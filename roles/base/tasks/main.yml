@@ -1,0 +1,9 @@
+- include: disable_password_expiration.yml
+
+- include: display_boot.yml
+
+- include: fix_hostname.yml
+
+- include: enable_core_dump.yml
+
+- include: install_tools.yml

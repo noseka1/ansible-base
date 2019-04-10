@@ -1,0 +1,10 @@
+- name: Install tools
+  yum:
+    name:
+#      - htop
+      - tcpdump
+      - strace
+      - gdb
+      - vim
+    state: present
+  become: yes

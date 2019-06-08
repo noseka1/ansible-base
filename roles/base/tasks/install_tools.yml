@@ -6,5 +6,8 @@
       - strace
       - gdb
       - vim
+      - policycoreutils-python # semanage
+      - setroubleshoot-server # sealert
+      - setools-console # sesearch
     state: present
   become: yes

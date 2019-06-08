@@ -1,3 +1,7 @@
 - hosts: all
   tasks:
     - include_role: name=base
+
+- hosts: rhel-5
+  tasks:
+    - include_role: name=openshift_loadbalancer

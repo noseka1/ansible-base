@@ -1,0 +1,76 @@
+- name: Install haproxy
+  yum: name=haproxy state=present
+  become: yes
+
+- name: Configure HAProxy
+  blockinfile:
+    path: /etc/haproxy/haproxy.cfg
+    marker: '# {mark} ANSIBLE MANAGED BLOCK'
+    block: |
+      frontend port6443
+          mode tcp
+          option tcplog
+          bind 0.0.0.0:6443
+          default_backend port6443
+
+      backend port6443
+          mode tcp
+          balance roundrobin
+          server rhel-1 rhel-1:6443 check
+          server rhel-2 rhel-2:6443 check
+
+      frontend port22623
+          mode tcp
+          option tcplog
+          bind 0.0.0.0:22623
+          default_backend port22623
+
+      backend port22623
+          mode tcp
+          balance roundrobin
+          server rhel-1 rhel-1:22623 check
+          server rhel-2 rhel-2:22623 check
+
+      frontend port443
+          mode tcp
+          option tcplog
+          bind 0.0.0.0:443
+          default_backend port443
+
+      backend port443
+          mode tcp
+          balance roundrobin
+          server rhel-3 rhel-1:443 check
+          server rhel-4 rhel-2:443 check
+
+      frontend port80
+          bind 0.0.0.0:80
+          default_backend port80
+
+      backend port80
+          balance roundrobin
+          server rhel-3 rhel-1:80 check
+          server rhel-4 rhel-2:80 check
+  notify: Restart haproxy
+  become: yes
+
+- name: Enable ports on firewall
+  firewalld:
+    port: '{{ item }}/tcp'
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - 6443
+    - 22623
+    - 443
+    - 80
+  become: yes
+
+- name: Allow HAProxy to listen on ports
+  seport:
+    ports: 6443, 22623
+    proto: tcp
+    setype: http_port_t
+    state: present
+  become: yes

@@ -1,0 +1,42 @@
+network:
+  name: openshift
+  ip_range_start: 192.168.130.10
+  ip_range_end:   192.168.130.254
+  bridge_ip:      192.168.130.1
+  bridge_netmask: 255.255.255.0
+  bridge_name: virbr-osh
+  bridge_mac: 52:54:00:2c:0e:00
+
+virtual_machines_dir: /home/anosek/qemu/vms
+
+virtual_machines:
+  osh_loadbalancer:
+    name: osh-loadbalancer
+    memory_kb: 262144
+    vcpu: 2
+    mac: 52:54:00:2c:0e:10
+    ip: 192.168.130.10
+  osh_installer:
+    name: osh-installer
+    memory_kb: 4194304
+    vcpu: 4
+    mac: 52:54:00:2c:0e:11
+    ip: 192.168.130.11
+  osh_master:
+    name: osh-master
+    memory_kb: 6291456
+    vcpu: 4
+    mac: 52:54:00:2c:0e:12
+    ip: 192.168.130.12
+  osh_worker_1:
+    name: osh-worker-1
+    memory_kb: 6291456
+    vcpu: 4
+    mac: 52:54:00:2c:0e:13
+    ip: 192.168.130.13
+  osh_worker_2:
+    name: osh-worker-2
+    memory_kb: 2097152
+    vcpu: 4
+    mac: 52:54:00:2c:0e:14
+    ip: 192.168.130.14

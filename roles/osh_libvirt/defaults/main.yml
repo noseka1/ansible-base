@@ -9,6 +9,7 @@ network:
 
 virtual_machines_user: anosek
 virtual_machines_dir: /home/{{ virtual_machines_user }}/qemu/vms
+virtual_machines_domain: anosek-cluster-1.example.com
 
 virtual_machines:
   osh_loadbalancer:

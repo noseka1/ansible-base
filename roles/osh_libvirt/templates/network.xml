@@ -11,7 +11,7 @@
     <dhcp>
       <range start='{{ network.ip_range_start }}' end='{{ network.ip_range_end }}'/>
 {% for key, value in virtual_machines.items() %}
-      <host mac='{{ value.mac }}' name='{{ value.name }}' ip='{{ value.ip }}'/>
+      <host mac='{{ value.mac }}' name='{{ virtual_machines_domain }}.{{ value.name }}' ip='{{ value.ip }}'/>
 {% endfor %}
     </dhcp>
   </ip>

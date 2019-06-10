@@ -4,4 +4,4 @@
 
 - hosts: rhel-5
   tasks:
-    - include_role: name=openshift_loadbalancer
+    - include_role: name=osh_loadbalancer

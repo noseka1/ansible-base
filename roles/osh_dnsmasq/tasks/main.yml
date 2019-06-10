@@ -1,0 +1,35 @@
+- name: Install dnsmasq
+  yum: name=dnsmasq state=present
+  become: yes
+
+- name: Configure dnsmasq.conf
+  ini_file: dest=/etc/dnsmasq.conf section= option={{ item.option }} value={{ item.value }}
+  notify: Restart dnsmasq
+  with_items:
+    - option: srv-host
+      value: '_etcd-server-ssl._tcp.{{ openshift_dns_domain }},{{ openshift_loadbalancer }},2380,0,10'
+    - option: addn-hosts
+      value: /etc/dnsmasq.openshift.addnhosts
+    - option: local
+      value: /{{ openshift_dns_domain }}/
+  become: yes
+
+- name: Configure no-value options in dnsmasq.conf
+  ini_file: dest=/etc/dnsmasq.conf section= option={{ item.option }} allow_no_value=yes
+  notify: Restart dnsmasq
+  with_items:
+    - option: no-hosts
+  become: yes
+
+- name: Add OpenShift DNS records
+  template: src=dnsmasq.openshift.addnhosts dest=/etc/dnsmasq.openshift.addnhosts
+  notify: Restart dnsmasq
+  become: yes
+
+- name: Enable DNS service on firewall
+  firewalld:
+    service: dns
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes

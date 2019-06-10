@@ -1,0 +1,6 @@
+192.168.130.10 osh-dns.{{ openshift_dns_domain }}
+192.168.131.10 osh-loadbalancer.{{ openshift_dns_domain }}
+192.168.131.11 osh-installer.{{ openshift_dns_domain }}  etcd-0.{{ openshift_dns_domain }}
+192.168.131.12 osh-master.{{ openshift_dns_domain }}
+192.168.131.13 osh-worker-1.{{ openshift_dns_domain }}
+192.168.131.14 osh-worker-2.{{ openshift_dns_domain }}  api.{{ openshift_dns_domain }}  api-int.{{ openshift_dns_domain }}

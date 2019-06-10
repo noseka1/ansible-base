@@ -6,7 +6,7 @@ virtual_machines_domain: anosek-cluster-1.example.com
 
 virtual_machines:
   osh-dns:
-    memory_kb: 262144
+    memory_kb: 524288
     vcpu: 1
     mac: 52:54:00:2c:00:10
     ip: 192.168.130.10
@@ -14,7 +14,7 @@ virtual_machines:
     network: openshift-dns
   osh-loadbalancer:
     name: osh-loadbalancer
-    memory_kb: 262144
+    memory_kb: 524288
     vcpu: 1
     mac: 52:54:00:2c:01:10
     ip: 192.168.131.10

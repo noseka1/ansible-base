@@ -1,3 +1,5 @@
+exec_action: create
+
 network:
   name: openshift
   ip_range_start: 192.168.130.10

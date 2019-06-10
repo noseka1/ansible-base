@@ -1,0 +1,35 @@
+- name: List running virtual machines
+  virt:
+    command: list_vms
+    state: running
+  register: libvirt_running_vms
+  become: yes
+
+- name: Stop virtual machines
+  virt:
+    command: destroy
+    name: '{{ item.value.name }}'
+  when: 'item.value.name in libvirt_running_vms.list_vms'
+  with_dict: '{{ virtual_machines }}'
+  ignore_errors: yes
+  become: yes
+
+- name: List all virtual machines
+  virt:
+    command: list_vms
+  register: libvirt_vms
+  become: yes
+
+- name: Delete virtual machines
+  virt:
+    command: undefine
+    name: '{{ item.value.name }}'
+  when: 'item.value.name in libvirt_vms.list_vms'
+  with_dict: '{{ virtual_machines }}'
+  become: yes
+
+- name: Delete virtual machine disks
+  file: path={{ virtual_machines_dir }}/{{ item.value.name }}.qcow2 state=absent
+  with_dict: '{{ virtual_machines }}'
+  become_user: '{{ virtual_machines_user }}'
+  become: yes

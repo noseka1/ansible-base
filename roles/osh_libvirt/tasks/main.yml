@@ -1,4 +1,11 @@
-- include: network.yml
+- include: network_create.yml
+  when: exec_action == 'create'
 
-- include: domain.yml
+- include: domain_create.yml
+  when: exec_action == 'create'
 
+- include: domain_delete.yml
+  when: exec_action == 'delete'
+
+- include: network_delete.yml
+  when: exec_action == 'delete'

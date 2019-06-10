@@ -1,0 +1,6 @@
+- name: Create virtual machines
+  virt:
+    command: define
+    xml: "{{ lookup('template', 'domain.xml') }}"
+  with_dict: '{{ virtual_machines }}'
+  become: yes

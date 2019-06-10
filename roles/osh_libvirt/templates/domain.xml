@@ -1,0 +1,45 @@
+<domain type='kvm'>
+  <name>{{ item.value.name }}</name>
+  <memory unit='KiB'>{{ item.value.memory_kb }}</memory>
+  <vcpu>{{ item.value.vcpu }}</vcpu>
+  <os>
+    <type>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <clock offset="utc">
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="hpet" present="no"/>
+  </clock>
+  <devices>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='{{ virtual_machines_dir }}/{{ item.value.name }}.qcow2'/>
+      <target bus="virtio" dev="vda"/>
+    </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <target dev='hda' bus='ide'/>
+    </disk>
+    <interface type='network'>
+      <mac address='{{ item.value.mac }}'/>
+      <source network='{{ network.name }}'/>
+      <model type='virtio'/>
+    </interface>
+    <input type='mouse' bus='ps2'/>
+    <input type='keyboard' bus='ps2'/>
+<!--
+    <serial type="file">
+      <source path="/home/anosek/qemu/vms/PLACEHOLDER1.console.log"/>
+    </serial>
+-->
+    <serial type="pty"/>
+    <graphics type="vnc" autoport="yes" keymap="en-us" listen="127.0.0.1"/>
+    <video>
+      <model type="cirrus"/>
+    </video>
+  </devices>
+</domain>

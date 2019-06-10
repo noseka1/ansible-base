@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>{{ item.value.name }}</name>
+  <name>{{ item.key }}</name>
   <memory unit='KiB'>{{ item.value.memory_kb }}</memory>
   <vcpu>{{ item.value.vcpu }}</vcpu>
   <os>
@@ -17,7 +17,7 @@
   <devices>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='{{ virtual_machines_dir }}/{{ item.value.name }}.qcow2'/>
+      <source file='{{ virtual_machines_dir }}/{{ item.key }}.qcow2'/>
       <target bus="virtio" dev="vda"/>
     </disk>
     <disk type='file' device='cdrom'>
@@ -26,7 +26,7 @@
     </disk>
     <interface type='network'>
       <mac address='{{ item.value.mac }}'/>
-      <source network='{{ network.name }}'/>
+      <source network='{{ item.value.network }}'/>
       <model type='virtio'/>
     </interface>
     <input type='mouse' bus='ps2'/>

@@ -1,18 +1,3 @@
-- name: Define a new network '{{ network.name }}'
-  virt_net:
-    command: define
-    name: '{{ network.name }}'
-    xml: '{{ lookup("template", "network.xml") }}'
-  become: yes
-
-- name: Start the network '{{ network.name }}'
-  virt_net:
-    state: active
-    name: '{{ network.name }}'
-  become: yes
-
-- name: Autostart the network '{{ network.name }}'
-  virt_net:
-    autostart: yes
-    name: '{{ network.name }}'
-  become: yes
+- name: Create networks
+  include: network_create_include.yml
+  with_dict: '{{ networks }}'

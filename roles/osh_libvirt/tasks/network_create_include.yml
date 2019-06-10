@@ -1,0 +1,18 @@
+- name: Define a new network '{{ item.key }}'
+  virt_net:
+    command: define
+    name: '{{ item.key }}'
+    xml: '{{ lookup("template", "network.xml") }}'
+  become: yes
+
+- name: Start the network '{{ item.key }}'
+  virt_net:
+    state: active
+    name: '{{ item.key }}'
+  become: yes
+
+- name: Autostart the network '{{ item.key }}'
+  virt_net:
+    autostart: yes
+    name: '{{ item.key }}'
+  become: yes

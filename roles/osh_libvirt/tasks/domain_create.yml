@@ -6,9 +6,9 @@
   become: yes
 
 - name: Create qcow2 disk
-  command: qemu-img create -f qcow2 {{ virtual_machines_dir }}/{{ item.value.name }}.qcow2 {{ item.value.disk_gb }}G
+  command: qemu-img create -f qcow2 {{ virtual_machines_dir }}/{{ item.key }}.qcow2 {{ item.value.disk_gb }}G
   args:
-    creates: '{{ virtual_machines_dir }}/{{ item.value.name }}.qcow2'
+    creates: '{{ virtual_machines_dir }}/{{ item.key }}.qcow2'
   with_dict: '{{ virtual_machines }}'
   become_user: '{{ virtual_machines_user }}'
   become: yes

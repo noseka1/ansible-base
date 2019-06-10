@@ -1,51 +1,72 @@
 exec_action: create
 
-network:
-  name: openshift
-  ip_range_start: 192.168.130.10
-  ip_range_end:   192.168.130.254
-  bridge_ip:      192.168.130.1
-  bridge_netmask: 255.255.255.0
-  bridge_name: virbr-osh
-  bridge_mac: 52:54:00:2c:0e:00
-
 virtual_machines_user: anosek
 virtual_machines_dir: /home/{{ virtual_machines_user }}/qemu/vms
 virtual_machines_domain: anosek-cluster-1.example.com
 
 virtual_machines:
-  osh_loadbalancer:
-    name: osh-loadbalancer
+  osh-dns:
     memory_kb: 262144
-    vcpu: 2
-    mac: 52:54:00:2c:0e:10
+    vcpu: 1
+    mac: 52:54:00:2c:00:10
     ip: 192.168.130.10
     disk_gb: 20
-  osh_installer:
+    network: openshift-dns
+  osh-loadbalancer:
+    name: osh-loadbalancer
+    memory_kb: 262144
+    vcpu: 1
+    mac: 52:54:00:2c:01:10
+    ip: 192.168.131.10
+    disk_gb: 20
+    network: openshift-cluster
+  osh-installer:
     name: osh-installer
     memory_kb: 4194304
     vcpu: 4
-    mac: 52:54:00:2c:0e:11
-    ip: 192.168.130.11
+    mac: 52:54:00:2c:01:11
+    ip: 192.168.131.11
     disk_gb: 20
-  osh_master:
+    network: openshift-cluster
+  osh-master:
     name: osh-master
     memory_kb: 6291456
     vcpu: 4
-    mac: 52:54:00:2c:0e:12
-    ip: 192.168.130.12
+    mac: 52:54:00:2c:01:12
+    ip: 192.168.131.12
     disk_gb: 120
-  osh_worker_1:
+    network: openshift-cluster
+  osh-worker-1:
     name: osh-worker-1
     memory_kb: 6291456
     vcpu: 4
-    mac: 52:54:00:2c:0e:13
-    ip: 192.168.130.13
+    mac: 52:54:00:2c:01:13
+    ip: 192.168.131.13
     disk_gb: 120
-  osh_worker_2:
+    network: openshift-cluster
+  osh-worker-2:
     name: osh-worker-2
     memory_kb: 2097152
     vcpu: 4
-    mac: 52:54:00:2c:0e:14
-    ip: 192.168.130.14
+    mac: 52:54:00:2c:01:14
+    ip: 192.168.131.14
     disk_gb: 120
+    network: openshift-cluster
+
+networks:
+  openshift-dns:
+    ip_range_start: 192.168.130.10
+    ip_range_end:   192.168.130.254
+    bridge_ip:      192.168.130.1
+    bridge_netmask: 255.255.255.0
+    bridge_name: virbr-oshd
+    bridge_mac: 52:54:00:2c:00:00
+  openshift-cluster:
+    ip_range_start: 192.168.131.10
+    ip_range_end:   192.168.131.254
+    bridge_ip:      192.168.131.1
+    bridge_netmask: 255.255.255.0
+    bridge_name: virbr-osh
+    bridge_mac: 52:54:00:2c:01:00
+    dns_forward: '{{ virtual_machines["osh-dns"].ip }}'
+

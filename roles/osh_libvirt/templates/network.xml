@@ -1,21 +1,25 @@
 <network>
-  <name>{{ network.name }}</name>
+  <name>{{ item.key }}</name>
   <forward mode='nat'>
     <nat>
       <port start='1024' end='65535'/>
     </nat>
   </forward>
-  <bridge name='{{ network.bridge_name }}' stp='on' delay='0'/>
-  <mac address='{{ network.bridge_mac }}'/>
-  <ip address='{{ network.bridge_ip }}' netmask='{{ network.bridge_netmask }}'>
+  <bridge name='{{ item.value.bridge_name }}' stp='on' delay='0'/>
+  <mac address='{{ item.value.bridge_mac }}'/>
+  <ip address='{{ item.value.bridge_ip }}' netmask='{{ item.value.bridge_netmask }}'>
     <dhcp>
-      <range start='{{ network.ip_range_start }}' end='{{ network.ip_range_end }}'/>
+      <range start='{{ item.value.ip_range_start }}' end='{{ item.value.ip_range_end }}'/>
 {% for key, value in virtual_machines.items() %}
-      <host mac='{{ value.mac }}' name='{{ virtual_machines_domain }}.{{ value.name }}' ip='{{ value.ip }}'/>
+  {% if value.network == item.key %}
+      <host mac='{{ value.mac }}' name='{{ key }}.{{ virtual_machines_domain }}' ip='{{ value.ip }}'/>
+  {% endif %}
 {% endfor %}
     </dhcp>
   </ip>
+{% if item.value.dns_forward is defined %}
   <dns>
-    <forwarder addr='{{ virtual_machines.osh_loadbalancer.ip }}'/>
+    <forwarder addr='{{ item.value.dns_forward }}'/>
   </dns>
+{% endif %}
 </network>

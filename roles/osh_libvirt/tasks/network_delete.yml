@@ -5,22 +5,12 @@
   register: libvirt_active_nets
   become: yes
 
-- name: Stop the network '{{ network.name }}'
-  virt_net:
-    command: destroy
-    name: '{{ network.name }}'
-  when: 'network.name in libvirt_active_nets.list_nets'
-  become: yes
-
 - name: List all networks
   virt_net:
     command: list_nets
   register: libvirt_nets
   become: yes
 
-- name: Delete the network '{{ network.name }}'
-  virt_net:
-    command: undefine
-    name: '{{ network.name }}'
-  when: 'network.name in libvirt_nets.list_nets'
-  become: yes
+- name: Delete networks
+  include: network_delete_include.yml
+  with_dict: '{{ networks }}'

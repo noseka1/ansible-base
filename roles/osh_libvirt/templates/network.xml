@@ -15,4 +15,7 @@
 {% endfor %}
     </dhcp>
   </ip>
+  <dns>
+    <forwarder addr='{{ virtual_machines.osh_loadbalancer.ip }}'/>
+  </dns>
 </network>

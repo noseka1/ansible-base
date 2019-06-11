@@ -2,13 +2,15 @@
   virt:
     command: define
     xml: "{{ lookup('template', 'domain.xml') }}"
-  with_dict: '{{ virtual_machines }}'
+  when: virtual_machines[item] is defined
+  with_items: '{{ ansible_play_hosts }}'
   become: yes
 
 - name: Create qcow2 disk
-  command: qemu-img create -f qcow2 {{ virtual_machines_dir }}/{{ item.key }}.qcow2 {{ item.value.disk_gb }}G
+  command: qemu-img create -f qcow2 {{ virtual_machines_dir }}/{{ hostvars[item].ansible_ssh_host }}.qcow2 {{ virtual_machines[item].disk_gb }}G
   args:
-    creates: '{{ virtual_machines_dir }}/{{ item.key }}.qcow2'
-  with_dict: '{{ virtual_machines }}'
+    creates: '{{ virtual_machines_dir }}/{{ hostvars[item].ansible_ssh_host }}.qcow2'
+  when: virtual_machines[item] is defined
+  with_items: '{{ ansible_play_hosts }}'
   become_user: '{{ virtual_machines_user }}'
   become: yes

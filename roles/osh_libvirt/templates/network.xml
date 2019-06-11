@@ -12,7 +12,7 @@
       <range start='{{ item.value.ip_range_start }}' end='{{ item.value.ip_range_end }}'/>
 {% for key, value in virtual_machines.items() %}
   {% if value.network == item.key %}
-      <host mac='{{ value.mac }}' name='{{ key }}.{{ virtual_machines_domain }}' ip='{{ value.ip }}'/>
+      <host mac='{{ value.mac }}' name='{{ hostvars[key].ansible_ssh_host }}' ip='{{ value.ip }}'/>
   {% endif %}
 {% endfor %}
     </dhcp>

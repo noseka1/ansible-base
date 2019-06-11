@@ -8,9 +8,9 @@
 - name: Stop virtual machines
   virt:
     command: destroy
-    name: '{{ item.key }}'
-  when: 'item.key in libvirt_running_vms.list_vms'
-  with_dict: '{{ virtual_machines }}'
+    name: '{{ hostvars[item].ansible_ssh_host }}'
+  when: 'virtual_machines[item] is defined and hostvars[item].ansible_ssh_host in libvirt_running_vms.list_vms'
+  with_items: '{{ ansible_play_hosts }}'
   become: yes
 
 - name: List all virtual machines
@@ -22,13 +22,14 @@
 - name: Delete virtual machines
   virt:
     command: undefine
-    name: '{{ item.key }}'
-  when: 'item.key in libvirt_vms.list_vms'
-  with_dict: '{{ virtual_machines }}'
+    name: '{{ hostvars[item].ansible_ssh_host }}'
+  when: 'virtual_machines[item] is defined and hostvars[item].ansible_ssh_host in libvirt_vms.list_vms'
+  with_items: '{{ ansible_play_hosts }}'
   become: yes
 
 - name: Delete virtual machine disks
-  file: path={{ virtual_machines_dir }}/{{ item.key }}.qcow2 state=absent
-  with_dict: '{{ virtual_machines }}'
+  file: path={{ virtual_machines_dir }}/{{ hostvars[item].ansible_ssh_host }}.qcow2 state=absent
+  when: 'virtual_machines[item] is defined'
+  with_items: '{{ ansible_play_hosts }}'
   become_user: '{{ virtual_machines_user }}'
   become: yes

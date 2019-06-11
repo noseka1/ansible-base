@@ -1,4 +1,4 @@
-- hosts: osh-loadbalancer
+- hosts: openshift_loadbalancer
   tasks:
     - include_role: name=base
       tags: base

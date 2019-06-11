@@ -7,7 +7,7 @@
   notify: Restart dnsmasq
   with_items:
     - option: srv-host
-      value: '_etcd-server-ssl._tcp.{{ openshift_dns_domain }},{{ openshift_loadbalancer }},2380,0,10'
+      value: '_etcd-server-ssl._tcp.{{ openshift_dns_domain }},{{ hostvars[groups["openshift_master"][0]].ansible_ssh_host }},2380,0,10'
     - option: addn-hosts
       value: /etc/dnsmasq.openshift.addnhosts
     - option: local

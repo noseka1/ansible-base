@@ -1,4 +1,4 @@
-- hosts: osh-dns
+- hosts: openshift_dns
   tasks:
     - include_role: name=base
       tags: base

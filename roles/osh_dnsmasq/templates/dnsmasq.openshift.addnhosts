@@ -1,6 +1,7 @@
-192.168.130.10 osh-dns.{{ openshift_dns_domain }}
-192.168.131.10 osh-loadbalancer.{{ openshift_dns_domain }}
-192.168.131.11 osh-installer.{{ openshift_dns_domain }}  etcd-0.{{ openshift_dns_domain }}
-192.168.131.12 osh-master.{{ openshift_dns_domain }}
-192.168.131.13 osh-worker-1.{{ openshift_dns_domain }}
-192.168.131.14 osh-worker-2.{{ openshift_dns_domain }}  api.{{ openshift_dns_domain }}  api-int.{{ openshift_dns_domain }}
+{{ virtual_machines[groups['openshift_dns'][0]].ip }} {{ hostvars[groups['openshift_dns'][0]].ansible_ssh_host }}
+{{ virtual_machines[groups['openshift_loadbalancer'][0]].ip }} {{ hostvars[groups['openshift_loadbalancer'][0]].ansible_ssh_host }}  api.{{ openshift_dns_domain }}  api-int.{{ openshift_dns_domain }}
+{{ virtual_machines[groups['openshift_installer'][0]].ip }} {{ hostvars[groups['openshift_installer'][0]].ansible_ssh_host }}
+{{ virtual_machines[groups['openshift_master'][0]].ip }} {{ hostvars[groups['openshift_master'][0]].ansible_ssh_host }}  etcd-0.{{ openshift_dns_domain }}
+{% for item in groups['openshift_worker'] %}
+{{ virtual_machines[item].ip }} {{ hostvars[item].ansible_ssh_host }}
+{% endfor %}

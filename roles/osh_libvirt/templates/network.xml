@@ -7,6 +7,7 @@
   </forward>
   <bridge name='{{ item.value.bridge_name }}' stp='on' delay='0'/>
   <mac address='{{ item.value.bridge_mac }}'/>
+  <domain name='{{ openshift_dns_domain }}' localOnly="no"/>
   <ip address='{{ item.value.bridge_ip }}' netmask='{{ item.value.bridge_netmask }}'>
     <dhcp>
       <range start='{{ item.value.ip_range_start }}' end='{{ item.value.ip_range_end }}'/>

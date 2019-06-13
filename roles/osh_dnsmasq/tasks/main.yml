@@ -12,6 +12,8 @@
       value: /etc/dnsmasq.openshift.addnhosts
     - option: local
       value: /{{ openshift_dns_domain }}/
+    - option: address
+      value: /apps.{{ openshift_dns_domain }}/{{ virtual_machines[groups.openshift_loadbalancer.0].ip }}
   become: yes
 
 - name: Configure no-value options in dnsmasq.conf

@@ -1,0 +1,9 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    # check that the required variables were defined
+    - debug: msg='aws_key={{ aws_key }}'
+    - debug: msg='aws_secret_key={{ aws_secret_key }}'
+    - debug: msg='aws_region={{ aws_region }}'
+
+    - include_role: name=otlc_openshift

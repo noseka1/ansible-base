@@ -1,0 +1,19 @@
+- hosts: all
+  gather_facts: yes
+  vars_prompt:
+    - name: redhat_subscription_user
+      prompt: "redhat_subscription_user"
+      private: no
+
+    - name: redhat_subscription_password
+      prompt: "redhat_subscription_password"
+      private: yes
+
+  tasks:
+    - name: Register with Red Hat Subscription Manager
+      redhat_subscription:
+        username: '{{ redhat_subscription_user }}'
+        password: '{{ redhat_subscription_password }}'
+        release: '{{ ansible_distribution_version }}'
+        auto_attach: true
+        state: present

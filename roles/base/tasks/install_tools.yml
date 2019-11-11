@@ -1,14 +1,29 @@
 - name: Install tools
   yum:
     name:
-#      - htop
       - bind-utils # dig, host
       - tcpdump
       - strace
       - gdb
       - vim
-      - policycoreutils-python # semanage
       - setroubleshoot-server # sealert
       - setools-console # sesearch
     state: present
+  when: ansible_distribution == "RedHat"
+  become: yes
+
+- name: Install tools RHEL7
+  yum:
+    name:
+      - policycoreutils-python # semanage
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 7
+  become: yes
+
+- name: Install tools RHEL8
+  yum:
+    name:
+      - policycoreutils-python-utils # semanage
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 8
   become: yes

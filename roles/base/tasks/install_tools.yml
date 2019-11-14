@@ -5,6 +5,7 @@
       - tcpdump
       - strace
       - gdb
+      - mc
       - vim
       - setroubleshoot-server # sealert
       - setools-console # sesearch

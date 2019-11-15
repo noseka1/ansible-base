@@ -1,5 +1,7 @@
 - include: disable_password_expiration.yml
 
+- include: configure_sudo.yml
+
 - include: display_boot.yml
 
 - include: fix_hostname.yml

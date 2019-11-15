@@ -17,3 +17,20 @@
         release: '{{ ansible_distribution_version }}'
         auto_attach: true
         state: present
+
+    - name: Attach a specific pool ID
+      redhat_subscription:
+        username: '{{ redhat_subscription_user }}'
+        password: '{{ redhat_subscription_password }}'
+        release: '{{ ansible_distribution_version }}'
+        pool_ids: '{{ pool_id }}'
+        state: present
+      when: pool_id is defined
+
+    - name: Enable yum repositories
+      ini_file:
+        path: /etc/yum.repos.d/redhat.repo
+        section: '{{ item }}'
+        option: enabled
+        value: "1"
+      with_items: '{{ (enable_repos | default("[]") | from_yaml )}}'

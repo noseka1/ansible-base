@@ -1,12 +1,11 @@
-- name: Install ntp package
+- name: Install chrony package
   package: name={{ item }} state=installed
   with_items:
-   - ntp
-   - ntpdate
+    - chrony
   become: yes
 
-- name: Enable ntpd service and start it
-  service: name=ntpd state=started enabled=yes
+- name: Enable chronyd service and start it
+  service: name=chronyd state=started enabled=yes
   become: yes
 
 - name: Refresh Ansible's ansible_date_time fact

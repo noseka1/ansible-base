@@ -1,0 +1,13 @@
+- name: Install ntp package
+  package: name={{ item }} state=installed
+  with_items:
+   - ntp
+   - ntpdate
+  become: yes
+
+- name: Enable ntpd service and start it
+  service: name=ntpd state=started enabled=yes
+  become: yes
+
+- name: Refresh Ansible's ansible_date_time fact
+  setup: filter=ansible_date_time

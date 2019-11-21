@@ -2,6 +2,8 @@
 
 - include: configure_sudo.yml
 
+- include: generate_ssh_keys.yml
+
 - include: configure_ntp.yml
 
 - include: display_boot.yml

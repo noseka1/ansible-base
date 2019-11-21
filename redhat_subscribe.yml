@@ -18,14 +18,13 @@
         auto_attach: true
         state: present
 
-    - name: Attach a specific pool ID
+    - name: Attach Employee SKU
       redhat_subscription:
         username: '{{ redhat_subscription_user }}'
         password: '{{ redhat_subscription_password }}'
         release: '{{ ansible_distribution_version }}'
-        pool_ids: '{{ pool_id }}'
+        pool_ids: 8a85f98460bfb0470160c2ff22f13e47
         state: present
-      when: pool_id is defined
 
     - name: Enable yum repositories
       ini_file:

@@ -1,0 +1,20 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: QuayEcosystem
+metadata:
+  name: quay
+  namespace: '{{ quay_namespace }}'
+spec:
+  quay:
+    imagePullSecretName: redhat-quay-pull-secret
+    superuserCredentialsSecretName: superuser
+    configSecretName: quayconfig
+    database:
+      volumeSize: 1Gi
+      credentialsSecretName: database
+    registryStorage:
+      persistentVolumeAccessMode:
+        - ReadWriteOnce
+      persistentVolumeSize: 20Gi
+  clair:
+    enabled: true
+    imagePullSecretName: redhat-quay-pull-secret

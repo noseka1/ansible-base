@@ -1,0 +1,35 @@
+- name: Create a Quay project
+  k8s:
+    definition: "{{ lookup('template', 'quay-project.yml') }}"
+
+- name: Create OperatorGroup object
+  k8s:
+    definition: "{{ lookup('template', 'quay-operatorgroup.yml') }}"
+
+- name: Subscribe to Quay
+  k8s:
+    definition: "{{ lookup('template', 'quay-subscription.yml') }}"
+
+- name: Create Red Hat Quay pull secret
+  k8s:
+    definition: "{{ lookup('template', 'redhat-quay-pull-secret-secret.yml') }}"
+
+- name: Configure Quay super user
+  k8s:
+    definition: "{{ lookup('template', 'superuser-secret.yml') }}"
+
+- name: Configure Quay configuration interface password
+  k8s:
+    definition: "{{ lookup('template', 'quayconfig-secret.yml') }}"
+
+- name: Configure Quay database credentials
+  k8s:
+    definition: "{{ lookup('template', 'database-secret.yml') }}"
+
+- name: Install Quay
+  k8s:
+    definition: "{{ lookup('template', 'quay-quayecosystem.yml') }}"
+    wait: true
+    wait_condition:
+      type: QuaySetupSuccess
+      status: "True"

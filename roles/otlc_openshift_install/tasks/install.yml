@@ -12,7 +12,7 @@
 - name: Create a copy of install-config.yaml
   template: src=install-config.yaml dest={{ cluster_config_dir }}/install-config.copy.yaml
 
-- name: Check the install_complete timstamp
+- name: Check the install_complete timestamp
   stat:
     path: '{{ cluster_config_dir }}/install_complete'
   register: install_complete
@@ -22,5 +22,7 @@
   when: not install_complete.stat.exists
 
 - name: Create the timestamp
-  command: touch {{ cluster_config_dir }}/install_complete
+  file:
+    path: '{{ cluster_config_dir }}/install_complete'
+    state: touch
   when: not install_complete.stat.exists

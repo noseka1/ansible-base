@@ -1,4 +1,4 @@
-- name: Retrieve all provisioned services
+- name: Retrieve all provisioned services for user {{ otlc_username }}
   uri:
     url: 'https://labs.opentlc.com/api/services?expand=resources'
     user: '{{ otlc_username }}'

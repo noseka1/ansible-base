@@ -1,10 +1,10 @@
 - include: retrieve_service.yml
 
 - fail:
-    msg: "OpenShift service has already been provisioned"
+    msg: "OpenShift service {{ otlc_service_template_name }} has already been provisioned"
   when: otlc_service | length > 0
 
-- name: Ordering OpenShift 4 AWS Install VM from the catalog OPENTLC OpenShift 4 Labs
+- name: Ordering {{ otlc_service_template_name }} from the catalog {{ otlc_service_catalog_name }}
   uri:
     url: 'https://labs.opentlc.com/api/service_catalogs/{{ otlc_service_catalog_id }}/service_templates'
     user: '{{ otlc_username }}'

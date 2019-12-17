@@ -1,4 +1,4 @@
-- name: Retrieve service attributes
+- name: Retrieve attributes of service {{ otlc_service.0.href }}
   uri:
     url: '{{ otlc_service.0.href }}?expand=custom_attributes'
     user: '{{ otlc_username }}'

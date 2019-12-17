@@ -31,8 +31,8 @@
   args:
     creates: .aws/credentials
   environment:
-    AWSKEY: '{{ aws_key }}'
-    AWSSECRETKEY: '{{ aws_secret_key }}'
+    AWSKEY: '{{ otlc_service_info.aws_access_key_id }}'
+    AWSSECRETKEY: '{{ otlc_service_info.aws_secret_access_key }}'
     REGION: '{{ aws_region }}'
 
 - name: Create an SSH keypair to be used for your OpenShift environment

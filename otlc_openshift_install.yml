@@ -1,15 +1,22 @@
-- hosts: all
+- hosts: localhost
   gather_facts: no
-  vars_prompt:
-    - name: aws_key
-      prompt: 'Enter aws_key'
-      private: no
-    - name: aws_secret_key
-      prompt: 'Enter aws_secret_key'
-      private: yes
-    - name: aws_region
-      prompt: 'Enter aws_region'
-      private: no
 
   tasks:
+    - include_role: name=otlc_openshift_order
+
+    - name: Add bastion host to the inventory
+      add_host:
+        name: '{{ otlc_service_info.ssh_hostname }}'
+        ansible_ssh_user: '{{ otlc_service_info.ssh_username }}'
+        ansible_password: '{{ otlc_service_info.ssh_password }}'
+        otlc_service_info: '{{ otlc_service_info }}'
+
+- hosts: '{{ hostvars.localhost.otlc_service_info.ssh_hostname }}'
+  gather_facts: no
+  tasks:
+    - name: Add ssh public key to authorized keys
+      authorized_key:
+        user: '{{ ansible_ssh_user }}'
+        key: '{{ lookup("file", "~/.ssh/id_rsa.pub") }}'
+
     - include_role: name=otlc_openshift_install

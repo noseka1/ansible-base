@@ -1,1 +1,1 @@
-inventory/group_vars/all/redhat_credentials.yml
+inventory/group_vars/all/credentials.yml

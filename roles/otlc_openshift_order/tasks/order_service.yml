@@ -1,0 +1,27 @@
+- name: Ordering {{ otlc_service_template_name }} from the catalog {{ otlc_service_catalog_name }}
+  uri:
+    url: 'https://labs.opentlc.com/api/service_catalogs/{{ otlc_service_catalog_id }}/service_templates'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: POST
+    body:
+      action: order
+      resource:
+        href: '/api/service_templates/{{ otlc_service_template_id }}'
+    body_format: json
+    status_code: 200
+  register: opentlc_order
+
+- debug: msg='Request URL is {{ opentlc_order.json.results.0.href }}'
+
+- name: Waiting for the lab provisioning to complete
+  uri:
+    url: '{{ opentlc_order.json.results.0.href }}'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: GET
+    status_code: 200
+  register: result
+  until: result.json.request_state == 'finished'
+  retries: 180
+  delay: 10

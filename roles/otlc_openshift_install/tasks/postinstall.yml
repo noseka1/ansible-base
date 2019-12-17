@@ -30,3 +30,18 @@
 - name: Grant admin user the cluster-admin role
   k8s:
     definition: "{{ lookup('template', 'cluster-admin-0-clusterrolebinding.yml') }}"
+
+- name: Check the update_complete timestamp
+  stat:
+    path: '{{ cluster_config_dir }}/update_complete'
+  register: update_complete
+
+- name: Update the cluster to the latest version
+  command: oc adm upgrade --to-latest=true
+  when: not update_complete.stat.exists
+
+- name: Create the timestamp
+  file:
+    path: '{{ cluster_config_dir }}/update_complete'
+    state: touch
+  when: not update_complete.stat.exists

@@ -1,0 +1,14 @@
+- name: Retrieve all provisioned services
+  uri:
+    url: 'https://labs.opentlc.com/api/services?expand=resources'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: GET
+    status_code: 200
+  register: otlc_services
+
+- set_fact:
+    otlc_service: '{{ otlc_services.json.resources | selectattr("service_template_id", "equalto", otlc_template_id) | list }}'
+
+- include: retrieve_service_info.yml
+  when: otlc_service | length > 0

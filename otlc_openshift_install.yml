@@ -13,7 +13,6 @@
       changed_when: False
 
 - hosts: '{{ hostvars.localhost.otlc_service_info.ssh_hostname }}'
-  gather_facts: no
   tasks:
     - name: Add ssh public key to authorized keys
       authorized_key:

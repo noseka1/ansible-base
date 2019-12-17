@@ -1,0 +1,26 @@
+- name: Retrieve SSH public key
+  shell: cat .ssh/cluster-key.pub
+  changed_when: False
+  register: ssh_public_key
+
+- name: Create cluster configuration directory
+  file: path={{ cluster_config_dir }} state=directory
+
+- name: Create install-config.yaml
+  template: src=install-config.yaml dest={{ cluster_config_dir }}
+
+- name: Create a copy of install-config.yaml
+  template: src=install-config.yaml dest={{ cluster_config_dir }}/install-config.copy.yaml
+
+- name: Check the install_complete timstamp
+  stat:
+    path: '{{ cluster_config_dir }}/install_complete'
+  register: install_complete
+
+- name: Installing the cluster, this will take a while
+  command: openshift-install create cluster --dir={{ cluster_config_dir }} --log-level=debug
+  when: not install_complete.stat.exists
+
+- name: Create the timestamp
+  command: touch {{ cluster_config_dir }}/install_complete
+  when: not install_complete.stat.exists

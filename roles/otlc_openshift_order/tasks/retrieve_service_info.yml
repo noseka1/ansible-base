@@ -8,7 +8,7 @@
   register: otlc_service_attributes
 
 - set_fact:
-    otlc_service_info:
+    otlc_service_raw:
       guid: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "GUID") | first).value }}'
       env0: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 0") | first).value }}'
       env1: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 1") | first).value }}'
@@ -17,6 +17,16 @@
       env4: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 4") | first).value }}'
       env5: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 5") | first).value }}'
       env6: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 6") | first).value }}'
+
+- set_fact:
+    otlc_service_info:
+      guid:                  '{{ otlc_service_raw.guid }}'
+      top_level_domain:      '{{ otlc_service_raw.env0.split(":").1 | trim }}'
+      aws_access_key_id:     '{{ otlc_service_raw.env3.split("=").1 | trim }}'
+      aws_secret_access_key: '{{ otlc_service_raw.env4.split("=").1 | trim }}'
+      ssh_username:          '{{ otlc_service_raw.env5.split(" ").3.split("@").0 | trim }}'
+      ssh_hostname:          '{{ otlc_service_raw.env5.split(" ").3.split("@").1 | trim }}'
+      ssh_password:          '{{ otlc_service_raw.env6.split(":").1 | trim }}'
 
 - debug:
     var: otlc_service_info

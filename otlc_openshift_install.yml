@@ -12,4 +12,4 @@
       private: no
 
   tasks:
-    - include_role: name=otlc_openshift
+    - include_role: name=otlc_openshift_install

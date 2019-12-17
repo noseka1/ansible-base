@@ -10,6 +10,7 @@
         ansible_ssh_user: '{{ otlc_service_info.ssh_username }}'
         ansible_password: '{{ otlc_service_info.ssh_password }}'
         otlc_service_info: '{{ otlc_service_info }}'
+      changed_when: False
 
 - hosts: '{{ hostvars.localhost.otlc_service_info.ssh_hostname }}'
   gather_facts: no

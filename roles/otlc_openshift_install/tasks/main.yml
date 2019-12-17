@@ -40,4 +40,22 @@
   args:
     creates: .ssh/cluster-key
 
-- debug: msg='You can install the cluster using the command "openshift-install create cluster --dir $HOME/cluster-${GUID}"'
+- name: Retrieve SSH public key
+  shell: cat ~/.ssh/cluster-key.pub
+  changed_when: False
+  register: ssh_public_key
+
+- name: Create cluster configuration directory
+  file: path=cluster-{{ otlc_service_info.guid }} state=directory
+
+- name: Create install-config.yaml
+  template: src=install-config.yaml dest=cluster-{{ otlc_service_info.guid }}
+
+- name: Create a hard-link to keep install-config.yaml file around after deletion
+  file:
+    src: cluster-{{ otlc_service_info.guid }}/install-config.yaml
+    dest: cluster-{{ otlc_service_info.guid }}/install-config.link.yaml
+    state: hard
+
+- name: Installing the cluster, this will take a while.
+  command: openshift-install create cluster --dir=cluster-{{ otlc_service_info.guid }} --log-level=debug

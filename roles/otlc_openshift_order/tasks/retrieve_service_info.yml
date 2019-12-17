@@ -21,7 +21,7 @@
 - set_fact:
     otlc_service_info:
       guid:                  '{{ otlc_service_raw.guid }}'
-      top_level_domain:      '{{ otlc_service_raw.env0.split(":").1 | trim }}'
+      top_level_domain:      '{{ otlc_service_raw.env0.split(":").1 | trim | regex_replace("^\.", "")}}'
       aws_access_key_id:     '{{ otlc_service_raw.env3.split("=").1 | trim }}'
       aws_secret_access_key: '{{ otlc_service_raw.env4.split("=").1 | trim }}'
       ssh_username:          '{{ otlc_service_raw.env5.split(" ").3.split("@").0 | trim }}'

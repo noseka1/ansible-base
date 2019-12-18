@@ -1,0 +1,14 @@
+# Service life time can be extended once.
+# This is the same as clicking the App Control/Extend Lifetime button in Web UI
+
+- name: Extending lifetime of service {{ otlc_service.0.href }}
+  uri:
+    url: '{{ otlc_service.0.href }}'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: POST
+    body:
+      action: extend lifetime
+    body_format: json
+    status_code: 200
+  register: opentlc_extend

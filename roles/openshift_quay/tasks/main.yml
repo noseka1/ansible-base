@@ -30,6 +30,7 @@
   k8s:
     definition: "{{ lookup('template', 'quay-quayecosystem.yml') }}"
     wait: true
+    wait_timeout: 600
     wait_condition:
       type: QuaySetupSuccess
       status: "True"

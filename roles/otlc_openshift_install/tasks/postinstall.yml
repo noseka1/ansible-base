@@ -3,3 +3,5 @@
 - include: postinstall_users.yml
 
 - include: postinstall_update.yml
+
+- include: postinstall_image_registry.yml

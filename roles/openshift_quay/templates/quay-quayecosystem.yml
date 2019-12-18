@@ -8,6 +8,7 @@ spec:
     imagePullSecretName: redhat-quay-pull-secret
     superuserCredentialsSecretName: superuser
     configSecretName: quayconfig
+    keepConfigDeployment: true
     database:
       volumeSize: 1Gi
       credentialsSecretName: database

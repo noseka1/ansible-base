@@ -34,3 +34,7 @@
     wait_condition:
       type: QuaySetupSuccess
       status: "True"
+
+- name: Subscribe all namespaces to Container Security Operator
+  k8s:
+    definition: "{{ lookup('template', 'container-security-operator-subscription.yml') }}"

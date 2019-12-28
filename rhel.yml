@@ -1,4 +1,5 @@
 - hosts: all
   tasks:
-    - include_role: name=base
+    - include_role:
+        name: base
       tags: base

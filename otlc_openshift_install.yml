@@ -2,7 +2,8 @@
   gather_facts: no
 
   tasks:
-    - include_role: name=otlc_openshift_order
+    - include_role:
+        name: otlc_openshift_order
 
     - name: Add bastion host to the inventory
       add_host:
@@ -19,4 +20,5 @@
         user: '{{ ansible_ssh_user }}'
         key: '{{ lookup("file", "~/.ssh/id_rsa.pub") }}'
 
-    - include_role: name=otlc_openshift_install
+    - include_role:
+        name: otlc_openshift_install

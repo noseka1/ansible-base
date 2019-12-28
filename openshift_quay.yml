@@ -2,4 +2,5 @@
   connection: local
   gather_facts: no
   tasks:
-    - include_role: name=openshift_quay
+    - include_role:
+        name: openshift_quay

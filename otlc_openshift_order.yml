@@ -2,4 +2,5 @@
   connection: local
   gather_facts: no
   tasks:
-    - include_role: name=otlc_openshift_order
+    - include_role:
+        name: otlc_openshift_order

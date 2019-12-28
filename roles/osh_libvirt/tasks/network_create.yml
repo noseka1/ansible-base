@@ -1,3 +1,0 @@
-- name: Create networks
-  include: network_create_include.yml
-  with_dict: '{{ networks }}'

@@ -1,7 +1,0 @@
-- hosts: openshift_dns
-  tasks:
-    - include_role: name=base
-      tags: base
-
-    - include_role: name=osh_dnsmasq
-      tags: osh_dnsmasq

@@ -1,7 +1,0 @@
-- hosts: openshift_loadbalancer
-  tasks:
-    - include_role: name=base
-      tags: base
-
-    - include_role: name=osh_loadbalancer
-      tags: osh_loadbalancer

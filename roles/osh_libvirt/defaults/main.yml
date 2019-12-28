@@ -1,4 +1,0 @@
-exec_action: create
-
-virtual_machines_user: anosek
-virtual_machines_dir: /home/{{ virtual_machines_user }}/qemu/vms

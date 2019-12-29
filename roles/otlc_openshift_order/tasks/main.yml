@@ -1,7 +1,10 @@
 - include: retrieve_service.yml
 
+- set_fact:
+    send_order: '{{  otlc_service | length  == 0 }}'
+
 - block:
     - include: order_service.yml
     - include: retrieve_service.yml
     - include: extend_service.yml
-  when: otlc_service | length == 0
+  when: send_order

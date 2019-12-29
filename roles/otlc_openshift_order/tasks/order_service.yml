@@ -23,5 +23,5 @@
     status_code: 200
   register: result
   until: result.json.request_state == 'finished'
-  retries: 180
+  retries: 60
   delay: 10

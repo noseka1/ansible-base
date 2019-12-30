@@ -1,0 +1,12 @@
+- name: Retrieve attributes of service {{ otlc_service.0.href }}
+  uri:
+    url: '{{ otlc_service.0.href }}?expand=custom_attributes'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: GET
+    status_code: 200
+  register: otlc_service_attributes
+
+- name: Show service attributes
+  debug:
+    var: otlc_service_attributes.json.custom_attributes

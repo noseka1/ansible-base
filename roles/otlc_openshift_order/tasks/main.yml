@@ -1,11 +1,6 @@
-- name: Retrieve attributes of service {{ otlc_service.0.href }}
-  uri:
-    url: '{{ otlc_service.0.href }}?expand=custom_attributes'
-    user: '{{ otlc_username }}'
-    password: '{{ otlc_password }}'
-    method: GET
-    status_code: 200
-  register: otlc_service_attributes
+- name: Order the service
+  import_role:
+    name: otlc_generic_order
 
 - set_fact:
     otlc_service_raw:

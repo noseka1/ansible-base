@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - import_role:
-        name: otlc_lab_order
+        name: otlc_openshift_order
       vars:
         otlc_service_catalog_id: '20000000000040'
         otlc_service_catalog_name: 'OPENTLC OpenShift 4 Labs'

@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - import_role:
-        name: otlc_lab_order
+        name: otlc_generic_order
       vars:
         otlc_service_catalog_id: '20000000000001'
         otlc_service_catalog_name: 'OPENTLC Datacenter Infrastructure Labs'

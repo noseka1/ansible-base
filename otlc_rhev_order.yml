@@ -1,0 +1,13 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: otlc_lab_order
+      vars:
+        otlc_service_catalog_id: '20000000000001'
+        otlc_service_catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
+        otlc_service_template_id: '20000000000290'
+        otlc_service_template_name: 'RHV 4.0 Foundations Lab'
+        otlc_service_options:
+          dialog_check: t

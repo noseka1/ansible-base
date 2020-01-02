@@ -4,8 +4,8 @@ metadata:
   name: quay
   namespace: '{{ quay_namespace }}'
 spec:
-  channel: alpha
+  channel: stable
+  installPlanApproval: Automatic
   name: quay
   source: community-operators
   sourceNamespace: openshift-marketplace
-  installPlanApproval: Automatic

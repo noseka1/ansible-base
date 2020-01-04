@@ -1,1 +1,2 @@
 quay_namespace: quay-enterprise
+ingress_domain: ''

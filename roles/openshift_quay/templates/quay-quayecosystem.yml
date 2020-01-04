@@ -7,7 +7,9 @@ spec:
   quay:
     imagePullSecretName: redhat-quay-pull-secret
     superuserCredentialsSecretName: superuser
+    routeHost: quay-{{ quay_namespace }}.{{ ingress_domain }}
     configSecretName: quayconfig
+    configRouteHost: quay-config-{{ quay_namespace }}.{{ ingress_domain }}
     keepConfigDeployment: true
     database:
       volumeSize: 1Gi

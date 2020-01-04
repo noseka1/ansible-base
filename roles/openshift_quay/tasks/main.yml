@@ -1,3 +1,16 @@
+- name: Try to detect the default ingress domain
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: Ingress
+    name: cluster
+    namespace: ''
+  when: not ingress_domain
+  register: openshift_config
+
+- name:
+  set_fact:
+    ingress_domain: '{{ openshift_config.resources.0.spec.domain | default(ingress_domain) }}'
+
 - name: Create a Quay project
   k8s:
     definition: "{{ lookup('template', 'quay-project.yml') }}"

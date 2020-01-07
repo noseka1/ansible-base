@@ -15,7 +15,7 @@ spec:
       volumeSize: 1Gi
       credentialsSecretName: database
     registryStorage:
-      persistentVolumeAccessMode:
+      persistentVolumeAccessModes:
         - ReadWriteOnce
       persistentVolumeSize: 20Gi
   clair:

@@ -1,0 +1,6 @@
+- hosts: localhost
+  connection: local
+  gather_facts: True
+  tasks:
+    - import_role:
+        name: openshift_argocd

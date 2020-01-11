@@ -1,0 +1,2 @@
+argocd_namespace: argocd
+argocd_resource: github.com/argoproj/argo-cd/manifests/cluster-install?ref=v1.3.6

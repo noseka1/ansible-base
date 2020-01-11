@@ -1,0 +1,54 @@
+- name: Create an {{ argocd_namespace }} project
+  k8s:
+    definition: "{{ lookup('template', 'argocd-project.yml') }}"
+
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -argocd-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - argocd-secret-secret.yaml
+    - argocd-server-route.yaml
+
+- name: Install Argo CD
+  command: oc apply --kustomize {{ tmpdir.path }}
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent
+
+- name: Obtain Argo CD route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: argocd-server
+    namespace: '{{ argocd_namespace }}'
+  register: argocd_route
+
+- name: Waiting for Argo CD to come up
+  uri:
+    url: 'https://{{ argocd_route.resources.0.spec.host }}/api/v1/session'
+    method: POST
+    body:
+      username: admin
+      password: '{{ generic_user_password }}'
+    body_format: json
+    validate_certs: False
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 10
+
+- debug:
+    msg: Argo CD installed successfully. You can login with 'argocd login --insecure {{ argocd_route.resources.0.spec.host }} --username admin'

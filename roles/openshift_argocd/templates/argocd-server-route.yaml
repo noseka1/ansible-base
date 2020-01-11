@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: argocd-server
+spec:
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: argocd-server

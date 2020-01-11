@@ -1,3 +1,9 @@
+- name: Install python-passlib library required by the Ansible htpasswd module
+  yum:
+    name: python-passlib
+    state: present
+  become: True
+
 - name: Create htpassword file holding additional OpenShift users
   htpasswd:
     path: '{{ cluster_config_dir }}/htpasswd'

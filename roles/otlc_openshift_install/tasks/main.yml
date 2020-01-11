@@ -3,3 +3,5 @@
 - include: install.yml
 
 - include: postinstall.yml
+
+- include: openshift_info.yml

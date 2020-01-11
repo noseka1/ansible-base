@@ -1,10 +1,12 @@
-- include: retrieve_service.yml
+- import_tasks: retrieve_service.yml
 
 - set_fact:
     send_order: '{{  otlc_service | length  == 0 }}'
 
 - block:
-    - include: order_service.yml
-    - include: retrieve_service.yml
-    - include: extend_service.yml
+    - include_tasks: order_service.yml
+    - include_tasks: retrieve_service.yml
+    - include_tasks: extend_service.yml
   when: send_order
+
+- import_tasks: retrieve_service_attributes.yml

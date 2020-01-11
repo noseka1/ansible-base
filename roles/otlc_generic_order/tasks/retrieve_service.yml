@@ -9,9 +9,3 @@
 
 - set_fact:
     otlc_service: '{{ otlc_services.json.resources | selectattr("service_template_id", "equalto", otlc_service_template_id) | list }}'
-
-- debug:
-    var: otlc_service
-
-- include: retrieve_service_info.yml
-  when: otlc_service | length > 0

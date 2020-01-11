@@ -1,5 +1,5 @@
 # Service life time can be extended once.
-# This is the same as clicking the App Control/Extend Lifetime button in Web UI
+# This is the same as clicking on the App Control/Extend Lifetime button in Web UI
 
 - name: Extending lifetime of service {{ otlc_service.0.href }}
   uri:
@@ -11,4 +11,3 @@
       action: extend lifetime
     body_format: json
     status_code: 200
-  register: opentlc_extend

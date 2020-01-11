@@ -17,7 +17,7 @@ spec:
     registryStorage:
       persistentVolumeAccessModes:
         - ReadWriteOnce
-      persistentVolumeSize: 20Gi
+      persistentVolumeSize: 500Gi
   clair:
     enabled: true
     imagePullSecretName: redhat-quay-pull-secret

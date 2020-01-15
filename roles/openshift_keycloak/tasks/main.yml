@@ -1,0 +1,54 @@
+- name: Create a {{ keycloak_namespace }} project
+  k8s:
+    definition: "{{ lookup('template', 'keycloak-project.yml') }}"
+
+- name: Create OperatorGroup object
+  k8s:
+    definition: "{{ lookup('template', 'keycloak-operatorgroup.yml') }}"
+
+- name: Subscribe to Keycloak
+  k8s:
+    definition: "{{ lookup('template', 'keycloak-subscription.yml') }}"
+
+- name: Install Keycloak
+  k8s:
+    definition: "{{ lookup('template', 'keycloak-keycloak.yml') }}"
+
+- name: Wait for Keycloak to come up
+  k8s_info:
+    api_version: keycloak.org/v1alpha1
+    kind: Keycloak
+    name: keycloak
+    namespace: '{{ keycloak_namespace }}'
+  register: keycloak_keycloak
+  until: keycloak_keycloak.resources.0.status.ready | default(False)
+  retries: 60
+  delay: 10
+
+- name: Obtain credential-keycloak secret
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: credential-keycloak
+    namespace: '{{ keycloak_namespace }}'
+  register: keycloak_secret
+
+- name: Obtain Keycloak route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: keycloak
+    namespace: '{{ keycloak_namespace }}'
+  register: keycloak_route
+
+- set_fact:
+    msg: |
+      Keycloak installed successfully.
+
+      Keycloak URL: https://{{ keycloak_route.resources.0.spec.host }}
+
+      Initial credentials:
+      Username: {{ keycloak_secret.resources.0.data.ADMIN_USERNAME | b64decode }}
+      Password: {{ keycloak_secret.resources.0.data.ADMIN_PASSWORD | b64decode }}
+
+- debug: msg="{{ msg.split('\n') }}"

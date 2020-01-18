@@ -10,3 +10,4 @@
   when: send_order
 
 - import_tasks: retrieve_service_attributes.yml
+- import_tasks: check_service.yml

@@ -34,6 +34,7 @@
     method: GET
     status_code: 200
   register: result
+  ignore_errors: True
   until: result.json.request_state == 'finished'
   retries: 60
   delay: 10

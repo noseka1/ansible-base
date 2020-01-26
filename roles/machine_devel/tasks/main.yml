@@ -5,6 +5,8 @@
       - colordiff
       - gdb
       - git
+      - highlight
+      - htop
       - iotop
       - lsof
       - ngrep
@@ -12,5 +14,15 @@
       - ranger
       - strace
       - tcpdump
+      - tig
       - tmux
+  become: True
+
+- name: Install tools used by ranger
+  yum:
+    name:
+      - atool
+      - caca-utils
+      - unoconv
+      - mediainfo
   become: True

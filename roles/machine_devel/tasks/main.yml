@@ -22,7 +22,7 @@
   yum:
     name:
       - atool
-      - caca-utils
+      - highlight
       - unoconv
       - mediainfo
   become: True

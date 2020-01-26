@@ -1,0 +1,16 @@
+- name: Install development tools
+  yum:
+    name:
+      - bind-utils # dig command
+      - colordiff
+      - gdb
+      - git
+      - iotop
+      - lsof
+      - ngrep
+      - patch
+      - ranger
+      - strace
+      - tcpdump
+      - tmux
+  become: True

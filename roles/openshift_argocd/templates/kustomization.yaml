@@ -6,4 +6,5 @@ bases:
 patchesStrategicMerge:
   - argocd-secret-secret.yaml
 resources:
+  - argocd-namespace.yaml
   - argocd-server-route.yaml

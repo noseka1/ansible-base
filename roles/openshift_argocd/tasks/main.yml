@@ -1,7 +1,3 @@
-- name: Create an {{ argocd_namespace }} project
-  k8s:
-    definition: "{{ lookup('template', 'argocd-project.yml') }}"
-
 - name: Create temporary kustomize directory
   tempfile:
     state: directory
@@ -17,6 +13,7 @@
     dest: '{{ tmpdir.path }}'
   with_items:
     - kustomization.yaml
+    - argocd-namespace.yaml
     - argocd-secret-secret.yaml
     - argocd-server-route.yaml
 

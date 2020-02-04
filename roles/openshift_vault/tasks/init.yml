@@ -1,0 +1,38 @@
+- name: Unseal vault
+  hashivault_unseal:
+    keys: '{{ vault_init["keys"][0] }}'
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+
+- name: Enable user/password authentication
+  hashivault_auth_method:
+    method_type: userpass
+    state: enabled
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_init.root_token }}'
+
+- name: Create admin user authenticated by password
+  hashivault_userpass_create:
+    name: admin
+    pass: '{{ generic_user_password }}'
+    policies: admin
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_init.root_token }}'
+
+- name: Grant full access to the admin user
+  hashivault_policy_set:
+    name: admin
+    rules: |
+      path "*"
+      {
+        capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+      }
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_init.root_token }}'

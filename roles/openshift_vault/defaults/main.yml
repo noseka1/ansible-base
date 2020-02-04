@@ -1,0 +1,2 @@
+vault_namespace: vault
+vault_skip_verify: true

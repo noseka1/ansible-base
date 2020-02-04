@@ -1,0 +1,61 @@
+- name: Grab vault's service account token
+  command: oc serviceaccounts get-token {{ vault_name }}
+  changed_when: False
+  register: token_reviewer_jwt
+
+- name: Grab vault's service account CA
+  command: oc exec {{ vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  changed_when: False
+  register: kubernetes_ca_cert
+
+- name: Grab OpenShift API server URL
+  command: oc whoami --show-server
+  changed_when: False
+  register: kubernetes_host
+
+- name: Enable Kubernetes authentication
+  hashivault_auth_method:
+    method_type: kubernetes
+    state: enabled
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_token }}'
+
+- name: Configure Kubernetes authentication
+  hashivault_write:
+    secret: /auth/kubernetes/config
+    data:
+      token_reviewer_jwt: '{{ token_reviewer_jwt.stdout }}'
+      kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
+      kubernetes_host: '{{ kubernetes_host.stdout }}'
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_token }}'
+
+
+- name: Grant read access to all secrets to Kubernetes identities
+  hashivault_policy_set:
+    name: kube_read
+    rules: |
+      path "secrets/*"
+      {
+        capabilities = [ "read", "list" ]
+      }
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_token }}'
+
+- name: Bind the policy to Kubernetes identities
+  hashivault_write:
+    secret: /auth/kubernetes/role/kube
+    data:
+      bound_service_account_names: default
+      bound_service_account_namespaces: '*'
+      policies: kube_read
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_token }}'

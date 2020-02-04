@@ -1,0 +1,14 @@
+- name: Retrieve an admin token
+  hashivault_token_create:
+    display_name: admin
+    policies: admin
+  register: vault_token_result
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_AUTHTYPE: userpass
+    VAULT_USER: admin
+    VAULT_PASSWORD: '{{ generic_user_password }}'
+
+- set_fact:
+    vault_token: '{{ vault_token_result.token.auth.client_token }}'

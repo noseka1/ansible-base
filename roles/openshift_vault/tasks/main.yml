@@ -21,3 +21,9 @@
 - name: Initialize vault
   import_tasks: init.yml
   when: vault_init["keys"][0] is defined
+
+- name: Retrieve an admin token
+  import_tasks: admin_token.yml
+
+- name: Configure the Kubernetes auth method
+  import_tasks: kube_auth.yml

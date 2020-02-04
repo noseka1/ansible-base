@@ -27,3 +27,6 @@
 
 - name: Configure the Kubernetes auth method
   import_tasks: kube_auth.yml
+
+- name: Enable audit logs
+  import_tasks: enable_audit.yml

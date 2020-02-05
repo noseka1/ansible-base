@@ -10,5 +10,6 @@
     VAULT_USER: admin
     VAULT_PASSWORD: '{{ generic_user_password }}'
 
-- set_fact:
+- name: Save vault admin token
+  set_fact:
     vault_token: '{{ vault_token_result.token.auth.client_token }}'

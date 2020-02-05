@@ -1,26 +1,9 @@
-- name: Obtain vault route
-  k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: vault
-    namespace: '{{ vault_namespace }}'
-  register: vault_route
-
-- set_fact:
-    vault_addr: 'https://{{ vault_route.resources.0.spec.host }}'
-
-- name: Check whether vault has already been initialized
-  hashivault_init:
-    secret_shares: 1
-    secret_threshold: 1
-  register: vault_init
-  environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+- name: Install vault on OpenShift
+  import_tasks: install.yml
 
 - name: Initialize vault
   import_tasks: init.yml
-  when: vault_init["keys"][0] is defined
+  when: vault_health.status == 501
 
 - name: Retrieve an admin token
   import_tasks: admin_token.yml
@@ -30,3 +13,7 @@
 
 - name: Enable audit logs
   import_tasks: enable_audit.yml
+
+- name: Vault installed successfully
+  debug:
+    msg: Vault installed successfully. You can log in with 'VAULT_ADDR={{ vault_addr }} VAULT_SKIP_VERIFY={{ vault_skip_verify }} vault login -method=userpass username=admin password=<password>'

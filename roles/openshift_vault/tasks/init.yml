@@ -1,3 +1,12 @@
+- name: Initialize vault
+  hashivault_init:
+    secret_shares: 1
+    secret_threshold: 1
+  register: vault_init
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+
 - name: Unseal vault
   hashivault_unseal:
     keys: '{{ vault_init["keys"][0] }}'
@@ -15,7 +24,7 @@
     VAULT_TOKEN: '{{ vault_init.root_token }}'
 
 - name: Create admin user authenticated by password
-  hashivault_userpass_create:
+  hashivault_userpass:
     name: admin
     pass: '{{ generic_user_password }}'
     policies: admin

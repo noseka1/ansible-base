@@ -34,7 +34,6 @@
     VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
     VAULT_TOKEN: '{{ vault_token }}'
 
-
 - name: Grant read access to all secrets to Kubernetes identities
   hashivault_policy_set:
     name: kube_read

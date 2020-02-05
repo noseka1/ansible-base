@@ -48,4 +48,4 @@
   delay: 10
 
 - debug:
-    msg: Argo CD installed successfully. You can login with 'argocd login --insecure {{ argocd_route.resources.0.spec.host }} --username admin'
+    msg: Argo CD installed successfully. You can log in with 'argocd login --insecure {{ argocd_route.resources.0.spec.host }} --username admin'

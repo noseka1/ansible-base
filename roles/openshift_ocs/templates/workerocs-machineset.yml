@@ -1,0 +1,70 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ cluster_id.stdout }}
+    machine.openshift.io/cluster-api-machine-role: workerocs
+    machine.openshift.io/cluster-api-machine-type: workerocs
+  name: {{ cluster_id.stdout }}-workerocs-{{ ocs_aws_region }}{{ item }}
+  namespace: openshift-machine-api
+spec:
+  replicas: {{ ocs_nodes_per_zone }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ cluster_id.stdout }}
+      machine.openshift.io/cluster-api-machineset: {{ cluster_id.stdout }}-workerocs-{{ ocs_aws_region }}{{ item }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ cluster_id.stdout }}
+        machine.openshift.io/cluster-api-machine-role: workerocs
+        machine.openshift.io/cluster-api-machine-type: workerocs
+        machine.openshift.io/cluster-api-machineset: {{ cluster_id.stdout }}-workerocs-{{ ocs_aws_region }}{{ item }}
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          role: storage-node
+          node-role.kubernetes.io/worker: ""
+          cluster.ocs.openshift.io/openshift-storage: ""
+      providerSpec:
+        value:
+          ami:
+            id: {{ ocs_ami_id }}
+          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          blockDevices:
+          - ebs:
+              iops: 0
+              volumeSize: 120
+              volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          deviceIndex: 0
+          iamInstanceProfile:
+            id: {{ cluster_id.stdout }}-worker-profile
+          instanceType: m4.4xlarge
+          kind: AWSMachineProviderConfig
+          metadata:
+            creationTimestamp: null
+          placement:
+            availabilityZone: {{ ocs_aws_region }}{{ item }}
+            region: {{ ocs_aws_region }}
+          publicIp: null
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ cluster_id.stdout }}-worker-sg
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - {{ cluster_id.stdout }}-private-{{ ocs_aws_region }}{{ item }}
+          tags:
+          - name: kubernetes.io/cluster/{{ cluster_id.stdout }}
+            value: owned
+          userDataSecret:
+            name: worker-user-data
+      versions:
+        kubelet: ""

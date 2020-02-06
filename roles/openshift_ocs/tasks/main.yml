@@ -1,0 +1,45 @@
+- name: Obtain cluster ID
+  command: oc get machineset -n openshift-machine-api -o jsonpath='{.items[0].metadata.labels.machine\.openshift\.io/cluster-api-cluster}'
+  changed_when: False
+  register: cluster_id
+
+- name: Add OCS machine sets to the cluster
+  k8s:
+    definition: "{{ lookup('template', 'workerocs-machineset.yml') }}"
+  with_items: '{{ ocs_availability_zones }}'
+
+- name: Waiting for {{ ocs_nodes_total }} OCS worker machines to come up
+  k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: Machine
+    namespace: openshift-machine-api
+    label_selectors:
+      - machine.openshift.io/cluster-api-machine-role=workerocs
+  register: ocs_machines
+  until: (ocs_machines.resources | length) == (ocs_nodes_total | int)
+  retries: 60
+  delay: 10
+
+- name: Waiting for {{ ocs_nodes_total }} OCS nodes to join the cluster
+  k8s_info:
+    api_version: v1
+    kind: Node
+    label_selectors:
+      - cluster.ocs.openshift.io/openshift-storage=
+  register: ocs_nodes
+  until: (ocs_nodes.resources | list | length) == (ocs_nodes_total | int)
+  retries: 60
+  delay: 10
+
+- name: Apply kustomization
+  command: oc apply --kustomize {{ item }}
+  with_items: '{{ ocs_kustomizations }}'
+
+- name: Waiting for {{ ocs_instance_name }} deployment to complete
+  k8s_info:
+    api_version: ocs.openshift.io/v1
+    kind: StorageCluster
+    namespace: '{{ ocs_instance_namespace }}'
+    name: '{{ ocs_instance_name }}'
+  register: ocs_instance
+  until: (ocs_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status

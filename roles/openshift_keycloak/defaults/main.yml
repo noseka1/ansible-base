@@ -1,1 +1,4 @@
 keycloak_namespace: keycloak
+keycloak_kustomizations:
+  - github.com/noseka1/keycloak-kustomization/keycloak-operator/base?ref=myauto
+  - github.com/noseka1/keycloak-kustomization/keycloak-instance/base?ref=myauto

@@ -1,18 +1,6 @@
-- name: Create a {{ keycloak_namespace }} project
-  k8s:
-    definition: "{{ lookup('template', 'keycloak-project.yml') }}"
-
-- name: Create OperatorGroup object
-  k8s:
-    definition: "{{ lookup('template', 'keycloak-operatorgroup.yml') }}"
-
-- name: Subscribe to Keycloak
-  k8s:
-    definition: "{{ lookup('template', 'keycloak-subscription.yml') }}"
-
-- name: Install Keycloak
-  k8s:
-    definition: "{{ lookup('template', 'keycloak-keycloak.yml') }}"
+- name: Apply kustomization
+  command: oc apply --kustomize {{ item }}
+  with_items: '{{ keycloak_kustomizations }}'
 
 - name: Wait for Keycloak to come up
   k8s_info:

@@ -40,7 +40,7 @@
     kind: ClusterServiceVersion
     namespace: '{{ ocs_instance_namespace }}'
   register: ocs_operator
-  until: (ocs_operator.resources | selectattr('status.phase', 'equalto', 'Succeeded') | list | length) == 2
+  until: (ocs_operator.resources | selectattr('status.phase', '!=', 'Succeeded') | list | length) == 0
   retries: 60
   delay: 10
 

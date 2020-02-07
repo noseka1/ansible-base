@@ -5,7 +5,7 @@ ocs_nodes_per_zone: 1
 ocs_nodes_total: '{{ (ocs_availability_zones | length) * ocs_nodes_per_zone }}'
 
 ocs_kustomizations:
-  - github.com/noseka1/ocs-kustomization/ocs-operator/base?ref=myauto
-  - github.com/noseka1/ocs-kustomization/ocs-instance/base?ref=myauto
+  operator: github.com/noseka1/ocs-kustomization/ocs-operator/base?ref=myauto
+  instance: github.com/noseka1/ocs-kustomization/ocs-instance/base?ref=myauto
 ocs_instance_namespace: openshift-storage
 ocs_instance_name: ocs-storagecluster

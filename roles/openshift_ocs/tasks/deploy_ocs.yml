@@ -1,0 +1,26 @@
+- name: Deploy ocs operator
+  command: oc apply --kustomize {{ ocs_kustomizations.operator }}
+
+- name: Waiting for ocs operator deployment to complete
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: ClusterServiceVersion
+    namespace: '{{ ocs_instance_namespace }}'
+  register: ocs_operator
+  until: (ocs_operator.resources | selectattr('status.phase', '!=', 'Succeeded') | list | length) == 0
+  retries: 60
+  delay: 10
+
+- name: Deploy ocs instance
+  command: oc apply --kustomize {{ ocs_kustomizations.instance }}
+
+- name: Waiting for {{ ocs_instance_name }} deployment to complete
+  k8s_info:
+    api_version: ocs.openshift.io/v1
+    kind: StorageCluster
+    namespace: '{{ ocs_instance_namespace }}'
+    name: '{{ ocs_instance_name }}'
+  register: ocs_instance
+  until: (ocs_instance.resources.0.status is defined) and (ocs_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

@@ -1,19 +1,29 @@
-- name: Install AWS CLI
-  script: install_aws_cli.sh
-  args:
-    chdir: /root
-    creates: /usr/bin/aws
+- name: Create cluster configuration directory
+  file: path={{ cluster_config_dir }} state=directory
+
+- name: Copy the OpenShift installer download script
+  template:
+    src: download_installer.sh
+    dest: '{{ cluster_config_dir }}'
+    mode: '0755'
   become: true
 
-- name: Download OpenShift installer
-  script: download_installer.sh
+- name: Download OpenShift installer {{ openshift_version }}
+  command: '{{ cluster_config_dir }}/download_installer.sh'
   args:
     chdir: /root
     creates: /usr/bin/openshift-install
   become: true
 
-- name: Download oc CLI tool
-  script: download_oc.sh
+- name: Copy the OpenShift CLI download script
+  template:
+    src: download_oc.sh
+    dest: '{{ cluster_config_dir }}'
+    mode: '0755'
+  become: true
+
+- name: Download oc CLI tool {{ openshift_version }}
+  command: '{{ cluster_config_dir }}/download_oc.sh'
   args:
     chdir: /root
     creates: /usr/bin/oc
@@ -24,6 +34,13 @@
   args:
     chdir: /root
     creates: /etc/bash_completion.d/openshift
+  become: true
+
+- name: Install AWS CLI
+  script: install_aws_cli.sh
+  args:
+    chdir: /root
+    creates: /usr/bin/aws
   become: true
 
 - name: Configure AWS CLI

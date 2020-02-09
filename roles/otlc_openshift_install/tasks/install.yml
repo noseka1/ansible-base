@@ -3,9 +3,6 @@
   changed_when: False
   register: ssh_public_key
 
-- name: Create cluster configuration directory
-  file: path={{ cluster_config_dir }} state=directory
-
 - name: Create install-config.yaml
   template: src=install-config.yaml dest={{ cluster_config_dir }}
 

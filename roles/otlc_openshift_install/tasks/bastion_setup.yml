@@ -1,0 +1,14 @@
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+    redhat_subscription_enable_repos:
+      - rhel-7-server-ose-4.3-rpms
+
+- name: Install rpms required by Ansible modules
+  yum:
+    name:
+      - python2-kubernetes
+      - python2-openshift
+  become: True

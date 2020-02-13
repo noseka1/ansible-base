@@ -1,4 +1,8 @@
-# requires rpm package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
   version: 4.2.3
+  # requires rpm package python3-hvac
+
+- name: devnullcake.redhat-subscription
+  src: https://github.com/noseka1/ansible-role-redhat-subscription.git
+  version: master

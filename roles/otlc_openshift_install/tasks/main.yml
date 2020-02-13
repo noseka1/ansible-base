@@ -1,3 +1,5 @@
+- include: bastion_setup.yml
+
 - include: preinstall.yml
 
 - include: install.yml

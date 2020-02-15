@@ -1,5 +1,9 @@
 - include: postinstall_kubeconfig.yml
 
+- include: postinstall_epel.yml
+
+- include: postinstall_certs.yml
+
 - include: postinstall_users.yml
 
 - include: postinstall_image_registry.yml

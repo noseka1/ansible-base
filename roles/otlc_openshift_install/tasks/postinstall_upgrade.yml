@@ -1,0 +1,14 @@
+- name: Check the upgrade_complete timestamp
+  stat:
+    path: '{{ cluster_config_dir }}/upgrade_complete'
+  register: upgrade_complete
+
+- name: Update the cluster to the latest version
+  command: oc adm upgrade --to={{ openshift_upgrade_to_version }}
+  when: not upgrade_complete.stat.exists
+
+- name: Create the timestamp
+  file:
+    path: '{{ cluster_config_dir }}/upgrade_complete'
+    state: touch
+  when: not upgrade_complete.stat.exists

@@ -39,7 +39,7 @@
   debug:
     var: ocs_node_names
 
-- name: Reserve the nodes for OCS pods only
-  command: oc adm taint nodes {{ item }} node.ocs.openshift.io/storage=true:NoSchedule
-  when: ((ocs_nodes.resources | selectattr('metadata.name', 'equalto', item) | first).spec.taints | default([]) | selectattr('key', 'equalto', 'node.ocs.openshift.io/storage') | first) is not defined
-  with_items: '{{ ocs_node_names }}'
+#- name: Reserve the nodes for OCS pods only
+#  command: oc adm taint nodes {{ item }} node.ocs.openshift.io/storage=true:NoSchedule
+#  when: ((ocs_nodes.resources | selectattr('metadata.name', 'equalto', item) | first).spec.taints | default([]) | selectattr('key', 'equalto', 'node.ocs.openshift.io/storage') | first) is not defined
+#  with_items: '{{ ocs_node_names }}'

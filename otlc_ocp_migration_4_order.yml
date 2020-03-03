@@ -1,0 +1,13 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: otlc_generic_order
+      vars:
+        otlc_service_catalog_id: '20000000000040'
+        otlc_service_catalog_name: 'OPENTLC OpenShift 4 Labs'
+        otlc_service_template_id: '20000000000652'
+        otlc_service_template_name: 'OCP Migration Lab - OCP 4 Cluster'
+        otlc_service_options:
+          dialog_check: t

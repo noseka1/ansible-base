@@ -24,3 +24,16 @@
   until: (ocs_instance.resources.0.status is defined) and (ocs_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 60
   delay: 10
+
+- name: Deploy rook-ceph-tools
+  command: oc apply --kustomize {{ ocs_kustomizations.tools }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for rook-ceph-tools deployment to complete
+  k8s_info:
+    api_version: extensions/v1beta1
+    kind: Deployment
+    namespace: '{{ ocs_instance_namespace }}'
+  register: rook_ceph_tools
+  until: (rook_ceph_tools.resources.0.status is defined) and (rook_ceph_tools.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

@@ -33,7 +33,7 @@
     namespace: '{{ argocd_namespace }}'
   register: argocd_route
 
-- name: Waiting for Argo CD to come up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo CD to come up
   uri:
     url: 'https://{{ argocd_route.resources.0.spec.host }}/api/v1/session'
     method: POST

@@ -14,7 +14,7 @@
   set_fact:
     vault_addr: 'https://{{ vault_route.resources.0.spec.host }}'
 
-- name: Waiting for vault to come up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
   uri:
     url: '{{ vault_addr }}/v1/sys/health'
     method: GET

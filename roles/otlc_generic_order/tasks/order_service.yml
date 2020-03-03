@@ -26,7 +26,7 @@
 
 - debug: msg='Request URL is {{ opentlc_order.json.results.0.href }}'
 
-- name: Waiting for the lab provisioning to complete
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the lab provisioning to complete
   uri:
     url: '{{ opentlc_order.json.results.0.href }}'
     user: '{{ otlc_username }}'

@@ -1,0 +1,3 @@
+docker_registry_namespace: docker-registry
+docker_registry_kustomizations:
+  - github.com/noseka1/docker-registry-kustomization/docker-registry/base?ref=master

@@ -1,0 +1,31 @@
+- name: Apply kustomization
+  command: oc apply --kustomize {{ item }}
+  with_items: '{{ docker_registry_kustomizations }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry deployment to complete
+  k8s_info:
+    api_version: extensions/v1beta1
+    kind: Deployment
+    namespace: '{{ docker_registry_namespace }}'
+  register: docker_registry_deployment
+  until: (docker_registry_deployment.resources.0.status is defined) and (docker_registry_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Obtain Docker registry route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: docker-registry
+    namespace: '{{ docker_registry_namespace }}'
+  register: docker_registry_route
+
+- set_fact:
+    msg: |
+      Docker registry installed successfully.
+
+      Docker registry URL: https://{{ docker_registry_route.resources.0.spec.host }}
+
+      See {{ docker_registry_kustomizations.0 }} for credentials.
+
+- debug: msg="{{ msg.split('\n') }}"

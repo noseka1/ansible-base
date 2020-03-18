@@ -36,5 +36,5 @@
   register: result
   ignore_errors: True
   until: result.json.request_state == 'finished'
-  retries: 60
+  retries: 120
   delay: 10

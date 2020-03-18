@@ -1,5 +1,5 @@
 - fail:
     msg: >
-      Lab failed to provision on time. Go to https://labs.opentlc.com, Services/My Services and delete the service. After the service
-      has been deleted you can start a new deployment.
+      Lab failed to provision on time. You can either wait some more or delete the service and start over. In oder to delete the service:
+      Go to https://labs.opentlc.com, Services/My Services and delete the service. After the service has been deleted you can start a new deployment.
   when: (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "service_status") | first).value  != 'complete'

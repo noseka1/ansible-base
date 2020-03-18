@@ -3,7 +3,7 @@
 
   tasks:
     - include_role:
-        name: otlc_openshift_order
+        name: otlc_ocp4_installation_order
 
     - name: Add bastion host to the inventory
       add_host:
@@ -21,4 +21,4 @@
         key: '{{ lookup("file", "~/.ssh/id_rsa.pub") }}'
 
     - include_role:
-        name: otlc_openshift_install
+        name: otlc_ocp4_installation_install

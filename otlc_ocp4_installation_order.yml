@@ -3,4 +3,4 @@
   gather_facts: no
   tasks:
     - import_role:
-        name: otlc_openshift_order
+        name: otlc_ocp4_installation_order

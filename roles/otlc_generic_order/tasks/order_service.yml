@@ -5,7 +5,7 @@
 
 - name: Add additional request options
   set_fact:
-    request_options: '{{ request_options | combine(otlc_service_options) }}'
+    request_options: '{{ request_options | combine(otlc_service_options | default({})) }}'
 
 - name: Show request options
   debug:

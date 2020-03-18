@@ -9,5 +9,3 @@
         otlc_service_catalog_name: 'OPENTLC OpenShift 4 Labs'
         otlc_service_template_id: '20000000000491'
         otlc_service_template_name: 'OpenShift Client VM'
-        #otlc_service_options: {}
-        #          dialog_check: t

@@ -3,6 +3,6 @@
   gather_facts: no
   tasks:
     - import_role:
-        name: otlc_generic_order
+        name: otlc_generic_delete
       vars:
-        otlc_service_desc: '{{ otlc_labs.rhev }}'
+        otlc_service_desc: '{{ otlc_labs.ocp4_clientvm }}'

@@ -1,0 +1,88 @@
+# Discover catalog and template IDs at:
+# https://labs.opentlc.com/api/service_catalogs?expand=resources
+# https://labs.opentlc.com/api/service_templates?expand=resources
+
+otlc_labs:
+  ocp3_migration:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000653'
+    template_name: 'OCP Migration Lab - OCP 3 Cluster'
+    order_options:
+      dialog_expiration: "7"
+      dialog_nodes: "3"
+      dialog_ocprelease: 3.11.43
+      dialog_region: na
+      dialog_runtime: "8"
+
+  ocp4_migration:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000652'
+    template_name: 'OCP Migration Lab - OCP 4 Cluster'
+    order_options:
+      dialog_check: t
+      dialog_expiration: "7"
+      dialog_region: na_sandboxes_gpte
+      dialog_runtime: "10"
+
+  ocp4_clientvm:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000610'
+    template_name: 'OpenShift 4 Client VM'
+    order_options:
+      dialog_expiration: "7"
+      dialog_ocprelease: "4.3.0"
+      dialog_region: na
+      dialog_runtime: "8"
+
+  ocp4_shared_access:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000607'
+    template_name: 'OPENTLC OpenShift 4 Shared Access'
+    order_options:
+      dialog_check: t
+      dialog_expiration: "7"
+      dialog_runtime: "8"
+
+  ocp4_installation:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000619'
+    template_name: 'OpenShift 4 Installation Lab'
+    order_options:
+      dialog_expiration: "6"
+      dialog_region: na_sandboxes_gpte
+      dialog_runtime: "8"
+
+  rhel7_implementation:
+    catalog_id: '20000000000001'
+    catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
+    template_id: '20000000000057'
+    template_name: 'RHEL 7 Implementation Lab'
+    order_options:
+      dialog_expiration: "7"
+      dialog_runtime: "4"
+      dialog_check: t
+
+  rhel8_beta:
+    catalog_id: '20000000000001'
+    catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
+    template_id: '20000000000521'
+    template_name: 'RHEL 8.0 Beta Evaluation'
+    order_options:
+      dialog_expiration: "7"
+      dialog_runtime: "8"
+      dialog_check: t
+
+  rhev:
+    catalog_id: '20000000000001'
+    catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
+    template_id: '20000000000290'
+    template_name: 'RHV 4.0 Foundations Lab'
+    order_options:
+      dialog_check: t
+      dialog_expiration: "7"
+      dialog_runtime: "4"

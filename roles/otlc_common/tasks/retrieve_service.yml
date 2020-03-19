@@ -5,7 +5,11 @@
     password: '{{ otlc_password }}'
     method: GET
     status_code: 200
-  register: otlc_services
+  register: otlc_services_provisioned
 
 - set_fact:
-    otlc_service: '{{ otlc_services.json.resources | selectattr("service_template_id", "equalto", otlc_service_template_id) | list }}'
+    otlc_service: '{{ otlc_services_provisioned.json.resources | selectattr("service_template_id", "equalto", otlc_service_desc.template_id) | list }}'
+
+- name: Show service
+  debug:
+    var: otlc_service

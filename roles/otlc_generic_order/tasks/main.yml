@@ -1,4 +1,6 @@
-- import_tasks: retrieve_service.yml
+- import_role:
+    name: otlc_common
+    tasks_from: retrieve_service.yml
 
 - set_fact:
     send_order: '{{  otlc_service | length  == 0 }}'
@@ -10,4 +12,4 @@
   when: send_order
 
 - import_tasks: retrieve_service_attributes.yml
-- import_tasks: check_service.yml
+- import_tasks: check_service_health.yml

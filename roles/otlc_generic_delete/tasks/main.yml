@@ -1,0 +1,10 @@
+- import_role:
+    name: otlc_common
+    tasks_from: retrieve_service.yml
+
+- fail:
+    msg: Service {{ otlc_service_desc.template_name }} is not provisioned
+  when: otlc_service | length  == 0
+
+- name: Delete service
+  import_tasks: delete_service.yml

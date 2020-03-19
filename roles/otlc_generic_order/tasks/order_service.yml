@@ -1,19 +1,19 @@
 - name: Prepare request options
   set_fact:
     request_options:
-      href: '/api/service_templates/{{ otlc_service_template_id }}'
+      href: '/api/service_templates/{{ otlc_service_desc.template_id }}'
 
 - name: Add additional request options
   set_fact:
-    request_options: '{{ request_options | combine(otlc_service_options | default({})) }}'
+    request_options: '{{ request_options | combine(otlc_service_desc.order_options | default({})) }}'
 
 - name: Show request options
   debug:
     var: request_options
 
-- name: Ordering {{ otlc_service_template_name }} from the catalog {{ otlc_service_catalog_name }}
+- name: Ordering {{ otlc_service_desc.template_name }} from the catalog {{ otlc_service_desc.catalog_name }}
   uri:
-    url: 'https://labs.opentlc.com/api/service_catalogs/{{ otlc_service_catalog_id }}/service_templates'
+    url: 'https://labs.opentlc.com/api/service_catalogs/{{ otlc_service_desc.catalog_id }}/service_templates'
     user: '{{ otlc_username }}'
     password: '{{ otlc_password }}'
     method: POST

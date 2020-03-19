@@ -5,4 +5,4 @@
     - import_role:
         name: otlc_generic_order
       vars:
-        otlc_service_desc: '{{ otlc_labs.rhev }}'
+        otlc_service_desc: '{{ otlc_labs.rhel8_beta }}'

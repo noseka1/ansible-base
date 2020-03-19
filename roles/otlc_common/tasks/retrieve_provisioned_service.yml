@@ -1,0 +1,8 @@
+- import_tasks: retrieve_provisioned_services.yml
+
+- set_fact:
+    otlc_service: '{{ otlc_services_provisioned.json.resources | selectattr("service_template_id", "equalto", otlc_service_desc.template_id) | list }}'
+
+- name: Show service
+  debug:
+    var: otlc_service

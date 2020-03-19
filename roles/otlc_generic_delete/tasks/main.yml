@@ -1,6 +1,6 @@
 - import_role:
     name: otlc_common
-    tasks_from: retrieve_service.yml
+    tasks_from: retrieve_provisioned_service.yml
 
 - fail:
     msg: Service {{ otlc_service_desc.template_name }} is not provisioned

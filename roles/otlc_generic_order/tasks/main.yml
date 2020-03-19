@@ -1,13 +1,15 @@
 - import_role:
     name: otlc_common
-    tasks_from: retrieve_service.yml
+    tasks_from: retrieve_provisioned_service.yml
 
 - set_fact:
     send_order: '{{  otlc_service | length  == 0 }}'
 
 - block:
     - include_tasks: order_service.yml
-    - include_tasks: retrieve_service.yml
+    - include_role:
+        name: otlc_common
+        tasks_from: retrieve_provisioned_service.yml
     - include_tasks: extend_service.yml
   when: send_order
 

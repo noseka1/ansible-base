@@ -1,0 +1,10 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: otlc_common
+        tasks_from: retrieve_provisioned_services.yml
+    - name: Show provisioned services
+      debug:
+        var: otlc_services_provisioned.json.resources

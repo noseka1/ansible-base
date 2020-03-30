@@ -44,7 +44,9 @@ otlc_labs:
     template_name: 'OPENTLC OpenShift 4 Shared Access'
     order_options:
       dialog_check: t
+      dialog_environment: PROD
       dialog_expiration: "7"
+      dialog_region: na_opentlc
       dialog_runtime: "8"
 
   ocp4_installation:

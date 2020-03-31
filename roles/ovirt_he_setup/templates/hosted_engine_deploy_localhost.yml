@@ -1,0 +1,5 @@
+- name: Deploy oVirt hosted engine
+  hosts: localhost
+  connection: local
+  roles:
+    - role: ovirt.hosted_engine_setup

@@ -11,7 +11,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vCSA installation to complete
   command: >
-    {{ vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
+    {{ vsphere_lab.vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
       install
       --accept-eula
       --acknowledge-ceip

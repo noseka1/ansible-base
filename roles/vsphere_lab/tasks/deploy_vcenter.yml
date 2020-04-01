@@ -1,0 +1,25 @@
+- name: Create temporary directory
+  tempfile:
+    state: directory
+    suffix: -vcsa
+  register: tmpdir
+
+- name: Copy install config to {{ tmpdir.path }}
+  template:
+    src: embedded_vCSA_on_ESXi.json
+    dest: '{{ tmpdir.path }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for vCSA installation to complete
+  command: >
+    {{ vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
+      install
+      --accept-eula
+      --acknowledge-ceip
+      --log-dir {{ tmpdir.path }}
+      --no-ssl-certificate-verification
+      {{ tmpdir.path }}/embedded_vCSA_on_ESXi.json
+
+- name: Delete temporary directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

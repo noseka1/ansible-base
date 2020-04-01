@@ -1,0 +1,12 @@
+vsphere_lab:
+  vcsa_iso_mount_path: /mnt/vcsa
+  esxi_hostname: esxi.lab.example.com
+  esxi_username: root
+  esxi_password: '{{ generic_user_password }}'
+  vcsa_vm:
+    name: Embedded-vCenter-Server-Appliance
+    memory: 6144
+    macaddr: '00:50:56:11:22:19'
+  vsphere_hostname: photon-machine.lab.example.com
+  vsphere_username: administrator@mysso.com
+  vsphere_password: '{{ generic_user_password }}'

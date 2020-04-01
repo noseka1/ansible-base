@@ -1,0 +1,64 @@
+- name: Power off vCSA
+  vmware_guest:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    validate_certs: False
+    state: poweredoff
+
+- name: Change memory size to {{ vsphere_lab.vcsa_vm.memory }}
+  vmware_guest:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    validate_certs: False
+    hardware:
+      memory_mb: '{{ vsphere_lab.vcsa_vm.memory }}'
+
+- name: Gather network info about {{ vsphere_lab.vcsa_vm.name }}
+  vmware_guest_network:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    datacenter: ha-datacenter
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    gather_network_info: True
+    validate_certs: False
+  register: vcsa_network_info
+
+- name: Remove the network interface from the {{ vsphere_lab.vcsa_vm.name }}
+  vmware_guest_network:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    datacenter: ha-datacenter
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    networks:
+      - label: '{{ vcsa_network_info.network_data["0"].label }}'
+        state: absent
+    validate_certs: False
+  when: vcsa_network_info.network_data["0"] is defined
+
+- name: Add network interface to the {{ vsphere_lab.vcsa_vm.name }} with well-known MAC address {{ vsphere_lab.vcsa_vm.macaddr }}
+  vmware_guest_network:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    datacenter: ha-datacenter
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    networks:
+      - name: VM Network
+        manual_mac: '{{ vsphere_lab.vcsa_vm.macaddr }}'
+        state: new
+    validate_certs: False
+
+- name: Power vCSA back on
+  vmware_guest:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    validate_certs: False
+    state: poweredon

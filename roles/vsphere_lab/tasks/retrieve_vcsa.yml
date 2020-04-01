@@ -1,0 +1,10 @@
+- name: Retrieve vCSA virtual machine
+  vmware_guest_info:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    datacenter: ha-datacenter
+    validate_certs: False
+  ignore_errors: True
+  register: vcsa_vm

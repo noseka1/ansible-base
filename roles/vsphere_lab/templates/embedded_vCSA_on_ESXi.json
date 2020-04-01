@@ -19,7 +19,14 @@
         },
         "network": {
             "ip_family": "ipv4",
-            "mode": "dhcp"
+            "mode": "static",
+            "ip": "{{ vsphere_lab.vcsa_vm.static_network.ip }}",
+            "dns_servers": [
+                "{{ vsphere_lab.vcsa_vm.static_network.dns }}"
+            ],
+            "prefix": "{{ vsphere_lab.vcsa_vm.static_network.prefix }}",
+            "gateway": "{{ vsphere_lab.vcsa_vm.static_network.gateway }}",
+            "system_name": "{{ vsphere_lab.vcsa_vm.static_network.system_name }}"
         },
         "os": {
             "password": "{{ vsphere_lab.vsphere_password }}",

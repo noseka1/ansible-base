@@ -12,5 +12,8 @@
   import_tasks: reconfigure_vcsa.yml
   when: vcsa_vm.instance.hw_memtotal_mb != vsphere_lab.vcsa_vm.memory or vcsa_vm.instance.hw_eth0.macaddress != vsphere_lab.vcsa_vm.macaddr
 
+- name: Add network
+  import_tasks: add_network.yml
+
 - name: Create datacenter
   import_tasks: create_datacenter.yml

@@ -1,0 +1,18 @@
+- name: Add a VMware vSwitch
+  vmware_vswitch:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    switch: OpenShift
+    nics: vmnic1
+    validate_certs: False
+
+- name: Create portgroup
+  vmware_portgroup:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    switch_name: OpenShift
+    portgroup_name: OpenShift Network
+    validate_certs: False

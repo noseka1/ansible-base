@@ -1,3 +1,5 @@
+# Run this playbook using:
+# ansible-playbook -i inventory/localhost.ini -e ansible_python_interpreter=/usr/bin/python2 rhev_lab_network.yml
 - hosts: localhost
   connection: local
   gather_facts: no

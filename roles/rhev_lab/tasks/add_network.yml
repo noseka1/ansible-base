@@ -1,0 +1,30 @@
+- block:
+    - name: Log in to '{{ rhev_lab.ovirt_url }}'
+      ovirt_auth:
+        url: '{{ rhev_lab.ovirt_url }}'
+        username: '{{ rhev_lab.ovirt_username }}'
+        password: '{{ rhev_lab.ovirt_password }}'
+        insecure: True
+
+    - name: Create network
+      ovirt_network:
+        auth: '{{ ovirt_auth }}'
+        data_center: Default
+        clusters:
+          - name: Default
+        name: openshift
+        vm_network: true
+
+    - name: Attach network to host
+      ovirt_host_network:
+        auth: '{{ ovirt_auth }}'
+        name: rhvh.lab.example.com
+        interface: eth1
+        networks:
+          - name: openshift
+
+  always:
+    - name: Always revoke the SSO token, log out from '{{ rhev_lab.ovirt_url }}'
+      ovirt_auth:
+        state: absent
+        ovirt_auth: '{{ ovirt_auth }}'

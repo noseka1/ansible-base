@@ -1,6 +1,6 @@
-he_bridge_if: eth0
-he_fqdn: engine.lab.example.com
-he_vm_mac_addr: 00:a5:3f:66:ba:12
-he_domain_type: nfs
-he_storage_domain_addr: 192.168.122.1
-he_storage_domain_path: /exports/rhev
+he_bridge_if: '{{ rhev_lab.hosted_engine.bridge_if }}'
+he_fqdn: '{{ rhev_lab.hosted_engine.fqdn }}'
+he_vm_mac_addr: '{{ rhev_lab.hosted_engine.vm_mac_addr }}'
+he_domain_type: '{{ rhev_lab.hosted_engine.domain_type }}'
+he_storage_domain_addr: '{{ rhev_lab.hosted_engine.storage_domain_addr }}'
+he_storage_domain_path: '{{ rhev_lab.hosted_engine.storage_domain_path }}'

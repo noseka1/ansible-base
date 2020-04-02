@@ -13,6 +13,7 @@
         clusters:
           - name: Default
         name: openshift
+        description: OpenShift Network
         vm_network: true
 
     - name: Attach network to host

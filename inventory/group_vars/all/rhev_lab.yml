@@ -1,6 +1,7 @@
 rhev_lab:
   hosted_engine:
     fqdn: engine.lab.example.com
+    memory: 4096
     bridge_if: eth0
     vm_mac_addr: 00:a5:3f:66:ba:12
     domain_type: nfs

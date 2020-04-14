@@ -1,5 +1,5 @@
-openshift_version: 4.3.10
-openshift_upgrade_to_version: 4.3.10
+openshift_version: 4.3.12
+openshift_upgrade_to_version: 4.3.12
 aws_region: us-west-2
 cluster_config_dir: '{{ ansible_env["HOME"] }}/cluster-{{ otlc_service_info.guid }}'
 

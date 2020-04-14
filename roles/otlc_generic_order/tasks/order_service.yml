@@ -35,6 +35,6 @@
     status_code: 200
   register: result
   ignore_errors: True
-  until: result.json.request_state == 'finished'
+  until: result.json is defined and result.json.request_state == 'finished'
   retries: 120
   delay: 10

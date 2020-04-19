@@ -3,4 +3,4 @@
     name: '*'
     state: latest
   when: ansible_distribution in [ "RedHat", "Fedora" ]
-	become: True
+  become: True

@@ -18,3 +18,5 @@
 - include: enable_core_dump.yml
 
 - include: install_tools.yml
+
+- include: update_all_packages.yml

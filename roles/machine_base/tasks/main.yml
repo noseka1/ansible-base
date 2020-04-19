@@ -5,6 +5,8 @@
 
 - include: configure_sudo.yml
 
+- include: set_ssh_authorized_keys.yml
+
 - include: generate_ssh_keys.yml
 
 - include: configure_ntp.yml

@@ -1,0 +1,10 @@
+- name: Set authorized key for user root
+  authorized_key:
+    user: root
+    key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
+  become: True
+
+- name: Set authorized key for user {{ ansible_user_id }}
+  authorized_key:
+    user: '{{ ansible_user_id }}'
+    key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'

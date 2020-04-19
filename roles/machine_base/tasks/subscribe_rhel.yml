@@ -1,0 +1,18 @@
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+    redhat_subscription_enable_repos:
+      - rhel-7-server-optional-rpms
+      - rhel-7-server-extras-rpms
+    redhat_subscription_disable_repos:
+      - rhel-7-server-htb-rpms
+  when: ansible_distribution_major_version | int <= 7
+
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+  when: ansible_distribution_major_version | int >= 8

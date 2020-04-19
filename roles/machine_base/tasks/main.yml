@@ -1,3 +1,6 @@
+- include: subscribe_rhel.yml
+  when: ansible_distribution == "RedHat"
+
 - include: disable_password_expiration.yml
 
 - include: configure_sudo.yml

@@ -1,0 +1,5 @@
+- hosts: all
+  tasks:
+    - include_role:
+        name: machine_base
+      tags: machine_base

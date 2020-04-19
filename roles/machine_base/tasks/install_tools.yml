@@ -1,0 +1,61 @@
+- name: Install tools
+  yum:
+    name:
+      - bind-utils # dig, host
+      - gdb
+      - git
+      - lsof
+      - mc
+      - patch
+      - strace
+      - tcpdump
+      - vim
+      - setroubleshoot-server # sealert
+      - setools-console # sesearch
+    state: present
+  when: ansible_distribution in [ "RedHat", "Fedora" ]
+  become: True
+
+- name: Install tools RHEL7
+  yum:
+    name:
+      - policycoreutils-python # semanage
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 7
+  become: True
+
+- name: Install tools RHEL8
+  yum:
+    name:
+      - policycoreutils-python-utils # semanage
+      - highlight
+      - iotop
+      - tmux
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 8
+  become: True
+
+- name: Install tools Fedora
+  yum:
+    name:
+      - colordiff
+      - highlight
+      - htop
+      - iotop
+      - ngrep
+      - ranger
+      - tig
+      - tmux
+    state: present
+  when: ansible_distribution == "Fedora"
+  become: True
+
+- name: Install tools used by ranger
+  yum:
+    name:
+      - atool
+      - highlight
+      - unoconv
+      - mediainfo
+  when: ansible_distribution == "Fedora"
+  become: True

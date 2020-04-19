@@ -1,0 +1,25 @@
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+  become: True
+
+- name: Workaround for installing containerd.io, https://bugzilla.redhat.com/show_bug.cgi?id=1756473
+  ini_file:
+    dest: /etc/yum.repos.d/docer-ce.repo
+    section: docker-ce-stable
+    option: module_hotfixes
+    value: "True"
+  become: True
+
+- name: Install Docker
+  package:
+    name: docker-ce
+  become: True
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: True
+  become: True

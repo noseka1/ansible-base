@@ -10,6 +10,7 @@
       - strace
       - tcpdump
       - vim
+      - wget
       - setroubleshoot-server # sealert
       - setools-console # sesearch
     state: present

@@ -1,0 +1,16 @@
+- name: Install SSH host keys
+  copy:
+    content: '{{ item.content }}'
+    dest: '{{ item.dest }}'
+    group: '{{ item.group }}'
+    mode: '{{ item.mode }}'
+  with_items:
+    - { dest: /etc/ssh/ssh_host_ecdsa_key,       content: '{{ ssh_host_keys.ssh_host_ecdsa_key }}',       group: ssh_keys, mode: '0640' }
+    - { dest: /etc/ssh/ssh_host_ecdsa_key.pub,   content: '{{ ssh_host_keys.ssh_host_ecdsa_key_pub }}',   group: root,     mode: '0644' }
+    - { dest: /etc/ssh/ssh_host_ed25519_key,     content: '{{ ssh_host_keys.ssh_host_ed25519_key }}',     group: ssh_keys, mode: '0640' }
+    - { dest: /etc/ssh/ssh_host_ed25519_key.pub, content: '{{ ssh_host_keys.ssh_host_ed25519_key_pub }}', group: root,     mode: '0644' }
+    - { dest: /etc/ssh/ssh_host_rsa_key,         content: '{{ ssh_host_keys.ssh_host_rsa_key }}',         group: ssh_keys, mode: '0640' }
+    - { dest: /etc/ssh/ssh_host_rsa_key.pub,     content: '{{ ssh_host_keys.ssh_host_rsa_key_pub }}',     group: root,     mode: '0644' }
+  loop_control:
+    label: '{{ item.dest }}'
+  become: True

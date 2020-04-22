@@ -1,0 +1,4 @@
+cloud_init_modifications:
+  disable_root: 0
+  ssh_pwauth:   1
+  datasource_list: [ None ]

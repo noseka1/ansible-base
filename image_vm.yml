@@ -1,0 +1,14 @@
+- name: Configure virtual machine image
+  hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: Add a chroot host
+    add_host:
+      hostname: '{{ chroot_location }}'
+      ansible_ssh_host: '{{ chroot_location }}'
+
+- hosts: '{{ chroot_location }}'
+  connection: chroot
+  gather_facts: False
+  roles:
+    - image_vm

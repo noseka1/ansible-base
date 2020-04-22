@@ -1,0 +1,70 @@
+- name: Set root password
+  user:
+    name: root
+    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+  become: True
+
+- name: Configure users
+  user:
+    name: '{{ item }}'
+    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+    groups:
+      - wheel
+  with_items:
+    - ansible
+    - developer
+  become: True
+
+- name: Set authorized key for users
+  authorized_key:
+    user: '{{ item }}'
+    key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
+  with_items:
+    - root
+    - ansible
+    - developer
+  become: True
+
+- name: Set UseDNS to no in sshd config
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^UseDNS'
+    line: UseDNS no
+  become: True
+
+- name: Allow sudo without password
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  become: True
+
+- name: Fetch cloud-init configuration
+  slurp:
+    path: /etc/cloud/cloud.cfg
+  register: cloud_cfg
+
+- name: Extract the data
+  set_fact:
+    cloud_cfg: '{{ cloud_cfg.content | b64decode | from_yaml }}'
+
+- name: Modify cloud-init configuration
+  set_fact:
+    cloud_cfg: '{{ cloud_cfg | combine(cloud_init_modifications) }}'
+
+- name: Write cloud-init configuration back
+  copy:
+    content: '{{ cloud_cfg | to_nice_yaml }}'
+    dest: /etc/cloud/cloud.cfg
+  become: True
+
+- name: Install SSH host keys
+  import_tasks: install_ssh_host_keys.yml
+
+- name: Fix SELinux label on first boot
+  copy:
+    dest: /.autorelabel
+    content: ''
+    force: False
+  become: True

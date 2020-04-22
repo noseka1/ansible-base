@@ -59,6 +59,12 @@
     dest: /etc/cloud/cloud.cfg
   become: True
 
+- name: Make cloud-init run on RHEL7
+  copy:
+    src: ds-identify.cfg
+    dest: /etc/cloud/ds-identify.cfg
+  become: True
+
 - name: Install SSH host keys
   import_tasks: install_ssh_host_keys.yml
 

@@ -1,0 +1,26 @@
+- name: Install containerd
+  yum:
+    name: containerd.io
+  become: True
+
+- name: Generate default configuration
+  command: containerd config default
+  changed_when: False
+  register: containerd_config
+
+- set_fact:
+    containerd_config: '{{ containerd_config.stdout | regex_replace("systemd_cgroup = false", "systemd_cgroup = true") }}'
+
+- name: Create containerd configuration file
+  copy:
+    content: '{{ containerd_config }}'
+    dest: /etc/containerd/config.toml
+  notify: Restart containerd
+  become: True
+
+- name: Start containerd service
+  service:
+    name: containerd
+    state: started
+    enabled: True
+  become: True

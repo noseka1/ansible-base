@@ -1,0 +1,17 @@
+- hosts:
+    - kubernetes
+  tasks:
+    - import_role:
+        name: machine_base
+      tags: machine_base
+
+    - import_role:
+        name: machine_docker
+      tags: machine_docker
+
+- hosts:
+    - kubernetes
+  tasks:
+    - import_role:
+        name: kube_lab
+      tags: kube_lab

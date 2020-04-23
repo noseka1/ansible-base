@@ -1,0 +1,24 @@
+- name: Copy over the kubeadm master configuration
+  template:
+    src: kubeadm_master_config.yml
+    dest: '{{ kubeadm_config_dir }}'
+
+- name: Install Kubernetes master
+  command: kubeadm init --config {{ kubeadm_config_dir }}/kubeadm_master_config.yml
+  args:
+    creates: /etc/kubernetes/kubelet.conf
+  register: kubeadm
+  become: True
+
+- debug: var=kubeadm.stdout_lines
+  when: kubeadm is changed
+
+- name: Ensure that the /root/.kube directory exists
+  file: dest=/root/.kube state=directory mode=0755
+  become: True
+
+- name: Copy Kubernetes admin credentials
+  command: cp /etc/kubernetes/admin.conf /root/.kube/config
+  args:
+    creates: /root/.kube/config
+  become: True

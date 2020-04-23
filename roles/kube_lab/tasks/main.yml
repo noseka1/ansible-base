@@ -1,0 +1,17 @@
+- name: Include configuration common to both Kubernetes master and nodes
+  include: common.yml
+
+- name: Install Kubernetes master
+  include: install_master.yml
+  when: "'kubernetes_master' in group_names"
+  tags: install_master
+
+- name: Install Kubernetes add-ons
+  include: install_addons.yml
+  when: inventory_hostname == hostvars[groups['kubernetes_master'][0]]['inventory_hostname']
+  tags: install_addons
+
+- name: Install Kubernetes workers
+  include: install_worker.yml
+  when: "'kubernetes_worker' in group_names"
+  tags: install_worker

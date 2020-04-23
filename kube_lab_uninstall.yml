@@ -1,0 +1,13 @@
+- hosts:
+    - kubernetes
+  tasks:
+    - name: Uninstall the Kubernetes cluster
+      command: kubeadm reset
+      become: True
+
+- hosts:
+    - kubernetes_master
+  tasks:
+    - name: Remove the kubectl credentials
+      file: dest=/root/.kube state=absent
+      become: True

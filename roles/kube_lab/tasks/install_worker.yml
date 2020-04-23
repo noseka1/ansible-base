@@ -1,0 +1,14 @@
+- name: Copy over the kubeadm node configuration
+  template:
+    src: kubeadm_worker_config.yml
+    dest: '{{ kubeadm_config_dir }}'
+
+- name: Join the Kubernetes cluster
+  command: kubeadm join --config {{ kubeadm_config_dir }}/kubeadm_worker_config.yml
+  args:
+    creates: /etc/kubernetes/kubelet.conf
+  register: kubeadm
+  become: True
+
+- debug: var=kubeadm.stdout_lines
+  when: kubeadm is changed

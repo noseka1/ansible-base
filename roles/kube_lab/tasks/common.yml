@@ -1,0 +1,63 @@
+- name: Load required kernel modules
+  modprobe:
+    name: '{{ item }}'
+  with_items:
+    - br_netfilter
+    - overlay
+    - ip_tables
+  become: True
+
+- name: Setup required sysctl params
+  sysctl: name={{ item.key }} value={{ item.value }} reload=yes
+  with_items:
+    - { key: net.bridge.bridge-nf-call-iptables,  value: 1 }
+    - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }
+    - { key: net.ipv4.ip_forward,                 value: 1 }
+  become: True
+
+- name: Put SELinux in permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+  become: True
+
+- name: Add Kubernetes Yum repository
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+    mode: '0644'
+  become: True
+
+- name: Install Kubernetes bootstrap packages
+  yum:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    disable_excludes: kubernetes
+  become: True
+
+- name: Ensure the kubelet services is enabled and started
+  service:
+    name: '{{ item }}'
+    state: started
+    enabled: True
+  with_items:
+    - kubelet
+  become: True
+
+- name: Create a kubeadm config directory
+  file:
+    dest: '{{ kubeadm_config_dir }}'
+    state: directory
+    mode: '0755'
+
+- name: Install further required packages
+  yum:
+    name: iproute-tc
+  become: True
+
+- name: Verify that containerd is running
+  command: crictl --runtime-endpoint unix:///run/containerd/containerd.sock info
+  changed_when: False
+  become: True

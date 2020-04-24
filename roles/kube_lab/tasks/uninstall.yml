@@ -1,0 +1,15 @@
+- name: Uninstall the Kubernetes cluster
+  command: kubeadm reset --force --cri-socket {{ kubeadm_config.crisocket }}
+  register: kubeadm_output
+  become: True
+
+- name: Display output of kubeadm reset
+  debug:
+    var: kubeadm_output.stdout_lines
+
+- name: Remove the kubectl credentials
+  file:
+    dest: /root/.kube
+    state: absent
+  when: "'kubernetes_master' in group_names"
+  become: True

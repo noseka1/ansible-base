@@ -37,3 +37,7 @@ networking:
   serviceSubnet: 10.96.0.0/12
   podSubnet: '{{ kubeadm_config.pod_network_cidr }}'
 scheduler: {}
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd

@@ -4,13 +4,17 @@
       - conmon
       - cri-o
       - oci-systemd-hook
+      - runc
     enablerepo: rhocp-4.3-for-rhel-8-x86_64-rpms
   become: True
 
-- name: Fix the missing directory
-  file:
-    dest: /usr/libexec/crio/conmon
-    state: directory
+- name:
+  ini_file:
+    dest: /etc/crio/crio.conf
+    section: crio.runtime
+    option: conmon
+    value: '"/usr/bin/conmon"'
+  notify: Restart crio
   become: True
 
 - name: Start crio service

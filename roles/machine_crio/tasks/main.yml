@@ -1,0 +1,21 @@
+- name: Install the cri-o container runtime
+  yum:
+    name:
+      - conmon
+      - cri-o
+      - oci-systemd-hook
+    enablerepo: rhocp-4.3-for-rhel-8-x86_64-rpms
+  become: True
+
+- name: Fix the missing directory
+  file:
+    dest: /usr/libexec/crio/conmon
+    state: directory
+  become: True
+
+- name: Start crio service
+  service:
+    name: crio
+    state: started
+    enabled: True
+  become: True

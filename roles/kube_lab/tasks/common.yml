@@ -57,7 +57,7 @@
     name: iproute-tc
   become: True
 
-- name: Verify that containerd is running
-  command: crictl --runtime-endpoint unix:///run/containerd/containerd.sock info
+- name: Verify that container runtime socket {{ kubeadm_config.crisocket }} is functional
+  command: crictl --runtime-endpoint unix://{{ kubeadm_config.crisocket }}
   changed_when: False
   become: True

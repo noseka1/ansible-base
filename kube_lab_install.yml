@@ -9,6 +9,10 @@
         name: machine_docker
       tags: machine_docker
 
+    - import_role:
+        name: machine_crio
+      tags: machine_crio
+
 - hosts:
     - kubernetes
   tasks:

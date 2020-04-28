@@ -1,1 +1,2 @@
 core_pattern: "/tmp/core.%e.%h.%t.%p"
+update_all_packages: True

@@ -20,3 +20,4 @@
 - include: install_tools.yml
 
 - include: update_all_packages.yml
+  when: update_all_packages | bool

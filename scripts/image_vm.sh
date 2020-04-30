@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -x
 # exit immediately if a command exits with a non-zero status.
 set -e
 
-NBD_DEVICE=/dev/nbd3
+NBD_DEVICE=/dev/nbd0
 
 function mount_image {
   local IMAGE_PATH=$1
@@ -11,7 +11,14 @@ function mount_image {
   sudo modprobe nbd
   sudo qemu-nbd --connect $NBD_DEVICE $IMAGE_PATH
 
-  local PARTITION_OFFSET=$(sudo fdisk -l -u $NBD_DEVICE 2>/dev/null | grep '83 \+Linux' | awk '{ print $3 }')
+  while [ ! -b ${NBD_DEVICE}p1 ]; do
+    # qemu-nbd can return before the block device is created by udev
+    # see also: https://bugzilla.redhat.com/show_bug.cgi?id=1111635
+    echo Waiting for device ${NBD_DEVICE}p1 to show up
+    sleep 1
+  done
+
+  local PARTITION_OFFSET=$(sudo fdisk -l -u $NBD_DEVICE 2>/dev/null | grep ${NBD_DEVICE}p3 | awk '{ print $2 }')
   local PARTITION_OFFSET_BYTES=$((PARTITION_OFFSET * 512))
 
   echo Mounting image to $MOUNT_POINT

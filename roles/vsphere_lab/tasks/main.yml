@@ -1,3 +1,6 @@
+- name: Configure ESXi
+  import_tasks: configure_esxi.yml
+
 - name: Retrieve vCSA virtual machine
   import_tasks: retrieve_vcsa.yml
 

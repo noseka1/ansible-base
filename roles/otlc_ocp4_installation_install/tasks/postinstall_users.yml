@@ -26,6 +26,10 @@
   k8s:
     definition: "{{ lookup('template', 'cluster-oauth.yml') }}"
 
-- name: Grant admin user the cluster-admin role
+- name: Create admins group
+  k8s:
+    definition: "{{ lookup('template', 'admins-group.yml') }}"
+
+- name: Grant admins group the cluster-admin role
   k8s:
     definition: "{{ lookup('template', 'cluster-admin-0-clusterrolebinding.yml') }}"

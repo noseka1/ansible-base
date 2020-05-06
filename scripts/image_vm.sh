@@ -18,7 +18,17 @@ function mount_image {
     sleep 1
   done
 
-  local PARTITION_OFFSET=$(sudo fdisk -l -u $NBD_DEVICE 2>/dev/null | grep ${NBD_DEVICE}p3 | awk '{ print $2 }')
+  local TABLE_TYPE=dos
+  if sudo fdisk --list $NBD_DEVICE | grep 'Disklabel type: gpt'; then
+    TABLE_TYPE=gpt
+  fi
+  local PARTITION_OFFSET
+  if [ "$TABLE_TYPE" = dos ]; then
+    PARTITION_OFFSET=$(sudo fdisk --list --units $NBD_DEVICE | grep '83 Linux' | awk '{ print $3 }')
+  else
+    PARTITION_OFFSET=$(sudo fdisk --list --units $NBD_DEVICE 2>/dev/null | grep 'Linux filesystem' | awk '{ print $2 }')
+  fi
+
   local PARTITION_OFFSET_BYTES=$((PARTITION_OFFSET * 512))
 
   echo Mounting image to $MOUNT_POINT

@@ -1,3 +1,16 @@
+- name: Set timezone to {{ time_zone }}
+  timezone:
+    name: '{{ time_zone }}'
+  become: True
+
+- name: Allow sudo without password
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  become: True
+
 - name: Set root password
   user:
     name: root
@@ -23,14 +36,6 @@
     - root
     - ansible
     - developer
-  become: True
-
-- name: Allow sudo without password
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
   become: True
 
 - name: Set UseDNS to no in sshd config

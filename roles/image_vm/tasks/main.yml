@@ -25,13 +25,6 @@
     - developer
   become: True
 
-- name: Set UseDNS to no in sshd config
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: '^UseDNS'
-    line: UseDNS no
-  become: True
-
 - name: Allow sudo without password
   lineinfile:
     dest: /etc/sudoers
@@ -40,33 +33,18 @@
     validate: 'visudo -cf %s'
   become: True
 
-- name: Fetch cloud-init configuration
-  slurp:
-    path: /etc/cloud/cloud.cfg
-  register: cloud_cfg
-
-- name: Extract the data
-  set_fact:
-    cloud_cfg: '{{ cloud_cfg.content | b64decode | from_yaml }}'
-
-- name: Modify cloud-init configuration
-  set_fact:
-    cloud_cfg: '{{ cloud_cfg | combine(cloud_init_modifications) }}'
-
-- name: Write cloud-init configuration back
-  copy:
-    content: '{{ cloud_cfg | to_nice_yaml }}'
-    dest: /etc/cloud/cloud.cfg
-  become: True
-
-- name: Make cloud-init run on RHEL7
-  copy:
-    src: ds-identify.cfg
-    dest: /etc/cloud/ds-identify.cfg
+- name: Set UseDNS to no in sshd config
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^UseDNS'
+    line: UseDNS no
   become: True
 
 - name: Install SSH host keys
   import_tasks: install_ssh_host_keys.yml
+
+- name: Configure cloud-init
+  import_tasks: configure_cloud_init.yml
 
 - name: Fix SELinux label on first boot
   copy:

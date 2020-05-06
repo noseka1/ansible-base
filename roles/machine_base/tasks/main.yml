@@ -12,6 +12,7 @@
 - include: configure_ntp.yml
 
 - include: display_boot.yml
+  when: ansible_distribution == "RedHat"
 
 - include: fix_hostname.yml
 

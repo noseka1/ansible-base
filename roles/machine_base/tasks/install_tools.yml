@@ -2,15 +2,22 @@
   yum:
     name:
       - bind-utils # dig, host
+      - bzip2
+      - curl
       - gdb
       - git
+      - jq
       - lsof
+      - man-db
       - mc
+      - net-tools
+      - nmap-ncat
       - patch
       - strace
       - tcpdump
       - vim
       - wget
+      - wireshark-cli
       - setroubleshoot-server # sealert
       - setools-console # sesearch
     state: present

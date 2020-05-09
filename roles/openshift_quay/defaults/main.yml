@@ -1,2 +1,8 @@
-quay_namespace: quay-enterprise
+quay_kustomizations:
+  operator: github.com/noseka1/quay-kustomization/quay-operator/base?ref=myauto
+  instance: github.com/noseka1/quay-kustomization/quay-instance/overlays/development?ref=myauto
+  security: github.com/noseka1/quay-kustomization/container-security-operator/base?ref=myauto
+quay_instance_namespace: quay-enterprise
+quay_instance_name: quay
+
 ingress_domain: ''

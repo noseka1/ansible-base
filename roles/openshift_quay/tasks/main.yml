@@ -11,43 +11,48 @@
   set_fact:
     ingress_domain: '{{ openshift_config.resources.0.spec.domain | default(ingress_domain) }}'
 
-- name: Create a Quay project
-  k8s:
-    definition: "{{ lookup('template', 'quay-project.yml') }}"
+- name: Install Container Security Operator
+  command: oc apply --kustomize {{ quay_kustomizations.security }}
 
-- name: Create OperatorGroup object
-  k8s:
-    definition: "{{ lookup('template', 'quay-operatorgroup.yml') }}"
+- name: Deploy Quay operator
+  command: oc apply --kustomize {{ quay_kustomizations.operator }}
 
-- name: Subscribe to Quay
-  k8s:
-    definition: "{{ lookup('template', 'quay-subscription.yml') }}"
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -quay-kustomize
+  register: tmpdir
 
-- name: Create Red Hat Quay pull secret
-  k8s:
-    definition: "{{ lookup('template', 'redhat-quay-pull-secret-secret.yml') }}"
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
 
-- name: Configure Quay super user
-  k8s:
-    definition: "{{ lookup('template', 'superuser-secret.yml') }}"
-
-- name: Configure Quay configuration interface password
-  k8s:
-    definition: "{{ lookup('template', 'quayconfig-secret.yml') }}"
-
-- name: Configure Quay database credentials
-  k8s:
-    definition: "{{ lookup('template', 'database-secret.yml') }}"
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - quay-quayecosystem.yaml
+    - redhat-quay-pull-secret.json
 
 - name: Install Quay
-  k8s:
-    definition: "{{ lookup('template', 'quay-quayecosystem.yml') }}"
-    wait: true
-    wait_timeout: 600
-    wait_condition:
-      type: QuaySetupSuccess
-      status: "True"
+  command: oc apply --kustomize {{ tmpdir.path }}
 
-- name: Subscribe all namespaces to Container Security Operator
-  k8s:
-    definition: "{{ lookup('template', 'container-security-operator-subscription.yml') }}"
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete
+  k8s_info:
+    api_version: redhatcop.redhat.io/v1alpha1
+    kind: QuayEcosystem
+    namespace: '{{ quay_instance_namespace }}'
+  register: quayecosystem
+  until:
+    - quayecosystem.resources.0.status is defined
+    - quayecosystem.resources.0.status.conditions | selectattr('type', 'equalto', 'QuaySetupSuccess') | list | length > 0
+    - (quayecosystem.resources.0.status.conditions | selectattr('type', 'equalto', 'QuaySetupSuccess') | first).status == 'True'
+  failed_when: False
+  retries: 60
+  delay: 10

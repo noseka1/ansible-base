@@ -1,0 +1,8 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: QuayEcosystem
+metadata:
+  name: quay
+spec:
+  quay:
+    routeHost: quay-quay-enterprise.{{ ingress_domain }}
+    configRouteHost: quay-config-quay-enterprise.{{ ingress_domain }}

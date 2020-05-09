@@ -1,0 +1,5 @@
+- name: Deploy OpenShift Pipelines operator
+  command: oc apply --kustomize {{ tekton_kustomizations.operator }}
+
+- name: Deploy OpenShift Pipelines instance
+  command: oc apply --kustomize {{ tekton_kustomizations.instance }}

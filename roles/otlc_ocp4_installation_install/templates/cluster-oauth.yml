@@ -3,6 +3,10 @@ kind: OAuth
 metadata:
   name: cluster
 spec:
+  tokenConfig:
+    # Increase token validity period to 31 days
+    # See also https://docs.openshift.com/container-platform/4.4/authentication/configuring-internal-oauth.html
+    accessTokenMaxAgeSeconds: {{ 31 * 24 * 60 * 60 | int }}
   identityProviders:
   - name: htpasswd
     mappingMethod: claim

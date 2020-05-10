@@ -22,10 +22,6 @@
   k8s:
     definition: "{{ lookup('template', 'htpasswd-secret.yml') }}"
 
-- name: Configure authentication using htpasswd
-  k8s:
-    definition: "{{ lookup('template', 'cluster-oauth.yml') }}"
-
 - name: Create admins group
   k8s:
     definition: "{{ lookup('template', 'cluster-admins-group.yml') }}"

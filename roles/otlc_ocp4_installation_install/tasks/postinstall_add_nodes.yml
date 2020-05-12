@@ -6,45 +6,27 @@
     namespace: ''
   register: infrastructure
 
+- name: Set cluster_id
+  set_fact:
+    cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+
 - name: Add nodes to cluster
   k8s:
     definition:
       apiVersion: machine.openshift.io/v1beta1
       kind: MachineSet
       metadata:
-        name: '{{ infrastructure.resources.0.status.infrastructureName }}-worker-{{ aws_region }}{{ item }}'
+        name: '{{ cluster_id }}-worker-{{ aws_region }}{{ item }}'
         namespace: openshift-machine-api
       spec:
         replicas: '{{ ocp_nodes_per_zone }}'
   with_items: '{{ ocp_availability_zones }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for worker machines to come up
-  k8s_info:
-    api_version: machine.openshift.io/v1beta1
-    kind: Machine
-    namespace: openshift-machine-api
-    label_selectors:
-      - machine.openshift.io/cluster-api-machine-role=worker
-  register: ocp_machines
-  until: (ocp_machines.resources | length) == (ocp_nodes_total | int)
-  retries: 60
-  delay: 10
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for worker nodes to join the cluster
-  k8s_info:
-    api_version: v1
-    kind: Node
-    label_selectors:
-      - node-role.kubernetes.io/worker=
-  register: ocp_nodes
-  until: (ocp_nodes.resources | list | length) == (ocp_nodes_total | int)
-  retries: 60
-  delay: 10
-
-- name: List of worker node names
-  set_fact:
-    ocp_node_names: '{{ ocp_nodes.resources | json_query("[*].metadata.name") }}'
-
-- name: Existing worker nodes
-  debug:
-    var: ocp_node_names
+- name: Wait for the nodes to join the cluster
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_nodes.yml
+  vars:
+    expand_machine_selector: machine.openshift.io/cluster-api-machine-role=worker
+    expand_node_selector: node-role.kubernetes.io/worker=
+    expand_nodes_total: '{{ ocp_nodes_total }}'

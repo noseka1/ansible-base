@@ -1,0 +1,68 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
+    machine.openshift.io/cluster-api-machine-role: workergpu
+    machine.openshift.io/cluster-api-machine-type: workergpu
+  name: {{ cluster_id }}-workergpu-{{ nvidia_gpu_aws_region }}{{ item }}
+  namespace: openshift-machine-api
+spec:
+  replicas: {{ nvidia_gpu_nodes_per_zone }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
+      machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-workergpu-{{ nvidia_gpu_aws_region }}{{ item }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
+        machine.openshift.io/cluster-api-machine-role: workergpu
+        machine.openshift.io/cluster-api-machine-type: workergpu
+        machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-workergpu-{{ nvidia_gpu_aws_region }}{{ item }}
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.example.com/workergpu: ""
+      providerSpec:
+        value:
+          ami:
+            id: {{ nvidia_gpu_ami_id }}
+          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          blockDevices:
+          - ebs:
+              iops: 0
+              volumeSize: 120
+              volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          deviceIndex: 0
+          iamInstanceProfile:
+            id: {{ cluster_id }}-worker-profile
+          instanceType: p3.2xlarge
+          kind: AWSMachineProviderConfig
+          metadata:
+            creationTimestamp: null
+          placement:
+            availabilityZone: {{ nvidia_gpu_aws_region }}{{ item }}
+            region: {{ nvidia_gpu_aws_region }}
+          publicIp: null
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ cluster_id }}-worker-sg
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - {{ cluster_id }}-private-{{ nvidia_gpu_aws_region }}{{ item }}
+          tags:
+          - name: kubernetes.io/cluster/{{ cluster_id }}
+            value: owned
+          userDataSecret:
+            name: worker-user-data
+      versions:
+        kubelet: ""

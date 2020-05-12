@@ -1,1 +1,2 @@
 redhat_subscription_pool_id: 8a85f98460bfb0470160c2ff22f13e47 # Employee SKU
+aws_rhcos_ami: ami-0409b2cebfc3ac3d0

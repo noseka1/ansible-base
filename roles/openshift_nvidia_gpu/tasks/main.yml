@@ -1,0 +1,2 @@
+- name: Add GPU-enabled nodes to the cluster
+  import_tasks: add_nodes.yml

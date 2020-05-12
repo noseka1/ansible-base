@@ -1,0 +1,5 @@
+nvidia_gpu_aws_region: us-west-2
+nvidia_gpu_ami_id: '{{ aws_rhcos_ami }}'
+nvidia_gpu_availability_zones: [ a, b, c ]
+nvidia_gpu_nodes_per_zone: 1
+nvidia_gpu_nodes_total: '{{ (nvidia_gpu_availability_zones | length) * nvidia_gpu_nodes_per_zone }}'

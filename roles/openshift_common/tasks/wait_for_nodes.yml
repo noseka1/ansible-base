@@ -1,0 +1,30 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for machines to come up
+  k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: Machine
+    namespace: openshift-machine-api
+    label_selectors:
+      - '{{ expand_machine_selector }}'
+  register: expand_machines
+  until: (expand_machines.resources | length) == (expand_nodes_total | int)
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for nodes to join the cluster
+  k8s_info:
+    api_version: v1
+    kind: Node
+    label_selectors:
+      - '{{ expand_node_selector }}'
+  register: expand_nodes
+  until: (expand_nodes.resources | list | length) == (expand_nodes_total | int)
+  retries: 60
+  delay: 10
+
+- name: List of node names
+  set_fact:
+    expand_node_names: '{{ expand_nodes.resources | json_query("[*].metadata.name") }}'
+
+- name: Existing worker nodes
+  debug:
+    var: expand_node_names

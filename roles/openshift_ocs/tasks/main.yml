@@ -1,5 +1,5 @@
 - name: Add nodes to the OpenShift cluster
-  import_tasks: expand_openshift.yml
+  import_tasks: add_nodes.yml
 
 - name: Install OpenShift Container Storage
   import_tasks: deploy_ocs.yml

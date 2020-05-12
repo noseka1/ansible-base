@@ -30,9 +30,10 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for rook-ceph-tools deployment to complete
   k8s_info:
-    api_version: extensions/v1beta1
+    api_version: apps/v1
     kind: Deployment
     namespace: '{{ ocs_instance_namespace }}'
+    name: rook-ceph-tools
   register: rook_ceph_tools
   until: (rook_ceph_tools.resources.0.status is defined) and (rook_ceph_tools.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 60

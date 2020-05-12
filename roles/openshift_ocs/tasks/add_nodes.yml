@@ -1,0 +1,30 @@
+- name: Obtain infrastructure info
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: Infrastructure
+    name: cluster
+    namespace: ''
+  register: infrastructure
+
+- name: Set cluster_id
+  set_fact:
+    cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+
+- name: Add machine sets to the cluster
+  k8s:
+    definition: '{{ lookup("template", "workerocs-machineset.yml") }}'
+  with_items: '{{ ocs_availability_zones }}'
+
+- name: Wait for the nodes to join the cluster
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_nodes.yml
+  vars:
+    expand_machine_selector: machine.openshift.io/cluster-api-machine-role=workerocs
+    expand_node_selector: node-role.example.com/workerocs=
+    expand_nodes_total: '{{ ocs_nodes_total }}'
+
+#- name: Reserve the nodes for OCS pods only
+#  command: oc adm taint nodes {{ item }} node.ocs.openshift.io/storage=true:NoSchedule
+#  when: ((ocs_nodes.resources | selectattr('metadata.name', 'equalto', item) | first).spec.taints | default([]) | selectattr('key', 'equalto', 'node.ocs.openshift.io/storage') | first) is not defined
+#  with_items: '{{ ocs_node_names }}'

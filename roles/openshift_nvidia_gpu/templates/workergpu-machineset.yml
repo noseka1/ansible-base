@@ -41,7 +41,7 @@ spec:
           deviceIndex: 0
           iamInstanceProfile:
             id: {{ cluster_id }}-worker-profile
-          instanceType: p3.2xlarge
+          instanceType: g4dn.xlarge
           kind: AWSMachineProviderConfig
           metadata:
             creationTimestamp: null

@@ -1,0 +1,26 @@
+- name: Set root password
+  user:
+    name: root
+    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+  become: True
+
+- name: Create users
+  user:
+    name: '{{ item }}'
+    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+    groups:
+      - wheel
+  with_items:
+    - ansible
+    - developer
+  become: True
+
+- name: Set authorized key for users
+  authorized_key:
+    user: '{{ item }}'
+    key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
+  with_items:
+    - root
+    - ansible
+    - developer
+  become: True

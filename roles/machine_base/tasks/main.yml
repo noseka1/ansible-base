@@ -1,9 +1,14 @@
-- include: subscribe_rhel.yml
-  when: ansible_distribution == "RedHat"
+- name: Configure passwordless sudo
+  import_role:
+    name: common_tasks
+    tasks_from: configure_passwordless_sudo.yml
+
+- name: Subscribe RHEL
+  import_role:
+    name: common_tasks
+    tasks_from: subscribe_rhel.yml
 
 - include: disable_password_expiration.yml
-
-- include: configure_sudo.yml
 
 - include: set_ssh_authorized_keys.yml
 
@@ -18,7 +23,12 @@
 
 - include: enable_core_dump.yml
 
-- include: install_tools.yml
+- name: Install tools
+  import_role:
+    name: common_tasks
+    tasks_from: install_tools.yml
 
-- include: update_all_packages.yml
-  when: update_all_packages | bool
+- name: Upgrade all packages
+  import_role:
+    name: common_tasks
+    tasks_from: upgrade_all_packages.yml

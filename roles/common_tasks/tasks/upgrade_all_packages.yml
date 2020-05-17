@@ -2,5 +2,7 @@
   yum:
     name: '*'
     state: latest
-  when: ansible_distribution in [ "RedHat", "Fedora" ]
+  when:
+    - update_all_packages | default(true)
+    - ansible_distribution in [ "RedHat", "Fedora" ]
   become: True

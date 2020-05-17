@@ -1,32 +1,12 @@
-- name: Set timezone to {{ time_zone }}
-  timezone:
-    name: '{{ time_zone }}'
-  become: True
+- name: Configure passwordless sudo
+  import_role:
+    name: common_tasks
+    tasks_from: configure_passwordless_sudo.yml
 
-- name: Allow sudo without password
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-  become: True
-
-- name: Set root password
-  user:
-    name: root
-    password: '{{ generic_user_password | string | password_hash("sha512") }}'
-  become: True
-
-- name: Configure users
-  user:
-    name: '{{ item }}'
-    password: '{{ generic_user_password | string | password_hash("sha512") }}'
-    groups:
-      - wheel
-  with_items:
-    - ansible
-    - developer
-  become: True
+- name: Configure common users
+  import_role:
+    name: common_tasks
+    tasks_from: configure_common_users.yml
 
 - name: Set authorized key for users
   authorized_key:
@@ -36,6 +16,11 @@
     - root
     - ansible
     - developer
+  become: True
+
+- name: Set timezone to {{ time_zone }}
+  timezone:
+    name: '{{ time_zone }}'
   become: True
 
 - name: Set UseDNS to no in sshd config

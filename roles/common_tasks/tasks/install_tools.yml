@@ -36,7 +36,7 @@
   yum:
     name:
       - policycoreutils-python-utils # semanage
-      - highlight
+      - python3-pygments
       - iotop
       - tmux
     state: present
@@ -48,7 +48,7 @@
     name:
       - colordiff
       - fzf
-      - highlight
+      - python3-pygments
       - htop
       - iotop
       - ngrep
@@ -63,7 +63,7 @@
   yum:
     name:
       - atool
-      - highlight
+      - python3-pygments
       - unoconv
       - mediainfo
   when: ansible_distribution == "Fedora"

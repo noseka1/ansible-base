@@ -1,7 +1,3 @@
 - name: Expose the registry via an external route
   k8s:
     definition: "{{ lookup('template', 'cluster-registry.yml') }}"
-
-- name: Allow any authenticated users to push/pull from the registry
-  k8s:
-    definition: "{{ lookup('template', 'registry-editor-0-clusterrolebinding.yml') }}"

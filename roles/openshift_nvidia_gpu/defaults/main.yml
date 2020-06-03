@@ -1,5 +1,5 @@
-nvidia_gpu_aws_region: us-west-2
-nvidia_gpu_ami_id: '{{ aws_rhcos_ami }}'
-nvidia_gpu_availability_zones: [ a, b, c ]
-nvidia_gpu_nodes_per_zone: 1
-nvidia_gpu_nodes_total: '{{ (nvidia_gpu_availability_zones | length) * nvidia_gpu_nodes_per_zone }}'
+ngpu_instance_type: g4dn.xlarge
+#ngpu_instance_type: p3.2xlarge
+ngpu_availability_zones: [ a, b, c ]
+ngpu_nodes_per_zone: 1
+ngpu_nodes_total: '{{ (ngpu_availability_zones | length) * ngpu_nodes_per_zone }}'

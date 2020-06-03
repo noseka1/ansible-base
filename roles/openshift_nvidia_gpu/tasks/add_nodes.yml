@@ -8,18 +8,40 @@
 
 - name: Set cluster_id
   set_fact:
-    cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+    ngpu_cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+
+- name: Set AWS region
+  set_fact:
+    ngpu_aws_region: '{{ infrastructure.resources.0.status.platformStatus.aws.region }}'
+
+- name: Set AWS ami id
+  set_fact:
+    ngpu_ami_id: '{{ aws_rhcos_ami[ngpu_aws_region] }}'
 
 - name: Add machine sets to the cluster
   k8s:
-    definition: '{{ lookup("template", "workergpu-machineset.yml") }}'
-  with_items: '{{ nvidia_gpu_availability_zones }}'
+    definition: '{{ lookup("template", "gpu-machineset.yml") }}'
+  with_items: '{{ ngpu_availability_zones }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for machines to come up
+  k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    namespace: openshift-machine-api
+    name: '{{ ngpu_cluster_id }}-gpu-{{ ngpu_aws_region }}{{ item }}'
+  register: ngpu_machineset
+  until:
+    - ngpu_machineset.resources.0.status is defined
+    - ngpu_machineset.resources.0.status.readyReplicas is defined
+    - ngpu_machineset.resources.0.status.readyReplicas == (ngpu_nodes_per_zone | int)
+  retries: 60
+  delay: 10
+  with_items: '{{ ngpu_availability_zones }}'
 
 - name: Wait for the nodes to join the cluster
   import_role:
     name: openshift_common
     tasks_from: wait_for_nodes.yml
   vars:
-    expand_machine_selector: machine.openshift.io/cluster-api-machine-role=workergpu
-    expand_node_selector: node-role.example.com/workergpu=
-    expand_nodes_total: '{{ nvidia_gpu_nodes_total }}'
+    expand_node_selector: node-role.kubernetes.io/gpu=
+    expand_nodes_total: '{{ ngpu_nodes_total }}'

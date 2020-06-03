@@ -3,8 +3,8 @@ kind: MachineSet
 metadata:
   labels:
     machine.openshift.io/cluster-api-cluster: {{ ngpu_cluster_id }}
-    machine.openshift.io/cluster-api-machine-role: gpu
-    machine.openshift.io/cluster-api-machine-type: gpu
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
   name: {{ ngpu_cluster_id }}-gpu-{{ ngpu_aws_region }}{{ item }}
   namespace: openshift-machine-api
 spec:
@@ -18,8 +18,8 @@ spec:
       creationTimestamp: null
       labels:
         machine.openshift.io/cluster-api-cluster: {{ ngpu_cluster_id }}
-        machine.openshift.io/cluster-api-machine-role: gpu
-        machine.openshift.io/cluster-api-machine-type: gpu
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
         machine.openshift.io/cluster-api-machineset: {{ ngpu_cluster_id }}-gpu-{{ ngpu_aws_region }}{{ item }}
     spec:
       metadata:

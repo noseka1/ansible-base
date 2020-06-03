@@ -1,5 +1,4 @@
-ocs_aws_region: us-west-2
-ocs_ami_id: '{{ aws_rhcos_ami }}'
+ocs_instance_type: m4.4xlarge
 ocs_availability_zones: [ a, b, c ]
 ocs_nodes_per_zone: 1
 ocs_nodes_total: '{{ (ocs_availability_zones | length) * ocs_nodes_per_zone }}'

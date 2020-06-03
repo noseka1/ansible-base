@@ -2,30 +2,31 @@ apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
   labels:
-    machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-    machine.openshift.io/cluster-api-machine-role: workerocs
-    machine.openshift.io/cluster-api-machine-type: workerocs
-  name: {{ cluster_id }}-workerocs-{{ ocs_aws_region }}{{ item }}
+    machine.openshift.io/cluster-api-cluster: {{ ocs_cluster_id }}
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: {{ ocs_cluster_id }}-ocs-{{ ocs_aws_region }}{{ item }}
   namespace: openshift-machine-api
 spec:
   replicas: {{ ocs_nodes_per_zone }}
   selector:
     matchLabels:
-      machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-      machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-workerocs-{{ ocs_aws_region }}{{ item }}
+      machine.openshift.io/cluster-api-cluster: {{ ocs_cluster_id }}
+      machine.openshift.io/cluster-api-machineset: {{ ocs_cluster_id }}-ocs-{{ ocs_aws_region }}{{ item }}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-        machine.openshift.io/cluster-api-machine-role: workerocs
-        machine.openshift.io/cluster-api-machine-type: workerocs
-        machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-workerocs-{{ ocs_aws_region }}{{ item }}
+        machine.openshift.io/cluster-api-cluster: {{ ocs_cluster_id }}
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: {{ ocs_cluster_id }}-ocs-{{ ocs_aws_region }}{{ item }}
     spec:
       metadata:
         creationTimestamp: null
         labels:
-          node-role.example.com/workerocs: ""
+          node-role.kubernetes.io/ocs: ""
+          node-role.kubernetes.io/worker: ""
           cluster.ocs.openshift.io/openshift-storage: ""
       providerSpec:
         value:
@@ -41,8 +42,8 @@ spec:
             name: aws-cloud-credentials
           deviceIndex: 0
           iamInstanceProfile:
-            id: {{ cluster_id }}-worker-profile
-          instanceType: m4.4xlarge
+            id: {{ ocs_cluster_id }}-worker-profile
+          instanceType: {{ ocs_instance_type }}
           kind: AWSMachineProviderConfig
           metadata:
             creationTimestamp: null
@@ -54,14 +55,14 @@ spec:
           - filters:
             - name: tag:Name
               values:
-              - {{ cluster_id }}-worker-sg
+              - {{ ocs_cluster_id }}-worker-sg
           subnet:
             filters:
             - name: tag:Name
               values:
-              - {{ cluster_id }}-private-{{ ocs_aws_region }}{{ item }}
+              - {{ ocs_cluster_id }}-private-{{ ocs_aws_region }}{{ item }}
           tags:
-          - name: kubernetes.io/cluster/{{ cluster_id }}
+          - name: kubernetes.io/cluster/{{ ocs_cluster_id }}
             value: owned
           userDataSecret:
             name: worker-user-data

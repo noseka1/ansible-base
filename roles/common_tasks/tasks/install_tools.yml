@@ -6,7 +6,6 @@
       - curl
       - gdb
       - git
-      - jq
       - lsof
       - man-db
       - mc
@@ -17,7 +16,6 @@
       - tcpdump
       - vim
       - wget
-      - wireshark-cli
       - setroubleshoot-server # sealert
       - setools-console # sesearch
     state: present
@@ -35,10 +33,12 @@
 - name: Install tools RHEL8
   yum:
     name:
+      - jq
       - policycoreutils-python-utils # semanage
       - python3-pygments
       - iotop
       - tmux
+      - wireshark-cli
     state: present
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 8
   become: True
@@ -48,6 +48,7 @@
     name:
       - colordiff
       - fzf
+      - jq
       - python3-pygments
       - htop
       - iotop
@@ -55,6 +56,7 @@
       - ranger
       - tig
       - tmux
+      - wireshark-cli
     state: present
   when: ansible_distribution == "Fedora"
   become: True

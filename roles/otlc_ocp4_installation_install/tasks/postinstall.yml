@@ -13,3 +13,5 @@
 - include: postinstall_add_nodes.yml
 
 - include: postinstall_alerting.yml
+
+- include: postinstall_image_prunning.yml

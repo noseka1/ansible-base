@@ -9,6 +9,7 @@
     path: '{{ cluster_config_dir }}/htpasswd'
     name: '{{ item.name }}'
     password: '{{ item.password }}'
+  no_log: True
   with_items:
     - { name: admin,     password: '{{ generic_user_password }}' }
     - { name: developer, password: '{{ generic_user_password }}' }

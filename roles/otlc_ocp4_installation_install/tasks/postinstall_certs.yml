@@ -6,27 +6,8 @@
 
 - name: Configure API server certificate
   k8s:
-    definition:
-      apiVersion: config.openshift.io/v1
-      kind: APIServer
-      metadata:
-        name: cluster
-      spec:
-        servingCerts:
-            namedCertificates:
-              - names:
-                  - 'api.cluster-{{ otlc_service_info.guid }}.{{ otlc_service_info.top_level_domain }}'
-                servingCertificate:
-                  name: api-cert
+    definition: "{{ lookup('template', 'cluster-apiserver.yml') }}"
 
 - name: Configure wildcard apps certificate
   k8s:
-    definition:
-      apiVersion: operator.openshift.io/v1
-      kind: IngressController
-      metadata:
-        name: default
-        namespace: openshift-ingress-operator
-      spec:
-        defaultCertificate:
-          name: wildcard-cert
+    definition: "{{ lookup('template', 'default-ingresscontroller.yml') }}"

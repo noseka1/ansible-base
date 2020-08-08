@@ -1,0 +1,11 @@
+apiVersion: config.openshift.io/v1
+kind: APIServer
+metadata:
+  name: cluster
+spec:
+  servingCerts:
+    namedCertificates:
+    - names:
+      - api.cluster-{{ otlc_service_info.guid }}.{{ otlc_service_info.top_level_domain }}
+      servingCertificate:
+        name: api-cert

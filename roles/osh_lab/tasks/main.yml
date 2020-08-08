@@ -1,9 +1,3 @@
-- import_tasks: postinstall_kubeconfig.yml
-
-- import_tasks: postinstall_epel.yml
-
-- import_tasks: postinstall_add_nodes.yml
-
 - import_tasks: postinstall_certs.yml
 
 - import_role:

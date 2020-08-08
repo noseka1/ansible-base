@@ -1,3 +1,4 @@
 /inventory/group_vars/all/credentials.yml
 /inventory/group_vars/all/ssh_host_keys.yml
 /inventory/group_vars/kubernetes/kubeadm_token.yml
+/inventory/group_vars/all/osh_lab_certs.yml

@@ -4,9 +4,15 @@
     state: present
   become: True
 
+- name: Create temporary file
+  tempfile:
+    prefix: htpasswd
+    state: file
+  register: tmpfile
+
 - name: Create htpassword file holding additional OpenShift users
   htpasswd:
-    path: '{{ cluster_config_dir }}/htpasswd'
+    path: '{{ tmpfile.path }}'
     name: '{{ item.name }}'
     password: '{{ item.password }}'
   no_log: True
@@ -15,9 +21,14 @@
     - { name: developer, password: '{{ generic_user_password }}' }
 
 - name: Retrieve htpasswd file
-  shell: cat {{ cluster_config_dir }}/htpasswd
+  shell: cat {{ tmpfile.path }}
   changed_when: False
   register: htpasswd
+
+- name: Delete temporary {{ tmpfile.path }}
+  file:
+    path: '{{ tmpfile.path }}'
+    state: absent
 
 - name: Create htpasswd secret
   k8s:

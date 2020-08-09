@@ -8,7 +8,18 @@
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/scc.yaml'
 
 - name: Create directories on the {{ volume_node }} node for the volumes
-  command: oc debug node/{{ volume_node }} --namespace default -- /bin/bash -c 'for I in $(seq 1 {{ volume_count }}); do mkdir -p /host/{{ volume_path }}/$I; done'
+  command: >
+    oc debug node/{{ volume_node }} --namespace default --
+      /bin/bash -c '
+        set -e
+        for I in $(seq 1 {{ volume_count }}); do
+          DIR=/host/{{ volume_path }}/$I;
+          mkdir -p $DIR;
+          chown 0.0 $DIR;
+          chmod 775 $DIR;
+          chcon -R -t container_file_t -l s0 $DIR;
+        done
+      '
 
 - name: Create Rook NFS namespace
   k8s:

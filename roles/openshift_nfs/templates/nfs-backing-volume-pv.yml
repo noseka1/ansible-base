@@ -10,8 +10,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  local:
+  hostPath:
     path: {{ volume_path }}/{{ item }}
+    type: Directory
   nodeAffinity:
     required:
       nodeSelectorTerms:

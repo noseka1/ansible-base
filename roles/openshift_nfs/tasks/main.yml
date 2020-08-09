@@ -1,0 +1,32 @@
+- name: Deploy Rook NFS operator
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+  loop:
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/common.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/provisioner.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/scc.yaml'
+
+- name: Create directories on the {{ volume_node }} node for the volumes
+  command: oc debug node/{{ volume_node }} --namespace default -- /bin/bash -c 'for I in $(seq 1 {{ volume_count }}); do mkdir -p /host/{{ volume_path }}/$I; done'
+
+- name: Create Rook NFS namespace
+  k8s:
+    definition: "{{ lookup('template', 'rook-nfs-ns.yml') }}"
+
+- name: Create backing PVs
+  k8s:
+    definition: "{{ lookup('template', 'nfs-backing-volume-pv.yml') }}"
+  loop: '{{ range(1, volume_count + 1) | list }}'
+
+- name: Create backing PVCs
+  k8s:
+    definition: "{{ lookup('template', 'nfs-backing-volume-pvc.yml') }}"
+  loop: '{{ range(1, volume_count + 1) | list }}'
+
+- name: Deploy Rook NFS server
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - rook-nfs-server-sa.yml
+    - rook-nfs-nfsserver.yml

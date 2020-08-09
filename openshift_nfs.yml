@@ -1,0 +1,4 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - include_role: name=openshift_nfs

@@ -30,3 +30,16 @@
   loop:
     - rook-nfs-server-sa.yml
     - rook-nfs-nfsserver.yml
+
+- name: Obtain Rook NFS service
+  k8s_info:
+    api_version: v1
+    kind: Service
+    name: rook-nfs
+    namespace: rook-nfs
+  register: rook_nfs_service
+
+- name: Create PVs available for the OpenShift users
+  k8s:
+    definition: "{{ lookup('template', 'nfs-volume-pv.yml') }}"
+  loop: '{{ range(1, volume_count + 1) | list }}'

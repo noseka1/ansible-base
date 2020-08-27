@@ -5,13 +5,13 @@
 - set_fact:
     otlc_service_raw:
       guid: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "GUID") | first).value }}'
-      env0: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 0") | first).value }}'
-      env1: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 1") | first).value }}'
-      env2: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 2") | first).value }}'
-      env3: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 3") | first).value }}'
-      env4: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 4") | first).value }}'
-      env5: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 5") | first).value }}'
-      env6: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 6") | first).value }}'
+      env0: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 000") | first).value }}'
+      env1: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 001") | first).value }}'
+      env2: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 002") | first).value }}'
+      env3: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 003") | first).value }}'
+      env4: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 004") | first).value }}'
+      env5: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 005") | first).value }}'
+      env6: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 006") | first).value }}'
 
 - set_fact:
     otlc_service_info:

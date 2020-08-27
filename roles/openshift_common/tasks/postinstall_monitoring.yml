@@ -1,0 +1,3 @@
+- name: Enable monitoring of custom services
+  k8s:
+    definition: "{{ lookup('template', 'cluster-monitoring-config-cm.yml') }}"

@@ -26,3 +26,7 @@ platform:
     region: {{ aws_region }}
 pullSecret: '{{ redhat_cloud_pull_secret }}'
 sshKey: {{ ssh_public_key.stdout }}
+{% if otlc_ocp4_additional_trust_bundle is defined %}
+additionalTrustBundle: |
+  {{ otlc_ocp4_additional_trust_bundle | indent(2) }}
+{% endif %}

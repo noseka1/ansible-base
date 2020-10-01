@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for CSV to appear
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for CSV name to appear
   k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription

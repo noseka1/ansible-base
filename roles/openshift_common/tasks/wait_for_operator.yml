@@ -8,7 +8,6 @@
   until:
     - operator_subscription.resources.0.status is defined
     - operator_subscription.resources.0.status.currentCSV is defined
-  failed_when: False
   retries: 60
   delay: 10
 
@@ -23,6 +22,5 @@
     - operator_csv.resources.0.status is defined
     - operator_csv.resources.0.status.phase is defined
     - operator_csv.resources.0.status.phase == 'Succeeded'
-  failed_when: False
   retries: 60
   delay: 10

@@ -28,6 +28,9 @@ spec:
           node-role.kubernetes.io/worker: ""
           node-role.kubernetes.io/gpu: ""
           node-role.kubernetes.io/app-gpu: ""
+      taints:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
       providerSpec:
         value:
           ami:

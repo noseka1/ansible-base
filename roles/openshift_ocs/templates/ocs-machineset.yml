@@ -28,6 +28,10 @@ spec:
           node-role.kubernetes.io/ocs: ""
           node-role.kubernetes.io/worker: ""
           cluster.ocs.openshift.io/openshift-storage: ""
+      taints:
+      - effect: NoSchedule
+        key: node.ocs.openshift.io/storage
+        value: "true"
       providerSpec:
         value:
           ami:

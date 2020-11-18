@@ -45,8 +45,3 @@
   vars:
     expand_node_selector: node-role.kubernetes.io/ocs=
     expand_nodes_total: '{{ ocs_nodes_total }}'
-
-#- name: Reserve the nodes for OCS pods only
-#  command: oc adm taint nodes {{ item }} node.ocs.openshift.io/storage=true:NoSchedule
-#  when: ((ocs_nodes.resources | selectattr('metadata.name', 'equalto', item) | first).spec.taints | default([]) | selectattr('key', 'equalto', 'node.ocs.openshift.io/storage') | first) is not defined
-#  with_items: '{{ ocs_node_names }}'

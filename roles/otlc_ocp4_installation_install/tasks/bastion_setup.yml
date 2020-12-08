@@ -4,7 +4,7 @@
   vars:
     redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
     redhat_subscription_enable_repos:
-      - rhel-7-server-ose-4.3-rpms
+      - rhel-7-server-ose-4.5-rpms
 
 - name: Install rpms required by Ansible modules
   yum:

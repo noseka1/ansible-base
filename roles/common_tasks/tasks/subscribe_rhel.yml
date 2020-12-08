@@ -12,8 +12,6 @@
     redhat_subscription_enable_repos:
       - rhel-7-server-optional-rpms
       - rhel-7-server-extras-rpms
-    redhat_subscription_disable_repos:
-      - rhel-7-server-htb-rpms
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 7
 
 - name: Red Hat subscription

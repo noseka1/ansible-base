@@ -9,5 +9,5 @@
 
 - name: mprahl.lets-encrypt-route-53
   src: https://github.com/mprahl/ansible-role-lets-encrypt-route-53.git
-  version: v4.5.1
+  version: v4.6.1
   # requires EPEL enabled

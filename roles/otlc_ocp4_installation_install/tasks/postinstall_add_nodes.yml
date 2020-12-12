@@ -27,6 +27,5 @@
     name: openshift_common
     tasks_from: wait_for_nodes.yml
   vars:
-    expand_machine_selector: machine.openshift.io/cluster-api-machine-role=worker
     expand_node_selector: node-role.kubernetes.io/worker=
     expand_nodes_total: '{{ ocp_nodes_total }}'

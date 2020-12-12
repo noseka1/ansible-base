@@ -29,3 +29,12 @@
   vars:
     expand_node_selector: node-role.kubernetes.io/worker=
     expand_nodes_total: '{{ ocp_nodes_total }}'
+
+- name: Create cluster autoscaler
+  k8s:
+    definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
+
+- name: Autoscale existing machine sets
+  k8s:
+    definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
+  with_items: '{{ ocp_availability_zones }}'

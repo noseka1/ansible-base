@@ -5,7 +5,7 @@
     label_selectors:
       - '{{ expand_node_selector }}'
   register: expand_nodes
-  until: (expand_nodes.resources | list | length) == (expand_nodes_total | int)
+  until: (expand_nodes.resources | list | length) >= (expand_nodes_total | int)
   retries: 60
   delay: 10
 

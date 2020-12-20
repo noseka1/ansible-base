@@ -2,9 +2,9 @@
 
 - import_tasks: postinstall_epel.yml
 
-- import_tasks: postinstall_add_nodes.yml
-
 - import_tasks: postinstall_certs.yml
+
+- import_tasks: postinstall_nodes.yml
 
 - import_role:
     name: openshift_common

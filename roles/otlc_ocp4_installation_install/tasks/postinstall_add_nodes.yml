@@ -10,31 +10,11 @@
   set_fact:
     cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
 
-- name: Add nodes to cluster
-  k8s:
-    definition:
-      apiVersion: machine.openshift.io/v1beta1
-      kind: MachineSet
-      metadata:
-        name: '{{ cluster_id }}-worker-{{ aws_region }}{{ item }}'
-        namespace: openshift-machine-api
-      spec:
-        replicas: '{{ ocp_nodes_per_zone }}'
-  with_items: '{{ ocp_availability_zones }}'
-
-- name: Wait for the nodes to join the cluster
-  import_role:
-    name: openshift_common
-    tasks_from: wait_for_nodes.yml
-  vars:
-    expand_node_selector: node-role.kubernetes.io/worker=
-    expand_nodes_total: '{{ ocp_nodes_total }}'
-
 - name: Create cluster autoscaler
   k8s:
     definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
 
-- name: Autoscale existing machine sets
+- name: Enable autoscaling of the existing machine sets
   k8s:
     definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
   with_items: '{{ ocp_availability_zones }}'

@@ -1,6 +1,9 @@
 # Discover catalog and template IDs at:
 # https://labs.opentlc.com/api/service_catalogs?expand=resources
 # https://labs.opentlc.com/api/service_templates?expand=resources
+#
+# Discover the mandatory dialog parameters at:
+# https://labs.opentlc.com/api/service_requests?expand=resources
 
 otlc_labs:
   ocp3_migration:

@@ -1,0 +1,17 @@
+- import_tasks: postinstall_certs.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: postinstall_users.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: postinstall_oauth.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: postinstall_image_registry.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: postinstall_image_prunning.yml

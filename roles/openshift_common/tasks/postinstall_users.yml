@@ -2,6 +2,7 @@
   yum:
     name: python-passlib
     state: present
+  when: ansible_os_family == 'RedHat'
   become: True
 
 - name: Create temporary file

@@ -1,0 +1,4 @@
+- hosts: localhost
+  tasks:
+    - import_role:
+        name: crc_lab

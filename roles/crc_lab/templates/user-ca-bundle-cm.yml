@@ -5,4 +5,4 @@ metadata:
   namespace: openshift-config
 data:
   ca-bundle.crt: |
-    '{{ crc_lab_certs.trusted_ca_bundle | b64encode }}'
+    {{ crc_lab_certs.trusted_ca_bundle | b64encode }}

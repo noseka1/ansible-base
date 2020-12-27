@@ -18,5 +18,5 @@
   k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
-    - cluster-proxy.yml
     - user-ca-bundle-cm.yml
+    - cluster-proxy.yml

@@ -14,9 +14,11 @@ otlc_labs:
     order_options:
       dialog_expiration: "7"
       dialog_nodes: "3"
-      dialog_ocprelease: 3.11.43
+      dialog_ocprelease: 3.11.346
       dialog_region: na
       dialog_runtime: "8"
+      dialog_notes: "Customer Activity - Informal training"
+      dialog_environment: "PROD"
 
   ocp4_migration:
     catalog_id: '20000000000040'
@@ -28,6 +30,8 @@ otlc_labs:
       dialog_expiration: "7"
       dialog_region: na_sandboxes_gpte
       dialog_runtime: "10"
+      dialog_notes: "Customer Activity - Informal training"
+      dialog_environment: "PROD"
 
   ocp4_clientvm:
     catalog_id: '20000000000040'

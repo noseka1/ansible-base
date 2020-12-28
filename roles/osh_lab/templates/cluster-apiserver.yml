@@ -6,6 +6,6 @@ spec:
   servingCerts:
     namedCertificates:
     - names:
-      - api.mycluster.example.com
+      - {{ osh_lab_api_domain }}
       servingCertificate:
         name: api-cert

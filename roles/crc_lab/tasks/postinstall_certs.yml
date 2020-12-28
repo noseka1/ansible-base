@@ -13,3 +13,10 @@
 - name: Configure wildcard apps certificate
   k8s:
     definition: "{{ lookup('template', 'default-ingresscontroller.yml') }}"
+
+- name: Set up cluster-wide proxy to trust the certificate
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - user-ca-bundle-cm.yml
+    - cluster-proxy.yml

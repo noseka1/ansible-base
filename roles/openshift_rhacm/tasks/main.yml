@@ -1,39 +1,5 @@
-- name: Deploy RHACM operator
-  command: oc apply --kustomize {{ rhacm_kustomizations.operator }}
+- import_tasks: install_rhacm.yml
 
-- name: Wait for RHACM operator to deploy
-  import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
-  vars:
-    subscription_name: '{{ rhacm_subscription_name }}'
-    subscription_namespace: '{{ rhacm_subscription_namespace }}'
+- import_tasks: sync_release_images.yml
 
-- name: Deploy RHACM instance
-  command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
-  k8s_info:
-    api_version: operator.open-cluster-management.io/v1
-    kind: MultiClusterHub
-    namespace: '{{ rhacm_instance_namespace }}'
-    name: '{{ rhacm_instance_name }}'
-  register: rhacm_instance
-  until:
-    - rhacm_instance.resources | length > 0
-    - rhacm_instance.resources.0.status is defined
-    - rhacm_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | list | length > 0
-    - (rhacm_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | first).status == "True"
-  retries: 60
-  delay: 10
-
-- name: Obtain RHACM route
-  k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: multicloud-console
-    namespace: '{{ rhacm_instance_namespace }}'
-  register: rhacm_instance_route
-
-- debug:
-    msg: RHACM installed successfully. Use your browser to access the RHACM Web UI at https://{{ rhacm_instance_route.resources.0.spec.host }}.
+- import_tasks: report_success.yml

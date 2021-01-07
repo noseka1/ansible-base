@@ -1,0 +1,43 @@
+- name: Obtain infrastructure info
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: Infrastructure
+    name: cluster
+    namespace: ''
+  register: infrastructure
+
+- name: Set cluster_id
+  set_fact:
+    cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+
+- name: Set AWS region
+  set_fact:
+    aws_region: '{{ infrastructure.resources.0.status.platformStatus.aws.region }}'
+
+- name: Add machine sets to the cluster
+  k8s:
+    definition: '{{ lookup("template", "node-machineset.yml") }}'
+  with_items: '{{ ocp_availability_zones }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for machines to come up
+  k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    namespace: openshift-machine-api
+    name: '{{ cluster_id }}-{{ role }}-{{ aws_region }}{{ item }}'
+  register: machineset
+  until:
+    - machineset.resources.0.status is defined
+    - machineset.resources.0.status.readyReplicas is defined
+    - machineset.resources.0.status.readyReplicas == (nodes_per_zone | int)
+  retries: 60
+  delay: 10
+  with_items: '{{ ocp_availability_zones }}'
+
+- name: Wait for the nodes to join the cluster
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_nodes.yml
+  vars:
+    expand_node_selector: node-role.kubernetes.io/{{ role }}=
+    expand_nodes_total: '{{ nodes_total }}'

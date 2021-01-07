@@ -18,3 +18,10 @@
   k8s:
     definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
   with_items: '{{ ocp_availability_zones }}'
+
+- name: Deploy Infra Nodes MachineSet
+  import_role:
+    name: openshift_common
+    tasks_from: add_machineset.yml
+    vars_from: infra_vars.yml
+  when: install_infra_nodes | bool

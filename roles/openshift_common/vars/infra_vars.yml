@@ -1,0 +1,5 @@
+role: infra
+ami_id: ami-0dd9008abadc519f1
+instance_type: m4.large
+nodes_per_zone: 1
+nodes_total: '{{ (ocp_availability_zones | length) * nodes_per_zone }}'

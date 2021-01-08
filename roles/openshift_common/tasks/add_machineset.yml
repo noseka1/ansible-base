@@ -24,12 +24,12 @@
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api
-    name: '{{ cluster_id }}-{{ role }}-{{ aws_region }}{{ item }}'
+    name: '{{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}'
   register: machineset
   until:
     - machineset.resources.0.status is defined
     - machineset.resources.0.status.readyReplicas is defined
-    - machineset.resources.0.status.readyReplicas == (nodes_per_zone | int)
+    - machineset.resources.0.status.readyReplicas == (add_machineset_nodes_per_zone | int)
   retries: 60
   delay: 10
   with_items: '{{ ocp_availability_zones }}'
@@ -39,5 +39,5 @@
     name: openshift_common
     tasks_from: wait_for_nodes.yml
   vars:
-    expand_node_selector: node-role.kubernetes.io/{{ role }}=
-    expand_nodes_total: '{{ nodes_total }}'
+    expand_node_selector: node-role.kubernetes.io/{{ add_machineset_role }}=
+    expand_nodes_total: '{{ add_machineset_nodes_total }}'

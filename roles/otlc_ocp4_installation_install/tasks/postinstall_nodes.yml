@@ -23,5 +23,4 @@
   import_role:
     name: openshift_common
     tasks_from: add_machineset.yml
-    vars_from: infra_vars.yml
   when: install_infra_nodes | bool

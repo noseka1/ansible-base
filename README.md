@@ -8,6 +8,12 @@ $ ansible-galaxy role install \
   --force
 ```
 
+```
+$ ansible-galaxy collection install \
+  --requirements-file requirements.yml \
+  --force
+```
+
 Insert your credentials:
 
 ```

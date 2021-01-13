@@ -7,12 +7,12 @@
     VAULT_ADDR: '{{ vault_addr }}'
     VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
 
+- name: Save the unseal key in the Kubernetes secret for later use
+  k8s:
+    definition: "{{ lookup('template', 'vault-unseal-secret.yml') }}"
+
 - name: Unseal vault
-  hashivault_unseal:
-    keys: '{{ vault_init["keys"][0] }}'
-  environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+  import_tasks: unseal.yml
 
 - name: Enable user/password authentication
   hashivault_auth_method:
@@ -34,7 +34,7 @@
     VAULT_TOKEN: '{{ vault_init.root_token }}'
 
 - name: Grant full access to the admin user
-  hashivault_policy_set:
+  hashivault_policy:
     name: admin
     rules: |
       path "*"

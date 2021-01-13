@@ -1,12 +1,34 @@
-- name: Apply kustomization
-  command: oc apply --kustomize {{ item }}
-  with_items: '{{ vault_kustomizations }}'
+- name: Add hashicorp chart repo
+  community.kubernetes.helm.helm_repository:
+    name: hashicorp
+    repo_url: "https://helm.releases.hashicorp.com"
+
+- name: Deploy Vault Helm chart
+  community.kubernetes.helm:
+    name: '{{ vault_name }}'
+    chart_ref: hashicorp/vault
+    release_namespace: '{{ vault_namespace }}'
+    create_namespace: True
+    release_values:
+      global:
+        openshift: True
+      server:
+        auditStorage:
+          enabled: True
+        extraEnvironmentVars:
+          VAULT_LOG_LEVEL: debug
+      ui:
+        enabled: True
+
+- name: Create route
+  k8s:
+    definition: "{{ lookup('template', 'vault-route.yml') }}"
 
 - name: Obtain vault route
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: vault
+    name: '{{ vault_name }}'
     namespace: '{{ vault_namespace }}'
   register: vault_route
 
@@ -16,9 +38,9 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
   uri:
-    url: '{{ vault_addr }}/v1/sys/health'
+    url: '{{ vault_addr }}/v1/sys/seal-status'
     method: GET
-    validate_certs: False
+    validate_certs: '{{ not vault_skip_verify }}'
     status_code: [ 200, 501 ]
   register: vault_health
   until: vault_health.status in [ 200, 501 ]

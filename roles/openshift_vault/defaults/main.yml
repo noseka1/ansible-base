@@ -1,6 +1,3 @@
 vault_namespace: vault
 vault_name: vault
 vault_skip_verify: true
-vault_kustomizations:
-  - github.com/noseka1/vault-kustomization/vault-helm-operator/base?ref=myauto
-  - github.com/noseka1/vault-kustomization/vault-instance/base?ref=myauto

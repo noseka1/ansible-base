@@ -1,0 +1,24 @@
+- name: Obtain the seal status
+  uri:
+    url: '{{ vault_addr }}/v1/sys/seal-status'
+    method: GET
+    validate_certs: '{{ not vault_skip_verify }}'
+    status_code: 200
+  register: result
+
+- name: Obtain the unseal key
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ vault_name }}-unseal'
+    namespace: '{{ vault_namespace }}'
+  register: unseal_secret
+  when: result.json.sealed
+
+- name: Unseal vault
+  hashivault_unseal:
+    keys: '{{ unseal_secret.resources.0.data.key | b64decode }}'
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+  when: result.json.sealed

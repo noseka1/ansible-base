@@ -1,6 +1,6 @@
 - name: Enable audit logs
-  hashivault_audit_enable:
-    name: file
+  hashivault_audit:
+    device_type: file
     options:
       file_path: /vault/audit/audit.log
   environment:

@@ -38,11 +38,11 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
   uri:
-    url: '{{ vault_addr }}/v1/sys/seal-status'
+    url: '{{ vault_addr }}/v1/sys/health'
     method: GET
     validate_certs: '{{ not vault_skip_verify }}'
-    status_code: [ 200, 501 ]
+    status_code: [ 200, 501, 503 ]
   register: vault_health
-  until: vault_health.status in [ 200, 501 ]
+  until: (vault_health.status in [ 200, 501 ] or vault_health.json.sealed)
   retries: 60
   delay: 10

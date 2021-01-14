@@ -38,7 +38,7 @@
   hashivault_policy:
     name: kube_read
     rules: |
-      path "secrets/*"
+      path "kv/data/*"
       {
         capabilities = [ "read", "list" ]
       }
@@ -47,12 +47,24 @@
     VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
     VAULT_TOKEN: '{{ vault_token }}'
 
-- name: Bind the policy to Kubernetes identities
+- name: Define kube role
   hashivault_write:
     secret: /auth/kubernetes/role/kube
     data:
       bound_service_account_names: default
       bound_service_account_namespaces: '*'
+      policies: kube_read
+  environment:
+    VAULT_ADDR: '{{ vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_TOKEN: '{{ vault_token }}'
+
+- name: Define external_secrets role
+  hashivault_write:
+    secret: /auth/kubernetes/role/external-secrets
+    data:
+      bound_service_account_names: external-secrets-kubernetes-external-secrets
+      bound_service_account_namespaces: external-secrets
       policies: kube_read
   environment:
     VAULT_ADDR: '{{ vault_addr }}'

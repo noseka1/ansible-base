@@ -1,0 +1,5 @@
+external_secrets_namespace: external-secrets
+external_secrets_name: external-secrets
+
+vault_name: vault
+vault_namespace: vault

@@ -1,0 +1,46 @@
+- name: Obtain vault route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ vault_name }}'
+    namespace: '{{ vault_namespace }}'
+  register: vault_route
+
+- name: Set vault URL
+  set_fact:
+    vault_addr: 'https://{{ vault_route.resources.0.spec.host }}'
+
+- name: Add external-secrets chart repo
+  community.kubernetes.helm.helm_repository:
+    name: external-secrets
+    repo_url: "https://external-secrets.github.io/kubernetes-external-secrets/"
+
+- name: Deploy External Secrets chart
+  community.kubernetes.helm:
+    name: '{{ external_secrets_name }}'
+    chart_ref: external-secrets/kubernetes-external-secrets
+    release_namespace: '{{ external_secrets_namespace }}'
+    create_namespace: True
+    release_values:
+      customResourceManagerDisabled: True
+      env:
+        LOG_LEVEL: debug
+        VAULT_ADDR: '{{ vault_addr }}'
+        DEFAULT_VAULT_MOUNT_POINT: kubernetes
+        DEFAULT_VAULT_ROLE: external-secrets
+
+- name: Create an external secret for testing
+  k8s:
+    definition: "{{ lookup('template', 'test-secret.yml') }}"
+
+- name: Retrieve the respective secret created by the operator
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ external_secrets_name }}-test'
+    namespace: '{{ external_secrets_namespace }}'
+  register: test_secret
+
+- name: Fail if the secret value is not correct
+  fail:
+  when: (test_secret.resources.0.data.testkey | b64decode) != 'testvalue'

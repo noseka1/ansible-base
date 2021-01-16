@@ -4,3 +4,8 @@ service_mesh_kustomizations:
   kiali_operator: github.com/noseka1/service-mesh-kustomization/kiali-operator/base?ref=myauto
   service_mesh_operator: github.com/noseka1/service-mesh-kustomization/service-mesh-operator/base?ref=myauto
   service_mesh_instance: github.com/noseka1/service-mesh-kustomization/service-mesh-instance/base?ref=myauto
+
+service_mesh_subscription_name: servicemeshoperator
+service_mesh_subscription_namespace: openshift-operators
+service_mesh_instance_name: control-plane
+service_mesh_instance_namespace: istio-system

@@ -1,0 +1,9 @@
+cluster_logging_kustomizations:
+  elasticsearch_operator: github.com/noseka1/openshift-post-install/logging/elasticsearch-operator/base?ref=myauto
+  cluster_logging_operator: github.com/noseka1/openshift-post-install/logging/cluster-logging-operator/base?ref=myauto
+  cluster_logging_instance: github.com/noseka1/openshift-post-install/logging/cluster-logging-instance/overlays/development?ref=myauto
+
+cluster_logging_subscription_name: elasticsearch-operator
+cluster_logging_subscription_namespace: openshift-operators
+cluster_logging_instance_name: instance
+cluster_logging_instance_namespace: openshift-logging

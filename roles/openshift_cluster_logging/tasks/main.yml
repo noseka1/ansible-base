@@ -1,0 +1,29 @@
+- name: Deploy elasticsearch operator
+  command: oc apply --kustomize {{ cluster_logging_kustomizations.elasticsearch_operator }}
+
+- name: Deploy cluster logging operator
+  command: oc apply --kustomize {{ cluster_logging_kustomizations.cluster_logging_operator }}
+
+- name: Wait for cluster logging operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ cluster_logging_subscription_name }}'
+    subscription_namespace: '{{ cluster_logging_subscription_namespace }}'
+
+- name: Deploy cluster logging instance
+  command: oc apply --kustomize {{ cluster_logging_kustomizations.cluster_logging_instance }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster logging deployment to complete
+  k8s_info:
+    api_version: logging.openshift.io/v1
+    kind: ClusterLogging
+    name: '{{ cluster_logging_instance_name }}'
+    namespace: '{{ cluster_logging_instance_namespace }}'
+  register: cl_instance
+  until:
+    - cl_instance.resources | length > 0
+    - cl_instance.resources.0.status is defined
+  retries: 80
+  delay: 10

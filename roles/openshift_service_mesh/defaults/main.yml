@@ -1,0 +1,6 @@
+service_mesh_kustomizations:
+  elasticsearch_operator: github.com/noseka1/service-mesh-kustomization/elasticsearch-operator/base?ref=myauto
+  jaeger_operator: github.com/noseka1/service-mesh-kustomization/jaeger-operator/base?ref=myauto
+  kiali_operator: github.com/noseka1/service-mesh-kustomization/kiali-operator/base?ref=myauto
+  service_mesh_operator: github.com/noseka1/service-mesh-kustomization/service-mesh-operator/base?ref=myauto
+  service_mesh_instance: github.com/noseka1/service-mesh-kustomization/service-mesh-instance/base?ref=myauto

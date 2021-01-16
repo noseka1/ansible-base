@@ -1,0 +1,14 @@
+- name: Deploy elasticsearch operator
+  command: oc apply --kustomize {{ service_mesh_kustomizations.elasticsearch_operator }}
+
+- name: Deploy jaeger operator
+  command: oc apply --kustomize {{ service_mesh_kustomizations.jaeger_operator }}
+
+- name: Deploy kiali operator
+  command: oc apply --kustomize {{ service_mesh_kustomizations.kiali_operator }}
+
+- name: Deploy service mesh operator
+  command: oc apply --kustomize {{ service_mesh_kustomizations.service_mesh_operator }}
+
+- name: Deploy service mesh instance
+  command: oc apply --kustomize {{ service_mesh_kustomizations.service_mesh_instance }}

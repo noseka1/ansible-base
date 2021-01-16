@@ -1,0 +1,3 @@
+- name: Configure OpenShift audit log policy profile
+  k8s:
+    definition: "{{ lookup('template', 'cluster-apiserver.yml') }}"

@@ -7,4 +7,4 @@
   register: rhacm_instance_route
 
 - debug:
-    msg: RHACM installed successfully. Use your browser to access the RHACM Web UI at https://{{ rhacm_instance_route.resources.0.spec.host }}.
+    msg: RHACM installed successfully. Use your browser to access the RHACM Web UI at https://{{ rhacm_instance_route.resources.0.spec.host }}

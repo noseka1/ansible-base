@@ -36,5 +36,5 @@
   register: result
   ignore_errors: True
   until: result.json is defined and result.json.request_state == 'finished'
-  retries: 120
+  retries: '{{ otlc_order_wait_retries }}'
   delay: 10

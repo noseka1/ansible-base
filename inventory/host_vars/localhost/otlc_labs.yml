@@ -70,6 +70,32 @@ otlc_labs:
       dialog_region: na_sandboxes_gpte
       dialog_runtime: "8"
 
+  ocp4_configuration:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000741'
+    template_name: 'OpenShift 4 Configuration Lab'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_region: na_sandboxes_gpte
+      dialog_runtime: "8"
+
+  ocs4_implementation:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000951'
+    template_name: 'OCS 4 Implementation on AWS'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_region: na_sandboxes_gpte
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_runtime: "8"
+
   rhel7_implementation:
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'

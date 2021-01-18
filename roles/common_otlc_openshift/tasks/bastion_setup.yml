@@ -1,0 +1,77 @@
+- name: Restore the default settings in rhsm.conf
+  ini_file:
+    path: /etc/rhsm/rhsm.conf
+    section: '{{ item.section }}'
+    option: '{{ item.option }}'
+    value: '{{ item.value }}'
+  loop:
+    - { section: 'server', option: 'prefix', value: '/subscription' }
+    - { section: 'server', option: 'hostname', value: 'subscription.rhsm.redhat.com' }
+    - { section: 'rhsm', option: 'baseurl', value: 'https://cdn.redhat.com' }
+    - { section: 'rhsm', option: 'repo_ca_cert', value: '%(ca_cert_dir)sredhat-uep.pem' }
+    - { section: 'rhsm', option: 'full_refresh_on_yum', value: 0 }
+  become: True
+
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+    redhat_subscription_enable_repos:
+      - rhel-7-server-ose-4.5-rpms
+  when: ansible_distribution_major_version is version('7', '==')
+
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+    redhat_subscription_enable_repos:
+      - rhocp-4.6-for-rhel-8-x86_64-rpms
+  when: ansible_distribution_major_version is version('8', '==')
+
+- name: Check if EPEL repo is already configured
+  stat:
+    path: '{{ epel_repofile_path }}'
+  register: epel_repofile_result
+
+- name: Import EPEL GPG key
+  rpm_key:
+    key: '{{ epel_repo_gpg_key_url }}'
+  when: not epel_repofile_result.stat.exists
+  become: True
+
+- name: Install EPEL repo
+  yum:
+    name: '{{ epel_repo_url }}'
+  register: result
+  when: not epel_repofile_result.stat.exists
+  become: True
+
+- name: Install rpms required by Ansible modules
+  yum:
+    name:
+      - python2-kubernetes
+      - python2-openshift
+      - python2-boto3
+  become: True
+  when: ansible_distribution_major_version is version('7', '==')
+
+- name: Install rpms required by Ansible modules
+  yum:
+    name:
+      - python3-kubernetes
+      - python3-openshift
+      - python3-boto3
+  become: True
+  when: ansible_distribution_major_version is version('8', '==')
+
+- name: Ensure ~/.aws directory exists
+  file:
+    path: .aws
+    state: directory
+
+- name: Create AWS credentials file
+  template:
+    src: aws_credentials
+    dest: .aws/credentials

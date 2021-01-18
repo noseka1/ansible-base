@@ -1,0 +1,17 @@
+- name: Retrieve the AWS DNS zone id
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: DNS
+    name: cluster
+  register: cluster_dns
+
+- name: Check if we have AWS permissions to list the records in the DNS zone (if not, this will fail)
+  route53_info:
+    query: record_sets
+    hosted_zone_id: '{{ cluster_dns.resources.0.spec.publicZone.id }}'
+  ignore_errors: True
+  register: aws_dns_access_result
+
+- name: If we have sufficient permissions, go ahead and set up OpenShift certificates
+  import_tasks: postinstall_certs_create.yml
+  when: aws_dns_access_result is succeeded

@@ -43,15 +43,6 @@
     creates: /usr/bin/aws
   become: true
 
-- name: Configure AWS CLI
-  script: configure_aws_cli.sh
-  args:
-    creates: .aws/credentials
-  environment:
-    AWSKEY: '{{ otlc_service_info.aws_access_key_id }}'
-    AWSSECRETKEY: '{{ otlc_service_info.aws_secret_access_key }}'
-    REGION: '{{ aws_region }}'
-
 - name: Create an SSH keypair to be used for your OpenShift environment
   shell: ssh-keygen -f ~/.ssh/cluster-key -N ''
   args:

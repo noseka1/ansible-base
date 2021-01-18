@@ -23,7 +23,7 @@ networking:
   - 172.30.0.0/16
 platform:
   aws:
-    region: {{ aws_region }}
+    region: {{ otlc_service_info.aws_region }}
 pullSecret: '{{ redhat_cloud_pull_secret }}'
 sshKey: {{ ssh_public_key.stdout }}
 {% if otlc_ocp4_additional_trust_bundle is defined %}

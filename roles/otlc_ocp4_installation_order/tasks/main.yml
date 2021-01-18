@@ -12,6 +12,7 @@
       env4: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 004") | first).value }}'
       env5: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 005") | first).value }}'
       env6: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 006") | first).value }}'
+      aws_region: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "ec2region") | first).value }}'
 
 - set_fact:
     otlc_service_info:
@@ -22,6 +23,7 @@
       ssh_username:          '{{ otlc_service_raw.env5.split(" ").3.split("@").0 | trim }}'
       ssh_hostname:          '{{ otlc_service_raw.env5.split(" ").3.split("@").1 | trim }}'
       ssh_password:          '{{ otlc_service_raw.env6.split(":").1 | trim }}'
+      aws_region:            '{{ otlc_service_raw.aws_region }}'
 
 - debug:
     var: otlc_service_info

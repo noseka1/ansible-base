@@ -92,7 +92,7 @@ otlc_labs:
       dialog_check: t
       dialog_environment: PROD
       dialog_expiration: "7"
-      dialog_region: na_sandboxes_gpte
+      dialog_region: na
       dialog_notes: "Customer Activity - Customer environment testing"
       dialog_runtime: "8"
 

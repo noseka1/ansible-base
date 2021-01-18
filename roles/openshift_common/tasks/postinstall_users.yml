@@ -2,7 +2,14 @@
   yum:
     name: python-passlib
     state: present
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version is version('7', '<=')
+  become: True
+
+- name: Install python-passlib library required by the Ansible htpasswd module
+  yum:
+    name: python3-passlib
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version is version('7', '>')
   become: True
 
 - name: Create temporary file

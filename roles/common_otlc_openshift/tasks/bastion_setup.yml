@@ -12,6 +12,10 @@
     - { section: 'rhsm', option: 'full_refresh_on_yum', value: 0 }
   become: True
 
+- name: Clean up the pre-existing Red Hat subscription
+  command: subscription-manager clean
+  become: True
+
 - name: Red Hat subscription
   include_role:
     name: devnullcake.redhat-subscription

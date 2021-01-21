@@ -7,6 +7,9 @@
 #
 # Or provision the lab manually and then list the parameteres using:
 # ansible-playbook -i inventory/localhost.ini otlc_provisioned_services.yml
+#
+# ManageIQ API documentation:
+# https://www.manageiq.org/docs/api
 
 otlc_labs:
   ocp3_migration:

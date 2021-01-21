@@ -1,0 +1,22 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: otlc_common
+        tasks_from: retrieve_provisioned_services.yml
+
+    - name: Send the start request to provisioned services
+      uri:
+        url: '{{ item.href }}'
+        user: '{{ otlc_username }}'
+        password: '{{ otlc_password }}'
+        method: POST
+        body:
+          action: 'Start'
+          resource:
+            areyousure: yes
+        body_format: json
+        status_code: 200
+      ignore_errors: True
+      loop: '{{ otlc_services_provisioned.json.resources }}'

@@ -5,6 +5,9 @@
 # Discover the mandatory dialog parameters for the lab at:
 # https://labs.opentlc.com/api/service_requests?expand=resources
 #
+# Discover cutom actions (like Start) for a service, example:
+# https://labs.opentlc.com/api/services/20000000423849?attributes=custom_actions,custom_action_buttons
+#
 # Or provision the lab manually and then list the parameteres using:
 # ansible-playbook -i inventory/localhost.ini otlc_provisioned_services.yml
 #

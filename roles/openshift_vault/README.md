@@ -1,4 +1,4 @@
-# Deploying HashiCorp Vault on OpenShift
+# Deploying HashiCorp Vault to OpenShift
 
 This role deploys HashiCorp Vault to OpenShift.
 

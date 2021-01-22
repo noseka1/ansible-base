@@ -4,7 +4,7 @@ This Ansible role deploys [HashiCorp Vault](https://www.vaultproject.io/) to Ope
 
 > The deployed Vault instance is suitable for testing/development purposes only. **It should in no way be used in production environments!**
 
-The Vault documentation is available [here](https://learn.hashicorp.com/vault).
+The Vault documentation is available [here](https://www.vaultproject.io/docs). Useful Vault tutorials can be found [here](https://learn.hashicorp.com/vault).
 
 ## Configuration
 

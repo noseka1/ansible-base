@@ -1,6 +1,6 @@
 # Deploying HashiCorp Vault to OpenShift
 
-This Ansible role deploys HashiCorp Vault to OpenShift.
+This Ansible role deploys [HashiCorp Vault](https://www.vaultproject.io/) to OpenShift.
 
 > The deployed Vault instance is suitable for testing/development purposes only. **It should in no way be used in production environments!**
 

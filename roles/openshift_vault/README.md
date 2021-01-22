@@ -8,7 +8,7 @@ The Vault documentation is available [here](https://www.vaultproject.io/docs). U
 
 ## Configuration
 
-The role performs the following configuration:
+This Ansible role performs the following configuration:
 
 * Deploy Vault on OpenShift using the official HashiCorp Helm Chart.
 * Create an external Route to reach Vault from outside of the OpenShift cluster.

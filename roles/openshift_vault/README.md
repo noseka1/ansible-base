@@ -19,7 +19,7 @@ The role performs the following configuration:
 * Define Vault roles that grant read access to all secrets to all Kubernetes identities. These roles leave the access to the secrets in Vault wide open. (these roles are used for testing purposes)
 * Create an *admin* user with unlimited privileges
 * Enable audit logs
-* Insert test secrets in Vault
+* Insert test secrets to Vault
 
 ## Production considerations
 

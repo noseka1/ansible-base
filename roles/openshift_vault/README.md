@@ -1,8 +1,12 @@
-# 
+# Deploying HashiCorp Vault on OpenShift
 
-This role deploys HashiCorp Vault to OpenShift. The deployed instance is suitable for testing/development purposes only. **It should in no way be used in production environments!**
+This role deploys HashiCorp Vault to OpenShift.
 
-The Vault documentation is avaialable [here](https://learn.hashicorp.com/vault).
+> The deployed Vault instance is suitable for testing/development purposes only. **It should in no way be used in production environments!**
+
+The Vault documentation is available [here](https://learn.hashicorp.com/vault).
+
+## Configuration
 
 The role performs the following configuration:
 
@@ -12,6 +16,15 @@ The role performs the following configuration:
 * Initialize Vault and unseal it. The unseal key is stored as a Kubernetes Secret, allowing to unseal Vault be re-running the Ansible playbook.
 * Enable Usename & Password authentication method
 * Enable Kubernetes authentication method
+* Define Vault roles that grant read access to all secrets to all. These roles leave the access to the secrets in Vault wide open. (these roles are used for testing purposes)
 * Create an *admin* user with unlimited privileges
 * Enable audit logs
 * Insert test secrets in Vault
+
+## Production considerations
+
+* Define secure roles and policies. This Ansible role leaves the access to secrets in Vault wide open.
+* Implement a secure unsealing process
+* Scale Vault to multiple replicas
+* Choose a storage backend for Vault. See also [Storage overview](https://www.vaultproject.io/docs/configuration/storage) for list of available storage options.
+* Enable authentication against an Identity Provider like LDAP, Okta, .... See [Auth Methods](https://www.vaultproject.io/docs/auth) for the list of available authentication methods.

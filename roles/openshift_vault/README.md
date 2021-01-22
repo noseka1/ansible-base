@@ -13,7 +13,7 @@ The role performs the following configuration:
 * Deploy Vault on OpenShift using the official HashiCorp Helm Chart
 * Create an external Route to reach Vault from outside of the OpenShift cluster
 * Enable Vault Web UI
-* Initialize Vault and unseal it. The unseal key is stored as a Kubernetes Secret, allowing to unseal Vault be re-running the Ansible playbook.
+* Initialize Vault and unseal it. The unseal key is stored as a Kubernetes Secret, allowing to unseal Vault by re-running the Ansible playbook.
 * Enable Usename & Password authentication method
 * Enable Kubernetes authentication method
 * Define Vault roles that grant read access to all secrets to all. These roles leave the access to the secrets in Vault wide open. (these roles are used for testing purposes)

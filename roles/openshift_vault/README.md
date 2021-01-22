@@ -26,5 +26,5 @@ The role performs the following configuration:
 * Define secure roles and policies. This Ansible role leaves the access to secrets in Vault wide open.
 * Implement a secure unsealing process
 * Scale Vault to multiple replicas
-* Choose a storage backend for Vault. See also [Storage overview](https://www.vaultproject.io/docs/configuration/storage) for list of available storage options.
+* Choose a storage backend for Vault. See also [Storage overview](https://www.vaultproject.io/docs/configuration/storage) for the list of available storage options.
 * Enable authentication against an Identity Provider like LDAP, Okta, .... See [Auth Methods](https://www.vaultproject.io/docs/auth) for the list of available authentication methods.

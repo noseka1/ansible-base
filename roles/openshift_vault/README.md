@@ -16,7 +16,7 @@ The role performs the following configuration:
 * Initialize Vault and unseal it. The unseal key is stored as a Kubernetes Secret, allowing to unseal Vault by re-running the Ansible playbook.
 * Enable Usename & Password authentication method
 * Enable Kubernetes authentication method
-* Define Vault roles that grant read access to all secrets to all. These roles leave the access to the secrets in Vault wide open. (these roles are used for testing purposes)
+* Define Vault roles that grant read access to all secrets to all Kubernetes identities. These roles leave the access to the secrets in Vault wide open. (these roles are used for testing purposes)
 * Create an *admin* user with unlimited privileges
 * Enable audit logs
 * Insert test secrets in Vault

@@ -1,0 +1,7 @@
+- name: Create subscription-admins group
+  k8s:
+    definition: "{{ lookup('template', 'open-cluster-management-subscription-admins-group.yml') }}"
+
+- name: Grant subscription-admins group the subscription-admin role
+  k8s:
+    definition: "{{ lookup('template', 'open-cluster-management-subscription-admin-0-clusterrolebinding.yml') }}"

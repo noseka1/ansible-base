@@ -2,6 +2,6 @@
   k8s:
     definition: "{{ lookup('template', 'open-cluster-management-subscription-admins-group.yml') }}"
 
-- name: Grant subscription-admins group the subscription-admin role
+- name: Add the subscription-admins group the the existing open-cluster-management:subscription-admin binding
   k8s:
-    definition: "{{ lookup('template', 'open-cluster-management-subscription-admin-0-clusterrolebinding.yml') }}"
+    definition: "{{ lookup('template', 'open-cluster-management:subscription-admin-clusterrolebinding.yml') }}"

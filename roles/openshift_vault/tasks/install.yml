@@ -43,6 +43,6 @@
     validate_certs: '{{ not vault_skip_verify }}'
     status_code: [ 200, 501, 503 ]
   register: vault_health
-  until: (vault_health.status in [ 200, 501 ] or vault_health.json.sealed)
+  until: (vault_health.status in [ 200, 501 ] or (vault_health.json is defined and vault_health.json.sealed))
   retries: 60
   delay: 10

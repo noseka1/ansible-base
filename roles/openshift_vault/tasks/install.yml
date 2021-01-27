@@ -7,6 +7,7 @@
   community.kubernetes.helm:
     name: '{{ vault_name }}'
     chart_ref: hashicorp/vault
+    chart_version: '{{ vault_chart_version | default(omit) }}'
     release_namespace: '{{ vault_namespace }}'
     create_namespace: True
     release_values:

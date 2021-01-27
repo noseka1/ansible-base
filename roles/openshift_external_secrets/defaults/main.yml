@@ -1,5 +1,8 @@
 external_secrets_namespace: external-secrets
 external_secrets_name: external-secrets
 
+# Pin the Helm Chart version
+#external_secrets_chart_version: 6.1.0
+
 vault_name: vault
 vault_namespace: vault

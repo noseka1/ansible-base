@@ -19,6 +19,7 @@
   community.kubernetes.helm:
     name: '{{ external_secrets_name }}'
     chart_ref: external-secrets/kubernetes-external-secrets
+    chart_version: '{{ external_secrets_chart_version | default(omit) }}'
     release_namespace: '{{ external_secrets_namespace }}'
     create_namespace: True
     release_values:

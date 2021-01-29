@@ -18,7 +18,7 @@
     - argocd-server-route.yaml
 
 - name: Install Argo CD
-  command: oc apply --kustomize {{ tmpdir.path }}
+  shell: kustomize build {{ tmpdir.path }} | oc apply --filename -
 
 - name: Delete temporary kustomize directory {{ tmpdir.path }}
   file:

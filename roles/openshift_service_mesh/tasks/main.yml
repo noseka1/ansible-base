@@ -18,6 +18,16 @@
     subscription_name: '{{ service_mesh_subscription_name }}'
     subscription_namespace: '{{ service_mesh_subscription_namespace }}'
 
+- name: Wait for the smmr.mutation.maistra.io webhook to fully deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    deployment_name: istio-operator
+    deployment_namespace: '{{ service_mesh_subscription_namespace }}'
+    deployment_label_selectors:
+      - olm.owner = {{ operator_subscription.resources.0.status.currentCSV }}
+
 - name: Deploy service mesh instance
   command: oc apply --kustomize {{ service_mesh_kustomizations.service_mesh_instance }}
 

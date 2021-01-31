@@ -1,0 +1,14 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the deployment {{ deployment_namespace }}/{{ deployment_name }} to become available
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ deployment_name }}'
+    namespace: '{{ deployment_namespace }}'
+    label_selectors: '{{ deployment_label_selectors | default(omit) }}'
+  register: deployment_found
+  until:
+    - deployment_found.resources.0.status is defined
+    - deployment_found.resources.0.status.availableReplicas is defined
+    - deployment_found.resources.0.status.availableReplicas > 0
+  retries: 60
+  delay: 10

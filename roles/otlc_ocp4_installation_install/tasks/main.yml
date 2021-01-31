@@ -1,3 +1,6 @@
-- include: preinstall.yml
+- import_tasks: get_latest_version.yml
+  when: openshift_version == 'latest'
 
-- include: install.yml
+- import_tasks: preinstall.yml
+
+- import_tasks: install.yml

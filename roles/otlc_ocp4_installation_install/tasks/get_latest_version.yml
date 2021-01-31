@@ -1,0 +1,13 @@
+- name: Fetch the versions available in channel {{ openshift_channel }}
+  uri:
+    url: 'https://raw.githubusercontent.com/openshift/cincinnati-graph-data/master/channels/stable-{{ openshift_channel }}.yaml'
+    method: GET
+    return_content: True
+    status_code: [ 200 ]
+  register: openshift_versions
+
+# The assumption is that the latest version is the last on the list. This assumption holds most of the time but
+# not always.
+- name: Choose the latest OpenShift version in channel {{ openshift_channel }}
+  set_fact:
+    openshift_version: '{{ (openshift_versions.content | from_yaml).versions | last }}'

@@ -18,5 +18,6 @@
             areyousure: yes
         body_format: json
         status_code: 200
+        timeout: 120
       ignore_errors: True
       loop: '{{ otlc_services_provisioned.json.resources }}'

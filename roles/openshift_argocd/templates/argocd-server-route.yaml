@@ -7,6 +7,7 @@ spec:
     targetPort: https
   tls:
     termination: passthrough
+    insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
     name: argocd-server

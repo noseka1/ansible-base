@@ -42,7 +42,7 @@
     namespace: '{{ external_secrets_namespace }}'
   register: test_secret
   until: test_secret.resources | length > 0
-  retries: 10
+  retries: 120
   delay: 1
 
 - name: Fail if the secret value is not correct

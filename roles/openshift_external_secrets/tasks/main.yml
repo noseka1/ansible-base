@@ -29,6 +29,9 @@
         VAULT_ADDR: '{{ vault_addr }}'
         DEFAULT_VAULT_MOUNT_POINT: kubernetes
         DEFAULT_VAULT_ROLE: external-secrets
+      serviceMonitor:
+        enabled: true
+        namespace: '{{ external_secrets_namespace }}'
 
 - name: Create an external secret for testing
   k8s:

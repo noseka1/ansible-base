@@ -65,6 +65,7 @@ otlc_labs:
       dialog_region: na_opentlc
       dialog_runtime: "8"
 
+  # Custom OCP installation, TLS certs configuration works, runs constantly
   ocp4_installation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
@@ -76,6 +77,7 @@ otlc_labs:
       dialog_region: na_sandboxes_gpte
       dialog_runtime: "8"
 
+  # Cannot add records to the DNS zone, shuts down after 8 hours
   ocp4_configuration:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
@@ -89,6 +91,7 @@ otlc_labs:
       dialog_region: na_sandboxes_gpte
       dialog_runtime: "8"
 
+  # OCP 4.6.2, cannot add records to the DNS zone, shuts down after 8 hours
   ocs4_implementation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'

@@ -1,0 +1,3 @@
+- import_tasks: install_argocd.yml
+
+- import_tasks: report_success.yml

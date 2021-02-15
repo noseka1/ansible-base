@@ -15,6 +15,19 @@
   loop:
     - '{{ argocd_instance_name }}-cluster-secret.yaml'
 
+- name: Obtain ingress wildcard certificate
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: wildcard-cert
+    namespace: openshift-ingress
+  register: wildcard_cert
+
+- name: Configure Argo CD TLS cert
+  k8s:
+    definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-secret.yaml') }}"
+  when: wildcard_cert.resources | length == 1
+
 - name: Deploy Argo CD instance
   command: oc apply --kustomize {{ argocd_kustomizations.instance }}
 

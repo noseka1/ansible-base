@@ -23,7 +23,7 @@
     namespace: openshift-ingress
   register: wildcard_cert
 
-- name: Configure Argo CD TLS cert
+- name: Configure Argo CD endpoint TLS cert
   k8s:
     definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-secret.yaml') }}"
   when: wildcard_cert.resources | length == 1

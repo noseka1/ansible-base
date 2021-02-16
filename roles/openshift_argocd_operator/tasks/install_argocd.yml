@@ -9,7 +9,7 @@
     subscription_name: '{{ argocd_subscription_name }}'
     subscription_namespace: '{{ argocd_subscription_namespace }}'
 
-- name: Apply custom settings
+- name: Set admin user password
   k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
@@ -27,6 +27,19 @@
   k8s:
     definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-secret.yaml') }}"
   when: wildcard_cert.resources | length == 1
+
+- name: Obtain sa secrets in the default namespace
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    namespace: default
+    field_selectors:
+      - type=kubernetes.io/service-account-token
+  register: sa_secrets
+
+- name: Trust the hosting cluster's certs
+  k8s:
+    definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-certs-cm-cm.yaml') }}"
 
 - name: Deploy Argo CD instance
   command: oc apply --kustomize {{ argocd_kustomizations.instance }}

@@ -2,7 +2,7 @@
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: argocd-server
+    name: '{{ argocd_instance_name }}-server'
     namespace: '{{ argocd_instance_namespace }}'
   register: argocd_route
 

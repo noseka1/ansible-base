@@ -1,0 +1,6 @@
+gitops_kustomizations:
+  operator: github.com/noseka1/openshift-gitops-kustomization/gitops-operator/base?ref=myauto
+gitops_subscription_namespace: openshift-operators
+gitops_subscription_name: openshift-gitops
+argocd_instance_namespace: openshift-gitops
+argocd_instance_name: argocd-cluster

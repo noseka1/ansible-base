@@ -16,3 +16,7 @@
   k8s:
     definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-secret.yaml') }}"
   when: wildcard_cert.resources | length == 1
+
+- name: Configure Argo CD server
+  k8s:
+    definition: "{{ lookup('template', 'argocd-cm-cm.yaml') }}"

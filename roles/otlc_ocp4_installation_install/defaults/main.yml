@@ -1,2 +1,2 @@
-openshift_channel: '4.6'
+openshift_channel: '4.7'
 openshift_version: latest

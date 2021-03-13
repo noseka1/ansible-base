@@ -3,10 +3,10 @@ kind: Kustomization
 namespace: {{ quay_instance_namespace }}
 
 bases:
-  - {{ quay_kustomizations.instance }}
+- {{ quay_kustomizations.instance }}
 
 patchesStrategicMerge:
-  - quay-quayecosystem.yaml
+- quay-quayecosystem.yaml
 
 secretGenerator:
 - behavior: replace

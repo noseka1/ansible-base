@@ -17,6 +17,9 @@
 - name: Enable audit logs
   import_tasks: enable_audit.yml
 
+- name: Create kv store
+  import_tasks: create_kv_store.yml
+
 - name: Insert secrets
   import_tasks: insert_secrets.yml
 

@@ -9,9 +9,6 @@
     subscription_name: '{{ rhacm_subscription_name }}'
     subscription_namespace: '{{ rhacm_subscription_namespace }}'
 
-- name: Deploy RHACM instance
-  command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
-
 - name: Wait until klusterletaddonconfigs resource is available
   k8s_info:
     api_version: apiextensions.k8s.io/v1
@@ -21,6 +18,9 @@
   until: klusterletaddonconfigs_crd.resources | length > 0
   retries: 80
   delay: 10
+
+- name: Deploy RHACM instance
+  command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
   k8s_info:

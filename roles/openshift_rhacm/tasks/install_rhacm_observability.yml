@@ -1,0 +1,37 @@
+- name: Obtain Minio route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ minio_name }}'
+    namespace: '{{ minio_namespace }}'
+  register: minio_route
+
+- fail:
+    msg: Minio not installed. Install Minio first and then re-run the RHACM playbook.
+  when: minio_route.resources | length == 0
+
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -rhacm-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - pull-secret-secret.yaml
+    - thanos-object-storage-secret.yaml
+
+- name: Install Observability component
+  command: oc apply --kustomize {{ tmpdir.path }}
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

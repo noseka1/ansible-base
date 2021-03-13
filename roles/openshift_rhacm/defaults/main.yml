@@ -1,7 +1,11 @@
 rhacm_kustomizations:
   operator: github.com/noseka1/rhacm-kustomization/rhacm-operator/base?ref=myauto
   instance: github.com/noseka1/rhacm-kustomization/rhacm-instance/overlays/basic?ref=myauto
+  observability: github.com/noseka1/rhacm-kustomization/rhacm-observability/overlays/basic?ref=myauto
 rhacm_subscription_namespace: open-cluster-management
 rhacm_subscription_name: advanced-cluster-management
 rhacm_instance_namespace: open-cluster-management
 rhacm_instance_name: multiclusterhub
+
+minio_name: minio
+minio_namespace: minio

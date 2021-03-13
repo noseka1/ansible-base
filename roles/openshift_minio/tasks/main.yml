@@ -1,0 +1,43 @@
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -minio-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - minio-credentials-secret.yaml
+
+- name: Install Minio
+  command: oc apply --kustomize {{ tmpdir.path }}
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent
+
+- name: Obtain Minio route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: minio
+    namespace: '{{ minio_namespace }}'
+  register: minio_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Minio to come up
+  uri:
+    url: 'https://{{ minio_route.resources.0.spec.host }}/minio/health/live'
+    method: GET
+    status_code: [ 200 ]
+    validate_certs: False
+  register: minio_health
+  until: minio_health.status in [ 200 ]
+  retries: 60
+  delay: 10

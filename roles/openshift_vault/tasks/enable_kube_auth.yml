@@ -63,8 +63,8 @@
   hashivault_write:
     secret: /auth/kubernetes/role/external-secrets
     data:
-      bound_service_account_names: external-secrets-kubernetes-external-secrets
-      bound_service_account_namespaces: external-secrets
+      bound_service_account_names: external-secrets-kubernetes-external-secrets,default
+      bound_service_account_namespaces: external-secrets,default
       policies: kube_read
   environment:
     VAULT_ADDR: '{{ vault_addr }}'

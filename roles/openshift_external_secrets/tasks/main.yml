@@ -28,6 +28,8 @@
         LOG_LEVEL: debug
         VAULT_ADDR: '{{ vault_addr }}'
         DEFAULT_VAULT_MOUNT_POINT: kubernetes
+        # This role must exist in Vault. This role must grant access to secret data
+        # See also https://www.vaultproject.io/docs/auth/kubernetes
         DEFAULT_VAULT_ROLE: external-secrets
       serviceMonitor:
         enabled: true

@@ -21,6 +21,10 @@
       ui:
         enabled: True
 
+- name: Create route
+  k8s:
+    definition: "{{ lookup('template', 'vault-route.yml') }}"
+
 - name: Obtain vault route
   import_tasks: get_vault_route.yml
 

@@ -9,10 +9,17 @@
 
 - name: Save the unseal key in the Kubernetes secret for later use
   k8s:
-    definition: "{{ lookup('template', 'vault-unseal-secret.yml') }}"
+    definition: "{{ lookup('template', 'vault-unseal-key-secret.yml') }}"
 
 - name: Unseal vault
   import_tasks: unseal.yml
+
+- name: Deploy script that unseals vault automatically
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - vault-unseal-deploy.yml
+    - vault-unseal-script-cm.yml
 
 - name: Enable user/password authentication
   hashivault_auth_method:

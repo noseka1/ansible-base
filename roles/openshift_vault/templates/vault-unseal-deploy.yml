@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ vault_name }}-unseal
+  namespace: {{ vault_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ vault_name }}-unseal
+  template:
+    metadata:
+      labels:
+        app: {{ vault_name }}-unseal
+    spec:
+      containers:
+      - image: quay.io/noseka1/openshift-toolbox:basic
+        env:
+        - name: VAULT_ADDR
+          value: {{ vault_addr }}
+        name: vault-unseal
+        volumeMounts:
+        - name: script
+          mountPath: /toolbox
+        - name: key
+          mountPath: /mnt
+      volumes:
+      - name: script
+        configMap:
+          name: {{ vault_name }}-unseal-script
+      - name: key
+        secret:
+          secretName: {{ vault_name }}-unseal-key

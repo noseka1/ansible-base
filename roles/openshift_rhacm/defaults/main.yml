@@ -7,5 +7,7 @@ rhacm_subscription_name: advanced-cluster-management
 rhacm_instance_namespace: open-cluster-management
 rhacm_instance_name: multiclusterhub
 
+install_rhacm_observability: False
+
 minio_name: minio
 minio_namespace: minio

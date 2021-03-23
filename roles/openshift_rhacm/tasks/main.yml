@@ -1,6 +1,7 @@
 - import_tasks: install_rhacm_core.yml
 
 - import_tasks: install_rhacm_observability.yml
+  when: install_rhacm_observability
 
 - import_tasks: configure_users.yml
 

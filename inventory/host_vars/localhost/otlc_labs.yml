@@ -72,6 +72,7 @@ otlc_labs:
     template_id: '20000000000619'
     template_name: 'OpenShift 4 Installation Lab'
     order_options:
+      dialog_environment: PROD
       dialog_expiration: "6"
       dialog_notes: "Customer Activity - Customer environment testing"
       dialog_region: na_sandboxes_gpte

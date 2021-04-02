@@ -69,7 +69,7 @@ otlc_labs:
   ocp4_installation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
-    template_id: '20000000000619'
+    template_id: '20000000001005'
     template_name: 'OpenShift 4 Installation Lab'
     order_options:
       dialog_environment: PROD

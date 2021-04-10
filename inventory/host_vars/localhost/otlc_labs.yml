@@ -13,6 +13,11 @@
 #
 # ManageIQ API documentation:
 # https://www.manageiq.org/docs/api
+#
+# Possible dialog_region values:
+# na_sandbox_gpte
+# emea_sandbox_gpte
+# apac_sandbox_gpte
 
 otlc_labs:
   ocp3_migration:
@@ -37,7 +42,7 @@ otlc_labs:
     order_options:
       dialog_check: t
       dialog_expiration: "7"
-      dialog_region: na_sandboxes_gpte
+      dialog_region: na_sandbox_gpte
       dialog_runtime: "10"
       dialog_notes: "Customer Activity - Informal training"
       dialog_environment: PROD
@@ -75,7 +80,7 @@ otlc_labs:
       dialog_environment: PROD
       dialog_expiration: "6"
       dialog_notes: "Customer Activity - Customer environment testing"
-      dialog_region: na_sandboxes_gpte
+      dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
   # Cannot add records to the DNS zone, shuts down after 8 hours
@@ -89,7 +94,7 @@ otlc_labs:
       dialog_environment: PROD
       dialog_expiration: "7"
       dialog_notes: "Customer Activity - Customer environment testing"
-      dialog_region: na_sandboxes_gpte
+      dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
   # OCP 4.7.4, cannot add records to the DNS zone, shuts down after 8 hours

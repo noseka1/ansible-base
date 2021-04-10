@@ -33,6 +33,20 @@ otlc_labs:
       dialog_notes: "Customer Activity - Customer environment testing"
       dialog_environment: PROD
 
+  # OCP 4.4.29, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days
+  acm_foundation_managed:
+    catalog_id: '20000000000040'
+    template_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000000860'
+    catalog_name: 'OpenShift 4 ACM Foundation Lab (Managed)'
+    order_options:
+      dialog_check: t
+      dialog_expiration: "2"
+      dialog_region: na_sandbox_gpte
+      dialog_runtime: "8"
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_environment: PROD
+
   ocp3_migration:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'

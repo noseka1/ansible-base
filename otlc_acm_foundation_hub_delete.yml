@@ -1,0 +1,8 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: otlc_generic_delete
+      vars:
+        otlc_service_desc: '{{ otlc_labs.acm_foundation_hub }}'

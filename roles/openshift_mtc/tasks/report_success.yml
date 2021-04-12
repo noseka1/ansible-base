@@ -1,0 +1,20 @@
+- name: Obtain MTC route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: migration
+    namespace: '{{ mtc_instance_namespace }}'
+  register: mtc_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Migration Toolkit for Containers UI to come up
+  uri:
+    url: 'https://{{ mtc_route.resources.0.spec.host }}'
+    method: GET
+    validate_certs: False
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 10
+
+- debug:
+    msg: Migration Toolkit for Containers installed successfully. You can browse to https://{{ mtc_route.resources.0.spec.host }}

@@ -3,4 +3,4 @@ gitops_kustomizations:
 gitops_subscription_namespace: openshift-operators
 gitops_subscription_name: openshift-gitops
 argocd_instance_namespace: openshift-gitops
-argocd_instance_name: argocd-cluster
+argocd_instance_name: openshift-gitops

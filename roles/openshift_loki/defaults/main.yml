@@ -1,0 +1,5 @@
+loki_kustomizations:
+  namespace: github.com/noseka1/multiregional-observability/observatorium-namespace/base?ref=myauto
+  minio: github.com/noseka1/multiregional-observability/minio/base?ref=myauto
+  loki: github.com/noseka1/multiregional-observability/loki-standalone/base?ref=myauto
+  promtail: github.com/noseka1/multiregional-observability/promtail/overlays/loki-standalone?ref=myauto

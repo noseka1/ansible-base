@@ -1,3 +1,9 @@
+- name: Create namespace {{ minio_namespace }}
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ minio_namespace }}'
+
 - name: Create temporary kustomize directory
   tempfile:
     state: directory

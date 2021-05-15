@@ -1,4 +1,4 @@
 minio_kustomizations:
-  minio: github.com/noseka1/openshift-minio-kustomization/minio/base?ref=myauto
+  minio: github.com/noseka1/openshift-minio-kustomization/minio-instance/base?ref=myauto
 
 minio_namespace: minio

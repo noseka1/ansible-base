@@ -1,5 +1,11 @@
 - import_tasks: install_rhacm_core.yml
 
+- import_role:
+    name: openshift_minio
+  vars:
+    minio_namespace: '{{ rhacm_minio_namespace }}'
+  when: install_rhacm_observability
+
 - import_tasks: install_rhacm_observability.yml
   when: install_rhacm_observability
 

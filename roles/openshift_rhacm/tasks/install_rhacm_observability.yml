@@ -2,8 +2,8 @@
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ minio_name }}'
-    namespace: '{{ minio_namespace }}'
+    name: '{{ rhacm_minio_name }}'
+    namespace: '{{ rhacm_minio_namespace }}'
   register: minio_route
 
 - fail:

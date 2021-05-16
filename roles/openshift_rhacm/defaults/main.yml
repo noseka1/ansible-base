@@ -10,5 +10,5 @@ rhacm_instance_name: multiclusterhub
 
 install_rhacm_observability: False
 
-minio_name: minio
-minio_namespace: minio
+rhacm_minio_name: minio
+rhacm_minio_namespace: open-cluster-management

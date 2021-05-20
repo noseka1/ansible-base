@@ -1,5 +1,8 @@
 redhat_subscription_pool_id: 8a85f99b6b498682016b521dfe463949 # Employee SKU
+
+# AMI name: rhcos-47.83.202103251640-0, creation date: March 25, 2021 at 10:41:40
 aws_rhcos_ami:
-  us-east-1: ami-046fe691f52a953f9
-  us-west-1: ami-0c1d2b5606111ac8c
-  us-west-2: ami-0409b2cebfc3ac3d0
+  us-east-1: ami-03d1c2cba04df838c
+  us-east-2: ami-0ddab715d6b88a315
+  us-west-1: ami-09b797de07577bf33
+  us-west-2: ami-0617611237b58ac93

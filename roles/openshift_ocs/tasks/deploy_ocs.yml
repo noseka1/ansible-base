@@ -27,18 +27,12 @@
   delay: 10
 
 - name: Deploy rook-ceph-tools
-  command: oc apply --kustomize {{ ocs_kustomizations.tools }}
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for rook-ceph-tools deployment to complete
-  k8s_info:
-    api_version: apps/v1
-    kind: Deployment
-    namespace: '{{ ocs_instance_namespace }}'
-    name: rook-ceph-tools
-  register: rook_ceph_tools
-  until:
-    - rook_ceph_tools.resources.0.status is defined
-    - rook_ceph_tools.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (rook_ceph_tools.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: 60
-  delay: 10
+  k8s:
+    definition:
+      apiVersion: ocs.openshift.io/v1
+      kind: OCSInitialization
+      metadata:
+        name:  ocsinit
+        namespace: '{{ ocs_instance_namespace }}'
+      spec:
+        enableCephTools: true

@@ -1,7 +1,0 @@
-he_bridge_if: '{{ rhv_lab.hosted_engine.bridge_if }}'
-he_fqdn: '{{ rhv_lab.hosted_engine.fqdn }}'
-he_vm_mac_addr: '{{ rhv_lab.hosted_engine.vm_mac_addr }}'
-he_domain_type: '{{ rhv_lab.hosted_engine.domain_type }}'
-he_storage_domain_addr: '{{ rhv_lab.hosted_engine.storage_domain_addr }}'
-he_storage_domain_path: '{{ rhv_lab.hosted_engine.storage_domain_path }}'
-he_mem_size_MB: '{{ rhv_lab.hosted_engine.memory }}'

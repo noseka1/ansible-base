@@ -1,0 +1,33 @@
+- name: Enable dnf module virt:av
+  command: dnf module enable virt:av --assumeyes
+  become: True
+
+- name: Install rpms
+  yum:
+    name:
+      - firewalld
+      - rhvm-appliance
+      - ovirt-hosted-engine-setup
+    state: present
+  become: True
+
+- name: Firewalld is required to be enabled and active in order to correctly deploy hosted-engine
+  service:
+    name: firewalld
+    state: started
+    enabled: True
+
+- name:
+  template:
+    src: '{{ item }}'
+    dest: '{{ ansible_env["HOME"] }}/{{ item }}'
+  with_items:
+    - hosted-engine-deploy-answers-file.conf
+
+- name: Remove the disk space check
+  patch:
+    src: create_storage_domain.yml.patch
+    dest: /usr/share/ansible/collections/ansible_collections/redhat/rhv/roles/hosted_engine_setup/tasks/create_storage_domain.yml
+
+- debug:
+    msg: Continue the installation using command 'ssh root@rhvh.lab.example.com hosted-engine --deploy --config-append=/root/hosted-engine-deploy-answers-file.conf'

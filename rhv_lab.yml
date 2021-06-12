@@ -1,14 +1,4 @@
-# Run this playbook using:
-# ansible-playbook -i inventory/rhv_lab.ini -e ansible_python_interpreter=/usr/bin/python2 rhv_lab.yml
 - hosts: rhvh.lab.example.com
   tasks:
-    - name: Red Hat subscription
-      import_role:
-        name: devnullcake.redhat-subscription
-      vars:
-        redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
-        redhat_subscription_enable_repos:
-          - rhel-7-server-rhvh-4-rpms
-
     - import_role:
         name: rhv_lab

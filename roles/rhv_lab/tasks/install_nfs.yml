@@ -1,0 +1,55 @@
+- name: Install rpms
+  yum:
+    name:
+      - nfs-utils
+    state: present
+  become: True
+
+- name: Start NFS server services
+  service:
+    name: '{{ item }}'
+    state: started
+    enabled: True
+  loop:
+    - nfs-server
+    - rpcbind
+  become: True
+
+- name: Create group kvm
+  group:
+    name: kvm
+    gid: 36
+  become: True
+
+- name: Create user vdsm
+  user:
+    name: vdsm
+    uid: 36
+    groups:
+      - kvm
+  become: True
+
+- name: Create /storage directory
+  file:
+    path: /storage
+    owner: vdsm
+    group: kvm
+    state: directory
+    mode: '0755'
+  become: True
+
+- name: Export /storage via NFS
+  template:
+    src: exports
+    dest: /etc/exports
+  register: nfs_config
+
+- name: Restart NFS services
+  service:
+    name: '{{ item }}'
+    state: restarted
+  loop:
+    - nfs-server
+    - rpcbind
+  when: nfs_config is changed
+  become: True

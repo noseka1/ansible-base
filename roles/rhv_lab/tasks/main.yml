@@ -1,24 +1,8 @@
-- name: Install rpms
-  yum:
-    name:
-      - ovirt-engine-appliance
-      - vim
-    state: present
-  become: True
+- name: Enable RHV repos
+  import_tasks: enable_rhv_repos.yml
 
-- name:
-  template:
-    src: '{{ item }}'
-    dest: '{{ ansible_env["HOME"] }}/{{ item }}'
-  with_items:
-    - he_deployment.yml
-    - hosted_engine_deploy_localhost.yml
-    - passwords.yml
+- name: Install NFS storage
+  import_tasks: install_nfs.yml
 
-- name: Remove the disk space check
-  patch:
-    src: create_storage_domain.yml.patch
-    dest: /usr/share/ansible/roles/ovirt.hosted_engine_setup/tasks/create_storage_domain.yml
-
-- debug:
-    msg: Continue the installation using command 'ssh root@rhvh.lab.example.com ansible-playbook hosted_engine_deploy_localhost.yml --extra-vars @he_deployment.yml --extra-vars @passwords.yml'
+- name: Deploy oVirt engine appliance
+  import_tasks: deploy_engine.yml

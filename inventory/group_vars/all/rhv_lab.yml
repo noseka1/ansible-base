@@ -1,12 +1,13 @@
 rhv_lab:
   hosted_engine:
     fqdn: engine.lab.example.com
+    vcpus: 4
     memory: 4096
     bridge_if: eth0
     vm_mac_addr: 00:a5:3f:66:ba:12
     domain_type: nfs
-    storage_domain_addr: 192.168.122.1
-    storage_domain_path: /exports/rhv
+    storage_domain_addr: rhvh.lab.example.com
+    storage_domain_path: /storage
     password: '{{ generic_user_password }}'
   ovirt_url: https://engine.lab.example.com/ovirt-engine/api
   ovirt_username: admin@internal

@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: rhv_lab
+        tasks_from: create_ovirt_network.yml

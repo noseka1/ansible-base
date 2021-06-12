@@ -1,6 +1,6 @@
 kubeadm_config:
   # see git tags at https://github.com/kubernetes/kubernetes
-  kubernetes_version: v1.18.2
+  kubernetes_version: v1.21.1
   # required by flannel, see also: https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md
   pod_network_cidr: 10.244.0.0/16
   crisocket: /var/run/dockershim.sock

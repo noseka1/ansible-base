@@ -14,6 +14,9 @@
 
 - include: generate_ssh_keys.yml
 
+- import_tasks: set_timezone.yml
+  when: timezone | length > 0
+
 - include: configure_ntp.yml
 
 - include: display_boot.yml

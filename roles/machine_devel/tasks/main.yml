@@ -1,0 +1,29 @@
+- set_fact:
+    github_dir: '{{ ansible_env.HOME + "/git/github.com/noseka1" }}'
+
+- name: Create github directory
+  file:
+    path: '{{ github_dir }}'
+    state: directory
+
+- name: Git checkout openshift-toolbox
+  git:
+    repo: 'https://github.com/noseka1/openshift-toolbox'
+    dest: '{{ github_dir }}/openshift-toolbox'
+    version: master
+
+- name: Run installation scripts
+  command: '{{ item }}'
+  loop:
+    - '{{ github_dir }}/openshift-toolbox/toolbox_install_basic.sh'
+    - '{{ github_dir }}/openshift-toolbox/toolbox_install_full.sh'
+  become: True
+
+- name: Git checkout rcfiles
+  git:
+    repo: 'https://github.com/noseka1/rcfiles'
+    dest: '{{ github_dir }}/rcfiles'
+    version: master
+
+- name: Set up rcfiles
+  command: '{{ github_dir }}/rcfiles/bin/rcfiles_setup --assumeyes'

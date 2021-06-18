@@ -8,19 +8,12 @@
         name: common_tasks
         tasks_from: configure_common_users.yml
 
-- hosts: all
-  gather_facts: False
-  tasks:
-    - name: Add the same host to the inventory but set ansible_ssh_user to developer
-      add_host:
-        name: '{{ ansible_host }}-developer'
-        ansible_ssh_host: '{{ ansible_host }}'
+    # Switch to user developer before running the machine_devel role
+    - set_fact:
         ansible_ssh_user: developer
-        groups: all_developer
-      changed_when: False
       tags: machine_devel
 
-- hosts: all_developer
+- hosts: all
   tasks:
     - import_role:
         name: machine_devel

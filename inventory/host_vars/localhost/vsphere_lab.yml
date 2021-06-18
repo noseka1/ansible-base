@@ -16,3 +16,4 @@ vsphere_lab:
   vsphere_hostname: photon-machine.lab.example.com
   vsphere_username: administrator@mysso.com
   vsphere_password: '{{ generic_user_password }}'
+  openshift_network_nic: vmnic1

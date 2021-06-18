@@ -4,7 +4,7 @@
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
     switch: OpenShift
-    nics: vmnic1
+    nics: '{{ vsphere_lab.openshift_network_nic }}'
     validate_certs: False
 
 - name: Create portgroup

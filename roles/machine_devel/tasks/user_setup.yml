@@ -1,0 +1,11 @@
+- set_fact:
+    github_dir: '{{ ansible_env.HOME + "/git/github.com/noseka1" }}'
+
+- name: Git checkout rcfiles
+  git:
+    repo: 'https://github.com/noseka1/rcfiles'
+    dest: '{{ github_dir }}/rcfiles'
+    version: master
+
+- name: Set up rcfiles
+  command: '{{ github_dir }}/rcfiles/bin/rcfiles_setup --assumeyes'

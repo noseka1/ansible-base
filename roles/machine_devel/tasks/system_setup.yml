@@ -18,12 +18,3 @@
     - '{{ github_dir }}/openshift-toolbox/toolbox_install_basic.sh'
     - '{{ github_dir }}/openshift-toolbox/toolbox_install_full.sh'
   become: True
-
-- name: Git checkout rcfiles
-  git:
-    repo: 'https://github.com/noseka1/rcfiles'
-    dest: '{{ github_dir }}/rcfiles'
-    version: master
-
-- name: Set up rcfiles
-  command: '{{ github_dir }}/rcfiles/bin/rcfiles_setup --assumeyes'

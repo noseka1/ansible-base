@@ -8,7 +8,17 @@
         name: common_tasks
         tasks_from: configure_common_users.yml
 
-    # Switch to user developer before running the machine_devel role
+    - import_role:
+        name: machine_devel
+        tasks_from: system_setup
+      tags: machine_devel
+
+    - import_role:
+        name: machine_devel
+        tasks_from: user_setup
+      tags: machine_devel
+
+    # Switch to user developer
     - set_fact:
         ansible_ssh_user: developer
       tags: machine_devel
@@ -17,4 +27,5 @@
   tasks:
     - import_role:
         name: machine_devel
+        tasks_from: user_setup
       tags: machine_devel

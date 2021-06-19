@@ -1,10 +1,12 @@
 - name: Configure vCSA to start on ESXi host start
   community.vmware.vmware_host_auto_start:
-    hostname: '{{ vsphere_lab.esxi_hostname }}'
-    username: '{{ vsphere_lab.esxi_username }}'
-    password: '{{ vsphere_lab.esxi_password }}'
+    hostname: '{{ vsphere_lab.vsphere_hostname }}'
+    username: '{{ vsphere_lab.vsphere_username }}'
+    password: '{{ vsphere_lab.vsphere_password }}'
     esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
     validate_certs: False
-    power_info:
-      start_action: powerOn
+    system_defaults:
+      enabled: true
+      start_delay: 0
+      stop_delay: 0

@@ -30,7 +30,7 @@
         },
         "os": {
             "password": "{{ vsphere_lab.vsphere_password }}",
-            "ntp_servers": "time.nist.gov",
+            "time_tools_sync": false,
             "ssh_enable": true
         },
         "sso": {

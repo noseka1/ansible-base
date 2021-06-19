@@ -6,7 +6,6 @@
     esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
     validate_certs: False
-    system_defaults:
-      enabled: true
-      start_delay: 0
-      stop_delay: 0
+    power_info:
+      start_action: powerOn
+      start_order: 1

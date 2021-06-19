@@ -6,7 +6,7 @@ vsphere_lab:
   vcsa_vm:
     name: Embedded-vCenter-Server-Appliance
     memory: 6144
-    macaddr: '00:50:56:11:22:19'
+    macaddr: 00:50:56:11:22:19
     static_network:
       ip: 192.168.122.61
       dns: 192.168.122.1

@@ -1,3 +1,8 @@
+- name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
+  command: >
+    {{ vsphere_lab.vcsa_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help
+  changed_when: False
+
 - name: Create temporary directory
   tempfile:
     state: directory

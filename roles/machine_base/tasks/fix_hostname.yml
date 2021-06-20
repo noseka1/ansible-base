@@ -12,7 +12,3 @@
 - name: Run setup after the hostname changed
   setup:
   when: hostname is changed
-
-- name: Add 127.0.0.1 entry to /etc/hosts
-  lineinfile: dest=/etc/hosts line="127.0.0.1 {{ ansible_hostname }} {{ ansible_nodename }}"
-  become: yes

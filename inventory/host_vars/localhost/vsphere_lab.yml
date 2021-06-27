@@ -13,6 +13,7 @@ vsphere_lab:
       prefix: 24
       gateway: 192.168.122.1
       system_name: photon-machine.lab.example.com
+    ntp_servers: time.nist.gov
   vsphere_hostname: photon-machine.lab.example.com
   vsphere_username: administrator@mysso.com
   vsphere_password: '{{ generic_user_password }}'

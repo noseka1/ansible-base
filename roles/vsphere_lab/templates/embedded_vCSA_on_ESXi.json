@@ -30,7 +30,11 @@
         },
         "os": {
             "password": "{{ vsphere_lab.vsphere_password }}",
+{% if vsphere_lab.vcsa_vm.ntp_servers is defined and vsphere_lab.vcsa_vm.ntp_servers != "" %}
+            "ntp_servers": "{{ vsphere_lab.vcsa_vm.ntp_servers }}",
+{% else %}
             "time_tools_sync": false,
+{% endif %}
             "ssh_enable": true
         },
         "sso": {

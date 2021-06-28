@@ -1,0 +1,5 @@
+- hosts: localhost
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: import_ca_certs.yml

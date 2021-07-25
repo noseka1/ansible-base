@@ -1,0 +1,7 @@
+openshift_virtualization_kustomizations:
+  operator: github.com/noseka1/openshift-virtualization-kustomization/openshift-virtualization-operator/base?ref=myauto
+  instance: github.com/noseka1/openshift-virtualization-kustomization/openshift-virtualization-instance/base?ref=myauto
+openshift_virtualization_subscription_namespace: openshift-cnv
+openshift_virtualization_subscription_name: kubevirt-hyperconverged
+openshift_virtualization_instance_namespace: openshift-cnv
+openshift_virtualization_instance_name: kubevirt-hyperconverged

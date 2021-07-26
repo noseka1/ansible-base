@@ -18,6 +18,9 @@
 # na_sandbox_gpte
 # emea_sandbox_gpte
 # apac_sandbox_gpte
+#
+# na
+# emea
 
 otlc_labs:
   # OCP 4.5.4, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days, RHACM 2.0.3 preinstalled

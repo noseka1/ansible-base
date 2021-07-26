@@ -3,4 +3,7 @@
   gather_facts: True
   tasks:
     - import_role:
+        name: openshift_nfs
+
+    - import_role:
         name: osh_lab

@@ -42,13 +42,16 @@
     - rook-nfs-server-sa.yml
     - rook-nfs-nfsserver.yml
 
-- name: Obtain Rook NFS service
+- name: Wait until Rook NFS service shows up
   k8s_info:
     api_version: v1
     kind: Service
     name: rook-nfs
     namespace: rook-nfs
   register: rook_nfs_service
+  until: rook_nfs_service.resources | length > 0
+  retries: 60
+  delay: 10
 
 - name: Create PVs available for the OpenShift users
   k8s:

@@ -1,5 +1,10 @@
-- name: Deploy OpenShift Virtualization operator
-  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.operator }}
+- name: Deploy OpenShift Virtualization operator (KVM)
+  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.operator_kvm }}
+  when: qemu_kvm
+
+- name: Deploy OpenShift Virtualization operator (emulation)
+  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.operator_emu }}
+  when: not qemu_kvm
 
 - name: Wait for OpenShift Virtualization operator to deploy
   import_role:

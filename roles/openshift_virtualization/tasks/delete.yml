@@ -1,0 +1,31 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_objects.yml
+  vars:
+    delete_objects_apiver: kubevirt.io/v1alpha3
+    delete_objects_kind: VirtualMachine
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_objects.yml
+  vars:
+    delete_objects_apiver: cdi.kubevirt.io/v1beta1
+    delete_objects_kind: DataVolume
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_objects.yml
+  vars:
+    delete_objects_apiver: kubevirt.io/v1alpha3
+    delete_objects_kind: VirtualMachineInstance
+
+- name: Delete OpenShift Virtualization instance
+  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.instance }}
+
+- name: Delete OpenShift Virtualization operator (KVM)
+  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.operator_kvm }}
+  when: qemu_kvm
+
+- name: Delete OpenShift Virtualization operator (emulation)
+  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.operator_emu }}
+  when: not qemu_kvm

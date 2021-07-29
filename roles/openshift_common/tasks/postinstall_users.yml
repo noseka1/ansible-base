@@ -12,32 +12,6 @@
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version is version('7', '>')
   become: True
 
-- name: Create temporary file
-  tempfile:
-    prefix: htpasswd
-    state: file
-  register: tmpfile
-
-- name: Create htpassword file holding additional OpenShift users
-  htpasswd:
-    path: '{{ tmpfile.path }}'
-    name: '{{ item.name }}'
-    password: '{{ item.password }}'
-  no_log: True
-  with_items:
-    - { name: admin,     password: '{{ generic_user_password }}' }
-    - { name: developer, password: '{{ generic_user_password }}' }
-
-- name: Retrieve htpasswd file
-  shell: cat {{ tmpfile.path }}
-  changed_when: False
-  register: htpasswd
-
-- name: Delete temporary {{ tmpfile.path }}
-  file:
-    path: '{{ tmpfile.path }}'
-    state: absent
-
 - name: Create htpasswd secret
   k8s:
     definition: "{{ lookup('template', 'htpasswd-secret.yml') }}"

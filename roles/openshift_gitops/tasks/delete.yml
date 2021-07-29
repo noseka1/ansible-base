@@ -1,3 +1,11 @@
+- name: Obtain CSV name
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: '{{ gitops_subscription_name }}'
+    namespace: '{{ gitops_subscription_namespace }}'
+  register: operator_subscription
+
 - name: Delete GitOps operator
   command: oc delete --kustomize {{ gitops_kustomizations.operator }}
 
@@ -9,3 +17,10 @@
       - api_version: v1
         kind: Namespace
         name: openshift-gitops
+
+- name: Clean up CSVs
+  include_role:
+    name: openshift_common
+    tasks_from: delete_csvs.yml
+  vars:
+    delete_csvs_name: '{{ operator_subscription.resources.0.status.currentCSV }}'

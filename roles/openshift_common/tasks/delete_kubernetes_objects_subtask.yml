@@ -1,0 +1,27 @@
+- name: Obtain existing Kubernetes objects of kind {{ outer_item.kind }}
+  k8s_info:
+    api_version: '{{ outer_item.api_version }}'
+    kind: '{{ outer_item.kind }}'
+    name: '{{ outer_item.name | default(omit) }}'
+    namespace: '{{ outer_item.namespace | default(omit) }}'
+  register: existing_objects
+
+- name: Delete {{ existing_objects.resources | length }} Kubernetes objects
+  k8s:
+    api_version: '{{ outer_item.api_version }}'
+    kind: '{{ outer_item.kind }}'
+    name: '{{ item.metadata.name }}'
+    namespace: '{{ item.metadata.namespace | default(omit) }}'
+    state: absent
+  loop: '{{ existing_objects.resources }}'
+
+- name: Waiting until all objects of kind have been deleted
+  k8s_info:
+    api_version: '{{ outer_item.api_version }}'
+    kind: '{{ outer_item.kind }}'
+    name: '{{ outer_item.name | default(omit) }}'
+    namespace: '{{ outer_item.namespace | default(omit) }}'
+  register: remaining_objects
+  until: remaining_objects.resources | length == 0
+  retries: 30
+  delay: 5

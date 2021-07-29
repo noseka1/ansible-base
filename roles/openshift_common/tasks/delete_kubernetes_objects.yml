@@ -1,0 +1,5 @@
+- name: Delete Kubernetes objects outer loop
+  include_tasks: delete_kubernetes_objects_subtask.yml
+  loop: '{{ delete_kubernetes_objects }}'
+  loop_control:
+    loop_var: outer_item

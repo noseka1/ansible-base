@@ -1,0 +1,16 @@
+- name: Obtain existing Kubernetes namespaces
+  k8s_info:
+    api_version: v1
+    kind: Namespace
+  register: existing_namespaces
+
+- name: Delete CSV {{ delete_csvs_name }} in namespace
+  k8s:
+    api_version: operators.coreos.com/v1alpha1
+    kind: ClusterServiceVersion
+    name: '{{ delete_csvs_name }}'
+    namespace: '{{ item.metadata.name }}'
+    state: absent
+  loop: '{{ existing_namespaces.resources }}'
+  loop_control:
+    label: '{{ item.metadata.name }}'

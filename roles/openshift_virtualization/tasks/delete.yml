@@ -1,23 +1,14 @@
 - import_role:
     name: openshift_common
-    tasks_from: delete_objects.yml
+    tasks_from: delete_kubernetes_objects.yml
   vars:
-    delete_objects_apiver: kubevirt.io/v1alpha3
-    delete_objects_kind: VirtualMachine
-
-- import_role:
-    name: openshift_common
-    tasks_from: delete_objects.yml
-  vars:
-    delete_objects_apiver: cdi.kubevirt.io/v1beta1
-    delete_objects_kind: DataVolume
-
-- import_role:
-    name: openshift_common
-    tasks_from: delete_objects.yml
-  vars:
-    delete_objects_apiver: kubevirt.io/v1alpha3
-    delete_objects_kind: VirtualMachineInstance
+    delete_kubernetes_objects:
+      - api_version: kubevirt.io/v1
+        kind: VirtualMachine
+      - api_version: kubevirt.io/v1
+        kind: DataVolume
+      - api_version: kubevirt.io/v1
+        kind: VirtualMachineInstance
 
 - name: Delete OpenShift Virtualization instance
   command: oc delete --kustomize {{ openshift_virtualization_kustomizations.instance }}

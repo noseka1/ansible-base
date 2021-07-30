@@ -1,0 +1,38 @@
+- name: Deploy RHSSO operator
+  command: oc apply --kustomize {{ rhsso_kustomizations.operator }}
+
+- name: Wait for RHSSO operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ rhsso_subscription_name }}'
+    subscription_namespace: '{{ rhsso_subscription_namespace }}'
+
+- name: Deploy RHSSO instance
+  command: oc apply --kustomize {{ rhsso_kustomizations.instance }}
+
+- name: Wait for RHSSO to come up
+  k8s_info:
+    api_version: keycloak.org/v1alpha1
+    kind: Keycloak
+    name: '{{ rhsso_instance_name }}'
+    namespace: '{{ rhsso_instance_namespace }}'
+  register: rhsso_instance
+  until: rhsso_instance.resources.0.status.ready | default(False)
+  retries: 60
+  delay: 10
+
+- import_tasks: set_connection.yml
+
+- set_fact:
+    msg: |
+      Keycloak installed successfully.
+
+      Keycloak URL: https://{{ rhsso_hostname }}
+
+      Initial credentials:
+      Username: {{ rhsso_username }}
+      Password: {{ rhsso_password }}
+
+- debug: msg="{{ msg.split('\n') }}"

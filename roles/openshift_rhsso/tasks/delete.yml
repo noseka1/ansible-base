@@ -1,0 +1,5 @@
+- name: Deploy RHSSO instance
+  command: oc delete --kustomize {{ rhsso_kustomizations.instance }}
+
+- name: Delete RHSSO operator
+  command: oc delete --kustomize {{ rhsso_kustomizations.operator }}

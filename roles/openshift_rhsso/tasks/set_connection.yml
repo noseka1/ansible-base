@@ -1,11 +1,3 @@
-- name: Obtain credential-keycloak secret
-  k8s_info:
-    api_version: v1
-    kind: Secret
-    name: credential-keycloak
-    namespace: '{{ rhsso_instance_namespace }}'
-  register: keycloak_secret
-
 - name: Obtain Keycloak route
   k8s_info:
     api_version: route.openshift.io/v1
@@ -14,7 +6,15 @@
     namespace: '{{ rhsso_instance_namespace }}'
   register: keycloak_route
 
+- name: Obtain credential-keycloak secret
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: credential-keycloak
+    namespace: '{{ rhsso_instance_namespace }}'
+  register: keycloak_secret
+
 - set_fact:
     rhsso_username: '{{ keycloak_secret.resources.0.data.ADMIN_USERNAME | b64decode }}'
-    rhsso_password: '{{ keycloak_secret.resources.0.data.ADMIN_PASSWORD | b64decode }}'
+    rhsso_password: '{{ generic_user_password }}'
     rhsso_hostname: '{{ keycloak_route.resources.0.spec.host }}'

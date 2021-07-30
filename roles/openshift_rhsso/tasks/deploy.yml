@@ -23,16 +23,15 @@
   retries: 60
   delay: 10
 
-- import_tasks: set_connection.yml
+- name: Obtain Keycloak route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: keycloak
+    namespace: '{{ rhsso_instance_namespace }}'
+  register: keycloak_route
 
-- set_fact:
-    msg: |
-      Keycloak installed successfully.
+- import_tasks: set_admin_password.yml
 
-      Keycloak URL: https://{{ rhsso_hostname }}
-
-      Initial credentials:
-      Username: {{ rhsso_username }}
-      Password: {{ rhsso_password }}
-
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: RHSSO installed successfully. You can browse to https://{{ rhsso_hostname }}

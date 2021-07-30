@@ -1,3 +1,12 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: v1
+        kind: Namespace
+        name: rhacs-this-cluster
+
 - name: Obtain CSV name
   k8s_info:
     api_version: operators.coreos.com/v1alpha1

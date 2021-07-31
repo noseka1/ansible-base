@@ -9,7 +9,6 @@ spec:
   realm:
     id: argocd
     realm: argocd
-    enabled: True
     displayName: Argo CD Realm
   instanceSelector:
     matchLabels:

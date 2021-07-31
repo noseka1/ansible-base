@@ -1,0 +1,2 @@
+cert_manager_subscription_namespace: openshift-operators
+cert_manager_subscription_name: cert-manager

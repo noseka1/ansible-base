@@ -4,3 +4,6 @@ gitops_subscription_namespace: openshift-operators
 gitops_subscription_name: openshift-gitops
 argocd_instance_namespace: openshift-gitops
 argocd_instance_name: openshift-gitops
+
+rhsso_instance_namespace: rhsso
+rhsso_instance_name: keycloak

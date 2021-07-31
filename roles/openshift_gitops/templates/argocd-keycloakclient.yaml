@@ -1,0 +1,23 @@
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakClient
+metadata:
+  name: argocd
+  namespace: {{ rhsso_instance_namespace }}
+  labels:
+    app: {{ rhsso_instance_name }}
+spec:
+  realmSelector:
+     matchLabels:
+      app: {{ rhsso_instance_name }}
+  client:
+    clientId: argocd
+    name: Argo CD
+    description: Argo CD client
+    protocol: openid-connect
+    publicClient: False
+    clientAuthenticatorType: client-secret
+    secret: argocd
+    rootUrl: https://{{ argocd_route.resources.0.spec.host }}
+    baseUrl: https://{{ argocd_route.resources.0.spec.host }}/applications
+    redirectUris:
+    - https://{{ argocd_route.resources.0.spec.host }}/auth/callback

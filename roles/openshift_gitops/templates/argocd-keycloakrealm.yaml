@@ -1,0 +1,16 @@
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: argocd
+  namespace: {{ rhsso_instance_namespace }}
+  labels:
+    app: {{ rhsso_instance_name }}
+spec:
+  realm:
+    id: argocd
+    realm: argocd
+    enabled: True
+    displayName: Argo CD Realm
+  instanceSelector:
+    matchLabels:
+      app: {{ rhsso_instance_name }}

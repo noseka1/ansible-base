@@ -191,3 +191,29 @@
     validate_certs: False
     status_code: [ 201 ]
   when: (identity_providers_list_result.json | selectattr("providerId", "equalto", "openshift-v4") | length) == 0
+
+- name: Obtain list of flow executions for authentication flow "first broker login"
+  uri:
+    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
+    headers:
+      Authorization: bearer {{ rhsso_access_token }}
+    validate_certs: False
+    status_code: [ 200 ]
+  register: authentication_flow_executions_list_result
+
+- set_fact:
+    review_profile_config_execution: '{{ authentication_flow_executions_list_result.json | selectattr("alias", "defined") | selectattr("alias", "equalto", "review profile config") | first }}'
+
+- name: Disable review profile config execution (removes Update Account Information dialog)
+  uri:
+    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
+    method: PUT
+    headers:
+      Authorization: bearer {{ rhsso_access_token }}
+    body_format: json
+    body:
+      id: '{{ review_profile_config_execution.id }}'
+      requirement: DISABLED
+    validate_certs: False
+    status_code: [ 204 ]
+  when: review_profile_config_execution.requirement != "DISABLED"

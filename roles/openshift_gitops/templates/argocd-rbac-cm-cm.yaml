@@ -5,4 +5,4 @@ metadata:
   namespace: {{ gitops_instance_namespace }}
 data:
   policy.csv: |
-    g, ArgoCDAdmins, role:admin
+    g, /ArgoCDAdmins, role:admin

@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: {{ argocd_instance_name }}
-  namespace: {{ argocd_instance_namespace }}
+  name: {{ gitops_instance_name }}
+  namespace: {{ gitops_instance_namespace }}
 spec:
   oidcConfig: |
     name: OpenShift Single Sign-On

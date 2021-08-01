@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-rbac-cm
-  namespace: {{ argocd_instance_namespace }}
+  namespace: {{ gitops_instance_namespace }}
 data:
   policy.csv: |
     g, ArgoCDAdmins, role:admin

@@ -1,8 +1,6 @@
 - name: Set admin user password
   k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-    - '{{ argocd_instance_name }}-cluster-secret.yaml'
+    definition: "{{ lookup('template', '{{ gitops_instance_name }}-cluster-secret.yaml') }}"
 
 - name: Obtain ingress wildcard certificate
   k8s_info:
@@ -14,7 +12,7 @@
 
 - name: Configure Argo CD endpoint TLS cert
   k8s:
-    definition: "{{ lookup('template', '{{ argocd_instance_name }}-tls-secret.yaml') }}"
+    definition: "{{ lookup('template', '{{ gitops_instance_name }}-tls-secret.yaml') }}"
   when: wildcard_cert.resources | length == 1
 
 - name: Configure Argo CD server

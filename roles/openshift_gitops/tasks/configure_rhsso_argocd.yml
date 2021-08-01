@@ -1,6 +1,6 @@
-- name: Create secret that contains argocd client password
+- name: Update secret with argocd client password
   k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-cluster-secret-2.yaml') }}"
+    definition: "{{ lookup('template', 'argocd-secret-secret.yaml') }}"
 
 - name: Enable OIDC backend in Argo CD
   k8s:

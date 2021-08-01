@@ -8,5 +8,5 @@ spec:
     name: OpenShift Single Sign-On
     issuer: https://{{ rhsso_hostname }}/auth/realms/argocd
     clientID: argocd
-    clientSecret: oidc.keycloak.clientSecret
+    clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]

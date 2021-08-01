@@ -20,5 +20,11 @@
   retries: 60
   delay: 10
 
-- debug:
-    msg: Argo CD installed successfully. You can log in with 'argocd login --insecure {{ argocd_route.resources.0.spec.host }} --username admin'
+- name: Report success
+  set_fact:
+    msg: |
+      Argo CD installed successfully.
+      You can browse to https://{{ argocd_route.resources.0.spec.host }}
+      Or you can log in with 'argocd login --insecure {{ argocd_route.resources.0.spec.host }} --username admin'
+
+- debug: msg="{{ msg.split('\n') }}"

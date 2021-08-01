@@ -4,7 +4,7 @@
 
 - name: Enable OIDC backend in Argo CD
   k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd.yaml') }}"
+    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd-2.yaml') }}"
 
 - name: Map OIDC token groups to Argo CD roles
   k8s:

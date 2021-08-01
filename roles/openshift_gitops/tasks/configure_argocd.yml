@@ -2,18 +2,9 @@
   k8s:
     definition: "{{ lookup('template', '{{ gitops_instance_name }}-cluster-secret.yaml') }}"
 
-- name: Obtain ingress wildcard certificate
-  k8s_info:
-    api_version: v1
-    kind: Secret
-    name: wildcard-cert
-    namespace: openshift-ingress
-  register: wildcard_cert
-
-- name: Configure Argo CD endpoint TLS cert
+- name: Configure TLS edge-terminated route instead of passthrough
   k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-tls-secret.yaml') }}"
-  when: wildcard_cert.resources | length == 1
+    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd.yaml') }}"
 
 - name: Configure Argo CD server
   k8s:

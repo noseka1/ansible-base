@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: {{ gitops_instance_name }}
+  namespace: {{ gitops_instance_namespace }}
+spec:
+  oidcConfig: |
+    name: OpenShift Single Sign-On
+    issuer: https://{{ rhsso_hostname }}/auth/realms/argocd
+    clientID: argocd
+    clientSecret: oidc.keycloak.clientSecret
+    requestedScopes: ["openid", "profile", "email", "groups"]

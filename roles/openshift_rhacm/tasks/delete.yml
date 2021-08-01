@@ -1,0 +1,6 @@
+- name: Delete RHACM instance
+  command: oc delete --kustomize {{ rhacm_kustomizations.instance }}
+
+- name: Delete RHACM operator
+  command: oc delete --kustomize {{ rhacm_kustomizations.operator }}
+

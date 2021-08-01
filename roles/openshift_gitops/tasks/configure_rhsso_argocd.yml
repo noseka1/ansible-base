@@ -1,0 +1,11 @@
+- name: Create secret that contains argocd client password
+  k8s:
+    definition: "{{ lookup('template', '{{ argocd_instance_name }}-cluster-secret-2.yaml') }}"
+
+- name: Enable OIDC backend in Argo CD
+  k8s:
+    definition: "{{ lookup('template', '{{ argocd_instance_name }}-argocd.yaml') }}"
+
+- name: Map OIDC token groups to Argo CD roles
+  k8s:
+    definition: "{{ lookup('template', 'argocd-rbac-cm-cm.yaml') }}"

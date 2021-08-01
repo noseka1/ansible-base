@@ -1,0 +1,3 @@
+- name: Enable keycloak oauth client in OpenShift
+  k8s:
+    definition: "{{ lookup('template', 'keycloak-broker-oauthclient.yaml') }}"

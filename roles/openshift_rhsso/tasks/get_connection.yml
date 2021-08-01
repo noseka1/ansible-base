@@ -16,5 +16,5 @@
 
 - set_fact:
     rhsso_username: '{{ keycloak_secret.resources.0.data.ADMIN_USERNAME | b64decode }}'
-    rhsso_password: '{{ generic_user_password }}'
+    rhsso_password: '{{ keycloak_secret.resources.0.data.ADMIN_PASSWORD | b64decode }}'
     rhsso_hostname: '{{ keycloak_route.resources.0.spec.host }}'

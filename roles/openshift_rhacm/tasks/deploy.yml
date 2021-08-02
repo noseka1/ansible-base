@@ -11,6 +11,4 @@
 
 - import_tasks: configure_users.yml
 
-- import_tasks: sync_release_images.yml
-
 - import_tasks: report_success.yml

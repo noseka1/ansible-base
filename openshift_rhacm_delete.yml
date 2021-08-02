@@ -2,6 +2,6 @@
   connection: local
   gather_facts: no
   tasks:
-    - include_role:
+    - import_role:
         name: openshift_rhacm
         tasks_from: delete.yml

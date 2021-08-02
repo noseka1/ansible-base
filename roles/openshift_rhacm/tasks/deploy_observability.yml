@@ -1,3 +1,9 @@
+- import_role:
+    name: openshift_minio
+    tasks_from: deploy.yml
+  vars:
+    minio_namespace: '{{ rhacm_minio_namespace }}'
+
 - name: Obtain Minio route
   k8s_info:
     api_version: route.openshift.io/v1

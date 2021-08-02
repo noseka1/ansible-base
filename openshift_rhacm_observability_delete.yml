@@ -4,4 +4,4 @@
   tasks:
     - import_role:
         name: openshift_rhacm
-        tasks_from: deploy.yml
+        tasks_from: delete_observability.yml

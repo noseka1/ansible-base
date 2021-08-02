@@ -1,0 +1,8 @@
+- name: Delete Observability component
+  command: oc delete --kustomize {{ rhacm_kustomizations.observability }}
+
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ rhacm_minio_namespace }}'

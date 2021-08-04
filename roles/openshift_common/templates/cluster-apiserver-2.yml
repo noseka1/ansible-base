@@ -6,6 +6,6 @@ spec:
   servingCerts:
     namedCertificates:
     - names:
-      - {{ crc_lab_api_domain }}
+      - {{ openshift_cluster_certs.api.domain }}
       servingCertificate:
         name: api-cert

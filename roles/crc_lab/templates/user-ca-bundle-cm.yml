@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: user-ca-bundle
-  namespace: openshift-config
-data:
-  ca-bundle.crt: |
-    {{ crc_lab_certs.trusted_ca_bundle | indent(4) }}

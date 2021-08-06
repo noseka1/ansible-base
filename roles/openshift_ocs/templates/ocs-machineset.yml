@@ -27,7 +27,7 @@ spec:
         labels:
           node-role.kubernetes.io/ocs: ""
           node-role.kubernetes.io/worker: ""
-          cluster.ocs.openshift.io/openshift-storage: ""
+          {{ ocs_node_label }}: ""
       taints:
       - effect: NoSchedule
         key: node.ocs.openshift.io/storage

@@ -1,11 +1,3 @@
-- name: Obtain infrastructure info
-  k8s_info:
-    api_version: config.openshift.io/v1
-    kind: Infrastructure
-    name: cluster
-    namespace: ''
-  register: infrastructure
-
 - name: Set cluster_id
   set_fact:
     ocs_cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
@@ -43,5 +35,5 @@
     name: openshift_common
     tasks_from: wait_for_nodes.yml
   vars:
-    expand_node_selector: node-role.kubernetes.io/ocs=
+    expand_node_selector: '{{ ocs_node_label }}'
     expand_nodes_total: '{{ ocs_nodes_total }}'

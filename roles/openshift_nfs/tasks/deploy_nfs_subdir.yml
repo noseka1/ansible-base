@@ -1,0 +1,30 @@
+- name: Create prerequisites for nfs-subdir
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - nfs-subdir-ns.yaml
+    - nfs-subdir-scc-role.yaml
+    - nfs-subdir-scc-rolebinding.yaml
+
+- name: Add nfs-subdir-external-provisioner chart repo
+  community.kubernetes.helm.helm_repository:
+    name: nfs-subdir-external-provisioner
+    repo_url: "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
+
+- name: Deploy nfs-subdir-external-provisioner operator
+  community.kubernetes.helm:
+    name: '{{ nfs_subdir_name }}'
+    chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+    chart_version: '{{ nfs_subdir_version  }}'
+    release_namespace: '{{ nfs_subdir_namespace }}'
+    create_namespace: False
+    release_values:
+      nfs:
+        server: '{{ rook_nfs_service.resources.0.spec.clusterIP }}'
+        path: '/nfs-backing-volume-{{ volume_count }}'
+      serviceAccount:
+        name: '{{ nfs_subdir_service_account }}'
+      storageClass:
+        name: nfs-subdir
+        defaultClass: True
+        archiveOnDelete: False

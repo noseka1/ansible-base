@@ -1,4 +1,9 @@
 volume_node: master1
-volume_count: 20
+volume_count: 10
 volume_path: /mnt/volumes
 rook_base_url: https://raw.githubusercontent.com/rook/rook/release-1.4
+
+nfs_subdir_version: 4.0.13
+nfs_subdir_name: nfs-subdir
+nfs_subdir_namespace: nfs-subdir
+nfs_subdir_service_account: nfs-subdir

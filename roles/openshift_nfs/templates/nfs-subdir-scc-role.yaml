@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nfs-subdir-scc
+  namespace: {{ nfs_subdir_namespace }}
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - hostmount-anyuid
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use

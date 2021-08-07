@@ -13,7 +13,7 @@
 - name: Add machine sets to the cluster
   k8s:
     definition: '{{ lookup("template", "ocs-machineset.yml") }}'
-  with_items: '{{ ocs_availability_zones }}'
+  with_items: '{{ ocs_aws.availability_zones }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for machines to come up
   k8s_info:
@@ -25,10 +25,10 @@
   until:
     - ocs_machineset.resources.0.status is defined
     - ocs_machineset.resources.0.status.readyReplicas is defined
-    - ocs_machineset.resources.0.status.readyReplicas == (ocs_nodes_per_zone | int)
+    - ocs_machineset.resources.0.status.readyReplicas == (ocs_aws.nodes_per_zone | int)
   retries: 60
   delay: 10
-  with_items: '{{ ocs_availability_zones }}'
+  with_items: '{{ ocs_aws.availability_zones }}'
 
 - name: Wait for the nodes to join the cluster
   import_role:
@@ -36,4 +36,4 @@
     tasks_from: wait_for_nodes.yml
   vars:
     expand_node_selector: '{{ ocs_node_label }}'
-    expand_nodes_total: '{{ ocs_nodes_total }}'
+    expand_nodes_total: '{{ (ocs_aws.availability_zones | length) * ocs_aws.nodes_per_zone }}'

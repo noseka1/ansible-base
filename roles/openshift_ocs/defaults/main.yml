@@ -1,7 +1,8 @@
-ocs_instance_type: m4.4xlarge
-ocs_availability_zones: [ a, b, c ]
-ocs_nodes_per_zone: 1
-ocs_nodes_total: '{{ (ocs_availability_zones | length) * ocs_nodes_per_zone }}'
+ocs_aws:
+  instance_type: m4.4xlarge
+  availability_zones: [ a, b, c ]
+  nodes_per_zone: 1
+
 ocs_node_label: cluster.ocs.openshift.io/openshift-storage
 
 ocs_kustomizations:

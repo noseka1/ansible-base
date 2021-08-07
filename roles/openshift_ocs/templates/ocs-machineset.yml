@@ -8,7 +8,7 @@ metadata:
   name: {{ ocs_cluster_id }}-ocs-{{ ocs_aws_region }}{{ item }}
   namespace: openshift-machine-api
 spec:
-  replicas: {{ ocs_nodes_per_zone }}
+  replicas: {{ ocs_aws.nodes_per_zone }}
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ ocs_cluster_id }}
@@ -47,7 +47,7 @@ spec:
           deviceIndex: 0
           iamInstanceProfile:
             id: {{ ocs_cluster_id }}-worker-profile
-          instanceType: {{ ocs_instance_type }}
+          instanceType: {{ ocs_aws.instance_type }}
           kind: AWSMachineProviderConfig
           metadata:
             creationTimestamp: null

@@ -1,7 +1,7 @@
 volume_node: master1
 volume_count: 10
 volume_path: /mnt/volumes
-rook_base_url: https://raw.githubusercontent.com/rook/rook/release-1.4
+rook_base_url: https://raw.githubusercontent.com/rook/rook/release-1.7
 
 nfs_subdir_version: 4.0.13
 nfs_subdir_name: nfs-subdir

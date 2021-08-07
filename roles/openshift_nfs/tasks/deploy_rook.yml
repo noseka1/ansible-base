@@ -1,11 +1,14 @@
+- name: Deploy corrected SCC
+  k8s:
+    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+
 - name: Deploy Rook NFS operator
   k8s:
     definition: "{{ lookup('url', item, split_lines='no') }}"
   loop:
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/common.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/provisioner.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/scc.yaml'
 
 - name: Create directories on the {{ volume_node }} node for the volumes
   command: >
@@ -39,7 +42,6 @@
   k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
-    - rook-nfs-server-sa.yml
     - rook-nfs-nfsserver.yml
 
 - name: Wait until Rook NFS service shows up

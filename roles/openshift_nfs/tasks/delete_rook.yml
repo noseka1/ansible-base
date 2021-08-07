@@ -5,6 +5,14 @@
   loop:
     - rook-nfs-nfsserver.yml
 
+- name: Delete backing PV and PVC
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+     - nfs-backing-volume-pv.yml
+     - nfs-backing-volume-pvc.yml
+
 - name: Delete Rook NFS operator
   k8s:
     definition: "{{ lookup('url', item, split_lines='no') }}"

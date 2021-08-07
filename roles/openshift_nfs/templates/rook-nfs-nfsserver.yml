@@ -6,11 +6,9 @@ metadata:
 spec:
   replicas: 1
   exports:
-{% for item in range(1, volume_count + 1) %}
-  - name: volume-{{ item }}
+  - name: volume
     server:
       accessMode: ReadWrite
       squash: none
     persistentVolumeClaim:
-      claimName: nfs-backing-volume-{{ item }}
-{% endfor %}
+      claimName: nfs-backing-volume

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-backing-volume-{{ item }}
+  name: nfs-backing-volume
   namespace: rook-nfs
 spec:
   accessModes:

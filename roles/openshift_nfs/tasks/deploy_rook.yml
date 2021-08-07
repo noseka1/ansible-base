@@ -10,28 +10,24 @@
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
 
-- name: Create directories on the {{ volume_node }} node for the volumes
+- name: Create directory on the {{ volume_node }} node for the volume
   command: >
     oc debug node/{{ volume_node }} --namespace default --
       /bin/bash -c '
         set -e
-        for I in $(seq 1 {{ volume_count }}); do
-          DIR=/host/{{ volume_path }}/$I;
-          mkdir -p $DIR;
-          chown 0.0 $DIR;
-          chmod 775 $DIR;
-          chcon -R -t container_file_t -l s0 $DIR;
-        done
+        dir=/host/{{ volume_path }};
+        mkdir -p $dir;
+        chown 0.0 $dir;
+        chmod 775 $dir;
+        chcon -R -t container_file_t -l s0 $dir;
       '
-- name: Create backing PVs
-  k8s:
-    definition: "{{ lookup('template', 'nfs-backing-volume-pv.yml') }}"
-  loop: '{{ range(1, volume_count + 1) | list }}'
 
-- name: Create backing PVCs
+- name: Create backing PV and PVC
   k8s:
-    definition: "{{ lookup('template', 'nfs-backing-volume-pvc.yml') }}"
-  loop: '{{ range(1, volume_count + 1) | list }}'
+    definition: "{{ lookup('template', item) }}"
+  loop:
+     - nfs-backing-volume-pv.yml
+     - nfs-backing-volume-pvc.yml
 
 - name: Deploy Rook NFS server
   k8s:
@@ -49,8 +45,3 @@
   until: rook_nfs_service.resources | length > 0
   retries: 60
   delay: 10
-
-- name: Create PVs available for the OpenShift users
-  k8s:
-    definition: "{{ lookup('template', 'nfs-volume-pv.yml') }}"
-  loop: '{{ range(1, volume_count + 1 - 1) | list }}'

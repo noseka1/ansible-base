@@ -21,7 +21,7 @@
     release_values:
       nfs:
         server: '{{ rook_nfs_service.resources.0.spec.clusterIP }}'
-        path: '/nfs-backing-volume-{{ volume_count }}'
+        path: '/nfs-backing-volume'
       serviceAccount:
         name: '{{ nfs_subdir_service_account }}'
       storageClass:

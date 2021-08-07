@@ -1,0 +1,20 @@
+- name: Delete Rook NFS server
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+    - rook-nfs-nfsserver.yml
+
+- name: Delete Rook NFS operator
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    state: absent
+  loop:
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
+
+- name: Delete corrected SCC
+  k8s:
+    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+    state: absent

@@ -23,11 +23,6 @@
           chcon -R -t container_file_t -l s0 $DIR;
         done
       '
-
-- name: Create Rook NFS namespace
-  k8s:
-    definition: "{{ lookup('template', 'rook-nfs-ns.yml') }}"
-
 - name: Create backing PVs
   k8s:
     definition: "{{ lookup('template', 'nfs-backing-volume-pv.yml') }}"

@@ -1,0 +1,3 @@
+- import_tasks: delete_nfs_subdir.yml
+
+- import_tasks: delete_rook.yml

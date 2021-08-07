@@ -1,0 +1,12 @@
+- name: Delete nfs-subdir-external-provisioner operator
+  community.kubernetes.helm:
+    name: '{{ nfs_subdir_name }}'
+    release_namespace: '{{ nfs_subdir_namespace }}'
+    release_state: absent
+
+- name: Delete prerequisites for nfs-subdir
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - nfs-subdir-ns.yaml

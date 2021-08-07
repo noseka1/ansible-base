@@ -16,11 +16,16 @@
       /bin/bash -c '
         set -e
         dir=/host/{{ volume_path }};
-        mkdir -p $dir;
-        chown 0.0 $dir;
-        chmod 775 $dir;
-        chcon -R -t container_file_t -l s0 $dir;
+        if [ ! -d $dir ]; then
+          mkdir -p $dir;
+          chown 0.0 $dir;
+          chmod 775 $dir;
+          chcon -R -t container_file_t -l s0 $dir;
+          echo CHANGED
+        fi
       '
+  register: changed
+  changed_when: changed.stdout is search("CHANGED")
 
 - name: Create backing PV and PVC
   k8s:

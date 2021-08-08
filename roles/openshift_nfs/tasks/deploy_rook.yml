@@ -10,12 +10,12 @@
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
 
-- name: Create directory on the {{ volume_node }} node for the volume
+- name: Create directory on the {{ rook_volume_node }} node for the volume
   command: >
-    oc debug node/{{ volume_node }} --namespace default --
+    oc debug node/{{ rook_volume_node }} --namespace default --
       /bin/bash -c '
         set -e
-        dir=/host/{{ volume_path }};
+        dir=/host/{{ rook_volume_path }};
         if [ ! -d $dir ]; then
           mkdir -p $dir;
           chown 0.0 $dir;

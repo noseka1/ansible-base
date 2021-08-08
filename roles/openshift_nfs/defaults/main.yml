@@ -1,5 +1,5 @@
-volume_node: master1
-volume_path: /mnt/nfs-backing-volume
+rook_volume_node: master1
+rook_volume_path: /var/local/rook-nfs-backing-volume
 rook_base_url: https://raw.githubusercontent.com/rook/rook/release-1.7
 
 nfs_subdir_version: 4.0.13

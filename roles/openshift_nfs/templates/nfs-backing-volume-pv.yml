@@ -11,7 +11,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: {{ volume_path }}
+    path: {{ rook_volume_path }}
     type: Directory
   nodeAffinity:
     required:
@@ -20,7 +20,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-              - {{ volume_node }}
+              - {{ rook_volume_node }}
   claimRef:
     name: nfs-backing-volume
     namespace: rook-nfs

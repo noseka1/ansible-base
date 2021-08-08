@@ -9,7 +9,7 @@
 - name: Add nfs-subdir-external-provisioner chart repo
   community.kubernetes.helm.helm_repository:
     name: nfs-subdir-external-provisioner
-    repo_url: "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
+    repo_url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
 
 - name: Obtain rook-nfs service
   k8s_info:
@@ -19,7 +19,7 @@
     namespace: rook-nfs
   register: rook_nfs_service
 
-- name: Deploy nfs-subdir-external-provisioner operator
+- name: Deploy nfs-subdir-external-provisioner
   community.kubernetes.helm:
     name: '{{ nfs_subdir_name }}'
     chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner

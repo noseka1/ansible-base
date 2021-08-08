@@ -1,4 +1,4 @@
-- name: Delete nfs-subdir-external-provisioner operator
+- name: Delete nfs-subdir-external-provisioner
   community.kubernetes.helm:
     name: '{{ nfs_subdir_name }}'
     release_namespace: '{{ nfs_subdir_namespace }}'

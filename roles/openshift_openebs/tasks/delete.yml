@@ -1,0 +1,27 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: local.openebs.io/v1alpha1
+        kind: LVMVolume
+
+- name: Delete openebs-lvm storage class
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - openebs-lvm-sc.yaml
+
+- name: Delete OpenEBS
+  community.kubernetes.helm:
+    name: '{{ openebs_name }}'
+    release_namespace: '{{ openebs_namespace }}'
+    release_state: absent
+
+- name: Delete prerequisites for OpenEBS
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - openebs-ns.yaml

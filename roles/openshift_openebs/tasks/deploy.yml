@@ -1,0 +1,44 @@
+- name: Create prerequisites for OpenEBS
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - openebs-ns.yaml
+    - openebs-scc-role.yaml
+    - openebs-scc-rolebinding.yaml
+
+- name: Add OpenEBS chart repo
+  community.kubernetes.helm.helm_repository:
+    name: openebs
+    repo_url: '{{ openebs_helm_repo }}'
+
+- name: Deploy OpenEBS
+  community.kubernetes.helm:
+    name: '{{ openebs_name }}'
+    chart_ref: 'openebs/openebs'
+    chart_version: '{{ openebs_version  }}'
+    release_namespace: '{{ openebs_namespace }}'
+    create_namespace: False
+    release_values:
+      localprovisioner:
+        enabled: False
+      ndm:
+        enabled: False
+      ndmOperator:
+        enabled: False
+      webhook:
+        enabled: False
+      snapshotOperator:
+        enabled: False
+      provisioner:
+        enabled: False
+      apiserver:
+        enabled: False
+      lvm-localpv:
+        enabled: True
+        storageCapacity: False
+
+- name: Create openebs-lvm storage class
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - openebs-lvm-sc.yaml

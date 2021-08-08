@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_openebs
+        tasks_from: delete.yml

@@ -1,0 +1,22 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 99-openebs-lvm-{{ item }}
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - path: /var/usrlocal/bin/create-openebs-lvm.sh
+        mode: 0755
+        contents:
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'create-openebs-lvm.sh') | b64encode }}
+    systemd:
+      units:
+      - name: create-openebs-lvm.service
+        enabled: true
+        contents: |
+          {{ lookup('file', 'create-openebs-lvm.service') | indent(10) }}

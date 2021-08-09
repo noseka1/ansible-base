@@ -1,0 +1,10 @@
+[Unit]
+Description=Create LVM group for OpenEBS volumes
+
+[Service]
+Type=simple
+
+ExecStart=/var/usrlocal/bin/create-openebs-lvm.sh
+
+[Install]
+WantedBy=multi-user.target

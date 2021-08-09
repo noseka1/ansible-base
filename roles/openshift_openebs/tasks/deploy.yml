@@ -1,27 +1,17 @@
 - name: Create LVM group for OpenEBS volumes on each cluster node
   k8s:
     definition: "{{ lookup('template', '99-openebs-lvm-mc.yaml') }}"
+  register: machineconfig_result
   loop:
     - worker
     - master
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster APIs to stabilize
-  k8s_info:
-    api_version: config.openshift.io/v1
-    kind: ClusterVersion
-    name: version
-  register: clusterversion_result
-  until:
-    - clusterversion_result.resources.0.status is defined
-    - clusterversion_result.resources.0.status.conditions is defined
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | first).status == "False"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
-  retries: 60
-  delay: 10
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+  when: machineconfig_result is changed
 
 - name: Create prerequisites for OpenEBS
   k8s:

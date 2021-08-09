@@ -1,0 +1,21 @@
+- name: Wait for {{ stable_cluster_delay }} seconds for cluster node reboots to start
+  wait_for:
+    timeout: '{{ stable_cluster_delay }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster to stabilize
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+  until:
+    - clusterversion_result.resources.0.status is defined
+    - clusterversion_result.resources.0.status.conditions is defined
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | first).status == "False"
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
+  retries: 60
+  delay: 10

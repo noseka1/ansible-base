@@ -4,3 +4,4 @@
   tasks:
     - import_role:
         name: openshift_ocs
+        tasks_from: deploy.yml

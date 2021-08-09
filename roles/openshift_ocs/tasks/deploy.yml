@@ -1,0 +1,8 @@
+- import_tasks: get_infrastructure.yml
+
+- include_tasks: add_nodes.yml
+  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+
+- import_tasks: check_nodes.yml
+
+- import_tasks: deploy_ocs.yml

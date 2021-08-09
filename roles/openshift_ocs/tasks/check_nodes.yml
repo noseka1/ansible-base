@@ -1,0 +1,11 @@
+- name: Get labeled OCS nodes
+  k8s_info:
+    api_version: v1
+    kind: Node
+    label_selectors:
+      - '{{ ocs_node_label }}'
+  register: ocs_nodes_result
+
+- fail:
+    msg: "Need at least 3 OCS nodes. You can label cluster nodes using: 'oc label nodes <node> {{ ocs_node_label }}='"
+  when: (ocs_nodes_result.resources | list | length) < 3

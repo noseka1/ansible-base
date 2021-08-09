@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+# Create loop device and LVM volume group
+
 device_name=loop0
 device_path=/dev/$device_name
 data_path=/var/local/${device_name}-device-data.img
@@ -13,3 +15,8 @@ if [ ! -f $data_path ]; then
 else
   losetup --partscan $device_path $data_path
 fi
+
+# Install snapshot and thin volume module for lvm
+
+sudo modprobe dm-snapshot
+sudo modprobe dm_thin_pool

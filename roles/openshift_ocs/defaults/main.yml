@@ -6,9 +6,10 @@ ocs_aws:
 ocs_node_label: cluster.ocs.openshift.io/openshift-storage
 
 ocs_kustomizations:
-  operator: github.com/noseka1/ocs-kustomization/ocs-operator/base?ref=myauto
-  instance: github.com/noseka1/ocs-kustomization/ocs-instance/base?ref=myauto
-  tools:    github.com/noseka1/ocs-kustomization/rook-ceph-tools/base?ref=myauto
+  operator:         github.com/noseka1/ocs-kustomization/ocs-operator/base?ref=myauto
+  instance_aws:     github.com/noseka1/ocs-kustomization/ocs-instance/overlays/aws?ref=myauto
+  instance_openebs: github.com/noseka1/ocs-kustomization/ocs-instance/overlays/openebs?ref=myauto
+  tools:            github.com/noseka1/ocs-kustomization/rook-ceph-tools/base?ref=myauto
 ocs_subscription_namespace: openshift-storage
 ocs_subscription_name: ocs-operator
 ocs_instance_namespace: openshift-storage

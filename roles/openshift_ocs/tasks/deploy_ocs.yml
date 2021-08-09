@@ -10,7 +10,12 @@
     subscription_namespace: '{{ ocs_subscription_namespace }}'
 
 - name: Deploy ocs instance
-  command: oc apply --kustomize {{ ocs_kustomizations.instance }}
+  command: oc apply --kustomize {{ ocs_kustomizations.instance_aws }}
+  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+
+- name: Deploy ocs instance
+  command: oc apply --kustomize {{ ocs_kustomizations.instance_openebs }}
+  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ ocs_instance_name }} deployment to complete
   k8s_info:

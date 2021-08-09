@@ -7,4 +7,5 @@ volumeBindingMode: WaitForFirstConsumer
 parameters:
   storage: lvm
   volgroup: loop0-vg
+  thinProvision: 'yes'
 provisioner: local.csi.openebs.io

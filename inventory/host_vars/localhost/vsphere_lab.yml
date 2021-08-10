@@ -8,10 +8,10 @@ vsphere_lab:
     memory: 6144
     macaddr: 00:50:56:11:22:19
     static_network:
-      ip: 192.168.122.61
-      dns: 192.168.122.1
+      ip: 192.168.140.61
+      dns: 192.168.140.1
       prefix: 24
-      gateway: 192.168.122.1
+      gateway: 192.168.140.1
       system_name: photon-machine.lab.example.com
     ntp_servers: time.nist.gov
   vsphere_hostname: photon-machine.lab.example.com

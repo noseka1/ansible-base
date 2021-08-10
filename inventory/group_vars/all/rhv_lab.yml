@@ -6,10 +6,10 @@ rhv_lab:
     bridge_if: eth0
     vm_mac_addr: 00:a5:3f:66:ba:12
     static_network:
-      ip: 192.168.122.51
-      dns: 192.168.122.1
+      ip: 192.168.140.51
+      dns: 192.168.140.1
       prefix: 24
-      gateway: 192.168.122.1
+      gateway: 192.168.140.1
     domain_type: nfs
     storage_domain_addr: rhvh.lab.example.com
     storage_domain_path: /storage

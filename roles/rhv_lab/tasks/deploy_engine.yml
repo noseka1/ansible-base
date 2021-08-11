@@ -11,6 +11,13 @@
     state: present
   become: True
 
+- name: Ensure vdsm user is in the sanlock group (workaround for https://access.redhat.com/solutions/632983)
+  user:
+    name: vdsm
+    groups: sanlock
+    append: True
+  become: True
+
 - name: Firewalld is required to be enabled and active in order to correctly deploy hosted-engine
   service:
     name: firewalld

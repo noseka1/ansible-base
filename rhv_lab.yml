@@ -1,4 +1,9 @@
 - hosts: rhvh.lab.example.com
   tasks:
     - import_role:
+        name: machine_base
+      tags: machine_base
+
+    - import_role:
         name: rhv_lab
+      tags: rhv_lab

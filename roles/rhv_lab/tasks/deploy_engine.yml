@@ -1,3 +1,7 @@
+- name: Reset dnf module virt before switching it to virt:av
+  command: dnf module reset virt --assumeyes
+  become: True
+
 - name: Enable dnf module virt:av
   command: dnf module enable virt:av --assumeyes
   become: True

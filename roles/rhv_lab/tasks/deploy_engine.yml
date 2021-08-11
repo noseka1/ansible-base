@@ -24,10 +24,5 @@
   with_items:
     - hosted-engine-deploy-answers-file.conf
 
-- name: Remove the disk space check
-  patch:
-    src: create_storage_domain.yml.patch
-    dest: /usr/share/ansible/collections/ansible_collections/redhat/rhv/roles/hosted_engine_setup/tasks/create_storage_domain.yml
-
 - debug:
     msg: Continue the installation using command 'ssh root@rhvh.lab.example.com hosted-engine --deploy --config-append=/root/hosted-engine-deploy-answers-file.conf'

@@ -1,0 +1,6 @@
+- name: Create namespace {{ argo_rollouts_namespace }} in Kubernetes
+  k8s:
+    definition: '{{ lookup("template", "argo-rollouts-ns.yaml") }}'
+
+- name: Deploy Argo Rollouts
+  command: oc apply --namespace {{ argo_rollouts_namespace }} --filename {{ argo_rollouts_url }}

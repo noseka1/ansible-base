@@ -4,3 +4,4 @@
   tasks:
     - import_role:
         name: openshift_quay
+        tasks_from: delete.yml

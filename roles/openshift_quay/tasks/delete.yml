@@ -1,0 +1,11 @@
+- name: Delete Quay instance
+  command: oc delete --kustomize {{ quay_kustomizations.instance }}
+
+- name: Delete Quay operator
+  command: oc delete --kustomize {{ quay_kustomizations.operator }}
+
+- name: Delete Quay Bridge Operator
+  command: oc delete --kustomize {{ quay_kustomizations.bridge }}
+
+- name: Delete Container Security Operator
+  command: oc delete --kustomize {{ quay_kustomizations.security }}

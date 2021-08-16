@@ -15,7 +15,7 @@
     subscription_name: '{{ quay_operator_subscription_name }}'
     subscription_namespace: '{{ quay_operator_subscription_namespace }}'
 
-- name: Install Quay
+- name: Deploy Quay instance
   command: oc apply --kustomize {{ quay_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete

@@ -2,7 +2,6 @@ quay_kustomizations:
   operator: github.com/noseka1/quay-kustomization/quay-operator/base?ref=myauto
   instance: github.com/noseka1/quay-kustomization/quay-instance/overlays/development?ref=myauto
   security: github.com/noseka1/quay-kustomization/container-security-operator/base?ref=myauto
-  bridge:   github.com/noseka1/quay-kustomization/quay-bridge-operator/base?ref=myauto
 
 quay_operator_subscription_namespace: openshift-operators
 quay_operator_subscription_name: quay-operator
@@ -12,6 +11,3 @@ quay_instance_name: quay-registry
 
 container_security_operator_subscription_namespace: openshift-operators
 container_security_operator_subscription_name: container-security-operator
-
-quay_bridge_operator_subscription_namespace: openshift-operators
-quay_bridge_operator_subscription_name: quay-bridge-operator

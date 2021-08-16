@@ -1,9 +1,6 @@
 - name: Install Container Security Operator
   command: oc apply --kustomize {{ quay_kustomizations.security }}
 
-- name: Install Quay Bridge Operator
-  command: oc apply --kustomize {{ quay_kustomizations.bridge }}
-
 - name: Deploy Quay operator
   command: oc apply --kustomize {{ quay_kustomizations.operator }}
 

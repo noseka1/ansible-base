@@ -6,14 +6,6 @@
     namespace: '{{ quay_operator_subscription_namespace }}'
   register: quay_operator_subscription
 
-- name: Obtain quay-bridge-operator CSV name
-  k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ quay_bridge_operator_subscription_name }}'
-    namespace: '{{ quay_bridge_operator_subscription_namespace }}'
-  register: quay_bridge_operator_subscription
-
 - name: Obtain container-security-operator CSV name
   k8s_info:
     api_version: operators.coreos.com/v1alpha1
@@ -28,9 +20,6 @@
 - name: Delete Quay operator
   command: oc delete --kustomize {{ quay_kustomizations.operator }}
 
-- name: Delete Quay Bridge Operator
-  command: oc delete --kustomize {{ quay_kustomizations.bridge }}
-
 - name: Delete Container Security Operator
   command: oc delete --kustomize {{ quay_kustomizations.security }}
 
@@ -41,17 +30,9 @@
   vars:
     delete_csvs_name: '{{ quay_operator_subscription.resources.0.status.currentCSV }}'
 
-- name: Clean up quay-bridge-operator CSVs
-  include_role:
-    name: openshift_common
-    tasks_from: delete_csvs.yml
-  vars:
-    delete_csvs_name: '{{ quay_bridge_operator_subscription.resources.0.status.currentCSV }}'
-
 - name: Clean up container-security-operator CSVs
   include_role:
     name: openshift_common
     tasks_from: delete_csvs.yml
   vars:
     delete_csvs_name: '{{ container_security_operator_subscription.resources.0.status.currentCSV }}'
-

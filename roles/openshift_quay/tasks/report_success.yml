@@ -1,0 +1,11 @@
+- name: Obtain Quay registry route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ quay_instance_name }}-quay'
+    namespace: '{{ quay_instance_namespace }}'
+  register: quay_instance_route
+
+- debug:
+    msg: Red Hat Quay installed successfully. Use your browser to access the Quay Web UI and create account for user admin. https://{{ quay_instance_route.resources.0.spec.host }}
+

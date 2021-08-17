@@ -1,13 +1,13 @@
 - name: Set root password
   user:
     name: root
-    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+    password: '{{ generic_user_password | string | password_hash("sha512", "constant") }}'
   become: True
 
 - name: Create users
   user:
     name: '{{ item }}'
-    password: '{{ generic_user_password | string | password_hash("sha512") }}'
+    password: '{{ generic_user_password | string | password_hash("sha512", "constant") }}'
     groups:
       - wheel
   with_items:

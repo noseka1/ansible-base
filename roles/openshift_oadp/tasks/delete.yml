@@ -1,0 +1,8 @@
+- name: Deploy OADP operator
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+    state: absent
+  with_items:
+    - oadp-operator-sub.yaml
+    - oadp-operator-og.yaml
+    - oadp-operator-ns.yaml

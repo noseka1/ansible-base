@@ -1,0 +1,15 @@
+- name: Deploy OADP operator
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+  with_items:
+    - oadp-operator-ns.yaml
+    - oadp-operator-og.yaml
+    - oadp-operator-sub.yaml
+
+- name: Wait for OADP operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ oadp_subscription_name }}'
+    subscription_namespace: '{{ oadp_subscription_namespace }}'

@@ -158,22 +158,28 @@ otlc_labs:
   rhel7_implementation:
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
-    template_id: '20000000000057'
+    template_id: '20000000000703'
     template_name: 'RHEL 7 Implementation Lab'
     order_options:
-      dialog_expiration: "7"
-      dialog_runtime: "4"
       dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_region: na_osp
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_runtime: "4"
 
   rhel8_beta:
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
-    template_id: '20000000000521'
-    template_name: 'RHEL 8.0 Beta Evaluation'
+    template_id: '20000000000709'
+    template_name: 'RHEL 8 New Features For Exp. Admins'
     order_options:
-      dialog_expiration: "7"
-      dialog_runtime: "8"
       dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "4"
+      dialog_region: na_osp
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_runtime: "8"
 
   rhev:
     catalog_id: '20000000000001'

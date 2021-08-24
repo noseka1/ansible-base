@@ -37,7 +37,7 @@
       enabled: True
     validate_certs: False
     status_code: [ 201 ]
-  when: (realms_list_result.json | selectattr("id", "equalto", "argocd") | length) == 0
+  when: (realms_list_result.json | selectattr("id", "equalto", "argocd") | list| length) == 0
 
 - name: Obtain list of client scopes
   uri:
@@ -74,7 +74,7 @@
           protocolMapper: oidc-group-membership-mapper
     validate_certs: False
     status_code: [ 201 ]
-  when: (client_scopes_list_result.json | selectattr("name", "equalto", "groups") | length) == 0
+  when: (client_scopes_list_result.json | selectattr("name", "equalto", "groups") | list | length) == 0
 
 - name: Obtain list of clients
   uri:
@@ -112,7 +112,7 @@
         - https://{{ argocd_route.resources.0.spec.host }}/auth/callback
     validate_certs: False
     status_code: [ 201 ]
-  when: (clients_list_result.json | selectattr("clientId", "equalto", "argocd") | length) == 0
+  when: (clients_list_result.json | selectattr("clientId", "equalto", "argocd") | list | length) == 0
 
 - name: Obtain list of clients
   uri:
@@ -155,7 +155,7 @@
       name: ArgoCDAdmins
     validate_certs: False
     status_code: [ 201 ]
-  when: (groups_list_result.json | selectattr("name", "equalto", "ArgoCDAdmins") | length) == 0
+  when: (groups_list_result.json | selectattr("name", "equalto", "ArgoCDAdmins") | list | length) == 0
 
 - name: Obtain Kubernetes API server URL
   k8s_info:
@@ -190,7 +190,7 @@
       providerId: openshift-v4
     validate_certs: False
     status_code: [ 201 ]
-  when: (identity_providers_list_result.json | selectattr("providerId", "equalto", "openshift-v4") | length) == 0
+  when: (identity_providers_list_result.json | selectattr("providerId", "equalto", "openshift-v4") | list | length) == 0
 
 - name: Obtain list of flow executions for authentication flow "first broker login"
   uri:

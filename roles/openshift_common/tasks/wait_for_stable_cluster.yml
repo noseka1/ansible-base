@@ -29,6 +29,7 @@
     - v1.oauth.openshift.io
     - v1.packages.operators.coreos.com
     - v1.project.openshift.io
+    - v1.user.openshift.io
   register: openshift_api_result
   until:
     - openshift_api_result.resources is defined

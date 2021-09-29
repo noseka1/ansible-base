@@ -9,8 +9,8 @@ roles:
   version: master
 
 - name: mprahl.lets-encrypt-route-53
-  src: https://github.com/noseka1/ansible-role-lets-encrypt-route-53.git
-  version: master
+  src: https://github.com/mprahl/ansible-role-lets-encrypt-route-53.git
+  version: v5.1.0
   # requires EPEL enabled
 
 collections:

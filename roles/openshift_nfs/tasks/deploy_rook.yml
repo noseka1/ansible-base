@@ -1,56 +1,7 @@
-- name: Deploy corrected SCC
-  k8s:
-    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+- import_tasks: deploy_rook_nfs_operator.yml
 
-- name: Deploy Rook NFS operator
-  k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
-  loop:
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
+- import_tasks: pick_backing_volume_node.yml
 
-- name: Create directory on the {{ rook_volume_node }} node for the volume
-  command: >
-    oc debug node/{{ rook_volume_node }} --namespace default --
-      /bin/bash -c '
-        set -e
-        dir=/host/{{ rook_volume_path }};
-        if [ ! -d $dir ]; then
-          mkdir -p $dir;
-          chown 0.0 $dir;
-          chmod 775 $dir;
-          chcon -R -t container_file_t -l s0 $dir;
-          echo CHANGED
-        fi
-      '
-  register: changed
-  changed_when: changed.stdout is search("CHANGED")
+- import_tasks: create_backing_volume.yml
 
-- name: Create backing PV and PVC
-  k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-     - nfs-backing-volume-pv.yml
-     - nfs-backing-volume-pvc.yml
-
-- name: Deploy Rook NFS server
-  k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-    - rook-nfs-nfsserver.yml
-
-- name: Wait until Rook NFS service shows up
-  k8s_info:
-    api_version: nfs.rook.io/v1alpha1
-    kind: NFSServer
-    name: rook-nfs
-    namespace: rook-nfs
-  register: rook_nfs_server
-  until:
-    - rook_nfs_server.resources is defined
-    - rook_nfs_server.resources | length > 0
-    - rook_nfs_server.resources.0.status is defined
-    - rook_nfs_server.resources.0.status.state == 'Running'
-  retries: 60
-  delay: 10
+- import_tasks: deploy_rook_nfs_server.yml

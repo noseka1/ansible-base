@@ -1,0 +1,11 @@
+- name: Deploy corrected SCC
+  k8s:
+    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+
+- name: Deploy Rook NFS operator
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+  loop:
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
+    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'

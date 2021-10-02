@@ -1,0 +1,23 @@
+- name: Create directory on the {{ rook_volume_node }} node for the volume
+  command: >
+    oc debug node/{{ rook_volume_node }} --namespace default --
+      /bin/bash -c '
+        set -e
+        dir=/host/{{ rook_volume_path }};
+        if [ ! -d $dir ]; then
+          mkdir -p $dir;
+          chown 0.0 $dir;
+          chmod 775 $dir;
+          chcon -R -t container_file_t -l s0 $dir;
+          echo CHANGED
+        fi
+      '
+  register: changed
+  changed_when: changed.stdout is search("CHANGED")
+
+- name: Create backing PV and PVC
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+     - nfs-backing-volume-pv.yml
+     - nfs-backing-volume-pvc.yml

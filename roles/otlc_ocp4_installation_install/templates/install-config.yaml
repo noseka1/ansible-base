@@ -3,7 +3,9 @@ baseDomain: {{ otlc_service_info.top_level_domain }}
 compute:
 - hyperthreading: Enabled
   name: worker
-  platform: {}
+  platform:
+    aws:
+      type: m5.xlarge
   replicas: 3
 controlPlane:
   hyperthreading: Enabled

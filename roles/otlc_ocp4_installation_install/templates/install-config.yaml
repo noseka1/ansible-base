@@ -9,7 +9,7 @@ controlPlane:
   hyperthreading: Enabled
   name: master
   platform: {}
-  replicas: 3
+  replicas: {{ openshift_control_plane_replicas }}
 metadata:
   creationTimestamp: null
   name: cluster-{{ otlc_service_info.guid }}

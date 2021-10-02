@@ -1,2 +1,3 @@
 openshift_channel: '4.8'
 openshift_version: latest
+openshift_control_plane_replicas: 3

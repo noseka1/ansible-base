@@ -20,7 +20,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-              - {{ rook_volume_node }}
+              - {{ rook_volume_node_hostname }}
   claimRef:
     name: nfs-backing-volume
     namespace: rook-nfs

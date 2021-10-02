@@ -27,3 +27,5 @@
 - name: Pick the oldest node (non-deterministic if there are two nodes having the same creationTimestamp)
   set_fact:
     rook_volume_node: '{{ (rook_volume_node_candidates.resources | sort(attribute="metadata.creationTimestamp")).0.metadata.name }}'
+    rook_volume_node_hostname: '{{ (rook_volume_node_candidates.resources | sort(attribute="metadata.creationTimestamp")).0.metadata.labels["kubernetes.io/hostname"] }}'
+

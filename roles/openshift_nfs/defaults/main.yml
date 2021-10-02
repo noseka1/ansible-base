@@ -1,5 +1,5 @@
 rook_volume_path: /var/local/rook-nfs-backing-volume
-rook_base_url: https://raw.githubusercontent.com/rook/rook/v1.7.2
+rook_base_url: https://raw.githubusercontent.com/rook/nfs/v1.7.3
 
 nfs_subdir_version: 4.0.13
 nfs_subdir_name: nfs-subdir

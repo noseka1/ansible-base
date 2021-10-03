@@ -14,7 +14,7 @@
     path: '{{ cluster_config_dir }}/install_complete'
   register: install_complete
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift {{ openshift_version }} installation to complete
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift {{ otlc_ocp4_installation_openshift_version }} installation to complete
   command: openshift-install create cluster --dir={{ cluster_config_dir }} --log-level=debug
   when: not install_complete.stat.exists
 

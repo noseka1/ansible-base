@@ -8,7 +8,7 @@
     mode: '0755'
   become: true
 
-- name: Download OpenShift installer {{ openshift_version }}
+- name: Download OpenShift installer {{ otlc_ocp4_installation_openshift_version }}
   command: '{{ cluster_config_dir }}/download_installer.sh'
   args:
     chdir: /root
@@ -22,7 +22,7 @@
     mode: '0755'
   become: true
 
-- name: Download oc CLI tool {{ openshift_version }}
+- name: Download oc CLI tool {{ otlc_ocp4_installation_openshift_version }}
   command: '{{ cluster_config_dir }}/download_oc.sh'
   args:
     chdir: /root

@@ -11,7 +11,7 @@ controlPlane:
   hyperthreading: Enabled
   name: master
   platform: {}
-  replicas: {{ openshift_control_plane_replicas }}
+  replicas: {{ otlc_ocp4_installation_openshift_control_plane_replicas }}
 metadata:
   creationTimestamp: null
   name: cluster-{{ otlc_service_info.guid }}
@@ -20,7 +20,7 @@ networking:
   - cidr: 10.128.0.0/14
     hostPrefix: 23
   machineCIDR: 10.0.0.0/16
-  networkType: OpenShiftSDN
+  networkType: {{ otlc_ocp4_installation_openshift_network_type }}
   serviceNetwork:
   - 172.30.0.0/16
 platform:

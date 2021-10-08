@@ -1,0 +1,6 @@
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: auto-controller
+spec:
+  admin_password_secret: auto-controller-custom-admin-password

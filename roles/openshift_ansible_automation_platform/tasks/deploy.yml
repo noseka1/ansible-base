@@ -1,0 +1,36 @@
+- name: Deploy Ansible Automation Platform operator
+  command: oc apply --kustomize {{ aap_kustomizations.operator }}
+
+- name: Wait for Ansible Automation Platform operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ aap_subscription_name }}'
+    subscription_namespace: '{{ aap_subscription_namespace }}'
+
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -aap-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - auto-controller-automationcontroller.yaml
+    - auto-controller-custom-admin-password-secret.yaml
+
+- name: Install Automation Controller
+  shell: kustomize build {{ tmpdir.path }} | oc apply --filename -
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

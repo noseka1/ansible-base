@@ -1,0 +1,5 @@
+- name: Delete Automation Controller
+  command: oc delete --kustomize {{ aap_kustomizations.auto_controller }}
+
+- name: Deploy Ansible Automation Platform operator
+  command: oc delete --kustomize {{ aap_kustomizations.operator }}

@@ -34,3 +34,5 @@
   file:
     path: '{{ tmpdir.path }}'
     state: absent
+
+- import_tasks: report_success.yml

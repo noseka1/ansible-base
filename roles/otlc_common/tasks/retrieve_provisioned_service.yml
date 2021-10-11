@@ -1,8 +1,23 @@
 - import_tasks: retrieve_provisioned_services.yml
 
 - set_fact:
-    otlc_service: '{{ otlc_services_provisioned.json.resources | selectattr("service_template_id", "equalto", otlc_service_desc.template_id) | list }}'
+    otlc_services_provisioned_from_template: >
+      {{ otlc_services_provisioned.json.resources | selectattr("service_template_id", "equalto", otlc_service_desc.template_id) | list }}
 
-- name: Show service
+- block:
+    - set_fact:
+        otlc_service: >
+          {{ otlc_services_provisioned_from_template | selectattr("id", "equalto", service_id) | list }}
+    - fail:
+        msg: Service id={{ service_id }} not found
+      when: otlc_service | length == 0
+  when: service_id is defined
+
+- set_fact:
+    otlc_service: >
+      {{ otlc_services_provisioned_from_template }}
+  when: service_id is not defined
+
+- name: Show service(s)
   debug:
     var: otlc_service

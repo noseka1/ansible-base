@@ -1,4 +1,4 @@
-- name: Deleting {{ otlc_service_desc.template_name }} from the catalog {{ otlc_service_desc.catalog_name }}
+- name: Deleting service id {{ otlc_service.0.id }}, {{ otlc_service_desc.template_name }} from the catalog {{ otlc_service_desc.catalog_name }}
   uri:
     url: '{{ otlc_service.0.href }}'
     user: '{{ otlc_username }}'

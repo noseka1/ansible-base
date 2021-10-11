@@ -3,8 +3,17 @@
     tasks_from: retrieve_provisioned_service.yml
 
 - fail:
-    msg: Service {{ otlc_service_desc.template_name }} is not provisioned
+    msg: No service {{ otlc_service_desc.template_name }} is provisioned
   when: otlc_service | length  == 0
+
+- fail:
+    msg: >
+      More than 1 service provisioned from template id {{ otlc_service_desc.template_id }} found.
+      Please, choose one service by setting the Ansible variable: --extra-vars otlc_service_id=<SERVICE_ID>
+
+      Services to choose from:
+      {{ otlc_services_provisioned_from_template }}
+  when: otlc_service | length > 1
 
 - name: Delete service
   import_tasks: delete_service.yml

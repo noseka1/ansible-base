@@ -11,7 +11,7 @@
   debug:
     var: request_options
 
-- name: Ordering {{ otlc_service_desc.template_name }} from the catalog {{ otlc_service_desc.catalog_name }}
+- name: Order {{ otlc_service_desc.template_name }} from the catalog {{ otlc_service_desc.catalog_name }}
   uri:
     url: 'https://labs.opentlc.com/api/service_catalogs/{{ otlc_service_desc.catalog_id }}/service_templates'
     user: '{{ otlc_username }}'
@@ -35,6 +35,20 @@
     status_code: 200
   register: result
   ignore_errors: True
-  until: result.json is defined and result.json.request_state == 'finished'
+  until:
+    - result.json is defined
+    - result.json.request_state == 'finished'
   retries: '{{ otlc_order_wait_retries }}'
   delay: 10
+
+- name: Obtain provisioned service id from the provision request
+  uri:
+    url: 'https://labs.opentlc.com/api/provision_requests/{{ opentlc_order.json.results.0.id }}/request_tasks?expand=resources'
+    user: '{{ otlc_username }}'
+    password: '{{ otlc_password }}'
+    method: GET
+    status_code: 200
+  register: otlc_provision_request
+
+- set_fact:
+    otlc_service_id: '{{ otlc_provision_request.json.resources.0.destination_id }}'

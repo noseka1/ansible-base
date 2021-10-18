@@ -1,9 +1,13 @@
-- import_tasks: order_service.yml
-  when: service_id is not defined
+- import_role:
+    name: otlc_common
+    tasks_from: retrieve_provisioned_service.yml
 
 - set_fact:
-    otlc_service_id: '{{ service_id }}'
-  when: service_id is defined
+    newly_provisioned_service: True
+  when: otlc_service | length == 0
+
+- import_tasks: order_service.yml
+  when: otlc_service | length == 0
 
 - import_role:
     name: otlc_common
@@ -14,4 +18,4 @@
 - import_tasks: check_service_health.yml
 
 - import_tasks: extend_service.yml
-  when: service_id is not defined
+  when: newly_provisioned_service is defined

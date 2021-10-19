@@ -4,7 +4,7 @@ metadata:
   name: {{ oadp_subscription_name }}
   namespace: {{ oadp_subscription_namespace }}
 spec:
-  channel: alpha
+  channel: beta
   installPlanApproval: Automatic
   name: oadp-operator
   source: community-operators

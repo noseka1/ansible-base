@@ -1,2 +1,6 @@
+oadp_kustomizations:
+  operator: github.com/noseka1/oadp-operator-kustomization/oadp-operator/base?ref=myauto
+  velero:   github.com/noseka1/oadp-operator-kustomization/velero-instance/base?ref=myauto
+  minio:    github.com/noseka1/oadp-operator-kustomization/backupstoragelocation/minio?ref=myauto
 oadp_subscription_namespace: oadp-operator
 oadp_subscription_name: oadp-operator

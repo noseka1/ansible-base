@@ -19,7 +19,7 @@
     dest: '{{ tmpdir.path }}'
   with_items:
     - kustomization.yaml
-    - minio-credentials-secret.yaml
+    - minio-server-credentials-secret.yaml
 
 - name: Install Minio
   command: oc apply --kustomize {{ tmpdir.path }}
@@ -33,7 +33,7 @@
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: minio
+    name: minio-api
     namespace: '{{ minio_namespace }}'
   register: minio_route
 

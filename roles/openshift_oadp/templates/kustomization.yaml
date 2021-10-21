@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: {{ oadp_subscription_namespace }}
+
+bases:
+- {{ oadp_kustomizations.minio }}
+
+patchesStrategicMerge:
+- minio-client-credentials-secret.yaml

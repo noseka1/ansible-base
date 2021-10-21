@@ -1,0 +1,8 @@
+- name: Delete minio backup storage location
+  command: oc delete --kustomize {{ oadp_kustomizations.minio }}
+
+- name: Delete Velero instance
+  command: oc delete --kustomize {{ oadp_kustomizations.velero }}
+
+- name: Delete OADP operator
+  command: oc delete --kustomize {{ oadp_kustomizations.operator }}

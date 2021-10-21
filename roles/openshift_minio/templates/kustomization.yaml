@@ -7,4 +7,4 @@ bases:
 - {{ minio_kustomizations.minio }}
 
 patchesStrategicMerge:
-- minio-credentials-secret.yaml
+- minio-server-credentials-secret.yaml

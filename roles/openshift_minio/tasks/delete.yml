@@ -13,7 +13,7 @@
     dest: '{{ tmpdir.path }}'
   with_items:
     - kustomization.yaml
-    - minio-credentials-secret.yaml
+    - minio-server-credentials-secret.yaml
 
 - name: Delete Minio
   command: oc delete --kustomize {{ tmpdir.path }}

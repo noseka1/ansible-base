@@ -2,10 +2,6 @@
   k8s:
     definition: "{{ lookup('template', 'argocd-secret-secret.yaml') }}"
 
-- name: Enable OIDC backend in Argo CD
+- name: Enable OIDC backend in Argo CD and configure RBAC
   k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd-2.yaml') }}"
-
-- name: Map OIDC token groups to Argo CD roles
-  k8s:
-    definition: "{{ lookup('template', 'argocd-rbac-cm-cm.yaml') }}"
+    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd-3.yaml') }}"

@@ -215,5 +215,5 @@
       id: '{{ review_profile_config_execution.id }}'
       requirement: DISABLED
     validate_certs: False
-    status_code: [ 204 ]
+    status_code: [ 202, 204 ]
   when: review_profile_config_execution.requirement != "DISABLED"

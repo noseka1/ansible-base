@@ -15,3 +15,6 @@ spec:
     policy: |
       g, /ArgoCDAdmins, role:admin
     scopes: '[groups]'
+  # Make sure Dex is disabled as it seems to clash with the RH SSO login
+  dex:
+    openShiftOAuth: false

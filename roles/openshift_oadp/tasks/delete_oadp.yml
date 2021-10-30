@@ -1,5 +1,29 @@
-- name: Delete Velero instance
-  command: oc delete --kustomize {{ oadp_kustomizations.velero }}
+- import_tasks: get_infrastructure.yml
+
+- name: Create temporary kustomize directory
+  tempfile:
+    state: directory
+    suffix: -velero-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization config to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items:
+    - kustomization.yaml
+    - cloud-credentials-secret.yaml
+
+- name: Deploy Velero instance
+  command: oc delete --kustomize {{ tmpdir.path }}
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent
 
 - name: Delete OADP operator
   command: oc delete --kustomize {{ oadp_kustomizations.operator }}

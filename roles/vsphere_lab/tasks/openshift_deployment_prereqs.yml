@@ -31,9 +31,9 @@
 
 - name: Create cluster folder {{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
   vcenter_folder:
-    hostname: '{{ vsphere.vcenter_hostname }}'
-    username: '{{ vsphere.vcenter_username }}'
-    password: '{{ vsphere.vcenter_password }}'
+    hostname: '{{ vsphere_lab.vsphere_hostname }}'
+    username: '{{ vsphere_lab.vsphere_username }}'
+    password: '{{ vsphere_lab.vsphere_password }}'
     datacenter: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
     folder_name: '{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}'
     folder_type: vm

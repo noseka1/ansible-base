@@ -29,7 +29,7 @@
             "system_name": "{{ vsphere_lab.vcsa_vm.static_network.system_name }}"
         },
         "os": {
-            "password": "{{ vsphere_lab.vsphere_password }}",
+            "password": "{{ vsphere_lab.vcenter_password }}",
 {% if vsphere_lab.vcsa_vm.ntp_servers is defined and vsphere_lab.vcsa_vm.ntp_servers != "" %}
             "ntp_servers": "{{ vsphere_lab.vcsa_vm.ntp_servers }}",
 {% else %}
@@ -38,7 +38,7 @@
             "ssh_enable": true
         },
         "sso": {
-            "password": "{{ vsphere_lab.vsphere_password }}",
+            "password": "{{ vsphere_lab.vcenter_password }}",
             "domain_name": "mysso.com"
         }
     },

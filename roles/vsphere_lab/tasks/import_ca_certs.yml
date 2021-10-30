@@ -7,14 +7,14 @@
     state: directory
   become: True
 
-- name: Download CA certificates from https://{{ vsphere_lab.vsphere_hostname }}/certs/download.zip
+- name: Download CA certificates from https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip
   get_url:
-    url: 'https://{{ vsphere_lab.vsphere_hostname }}/certs/download.zip'
+    url: 'https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip'
     dest: '{{ download_directory }}'
     validate_certs: False
   become: True
 
-- name: Download CA certificates from https://{{ vsphere_lab.vsphere_hostname }}/certs/download.zip
+- name: Download CA certificates from https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip
   unarchive:
     src: '{{ download_directory }}/download.zip'
     dest: '{{ download_directory }}'
@@ -29,7 +29,7 @@
 
 - name: Check that certificates are trusted (this will fail if not)
   get_url:
-    url: 'https://{{ vsphere_lab.vsphere_hostname }}/certs/download.zip'
+    url: 'https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip'
     dest: '{{ download_directory }}'
     validate_certs: True
   become: True

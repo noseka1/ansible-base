@@ -62,9 +62,9 @@
     validate_certs: False
     state: poweredon
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.vsphere_hostname }} to come back up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.vcenter_hostname }} to come back up
   uri:
-    url: 'https://{{ vsphere_lab.vsphere_hostname }}'
+    url: 'https://{{ vsphere_lab.vcenter_hostname }}'
     validate_certs: False
   register: result
   until: result.status == 200

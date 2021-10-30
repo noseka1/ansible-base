@@ -1,26 +1,26 @@
 - name: Create Datacenter
   vmware_datacenter:
-    hostname: '{{ vsphere_lab.vsphere_hostname }}'
-    username: '{{ vsphere_lab.vsphere_username }}'
-    password: '{{ vsphere_lab.vsphere_password }}'
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
     state: present
     validate_certs: False
 
 - name: Create Cluster
   vmware_cluster:
-    hostname: '{{ vsphere_lab.vsphere_hostname }}'
-    username: '{{ vsphere_lab.vsphere_username }}'
-    password: '{{ vsphere_lab.vsphere_password }}'
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
     cluster_name: '{{ vsphere_lab.openshift_deployment_prereqs.cluster_name }}'
     validate_certs: False
 
 - name: Add ESXi Host to vCenter
   vmware_host:
-    hostname: '{{ vsphere_lab.vsphere_hostname }}'
-    username: '{{ vsphere_lab.vsphere_username }}'
-    password: '{{ vsphere_lab.vsphere_password }}'
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
     datacenter: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
     cluster: '{{ vsphere_lab.openshift_deployment_prereqs.cluster_name }}'
     esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
@@ -31,9 +31,9 @@
 
 - name: Create cluster folder {{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
   vcenter_folder:
-    hostname: '{{ vsphere_lab.vsphere_hostname }}'
-    username: '{{ vsphere_lab.vsphere_username }}'
-    password: '{{ vsphere_lab.vsphere_password }}'
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
     datacenter: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
     folder_name: '{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}'
     folder_type: vm

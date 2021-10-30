@@ -35,9 +35,8 @@
     password: '{{ vsphere_lab.esxi_password }}'
     datacenter: ha-datacenter
     name: '{{ vsphere_lab.vcsa_vm.name }}'
-    networks:
-      - label: '{{ vcsa_network_info.network_data["0"].label }}'
-        state: absent
+    mac_address: '{{ vcsa_network_info.network_data["0"].mac_address }}'
+    state: absent
     validate_certs: False
   when: vcsa_network_info.network_data["0"] is defined
 

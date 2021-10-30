@@ -14,7 +14,15 @@ vsphere_lab:
       gateway: 192.168.140.1
       system_name: photon-machine.lab.example.com
     ntp_servers: time.nist.gov
+    deployment_network: VM Network
+    datastore: datastore1
   vsphere_hostname: photon-machine.lab.example.com
   vsphere_username: administrator@mysso.com
   vsphere_password: '{{ generic_user_password }}'
-  openshift_network_nic: vmnic1
+  openshift_deployment_prereqs:
+    network_nic: vmnic1
+    network_name: OpenShift Network
+    datacenter_name: Datacenter
+    cluster_name: Cluster
+    datastore_name: datastore1
+    target_folder: mycluster

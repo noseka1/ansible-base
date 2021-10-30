@@ -6,8 +6,8 @@
             "hostname": "{{ vsphere_lab.esxi_hostname }}",
             "username": "{{ vsphere_lab.esxi_username }}",
             "password": "{{ vsphere_lab.esxi_password }}",
-            "deployment_network": "VM Network",
-            "datastore": "datastore1"
+            "deployment_network": "{{ vsphere_lab.vcsa_vm.deployment_network }}",
+            "datastore": "{{ vsphere_lab.vcsa_vm.datastore }}"
         },
         "appliance": {
             "__comments": [

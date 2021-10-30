@@ -4,7 +4,11 @@ kind: Kustomization
 namespace: {{ oadp_subscription_namespace }}
 
 bases:
-- {{ oadp_kustomizations.minio }}
+{% if infrastructure.resources.0.status.platformStatus.type == 'VSphere' %}
+- {{ oadp_kustomizations.velero_vsphere }}
+{% else %}
+- {{ oadp_kustomizations.velero_base }}
+{% endif %}
 
 patchesStrategicMerge:
-- minio-client-credentials-secret.yaml
+- cloud-credentials-secret.yaml

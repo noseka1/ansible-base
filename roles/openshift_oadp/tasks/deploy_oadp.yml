@@ -9,13 +9,12 @@
     subscription_name: '{{ oadp_subscription_name }}'
     subscription_namespace: '{{ oadp_subscription_namespace }}'
 
-- name: Deploy Velero instance
-  command: oc apply --kustomize {{ oadp_kustomizations.velero }}
+- import_tasks: get_infrastructure.yml
 
 - name: Create temporary kustomize directory
   tempfile:
     state: directory
-    suffix: -minio-kustomize
+    suffix: -velero-kustomize
   register: tmpdir
 
 - debug:
@@ -27,9 +26,9 @@
     dest: '{{ tmpdir.path }}'
   with_items:
     - kustomization.yaml
-    - minio-client-credentials-secret.yaml
+    - cloud-credentials-secret.yaml
 
-- name: Create minio backup storage location
+- name: Deploy Velero instance
   command: oc apply --kustomize {{ tmpdir.path }}
 
 - name: Delete temporary kustomize directory {{ tmpdir.path }}

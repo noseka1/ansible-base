@@ -12,4 +12,4 @@
   k8s:
     definition: "{{ lookup('url', item, split_lines='no') }}"
   loop:
-    - '{{ vsphere_csi_baseurl }}//manifests/vanilla/vsphere-csi-driver.yaml'
+    - '{{ vsphere_csi_base_url }}//manifests/vanilla/vsphere-csi-driver.yaml'

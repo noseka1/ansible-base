@@ -1,0 +1,14 @@
+- name: Create vSphere CSI prerequisites
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - vmware-system-csi-ns.yaml
+    - vsphere-config-secret-secret.yml
+    - vsphere-scc-rolebinding.yaml
+    - vsphere-scc-role.yaml
+
+- name: Deploy vSphere CSI driver
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+  loop:
+    - '{{ vsphere_csi_baseurl }}//manifests/vanilla/vsphere-csi-driver.yaml'

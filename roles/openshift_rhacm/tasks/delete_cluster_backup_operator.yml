@@ -1,0 +1,6 @@
+- name: Delete RHACM cluster backup operator
+  community.kubernetes.helm:
+    name: '{{ rhacm_cluster_backup_operator_name }}'
+    release_namespace: '{{ rhacm_cluster_backup_operator_namespace }}'
+    state: absent
+    wait: True

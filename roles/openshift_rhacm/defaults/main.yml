@@ -10,3 +10,10 @@ rhacm_instance_name: multiclusterhub
 
 rhacm_minio_name: minio
 rhacm_minio_namespace: open-cluster-management
+
+rhacm_cluster_backup_operator_git: https://github.com/open-cluster-management/cluster-backup-chart
+rhacm_cluster_backup_operator_name: cluster-backup-operator
+# The Cluster Back up and Restore Operator resources must be created
+# in the same namespace where the OADP Operator is installed.
+# See also: https://github.com/open-cluster-management/cluster-backup-operator
+rhacm_cluster_backup_operator_namespace: oadp-operator

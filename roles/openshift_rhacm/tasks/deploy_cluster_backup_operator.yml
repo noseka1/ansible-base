@@ -1,0 +1,25 @@
+- name: Create temporary directory
+  tempfile:
+    state: directory
+    suffix: -{{ rhacm_cluster_backup_operator_name }}
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Git clone stable repo on HEAD
+  git:
+    repo: '{{ rhacm_cluster_backup_operator_git }}'
+    dest: '{{ tmpdir.path }}'
+
+- name: Deploy RHACM cluster backup operator
+  community.kubernetes.helm:
+    name: '{{  cluster-backup-operator }}'
+    chart_ref: '{{ tmpdir.path }}/stable/cluster-backup-chart'
+    release_namespace: '{{ rhacm_cluster_backup_operator_namespace }}'
+    wait: True
+
+- name: Delete temporary directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

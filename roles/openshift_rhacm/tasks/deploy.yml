@@ -1,4 +1,4 @@
-- import_tasks: install_rhacm.yml
+- import_tasks: deploy_rhacm.yml
 
 - import_tasks: configure_users.yml
 

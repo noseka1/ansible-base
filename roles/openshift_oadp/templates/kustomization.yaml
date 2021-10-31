@@ -12,4 +12,3 @@ bases:
 
 patchesStrategicMerge:
 - cloud-credentials-secret.yaml
-- velero-velero.yaml

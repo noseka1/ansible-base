@@ -27,6 +27,7 @@
   with_items:
     - kustomization.yaml
     - cloud-credentials-secret.yaml
+    - velero-velero.yaml
 
 - name: Deploy Velero instance
   command: oc apply --kustomize {{ tmpdir.path }}

@@ -10,3 +10,6 @@
       - kustomization.yaml
       - cloud-credentials-secret.yaml
     kustomize_op: delete
+
+- name: Delete OADP operator
+  command: oc delete --kustomize {{ oadp_kustomizations.operator }}

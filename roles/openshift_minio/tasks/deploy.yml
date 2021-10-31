@@ -21,11 +21,11 @@
     kind: Route
     name: minio-api
     namespace: '{{ minio_namespace }}'
-  register: minio_route
+  register: minio_api_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Minio to come up
   uri:
-    url: 'https://{{ minio_route.resources.0.spec.host }}/minio/health/live'
+    url: 'https://{{ minio_api_route.resources.0.spec.host }}/minio/health/live'
     method: GET
     status_code: [ 200 ]
     validate_certs: False

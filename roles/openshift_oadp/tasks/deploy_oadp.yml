@@ -21,3 +21,17 @@
       - kustomization.yaml
       - cloud-credentials-secret.yaml
     kustomize_op: apply
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Velero to become available
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    namespace: '{{ oadp_subscription_namespace }}'
+    name: velero
+  register: velero_deployment
+  until:
+    - velero_deployment.resources.0.status is defined
+    - velero_deployment.resources.0.status.availableReplicas is defined
+    - velero_deployment.resources.0.status.availableReplicas > 0
+  retries: 60
+  delay: 10

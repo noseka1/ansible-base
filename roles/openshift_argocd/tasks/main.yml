@@ -1,29 +1,16 @@
-- name: Create temporary kustomize directory
-  tempfile:
-    state: directory
-    suffix: -argocd-kustomize
-  register: tmpdir
-
-- debug:
-    msg: Created temporary directory {{ tmpdir.path }}
-
-- name: Copy kustomization config to {{ tmpdir.path }}
-  template:
-    src: '{{ item }}'
-    dest: '{{ tmpdir.path }}'
-  with_items:
-    - kustomization.yaml
-    - argocd-namespace.yaml
-    - argocd-secret-secret.yaml
-    - argocd-server-route.yaml
-
-- name: Install Argo CD
-  shell: kustomize build {{ tmpdir.path }} | oc apply --filename -
-
-- name: Delete temporary kustomize directory {{ tmpdir.path }}
-  file:
-    path: '{{ tmpdir.path }}'
-    state: absent
+- name: Deploy Argo CD
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: argocd
+    kustomize_files:
+      - kustomization.yaml
+      - argocd-namespace.yaml
+      - argocd-secret-secret.yaml
+      - argocd-server-route.yaml
+    kustomize_op: apply
+    kustomize_method: kustomize
 
 - name: Obtain Argo CD route
   k8s_info:

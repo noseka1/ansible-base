@@ -1,5 +1,14 @@
 - name: Delete Observability component
-  command: oc delete --kustomize {{ rhacm_kustomizations.observability }}
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: rhacm_observability
+    kustomize_files:
+      - kustomization.yaml
+      - pull-secret-secret.yaml
+      - thanos-object-storage-secret.yaml
+    kustomize_op: delete
 
 - import_role:
     name: openshift_minio

@@ -9,30 +9,17 @@
     subscription_name: '{{ aap_subscription_name }}'
     subscription_namespace: '{{ aap_subscription_namespace }}'
 
-- name: Create temporary kustomize directory
-  tempfile:
-    state: directory
-    suffix: -aap-kustomize
-  register: tmpdir
-
-- debug:
-    msg: Created temporary directory {{ tmpdir.path }}
-
-- name: Copy kustomization config to {{ tmpdir.path }}
-  template:
-    src: '{{ item }}'
-    dest: '{{ tmpdir.path }}'
-  with_items:
-    - kustomization.yaml
-    - auto-controller-automationcontroller.yaml
-    - auto-controller-custom-admin-password-secret.yaml
-
 - name: Install Automation Controller
-  shell: kustomize build {{ tmpdir.path }} | oc apply --filename -
-
-- name: Delete temporary kustomize directory {{ tmpdir.path }}
-  file:
-    path: '{{ tmpdir.path }}'
-    state: absent
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: app
+    kustomize_files:
+      - kustomization.yaml
+      - auto-controller-automationcontroller.yaml
+      - auto-controller-custom-admin-password-secret.yaml
+    kustomize_op: apply
+    kustomize_method: kustomize
 
 - import_tasks: report_success.yml

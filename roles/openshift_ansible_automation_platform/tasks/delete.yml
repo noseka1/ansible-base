@@ -1,5 +1,15 @@
 - name: Delete Automation Controller
-  command: oc delete --kustomize {{ aap_kustomizations.auto_controller }}
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: app
+    kustomize_files:
+      - kustomization.yaml
+      - auto-controller-automationcontroller.yaml
+      - auto-controller-custom-admin-password-secret.yaml
+    kustomize_op: delete
+    kustomize_method: kustomize
 
-- name: Deploy Ansible Automation Platform operator
+- name: Delete Ansible Automation Platform operator
   command: oc delete --kustomize {{ aap_kustomizations.operator }}

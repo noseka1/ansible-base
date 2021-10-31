@@ -1,24 +1,10 @@
-- name: Create temporary kustomize directory
-  tempfile:
-    state: directory
-    suffix: -minio-kustomize
-  register: tmpdir
-
-- debug:
-    msg: Created temporary directory {{ tmpdir.path }}
-
-- name: Copy kustomization config to {{ tmpdir.path }}
-  template:
-    src: '{{ item }}'
-    dest: '{{ tmpdir.path }}'
-  with_items:
-    - kustomization.yaml
-    - minio-server-credentials-secret.yaml
-
-- name: Delete Minio
-  command: oc delete --kustomize {{ tmpdir.path }}
-
-- name: Delete temporary kustomize directory {{ tmpdir.path }}
-  file:
-    path: '{{ tmpdir.path }}'
-    state: absent
+- name: Delete minio
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: minio
+    kustomize_files:
+      - kustomization.yaml
+      - minio-server-credentials-secret.yaml
+    kustomize_op: delete

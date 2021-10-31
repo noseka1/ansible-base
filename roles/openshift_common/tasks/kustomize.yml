@@ -1,0 +1,29 @@
+- name: Create temporary kustomize directory for {{ kustomize_name }}
+  tempfile:
+    state: directory
+    suffix: -{{ kustomize_name }}-kustomize
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Copy kustomization files to {{ tmpdir.path }}
+  template:
+    src: '{{ item }}'
+    dest: '{{ tmpdir.path }}'
+  with_items: '{{ kustomize_files }}'
+
+- name: Run {{ kustomize_op }} {{ kustomize_name }}
+  command: oc {{ kustomize_op }} --kustomize {{ tmpdir.path }}
+  when: kustomize_method is not defined
+
+- name: Run {{ kustomize_op }} {{ kustomize_name }}
+  command: kustomize build {{ tmpdir.path }} | oc {{ kustomize_op }} --filename -
+  when:
+    - kustomize_method is defined
+    - kustomize_method == 'kustomize'
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

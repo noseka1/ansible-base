@@ -21,6 +21,9 @@
 #
 # na
 # emea
+#
+# Labs not managed by Ansible:
+# ODF 4 Implementation - runs on OpenStack, was able to only add one extra node
 
 otlc_labs:
   # OCP 4.5.4, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days, RHACM 2.0.3 preinstalled
@@ -100,7 +103,7 @@ otlc_labs:
       dialog_region: na_opentlc
       dialog_runtime: "8"
 
-  # Custom OCP installation, TLS certs configuration works, runs constantly
+  # Custom OCP installation, TLS certs configuration works, runs constantly, AWS
   ocp4_installation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
@@ -127,7 +130,21 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
-  # OCP 4.7.4, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours
+  # OCP 4.8.2, single-node control plane, Let's Encrypt TLS certs, AWS
+  ocp4_handson:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000001027'
+    template_name: 'Hands On with OpenShift 4.8'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_region: na_sandbox_gpte
+      dialog_runtime: "8"
+
+  # OCP 4.7.4, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours, AWS
   ocs4_implementation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'

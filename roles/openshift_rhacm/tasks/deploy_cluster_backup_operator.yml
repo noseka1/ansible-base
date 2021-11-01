@@ -14,7 +14,7 @@
 
 - name: Deploy RHACM cluster backup operator
   community.kubernetes.helm:
-    name: '{{  cluster-backup-operator }}'
+    name: '{{  rhacm_cluster_backup_operator_name }}'
     chart_ref: '{{ tmpdir.path }}/stable/cluster-backup-chart'
     release_namespace: '{{ rhacm_cluster_backup_operator_namespace }}'
     wait: True

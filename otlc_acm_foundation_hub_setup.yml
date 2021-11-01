@@ -3,7 +3,8 @@
 
   tasks:
     - import_role:
-        name: otlc_acm_foundation_hub_order
+        name: otlc_specific_order
+        tasks_from: otlc_acm_foundation_hub
       vars:
         otlc_service_desc: '{{ otlc_labs.acm_foundation_hub }}'
 

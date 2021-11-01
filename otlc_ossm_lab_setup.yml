@@ -3,7 +3,8 @@
 
   tasks:
     - import_role:
-        name: otlc_ossm_lab_order
+        name: otlc_specific_order
+        tasks_from: otlc_ossm_lab
       vars:
         otlc_service_desc: '{{ otlc_labs.ossm_lab }}'
 

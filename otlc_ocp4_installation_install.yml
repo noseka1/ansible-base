@@ -3,7 +3,8 @@
   gather_facts: False
   tasks:
     - import_role:
-        name: otlc_ocp4_installation_order
+        name: otlc_specific_order
+        tasks_from: otlc_ocp4_installation
       vars:
         otlc_service_desc: '{{ otlc_labs.ocp4_installation }}'
 

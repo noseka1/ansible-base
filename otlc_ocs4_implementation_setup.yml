@@ -3,7 +3,8 @@
 
   tasks:
     - import_role:
-        name: otlc_ocs4_implementation_order
+        name: otlc_specific_order
+        tasks_from: otlc_ocs4_implementation
       vars:
         otlc_service_desc: '{{ otlc_labs.ocs4_implementation }}'
 

@@ -127,7 +127,7 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
-  # OCP 4.7.4, cannot add records to the DNS zone, shuts down after 8 hours
+  # OCP 4.7.4, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours
   ocs4_implementation:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'

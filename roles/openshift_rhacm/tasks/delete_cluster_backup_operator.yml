@@ -4,3 +4,11 @@
     release_namespace: '{{ rhacm_cluster_backup_operator_namespace }}'
     state: absent
     wait: True
+
+- name: Delete cluster backup operator CRDs
+  k8s:
+    definition: "{{ lookup('file', item, split_lines='no') }}"
+    state: absent
+  loop:
+    - backupschedules.cluster.open-cluster-management.io-crd.yaml
+    - restores.cluster.open-cluster-management.io-crd.yaml

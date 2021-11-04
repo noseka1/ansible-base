@@ -18,7 +18,7 @@
   when: kustomize_method is not defined
 
 - name: Run {{ kustomize_op }} {{ kustomize_name }}
-  command: kustomize build {{ tmpdir.path }} | oc {{ kustomize_op }} --filename -
+  shell: kustomize build {{ tmpdir.path }} | oc {{ kustomize_op }} --filename -
   when:
     - kustomize_method is defined
     - kustomize_method == 'kustomize'

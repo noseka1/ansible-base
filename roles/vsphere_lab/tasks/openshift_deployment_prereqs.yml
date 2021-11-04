@@ -16,6 +16,24 @@
     cluster_name: '{{ vsphere_lab.openshift_deployment_prereqs.cluster_name }}'
     validate_certs: False
 
+- name: Obtain Cluster info
+  vmware_cluster_info:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
+    cluster_name: '{{ vsphere_lab.openshift_deployment_prereqs.cluster_name }}'
+    validate_certs: False
+  register: vsphere_cluster_info
+
+- name: Disable vCLS for cluster {{ vsphere_lab.openshift_deployment_prereqs.cluster_name }} (https://kb.vmware.com/kb/80472)
+  community.vmware.vmware_vcenter_settings:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    advanced_settings:
+      'config.vcls.clusters.{{ vsphere_cluster_info.clusters.[vsphere_lab.openshift_deployment_prereqs.cluster_name].moid }}.enabled': 'False'
+
 - name: Add ESXi Host to vCenter
   vmware_host:
     hostname: '{{ vsphere_lab.vcenter_hostname }}'

@@ -39,6 +39,7 @@
     username: '{{ vsphere_lab.vcenter_username }}'
     password: '{{ vsphere_lab.vcenter_password }}'
     advanced_settings: '{{ vsphere_advanced_settings }}'
+    validate_certs: False
 
 - name: Add ESXi Host to vCenter
   vmware_host:

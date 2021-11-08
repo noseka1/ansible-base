@@ -1,9 +1,9 @@
-- name: Create target folder {{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
+- name: Create target folder {{ vsphere_lab.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
   vcenter_folder:
     hostname: '{{ vsphere_lab.vcenter_hostname }}'
     username: '{{ vsphere_lab.vcenter_username }}'
     password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter: '{{ vsphere_lab.openshift_deployment_prereqs.datacenter_name }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
     folder_name: '{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}'
     folder_type: vm
     state: present

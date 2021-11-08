@@ -3,6 +3,7 @@
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
     wait: True
+    wait_timeout: 1800
   loop:
     - cluster-managedcluster.yaml
     - cluster-ns.yml

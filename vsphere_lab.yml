@@ -1,3 +1,10 @@
+- hosts: esxi
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: configure_certs_for_esxi.yml
+
 - hosts: localhost
   tasks:
     - import_role:

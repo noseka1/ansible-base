@@ -1,0 +1,12 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.esxi_hostname }} to come back up
+  vmware_about_info:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    validate_certs: False
+  delegate_to: localhost
+  ignore_errors: True
+  register: result
+  until: result is success
+  retries: 60
+  delay: 10

@@ -1,0 +1,2 @@
+{{ vsphere_lab_certs.esxi.crt }}
+{{ vsphere_lab_certs.esxi.ca_crt }}

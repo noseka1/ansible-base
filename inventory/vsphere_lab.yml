@@ -1,0 +1,7 @@
+vsphere_lab:
+  hosts:
+    esxi:
+      ansible_ssh_host: esxi.lab.example.com
+      ansible_ssh_user: root
+    localhost:
+      ansible_connection: local

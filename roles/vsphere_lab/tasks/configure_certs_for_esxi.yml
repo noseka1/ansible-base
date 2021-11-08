@@ -1,0 +1,25 @@
+- name: Install custom certificate
+  template:
+    src: rui.crt
+    dest: /etc/vmware/ssl/rui.crt
+  register: esxi_cert
+  become: True
+
+- name: Install custom private key
+  template:
+    src: rui.key
+    dest: /etc/vmware/ssl/rui.key
+  register: esxi_key
+  become: True
+
+- name: Restart ESXi services after cert has been updated
+  command: '{{ item }}'
+  loop:
+    - /etc/init.d/hostd restart
+    - /etc/init.d/vpxa restart
+  when: (esxi_cert is changed) or (esxi_key is changed)
+  become: True
+
+- name: Wait for ESXi to become reachable
+  import_tasks: wait_for_esxi.yml
+  when: (esxi_cert is changed) or (esxi_key is changed)

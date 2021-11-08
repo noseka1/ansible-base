@@ -2,6 +2,7 @@
   k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
+    wait: True
   loop:
     - cluster-managedcluster.yaml
     - cluster-ns.yml

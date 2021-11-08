@@ -1,0 +1,7 @@
+- name: Delete {{ rhacm_managed_cluster.cluster_name }} managed cluster
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - cluster-managedcluster.yaml
+    - cluster-ns.yml

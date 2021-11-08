@@ -1,0 +1,22 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: {{ rhacm_managed_cluster.cluster_name }}
+  namespace: {{ rhacm_managed_cluster.cluster_name }}
+spec:
+  clusterName: {{ rhacm_managed_cluster.cluster_name }}
+  clusterNamespace: {{ rhacm_managed_cluster.cluster_name }}
+  clusterLabels:
+    cloud: Amazon
+    vendor: OpenShift
+  applicationManager:
+    enabled: true
+    argocdCluster: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true

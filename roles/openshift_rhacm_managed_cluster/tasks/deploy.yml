@@ -1,0 +1,27 @@
+- name: Create objects for deployment of {{ rhacm_managed_cluster.cluster_name }} managed cluster
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - cluster-ns.yml
+    - cluster-clusterdeployment.yaml
+    - cluster-klusterletaddonconfig.yaml
+    - cluster-managedcluster.yaml
+    - secrets/cluster-aws-creds-secret.yaml
+    - secrets/cluster-install-config-secret.yaml
+    - secrets/cluster-pull-secret-secret.yaml
+    - secrets/cluster-ssh-private-key-secret.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_managed_cluster.cluster_name }} to deploy
+  k8s_info:
+    api_version: cluster.open-cluster-management.io/v1
+    kind: ManagedCluster
+    name: '{{ rhacm_managed_cluster.cluster_name }}'
+  register: managed_cluster
+  until:
+    - managed_cluster.resources | length > 0
+    - managed_cluster.resources.0.status is defined
+    - managed_cluster.resources.0.status.conditions is defined
+    - managed_cluster.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | list | length > 0
+    - (managed_cluster.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | first).status == "True"
+  retries: 180
+  delay: 10

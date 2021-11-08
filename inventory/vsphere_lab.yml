@@ -3,5 +3,6 @@ vsphere_lab:
     esxi:
       ansible_ssh_host: esxi.lab.example.com
       ansible_ssh_user: root
+      ansible_python_interpreter: /bin/python
     localhost:
       ansible_connection: local

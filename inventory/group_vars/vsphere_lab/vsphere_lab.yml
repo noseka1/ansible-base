@@ -19,10 +19,9 @@ vsphere_lab:
   vcenter_hostname: photon-machine.lab.example.com
   vcenter_username: administrator@mysso.com
   vcenter_password: '{{ generic_user_password }}'
+  datacenter_name: Datacenter
+  cluster_name: Cluster
   openshift_deployment_prereqs:
     network_nic: vmnic1
     network_name: OpenShift Network
-    datacenter_name: Datacenter
-    cluster_name: Cluster
-    datastore_name: datastore1
     target_folder: mycluster

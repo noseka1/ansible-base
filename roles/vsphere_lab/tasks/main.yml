@@ -20,5 +20,8 @@
 - name: Ensure vCSA autostarts
   import_tasks: vcsa_autostart.yml
 
+- name: Creae ESXi cluster
+  import_tasks: create_esxi_cluster.yml
+
 - name: Install OpenShift deployment prerequisites
-  import_tasks: openshift_deployment_prereqs.yml
+  import_tasks: ensure_openshift_prereqs.yml

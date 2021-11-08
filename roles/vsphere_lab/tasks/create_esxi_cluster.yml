@@ -1,0 +1,55 @@
+- name: Create Datacenter
+  vmware_datacenter:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    state: present
+    validate_certs: False
+
+- name: Create Cluster
+  vmware_cluster:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    cluster_name: '{{ vsphere_lab.cluster_name }}'
+    validate_certs: False
+
+- name: Obtain Cluster info
+  vmware_cluster_info:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    cluster_name: '{{ vsphere_lab.cluster_name }}'
+    validate_certs: False
+  register: vsphere_cluster_info
+
+- set_fact:
+    vsphere_advanced_settings_key: config.vcls.clusters.{{ vsphere_cluster_info.clusters[vsphere_lab.cluster_name].moid }}.enabled
+
+- set_fact:
+    vsphere_advanced_settings: >
+      {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}
+
+- name: Disable vCLS for cluster {{ vsphere_lab.cluster_name }} (https://kb.vmware.com/kb/80472)
+  community.vmware.vmware_vcenter_settings:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    advanced_settings: '{{ vsphere_advanced_settings }}'
+    validate_certs: False
+
+- name: Add ESXi Host to vCenter
+  vmware_host:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    cluster: '{{ vsphere_lab.cluster_name }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    esxi_username: '{{ vsphere_lab.esxi_username }}'
+    esxi_password: '{{ vsphere_lab.esxi_password }}'
+    state: present
+    validate_certs: False

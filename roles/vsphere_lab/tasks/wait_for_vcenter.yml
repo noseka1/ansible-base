@@ -6,3 +6,17 @@
   until: result.status == 200
   retries: 60
   delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.vcenter_hostname }} APIs to become available
+  uri:
+    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/session'
+    method: POST
+    url_username: '{{ vsphere_lab.vcenter_username }}'
+    url_password: '{{ vsphere_lab.vcenter_password }}'
+    status_code: [ 201 ]
+    validate_certs: False
+  register: vcenter_session
+  delegate_to: localhost
+  until: vcenter_session.status == 201
+  retries: 60
+  delay: 10

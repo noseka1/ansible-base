@@ -9,3 +9,10 @@
   tasks:
     - import_role:
         name: vsphere_lab
+
+- hosts: vcsa
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: configure_vcsa_host.yml

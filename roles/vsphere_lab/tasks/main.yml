@@ -9,7 +9,7 @@
   import_tasks: retrieve_vcsa.yml
 
 - name: Reconfigure vCSA instance if needed
-  import_tasks: reconfigure_vcsa.yml
+  import_tasks: configure_vcsa_vm.yml
   when: >
     vcsa_vm.instance.hw_memtotal_mb != vsphere_lab.vcsa_vm.memory
     or vcsa_vm.instance.hw_eth0.macaddress != vsphere_lab.vcsa_vm.macaddr

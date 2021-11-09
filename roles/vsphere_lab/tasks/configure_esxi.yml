@@ -1,0 +1,33 @@
+- name: Disable session timeouts
+  vmware_host_config_manager:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    options:
+      UserVars.HostClientSessionTimeout: 0
+      UserVars.ESXiShellTimeOut: 0
+      UserVars.ESXiShellInteractiveTimeOut: 0
+      UserVars.DcuiTimeOut: 0
+    validate_certs: False
+  register: esxi_config
+
+- name: Reboot ESXi for configuration changes to take effect
+  vmware_host_powerstate:
+    hostname: '{{ vsphere_lab.esxi_hostname }}'
+    username: '{{ vsphere_lab.esxi_username }}'
+    password: '{{ vsphere_lab.esxi_password }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    state: reboot-host
+    force: True
+    validate_certs: False
+  when: esxi_config is changed
+
+- name: Wait for ESXi host to start rebooting
+  pause:
+    seconds: 30
+  when: esxi_config is changed
+
+- name: Wait for ESXi to become reachable
+  import_tasks: wait_for_esxi.yml
+  when: esxi_config is changed

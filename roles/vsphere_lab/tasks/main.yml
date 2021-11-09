@@ -14,14 +14,14 @@
     vcsa_vm.instance.hw_memtotal_mb != vsphere_lab.vcsa_vm.memory
     or vcsa_vm.instance.hw_eth0.macaddress != vsphere_lab.vcsa_vm.macaddr
 
-- name: Configure ESXi
-  import_tasks: configure_esxi.yml
-
 - name: Configure custom TLS certificates
   import_tasks: configure_certs_for_vcenter.yml
 
-- name: Creae ESXi cluster
+- name: Create ESXi cluster
   import_tasks: create_esxi_cluster.yml
+
+- name: Configure ESXi
+  import_tasks: configure_esxi.yml
 
 - name: Install OpenShift deployment prerequisites
   import_tasks: ensure_openshift_prereqs.yml

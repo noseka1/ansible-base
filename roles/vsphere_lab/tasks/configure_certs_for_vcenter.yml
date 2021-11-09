@@ -72,9 +72,9 @@
     validate_certs: False
   when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
 
-- name: Wait for 120 seconds for vCenter services to begin restarting
+- name: Wait for 60 seconds for vCenter services to begin restarting
   wait_for:
-    timeout: 120
+    timeout: 60
   when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
 
 - name: Wait for vCenter to become available

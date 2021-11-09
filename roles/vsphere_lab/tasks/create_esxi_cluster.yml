@@ -14,6 +14,8 @@
     password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.datacenter_name }}'
     cluster_name: '{{ vsphere_lab.cluster_name }}'
+    ignore_ha: True
+    ignore_drs: True
     validate_certs: False
 
 - name: Obtain Cluster info

@@ -1,3 +1,14 @@
+- name: Check that the vCenter Server Appliance ISO is mounted
+  stat:
+    path: '{{ vsphere_lab.vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
+  register: vcsa_deploy
+
+- fail:
+    msg: >
+      Mount the vCenter Server Appliance ISO on {{ vsphere_lab.vcsa_iso_mount_path }} are re-run this script.
+      For example: sudo mount VMware-VCSA-all-7.0.2-17958471.iso {{ vsphere_lab.vcsa_iso_mount_path }}
+  when: not vcsa_deploy.stat.exists
+
 - name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
   command: >
     {{ vsphere_lab.vcsa_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help

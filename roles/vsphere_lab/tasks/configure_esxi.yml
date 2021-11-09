@@ -1,3 +1,28 @@
+- name: Enable autostart on ESXi host
+  community.vmware.vmware_host_auto_start:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    system_defaults:
+      enabled: true
+      start_delay: 0
+      stop_delay: 0
+      stop_action: powerOff
+    validate_certs: False
+
+- name: Configure vCSA to start on ESXi host start
+  community.vmware.vmware_host_auto_start:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
+    name: '{{ vsphere_lab.vcsa_vm.name }}'
+    power_info:
+      start_action: powerOn
+      start_order: 1
+    validate_certs: False
+
 - name: Disable session timeouts
   vmware_host_config_manager:
     hostname: '{{ vsphere_lab.esxi_hostname }}'
@@ -30,4 +55,8 @@
 
 - name: Wait for ESXi to become reachable
   import_tasks: wait_for_esxi.yml
+  when: esxi_config is changed
+
+- name: Wait for vCenter to become available
+  import_tasks: wait_for_vcenter.yml
   when: esxi_config is changed

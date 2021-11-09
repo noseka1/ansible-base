@@ -20,9 +20,6 @@
 - name: Configure custom TLS certificates
   import_tasks: configure_certs_for_vcenter.yml
 
-- name: Ensure vCSA autostarts
-  import_tasks: vcsa_autostart.yml
-
 - name: Creae ESXi cluster
   import_tasks: create_esxi_cluster.yml
 

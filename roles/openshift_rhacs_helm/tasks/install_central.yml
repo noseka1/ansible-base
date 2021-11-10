@@ -1,0 +1,26 @@
+- name: Create namespace {{ rhacs_central_namespace }}
+  k8s:
+    definition: "{{ lookup('template', 'rhacs-central-ns.yaml') }}"
+
+- name: Add RHACS chart repo
+  community.kubernetes.helm.helm_repository:
+    name: rhacs
+    repo_url: '{{ rhacs_helm_repo }}'
+
+- name: Deploy RHACS Central
+  community.kubernetes.helm:
+    name: rhacs-central-services
+    chart_ref: rhacs/central-services
+    chart_version: '{{ rhacs_version }}'
+    release_namespace: '{{ rhacs_central_namespace }}'
+    create_namespace: False
+    release_values:
+      allowNonstandardNamespace: true
+      allowNonstandardReleaseName: true
+      central:
+        adminPassword:
+          htpasswd: admin:{{ generic_user_password | string | password_hash('bcrypt', 'constant1234567890123.') }}
+
+- name: Create route for Central
+  k8s:
+    definition: "{{ lookup('template', 'central-route.yaml') }}"

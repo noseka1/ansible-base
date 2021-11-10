@@ -1,0 +1,4 @@
+rhacs_version: 66.1.0
+rhacs_helm_repo: https://mirror.openshift.com/pub/rhacs/charts
+rhacs_central_namespace: rhacs-central
+rhacs_secured_cluster_services_namespace: rhacs-this-cluster

@@ -1,7 +1,0 @@
-- hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-    - import_role:
-        name: openshift_rhacm
-        tasks_from: deploy_cluster_backup_operator.yml

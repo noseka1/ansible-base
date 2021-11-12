@@ -130,7 +130,7 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
-  # OCP 4.8.2, single-node control plane, Let's Encrypt TLS certs, AWS
+  # OCP 4.8.2, single-node control plane, Let's Encrypt TLS certs, shuts down after 4 hours, AWS
   ocp4_handson:
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'

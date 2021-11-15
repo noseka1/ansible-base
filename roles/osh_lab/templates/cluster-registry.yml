@@ -10,4 +10,4 @@ spec:
   # Configure persistent storage for the image registry.
   storage:
     pvc:
-      claim: ocs4registry
+      claim: registry

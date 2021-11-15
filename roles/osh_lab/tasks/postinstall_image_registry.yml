@@ -1,6 +1,6 @@
 - name: Allocate persistent volume
   k8s:
-    definition: "{{ lookup('template', 'oc4registry-pvc.yml') }}"
+    definition: "{{ lookup('template', 'registry-pvc.yml') }}"
 -
 - name: Attach persistent volume to image registry
   k8s:

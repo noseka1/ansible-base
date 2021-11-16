@@ -1,0 +1,13 @@
+- name: Add volsync chart repo
+  community.kubernetes.helm.helm_repository:
+    name: volsync
+    repo_url: '{{ volsync_helm_repo }}'
+
+- name: Deploy volsync
+  community.kubernetes.helm:
+    name: '{{ volsync_name }}'
+    chart_ref: volsync/volsync
+    chart_version: '{{ volsync_version  }}'
+    release_namespace: '{{ volsync_namespace }}'
+    create_namespace: True
+    release_values:

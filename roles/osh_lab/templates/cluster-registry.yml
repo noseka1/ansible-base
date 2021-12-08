@@ -7,6 +7,8 @@ spec:
   managementState: Managed
   # Number of desired image registry pods
   replicas: 1
+  # Default RollingUpdate rollout strategy cannot be used with ReadWriteOnce access mode volume
+  rolloutStrategy: Recreate
   # Configure persistent storage for the image registry.
   storage:
     pvc:

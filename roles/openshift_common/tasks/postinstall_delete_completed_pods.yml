@@ -1,0 +1,18 @@
+- name: Retrieve all pods which are in Completed state
+  k8s_info:
+    api_version: v1
+    kind: Pod
+    field_selectors:
+      - status.phase==Succeeded
+  register: completed_pods
+
+- name: Delete all pods which are in Completed state
+  k8s:
+    api_version: v1
+    kind: Pod
+    name: '{{ item.metadata.name }}'
+    namespace: '{{ item.metadata.namespace }}'
+    state: absent
+  loop: '{{ completed_pods.resources }}'
+  loop_control:
+    label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'

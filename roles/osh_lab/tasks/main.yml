@@ -34,6 +34,10 @@
 
 - import_role:
     name: openshift_common
+    tasks_from: postinstall_delete_completed_pods.yml
+
+- import_role:
+    name: openshift_common
     tasks_from: postinstall_certs.yml
   vars:
     openshift_cluster_certs: '{{ osh_lab_certs }}'

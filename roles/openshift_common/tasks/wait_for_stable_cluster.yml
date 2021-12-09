@@ -20,6 +20,20 @@
   retries: 60
   delay: 10
 
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for pods to recover
+  k8s_info:
+    api_version: v1
+    kind: Pod
+    field_selectors:
+      - metadata.namespace!=openshift-marketplace
+      - status.phase!=Running
+      - status.phase!=Succeeded
+  register: recovering_pods
+  until:
+    - recovering_pods.resources | length == 0
+  retries: 60
+  delay: 10
+
 - name: Waiting for OpenShift APIs to become available
   k8s_info:
     api_version: apiregistration.k8s.io/v1

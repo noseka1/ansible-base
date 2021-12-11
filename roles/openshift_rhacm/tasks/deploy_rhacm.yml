@@ -12,19 +12,18 @@
 - name: Deploy RHACM instance
   command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
 
-- name: Wait until klusterletaddonconfig local-cluster object is available
+- name: Wait until managedcluster local-cluster object is available
   k8s_info:
-    api_version: agent.open-cluster-management.io/v1
-    kind: KlusterletAddonConfig
+    api_version: cluster.open-cluster-management.io/v1
+    kind: ManagedCluster
     name: local-cluster
-    namespace: local-cluster
-  register: klusterletaddonconfig
-  until: klusterletaddonconfig.resources | length > 0
+  register: managedcluster
+  until: managedcluster.resources | length > 0
   retries: 80
   delay: 10
 
-- name: Configure local-cluster
-  command: oc apply --kustomize {{ rhacm_kustomizations.local_cluster }}
+- name: Put local-cluster under GitOps management
+  command: oc apply --kustomize {{ rhacm_kustomizations.gitops }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
   k8s_info:

@@ -1,0 +1,17 @@
+- name: Obtain all storage class objects
+  k8s_info:
+    api_version: storage.k8s.io/v1
+    kind: StorageClass
+  register: storage_classes
+
+- set_fact:
+    default_storage_class_exists: False
+
+- set_fact:
+    default_storage_class_exists: True
+  when:
+    - item.metadata is defined
+    - item.metadata.annotations is defined
+    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] is defined
+    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] == 'true'
+  loop: '{{ storage_classes.resources }}'

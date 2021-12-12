@@ -1,3 +1,8 @@
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: check_default_storage_class_exists.yml
+
 - name: Create vSphere CSI prerequisites
   k8s:
     definition: "{{ lookup('template', item) }}"

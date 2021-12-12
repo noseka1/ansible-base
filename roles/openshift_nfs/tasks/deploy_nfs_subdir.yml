@@ -19,23 +19,10 @@
     namespace: rook-nfs
   register: rook_nfs_service
 
-- name: Obtain default storage class if it exists
-  k8s_info:
-    api_version: storage.k8s.io/v1
-    kind: StorageClass
-  register: storage_classes
-
-- set_fact:
-    default_storage_class_exists: False
-
-- set_fact:
-    default_storage_class_exists: True
-  when:
-    - item.metadata is defined
-    - item.metadata.annotations is defined
-    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] is defined
-    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] == 'true'
-  loop: '{{ storage_classes.resources }}'
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: check_default_storage_class_exists.yml
 
 - name: Deploy nfs-subdir-external-provisioner
   community.kubernetes.helm:

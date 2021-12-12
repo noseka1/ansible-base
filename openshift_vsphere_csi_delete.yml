@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - import_role:
+        name: openshift_vsphere_csi
+        tasks_from: delete.yml

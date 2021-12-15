@@ -17,4 +17,4 @@ jaeger_subscription_name: jaeger-product
 jaeger_subscription_namespace: openshift-operators
 
 elasticsearch_subscription_name: elasticsearch-operator
-elasticsearch_subscription_namespace: openshift-operators
+elasticsearch_subscription_namespace: openshift-operators-redhat

@@ -1,0 +1,17 @@
+- name: Obtain CSV name
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: '{{ operator_subscription_name }}'
+    namespace: '{{ operator_subscription_namespace }}'
+  register: operator_subscription
+
+- name: Delete kustomization {{ operator_kustomization }}
+  command: oc delete --kustomize {{ operator_kustomization }}
+
+- name: Clean up CSVs
+  include_role:
+    name: openshift_common
+    tasks_from: delete_csvs.yml
+  vars:
+    delete_csvs_name: '{{ operator_subscription.resources.0.status.currentCSV }}'

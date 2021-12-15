@@ -1,0 +1,30 @@
+- name: Delete service mesh instance
+  command: oc delete --kustomize {{ service_mesh_kustomizations.service_mesh_instance }}
+
+- name: Delete service mesh operator
+  include_tasks: delete_operator.yml
+  vars:
+    operator_subscription_name: '{{ service_mesh_subscription_name }}'
+    operator_subscription_namespace: '{{ service_mesh_subscription_namespace }}'
+    operator_kustomization: '{{ service_mesh_kustomizations.service_mesh_operator }}'
+
+- name: Delete kiali operator
+  include_tasks: delete_operator.yml
+  vars:
+    operator_subscription_name: '{{ kiali_subscription_name }}'
+    operator_subscription_namespace: '{{ kiali_subscription_namespace }}'
+    operator_kustomization: '{{ service_mesh_kustomizations.kiali_operator }}'
+
+- name: Delete jaeger operator
+  include_tasks: delete_operator.yml
+  vars:
+    operator_subscription_name: '{{ jaeger_subscription_name }}'
+    operator_subscription_namespace: '{{ jaeger_subscription_namespace }}'
+    operator_kustomization: '{{ service_mesh_kustomizations.jaeger_operator }}'
+
+- name: Delete elasticsearch operator
+  include_tasks: delete_operator.yml
+  vars:
+    operator_subscription_name: '{{ elasticsearch_subscription_name }}'
+    operator_subscription_namespace: '{{ elasticsearch_subscription_namespace }}'
+    operator_kustomization: '{{ service_mesh_kustomizations.elasticsearch_operator }}'

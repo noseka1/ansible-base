@@ -1,0 +1,7 @@
+- name: Obtain Minio route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: minio-api
+    namespace: '{{ minio_namespace }}'
+  register: minio_api_route

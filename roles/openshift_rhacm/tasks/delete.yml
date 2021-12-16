@@ -3,4 +3,3 @@
 
 - name: Delete RHACM operator
   command: oc delete --kustomize {{ rhacm_kustomizations.operator }}
-

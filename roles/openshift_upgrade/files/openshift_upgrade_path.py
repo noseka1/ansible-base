@@ -12,7 +12,7 @@ class Node(object):
 
     def __init__(self, version):
         self.version = version
-        self.outgoing_edges = []
+        self.outgoing_edges = set()
 
 class Graph(object):
 
@@ -27,7 +27,7 @@ class Graph(object):
     def add_edge(self, from_version, to_version):
         from_node = self.nodes[from_version]
         to_node = self.nodes[to_version]
-        from_node.outgoing_edges.append(to_node)
+        from_node.outgoing_edges.add(to_node)
 
     def sort_versions(self, versions):
         versions.sort(key = lambda x: [int(y) for y in x.split('.')])

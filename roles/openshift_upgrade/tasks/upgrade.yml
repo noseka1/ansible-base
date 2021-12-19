@@ -1,0 +1,58 @@
+- name: Switch channel to {{ item.channel }}
+  k8s:
+    definition:
+      apiVersion: v1
+      kind: ClusterVersion
+      metadata:
+        name: version
+      spec:
+        channel: '{{ item.channel }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} update to become available
+  k8s_info:
+    api_version: v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+  until:
+    - clusterversion_result.resources is defined
+    - clusterversion_result.resources | length > 0
+    - clusterversion_result.resources.0.status is defined
+    - clusterversion_result.resources.0.status.availableUpdates is defined
+    - clusterversion_result.resources.0.status.availableUpdates | selectattr('version', 'equalto', item.version) | list | length > 0
+  retries: 60
+  delay: 10
+
+- name: Trigger upgrade to version {{ item.version }}
+  k8s:
+    definition:
+      apiVersion: v1
+      kind: ClusterVersion
+      metadata:
+        name: version
+      spec:
+        desiredUpdate:
+          version: '{{ item.version }}'
+  register: upgrade_started
+
+- name: Wait for the upgrade to start
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+  until:
+    - clusterversion_result.resources.0.status is defined
+    - clusterversion_result.resources.0.status.conditions is defined
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"
+  retries: 10
+  delay: 1
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 0
+    stable_cluster_retries: 60
+  when: upgrade_started is changed

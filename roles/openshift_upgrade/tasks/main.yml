@@ -1,0 +1,59 @@
+- fail:
+    msg: Upgrade target version not defined
+  when: openshift_upgrade_target_version is undefined
+
+- fail:
+    msg: Upgrade target channel not defined
+  when: openshift_upgrade_target_channel is undefined
+
+- name: Retrieve latest version on {{ openshift_upgrade_target_channel }} channel
+  script: files/openshift_upgrade_path.py {{ openshift_upgrade_target_channel }}
+  register: upgrade_path
+  when: openshift_upgrade_target_version == 'latest'
+
+- name: Set target OpenShift version
+  set_fact:
+    openshift_upgrade_target_version: '{{ upgrade_path.stdout_lines[0] }}'
+  when: openshift_upgrade_target_version == 'latest'
+
+- debug:
+    msg: Upgrading OpenShift to version {{ openshift_upgrade_target_version }}
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 0
+    stable_cluster_retries: 60
+
+- name: Retrieve current cluster version
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+
+- debug:
+    msg: Current cluster version is {{ clusterversion_result.resources.0.status.desired.version }}
+
+- name: Compute upgrade path
+  script: files/openshift_upgrade_path.py {{ clusterversion_result.resources.0.status.desired.version }} {{ openshift_upgrade_target_version }}
+  register: upgrade_path
+
+- debug:
+    var: upgrade_path.stdout | from_json
+
+- name: Perform OpenShift cluster upgrade(s)
+  include_tasks: upgrade.yml
+  loop: '{{ upgrade_path.stdout | from_json }}'
+
+- name: Retrieve the upgrade history
+  k8s_info:
+    api_version: v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+
+- name: Show upgrade history if it exists
+  debug:
+    var: clusterversion_result.resources.0.status.history

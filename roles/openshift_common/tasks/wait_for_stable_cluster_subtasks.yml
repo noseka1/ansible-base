@@ -31,7 +31,7 @@
     {{ stable_cluster_retries - (retry_count | int) }} retries remaining.
     {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
   pause:
-    seconds: 10
+    seconds: 60
   when: not job_complete
 
 - include_tasks: wait_for_stable_cluster_subtasks.yml

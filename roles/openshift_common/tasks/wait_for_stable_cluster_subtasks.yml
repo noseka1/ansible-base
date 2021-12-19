@@ -1,6 +1,7 @@
 - name: Set retry count
   set_fact:
     retry_count: '{{ 0 if retry_count is undefined else (retry_count | int) + 1 }}'
+    job_complete: False
 
 - fail:
     msg: Ended after {{ stable_cluster_retries }}
@@ -13,9 +14,9 @@
     name: version
   register: clusterversion_result
 
-- name: Set job completed
+- name: Set job complete to True
   set_fact:
-    job_completed: True
+    job_complete: True
   when:
     - clusterversion_result.resources.0.status is defined
     - clusterversion_result.resources.0.status.conditions is defined
@@ -31,7 +32,7 @@
     {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
   pause:
     seconds: 10
-  when: job_completed is not defined or not job_completed
+  when: not job_complete
 
 - include_tasks: wait_for_stable_cluster_subtasks.yml
-  when: job_completed is not defined or not job_completed
+  when: not job_complete

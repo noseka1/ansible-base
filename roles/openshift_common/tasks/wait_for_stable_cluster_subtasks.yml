@@ -31,6 +31,7 @@
     {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
   pause:
     seconds: 10
+  when: job_completed is not defined or not job_completed
 
 - include_tasks: wait_for_stable_cluster_subtasks.yml
   when: job_completed is not defined or not job_completed

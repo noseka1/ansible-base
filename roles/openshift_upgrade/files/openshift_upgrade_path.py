@@ -98,25 +98,22 @@ class Main(object):
     def main(self):
         logging.basicConfig(level=logging.INFO)
 
-        from_version_arg, to_version_arg = self.read_program_arguments()
+        from_version_arg, to_version_arg, channel_arg = self.read_program_arguments()
 
+        if channel_arg:
+            graph = Graph()
+            self.add_channel_to_graph(channel_arg, graph)
+            graph.show_graph()
+            latest_version = graph.get_latest_version_on_channel(channel_arg)
+            print(latest_version)
+            sys.exit(0)
+
+        from_version = from_version_arg.split(".")
+        from_minor = int(from_version[1])
         to_version = to_version_arg.split(".")
         to_minor = int(to_version[1])
 
-        if from_version_arg:
-            from_version = from_version_arg.split(".")
-            from_minor = int(from_version[1])
-        else:
-            from_minor = to_minor
-
         graph = self.build_graph(from_minor, to_minor)
-
-        if len(to_version) == 2:
-          channel = "%s-%i.%i" % (STABLE, MAJOR, to_minor)
-          to_version_arg = graph.get_latest_version_on_channel(channel)
-          if not from_version_arg:
-              print(to_version_arg)
-              sys.exit(0)
 
         found, path = graph.find_upgrade_path(from_version_arg, to_version_arg)
         logging.debug("Upgrade path {} {}".format(found, path))
@@ -141,6 +138,8 @@ class Main(object):
         response_json = channel_response.json()
 
         if channel_response.status_code == 200:
+            if len(response_json["nodes"]) == 0:
+                raise Exception("Channel %s doesn't include any versions." % channel)
             graph.process_channel_reponse(channel, response_json)
         else:
             pp = pprint.PrettyPrinter(indent=4)
@@ -150,12 +149,12 @@ class Main(object):
     def read_program_arguments(self):
         if len(sys.argv) <= 1:
             print("Usage:")
-            print("{} CHANNEL_VERSION".format(sys.argv[0]))
+            print("{} CHANNEL".format(sys.argv[0]))
             print("{} FROM_VERSION TO_VERSION".format(sys.argv[0]))
             sys.exit(-1)
         if len(sys.argv) == 2:
-            return None, sys.argv[1]
+            return None, None, sys.argv[1]
         else:
-            return sys.argv[1], sys.argv[2]
+            return sys.argv[1], sys.argv[2], None
 
 Main().main()

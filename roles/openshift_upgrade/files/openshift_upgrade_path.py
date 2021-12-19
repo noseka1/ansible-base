@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-import requests
-import pprint
-import sys
 import json
+import logging
+import pprint
+import requests
+import sys
 
 OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?channel=%s'
 CHANNEL = 'channel'
@@ -80,7 +81,7 @@ class Graph(object):
                     queue.append((edge, path + [ path_increment ]))
         return False, []
 
-    def print_graph(self):
+    def show_graph(self):
         versions = list(self.nodes.keys())
         self.sort_versions(versions)
         for ver in versions:
@@ -89,11 +90,13 @@ class Graph(object):
             for edge in node.outgoing_edges:
                 edges.append(edge.version)
             self.sort_versions(edges)
-            print("{} has outgoing edges to {}".format(ver, edges))
+            logging.debug("{} has outgoing edges to {}".format(ver, edges))
 
 class Main(object):
 
     def main(self):
+        logging.basicConfig(level=logging.INFO)
+
         from_version_arg, to_version_arg = self.read_program_arguments()
 
         from_version = from_version_arg.split(".")
@@ -105,19 +108,19 @@ class Main(object):
 
         graph = self.build_graph(major, from_minor, to_minor)
 
-        graph.print_graph()
+        graph.show_graph()
 
         if len(to_version) == 2:
           channel = "%s-%s" % (STABLE, to_version_arg)
           to_version_arg = graph.get_latest_version_on_channel(channel)
 
         found, path = graph.find_upgrade_path(from_version_arg, to_version_arg)
-        print("Upgrade path {} {}".format(found, path))
+        logging.debug("Upgrade path {} {}".format(found, path))
 
         if found:
             print(json.dumps(path))
         else:
-            print("Upgrade path not found.")
+            logging.error("Upgrade path not found.")
             sys.exit(-1)
 
     def build_graph(self, major, from_minor, to_minor):

@@ -1,24 +1,9 @@
-- name: Wait for {{ stable_cluster_delay }} seconds for cluster node reboots to start
+- name: Wait for {{ stable_cluster_delay }} seconds
   wait_for:
     timeout: '{{ stable_cluster_delay }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster to stabilize
-  k8s_info:
-    api_version: config.openshift.io/v1
-    kind: ClusterVersion
-    name: version
-  register: clusterversion_result
-  until:
-    - clusterversion_result.resources.0.status is defined
-    - clusterversion_result.resources.0.status.conditions is defined
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | first).status == "False"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
-  retries: 60
-  delay: 10
+  include_tasks: wait_for_stable_cluster_subtasks.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for pods to recover
   k8s_info:
@@ -34,16 +19,18 @@
   retries: 60
   delay: 10
 
-- name: Waiting for OpenShift APIs to become available
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift APIs to become available
   k8s_info:
     api_version: apiregistration.k8s.io/v1
     kind: APIService
-    name: '{{ item }}'
+    name: '{{ apiservice_item }}'
   loop:
     - v1.oauth.openshift.io
     - v1.packages.operators.coreos.com
     - v1.project.openshift.io
     - v1.user.openshift.io
+  loop_control:
+    loop_var: apiservice_item
   register: openshift_api_result
   until:
     - openshift_api_result.resources is defined

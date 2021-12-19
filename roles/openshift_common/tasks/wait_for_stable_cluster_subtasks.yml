@@ -1,0 +1,36 @@
+- name: Set retry count
+  set_fact:
+    retry_count: '{{ 0 if retry_count is undefined else (retry_count | int) + 1 }}'
+
+- fail:
+    msg: Ended after {{ stable_cluster_retries }}
+  when: (retry_count | int ) == stable_cluster_retries
+
+- name: Retrieve cluster status
+  k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+
+- name: Set job completed
+  set_fact:
+    job_completed: True
+  when:
+    - clusterversion_result.resources.0.status is defined
+    - clusterversion_result.resources.0.status.conditions is defined
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | first).status == "False"
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
+
+- name: >
+    {{ stable_cluster_retries - (retry_count | int) }} retries remaining.
+    {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
+  pause:
+    seconds: 10
+
+- include_tasks: wait_for_stable_cluster_subtasks.yml
+  when: job_completed is not defined or not job_completed

@@ -1,4 +1,4 @@
-otlc_ocp4_installation_openshift_channel: '4.9'
+otlc_ocp4_installation_openshift_channel: stable-4.9
 otlc_ocp4_installation_openshift_version: latest
 otlc_ocp4_installation_openshift_control_plane_replicas: 3
 otlc_ocp4_installation_openshift_network_type: OVNKubernetes

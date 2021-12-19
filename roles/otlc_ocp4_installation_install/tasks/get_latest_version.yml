@@ -1,12 +1,7 @@
-- name: Fetch the versions available in channel {{ otlc_ocp4_installation_openshift_channel }}
-  uri:
-    url: 'https://raw.githubusercontent.com/openshift/cincinnati-graph-data/master/channels/stable-{{ otlc_ocp4_installation_openshift_channel }}.yaml'
-    method: GET
-    return_content: True
-    status_code: [ 200 ]
-  register: otlc_ocp4_installation_openshift_versions
+- name: Retrieve latest version on {{ otlc_ocp4_installation_openshift_channel }} channel
+  script: ../openshift_upgrade/files/openshift_upgrade_path.py {{ otlc_ocp4_installation_openshift_channel }}
+  register: upgrade_path
 
-# The assumption is that the latest version is the last on the list. This assumption holds most of the time but not always.
-- name: Choose the latest OpenShift version in channel {{ otlc_ocp4_installation_openshift_channel }}
+- name: Set target OpenShift version
   set_fact:
-    otlc_ocp4_installation_openshift_version: '{{ (otlc_ocp4_installation_openshift_versions.content | from_yaml).versions | last }}'
+    otlc_ocp4_installation_openshift_version: '{{ upgrade_path.stdout_lines[0] }}'

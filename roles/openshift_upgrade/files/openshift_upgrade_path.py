@@ -47,8 +47,11 @@ class Graph(object):
             to_version = node_list[edge[1]]
             self.add_edge(from_version, to_version)
 
-    def get_latest_version(self):
-        versions = list(self.nodes.keys())
+    def get_latest_version_on_channel(self, channel):
+        versions = list()
+        for node in self.nodes.values():
+            if node.channel == channel:
+                versions.append(node.version)
         self.sort_versions(versions)
         return versions[-1]
 
@@ -103,7 +106,10 @@ class Main(object):
         graph = self.build_graph(major, from_minor, to_minor)
 
         graph.print_graph()
-        print(graph.get_latest_version())
+
+        if len(to_version) == 2:
+          channel = "%s-%s" % (STABLE, to_version_arg)
+          to_version_arg = graph.get_latest_version_on_channel(channel)
 
         found, path = graph.find_upgrade_path(from_version_arg, to_version_arg)
         print("Upgrade path {} {}".format(found, path))

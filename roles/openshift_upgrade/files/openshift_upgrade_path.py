@@ -5,13 +5,16 @@ import pprint
 import sys
 import json
 
-OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?channel=%s-%s'
+OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?channel=%s'
+CHANNEL = 'channel'
 STABLE = 'stable'
+VERSION = 'version'
 
 class Node(object):
 
-    def __init__(self, version):
+    def __init__(self, channel, version):
         self.version = version
+        self.channel = channel
         self.outgoing_edges = set()
 
 class Graph(object):
@@ -19,9 +22,9 @@ class Graph(object):
     def __init__(self):
         self.nodes = dict()
 
-    def add_version(self, version):
+    def add_version(self, channel, version):
         if not version in self.nodes:
-            node = Node(version)
+            node = Node(channel, version)
             self.nodes[version] = node
 
     def add_edge(self, from_version, to_version):
@@ -32,11 +35,11 @@ class Graph(object):
     def sort_versions(self, versions):
         versions.sort(key = lambda x: [int(y) for y in x.split('.')])
 
-    def process_channel_reponse(self, channel_response):
+    def process_channel_reponse(self, channel, channel_response):
         node_list = []
         for node in channel_response["nodes"]:
             ver = node["version"]
-            self.add_version(ver)
+            self.add_version(channel, ver)
             node_list.append(ver)
 
         for edge in channel_response["edges"]:
@@ -67,7 +70,11 @@ class Graph(object):
                 return True, path
             else:
                 for edge in node.outgoing_edges:
-                    queue.append((edge, path + [ edge.version ]))
+                    path_increment = {
+                            CHANNEL: edge.channel,
+                            VERSION: edge.version
+                    }
+                    queue.append((edge, path + [ path_increment ]))
         return False, []
 
     def print_graph(self):
@@ -110,17 +117,17 @@ class Main(object):
     def build_graph(self, major, from_minor, to_minor):
         graph = Graph()
         for i in range(from_minor, to_minor + 1):
-            channel_name = "%i.%i" % (major, i)
-            self.add_channel_to_graph(channel_name, graph)
+            channel = "%s-%i.%i" % (STABLE, major, i)
+            self.add_channel_to_graph(channel, graph)
         return graph
 
-    def add_channel_to_graph(self, channel_name, graph):
-        channel_url = OPENSHIFT_GRAPH_URL % (STABLE, channel_name)
+    def add_channel_to_graph(self, channel, graph):
+        channel_url = OPENSHIFT_GRAPH_URL % (channel)
         channel_response = requests.get(channel_url)
         response_json = channel_response.json()
 
         if channel_response.status_code == 200:
-            graph.process_channel_reponse(response_json)
+            graph.process_channel_reponse(channel, response_json)
         else:
             pp = pprint.PrettyPrinter(indent=4)
             raise Exception("Failed to fetch data for channel %s. Response was: %s" %

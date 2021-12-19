@@ -10,6 +10,7 @@ OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?chan
 CHANNEL = 'channel'
 STABLE = 'stable'
 VERSION = 'version'
+MAJOR = 4
 
 class Node(object):
 
@@ -99,20 +100,23 @@ class Main(object):
 
         from_version_arg, to_version_arg = self.read_program_arguments()
 
-        from_version = from_version_arg.split(".")
         to_version = to_version_arg.split(".")
-
-        major = int(from_version[0])
-        from_minor = int(from_version[1])
         to_minor = int(to_version[1])
 
-        graph = self.build_graph(major, from_minor, to_minor)
+        if from_version_arg:
+            from_version = from_version_arg.split(".")
+            from_minor = int(from_version[1])
+        else:
+            from_minor = to_minor
 
-        graph.show_graph()
+        graph = self.build_graph(from_minor, to_minor)
 
         if len(to_version) == 2:
-          channel = "%s-%s" % (STABLE, to_version_arg)
+          channel = "%s-%i.%i" % (STABLE, MAJOR, to_minor)
           to_version_arg = graph.get_latest_version_on_channel(channel)
+          if not from_version_arg:
+              print(to_version_arg)
+              sys.exit(0)
 
         found, path = graph.find_upgrade_path(from_version_arg, to_version_arg)
         logging.debug("Upgrade path {} {}".format(found, path))
@@ -123,11 +127,12 @@ class Main(object):
             logging.error("Upgrade path not found.")
             sys.exit(-1)
 
-    def build_graph(self, major, from_minor, to_minor):
+    def build_graph(self, from_minor, to_minor):
         graph = Graph()
         for i in range(from_minor, to_minor + 1):
-            channel = "%s-%i.%i" % (STABLE, major, i)
+            channel = "%s-%i.%i" % (STABLE, MAJOR, i)
             self.add_channel_to_graph(channel, graph)
+        graph.show_graph()
         return graph
 
     def add_channel_to_graph(self, channel, graph):
@@ -143,10 +148,14 @@ class Main(object):
                 (self.url, pp.pformat(response_json)))
 
     def read_program_arguments(self):
-        if len(sys.argv) != 3:
+        if len(sys.argv) <= 1:
             print("Usage:")
+            print("{} CHANNEL_VERSION".format(sys.argv[0]))
             print("{} FROM_VERSION TO_VERSION".format(sys.argv[0]))
             sys.exit(-1)
-        return sys.argv[1], sys.argv[2]
+        if len(sys.argv) == 2:
+            return None, sys.argv[1]
+        else:
+            return sys.argv[1], sys.argv[2]
 
 Main().main()

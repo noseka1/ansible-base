@@ -4,4 +4,4 @@ epel_repofile_path: '/etc/yum.repos.d/epel.repo'
 
 ocp_availability_zones: [ a, b, c ]
 
-install_infra_nodes: no
+install_infra_nodes: False

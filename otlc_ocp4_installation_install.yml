@@ -39,6 +39,10 @@
 
     - import_role:
         name: otlc_common_openshift
+        tasks_from: postinstall_certs.yml
+
+    - import_role:
+        name: otlc_common_openshift
         tasks_from: postinstall.yml
 
     - import_role:

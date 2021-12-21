@@ -35,6 +35,10 @@
 
     - import_role:
         name: otlc_common_openshift
+        tasks_from: bastion_setup_oc.yml
+
+    - import_role:
+        name: otlc_common_openshift
         tasks_from: postinstall.yml
 
     - import_role:

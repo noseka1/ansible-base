@@ -12,12 +12,14 @@
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
+  ignore_errors: True
   register: clusterversion_result
 
 - name: Set job complete to True
   set_fact:
     job_complete: True
   when:
+    - clusterversion_result is not failed
     - clusterversion_result.resources.0.status is defined
     - clusterversion_result.resources.0.status.conditions is defined
     - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0

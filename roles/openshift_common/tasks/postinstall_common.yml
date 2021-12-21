@@ -1,0 +1,17 @@
+- import_tasks: postinstall_users.yml
+
+- import_tasks: postinstall_oauth.yml
+
+- import_tasks: postinstall_image_registry.yml
+
+- import_tasks: postinstall_image_prunning.yml
+
+- import_tasks: postinstall_monitoring.yml
+
+- import_tasks: postinstall_alerting.yml
+
+- import_tasks: postinstall_audit.yml
+
+- import_tasks: postinstall_access_logging.yml
+
+- import_tasks: postinstall_delete_completed_pods.yml

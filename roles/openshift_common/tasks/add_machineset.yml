@@ -3,7 +3,6 @@
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster
-    namespace: ''
   register: infrastructure
 
 - name: Set cluster_id

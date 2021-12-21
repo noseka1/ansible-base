@@ -1,3 +1,13 @@
 - name: Expose the registry via an external route
   k8s:
     definition: "{{ lookup('template', 'cluster-registry.yml') }}"
+
+- name: Retrieve status of the integrated image registry
+  k8s_info:
+    api_version: imageregistry.operator.openshift.io/v1
+    kind: Config
+    name: cluster
+  register: image_registry_config
+
+- include_tasks: postinstall_image_registry_volume.yml
+  when: image_registry_config.resources.0.spec.managementState == 'Removed'

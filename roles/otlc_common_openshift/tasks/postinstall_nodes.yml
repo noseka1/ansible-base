@@ -25,7 +25,7 @@
   k8s:
     definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
   when: item.metadata.name.startswith(cluster_id)
-  loop: machinesets_result.resources
+  loop: '{{ machinesets_result.resources }}'
   loop_control:
     label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'
 

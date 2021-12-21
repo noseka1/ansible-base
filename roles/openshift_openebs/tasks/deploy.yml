@@ -1,4 +1,4 @@
-- name: Create LVM group for OpenEBS volumes on each cluster node
+- name: Create LVM group for OpenEBS volumes on each cluster node (will cause nodes to restart)
   k8s:
     definition: "{{ lookup('template', '99-openebs-lvm-mc.yaml') }}"
   register: machineconfig_result
@@ -52,6 +52,11 @@
       lvm-localpv:
         enabled: True
         storageCapacity: False
+
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: check_default_storage_class_exists.yml
 
 - name: Create openebs-lvm storage class
   k8s:

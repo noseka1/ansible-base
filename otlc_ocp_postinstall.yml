@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: otlc_common_openshift
+        tasks_from: postinstall.yml

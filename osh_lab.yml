@@ -3,15 +3,4 @@
   gather_facts: True
   tasks:
     - import_role:
-        name: openshift_nfs
-        tasks_from: deploy.yml
-      tags: openshift_nfs
-
-    - import_role:
-        name: openshift_openebs
-        tasks_from: deploy.yml
-      tags: openshift_openebs
-
-    - import_role:
         name: osh_lab
-      tags: osh_lab

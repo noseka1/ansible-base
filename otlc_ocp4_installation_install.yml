@@ -27,16 +27,16 @@
         cluster_config_dir: '{{ ansible_env["HOME"] }}/cluster-{{ otlc_service_info.guid }}'
 
     - import_role:
-        name: common_otlc_openshift
+        name: otlc_common_openshift
         tasks_from: bastion_setup.yml
 
     - import_role:
         name: otlc_ocp4_installation_install
 
     - import_role:
-        name: common_otlc_openshift
+        name: otlc_common_openshift
         tasks_from: postinstall.yml
 
     - import_role:
-        name: common_otlc_openshift
+        name: otlc_common_openshift
         tasks_from: openshift_info.yml

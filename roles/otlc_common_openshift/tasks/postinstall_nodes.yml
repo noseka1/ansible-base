@@ -14,10 +14,20 @@
   k8s:
     definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
 
-- name: Enable autoscaling of the existing machine sets
+- name: Retrieve existing machinesets
+  k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    namespace: openshift-machine-api
+  register: machinesets_result
+
+- name: Enable autoscaling for the machinesets
   k8s:
     definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
-  with_items: '{{ ocp_availability_zones }}'
+  when: item.metadata.name.startswith(cluster_id)
+  loop: machinesets_result.resources
+  loop_control:
+    label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'
 
 - name: Deploy Infra Nodes MachineSet
   import_role:

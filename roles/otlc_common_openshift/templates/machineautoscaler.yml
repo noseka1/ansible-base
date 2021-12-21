@@ -1,7 +1,7 @@
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: '{{ cluster_id }}-worker-{{ otlc_service_info.aws_region }}{{ item }}'
+  name: {{ item.metadata.name }}
   namespace: openshift-machine-api
 spec:
   minReplicas: 2
@@ -9,4 +9,4 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: '{{ cluster_id }}-worker-{{ otlc_service_info.aws_region }}{{ item }}'
+    name: {{ item.metadata.name }}

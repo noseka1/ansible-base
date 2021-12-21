@@ -14,6 +14,10 @@
   set_fact:
     aws_region: '{{ infrastructure.resources.0.status.platformStatus.aws.region }}'
 
+- name: Set AWS ami id
+  set_fact:
+    add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
+
 - name: Add machine sets to the cluster
   k8s:
     definition: '{{ lookup("template", "node-machineset.yml") }}'

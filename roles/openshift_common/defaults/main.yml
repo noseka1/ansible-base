@@ -1,5 +1,4 @@
 add_machineset_role: infra
-add_machineset_ami_id: ami-0dd9008abadc519f1
 add_machineset_instance_type: m4.large
 add_machineset_nodes_per_zone: 1
 add_machineset_availability_zones: [ a, b, c ]

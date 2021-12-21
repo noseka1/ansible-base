@@ -1,23 +1,4 @@
-- fail:
-    msg: Upgrade target version not defined
-  when: openshift_upgrade_target_version is undefined
-
-- fail:
-    msg: Upgrade target channel not defined
-  when: openshift_upgrade_target_channel is undefined
-
-- name: Retrieve latest version on {{ openshift_upgrade_target_channel }} channel
-  script: files/openshift_upgrade_path.py {{ openshift_upgrade_target_channel }}
-  register: upgrade_path
-  when: openshift_upgrade_target_version == 'latest'
-
-- name: Set target OpenShift version
-  set_fact:
-    openshift_upgrade_target_version: '{{ upgrade_path.stdout_lines[0] }}'
-  when: openshift_upgrade_target_version == 'latest'
-
-- debug:
-    msg: Upgrading OpenShift to version {{ openshift_upgrade_target_version }}
+- import_tasks: compute_target_version.yml
 
 - import_role:
     name: openshift_common
@@ -42,6 +23,10 @@
 
 - debug:
     var: upgrade_path.stdout | from_json
+
+- name: Provide administrator acknowledgment to upgrade
+  k8s:
+    definition: "{{ lookup('template', 'admin-acks-cm.yaml') }}"
 
 - name: Perform OpenShift cluster upgrade(s)
   include_tasks: upgrade.yml

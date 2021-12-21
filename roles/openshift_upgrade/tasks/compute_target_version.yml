@@ -1,0 +1,20 @@
+- fail:
+    msg: Upgrade target version not defined
+  when: openshift_upgrade_target_version is undefined
+
+- fail:
+    msg: Upgrade target channel not defined
+  when: openshift_upgrade_target_channel is undefined
+
+- name: Retrieve latest version on {{ openshift_upgrade_target_channel }} channel
+  script: files/openshift_upgrade_path.py {{ openshift_upgrade_target_channel }}
+  register: upgrade_path
+  when: openshift_upgrade_target_version == 'latest'
+
+- name: Set target OpenShift version
+  set_fact:
+    openshift_upgrade_target_version: '{{ upgrade_path.stdout_lines[0] }}'
+  when: openshift_upgrade_target_version == 'latest'
+
+- debug:
+    msg: Upgrading OpenShift to version {{ openshift_upgrade_target_version }}

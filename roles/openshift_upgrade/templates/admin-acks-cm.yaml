@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-acks
+  namespace: openshift-config
+data:
+  # See also Preparing to upgrade to OpenShift Container Platform 4.9
+  # https://access.redhat.com/articles/6329921
+  ack-4.8-kube-1.22-api-removals-in-4.9: "true"

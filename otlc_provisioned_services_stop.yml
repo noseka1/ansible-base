@@ -1,0 +1,25 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: otlc_common
+        tasks_from: retrieve_provisioned_services.yml
+
+    - name: Send a stop request to each provisioned service
+      uri:
+        url: '{{ item.href }}'
+        user: '{{ otlc_username }}'
+        password: '{{ otlc_password }}'
+        method: POST
+        body:
+          action: Stop
+          resource:
+            areyousure: yes
+        body_format: json
+        status_code: 200
+        timeout: 120
+      ignore_errors: True
+      loop: '{{ otlc_services_provisioned.json.resources }}'
+      loop_control:
+        label: '{{ item.name }} retires on {{ item.retires_on }}'

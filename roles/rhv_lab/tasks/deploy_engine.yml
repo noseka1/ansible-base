@@ -32,7 +32,7 @@
   template:
     src: '{{ item }}'
     dest: '{{ ansible_env["HOME"] }}/{{ item }}'
-  with_items:
+  loop:
     - hosted-engine-deploy-answers-file.conf
 
 - debug:

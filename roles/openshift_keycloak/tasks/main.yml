@@ -1,6 +1,6 @@
 - name: Apply kustomization
   command: oc apply --kustomize {{ item }}
-  with_items: '{{ keycloak_kustomizations }}'
+  loop: '{{ keycloak_kustomizations }}'
 
 - name: Wait for Keycloak to come up
   k8s_info:

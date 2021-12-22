@@ -11,7 +11,7 @@
   template:
     src: '{{ item }}'
     dest: '{{ tmpdir.path }}'
-  with_items: '{{ kustomize_files }}'
+  loop: '{{ kustomize_files }}'
 
 - name: Run {{ kustomize_op }} {{ kustomize_name }}
   command: oc {{ kustomize_op }} --kustomize {{ tmpdir.path }}

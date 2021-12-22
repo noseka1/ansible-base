@@ -1,6 +1,6 @@
 - name: Apply kustomization
   command: oc apply --kustomize {{ item }}
-  with_items: '{{ docker_registry_kustomizations }}'
+  loop: '{{ docker_registry_kustomizations }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry deployment to complete
   k8s_info:

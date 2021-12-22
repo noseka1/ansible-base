@@ -12,7 +12,7 @@
   authorized_key:
     user: '{{ item }}'
     key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
-  with_items:
+  loop:
     - root
     - ansible
     - developer

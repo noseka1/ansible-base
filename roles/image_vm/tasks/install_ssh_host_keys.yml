@@ -4,7 +4,7 @@
     dest: '{{ item.dest }}'
     group: '{{ item.group }}'
     mode: '{{ item.mode }}'
-  with_items:
+  loop:
     - { dest: /etc/ssh/ssh_host_ecdsa_key,       content: '{{ ssh_host_keys.ssh_host_ecdsa_key }}',       group: ssh_keys, mode: '0640' }
     - { dest: /etc/ssh/ssh_host_ecdsa_key.pub,   content: '{{ ssh_host_keys.ssh_host_ecdsa_key_pub }}',   group: root,     mode: '0644' }
     - { dest: /etc/ssh/ssh_host_ed25519_key,     content: '{{ ssh_host_keys.ssh_host_ed25519_key }}',     group: ssh_keys, mode: '0640' }

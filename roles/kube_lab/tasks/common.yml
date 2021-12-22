@@ -1,7 +1,7 @@
 - name: Load required kernel modules
   modprobe:
     name: '{{ item }}'
-  with_items:
+  loop:
     - br_netfilter
     - overlay
     - ip_tables
@@ -9,7 +9,7 @@
 
 - name: Setup required sysctl params
   sysctl: name={{ item.key }} value={{ item.value }} reload=yes
-  with_items:
+  loop:
     - { key: net.bridge.bridge-nf-call-iptables,  value: 1 }
     - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }
     - { key: net.ipv4.ip_forward,                 value: 1 }
@@ -42,7 +42,7 @@
     name: '{{ item }}'
     state: started
     enabled: True
-  with_items:
+  loop:
     - kubelet
   become: True
 

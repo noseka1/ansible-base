@@ -9,7 +9,7 @@
   k8s:
     definition: "{{ lookup('template', 'cert-secret.yml') }}"
   no_log: True
-  with_items:
+  loop:
     - name: api-cert
       namespace: openshift-config
       crt: '{{ openshift_cluster_certs.api.crt }}'

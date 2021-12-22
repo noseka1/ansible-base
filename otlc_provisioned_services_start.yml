@@ -21,3 +21,5 @@
         timeout: 120
       ignore_errors: True
       loop: '{{ otlc_services_provisioned.json.resources }}'
+      loop_control:
+        label: '{{ item.name }} retires on {{ item.retires_on }}'

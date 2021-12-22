@@ -1,6 +1,21 @@
 - import_tasks: get_infrastructure.yml
 
-- include_tasks: add_nodes.yml
+- name: Deploy OCS nodes machineset
+  import_role:
+    name: openshift_common
+    tasks_from: add_machineset.yml
+  vars:
+    add_machineset_role: ocs
+    add_machineset_instance_type: '{{ ocs_aws.instance_type }}'
+    add_machineset_availability_zones: '{{ ocs_aws.availability_zones }}'
+    add_machineset_nodes_per_zone: '{{ ocs_aws.nodes_per_zone }}'
+    add_machineset_labels:
+      node-role.kubernetes.io/ocs: ""
+      cluster.ocs.openshift.io/openshift-storage: ""
+    add_machineset_taints:
+      - effect: NoSchedule
+        key: node.ocs.openshift.io/storage
+        value: "true"
   when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
 
 - import_tasks: check_nodes.yml

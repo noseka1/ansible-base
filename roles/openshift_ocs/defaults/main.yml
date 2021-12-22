@@ -3,8 +3,6 @@ ocs_aws:
   availability_zones: [ a, b, c ]
   nodes_per_zone: 1
 
-ocs_node_label: cluster.ocs.openshift.io/openshift-storage
-
 ocs_kustomizations:
   operator:         github.com/noseka1/ocs-kustomization/ocs-operator/base?ref=myauto
   instance_aws:     github.com/noseka1/ocs-kustomization/ocs-instance/overlays/aws?ref=myauto

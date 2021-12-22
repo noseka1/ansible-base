@@ -3,7 +3,7 @@
     api_version: v1
     kind: Node
     label_selectors:
-      - '{{ ocs_node_label }}'
+      - cluster.ocs.openshift.io/openshift-storage=
   register: ocs_nodes_result
 
 - fail:

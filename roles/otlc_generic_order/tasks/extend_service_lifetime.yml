@@ -1,4 +1,4 @@
-# Service life time can be extended once.
+# Service life time can be extended three times.
 # This is the same as clicking on the App Control/Extend Lifetime button in Web UI
 
 - name: Extending lifetime of service {{ otlc_service.0.href }}
@@ -9,6 +9,9 @@
     method: POST
     body:
       action: extend lifetime
+      resource:
+        check_box_1: t
     body_format: json
     status_code: 200
   ignore_errors: True
+  loop: [ 1, 2, 3 ]

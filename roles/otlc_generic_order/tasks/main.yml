@@ -17,5 +17,5 @@
 
 - import_tasks: check_service_health.yml
 
-- import_tasks: extend_service.yml
+- import_tasks: extend_service_lifetime.yml
   when: newly_provisioned_service is defined

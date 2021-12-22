@@ -13,7 +13,7 @@
   import_role:
     name: openshift_common
     tasks_from: add_machineset.yml
-  when: install_infra_nodes | bool
+  when: install_infra_nodes
 
 - name: Create cluster autoscaler
   k8s:

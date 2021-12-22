@@ -28,6 +28,9 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
   include_tasks: wait_for_stable_cluster_subtasks.yml
+  vars:
+    retry_count: 0
+    job_complete: False
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for pods to recover
   k8s_info:

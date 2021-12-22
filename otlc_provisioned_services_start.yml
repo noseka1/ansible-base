@@ -13,7 +13,7 @@
         password: '{{ otlc_password }}'
         method: POST
         body:
-          action: 'Start'
+          action: Start
           resource:
             areyousure: yes
         body_format: json

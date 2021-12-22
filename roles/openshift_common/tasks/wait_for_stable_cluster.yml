@@ -33,17 +33,3 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
   include_tasks: wait_for_stable_cluster_subtasks.yml
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for pods to recover
-  k8s_info:
-    api_version: v1
-    kind: Pod
-    field_selectors:
-      - metadata.namespace!=openshift-marketplace
-      - status.phase!=Running
-      - status.phase!=Succeeded
-  register: recovering_pods
-  until:
-    - recovering_pods.resources | length == 0
-  retries: 60
-  delay: 10

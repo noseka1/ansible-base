@@ -1,4 +1,4 @@
-- name: Set retry count
+- name: Set retry_count and job_complete
   set_fact:
     retry_count: '{{ 0 if retry_count is undefined else (retry_count | int) + 1 }}'
     job_complete: False
@@ -38,3 +38,7 @@
 
 - include_tasks: wait_for_stable_cluster_subtasks.yml
   when: not job_complete
+
+- name: Reset retry count
+  set_fact:
+    retry_count: -1

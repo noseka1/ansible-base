@@ -1,3 +1,17 @@
+- name: Deploy Infra Nodes MachineSet
+  import_role:
+    name: openshift_common
+    tasks_from: add_machineset.yml
+  vars:
+    add_machineset_role: infra
+    add_machineset_labels:
+      node-role.kubernetes.io/infra: ""
+  when: install_infra_nodes
+
+- name: Create cluster autoscaler
+  k8s:
+    definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
+
 - name: Obtain infrastructure info
   k8s_info:
     api_version: config.openshift.io/v1
@@ -8,16 +22,6 @@
 - name: Set cluster_id
   set_fact:
     cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
-
-- name: Deploy Infra Nodes MachineSet
-  import_role:
-    name: openshift_common
-    tasks_from: add_machineset.yml
-  when: install_infra_nodes
-
-- name: Create cluster autoscaler
-  k8s:
-    definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
 
 - name: Retrieve existing machinesets
   k8s_info:

@@ -6,7 +6,7 @@ metadata:
   name: {{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}
   namespace: openshift-machine-api
 spec:
-  replicas: 1
+  replicas: {{ add_machineset_nodes_per_zone }}
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
@@ -20,8 +20,8 @@ spec:
         machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}
     spec:
       metadata:
-        labels:
-          node-role.kubernetes.io/{{ add_machineset_role }}: ""
+        labels: {{ add_machineset_labels | to_json }}
+      taints: {{ add_machineset_taints | to_json }}
       providerSpec:
         value:
           ami:

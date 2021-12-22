@@ -17,7 +17,7 @@
   set_fact:
     add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
 
-- name: Add machine sets to the cluster
+- name: Add machinesets to the cluster
   k8s:
     definition: '{{ lookup("template", "node-machineset.yml") }}'
   with_items: '{{ add_machineset_availability_zones }}'

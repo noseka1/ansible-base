@@ -1,5 +1,7 @@
-add_machineset_role: infra
+add_machineset_role: worker
 add_machineset_instance_type: m4.large
+add_machineset_taints: []
+add_machineset_labels: {}
 add_machineset_nodes_per_zone: 1
 add_machineset_availability_zones: [ a, b, c ]
 add_machineset_nodes_total: '{{ (add_machineset_availability_zones | length) * add_machineset_nodes_per_zone }}'

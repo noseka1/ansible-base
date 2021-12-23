@@ -1,0 +1,11 @@
+- name: Get labeled ODF nodes
+  k8s_info:
+    api_version: v1
+    kind: Node
+    label_selectors:
+      - cluster.ocs.openshift.io/openshift-storage=
+  register: odf_nodes_result
+
+- fail:
+    msg: "Need at least 3 ODF nodes. You can label cluster nodes using: 'oc label nodes <node> {{ odf_node_label }}='"
+  when: (odf_nodes_result.resources | list | length) < 3

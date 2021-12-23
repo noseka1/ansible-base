@@ -1,0 +1,12 @@
+- import_tasks: get_infrastructure.yml
+
+- name: Delete ODF instance
+  command: oc delete --kustomize {{ odf_kustomizations.instance_aws }}
+  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+
+- name: Delete ODF instance
+  command: oc delete --kustomize {{ odf_kustomizations.instance_openebs }}
+  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
+
+- name: Delete ODF operator
+  command: oc delete --kustomize {{ odf_kustomizations.operator }}

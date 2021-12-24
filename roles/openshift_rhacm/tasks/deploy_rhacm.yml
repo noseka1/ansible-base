@@ -20,6 +20,7 @@
     namespace: open-cluster-management
   register: multiclusterhub
   until:
+    - multiclusterhub.resources is defined
     - multiclusterhub.resources | length > 0
     - multiclusterhub.resources.0.status is defined
     - multiclusterhub.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | list | length > 0
@@ -33,7 +34,9 @@
     kind: ManagedCluster
     name: local-cluster
   register: managedcluster
-  until: managedcluster.resources | length > 0
+  until:
+    - managedcluster.resources is defined
+    - managedcluster.resources | length > 0
   retries: 80
   delay: 10
 
@@ -56,6 +59,7 @@
     name: '{{ rhacm_instance_name }}'
   register: rhacm_instance
   until:
+    - rhacm_instance.resources is defined
     - rhacm_instance.resources | length > 0
     - rhacm_instance.resources.0.status is defined
     - rhacm_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | list | length > 0

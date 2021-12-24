@@ -14,4 +14,4 @@
 
 - import_tasks: postinstall_access_logging.yml
 
-- import_tasks: postinstall_delete_completed_pods.yml
+- import_tasks: postinstall_delete_succeeded_pods.yml

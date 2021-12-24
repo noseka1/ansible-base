@@ -1,0 +1,28 @@
+- name: Check that certificate is defined
+  fail:
+    msg: Certificate is missing
+  when: openshift_rhel_entitlements_cert is not defined or openshift_rhel_entitlements_cert == ''
+
+- name: Check that key is defined
+  fail:
+    msg: Private key is missing
+  when: openshift_rhel_entitlements_key is not defined or openshift_rhel_entitlements_key == ''
+
+- set_fact:
+    rhel_entitlements_role: master
+
+- name: Configure RHEL entitlements for master nodes
+  k8s:
+    definition: "{{ lookup('template', '50-rhel-entitlements-machineconfig.yaml') }}"
+  register: openshift_rhel_entitlements_result
+  loop:
+    - master
+    - worker
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: openshift_rhel_entitlements_result is changed

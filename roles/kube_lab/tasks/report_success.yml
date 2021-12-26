@@ -1,0 +1,36 @@
+- name: Obtain dashboard service port number
+  k8s_info:
+    api_version: v1
+    kind: Service
+    name: kubernetes-dashboard-nodeport
+    namespace: kubernetes-dashboard
+  register: kubernetes_dashboard_result
+  become: True
+
+- name: Obtain admin sa
+  k8s_info:
+    api_version: v1
+    kind: ServiceAccount
+    namespace: kube-system
+    name: admin
+  register: admin_sa_result
+  become: True
+
+- name: Obtain token for the admin sa
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    namespace: kube-system
+    name: '{{ admin_sa_result.resources.0.secrets.0.name }}'
+  register: admin_secret_result
+  become: True
+
+- set_fact:
+    msg: |
+      Kubernetes {{ kubeadm_config.kubernetes_version }} installed successfully
+
+      Kubernetes API server: https://{{ hostvars[groups['kubernetes_master'][0]]['ansible_ssh_host'] }}:6443
+      Kubernetes dashboard: https://{{ hostvars[groups['kubernetes_worker'][0]]['ansible_ssh_host'] }}:{{ kubernetes_dashboard_result.resources.0.spec.ports.0.nodePort }}
+
+      Authorization token: {{ admin_secret_result.resources.0.data.token | b64decode}}
+- debug: msg="{{ msg.split('\n') }}"

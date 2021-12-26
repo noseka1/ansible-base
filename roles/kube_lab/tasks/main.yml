@@ -35,3 +35,8 @@
   include: install_worker.yml
   when: "'kubernetes_worker' in group_names"
   tags: install_worker
+
+- name: Report success
+  include: report_success.yml
+  when: inventory_hostname == hostvars[groups['kubernetes_master'][0]]['inventory_hostname']
+  tags: report_success

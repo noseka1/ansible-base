@@ -1,5 +1,20 @@
+- import_role:
+    name: machine_base
+  tags: machine_base
+
+- import_role:
+    name: machine_docker
+  when: kubeadm_config_crisocket.find('containerd') != -1
+  tags: machine_docker
+
+- import_role:
+    name: machine_crio
+  when: kubeadm_config_crisocket.find('crio') != -1
+  tags: machine_crio
+
 - name: Include configuration common to both Kubernetes master and nodes
   include: common.yml
+  tags: common
 
 - name: Install Kubernetes master
   include: install_master.yml

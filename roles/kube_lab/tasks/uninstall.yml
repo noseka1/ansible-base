@@ -1,5 +1,5 @@
 - name: Uninstall the Kubernetes cluster
-  command: kubeadm reset --force --cri-socket {{ kubeadm_config.crisocket }}
+  command: kubeadm reset --force --cri-socket {{ kubeadm_config_crisocket }}
   register: kubeadm_output
   become: True
 

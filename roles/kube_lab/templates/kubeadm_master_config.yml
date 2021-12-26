@@ -12,7 +12,7 @@ localAPIEndpoint:
   advertiseAddress: '{{ hostvars[groups.kubernetes_master.0].ansible_default_ipv4.address }}'
   bindPort: 6443
 nodeRegistration:
-  criSocket: '{{ kubeadm_config.crisocket }}'
+  criSocket: '{{ kubeadm_config_crisocket }}'
   name: '{{ hostvars[groups["kubernetes_master"][0]]["ansible_ssh_host"] }}'
   taints:
   - effect: NoSchedule

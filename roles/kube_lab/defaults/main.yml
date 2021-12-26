@@ -3,8 +3,9 @@ kubeadm_config:
   kubernetes_version: v1.23.1
   # Required by flannel, see also: https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md
   pod_network_cidr: 10.244.0.0/16
-  #crisocket: /var/run/containerd/containerd.sock
-  #crisocket: /var/run/crio/crio.sock
+
+kubeadm_config_crisocket: /var/run/crio/crio.sock
+#kubeadm_config_crisocket: /var/run/containerd/containerd.sock
 
 kubeadm_config_dir: '{{ ansible_env["HOME"] }}/kubeadm'
 

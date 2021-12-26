@@ -57,7 +57,7 @@
     name: iproute-tc
   become: True
 
-- name: Verify that container runtime socket {{ kubeadm_config.crisocket }} is functional
-  command: crictl --runtime-endpoint unix://{{ kubeadm_config.crisocket }}
+- name: Verify that container runtime socket {{ kubeadm_config_crisocket }} is functional
+  command: crictl --runtime-endpoint unix://{{ kubeadm_config_crisocket }}
   changed_when: False
   become: True

@@ -8,5 +8,5 @@ discovery:
     unsafeSkipCAVerification: true
   timeout: 5m0s
 nodeRegistration:
-  criSocket: '{{ kubeadm_config.crisocket }}'
+  criSocket: '{{ kubeadm_config_crisocket }}'
   name: '{{ ansible_ssh_host }}'

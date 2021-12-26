@@ -1,0 +1,7 @@
+- name: Create admin user
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - admin-sa.yaml
+    - admin-clusterrolebinding.yaml
+  become: True

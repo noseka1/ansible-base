@@ -7,7 +7,7 @@
   pip:
     name:
       - kubernetes==11.0.0
-      - openshift==0.11.0
+      - openshift==0.11.2
   become: True
 
 - name: Install flannel
@@ -21,8 +21,7 @@
     definition: '{{ lookup("url", item, split_lines=False) }}'
     apply: True
   loop:
-    - '{{ ingress_nginx_mandatory_url }}'
-    - '{{ ingress_nginx_nodeport_url }}'
+    - '{{ ingress_nginx_url }}'
   become: True
 
 - name: Install dashboard

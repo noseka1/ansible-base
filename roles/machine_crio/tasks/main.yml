@@ -5,7 +5,7 @@
       - cri-o
       - oci-systemd-hook
       - runc
-    enablerepo: rhocp-4.3-for-rhel-8-x86_64-rpms
+    enablerepo: rhocp-4.9-for-rhel-8-x86_64-rpms
   become: True
 
 - name:

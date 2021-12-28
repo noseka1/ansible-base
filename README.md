@@ -24,5 +24,5 @@ $ vi inventory/group_vars/all/credentials.yml
 Run a playbook:
 
 ```
-$ ansible-playbook -i inventory/localhost.ini <playbook>
+$ ansible-playbook -i inventory/localhost.yml <playbook>
 ```

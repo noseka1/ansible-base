@@ -88,7 +88,7 @@ pushd $ansible_root
 sudo \
   --preserve-env \
   ansible-playbook \
-    --inventory inventory/localhost.ini \
+    --inventory inventory/localhost.yml \
     --extra-vars "chroot_location=$mount_point" \
     $playbook_name \
 || exit 1

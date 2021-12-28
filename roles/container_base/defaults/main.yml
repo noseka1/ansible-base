@@ -1,1 +1,2 @@
 update_all_packages: True
+update_all_packages_reboot: False

@@ -1,3 +1,4 @@
 core_pattern: "/tmp/core.%e.%h.%t.%p"
 update_all_packages: True
+update_all_packages_reboot: True
 timezone: America/Los_Angeles

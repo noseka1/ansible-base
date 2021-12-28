@@ -13,16 +13,16 @@
   tags: machine_crio
 
 - name: Include configuration common to both Kubernetes master and nodes
-  include: common.yml
+  import_tasks: common.yml
   tags: common
 
 - name: Install Kubernetes master
-  include: install_master.yml
+  import_tasks: install_master.yml
   when: "'kube_master' in group_names"
   tags: install_master
 
 - name: Install Kubernetes add-ons
-  include: install_addons.yml
+  import_tasks: install_addons.yml
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: install_addons
 
@@ -32,11 +32,11 @@
   tags: add_users
 
 - name: Install Kubernetes workers
-  include: install_worker.yml
+  import_tasks: install_worker.yml
   when: "'kube_worker' in group_names"
   tags: install_worker
 
 - name: Report success
-  include: report_success.yml
+  import_tasks: report_success.yml
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: report_success

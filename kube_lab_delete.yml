@@ -1,5 +1,5 @@
 - hosts:
-    - kubernetes
+    - kube_lab
   tasks:
     - name: Uninstall the Kubernetes cluster
       import_role:

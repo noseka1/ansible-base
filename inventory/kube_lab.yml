@@ -1,12 +1,12 @@
-kubernetes:
+kube_lab:
   children:
-    kubernetes_master:
+    kube_master:
       hosts:
-        kubemaster:
-          ansible_ssh_host: machine-1.lab.example.com
+        kube-1:
+          ansible_ssh_host: kube-1.lab.example.com
           ansible_ssh_user: ansible
-    kubernetes_worker:
+    kube_worker:
       hosts:
-        kubenode:
-          ansible_ssh_host: machine-2.lab.example.com
+        kube-2:
+          ansible_ssh_host: kube-2.lab.example.com
           ansible_ssh_user: ansible

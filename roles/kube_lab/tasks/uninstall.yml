@@ -11,5 +11,5 @@
   file:
     dest: /root/.kube
     state: absent
-  when: "'kubernetes_master' in group_names"
+  when: "'kube_master' in group_names"
   become: True

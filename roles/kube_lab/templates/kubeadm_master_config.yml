@@ -14,11 +14,6 @@ localAPIEndpoint:
 nodeRegistration:
   criSocket: '{{ kubeadm_config_crisocket }}'
   name: '{{ hostvars[groups["kube_master"][0]]["ansible_host"] }}'
-{% if not kubeadm_config.masters_schedulable %}
-  taints:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
-{% endif %}
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration

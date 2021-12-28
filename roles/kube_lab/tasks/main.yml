@@ -31,6 +31,11 @@
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: add_users
 
+- name: Make master nodes schedulable
+  import_tasks: make_masters_schedulable.yml
+  when: "'kube_master' in group_names and kubeadm_masters_schedulable"
+  tags: make_masters_schedulable
+
 - name: Install Kubernetes workers
   import_tasks: install_worker.yml
   when: "'kube_worker' in group_names"

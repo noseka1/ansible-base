@@ -18,11 +18,6 @@
     - developer
   become: True
 
-- name: Set timezone to {{ time_zone }}
-  timezone:
-    name: '{{ time_zone }}'
-  become: True
-
 - name: Set UseDNS to no in sshd config
   lineinfile:
     dest: /etc/ssh/sshd_config

@@ -7,5 +7,3 @@ cloud_init_modifications:
     - growpart
     - resizefs
     - users-groups
-
-time_zone: America/Los_Angeles

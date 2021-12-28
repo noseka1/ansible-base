@@ -4,6 +4,8 @@ kubeadm_config:
   # Required by flannel, see also: https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md
   pod_network_cidr: 10.244.0.0/16
   cert_dir: /etc/kubernetes/pki
+  # Allow scheduling pods on master nodes
+  masters_schedulable: True
 
 kubeadm_config_crisocket: /var/run/crio/crio.sock
 #kubeadm_config_crisocket: /var/run/containerd/containerd.sock

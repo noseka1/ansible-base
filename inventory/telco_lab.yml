@@ -3,8 +3,8 @@ all:
     ungrouped:
       hosts:
         infra1:
-          ansible_ssh_host: 10.1.196.40
-          ansible_ssh_user: root
+          ansible_host: 10.1.196.40
+          ansible_user: root
         compute1:
-          ansible_ssh_host: 10.1.196.44
-          ansible_ssh_user: root
+          ansible_host: 10.1.196.44
+          ansible_user: root

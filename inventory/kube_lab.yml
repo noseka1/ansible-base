@@ -3,10 +3,10 @@ kube_lab:
     kube_master:
       hosts:
         kube-1:
-          ansible_ssh_host: kube-1.lab.example.com
-          ansible_ssh_user: ansible
+          ansible_host: kube-1.lab.example.com
+          ansible_user: ansible
     kube_worker:
       hosts:
         kube-2:
-          ansible_ssh_host: kube-2.lab.example.com
-          ansible_ssh_user: ansible
+          ansible_host: kube-2.lab.example.com
+          ansible_user: ansible

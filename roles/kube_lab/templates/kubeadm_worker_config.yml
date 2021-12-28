@@ -3,10 +3,10 @@ kind: JoinConfiguration
 caCertPath: /etc/kubernetes/pki/ca.crt
 discovery:
   bootstrapToken:
-    apiServerEndpoint: '{{ hostvars[groups["kube_master"][0]]["ansible_ssh_host"] }}:6443'
+    apiServerEndpoint: '{{ hostvars[groups["kube_master"][0]]["ansible_host"] }}:6443'
     token: '{{ kubeadm_token }}'
     unsafeSkipCAVerification: true
   timeout: 5m0s
 nodeRegistration:
   criSocket: '{{ kubeadm_config_crisocket }}'
-  name: '{{ ansible_ssh_host }}'
+  name: '{{ ansible_host }}'

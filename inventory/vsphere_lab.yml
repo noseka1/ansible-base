@@ -1,12 +1,12 @@
 vsphere_lab:
   hosts:
     esxi:
-      ansible_ssh_host: esxi.lab.example.com
-      ansible_ssh_user: root
+      ansible_host: esxi.lab.example.com
+      ansible_user: root
       ansible_python_interpreter: /bin/python
     vcsa:
-      ansible_ssh_host: photon-machine.lab.example.com
-      ansible_ssh_user: root
+      ansible_host: photon-machine.lab.example.com
+      ansible_user: root
       ansible_ssh_password: '{{ generic_user_password }}'
       ansible_python_interpreter: /usr/bin/python
     localhost:

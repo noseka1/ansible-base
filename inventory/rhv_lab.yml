@@ -3,5 +3,5 @@ all:
     ungrouped:
       hosts:
         rhvh.lab.example.com:
-          ansible_ssh_host: rhvh.lab.example.com
-          ansible_ssh_user: root
+          ansible_host: rhvh.lab.example.com
+          ansible_user: root

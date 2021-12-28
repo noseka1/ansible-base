@@ -11,7 +11,7 @@
     - name: Add bastion host to the inventory
       add_host:
         name: '{{ otlc_service_info.ssh_hostname }}'
-        ansible_ssh_user: '{{ otlc_service_info.ssh_username }}'
+        ansible_user: '{{ otlc_service_info.ssh_username }}'
         ansible_password: '{{ otlc_service_info.ssh_password }}'
         otlc_service_info: '{{ otlc_service_info }}'
       changed_when: False
@@ -24,7 +24,7 @@
 
     - name: Add ssh public key to authorized keys
       authorized_key:
-        user: '{{ ansible_ssh_user }}'
+        user: '{{ ansible_user }}'
         key: '{{ lookup("file", "~/.ssh/id_rsa.pub") }}'
 
     - set_fact:

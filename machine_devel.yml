@@ -20,7 +20,7 @@
 
     # Switch to user developer
     - set_fact:
-        ansible_ssh_user: developer
+        ansible_user: developer
       tags: machine_devel
 
 - hosts: all

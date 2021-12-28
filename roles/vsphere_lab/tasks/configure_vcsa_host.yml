@@ -10,7 +10,7 @@
   when: vcsa_help_output.stdout.find('The shell is a CLI interface to interact with a server') != -1
 
 # Note that reset_connection task does not support when conditional
-- name: Close persistent SSH connections to {{ ansible_ssh_host }} after changing the login shell
+- name: Close persistent SSH connections to {{ ansible_host }} after changing the login shell
   meta: reset_connection
 
 - name: Set authorized key for user root

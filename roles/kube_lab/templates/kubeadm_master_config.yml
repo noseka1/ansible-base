@@ -13,7 +13,7 @@ localAPIEndpoint:
   bindPort: 6443
 nodeRegistration:
   criSocket: '{{ kubeadm_config_crisocket }}'
-  name: '{{ hostvars[groups["kube_master"][0]]["ansible_ssh_host"] }}'
+  name: '{{ hostvars[groups["kube_master"][0]]["ansible_host"] }}'
 {% if not kubeadm_config.masters_schedulable %}
   taints:
   - effect: NoSchedule

@@ -22,7 +22,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 apiServer:
   timeoutForControlPlane: 4m0s
-certificatesDir: /etc/kubernetes/pki
+certificatesDir: '{{ kubeadm_config.cert_dir }}'
 clusterName: kubernetes
 controllerManager: {}
 dns:

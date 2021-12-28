@@ -3,6 +3,22 @@
     src: kubeadm_master_config.yml
     dest: '{{ kubeadm_config_dir }}'
 
+- name: Create Kubernetes certificate directory
+  file:
+    path: '{{ kubeadm_config.cert_dir }}'
+    state: directory
+  become: True
+
+- name: Copy over the custom CA certificate and key
+  copy:
+    content: '{{ item.content }}'
+    dest: '{{ item.file }}'
+    mode: '{{ item.mode }}'
+  loop:
+    - { content: '{{ kubeadm_ca_cert.crt }}', file: '{{ kubeadm_config.cert_dir }}/ca.crt', mode: '0644' }
+    - { content: '{{ kubeadm_ca_cert.key }}', file: '{{ kubeadm_config.cert_dir }}/ca.key', mode: '0640' }
+  become: True
+
 - name: Install Kubernetes master
   command: kubeadm init --config {{ kubeadm_config_dir }}/kubeadm_master_config.yml
   args:

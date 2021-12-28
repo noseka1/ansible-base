@@ -14,8 +14,8 @@
 
 - import_tasks: generate_ssh_keys.yml
 
-#- import_tasks: set_timezone.yml
-#  when: timezone | length > 0
+- import_tasks: set_timezone.yml
+  when: timezone | length > 0
 
 - import_tasks: configure_ntp.yml
 

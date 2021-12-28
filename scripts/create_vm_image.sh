@@ -58,9 +58,12 @@ function tear_down_chroot {
   sudo umount $mount_point/dev
 }
 
-if [ -z "$image_path" ]; then
-  echo "image_path is not set. It should point to the image file to configure. Exiting ..."
-  exit 1
+
+if [ "$#" -gt 0 ]; then
+	image_path=$1
+else
+  echo Missing parameter <image_path>. <image_path> is not set. It should point to the image file to configure. Exiting ...
+	exit 1
 fi
 
 playbook_name=image_vm.yml

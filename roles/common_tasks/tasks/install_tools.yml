@@ -40,7 +40,19 @@
       - tmux
       - wireshark-cli
     state: present
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 8
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int == 8
+  become: True
+
+- name: Install tools RHEL9
+  yum:
+    name:
+      - jq
+      - policycoreutils-python-utils # semanage
+      - iotop
+      - tmux
+      - wireshark-cli
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 9
   become: True
 
 - name: Install tools Fedora

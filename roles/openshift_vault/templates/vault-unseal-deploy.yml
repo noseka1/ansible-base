@@ -14,7 +14,7 @@ spec:
         app: {{ vault_name }}-unseal
     spec:
       containers:
-      - image: quay.io/noseka1/openshift-toolbox:basic
+      - image: quay.io/noseka1/toolbox-container:basic
         env:
         - name: VAULT_ADDR
           value: {{ vault_addr }}

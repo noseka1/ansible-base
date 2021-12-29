@@ -6,15 +6,15 @@
     path: '{{ github_dir }}'
     state: directory
 
-- name: Git checkout openshift-toolbox
+- name: Git checkout toolbox-container
   git:
-    repo: 'https://github.com/noseka1/openshift-toolbox'
-    dest: '{{ github_dir }}/openshift-toolbox'
+    repo: 'https://github.com/noseka1/toolbox-container'
+    dest: '{{ github_dir }}/toolbox-container'
     version: master
 
 - name: Run installation scripts
   command: '{{ item }}'
   loop:
-    - '{{ github_dir }}/openshift-toolbox/toolbox_install_basic.sh'
-    - '{{ github_dir }}/openshift-toolbox/toolbox_install_full.sh'
+    - '{{ github_dir }}/toolbox-container/toolbox_install_basic.sh'
+    - '{{ github_dir }}/toolbox-container/toolbox_install_full.sh'
   become: True

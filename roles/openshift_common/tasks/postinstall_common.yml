@@ -1,3 +1,7 @@
+- import_tasks: postinstall_trusted_ca.yml
+
+- import_tasks: postinstall_cluster_wide_proxy.yml
+
 - import_tasks: postinstall_rhel_entitlements.yml
 
 - import_tasks: postinstall_users.yml

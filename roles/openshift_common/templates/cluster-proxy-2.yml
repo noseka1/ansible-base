@@ -1,0 +1,11 @@
+apiVersion: config.openshift.io/v1
+kind: Proxy
+metadata:
+  name: cluster
+spec:
+  httpProxy: {{ openshift_common_cluster_wide_proxy.http_proxy }}
+  httpsProxy: {{ openshift_common_cluster_wide_proxy.https_proxy }}
+  noProxy: {{ openshift_common_cluster_wide_proxy.no_proxy }}
+  readinessEndpoints:
+    - http://www.google.com
+    - https://www.google.com

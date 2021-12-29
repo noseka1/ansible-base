@@ -3,13 +3,5 @@ kind: Proxy
 metadata:
   name: cluster
 spec:
-{% if openshift_cluster_wide_proxy is defined %}
-  httpProxy: {{ openshift_cluster_wide_proxy.http_proxy }}
-  httpsProxy: {{ openshift_cluster_wide_proxy.https_proxy }}
-  noProxy: {{ openshift_cluster_wide_proxy.no_proxy }}
-  readinessEndpoints:
-    - http://www.google.com
-    - https://www.google.com
-{% endif %}
   trustedCA:
-    name: proxy-trusted-ca
+    name: user-ca-bundle

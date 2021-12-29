@@ -24,7 +24,16 @@
 
 - import_role:
     name: openshift_common
+    tasks_from: postinstall_trusted_ca.yml
+
+- import_role:
+    name: openshift_common
     tasks_from: postinstall_cluster_wide_proxy.yml
   vars:
-    openshift_cluster_certs: '{{ crc_lab_certs }}'
-    openshift_cluster_wide_proxy: '{{ crc_lab_proxy | default(omit) }}'
+    openshift_common_cluster_wide_proxy: '{{ crc_lab_proxy | default(omit) }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: postinstall_endpoint_certs.yml
+  vars:
+    openshift_common_endpoint_certs: '{{ crc_lab_certs | default(omit) }}'

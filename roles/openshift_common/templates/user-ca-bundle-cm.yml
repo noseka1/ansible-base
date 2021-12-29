@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: proxy-trusted-ca
+  name: user-ca-bundle
   namespace: openshift-config
 data:
   ca-bundle.crt: |
-    {{ openshift_cluster_certs.trusted_ca_bundle | indent(4) }}
+    {{ openshift_common_trusted_ca_bundle | indent(4) }}

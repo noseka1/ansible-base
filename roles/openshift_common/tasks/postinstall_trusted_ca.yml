@@ -1,0 +1,7 @@
+- name: Add custom CA to the cluster trusted CA bundle
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+   - user-ca-bundle-cm.yml
+   - cluster-proxy.yml
+  when: openshift_common_trusted_ca_bundle is defined

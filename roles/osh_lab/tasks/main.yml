@@ -11,10 +11,11 @@
 - import_role:
     name: openshift_common
     tasks_from: postinstall_common.yml
+  vars:
+    openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy | default(omit) }}'
 
 - import_role:
     name: openshift_common
-    tasks_from: postinstall_cluster_wide_proxy.yml
+    tasks_from: postinstall_endpoint_certs.yml
   vars:
-    openshift_cluster_certs: '{{ osh_lab_certs }}'
-    openshift_cluster_wide_proxy: '{{ osh_lab_proxy | default(omit) }}'
+    openshift_common_endpoint_certs: '{{ osh_lab_certs | default(omit) }}'

@@ -1,0 +1,21 @@
+- name: Create the certificate secrets
+  k8s:
+    definition: "{{ lookup('template', 'cert-secret.yml') }}"
+  no_log: True
+  loop:
+    - name: api-cert
+      namespace: openshift-config
+      crt: '{{ openshift_common_endpoint_certs.api.crt }}'
+      key: '{{ openshift_common_endpoint_certs.api.key }}'
+    - name: wildcard-cert
+      namespace: openshift-ingress
+      crt: '{{ openshift_common_endpoint_certs.ingress.crt }}'
+      key: '{{ openshift_common_endpoint_certs.ingress.key }}'
+
+- name: Configure API server certificate
+  k8s:
+    definition: "{{ lookup('template', 'cluster-apiserver-2.yml') }}"
+
+- name: Configure wildcard apps certificate
+  k8s:
+    definition: "{{ lookup('template', 'default-ingresscontroller-2.yml') }}"

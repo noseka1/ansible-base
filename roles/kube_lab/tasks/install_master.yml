@@ -14,6 +14,7 @@
     content: '{{ item.content }}'
     dest: '{{ item.file }}'
     mode: '{{ item.mode }}'
+  no_log: True
   loop:
     - { content: '{{ kubeadm_ca_cert.crt }}', file: '{{ kubeadm_config.cert_dir }}/ca.crt', mode: '0644' }
     - { content: '{{ kubeadm_ca_cert.key }}', file: '{{ kubeadm_config.cert_dir }}/ca.key', mode: '0640' }

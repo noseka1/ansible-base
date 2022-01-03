@@ -1,4 +1,4 @@
-redhat_subscription_pool_id: 2c9280817d76f32c017d819fab157e69 # Red Hat Developer Subscription for Individuals, SKU RH00798, expires 12/02/2022
+redhat_subscription_pool_id: 8a85f99c7d76f2fd017d96c345750657 # Employee SKU, SKU ES0113909, expires 12/31/2026
 
 # AMI name: rhcos-47.83.202103251640-0, creation date: March 25, 2021 at 10:41:40
 aws_rhcos_ami:

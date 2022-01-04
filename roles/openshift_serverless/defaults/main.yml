@@ -1,0 +1,6 @@
+serverless_kustomizations:
+  operator: github.com/noseka1/openshift-serverless-kustomization/serverless-operator/base?ref=myauto
+  serving:  github.com/noseka1/openshift-serverless-kustomization/knative-serving/overlays/development?ref=myauto
+  eventing: github.com/noseka1/openshift-serverless-kustomization/knative-eventing/overlays/development?ref=myauto
+serverless_subscription_namespace: openshift-serverless
+serverless_subscription_name: serverless-operator

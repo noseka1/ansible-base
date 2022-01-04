@@ -1,0 +1,8 @@
+- name: Delete Knative Eventing
+  command: oc delete --kustomize {{ serverless_kustomizations.eventing }}
+
+- name: Delete Knative Serving
+  command: oc delete --kustomize {{ serverless_kustomizations.serving }}
+
+- name: Delete Serverless operator
+  command: oc delete --kustomize {{ serverless_kustomizations.operator }}

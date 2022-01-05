@@ -1,0 +1,6 @@
+- hosts:
+    - kind_lab
+  tasks:
+    - import_role:
+        name: kind_lab
+        tasks_from: deploy.yml

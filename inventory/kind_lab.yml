@@ -1,0 +1,5 @@
+kind_lab:
+  hosts:
+    kind:
+      ansible_host: kind.lab.example.com
+      ansible_user: ansible

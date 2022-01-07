@@ -14,6 +14,8 @@
     tasks_from: retrieve_provisioned_service.yml
 
 - import_tasks: retrieve_service_attributes.yml
+  vars:
+    otlc_service_href: '{{ otlc_service.0.href }}'
 
 - import_tasks: check_service_health.yml
 

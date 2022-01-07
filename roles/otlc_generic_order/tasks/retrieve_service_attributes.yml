@@ -1,6 +1,6 @@
-- name: Retrieve attributes of service {{ otlc_service.0.href }}
+- name: Retrieve attributes of service {{ otlc_service_href }}
   uri:
-    url: '{{ otlc_service.0.href }}?expand=custom_attributes'
+    url: '{{ otlc_service_href }}?expand=custom_attributes'
     user: '{{ otlc_username }}'
     password: '{{ otlc_password }}'
     method: GET

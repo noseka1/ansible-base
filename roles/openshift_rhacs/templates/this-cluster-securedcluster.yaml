@@ -5,9 +5,16 @@ metadata:
   namespace: rhacs-this-cluster
 spec:
   admissionControl:
-    listenOnCreates: false
+    # Enable preventive policy enforcement for object creations.
+    # The default value is false.
+    listenOnCreates: true
+    # Enable monitoring and enforcement for Kubernetes events, such as port-forward and exec events.
+    # The default value is true.
     listenOnEvents: true
-    listenOnUpdates: false
+    # Enable preventive policy enforcement for object updates.
+    # It will not have any effect unless Listen On Creates is set to true as well.
+    # The default value is false.
+    listenOnUpdates: true
   centralEndpoint: {{ rhacs_route.resources.0.spec.host }}:443
   clusterName: this-cluster
   perNode:

@@ -22,3 +22,10 @@ spec:
       collection: KernelModule
       imageFlavor: Regular
     taintToleration: TolerateTaints
+{% if rhacs_additional_trusted_ca is defined %}
+  tls:
+    additionalCAs:
+      - name: custom_trusted_ca
+        content: |
+          {{ rhacs_additional_trusted_ca | indent(10) }}
+{% endif %}

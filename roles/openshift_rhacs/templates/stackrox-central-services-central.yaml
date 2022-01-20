@@ -8,3 +8,10 @@ spec:
       name: central-htpasswd
     defaultTLSSecret:
       name: central-tls
+{% if rhacs_additional_trusted_ca is defined %}
+  tls:
+    additionalCAs:
+      - name: custom_trusted_ca
+        content: |
+          {{ rhacs_additional_trusted_ca | indent(10) }}
+{% endif %}

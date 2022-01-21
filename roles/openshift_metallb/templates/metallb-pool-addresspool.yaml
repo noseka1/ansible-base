@@ -1,0 +1,9 @@
+apiVersion: metallb.io/v1alpha1
+kind: AddressPool
+metadata:
+  name: metallb-pool
+  namespace: {{ metallb_instance_namespace }}
+spec:
+  protocol: layer2
+  addresses:
+  - {{ metallb_address_pool }}

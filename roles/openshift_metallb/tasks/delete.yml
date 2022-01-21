@@ -1,0 +1,16 @@
+- name: Delete MetalLB instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+    - metallb-metallb.yaml
+    - metallb-pool-addresspool.yaml
+
+- name: Delete MetalLB operator
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+    - metallb-operator-sub.yaml
+    - metallb-operator-og.yaml
+    - metallb-system-ns.yaml

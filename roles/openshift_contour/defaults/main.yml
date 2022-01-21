@@ -1,0 +1,7 @@
+contour_operator_url: https://raw.githubusercontent.com/projectcontour/contour-operator/main/examples/operator/operator.yaml
+
+contour_operator_name: contour-operator
+contour_operator_namespace: contour-operator
+
+contour_instance_name: contour
+contour_instance_namespace: contour

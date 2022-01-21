@@ -1,0 +1,9 @@
+apiVersion: operator.projectcontour.io/v1alpha1
+kind: Contour
+metadata:
+  name: contour
+  namespace: contour
+spec:
+  namespace:
+    name: contour
+  replicas: 1

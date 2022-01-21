@@ -1,0 +1,14 @@
+- name: Delete Contour instance
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+    state: absent
+  loop:
+    - contour-contour.yaml
+    - contour-ns.yaml
+
+- name: Delete Contour operator
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    state: absent
+  loop:
+    - '{{ contour_operator_url }}'

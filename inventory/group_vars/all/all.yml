@@ -1,4 +1,4 @@
-redhat_subscription_pool_id: 8a85f99c7d76f2fd017d96c345750657 # Employee SKU, SKU ES0113909, expires 12/31/2026
+redhat_subscription_pool_id: 8a85f99c766234df01768d8228ba661b # Employee SKU, SKU ES0113909, expires December 31, 2022
 
 # AMI name: rhcos-47.83.202103251640-0, creation date: March 25, 2021 at 10:41:40
 aws_rhcos_ami:

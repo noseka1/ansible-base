@@ -4,4 +4,4 @@
     - import_role:
         name: otlc_generic_delete
       vars:
-        otlc_service_desc: '{{ otlc_labs.ocp4_handson }}'
+        otlc_service_desc: '{{ otlc_labs.ocp4_handson_48 }}'

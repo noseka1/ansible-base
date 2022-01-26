@@ -148,6 +148,20 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
+  # OCP 4.9.x, single-node control plane, Let's Encrypt TLS certs, shuts down after 4 hours, AWS
+  ocp4_handson_49:
+    catalog_id: '20000000000040'
+    catalog_name: 'OPENTLC OpenShift 4 Labs'
+    template_id: '20000000001044'
+    template_name: 'Hands On with OpenShift 4.9'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_region: na_sandbox_gpte
+      dialog_runtime: "8"
+
   # OCP 4.7.4, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours, AWS
   ocs4_implementation:
     catalog_id: '20000000000040'

@@ -2,7 +2,7 @@
 # https://labs.opentlc.com/api/service_catalogs?expand=resources
 # https://labs.opentlc.com/api/service_templates?expand=resources
 #
-# Discover the mandatory dialog parameters for the service provisioning at:
+# Discover the mandatory dialog parameters for the service after manually provisioning the service:
 # https://labs.opentlc.com/api/service_requests?expand=resources
 #
 # Or provision the lab manually and then list the parameteres using:
@@ -155,10 +155,10 @@ otlc_labs:
     template_id: '20000000001044'
     template_name: 'Hands On with OpenShift 4.9'
     order_options:
-      dialog_check: t
+      dialog_accept: t
       dialog_environment: PROD
       dialog_expiration: "7"
-      dialog_notes: "Customer Activity - Customer environment testing"
+      dialog_notes: "Training - Ad-hoc or exploratory"
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 

@@ -1,18 +1,11 @@
-- name: Fetch the {{ cluster_config_dir }}/auth/kubeconfig file
-  slurp:
-    src: '{{ cluster_config_dir }}/auth/kubeconfig'
-  register: kubeconfig
-  become: True
+- name: Check if Kubernetes config file exists
+  stat:
+    path: .kube/config
+  register: kubeconfig_stat
 
-- name: Ensure ~/.kube directory exists
-  file:
-    path: .kube
-    state: directory
-
-- name: Copy kubeconfig to ~/.kube/config
-  copy:
-    dest: .kube/config
-    content: '{{ kubeconfig.content | b64decode }}'
+- name: Create kubeconfig file if it doesn't exist
+  import_tasks: bastion_setup_kubeconfig.yml
+  when: not kubeconfig_stat.stat.exists
 
 - name: Don't verify API server cert (cert will be replaced with the Let's Encrypt cert)
   command: oc config set-cluster cluster-{{ otlc_service_info.guid }} --insecure-skip-tls-verify=true

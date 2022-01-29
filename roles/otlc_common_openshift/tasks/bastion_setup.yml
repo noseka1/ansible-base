@@ -7,6 +7,7 @@
   loop:
     - { section: 'server', option: 'prefix', value: '/subscription' }
     - { section: 'server', option: 'hostname', value: 'subscription.rhsm.redhat.com' }
+    - { section: 'server', option: 'port', value: '443' }
     - { section: 'rhsm', option: 'baseurl', value: 'https://cdn.redhat.com' }
     - { section: 'rhsm', option: 'repo_ca_cert', value: '%(ca_cert_dir)sredhat-uep.pem' }
     - { section: 'rhsm', option: 'full_refresh_on_yum', value: 0 }

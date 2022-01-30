@@ -1,6 +1,6 @@
-- name: Set retry count and job complete
+- name: Increment retry count
   set_fact:
-    stable_cluster_retry_count: '{{ 0 if stable_cluster_retry_count is undefined else (stable_cluster_retry_count | int) + 1 }}'
+    stable_cluster_retry_count: '{{ (stable_cluster_retry_count | int) + 1 }}'
 
 - fail:
     msg: Ended after {{ stable_cluster_retries }}

@@ -2,6 +2,14 @@
   wait_for:
     timeout: '{{ stable_cluster_delay }}'
 
+- name: Reset retry count and job complete
+  set_fact:
+    stable_cluster_retry_count: -1
+    stable_cluster_job_complete: False
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
+  include_tasks: wait_for_stable_cluster_subtasks.yml
+
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes APIs to become available
   command: oc version
   ignore_errors: True
@@ -25,11 +33,3 @@
     - api_resources_result is not failed
   retries: 30
   delay: 10
-
-- name: Reset retry count and job complete
-  set_fact:
-    stable_cluster_retry_count: -1
-    stable_cluster_job_complete: False
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
-  include_tasks: wait_for_stable_cluster_subtasks.yml

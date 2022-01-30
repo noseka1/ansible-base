@@ -11,7 +11,7 @@
 - set_fact:
     rhel_entitlements_role: master
 
-- name: Configure RHEL entitlements for master nodes
+- name: Configure RHEL entitlements for cluster nodes
   k8s:
     definition: "{{ lookup('template', '50-rhel-entitlements-machineconfig.yaml') }}"
   register: openshift_rhel_entitlements_result

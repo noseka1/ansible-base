@@ -1,0 +1,23 @@
+- name: Deploy Jaeger instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+     - jaeger-ns.yaml
+     - jaeger-jaeger.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Jaeger deployment to complete
+  k8s_info:
+    api_version: jaegertracing.io/v1
+    kind: Jaeger
+    name: '{{ jaeger_instance_name }}'
+    namespace: '{{ jaeger_instance_namespace }}'
+  register: jaeger_instance
+  until:
+    - jaeger_instance.resources | length > 0
+    - jaeger_instance.resources.0.status is defined
+    - jaeger_instance.resources.0.status.phase is defined
+    - jaeger_instance.resources.0.status.phase == "Running"
+  retries: 60
+  delay: 10
+
+- import_tasks: report_success.yml

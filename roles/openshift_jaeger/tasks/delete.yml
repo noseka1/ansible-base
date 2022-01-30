@@ -1,0 +1,7 @@
+- name: Deploy Jaeger instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+     - jaeger-jaeger.yaml
+     - jaeger-ns.yaml

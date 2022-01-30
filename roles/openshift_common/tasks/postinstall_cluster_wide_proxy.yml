@@ -3,4 +3,13 @@
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - cluster-proxy-2.yml
+  register: proxy_result
   when: openshift_common_cluster_wide_proxy is defined
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: proxy_result is changed

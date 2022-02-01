@@ -18,4 +18,3 @@
 
 - debug:
     msg: Red Hat Quay installed successfully. Use your browser to access the Quay Web UI and create account for user admin. https://{{ quay_instance_route.resources.0.spec.host }}
-

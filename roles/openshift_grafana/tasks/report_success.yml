@@ -1,0 +1,21 @@
+- name: Obtain Grafana route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ grafana_instance_name }}-route'
+    namespace: '{{ grafana_instance_namespace }}'
+  register: grafana_instance_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana to come up
+  uri:
+    url: 'https://{{ grafana_instance_route.resources.0.spec.host }}'
+    method: GET
+    validate_certs: False
+    status_code: [ 403 ]
+  register: result
+  until: result.status == 403
+  retries: 60
+  delay: 10
+
+- debug:
+    msg: Grafana installed successfully. Use your browser to access the Grafana Web UI at https://{{ grafana_instance_route.resources.0.spec.host }}

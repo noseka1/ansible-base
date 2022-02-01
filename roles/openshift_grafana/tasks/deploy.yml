@@ -1,0 +1,62 @@
+- name: Deploy Grafana operator
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - operator/grafana-ns.yaml
+    - operator/grafana-og.yaml
+    - operator/grafana-sub.yaml
+
+- name: Wait for Grafana operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ grafana_subscription_name }}'
+    subscription_namespace: '{{ grafana_subscription_namespace }}'
+
+- name: Deploy Grafana instance
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: grafana
+    kustomize_files:
+      - instance/kustomization.yaml
+      - instance/prometheus-grafanadashboard.yaml
+      - instance/prometheus-grafanadatasource.yaml
+    kustomize_op: apply
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
+  k8s_info:
+    api_version: integreatly.org/v1alpha1
+    kind: Grafana
+    name: '{{ grafana_instance_name }}'
+    namespace: '{{ grafana_instance_namespace }}'
+  register: grafana_instance
+  until:
+    - grafana_instance.resources | length > 0
+    - grafana_instance.resources.0.status is defined
+    - grafana_instance.resources.0.status.phase is defined
+    - grafana_instance.resources.0.status.phase == 'reconciling'
+    - grafana_instance.resources.0.status.message is defined
+    - grafana_instance.resources.0.status.message == 'success'
+  retries: 240
+  delay: 10
+
+# See also:
+# Custom Grafana dashboards for Red Hat OpenShift Container Platform 4
+# https://www.redhat.com/en/blog/custom-grafana-dashboards-red-hat-openshift-container-platform-4
+
+- name: Grab grafana service account token
+  command: oc serviceaccounts get-token --namespace {{ grafana_instance_namespace }} {{ grafana_instance_name }}-serviceaccount
+  changed_when: False
+  register: grafana_serviceaccount_jwt
+
+- name: Allow Grafana to retrieve OpenShift monitoring metrics
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - metrics/grafana-cluster-monitoring-view-clusterrolebinding.yaml
+    - metrics/openshift-monitoring-grafanadatasource.yaml
+
+- import_tasks: report_success.yml

@@ -1,0 +1,5 @@
+$patch: delete
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: prometheus

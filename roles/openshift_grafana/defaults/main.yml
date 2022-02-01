@@ -1,0 +1,7 @@
+grafana_kustomizations:
+  instance: github.com/noseka1/multiregional-monitoring-using-observatorium/grafana-instance/base?ref=myauto
+
+grafana_subscription_namespace: grafana
+grafana_subscription_name: grafana
+grafana_instance_namespace: grafana
+grafana_instance_name: grafana

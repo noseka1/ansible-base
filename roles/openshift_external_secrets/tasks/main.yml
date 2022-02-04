@@ -13,27 +13,24 @@
 - name: Add external-secrets chart repo
   community.kubernetes.helm.helm_repository:
     name: external-secrets
-    repo_url: "https://external-secrets.github.io/kubernetes-external-secrets/"
+    repo_url: https://charts.external-secrets.io
 
 - name: Deploy External Secrets chart
   community.kubernetes.helm:
     name: '{{ external_secrets_name }}'
-    chart_ref: external-secrets/kubernetes-external-secrets
+    chart_ref: external-secrets/external-secrets
     chart_version: '{{ external_secrets_chart_version | default(omit) }}'
     release_namespace: '{{ external_secrets_namespace }}'
     create_namespace: True
     release_values:
-      customResourceManagerDisabled: True
-      env:
-        LOG_LEVEL: debug
-        VAULT_ADDR: '{{ vault_addr }}'
-        DEFAULT_VAULT_MOUNT_POINT: kubernetes
-        # This role must exist in Vault. This role must grant access to secret data
-        # See also https://www.vaultproject.io/docs/auth/kubernetes
-        DEFAULT_VAULT_ROLE: external-secrets
-      serviceMonitor:
+      prometheus:
         enabled: true
-        namespace: '{{ external_secrets_namespace }}'
+        service:
+          port: 8080
+
+- name: Create HashiCorp Vault backend
+  k8s:
+    definition: "{{ lookup('template', 'vault-secretstore.yaml') }}"
 
 - name: Create an external secret for testing
   k8s:

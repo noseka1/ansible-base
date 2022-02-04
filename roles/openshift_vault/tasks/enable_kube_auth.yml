@@ -26,6 +26,7 @@
   hashivault_write:
     secret: /auth/kubernetes/config
     data:
+      issuer: https://kubernetes.default.svc
       token_reviewer_jwt: '{{ token_reviewer_jwt.stdout }}'
       kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
       kubernetes_host: '{{ kubernetes_host.stdout }}'
@@ -63,7 +64,7 @@
   hashivault_write:
     secret: /auth/kubernetes/role/external-secrets
     data:
-      bound_service_account_names: external-secrets-kubernetes-external-secrets,default
+      bound_service_account_names: external-secrets,default
       bound_service_account_namespaces: external-secrets,default
       policies: kube_read
   environment:

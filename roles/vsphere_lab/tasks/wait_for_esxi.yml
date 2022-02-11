@@ -10,3 +10,6 @@
   until: result is success
   retries: 60
   delay: 10
+
+- fail:
+  when: result is failed

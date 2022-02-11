@@ -41,6 +41,9 @@
   retries: '{{ otlc_order_wait_retries }}'
   delay: 10
 
+- fail:
+  when: result is failed
+
 - name: Obtain provisioned service id from the provision request
   uri:
     url: 'https://labs.opentlc.com/api/provision_requests/{{ opentlc_order.json.results.0.id }}/request_tasks?expand=resources'

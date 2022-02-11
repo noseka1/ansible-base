@@ -27,6 +27,9 @@
   retries: 30
   delay: 10
 
+- fail:
+  when: get_ping is failed
+
 - name: Try to generate init-bundle for this-cluster (returns HTTP 409 if bundle already exists)
   uri:
     url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/cluster-init/init-bundles'

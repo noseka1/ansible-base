@@ -20,6 +20,9 @@
   retries: 30
   delay: 10
 
+- fail:
+  when: oc_version_result is failed
+
 - name: Show cluster info
   debug:
     var: oc_version_result.stdout_lines
@@ -33,3 +36,6 @@
     - api_resources_result is not failed
   retries: 30
   delay: 10
+
+- fail:
+  when: api_resources_result is failed

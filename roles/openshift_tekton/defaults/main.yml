@@ -1,3 +1,0 @@
-tekton_kustomizations:
-  operator: github.com/noseka1/openshift-pipelines-kustomization/openshift-pipelines-operator/base?ref=myauto
-  instance: github.com/noseka1/openshift-pipelines-kustomization/openshift-pipelines-instance/base?ref=myauto

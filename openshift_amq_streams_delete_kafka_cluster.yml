@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_amq_streams
+        tasks_from: delete_kafka_cluster.yml

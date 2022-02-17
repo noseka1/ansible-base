@@ -1,0 +1,13 @@
+- name: Deploy AMQ Streams operator
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - amq-streams-sub.yaml
+
+- name: Wait for AMQ Streams operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: amq-streams
+    subscription_namespace: openshift-operators

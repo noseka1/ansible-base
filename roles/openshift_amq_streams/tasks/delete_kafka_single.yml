@@ -1,0 +1,14 @@
+- name: Delete Kafka instance
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    namespace: kafka-single
+    state: absent
+  loop:
+    - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'
+
+- name: Delete namespace
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - kafka-single-ns.yaml

@@ -1,0 +1,14 @@
+- name: Delete Kafka cluster
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    namespace: kafka-cluster
+    state: absent
+  loop:
+    - '{{ amq_streams_examples }}/kafka/kafka-persistent.yaml'
+
+- name: Delete namespace
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - kafka-cluster-ns.yaml

@@ -1,0 +1,62 @@
+- name: Create namespace
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - kafka-mirror-maker-ns.yaml
+
+- name: Deploy two Kafka instances and Mirror Maker
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    namespace: kafka-mirror-maker
+  loop:
+    - '{{ amq_streams_examples }}/mirror-maker/kafka-source.yaml'
+    - '{{ amq_streams_examples }}/mirror-maker/kafka-target.yaml'
+    - '{{ amq_streams_examples }}/mirror-maker/kafka-mirror-maker-2-sync-groups.yaml'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Source deployment to complete
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    namespace: kafka-mirror-maker
+    name: my-source-cluster
+  register: kafka_instance
+  until:
+    - kafka_instance.resources | length > 0
+    - kafka_instance.resources.0.status is defined
+    - kafka_instance.resources.0.status.conditions is defined
+    - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
+    - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Target deployment to complete
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    namespace: kafka-mirror-maker
+    name: my-target-cluster
+  register: kafka_instance
+  until:
+    - kafka_instance.resources | length > 0
+    - kafka_instance.resources.0.status is defined
+    - kafka_instance.resources.0.status.conditions is defined
+    - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
+    - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Mirror Maker deployment to complete
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: KafkaMirrorMaker2
+    namespace: kafka-mirror-maker
+    name: my-mirror-maker-2
+  register: mirror_maker_instance
+  until:
+    - mirror_maker_instance.resources | length > 0
+    - mirror_maker_instance.resources.0.status is defined
+    - mirror_maker_instance.resources.0.status.conditions is defined
+    - mirror_maker_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
+    - (mirror_maker_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
+  retries: 60
+  delay: 10

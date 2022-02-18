@@ -1,0 +1,7 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: otlc_generic_order
+      vars:
+        otlc_service_desc: '{{ rhpds_labs.open_aws_rosa }}'

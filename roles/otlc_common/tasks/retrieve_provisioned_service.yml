@@ -1,4 +1,6 @@
 - import_tasks: retrieve_provisioned_services.yml
+  vars:
+    rhlab_api_host: '{{ otlc_service_desc.api_host }}'
 
 - set_fact:
     otlc_services_provisioned_from_template: >

@@ -32,6 +32,7 @@
 otlc_labs:
   # OCP 4.5.4, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days, RHACM 2.0.3 preinstalled
   acm_foundation_hub:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     template_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000859'
@@ -45,6 +46,7 @@ otlc_labs:
 
   # OCP 4.4.29, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days
   acm_foundation_managed:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     template_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000860'
@@ -58,6 +60,7 @@ otlc_labs:
       dialog_environment: PROD
 
   ocp3_migration:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000653'
@@ -72,6 +75,7 @@ otlc_labs:
       dialog_environment: PROD
 
   ocp4_migration:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000652'
@@ -85,6 +89,7 @@ otlc_labs:
       dialog_environment: PROD
 
   ocp4_clientvm:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000610'
@@ -96,6 +101,7 @@ otlc_labs:
       dialog_runtime: "8"
 
   ocp4_shared_access:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000607'
@@ -109,6 +115,7 @@ otlc_labs:
 
   # Custom OCP installation, TLS certs configuration works, runs constantly, AWS
   ocp4_installation:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000001005'
@@ -122,6 +129,7 @@ otlc_labs:
 
   # Cannot add records to the DNS zone, shuts down after 8 hours
   ocp4_configuration:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000741'
@@ -136,6 +144,7 @@ otlc_labs:
 
   # OCP 4.8.2, single-node control plane, Let's Encrypt TLS certs, shuts down after 4 hours, AWS
   ocp4_handson_48:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000001027'
@@ -148,8 +157,9 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
-  # OCP 4.9.15, single-node cluster, Let's Encrypt TLS certs, shuts down after 4 hours, AWS
+  # Latest OCP version, single-node cluster, Let's Encrypt TLS certs, shuts down after 4 hours, AWS
   ocp4_handson_49:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000001044'
@@ -164,6 +174,7 @@ otlc_labs:
 
   # OCP 4.7.4, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours, AWS
   ocs4_implementation:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000000951'
@@ -178,6 +189,7 @@ otlc_labs:
 
   # OCP 4.7.16, cannot add records to the DNS zone, Let's Encrypt TLS certs, shuts down after 8 hours, AWS
   ossm_lab:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000040'
     catalog_name: 'OPENTLC OpenShift 4 Labs'
     template_id: '20000000001015'
@@ -191,6 +203,7 @@ otlc_labs:
       dialog_runtime: "8"
 
   rhel7_implementation:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
     template_id: '20000000000703'
@@ -204,6 +217,7 @@ otlc_labs:
       dialog_runtime: "4"
 
   rhel8_beta:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
     template_id: '20000000000709'
@@ -217,6 +231,7 @@ otlc_labs:
       dialog_runtime: "8"
 
   rhev:
+    api_host: labs.opentlc.com
     catalog_id: '20000000000001'
     catalog_name: 'OPENTLC Datacenter Infrastructure Labs'
     template_id: '20000000000290'
@@ -225,3 +240,61 @@ otlc_labs:
       dialog_check: t
       dialog_expiration: "7"
       dialog_runtime: "4"
+
+rhpds_labs:
+  open_aws_blank:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000000840'
+    template_name: 'AWS Blank Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: na_sandboxes_gpte
+
+  # Latest OCP version, 3 masters, 2 workers, Let's Encrypt TLS certs
+  open_aws_openshift:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000001024'
+    template_name: 'AWS with OpenShift Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: na_sandbox_gpte
+      dialog_runtime: "8"
+
+  # Latest OCP version, 3 masters, 2 infra, 2 workers, Let's Encrypt TLS certs
+  open_aws_rosa:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000000931'
+    template_name: 'AWS with ROSA Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "3"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: na_sandbox_gpte
+      dialog_runtime: "8"
+      dialog_salesforce: "None"
+
+  open_azure_blank:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000001011'
+    template_name: 'Azure Blank Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "7"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: azure_eastus

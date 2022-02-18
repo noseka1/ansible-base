@@ -4,6 +4,8 @@
     - import_role:
         name: otlc_common
         tasks_from: retrieve_provisioned_services.yml
+      vars:
+        rhlab_api_host: labs.opentlc.com
 
     - name: Show provisioned services
       debug:

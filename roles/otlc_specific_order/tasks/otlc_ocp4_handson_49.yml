@@ -22,6 +22,12 @@
       env12: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 012") | first).value }}'
       env13: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 013") | first).value }}'
       env14: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 014") | first).value }}'
+      env15: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 015") | first).value }}'
+      env16: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 016") | first).value }}'
+      env17: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 017") | first).value }}'
+      env18: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 018") | first).value }}'
+      env19: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 019") | first).value }}'
+      env20: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 020") | first).value }}'
       target_host: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "targetHost") | first).value }}'
       aws_region: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "ec2region") | first).value }}'
 
@@ -29,9 +35,9 @@
     otlc_service_info:
       guid:                  '{{ otlc_service_raw.guid }}'
       top_level_domain:      '{{ otlc_service_raw.target_host | regex_replace("^bastion\.", "")}}'
-      ssh_username:          '{{ otlc_service_raw.env13.split(" ").1.split("@").0 | trim }}'
-      ssh_hostname:          '{{ otlc_service_raw.env13.split(" ").1.split("@").1 | trim }}'
-      ssh_password:          "{{ otlc_service_raw.env14.split(\"'\").3 | trim }}"
+      ssh_username:          '{{ otlc_service_raw.env18.split(" ").1.split("@").0 | trim }}'
+      ssh_hostname:          '{{ otlc_service_raw.env18.split(" ").1.split("@").1 | trim }}'
+      ssh_password:          "{{ otlc_service_raw.env19.split(\"'\").3 | trim }}"
       aws_region:            '{{ otlc_service_raw.aws_region }}'
 
 - debug:

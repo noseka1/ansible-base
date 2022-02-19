@@ -1,0 +1,13 @@
+- import_tasks: retrieve_provisioned_services.yml
+  vars:
+    rhlab_api_host: labs.opentlc.com
+
+- set_fact:
+    rhlab_services_provisioned: '{{ otlc_services_provisioned.json.resources }}'
+
+- import_tasks: retrieve_provisioned_services.yml
+  vars:
+    rhlab_api_host: rhpds.redhat.com
+
+- set_fact:
+    rhlab_services_provisioned: '{{ rhlab_services_provisioned + otlc_services_provisioned.json.resources }}'

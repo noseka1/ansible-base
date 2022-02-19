@@ -3,20 +3,22 @@
   tasks:
     - import_role:
         name: otlc_common
-        tasks_from: retrieve_provisioned_services.yml
-      vars:
-        rhlab_api_host: labs.opentlc.com
+        tasks_from: retrieve_provisioned_services_all.yml
 
-    - name: Send an extend runtime request to each provisioned service
+    - name: Send a start request to each provisioned service
       uri:
         url: '{{ item.href }}'
         user: '{{ otlc_username }}'
         password: '{{ otlc_password }}'
         method: POST
         body:
-          action: extend runtime
+          action: Start
+          resource:
+            areyousure: yes
         body_format: json
         status_code: 200
         timeout: 120
       ignore_errors: True
-      loop: '{{ otlc_services_provisioned.json.resources }}'
+      loop: '{{ rhlab_services_provisioned }}'
+      loop_control:
+        label: '{{ item.name }} retires on {{ item.retires_on }}'

@@ -2,7 +2,7 @@
   gather_facts: False
   tasks:
     - import_role:
-        name: otlc_specific_order
-        tasks_from: otlc_ocp4_installation
+        name: rhlab_specific_order
+        tasks_from: otlc_ocp4_installation.yml
       vars:
         otlc_service_desc: '{{ otlc_labs.ocp4_installation }}'

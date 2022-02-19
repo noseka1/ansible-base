@@ -2,7 +2,7 @@
   gather_facts: False
   tasks:
     - import_role:
-        name: otlc_specific_order
-        tasks_from: otlc_acm_foundation_hub
+        name: rhlab_specific_order
+        tasks_from: otlc_acm_foundation_hub.yml
       vars:
         otlc_service_desc: '{{ otlc_labs.acm_foundation_hub }}'

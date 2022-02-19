@@ -3,8 +3,8 @@
 
   tasks:
     - import_role:
-        name: otlc_specific_order
-        tasks_from: otlc_ocp4_handson_48
+        name: rhlab_specific_order
+        tasks_from: otlc_ocp4_handson_48.yml
       vars:
         otlc_service_desc: '{{ otlc_labs.ocp4_handson_48 }}'
 

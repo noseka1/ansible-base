@@ -2,6 +2,7 @@
   gather_facts: False
   tasks:
     - import_role:
-        name: otlc_generic_order
+        name: rhlab_specific_order
+        tasks_from: rhpds_open_aws_openshift.yml
       vars:
         otlc_service_desc: '{{ rhpds_labs.open_aws_openshift }}'

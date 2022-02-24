@@ -34,6 +34,8 @@
     otlc_service_info:
       guid:                  '{{ otlc_service_raw.guid }}'
       top_level_domain:      '{{ otlc_service_raw.target_host | regex_replace("^bastion\.", "")}}'
+      aws_access_key_id:     '{{ otlc_service_raw.env4.split(":").1 | trim }}'
+      aws_secret_access_key: '{{ otlc_service_raw.env5.split(":").1 | trim }}'
       ssh_username:          '{{ otlc_service_raw.env0.split(" ")[-1].split("@").0 | trim }}'
       ssh_hostname:          '{{ otlc_service_raw.env0.split(" ")[-1].split("@").1 | trim }}'
       ssh_password:          '{{ otlc_service_raw.env1.split(" ")[-1] | trim }}'

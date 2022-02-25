@@ -1,0 +1,16 @@
+- name: Checkout Kafdrop git repo
+  git:
+    repo: 'https://github.com/obsidiandynamics/kafdrop.git'
+    dest: /tmp/kafdrop
+    version: '{{ kafdrop_version }}'
+
+- name: Deploy Kafdrop chart from local path
+  community.kubernetes.helm:
+    name: kafdrop
+    chart_ref: /tmp/kafdrop/chart
+    release_namespace: kafka-single
+    values:
+      image:
+        tag: '{{ kafdrop_version }}'
+      kafka:
+        brokerConnect: my-cluster-kafka-bootstrap:9092

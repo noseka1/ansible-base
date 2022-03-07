@@ -4,5 +4,9 @@ metadata:
   name: {{ gitops_instance_name }}
   namespace: {{ gitops_instance_namespace }}
 spec:
+  repo:
+    replicas: 1
   server:
+    replicas: 1
+    # Configure TLS edge-terminated route instead of passthrough
     insecure: true

@@ -2,7 +2,7 @@
   k8s:
     definition: "{{ lookup('template', '{{ gitops_instance_name }}-cluster-secret.yaml') }}"
 
-- name: Configure TLS edge-terminated route instead of passthrough
+- name: Configure ArgoCD resource
   k8s:
     definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd.yaml') }}"
 

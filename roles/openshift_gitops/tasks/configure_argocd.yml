@@ -9,3 +9,7 @@
 - name: Configure Argo CD server
   k8s:
     definition: "{{ lookup('template', 'argocd-cm-cm.yaml') }}"
+
+- name: Grant Argo CD cluster-admin privileges
+  k8s:
+    definition: "{{ lookup('template', 'gitops-cluster-admin-clusterrolebinding.yaml') }}"

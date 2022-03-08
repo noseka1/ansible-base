@@ -1,0 +1,26 @@
+- name: Obtain Quay registry route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ quay_instance_name }}-quay'
+    namespace: '{{ quay_instance_namespace }}'
+  register: quay_instance_route
+
+- name: Creating admin user at endpoint https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize
+  uri:
+    url: "https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize"
+    method: POST
+    validate_certs: no
+    return_content: yes
+    body_format: json
+    body:
+      username: admin
+      password: '{{ generic_user_password }}'
+      email: admin@example.com
+      access_token: true
+    status_code: [ 200, 400 ]
+  register: quay_user_initialize
+
+- fail:
+    msg: Failed to create the admin user
+  when: quay_user_initialize.status == 400 and quay_user_initialize.json.message != 'Cannot initialize user in a non-empty database'

@@ -1,0 +1,9 @@
+compliance_kustomizations:
+  operator: github.com/redhat-cop/gitops-catalog/compliance-operator/operator/overlays/release-0.1?ref=main
+  cis: github.com/redhat-cop/gitops-catalog/compliance-operator/instance/overlays/ocp-cis?ref=main
+
+compliance_operator_subscription_namespace: openshift-compliance
+compliance_operator_subscription_name: compliance-operator
+
+compliance_cis_namespace: openshift-compliance
+compliance_cis_name: cis-compliance

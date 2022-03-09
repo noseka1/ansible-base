@@ -1,0 +1,9 @@
+file_integrity_kustomizations:
+  operator: github.com/redhat-cop/gitops-catalog/file-integrity-operator/operator/overlays/release-0.1?ref=main
+  instance: github.com/redhat-cop/gitops-catalog/file-integrity-operator/instance/overlays/worker?ref=main
+
+file_integrity_operator_subscription_namespace: openshift-file-integrity
+file_integrity_operator_subscription_name: file-integrity-operator
+
+file_integrity_instance_namespace: openshift-file-integrity
+file_integrity_instance_name: worker-fileintegrity

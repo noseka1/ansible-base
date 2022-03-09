@@ -1,0 +1,41 @@
+- name: Deploy File Integrity operator
+  command: oc apply --kustomize {{ file_integrity_kustomizations.operator }}
+
+- name: Wait for File Integrity operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ file_integrity_operator_subscription_name }}'
+    subscription_namespace: '{{ file_integrity_operator_subscription_namespace }}'
+
+- name: Deploy File Integrity instance
+  command: oc apply --kustomize {{ file_integrity_kustomizations.instance }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the File Integrity instance to become active
+  k8s_info:
+    api_version: fileintegrity.openshift.io/v1alpha1
+    kind: FileIntegrity
+    namespace: '{{ file_integrity_instance_namespace }}'
+    name: '{{ file_integrity_instance_name }}'
+  register: fileintegrity_result
+  until:
+    - fileintegrity_result.resources | length > 0
+    - fileintegrity_result.resources.0.status is defined
+    - fileintegrity_result.resources.0.status.phase is defined
+    - fileintegrity_result.resources.0.status.phase == 'Active'
+  failed_when: False
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for FileIntegrityNodeStatus to show up
+  k8s_info:
+    api_version: fileintegrity.openshift.io/v1alpha1
+    kind: FileIntegrityNodeStatus
+    namespace: '{{ file_integrity_instance_namespace }}'
+  register: fileintegritynodestatus_result
+  until:
+    - fileintegritynodestatus_result.resources | length > 0
+  failed_when: False
+  retries: 60
+  delay: 10

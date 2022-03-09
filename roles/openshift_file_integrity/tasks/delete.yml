@@ -1,0 +1,5 @@
+- name: Delete File Integrity instance
+  command: oc delete --kustomize {{ file_integrity_kustomizations.instance }}
+
+- name: Delete File Integrity operator
+  command: oc delete --kustomize {{ file_integrity_kustomizations.operator }}

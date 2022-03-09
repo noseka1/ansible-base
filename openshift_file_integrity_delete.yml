@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_file_integrity
+        tasks_from: delete.yml

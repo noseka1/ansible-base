@@ -1,0 +1,5 @@
+- name: Delete NMState instance
+  command: oc delete --kustomize {{ nmstate_kustomizations.instance }}
+
+- name: Delete NMState operator
+  command: oc delete --kustomize {{ nmstate_kustomizations.operator }}

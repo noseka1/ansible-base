@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_nmstate
+        tasks_from: deploy.yml

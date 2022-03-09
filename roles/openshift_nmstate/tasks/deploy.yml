@@ -1,0 +1,24 @@
+- name: Deploy NMState operator
+  command: oc apply --kustomize {{ nmstate_kustomizations.operator }}
+
+- name: Wait for NMState operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ nmstate_operator_subscription_name }}'
+    subscription_namespace: '{{ nmstate_operator_subscription_namespace }}'
+
+- name: Deploy NMState instance
+  command: oc apply --kustomize {{ nmstate_kustomizations.instance }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for NMState deployment to complete
+  k8s_info:
+    api_version: nmstate.io/v1beta1
+    kind: NodeNetworkState
+  register: nns_result
+  until:
+    - nns_result.resources | length > 0
+  failed_when: False
+  retries: 60
+  delay: 10

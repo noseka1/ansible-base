@@ -1,0 +1,22 @@
+- name: Deploy external-secrets instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - external-secrets-ns.yaml
+    - external-secrets-operatorconfig.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for External Secrets instance deployment to complete
+  k8s_info:
+    api_version: operator.external-secrets.io/v1alpha1
+    kind: OperatorConfig
+    namespace: '{{ external_secrets_instance_namespace }}'
+    name: '{{ external_secrets_instance_name }}'
+  register: externalsecrets_result
+  until:
+    - externalsecrets_result.resources | length > 0
+    - externalsecrets_result.resources.0.status is defined
+    - externalsecrets_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Deployed') | list | length > 0
+    - (externalsecrets_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Deployed') | first).status == 'True'
+  failed_when: False
+  retries: 60
+  delay: 10

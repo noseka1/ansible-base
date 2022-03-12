@@ -1,0 +1,28 @@
+- name: Delete external-secrets namespace
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+    - external-secrets-ns.yaml
+
+- name: Obtain CSV name
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: '{{ external_secrets_subscription_name }}'
+    namespace: '{{ external_secrets_subscription_namespace }}'
+  register: operator_subscription
+
+- name: Delete External Secrets operator
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  loop:
+    - external-secrets-operator-sub.yaml
+
+- name: Clean up CSVs
+  include_role:
+    name: openshift_common
+    tasks_from: delete_csvs.yml
+  vars:
+    delete_csvs_name: '{{ operator_subscription.resources.0.status.currentCSV }}'

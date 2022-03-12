@@ -2,16 +2,16 @@
   k8s_info:
     api_version: v1
     kind: ServiceAccount
-    namespace: '{{ external_secrets_namespace }}'
-    name: '{{ external_secrets_name }}-kubernetes-external-secrets'
+    namespace: '{{ external_secrets_instance_namespace }}'
+    name: '{{ external_secrets_instance_name }}-kubernetes-external-secrets'
   register: sa_info
 
-- name: Obtain sa secrets in the {{ external_secrets_namespace }} namespace
+- name: Obtain sa secrets in the {{ external_secrets_instance_namespace }} namespace
   k8s_info:
     api_version: v1
     kind: Secret
     name: '{{ sa_info.resources.0.secrets | json_query("[*].name") | select("match", "external-secrets-kubernetes-external-secrets-token-.*") | list | first }}'
-    namespace: '{{ external_secrets_namespace }}'
+    namespace: '{{ external_secrets_instance_namespace }}'
   register: sa_secret
 
 - name: Create external-secrets-deployable namespace and the bootstrap token deployable

@@ -1,0 +1,7 @@
+- import_tasks: deploy_operator.yml
+
+- import_tasks: deploy_instance.yml
+
+- import_tasks: vault_backend.yml
+
+- import_tasks: deploy_bootstrap_token.yml

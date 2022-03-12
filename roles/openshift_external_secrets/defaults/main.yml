@@ -1,5 +1,8 @@
-external_secrets_namespace: external-secrets
-external_secrets_name: external-secrets
+external_secrets_subscription_namespace: openshift-operators
+external_secrets_subscription_name: external-secrets-operator
+
+external_secrets_instance_namespace: external-secrets
+external_secrets_instance_name: external-secrets
 
 # Pin the Helm Chart version
 #external_secrets_chart_version: 0.4.1

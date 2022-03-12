@@ -34,7 +34,7 @@
   register: api_resources_result
   until:
     - api_resources_result is not failed
-  retries: 30
+  retries: 60
   delay: 10
 
 - fail:

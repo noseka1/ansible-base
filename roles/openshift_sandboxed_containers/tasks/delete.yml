@@ -1,0 +1,21 @@
+- name: Delete test workload
+  command: oc delete --kustomize {{ sandboxed_containers_kustomizations.workload }}
+
+- name: Delete OpenShift sandboxed containers instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+    state: absent
+  register: sandboxed_containers_kataconfig
+  loop:
+     - cluster-kataconfig-kataconfig.yaml
+
+- name: Delete OpenShift sandboxed containers operator
+  command: oc delete --kustomize {{ sandboxed_containers_kustomizations.operator }}
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: sandboxed_containers_kataconfig is changed

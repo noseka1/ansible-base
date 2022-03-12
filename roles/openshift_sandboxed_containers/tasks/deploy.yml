@@ -1,0 +1,67 @@
+- name: Deploy OpenShift sandboxed containers operator
+  command: oc apply --kustomize {{ sandboxed_containers_kustomizations.operator }}
+
+- name: Wait for OpenShift sandboxed containers operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ sandboxed_containers_operator_subscription_name }}'
+    subscription_namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
+
+- name: Deploy OpenShift sandboxed containers instance
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+     - cluster-kataconfig-kataconfig.yaml
+  register: sandboxed_containers_kataconfig
+  until: sandboxed_containers_kataconfig is succeeded
+  failed_when: False
+  retries: 10
+  delay: 10
+
+- fail:
+  when: sandboxed_containers_kataconfig is failed
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: sandboxed_containers_kataconfig is changed
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift sandboxed containers deployment to complete
+  k8s_info:
+    api_version: kataconfiguration.openshift.io/v1
+    kind: KataConfig
+    name: '{{ sandboxed_containers_instance_name }}'
+  register: sandboxed_containers_kataconfig
+  until:
+    - sandboxed_containers_kataconfig.resources | length == 1
+    - sandboxed_containers_kataconfig.resources.0.status is defined
+    - sandboxed_containers_kataconfig.resources.0.status.installationStatus is defined
+    - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress is defined
+    - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress == 'false'
+  failed_when: False
+  retries: 60
+  delay: 10
+
+- name: Deploy test workload
+  command: oc apply --kustomize {{ sandboxed_containers_kustomizations.workload }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for test workload deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: example
+    namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
+  register: sandboxed_containers_test_workload
+  until:
+    - sandboxed_containers_test_workload.resources | length == 1
+    - sandboxed_containers_test_workload.resources.0.status is defined
+    - sandboxed_containers_test_workload.resources.0.status.availableReplicas is defined
+    - sandboxed_containers_test_workload.resources.0.status.availableReplicas > 0
+  failed_when: False
+  retries: 60
+  delay: 10

@@ -1,0 +1,9 @@
+sandboxed_containers_kustomizations:
+  operator: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/operator/overlays/preview-1.1?ref=main
+  instance: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/instance/base?ref=main
+  workload: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/example-workload/base?ref=main
+
+sandboxed_containers_operator_subscription_namespace: openshift-sandboxed-containers-operator
+sandboxed_containers_operator_subscription_name: sandboxed-containers-operator
+
+sandboxed_containers_instance_name: cluster-kataconfig

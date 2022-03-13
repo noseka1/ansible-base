@@ -1,0 +1,51 @@
+- name: Install TopoLVM operator
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - topolvm-operator-sub.yaml
+
+- name: Wait for TopoLVM operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ topolvm_operator_subscription_name }}'
+    subscription_namespace: '{{ topolvm_operator_subscription_namespace }}'
+
+- name: Deploy TopoLVM instance
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - topolvm-scc-role.yaml
+    - topolvm-scc-rolebinding.yaml
+    - global-info-cm.yaml
+    - topolvm-topolvmcluster.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for TopLVM cluster to deploy
+  k8s_info:
+    api_version: topolvm.cybozu.com/v2
+    kind: TopolvmCluster
+    namespace: '{{ topolvm_instance_namespace }}'
+    name: '{{ topolvm_instance_name }}'
+  register: topolvm_cluster
+  until:
+    - topolvm_cluster.resources | length > 0
+    - topolvm_cluster.resources.0.status is defined
+    - topolvm_cluster.resources.0.status.nodeStorageState is defined
+    - topolvm_cluster.resources.0.status.nodeStorageState | length > 0
+    - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses is defined
+    - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses | length  > 0
+  failed_when: False
+  retries: 60
+  delay: 10
+
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: check_default_storage_class_exists.yml
+
+- name: Create topolvm storage class
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - topolvm-sc.yaml

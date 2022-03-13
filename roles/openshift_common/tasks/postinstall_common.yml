@@ -8,6 +8,8 @@
 
 - import_tasks: postinstall_oauth.yml
 
+- import_tasks: postinstall_operatorhub_io.yml
+
 - import_tasks: postinstall_image_registry.yml
 
 - import_tasks: postinstall_image_prunning.yml

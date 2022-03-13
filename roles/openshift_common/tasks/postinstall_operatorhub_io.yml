@@ -1,0 +1,6 @@
+- name: Make operators hosted by OperatorHub.io available for installation via OLM
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    namespace: openshift-marketplace
+  loop:
+    - https://raw.githubusercontent.com/noseka1/gitops-catalog/operatorhub/operatorhub-io/operatorhub-io-catsrc.yaml

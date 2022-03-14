@@ -6,3 +6,19 @@ metadata:
 data:
   config.yaml: |
     enableUserWorkload: true
+    alertmanagerMain:
+      volumeClaimTemplate:
+        metadata:
+          name: alertmanager
+        spec:
+          resources:
+            requests:
+              storage: 50Gi
+    prometheusK8s:
+      volumeClaimTemplate:
+        metadata:
+          name: prometheus
+        spec:
+          resources:
+            requests:
+              storage: 50Gi

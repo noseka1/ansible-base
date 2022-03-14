@@ -1,5 +1,5 @@
 # See also: https://docs.openshift.com/container-platform/4.9/monitoring/enabling-monitoring-for-user-defined-projects.html
 
-- name: Enable monitoring of user-defined workloads
+- name: Use persistent storage for monitoring and enable monitoring of user-defined workloads
   k8s:
     definition: "{{ lookup('template', 'cluster-monitoring-config-cm.yml') }}"

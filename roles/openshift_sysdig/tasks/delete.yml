@@ -1,0 +1,2 @@
+- name: Delete sysdig daemonset
+  command: oc delete --kustomize {{ sysdig_kustomization }}

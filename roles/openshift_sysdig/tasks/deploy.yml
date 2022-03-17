@@ -1,0 +1,2 @@
+- name: Deploy sysdig daemonset
+  command: oc apply --kustomize {{ sysdig_kustomization }}

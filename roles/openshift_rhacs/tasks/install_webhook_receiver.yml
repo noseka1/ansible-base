@@ -1,0 +1,32 @@
+- import_tasks: get_rhacs_route.yml
+
+- name: Deploy custom webhook receiver
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: webhook_receiver
+    kustomize_files:
+      - webhook-receiver/kustomization.yaml
+      - webhook-receiver/run.sh
+      - webhook-receiver/webhook-receiver-deploy.yaml
+      - webhook-receiver/webhook-receiver-svc.yaml
+    kustomize_op: apply
+
+- name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/notifiers'
+    method: POST
+    body_format: json
+    body:
+      generic:
+        auditLoggingEnabled: True
+        endpoint: http://webhook-receiver.{{ rhacs_instance_namespace }}.svc:8080
+      name: My Webhook Receiver
+      type: generic
+      uiEndpoint: https://{{ rhacs_route.resources.0.spec.host }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 500 ]

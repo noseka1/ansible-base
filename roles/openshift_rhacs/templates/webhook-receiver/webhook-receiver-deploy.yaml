@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-receiver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-receiver
+  template:
+    metadata:
+      labels:
+        app: webhook-receiver
+    spec:
+      containers:
+      - image: toolbox-container
+        imagePullPolicy: Always
+        name: webhook-receiver
+        volumeMounts:
+        - name: run
+          mountPath: /toolbox
+        # Allow colorful output
+        tty: true
+        stdin: true
+      volumes:
+      - name: run
+        configMap:
+          name: webhook-receiver-run
+      tolerations:
+      - operator: Exists

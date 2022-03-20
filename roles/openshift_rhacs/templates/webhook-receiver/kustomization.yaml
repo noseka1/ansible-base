@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: {{ rhacs_instance_namespace }}
+
+images:
+- name: toolbox-container
+  newName: quay.io/noseka1/toolbox-container
+  newTag: basic
+
+configMapGenerator:
+- name: webhook-receiver-run
+  files:
+  - run.sh
+
+resources:
+- webhook-receiver-deploy.yaml
+- webhook-receiver-svc.yaml

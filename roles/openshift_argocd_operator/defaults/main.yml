@@ -1,7 +1,0 @@
-argocd_kustomizations:
-  operator: github.com/noseka1/argocd-operator-kustomization/argocd-operator/base?ref=myauto
-  instance: github.com/noseka1/argocd-operator-kustomization/argocd-instance/overlays/basic?ref=myauto
-argocd_subscription_namespace: argocd
-argocd_subscription_name: argocd
-argocd_instance_namespace: argocd
-argocd_instance_name: argocd

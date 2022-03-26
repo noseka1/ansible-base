@@ -5,6 +5,8 @@
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
 
+- import_tasks: retrieve_pull_secret.yml
+
 - name: Delete Observability component
   import_role:
     name: openshift_common

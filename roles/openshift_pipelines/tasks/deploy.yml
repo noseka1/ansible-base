@@ -8,3 +8,13 @@
   vars:
     subscription_name: '{{ openshift_pipelines_operator_subscription_name }}'
     subscription_namespace: '{{ openshift_pipelines_operator_subscription_namespace }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
+  k8s_info:
+    api_version: tekton.dev/v1beta1
+    kind: ClusterTask
+  register: clustertasks
+  until:
+    - clustertasks.resources | length > 0
+  retries: 60
+  delay: 10

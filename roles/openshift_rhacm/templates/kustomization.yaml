@@ -6,4 +6,4 @@ bases:
 
 patchesStrategicMerge:
 - pull-secret-secret.yaml
-- thanos-object-storage-secret.yaml
+- {{ rhacm_thanos_thanos_s3_secret }}

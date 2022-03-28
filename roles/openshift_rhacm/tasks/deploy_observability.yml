@@ -4,8 +4,19 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
+  when: rhacm_observability_use_existing_s3 == "false"
 
 - import_tasks: retrieve_pull_secret.yml
+
+- name: Set Thanos configuration for kustomization.yaml
+  set_fact:
+    rhacm_thanos_thanos_s3_secret: thanos-object-storage-secret.yaml
+  when: rhacm_observability_use_existing_s3 == "false"
+
+- name: Set Thanos configuration for kustomization.yaml
+  set_fact:
+    rhacm_thanos_thanos_s3_secret: thanos-object-storage-secret-existing-s3.yaml
+  when: rhacm_observability_use_existing_s3 == "true"
 
 - name: Deploy Observability component
   import_role:
@@ -18,3 +29,17 @@
       - pull-secret-secret.yaml
       - thanos-object-storage-secret.yaml
     kustomize_op: apply
+  when: rhacm_observability_use_existing_s3 == "false"
+
+- name: Deploy Observability component
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: rhacm_observability
+    kustomize_files:
+      - kustomization.yaml
+      - pull-secret-secret.yaml
+      - thanos-object-storage-secret-existing-s3.yaml
+    kustomize_op: apply
+  when: rhacm_observability_use_existing_s3 == "true"

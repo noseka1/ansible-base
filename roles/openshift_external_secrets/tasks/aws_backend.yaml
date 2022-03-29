@@ -1,0 +1,19 @@
+- name: Create AWS keys for user account which talks to AWS SM
+  k8s:
+    definition: "{{ lookup('template', 'aws-secret-manager-users-keys.yaml') }}"
+  when: external_secrets_oidc_enabled: false
+
+- name: Create AWS Secrets Manager backend - will use AWS keys
+  k8s:
+    definition: "{{ lookup('template', 'aws-secretstore-secret-manager.yaml') }}"
+  when: external_secrets_oidc_enabled: false
+
+- name: Create AWS service account
+  k8s:
+    definition: "{{ lookup('template', 'aws-service-account.yaml') }}"
+  when: external_secrets_oidc_enabled: true
+
+- name: Create AWS Secrets Manager backend - will use SA and OIDC
+  k8s:
+    definition: "{{ lookup('template', 'aws-service-account.yaml') }}"
+  when: external_secrets_oidc_enabled: true

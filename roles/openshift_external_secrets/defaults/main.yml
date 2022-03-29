@@ -10,3 +10,20 @@ external_secrets_instance_name: external-secrets
 vault_name: vault
 vault_namespace: vault
 openshift_external_secrets_vault_ca_bundle: ''
+
+#external_secrets_oidc_enabled:
+#true - when ROSA or OCP is configured to use OIDC provider
+#false - when ROSA or OCP is NOT configured to use OIDC provider
+
+external_secrets_oidc_enabled: false
+
+#external_secrets_secrets_manager_type:
+#vault - hashicorp vault
+#aws_sm - aws secrets manager
+
+external_secrets_secrets_manager_type: vault
+
+external_secrets_secretstore_aws_region: aws_region
+external_secrets_secretstore_aws_access_key: aws_access_key
+external_secrets_secretstore_aws_secret_key: aws_secret_key
+external_secrets_secretstore_aws_role: 'arn:aws:iam::00000000000:role/talk-to-secret-manager'

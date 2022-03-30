@@ -1,0 +1,13 @@
+- name: Deploy AMQ Broker operator
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - amq-broker-rhel8-sub.yaml
+
+- name: Wait for AMQ Broker operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ amq_broker_subscription_name }}'
+    subscription_namespace: '{{ amq_broker_subscription_namespace }}'

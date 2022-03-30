@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_amq_broker
+        tasks_from: delete_operator.yml

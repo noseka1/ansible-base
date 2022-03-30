@@ -3,10 +3,10 @@
 - include_tasks: deploy_instance.yml
 
 - include_tasks: vault_backend.yml
-  when: external_secrets_secrets_manager_type == vault  
+  when: external_secrets_secrets_manager_type == "vault"
 
 - include_tasks: aws_backend.yaml
-  when: external_secrets_secrets_manager_type == aws
+  when: external_secrets_secrets_manager_type == "aws"
 
 - include_tasks: deploy_bootstrap_token.yml
-  when: external_secrets_secrets_manager_type == vault
+  when: external_secrets_secrets_manager_type == "vault"

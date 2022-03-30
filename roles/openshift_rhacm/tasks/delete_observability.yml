@@ -4,7 +4,7 @@
     tasks_from: get_minio_api_route.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
-  when: rhacm_observability_use_existing_s3 == "false"
+  when: not rhacm_observability_use_existing_s3
 
 - import_tasks: retrieve_pull_secret.yml
 
@@ -19,7 +19,7 @@
       - pull-secret-secret.yaml
       - thanos-object-storage-secret.yaml
     kustomize_op: delete
-  when: rhacm_observability_use_existing_s3 == "false"
+  when: not rhacm_observability_use_existing_s
 
 - name: Delete Observability component
   import_role:
@@ -32,11 +32,11 @@
       - pull-secret-secret.yaml
       - thanos-object-storage-secret-existing-s3.yaml
     kustomize_op: delete
-  when: rhacm_observability_use_existing_s3 == "true"
+  when: rhacm_observability_use_existing_s3
 
 - import_role:
     name: openshift_minio
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
-  when: rhacm_observability_use_existing_s3 == "false"
+  when: not rhacm_observability_use_existing_s3

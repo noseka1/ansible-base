@@ -2,11 +2,11 @@
   k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: amq-streams
-    namespace: openshift-operators
+    name: '{{ amq_streams_subscription_name }}'
+    namespace: '{{ amq_streams_subscription_namespace }}'
   register: amq_streams_operator_subscription
 
-- name: Delete Deploy AMQ Streams operator
+- name: Delete AMQ Streams operator
   k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent

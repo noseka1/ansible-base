@@ -1,0 +1,16 @@
+apiVersion: hawt.io/v1alpha1
+kind: Hawtio
+metadata:
+  name: {{ fuse_console_instance_name }}
+  namespace: {{ fuse_console_instance_namespace }}
+spec:
+  replicas: 1
+  resources:
+    limits:
+      cpu: "1"
+      memory: 100Mi
+    requests:
+      cpu: 200m
+      memory: 32Mi
+  type: Namespace
+  version: "1.10"

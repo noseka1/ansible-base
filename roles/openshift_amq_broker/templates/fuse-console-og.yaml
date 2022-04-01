@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ fuse_console_subscription_name }}
+  namespace: {{ fuse_console_subscription_namespace }}
+spec:
+  targetNamespaces:
+  - {{ fuse_console_subscription_namespace }}

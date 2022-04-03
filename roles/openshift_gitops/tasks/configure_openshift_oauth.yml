@@ -1,6 +1,0 @@
-# See also: Dex OpenShift OAuth Connector
-# https://argocd-operator.readthedocs.io/en/latest/usage/dex/
-
-- name: Configure RBAC
-  k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd-2.yaml') }}"

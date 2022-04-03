@@ -10,3 +10,8 @@ spec:
     replicas: 1
     # Configure TLS edge-terminated route instead of passthrough
     insecure: true
+  rbac:
+    defaultPolicy: 'role:readonly'
+    policy: |
+      g, cluster-admins, role:admin
+    scopes: '[groups]'

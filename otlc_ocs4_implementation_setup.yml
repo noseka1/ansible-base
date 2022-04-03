@@ -1,6 +1,5 @@
 - hosts: localhost
   gather_facts: False
-
   tasks:
     - import_role:
         name: rhlab_specific_order

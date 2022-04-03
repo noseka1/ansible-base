@@ -1,0 +1,64 @@
+- import_tasks: get_rhacs_route.yml
+
+- name: Create OpenShift auth provider in RHACS (returns HTTP 400 if the auth provider already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/authProviders'
+    method: POST
+    body_format: json
+    body:
+      name: OpenShift OAuth
+      type: openshift
+      enabled: true
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 400 ]
+
+- name: Get auth providers in RHACS
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/authProviders'
+    method: GET
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 400 ]
+  register: rhacs_auth_providers
+
+- set_fact:
+    rhacs_auth_provider_id: "{{ (rhacs_auth_providers.json.authProviders | selectattr('name', 'equalto', 'OpenShift OAuth') | first).id }}"
+
+- name: Set minimum access role (returns HTTP 500 if the auth provider already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/groups'
+    method: POST
+    body_format: json
+    body:
+      props:
+        authProviderId: '{{ rhacs_auth_provider_id }}'
+        key: ""
+        value: ""
+      roleName: None
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 500 ]
+
+- name: Grant Admin role to users in cluster-admins group (returns HTTP 500 if the auth provider already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/groups'
+    method: POST
+    body_format: json
+    body:
+      props:
+        authProviderId: '{{ rhacs_auth_provider_id }}'
+        key: groups
+        value: cluster-admins
+      roleName: Admin
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 500 ]

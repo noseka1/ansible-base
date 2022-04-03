@@ -1,0 +1,51 @@
+# Install Argo CD Notifications
+# https://argocd-notifications.readthedocs.io/en/stable/
+# Eventually Argo CD Notifications will be likely packaged with the OpenShift GitOps:
+# https://issues.redhat.com/browse/GITOPS-927
+
+- name: Install Argo CD Notifications and its catalog
+  k8s:
+    definition: "{{ lookup('url', item, split_lines='no') }}"
+    namespace: '{{ gitops_instance_namespace }}'
+  loop:
+    - '{{ argocd_notifications_manifests }}'
+    - '{{ argocd_notifications_catalog }}'
+
+- name: Obtain Argo CD route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ gitops_instance_name }}-server'
+    namespace: '{{ gitops_instance_namespace }}'
+  register: argocd_route
+
+- name: Send all notifications to the custom webhook receiver
+  k8s:
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - argocd-notifications-cm-cm.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo CD Notifications deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ argocd_notifications_controller_name }}'
+    namespace: '{{ gitops_instance_namespace }}'
+  register: argocd_notifications_deployment
+  until:
+    - argocd_notifications_deployment.resources is defined
+    - argocd_notifications_deployment.resources | length > 0
+    - argocd_notifications_deployment.resources.0.status is defined
+    - argocd_notifications_deployment.resources.0.status.conditions is defined
+    - argocd_notifications_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (argocd_notifications_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (argocd_notifications_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Deploy custom webhook receiver
+  import_role:
+    name: openshift_webhook_receiver
+    tasks_from: deploy.yml
+  vars:
+    openshift_webhook_receiver_namespace: '{{ gitops_instance_namespace }}'

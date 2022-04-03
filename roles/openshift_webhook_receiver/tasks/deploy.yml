@@ -1,0 +1,30 @@
+- name: Deploy custom webhook receiver
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: webhook_receiver
+    kustomize_files:
+      - kustomization.yaml
+      - run.sh
+      - webhook-receiver-deploy.yaml
+      - webhook-receiver-svc.yaml
+    kustomize_op: apply
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Webhook Receiver deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ openshift_webhook_receiver_deployment_name }}'
+    namespace: '{{ openshift_webhook_receiver_namespace }}'
+  register: openshift_webhook_receiver_deployment
+  until:
+    - openshift_webhook_receiver_deployment.resources is defined
+    - openshift_webhook_receiver_deployment.resources | length > 0
+    - openshift_webhook_receiver_deployment.resources.0.status is defined
+    - openshift_webhook_receiver_deployment.resources.0.status.conditions is defined
+    - openshift_webhook_receiver_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (openshift_webhook_receiver_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (openshift_webhook_receiver_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

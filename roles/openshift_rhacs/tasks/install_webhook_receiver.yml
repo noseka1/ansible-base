@@ -1,17 +1,11 @@
-- import_tasks: get_rhacs_route.yml
-
 - name: Deploy custom webhook receiver
   import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
+    name: openshift_webhook_receiver
+    tasks_from: deploy.yml
   vars:
-    kustomize_name: webhook_receiver
-    kustomize_files:
-      - webhook-receiver/kustomization.yaml
-      - webhook-receiver/run.sh
-      - webhook-receiver/webhook-receiver-deploy.yaml
-      - webhook-receiver/webhook-receiver-svc.yaml
-    kustomize_op: apply
+    openshift_webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+
+- import_tasks: get_rhacs_route.yml
 
 - name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
   uri:

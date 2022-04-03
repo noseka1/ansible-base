@@ -1,0 +1,12 @@
+- name: Delete custom webhook receiver
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: webhook_receiver
+    kustomize_files:
+      - kustomization.yaml
+      - run.sh
+      - webhook-receiver-deploy.yaml
+      - webhook-receiver-svc.yaml
+    kustomize_op: delete

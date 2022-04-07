@@ -1,5 +1,8 @@
 - name: Deploy GitOps operator
-  command: oc apply --kustomize {{ gitops_kustomizations.operator }}
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - openshift-gitops-sub.yaml
 
 - name: Wait for GitOps operator to deploy
   import_role:

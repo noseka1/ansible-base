@@ -15,7 +15,11 @@
         kind: ArgoCD
 
 - name: Delete GitOps operator
-  command: oc delete --kustomize {{ gitops_kustomizations.operator }}
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+  loop:
+    - openshift-gitops-sub.yaml
 
 - name: Clean up CSVs
   include_role:

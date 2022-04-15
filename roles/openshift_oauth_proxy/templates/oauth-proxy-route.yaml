@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ openshift_oauth_proxy_name }}
+spec:
+  port:
+    targetPort: oauth-proxy
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: {{ openshift_oauth_proxy_name }}-oauth-proxy

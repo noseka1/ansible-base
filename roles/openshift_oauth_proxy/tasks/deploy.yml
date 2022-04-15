@@ -1,0 +1,29 @@
+- name: Deploy oauth-proxy {{ openshift_oauth_proxy_name }}
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ openshift_oauth_proxy_namespace }}'
+  loop:
+    - oauth-proxy-clusterrolebinding.yaml
+    - oauth-proxy-clusterrole.yaml
+    - oauth-proxy-sa.yaml
+    - oauth-proxy-deploy.yaml
+    - oauth-proxy-svc.yaml
+    - oauth-proxy-route.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for oauth-proxy deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ openshift_oauth_proxy_name }}'
+    namespace: '{{ openshift_oauth_proxy_namespace }}'
+  register: openshift_oauth_proxy_deployment
+  until:
+    - openshift_oauth_proxy_deployment.resources is defined
+    - openshift_oauth_proxy_deployment.resources | length > 0
+    - openshift_oauth_proxy_deployment.resources.0.status is defined
+    - openshift_oauth_proxy_deployment.resources.0.status.conditions is defined
+    - openshift_oauth_proxy_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (openshift_oauth_proxy_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (openshift_oauth_proxy_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

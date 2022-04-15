@@ -1,0 +1,10 @@
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ openshift_oauth_proxy_name }}-oauth-proxy
+roleRef:
+  name: {{ openshift_oauth_proxy_name }}-oauth-proxy
+subjects:
+- kind: ServiceAccount
+  name: {{ openshift_oauth_proxy_name }}-oauth-proxy
+  namespace: {{ openshift_oauth_proxy_namespace }}

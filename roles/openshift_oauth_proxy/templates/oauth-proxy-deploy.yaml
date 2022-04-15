@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ openshift_oauth_proxy_name }}-oauth-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ openshift_oauth_proxy_name }}-oauth-proxy
+  template:
+    metadata:
+      labels:
+        app: {{ openshift_oauth_proxy_name }}-oauth-proxy
+    spec:
+      containers:
+      - args:
+        # See also example:
+        # https://github.com/openshift/oauth-proxy/blob/master/contrib/sidecar.yaml
+          - '-https-address=:9091'
+          - '-provider=openshift'
+          - '-openshift-service-account={{ openshift_oauth_proxy_name }}-oauth-proxy'
+          - '-upstream={{ openshift_oauth_proxy_upstream }}'
+          - '-tls-cert=/etc/tls/private/tls.crt'
+          - '-tls-key=/etc/tls/private/tls.key'
+          - '-cookie-secret=mysecret'
+          - '-openshift-ca=/etc/pki/tls/cert.pem'
+          - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+        image: 'quay.io/openshift/origin-oauth-proxy:4.7.0'
+        name: oauth-proxy
+        ports:
+          - containerPort: 9091
+            name: oauth-proxy
+        volumeMounts:
+          - mountPath: /etc/tls/private
+            name: oauth-proxy-k8s-tls
+            readOnly: true
+      serviceAccountName: {{ openshift_oauth_proxy_name }}-oauth-proxy
+      volumes:
+      - name: oauth-proxy-k8s-tls
+        secret:
+          secretName: {{ openshift_oauth_proxy_name }}-oauth-proxy-k8s-tls

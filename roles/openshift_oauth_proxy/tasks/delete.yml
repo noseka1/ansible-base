@@ -1,0 +1,12 @@
+- name: Delete oauth-proxy {{ openshift_oauth_proxy_name }}
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ openshift_oauth_proxy_namespace }}'
+    state: absent
+  loop:
+    - oauth-proxy-clusterrolebinding.yaml
+    - oauth-proxy-clusterrole.yaml
+    - oauth-proxy-sa.yaml
+    - oauth-proxy-deploy.yaml
+    - oauth-proxy-svc.yaml
+    - oauth-proxy-route.yaml

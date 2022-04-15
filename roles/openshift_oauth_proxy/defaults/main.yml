@@ -1,0 +1,3 @@
+openshift_oauth_proxy_name: oauth-proxy
+openshift_oauth_proxy_namespace: oauth-proxy
+openshift_oauth_proxy_upstream: https://google.com

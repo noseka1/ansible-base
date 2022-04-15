@@ -5,7 +5,7 @@
     delete_kubernetes_objects:
       - api_version: v1
         kind: Namespace
-        name: rhacs-this-cluster
+        name: rhacs-seccluster
 
 - name: Obtain CSV name
   k8s_info:

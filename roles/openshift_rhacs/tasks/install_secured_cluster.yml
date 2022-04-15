@@ -1,6 +1,6 @@
-- name: Create rhacs-this-cluster namespace
+- name: Create rhacs-seccluster namespace
   k8s:
-    definition: "{{ lookup('template', 'rhacs-this-cluster-ns.yaml') }}"
+    definition: "{{ lookup('template', 'rhacs-seccluster-ns.yaml') }}"
 
 - import_tasks: get_rhacs_route.yml
 
@@ -21,7 +21,7 @@
 - fail:
   when: get_ping is failed
 
-- name: Try to generate init-bundle for this-cluster (returns HTTP 409 if bundle already exists)
+- name: Try to generate init-bundle for cluster (returns HTTP 409 if bundle already exists)
   uri:
     url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/cluster-init/init-bundles'
     method: POST
@@ -36,14 +36,14 @@
   register: generate_cert_result
 
 - name: Apply the generated init-bundle (skip if no new bundle generated in the previous step)
-  command: oc apply --namespace rhacs-this-cluster --filename -
+  command: oc apply --namespace rhacs-seccluster --filename -
   args:
     stdin: '{{ generate_cert_result.json.kubectlBundle | b64decode }}'
   when: generate_cert_result.status == 200
 
 - name: Deploy secured cluster services
   k8s:
-    definition: "{{ lookup('template', 'this-cluster-securedcluster.yaml') }}"
+    definition: "{{ lookup('template', 'stackrox-secured-cluster-services-securedcluster.yaml') }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for this-cluster to become healthy
   uri:

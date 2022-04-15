@@ -57,5 +57,5 @@
     - (get_clusters_result.json.clusters | selectattr("name", "equalto", "this-cluster") | length) == 1
     - (get_clusters_result.json.clusters | selectattr("name", "equalto", "this-cluster") | first).healthStatus != None
     - (get_clusters_result.json.clusters | selectattr("name", "equalto", "this-cluster") | first).healthStatus.overallHealthStatus == 'HEALTHY'
-  retries: 90
+  retries: 120
   delay: 10

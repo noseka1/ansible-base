@@ -1,0 +1,37 @@
+- name: Deploy smtp4dev
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ openshift_smtp4dev_namespace }}'
+  loop:
+    - smtp4dev-scc-role.yaml
+    - smtp4dev-scc-rolebinding.yaml
+    - smtp4dev-sa.yaml
+    - smtp4dev-deploy.yaml
+    - smtp4dev-svc.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Webhook Receiver deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ openshift_smtp4dev_name }}'
+    namespace: '{{ openshift_smtp4dev_namespace }}'
+  register: openshift_smtp4dev_deployment
+  until:
+    - openshift_smtp4dev_deployment.resources is defined
+    - openshift_smtp4dev_deployment.resources | length > 0
+    - openshift_smtp4dev_deployment.resources.0.status is defined
+    - openshift_smtp4dev_deployment.resources.0.status.conditions is defined
+    - openshift_smtp4dev_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (openshift_smtp4dev_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (openshift_smtp4dev_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Deploy oauth-proxy
+  import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: '{{ openshift_smtp4dev_name }}'
+    openshift_oauth_proxy_namespace: '{{ openshift_smtp4dev_namespace }}'
+    openshift_oauth_proxy_upstream: http://smtp4dev

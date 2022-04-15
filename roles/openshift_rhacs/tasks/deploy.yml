@@ -2,6 +2,8 @@
 
 - import_tasks: install_webhook_receiver.yml
 
+- import_tasks: install_mail_receiver.yml
+
 - import_tasks: enable_openshift_sso.yml
 
 - import_tasks: install_secured_cluster.yml

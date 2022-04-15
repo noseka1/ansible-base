@@ -1,0 +1,36 @@
+- name: Deploy smtp4dev email receiver
+  import_role:
+    name: openshift_smtp4dev
+    tasks_from: deploy.yml
+  vars:
+    openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
+
+- import_tasks: get_rhacs_route.yml
+
+- name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/notifiers'
+    method: POST
+    body_format: json
+    body:
+      email:
+        server: smtp4dev:25
+        username: dummy
+        password: dummy
+        disableTLS: true
+        startTLSAuthMethod: DISABLED
+        from: Red Hat Advanced Cluster Security
+        sender: acs-notifier@example.com
+      name: My Email Notifier
+      labelDefault: acs-alerts@example.com
+      type: email
+      uiEndpoint: https://{{ rhacs_route.resources.0.spec.host }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ -1, 200, 500 ]
+  register: rhacs_notifier_result
+  until: rhacs_notifier_result.status != -1
+  retries: 12
+  delay: 10

@@ -25,6 +25,7 @@
     name: '{{ odf_instance_name }}'
   register: odf_instance
   until:
+    - odf_instance.resources is defined
     - odf_instance.resources | length > 0
     - odf_instance.resources.0.status is defined
     - odf_instance.resources.0.status.conditions is defined

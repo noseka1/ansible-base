@@ -25,7 +25,7 @@ spec:
           - '-cookie-secret=mysecret'
           - '-openshift-ca=/etc/pki/tls/cert.pem'
           - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
-        image: 'quay.io/openshift/origin-oauth-proxy:4.7.0'
+        image: {{ openshift_oauth_proxy_image }}
         name: oauth-proxy
         ports:
           - containerPort: 9091

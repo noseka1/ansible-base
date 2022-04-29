@@ -1,4 +1,4 @@
-- name: Make operators hosted by OperatorHub.io available for installation via OLM
+- name: Make operators hosted on OperatorHub.io available for installation via OLM
   k8s:
     definition: "{{ lookup('url', item, split_lines='no') }}"
     namespace: openshift-marketplace

@@ -58,10 +58,13 @@
     namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
   register: sandboxed_containers_test_workload
   until:
-    - sandboxed_containers_test_workload.resources | length == 1
+    - sandboxed_containers_test_workload.resources is defined
+    - sandboxed_containers_test_workload.resources | length > 0
     - sandboxed_containers_test_workload.resources.0.status is defined
-    - sandboxed_containers_test_workload.resources.0.status.availableReplicas is defined
-    - sandboxed_containers_test_workload.resources.0.status.availableReplicas > 0
+    - sandboxed_containers_test_workload.resources.0.status.conditions is defined
+    - sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   failed_when: False
   retries: 60
   delay: 10

@@ -12,10 +12,12 @@
     namespace: '{{ contour_operator_namespace }}'
   register: contour_operator
   until:
+    - contour_operator.resources is defined
     - contour_operator.resources | length > 0
     - contour_operator.resources.0.status is defined
     - contour_operator.resources.0.status.conditions is defined
     - contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
     - (contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 60
   delay: 10
@@ -37,10 +39,12 @@
     namespace: '{{ contour_instance_namespace }}'
   register: contour_instance
   until:
+    - contour_instance.resources is defined
     - contour_instance.resources | length > 0
     - contour_instance.resources.0.status is defined
     - contour_instance.resources.0.status.conditions is defined
     - contour_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (contour_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
     - (contour_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 60
   delay: 10

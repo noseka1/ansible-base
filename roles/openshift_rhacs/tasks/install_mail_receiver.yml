@@ -29,8 +29,8 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: True
     validate_certs: False
-    status_code: [ -1, 200, 500 ]
+    status_code: [ -1, 200, 500, 503 ]
   register: rhacs_notifier_result
-  until: rhacs_notifier_result.status != -1
+  until: rhacs_notifier_result.status in [ 200, 500 ]
   retries: 12
   delay: 10

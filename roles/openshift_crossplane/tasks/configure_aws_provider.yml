@@ -1,0 +1,90 @@
+- name: Deploy AWS provider
+  k8s:
+    definition: "{{ lookup('template', 'aws-provider.yaml') }}"
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to deploy
+  k8s_info:
+    api_version: pkg.crossplane.io/v1
+    kind: Provider
+    name: aws
+    namespace: '{{ crossplane_namespace }}'
+  register: crossplane_aws_provider
+  until:
+    - crossplane_aws_provider.resources is defined
+    - crossplane_aws_provider.resources | length > 0
+    - crossplane_aws_provider.resources.0.status is defined
+    - crossplane_aws_provider.resources.0.status.conditions is defined
+    - crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | list | length > 0
+    - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status is defined
+    - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status == "True"
+  failed_when: False
+  retries: 60
+  delay: 10
+
+- fail:
+    msg: Variable crossplane_aws_access_key_id must be set
+  when: crossplane_aws_access_key_id is not defined
+
+- fail:
+    msg: Variable crossplane_aws_secret_acccess_key must be set
+  when: crossplane_aws_secret_acccess_key is not defined
+
+- name: Deploy AWS provider config
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - default-providerconfig.yaml
+    - aws-creds-secret.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider revision
+  k8s_info:
+    api_version: pkg.crossplane.io/v1
+    kind: Provider
+    name: aws
+    namespace: '{{ crossplane_namespace }}'
+  register: crossplane_aws_provider
+  until:
+    - crossplane_aws_provider.resources is defined
+    - crossplane_aws_provider.resources | length > 0
+    - crossplane_aws_provider.resources.0.status is defined
+    - crossplane_aws_provider.resources.0.status.currentRevision is defined
+  failed_when: False
+  retries: 60
+  delay: 10
+
+- set_fact:
+    crossplane_current_revision: '{{ crossplane_aws_provider.resources.0.status.currentRevision }}'
+
+- name: Relax the SCC for the AWS provider pod
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - aws-scc-role.yaml
+    - aws-scc-rolebinding.yaml
+  register: crossplane_aws_provider_scc
+
+- name: Remove the failing AWS provider pod
+  command: oc scale --replicas 0 deploy {{ crossplane_current_revision }}
+  when: crossplane_aws_provider_scc is changed
+
+- name: Start the AWS provider pod
+  command: oc scale --replicas 1 deploy {{ crossplane_current_revision }}
+  when: crossplane_aws_provider_scc is changed
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to become available
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    namespace: '{{ crossplane_namespace }}'
+    name: '{{ crossplane_current_revision }}'
+  register: crossplane_aws_provider
+  until:
+    - crossplane_aws_provider.resources is defined
+    - crossplane_aws_provider.resources | length > 0
+    - crossplane_aws_provider.resources.0.status is defined
+    - crossplane_aws_provider.resources.0.status.conditions is defined
+    - crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

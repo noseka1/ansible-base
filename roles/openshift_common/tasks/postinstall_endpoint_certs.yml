@@ -15,7 +15,18 @@
 - name: Configure API server certificate
   k8s:
     definition: "{{ lookup('template', 'cluster-apiserver-2.yml') }}"
+  register: openshift_common_api_cert
 
 - name: Configure wildcard apps certificate
   k8s:
     definition: "{{ lookup('template', 'default-ingresscontroller-2.yml') }}"
+  register: openshift_common_apps_cert
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+    stable_cluster_validate_certs: False
+  when: (openshift_common_api_cert) is changed or (openshift_common_apps_cert) is changed

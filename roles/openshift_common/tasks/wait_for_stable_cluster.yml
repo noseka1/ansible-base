@@ -7,11 +7,16 @@
     stable_cluster_retry_count: -1
     stable_cluster_job_complete: False
 
+- name: Set stable_cluster_validate_certs
+  set_fact:
+    stable_cluster_validate_certs: '{{ stable_cluster_validate_certs if stable_cluster_validate_certs is defined else True }}'
+
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
   include_tasks: wait_for_stable_cluster_subtasks.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes APIs to become available
-  command: oc version
+  command: >
+    oc version {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
   ignore_errors: True
   changed_when: False
   register: oc_version_result
@@ -28,7 +33,8 @@
     var: oc_version_result.stdout_lines
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift APIs to become available
-  command: oc api-resources
+  command: >
+    oc api-resources {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
   ignore_errors: True
   changed_when: False
   register: api_resources_result

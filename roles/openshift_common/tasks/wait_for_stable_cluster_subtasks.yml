@@ -11,6 +11,7 @@
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
+    validate_certs: '{{ stable_cluster_validate_certs }}'
   ignore_errors: True
   register: clusterversion_result
 

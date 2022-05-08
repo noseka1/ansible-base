@@ -2,7 +2,7 @@ apiVersion: platform.stackrox.io/v1alpha1
 kind: SecuredCluster
 metadata:
   name: stackrox-secured-cluster-services
-  namespace: rhacs-seccluster
+  namespace: stackrox-seccluster
 spec:
   admissionControl:
     # Enable preventive policy enforcement for object creations.

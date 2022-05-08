@@ -1,6 +1,6 @@
-- name: Create rhacs-seccluster namespace
+- name: Create stackrox-seccluster namespace
   k8s:
-    definition: "{{ lookup('template', 'rhacs-seccluster-ns.yaml') }}"
+    definition: "{{ lookup('template', 'stackrox-seccluster-ns.yaml') }}"
 
 - import_tasks: get_rhacs_route.yml
 
@@ -36,7 +36,7 @@
   register: generate_cert_result
 
 - name: Apply the generated init-bundle (skip if no new bundle generated in the previous step)
-  command: oc apply --namespace rhacs-seccluster --filename -
+  command: oc apply --namespace stackrox-seccluster --filename -
   args:
     stdin: '{{ generate_cert_result.json.kubectlBundle | b64decode }}'
   when: generate_cert_result.status == 200

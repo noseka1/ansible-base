@@ -3,5 +3,5 @@ rhacs_kustomizations:
   instance: github.com/noseka1/rhacs-kustomization/rhacs-instance/overlays/dev?ref=myauto
 rhacs_subscription_namespace: openshift-operators
 rhacs_subscription_name: rhacs-operator
-rhacs_instance_namespace: rhacs-central
+rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services

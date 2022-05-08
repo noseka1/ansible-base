@@ -6,10 +6,10 @@
       - api_version: platform.stackrox.io/v1alpha1
         kind: SecuredCluster
         name: stackrox-secured-cluster-services
-        namespace: rhacs-seccluster
+        namespace: stackrox-seccluster
       - api_version: v1
         kind: Namespace
-        name: rhacs-seccluster
+        name: stackrox-seccluster
 
 - name: Delete custom webhook receiver
   import_role:

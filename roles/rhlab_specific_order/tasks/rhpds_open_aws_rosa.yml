@@ -7,7 +7,6 @@
 - set_fact:
     otlc_service_raw:
       guid: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "babylon_guid") | first).value }}'
-      env0: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 000") | first).value }}'
       env1: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 001") | first).value }}'
       env2: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 002") | first).value }}'
       env3: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 003") | first).value }}'
@@ -27,6 +26,9 @@
       env17: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 017") | first).value }}'
       env18: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 018") | first).value }}'
       env19: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 019") | first).value }}'
+      env20: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 020") | first).value }}'
+      env21: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 021") | first).value }}'
+      env22: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 022") | first).value }}'
       target_host: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "targetHost") | first).value }}'
       aws_region: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "ec2region") | first).value }}'
 
@@ -34,11 +36,11 @@
     otlc_service_info:
       guid:                  '{{ otlc_service_raw.guid }}'
       top_level_domain:      '{{ otlc_service_raw.target_host | regex_replace("^bastion\.", "")}}'
-      aws_access_key_id:     '{{ otlc_service_raw.env4.split(":").1 | trim }}'
-      aws_secret_access_key: '{{ otlc_service_raw.env5.split(":").1 | trim }}'
-      ssh_username:          '{{ otlc_service_raw.env0.split(" ")[-1].split("@").0 | trim }}'
-      ssh_hostname:          '{{ otlc_service_raw.env0.split(" ")[-1].split("@").1 | trim }}'
-      ssh_password:          '{{ otlc_service_raw.env1.split(" ")[-1] | trim }}'
+      aws_access_key_id:     '{{ otlc_service_raw.env2.split(":").1 | trim }}'
+      aws_secret_access_key: '{{ otlc_service_raw.env3.split(":").1 | trim }}'
+      ssh_username:          '{{ otlc_service_raw.env21.split(" ")[-1].split("@").0 | trim }}'
+      ssh_hostname:          '{{ otlc_service_raw.env21.split(" ")[-1].split("@").1 | trim }}'
+      ssh_password:          '{{ otlc_service_raw.env22.split(" ")[-1] | trim }}'
       aws_region:            '{{ otlc_service_raw.aws_region }}'
 
 - debug:

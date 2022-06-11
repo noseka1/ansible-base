@@ -6,7 +6,7 @@
 
 - name: Deploy Kafka instance
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-single
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'

@@ -1,6 +1,6 @@
 - name: Delete two Kafka instances and Mirror Maker
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-mirror-maker
     state: absent
   loop:

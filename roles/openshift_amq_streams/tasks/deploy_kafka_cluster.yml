@@ -6,7 +6,7 @@
 
 - name: Deploy Kafka cluster
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-cluster
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent.yaml'

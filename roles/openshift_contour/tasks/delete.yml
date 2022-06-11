@@ -8,7 +8,7 @@
 
 - name: Delete Contour operator
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     state: absent
   loop:
     - '{{ contour_operator_url }}'

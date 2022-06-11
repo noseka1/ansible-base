@@ -1,6 +1,6 @@
 - name: Delete Kafka cluster
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-cluster
     state: absent
   loop:

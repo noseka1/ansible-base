@@ -4,7 +4,7 @@
 
 - name: Deploy Rook NFS operator
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
   loop:
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'

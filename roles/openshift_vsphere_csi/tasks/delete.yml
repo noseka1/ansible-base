@@ -1,6 +1,6 @@
 - name: Delete vSphere CSI driver
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     state: absent
   loop:
     - '{{ vsphere_csi_base_url }}//manifests/vanilla/vsphere-csi-driver.yaml'

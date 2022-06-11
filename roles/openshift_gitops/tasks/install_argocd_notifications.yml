@@ -5,7 +5,7 @@
 
 - name: Install Argo CD Notifications and its catalog
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: '{{ gitops_instance_namespace }}'
   loop:
     - '{{ argocd_notifications_manifests }}'

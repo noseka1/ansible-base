@@ -1,6 +1,6 @@
 - name: Deploy Contour operator
   k8s:
-    definition: "{{ lookup('url', item, split_lines='no') }}"
+    definition: "{{ lookup('url', item, split_lines=False) }}"
   loop:
     - '{{ contour_operator_url }}'
 

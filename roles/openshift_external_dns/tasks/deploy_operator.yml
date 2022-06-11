@@ -1,0 +1,23 @@
+- name: Create namespace {{ external_dns_instance_namespace }}
+  k8s:
+    definition: "{{ lookup('template', 'external-dns-ns.yaml') }}"
+
+- name: Grant the operator access to manage operand resources
+  k8s:
+    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/openshift/external-dns-operator/release-0.1/config/rbac/extra-roles.yaml', split_lines=False) }}"
+
+- name: Deploy External DNS operator
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - external-dns-operator-ns.yaml
+    - external-dns-operator-og.yaml
+    - external-dns-operator-sub.yaml
+
+- name: Wait for External Secrets operator to deploy
+  import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ external_dns_subscription_name }}'
+    subscription_namespace: '{{ external_dns_subscription_namespace }}'

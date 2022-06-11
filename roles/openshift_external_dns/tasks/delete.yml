@@ -1,0 +1,13 @@
+- name: Delete namespace {{ external_dns_instance_namespace }}
+  k8s:
+    definition: "{{ lookup('template', 'external-dns-ns.yaml') }}"
+    state: absent
+    wait: True
+
+- name: Delete External DNS operator
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+    wait: True
+  loop:
+    - external-dns-operator-ns.yaml

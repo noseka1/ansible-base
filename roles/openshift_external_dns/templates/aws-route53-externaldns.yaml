@@ -1,0 +1,22 @@
+apiVersion: externaldns.olm.openshift.io/v1alpha1
+kind: ExternalDNS
+metadata:
+  name: {{ external_dns_instance_name }}
+  namespace: {{ external_dns_instance_namespace }}
+spec:
+  provider:
+    aws:
+      credentials:
+        name: aws-access-key
+    type: AWS
+  source:
+    hostnameAnnotation: Ignore
+    fqdnTemplate:
+{% raw %}
+      - '{{.Name}}.example.com'
+{% endraw %}
+    type: OpenShiftRoute
+{% if external_dns_aws_zone | length > 0 %}
+  zones:
+    - {{ external_dns_aws_zone }}
+{% endif %}

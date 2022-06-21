@@ -1,0 +1,34 @@
+- name: Deploy Datadog Vector receiver
+  import_role:
+    name: openshift_datadog_vector
+    tasks_from: deploy.yml
+  vars:
+    openshift_datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+
+- import_tasks: get_rhacs_route.yml
+
+- name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/notifiers'
+    method: POST
+    body_format: json
+    body:
+      syslog:
+        localFacility: LOCAL0
+        tcpConfig:
+          hostname: vector
+          port: 9000
+          skipTlsVerify: false
+          useTls": false
+      name: My Syslog Receiver
+      type: syslog
+      uiEndpoint: https://{{ rhacs_route.resources.0.spec.host }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ -1, 200, 500, 503 ]
+  register: rhacs_notifier_result
+  until: rhacs_notifier_result.status in [ 200, 500 ]
+  retries: 12
+  delay: 10

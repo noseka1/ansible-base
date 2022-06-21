@@ -1,0 +1,4 @@
+openshift_datadog_vector_namespace: vector
+openshift_datadog_vector_deployment_name: vector
+
+openshift_datadog_vector_kustomization_base: github.com/vectordotdev/vector/distribution/kubernetes/vector-stateless-aggregator?ref=master

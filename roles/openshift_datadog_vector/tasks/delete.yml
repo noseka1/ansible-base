@@ -1,0 +1,9 @@
+- name: Delete Datadog Vector
+  import_role:
+    name: openshift_common
+    tasks_from: kustomize.yml
+  vars:
+    kustomize_name: vector
+    kustomize_files:
+      - kustomization.yaml
+    kustomize_op: delete

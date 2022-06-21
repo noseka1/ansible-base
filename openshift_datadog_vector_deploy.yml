@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: openshift_datadog_vector
+        tasks_from: deploy.yml

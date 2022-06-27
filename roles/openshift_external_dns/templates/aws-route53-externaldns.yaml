@@ -9,14 +9,15 @@ spec:
       credentials:
         name: aws-access-key
     type: AWS
+  domains:
+    - filterType: Include
+      matchType: Exact
+      name: {{ external_dns_domain_name }}
   source:
-    hostnameAnnotation: Ignore
-    fqdnTemplate:
-{% raw %}
-      - '{{.Name}}.example.com'
-{% endraw %}
     type: OpenShiftRoute
-{% if external_dns_aws_zone | length > 0 %}
-  zones:
-    - {{ external_dns_aws_zone }}
-{% endif %}
+    labelFilter:
+      matchLabels:
+        external-dns.mydomain.org/publish: "yes"
+    hostnameAnnotation: Allow
+    fqdnTemplate:
+      - {{ "'{{.Name}}." }}{{ external_dns_domain_name }}{{ "'" }}

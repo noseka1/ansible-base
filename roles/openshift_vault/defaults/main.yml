@@ -1,6 +1,0 @@
-vault_namespace: vault
-vault_name: vault
-vault_skip_verify: true
-
-# Pin the Helm Chart version
-#vault_chart_version: 0.9.0

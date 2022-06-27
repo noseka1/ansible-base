@@ -4,4 +4,4 @@
     - import_role:
         name: ansible-modules-hashivault
     - import_role:
-        name: openshift_vault
+        name: openshift_hashicorp_vault

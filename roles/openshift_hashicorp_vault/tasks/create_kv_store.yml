@@ -1,0 +1,9 @@
+- name: Enable generic secret kv store
+  hashivault_secret_engine:
+    name: kv
+    backend: kv
+    options: version=2
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'

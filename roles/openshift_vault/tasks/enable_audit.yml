@@ -1,9 +1,0 @@
-- name: Enable audit logs
-  hashivault_audit:
-    device_type: file
-    options:
-      file_path: /vault/audit/audit.log
-  environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'

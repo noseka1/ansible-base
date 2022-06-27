@@ -1,0 +1,11 @@
+- name: Obtain vault route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ hashicorp_vault_name }}'
+    namespace: '{{ hashicorp_vault_namespace }}'
+  register: hashicorp_vault_route
+
+- name: Set vault URL
+  set_fact:
+    hashicorp_vault_addr: 'https://{{ hashicorp_vault_route.resources.0.spec.host }}'

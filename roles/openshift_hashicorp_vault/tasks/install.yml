@@ -5,10 +5,10 @@
 
 - name: Deploy Vault Helm chart
   community.kubernetes.helm:
-    name: '{{ vault_name }}'
+    name: '{{ hashicorp_vault_name }}'
     chart_ref: hashicorp/vault
-    chart_version: '{{ vault_chart_version | default(omit) }}'
-    release_namespace: '{{ vault_namespace }}'
+    chart_version: '{{ hashicorp_vault_chart_version | default(omit) }}'
+    release_namespace: '{{ hashicorp_vault_namespace }}'
     create_namespace: True
     release_values:
       global:
@@ -30,11 +30,11 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
   uri:
-    url: '{{ vault_addr }}/v1/sys/health'
+    url: '{{ hashicorp_vault_addr }}/v1/sys/health'
     method: GET
-    validate_certs: '{{ not vault_skip_verify }}'
+    validate_certs: '{{ not hashicorp_vault_skip_verify }}'
     status_code: [ 200, 501, 503 ]
-  register: vault_health
-  until: (vault_health.status in [ 200, 501 ] or (vault_health.json is defined and vault_health.json.sealed))
+  register: hashicorp_vault_health
+  until: (hashicorp_vault_health.status in [ 200, 501 ] or (hashicorp_vault_health.json is defined and hashicorp_vault_health.json.sealed))
   retries: 60
   delay: 10

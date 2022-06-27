@@ -1,10 +1,10 @@
 - name: Grab vault's service account token
-  command: oc serviceaccounts get-token --namespace {{ vault_namespace }} {{ vault_name }}
+  command: oc serviceaccounts get-token --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}
   changed_when: False
   register: token_reviewer_jwt
 
 - name: Grab vault's service account CA
-  command: oc exec --namespace {{ vault_namespace }} {{ vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  command: oc exec --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
   changed_when: False
   register: kubernetes_ca_cert
 
@@ -18,9 +18,9 @@
     method_type: kubernetes
     state: enabled
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
 
 - name: Configure Kubernetes authentication
   hashivault_write:
@@ -31,9 +31,9 @@
       kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
       kubernetes_host: '{{ kubernetes_host.stdout }}'
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
 
 - name: Grant read access to all secrets to Kubernetes identities
   hashivault_policy:
@@ -44,9 +44,9 @@
         capabilities = [ "read", "list" ]
       }
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
 
 - name: Define kube role
   hashivault_write:
@@ -56,9 +56,9 @@
       bound_service_account_namespaces: '*'
       policies: kube_read
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
 
 - name: Define external_secrets role
   hashivault_write:
@@ -68,6 +68,6 @@
       bound_service_account_namespaces: external-secrets,default
       policies: kube_read
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'

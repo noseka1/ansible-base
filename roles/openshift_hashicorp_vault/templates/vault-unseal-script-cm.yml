@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ vault_name }}-unseal-script
-  namespace: {{ vault_namespace }}
+  name: {{ hashicorp_vault_name }}-unseal-script
+  namespace: {{ hashicorp_vault_namespace }}
 data:
   run.sh: |
     #!/bin/bash

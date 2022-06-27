@@ -3,14 +3,14 @@
     display_name: admin
     policies: admin
   changed_when: False
-  register: vault_token_result
+  register: hashicorp_vault_token_result
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
     VAULT_AUTHTYPE: userpass
     VAULT_USER: admin
     VAULT_PASSWORD: '{{ generic_user_password }}'
 
 - name: Save vault admin token
   set_fact:
-    vault_token: '{{ vault_token_result.token.auth.client_token }}'
+    hashicorp_vault_token: '{{ hashicorp_vault_token_result.token.auth.client_token }}'

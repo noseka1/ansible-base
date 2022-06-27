@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ vault_name }}-unseal
-  namespace: {{ vault_namespace }}
+  name: {{ hashicorp_vault_name }}-unseal
+  namespace: {{ hashicorp_vault_namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ vault_name }}-unseal
+      app: {{ hashicorp_vault_name }}-unseal
   template:
     metadata:
       labels:
-        app: {{ vault_name }}-unseal
+        app: {{ hashicorp_vault_name }}-unseal
     spec:
       containers:
       - image: quay.io/noseka1/toolbox-container:basic
         env:
         - name: VAULT_ADDR
-          value: {{ vault_addr }}
+          value: {{ hashicorp_vault_addr }}
         name: vault-unseal
         volumeMounts:
         - name: script
@@ -27,7 +27,7 @@ spec:
       volumes:
       - name: script
         configMap:
-          name: {{ vault_name }}-unseal-script
+          name: {{ hashicorp_vault_name }}-unseal-script
       - name: key
         secret:
-          secretName: {{ vault_name }}-unseal-key
+          secretName: {{ hashicorp_vault_name }}-unseal-key

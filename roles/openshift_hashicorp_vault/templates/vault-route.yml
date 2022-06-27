@@ -1,8 +1,8 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ vault_name }}
-  namespace: {{ vault_namespace }}
+  name: {{ hashicorp_vault_name }}
+  namespace: {{ hashicorp_vault_namespace }}
 spec:
   port:
     targetPort: 8200
@@ -11,4 +11,4 @@ spec:
     insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
-    name: {{ vault_name }}
+    name: {{ hashicorp_vault_name }}

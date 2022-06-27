@@ -1,0 +1,6 @@
+hashicorp_vault_namespace: vault
+hashicorp_vault_name: vault
+hashicorp_vault_skip_verify: true
+
+# Pin the Helm Chart version
+#hashicorp_vault_chart_version: 0.9.0

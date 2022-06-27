@@ -2,10 +2,10 @@
   hashivault_init:
     secret_shares: 1
     secret_threshold: 1
-  register: vault_init
+  register: hashicorp_vault_init
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
 
 - name: Save the unseal key in the Kubernetes secret for later use
   k8s:
@@ -26,9 +26,9 @@
     method_type: userpass
     state: enabled
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_init.root_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_init.root_token }}'
 
 - name: Create admin user authenticated by password
   hashivault_userpass:
@@ -36,9 +36,9 @@
     pass: '{{ generic_user_password }}'
     policies: admin
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_init.root_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_init.root_token }}'
 
 - name: Grant full access to the admin user
   hashivault_policy:
@@ -49,6 +49,6 @@
         capabilities = ["create", "read", "update", "delete", "list", "sudo"]
       }
   environment:
-    VAULT_ADDR: '{{ vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ vault_skip_verify }}'
-    VAULT_TOKEN: '{{ vault_init.root_token }}'
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_init.root_token }}'

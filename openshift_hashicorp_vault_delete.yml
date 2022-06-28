@@ -2,7 +2,5 @@
   gather_facts: False
   tasks:
     - import_role:
-        name: ansible-modules-hashivault
-    - import_role:
         name: openshift_hashicorp_vault
-        tasks_from: deploy.yml
+        tasks_from: delete.yml

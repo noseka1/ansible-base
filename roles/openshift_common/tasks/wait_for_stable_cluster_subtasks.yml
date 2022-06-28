@@ -19,7 +19,7 @@
   set_fact:
     stable_cluster_job_complete: True
   when:
-    - clusterversion_result is not failed
+    - clusterversion_result.resources is defined
     - clusterversion_result.resources | length > 0
     - clusterversion_result.resources.0.status is defined
     - clusterversion_result.resources.0.status.conditions is defined

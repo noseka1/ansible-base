@@ -29,6 +29,7 @@
     namespace: '{{ metallb_instance_namespace }}'
   register: metallb_instance
   until:
+    - metallb_instance.resources is defined
     - metallb_instance.resources | length > 0
     - metallb_instance.resources.0.status is defined
     - metallb_instance.resources.0.status.conditions is defined

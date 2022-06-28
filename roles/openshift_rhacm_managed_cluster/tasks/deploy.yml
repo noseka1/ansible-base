@@ -18,6 +18,7 @@
     name: '{{ rhacm_managed_cluster.cluster_name }}'
   register: managed_cluster
   until:
+    - managed_cluster.resources is defined
     - managed_cluster.resources | length > 0
     - managed_cluster.resources.0.status is defined
     - managed_cluster.resources.0.status.conditions is defined

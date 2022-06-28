@@ -1,0 +1,13 @@
+- name: Delete AWS provider config
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    state: absent
+    wait: True
+  loop:
+    - default-providerconfig.yaml
+
+- name: Delete AWS provider
+  k8s:
+    definition: "{{ lookup('template', 'aws-provider.yaml') }}"
+    state: absent
+    wait: True

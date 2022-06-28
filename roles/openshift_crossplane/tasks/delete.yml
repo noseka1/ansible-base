@@ -1,0 +1,3 @@
+- import_tasks: delete_aws_provider.yml
+
+- import_tasks: delete_controller.yml

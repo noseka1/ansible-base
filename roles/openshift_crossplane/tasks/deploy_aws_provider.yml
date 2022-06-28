@@ -22,11 +22,23 @@
 
 - fail:
     msg: Variable crossplane_aws_access_key_id must be set
-  when: crossplane_aws_access_key_id is not defined
+  when: crossplane_aws_access_key_id | length == 0
 
 - fail:
     msg: Variable crossplane_aws_secret_acccess_key must be set
-  when: crossplane_aws_secret_acccess_key is not defined
+  when: crossplane_aws_secret_acccess_key | length == 0
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.aws.crossplane.io CRD to become available
+  k8s_info:
+    api_version: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    name: providerconfigs.aws.crossplane.io
+  register: crossplane_providerconfigs_aws_result
+  until:
+    - crossplane_providerconfigs_aws_result.resources is defined
+    - crossplane_providerconfigs_aws_result.resources | length > 0
+  retries: 60
+  delay: 10
 
 - name: Deploy AWS provider config
   k8s:
@@ -62,11 +74,11 @@
   register: crossplane_aws_provider_scc
 
 - name: Remove the failing AWS provider pod
-  command: oc scale --replicas 0 deploy {{ crossplane_current_revision }}
+  command: oc scale --namespace {{ crossplane_namespace }} --replicas 0 deploy {{ crossplane_current_revision }}
   when: crossplane_aws_provider_scc is changed
 
 - name: Start the AWS provider pod
-  command: oc scale --replicas 1 deploy {{ crossplane_current_revision }}
+  command: oc scale --namespace {{ crossplane_namespace }} --replicas 1 deploy {{ crossplane_current_revision }}
   when: crossplane_aws_provider_scc is changed
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to become available

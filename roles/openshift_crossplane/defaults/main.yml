@@ -1,2 +1,6 @@
 crossplane_namespace: crossplane-system
 crossplane_name: crossplane
+
+crossplane_aws_provider_version: v0.28.1
+crossplane_aws_access_key_id: ''
+crossplane_aws_secret_acccess_key: ''

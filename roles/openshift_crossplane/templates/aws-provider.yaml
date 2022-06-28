@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: aws
 spec:
-  package: docker.io/crossplane/provider-aws:v0.26.1
+  package: docker.io/crossplane/provider-aws:{{ crossplane_aws_provider_version }}

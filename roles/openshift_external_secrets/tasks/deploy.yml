@@ -8,4 +8,6 @@
 - import_tasks: aws_backend.yaml
   when: external_secrets_secrets_manager_type == 'aws'
 
+- import_tasks: check_secret.yml
+
 - import_tasks: deploy_bootstrap_token.yml

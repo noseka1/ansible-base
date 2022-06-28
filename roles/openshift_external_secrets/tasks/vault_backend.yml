@@ -8,19 +8,4 @@
 
 - name: Create an external secret for testing
   k8s:
-    definition: "{{ lookup('template', 'test-secret.yml') }}"
-
-- name: Retrieve the respective secret created by the operator
-  k8s_info:
-    api_version: v1
-    kind: Secret
-    name: '{{ external_secrets_instance_name }}-test'
-    namespace: '{{ external_secrets_instance_namespace }}'
-  register: test_secret
-  until: test_secret.resources | length > 0
-  retries: 120
-  delay: 1
-
-- name: Fail if the secret value is not correct
-  fail:
-  when: (test_secret.resources.0.data.testkey | b64decode) != 'testvalue'
+    definition: "{{ lookup('template', 'external-secrets-test-secret-vault.yml') }}"

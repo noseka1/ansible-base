@@ -13,10 +13,10 @@ external_secrets_oidc_enabled: false
 
 # Secrets manager
 # vault - hashicorp vault
-# aws_sm - aws secrets manager
+# aws - aws secrets manager
 external_secrets_secrets_manager_type: vault
 
-external_secrets_secretstore_aws_region: aws_region
-external_secrets_secretstore_aws_access_key: aws_access_key
-external_secrets_secretstore_aws_secret_key: aws_secret_key
-external_secrets_secretstore_aws_role: 'arn:aws:iam::00000000000:role/talk-to-secret-manager'
+external_secrets_aws_region: ''
+external_secrets_aws_access_key_id: ''
+external_secrets_aws_secret_access_key: ''
+external_secrets_aws_role: 'arn:aws:iam::00000000000:role/talk-to-secret-manager'

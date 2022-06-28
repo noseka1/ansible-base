@@ -17,6 +17,41 @@
     - externalsecrets_result.resources.0.status is defined
     - externalsecrets_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Deployed') | list | length > 0
     - (externalsecrets_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Deployed') | first).status == 'True'
-  failed_when: False
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ external_secrets_instance_name }}-webhook deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ external_secrets_instance_name }}-webhook'
+    namespace: '{{ external_secrets_instance_namespace }}'
+  register: external_secrets_webhook
+  until:
+    - external_secrets_webhook.resources is defined
+    - external_secrets_webhook.resources | length > 0
+    - external_secrets_webhook.resources.0.status is defined
+    - external_secrets_webhook.resources.0.status.conditions is defined
+    - external_secrets_webhook.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (external_secrets_webhook.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (external_secrets_webhook.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ external_secrets_instance_name }}-cert-controller deployment to complete
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    name: '{{ external_secrets_instance_name }}-cert-controller'
+    namespace: '{{ external_secrets_instance_namespace }}'
+  register: external_secrets_cert_controller
+  until:
+    - external_secrets_cert_controller.resources is defined
+    - external_secrets_cert_controller.resources | length > 0
+    - external_secrets_cert_controller.resources.0.status is defined
+    - external_secrets_cert_controller.resources.0.status.conditions is defined
+    - external_secrets_cert_controller.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (external_secrets_cert_controller.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (external_secrets_cert_controller.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 60
   delay: 10

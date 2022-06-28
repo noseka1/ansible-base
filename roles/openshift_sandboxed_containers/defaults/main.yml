@@ -1,5 +1,5 @@
 sandboxed_containers_kustomizations:
-  operator: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/operator/overlays/preview-1.1?ref=main
+  operator: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/operator/overlays/stable-1.2?ref=main
   instance: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/instance/base?ref=main
   workload: github.com/noseka1/gitops-catalog/openshift-sandboxed-containers/example-workload/base?ref=main
 

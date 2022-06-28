@@ -8,18 +8,7 @@
 
 - import_tasks: retrieve_pull_secret.yml
 
-- name: Delete Observability component
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: rhacm_observability
-    kustomize_files:
-      - kustomization.yaml
-      - pull-secret-secret.yaml
-      - thanos-object-storage-secret.yaml
-    kustomize_op: delete
-  when: not rhacm_observability_use_existing_s
+- import_tasks: set_thanos_secret.yml
 
 - name: Delete Observability component
   import_role:
@@ -30,9 +19,8 @@
     kustomize_files:
       - kustomization.yaml
       - pull-secret-secret.yaml
-      - thanos-object-storage-secret-existing-s3.yaml
+      - '{{ rhacm_thanos_thanos_s3_secret }}'
     kustomize_op: delete
-  when: rhacm_observability_use_existing_s3
 
 - import_role:
     name: openshift_minio

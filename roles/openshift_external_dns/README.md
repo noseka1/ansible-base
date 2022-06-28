@@ -13,6 +13,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: myapp.myzonedomain.example.com
     external-dns.alpha.kubernetes.io/target: router-default.apps.myclusterdomain.example.com
+    external-dns.alpha.kubernetes.io/ttl: 300s
   labels:
     external-dns.mydomain.org/publish: "yes"
   name: myapp
@@ -30,6 +31,7 @@ kind: Route
 metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: router-default.apps.myclusterdomain.example.com
+    external-dns.alpha.kubernetes.io/ttl: 300s
   labels:
     external-dns.mydomain.org/publish: "yes"
   name: myapp-2

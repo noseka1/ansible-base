@@ -24,6 +24,5 @@
     - cis_scan_result.resources.0.status is defined
     - cis_scan_result.resources.0.status.phase is defined
     - cis_scan_result.resources.0.status.phase == 'DONE'
-  failed_when: False
   retries: 60
   delay: 10

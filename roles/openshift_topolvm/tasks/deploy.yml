@@ -35,7 +35,6 @@
     - topolvm_cluster.resources.0.status.nodeStorageState | length > 0
     - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses is defined
     - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses | length  > 0
-  failed_when: False
   retries: 60
   delay: 10
 

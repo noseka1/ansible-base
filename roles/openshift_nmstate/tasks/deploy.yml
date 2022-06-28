@@ -19,6 +19,5 @@
   register: nns_result
   until:
     - nns_result.resources | length > 0
-  failed_when: False
   retries: 60
   delay: 10

@@ -29,6 +29,5 @@
     - (quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == 'True'
     - quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RolloutBlocked') | list | length > 0
     - (quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RolloutBlocked') | first).status == 'False'
-  failed_when: False
   retries: 60
   delay: 10

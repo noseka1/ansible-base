@@ -17,16 +17,12 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes APIs to become available
   command: >
     oc version {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
-  ignore_errors: True
   changed_when: False
   register: oc_version_result
   until:
     - oc_version_result is not failed
   retries: 30
   delay: 10
-
-- fail:
-  when: oc_version_result is failed
 
 - name: Show cluster info
   debug:
@@ -35,13 +31,9 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift APIs to become available
   command: >
     oc api-resources {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
-  ignore_errors: True
   changed_when: False
   register: api_resources_result
   until:
     - api_resources_result is not failed
   retries: 60
   delay: 10
-
-- fail:
-  when: api_resources_result is failed

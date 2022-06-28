@@ -17,7 +17,6 @@
     - crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | list | length > 0
     - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status is defined
     - (crossplane_aws_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status == "True"
-  failed_when: False
   retries: 60
   delay: 10
 
@@ -48,7 +47,6 @@
     - crossplane_aws_provider.resources | length > 0
     - crossplane_aws_provider.resources.0.status is defined
     - crossplane_aws_provider.resources.0.status.currentRevision is defined
-  failed_when: False
   retries: 60
   delay: 10
 

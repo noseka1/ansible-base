@@ -16,12 +16,8 @@
      - cluster-kataconfig-kataconfig.yaml
   register: sandboxed_containers_kataconfig
   until: sandboxed_containers_kataconfig is succeeded
-  failed_when: False
   retries: 10
   delay: 10
-
-- fail:
-  when: sandboxed_containers_kataconfig is failed
 
 - import_role:
     name: openshift_common
@@ -43,7 +39,6 @@
     - sandboxed_containers_kataconfig.resources.0.status.installationStatus is defined
     - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress is defined
     - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress == 'false'
-  failed_when: False
   retries: 60
   delay: 10
 
@@ -65,6 +60,5 @@
     - sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
     - (sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
     - (sandboxed_containers_test_workload.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  failed_when: False
   retries: 60
   delay: 10

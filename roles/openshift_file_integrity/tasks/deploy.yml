@@ -24,7 +24,6 @@
     - fileintegrity_result.resources.0.status is defined
     - fileintegrity_result.resources.0.status.phase is defined
     - fileintegrity_result.resources.0.status.phase == 'Active'
-  failed_when: False
   retries: 60
   delay: 10
 
@@ -36,6 +35,5 @@
   register: fileintegritynodestatus_result
   until:
     - fileintegritynodestatus_result.resources | length > 0
-  failed_when: False
   retries: 60
   delay: 10

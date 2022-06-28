@@ -20,15 +20,11 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: True
     validate_certs: False
-  ignore_errors: True
   register: get_ping
   until:
     - get_ping.status == 200
   retries: 30
   delay: 10
-
-- fail:
-  when: get_ping is failed
 
 - name: Try to generate init-bundle for this-cluster (returns HTTP 409 if bundle already exists)
   uri:

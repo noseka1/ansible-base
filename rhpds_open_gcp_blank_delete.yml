@@ -1,0 +1,7 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - import_role:
+        name: otlc_generic_delete
+      vars:
+        otlc_service_desc: '{{ rhpds_labs.open_gcp_blank }}'

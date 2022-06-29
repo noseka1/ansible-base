@@ -314,3 +314,31 @@ rhpds_labs:
       dialog_expiration: "7"
       dialog_notes: "Customer Activity - Proof of concept"
       dialog_region: azure_eastus
+
+  # Latest OCP version, 3 masters, 3 workers, Let's Encrypt TLS certs
+  open_azure_aro:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000001034'
+    template_name: 'Azure with ARO Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "3"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: azure_eastus
+      dialog_salesforce: "None"
+
+  open_gcp_blank:
+    api_host: rhpds.redhat.com
+    catalog_id: '30000000000080'
+    catalog_name: 'Red Hat Open Environments'
+    template_id: '30000000001045'
+    template_name: 'GCP Blank Open Environment'
+    order_options:
+      dialog_check: t
+      dialog_environment: PROD
+      dialog_expiration: "2"
+      dialog_notes: "Customer Activity - Proof of concept"
+      dialog_region: gcp_us_east4

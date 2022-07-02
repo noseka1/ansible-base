@@ -18,6 +18,3 @@ spec:
           in_cluster_config = true
         }
       }
-      provider "aws" {
-        shared_credentials_file = "aws-creds.ini"
-      }

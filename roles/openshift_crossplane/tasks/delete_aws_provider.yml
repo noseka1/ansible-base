@@ -4,7 +4,7 @@
     state: absent
     wait: True
   loop:
-    - default-providerconfig.yaml
+    - default-providerconfig-aws.yaml
 
 - name: Delete AWS provider
   k8s:

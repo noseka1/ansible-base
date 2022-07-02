@@ -1,0 +1,62 @@
+- name: Deploy Terraform provider
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - terraform-controllerconfig.yaml
+    - terraform-provider.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider to deploy
+  k8s_info:
+    api_version: pkg.crossplane.io/v1
+    kind: Provider
+    name: terraform
+    namespace: '{{ crossplane_namespace }}'
+  register: crossplane_terraform_provider
+  until:
+    - crossplane_terraform_provider.resources is defined
+    - crossplane_terraform_provider.resources | length > 0
+    - crossplane_terraform_provider.resources.0.status is defined
+    - crossplane_terraform_provider.resources.0.status.conditions is defined
+    - crossplane_terraform_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | list | length > 0
+    - (crossplane_terraform_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status is defined
+    - (crossplane_terraform_provider.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.tf.crossplane.io CRD to become available
+  k8s_info:
+    api_version: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    name: providerconfigs.tf.crossplane.io
+  register: crossplane_providerconfigs_terraform_result
+  until:
+    - crossplane_providerconfigs_terraform_result.resources is defined
+    - crossplane_providerconfigs_terraform_result.resources | length > 0
+  retries: 60
+  delay: 10
+
+- name: Deploy Terraform provider config
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - default-providerconfig-terraform.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider revision
+  k8s_info:
+    api_version: pkg.crossplane.io/v1
+    kind: Provider
+    name: terraform
+    namespace: '{{ crossplane_namespace }}'
+  register: crossplane_terraform_provider
+  until:
+    - crossplane_terraform_provider.resources is defined
+    - crossplane_terraform_provider.resources | length > 0
+    - crossplane_terraform_provider.resources.0.status is defined
+    - crossplane_terraform_provider.resources.0.status.currentRevision is defined
+  retries: 60
+  delay: 10
+
+- set_fact:
+    crossplane_current_provider_revision: '{{ crossplane_terraform_provider.resources.0.status.currentRevision }}'
+
+- import_tasks: relax_provider_scc.yml

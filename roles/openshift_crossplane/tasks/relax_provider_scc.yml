@@ -1,0 +1,33 @@
+- name: Relax the SCC for the provider {{ crossplane_current_provider_revision }}
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - provider-scc-role.yaml
+    - provider-scc-rolebinding.yaml
+  register: crossplane_provider_scc
+
+- name: Remove the failing {{ crossplane_current_provider_revision }} provider pod
+  command: oc scale --namespace {{ crossplane_namespace }} --replicas 0 deploy {{ crossplane_current_provider_revision }}
+  when: crossplane_provider_scc is changed
+
+- name: Start the {{ crossplane_current_provider_revision }} provider pod
+  command: oc scale --namespace {{ crossplane_namespace }} --replicas 1 deploy {{ crossplane_current_provider_revision }}
+  when: crossplane_provider_scc is changed
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ crossplane_current_provider_revision }} provider to become available
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    namespace: '{{ crossplane_namespace }}'
+    name: '{{ crossplane_current_provider_revision }}'
+  register: crossplane_provider_result
+  until:
+    - crossplane_provider_result.resources is defined
+    - crossplane_provider_result.resources | length > 0
+    - crossplane_provider_result.resources.0.status is defined
+    - crossplane_provider_result.resources.0.status.conditions is defined
+    - crossplane_provider_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (crossplane_provider_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
+    - (crossplane_provider_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 60
+  delay: 10

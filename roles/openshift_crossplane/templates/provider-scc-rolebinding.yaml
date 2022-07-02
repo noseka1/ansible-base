@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ crossplane_current_revision }}-scc
+  name: {{ crossplane_current_provider_revision }}-scc
   namespace: {{ crossplane_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ crossplane_current_revision }}-scc
+  name: {{ crossplane_current_provider_revision }}-scc
 subjects:
 - kind: ServiceAccount
-  name: {{ crossplane_current_revision }}
+  name: {{ crossplane_current_provider_revision }}

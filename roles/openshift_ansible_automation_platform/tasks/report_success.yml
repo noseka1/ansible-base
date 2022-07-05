@@ -15,7 +15,7 @@
     validate_certs: False
   register: result
   until: result.status == 200
-  retries: 12
+  retries: 30
   delay: 10
 
 - debug:

@@ -3,7 +3,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: {{ item }}
-  name: 50-rhel-entitlements-{{ item }}
+  name: 50-{{ item }}-rhel-entitlements
 spec:
   config:
     ignition:

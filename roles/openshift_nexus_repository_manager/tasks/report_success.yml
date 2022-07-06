@@ -1,0 +1,2 @@
+- debug:
+    msg: Nexus repository manager installed successfully. You can browse to https://{{ nexus_repository_manager_route.resources.0.spec.host }}

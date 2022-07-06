@@ -1,0 +1,85 @@
+- name: Create Nexus repository manager namespace
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+  loop:
+    - nexus-repository-manager-ns.yaml
+    - nexus-repository-manager-scc-rolebinding.yaml
+    - nexus-repository-manager-scc-role.yaml
+
+- name: Add Nexus chart repo
+  community.kubernetes.helm.helm_repository:
+    name: sonatype
+    repo_url: '{{ nexus_repository_manager_helm_repo }}'
+
+- name: Deploy Nexus repository manager
+  community.kubernetes.helm:
+    name: '{{ nexus_repository_manager_name }}'
+    chart_ref: sonatype/nexus-repository-manager
+    chart_version: '{{ nexus_repository_manager_version | default(omit) }}'
+    release_namespace: '{{ nexus_repository_manager_namespace }}'
+    release_values:
+      service:
+        name: '{{ nexus_repository_manager_name }}'
+        portName: nexus-ui
+      route:
+        enabled: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ nexus_repository_manager_name }}'
+    wait_for_deployment_namespace: '{{ nexus_repository_manager_namespace }}'
+
+- name: Retrieve Nexus repository manager pod
+  k8s_info:
+    api_version: v1
+    kind: pod
+    label_selectors:
+      - app.kubernetes.io/name={{ nexus_repository_manager_name }}
+  register: nexus_repository_manager_pod
+
+- name: Retrieve initial admin password
+  community.kubernetes.k8s_exec:
+    namespace: '{{ nexus_repository_manager_namespace }}'
+    pod: '{{ nexus_repository_manager_pod.resources.0.metadata.name }}'
+    command: cat /nexus-data/admin.password
+  changed_when: False
+  register: nexus_repository_manager_initial_password
+
+- name: Obtain Nexus repository manager route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: docker
+    namespace: '{{ nexus_repository_manager_namespace }}'
+  register: nexus_repository_manager_route
+
+- name: Change the initial admin password
+  uri:
+    url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/security/users/admin/change-password'
+    user: admin
+    password: '{{ nexus_repository_manager_initial_password.stdout }}'
+    method: PUT
+    headers:
+      Content-Type: text/plain
+    body: '{{ generic_user_password }}'
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 204, 401 ]
+  register: nexus_repository_manager_password_update
+
+- name: Disable anonymous access
+  uri:
+    url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/security/anonymous'
+    user: admin
+    password: '{{ generic_user_password }}'
+    method: PUT
+    body_format: json
+    body:
+      enabled: false
+    force_basic_auth: True
+    validate_certs: False
+    status_code: 200
+
+- import_tasks: report_success.yml

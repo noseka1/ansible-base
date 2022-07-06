@@ -1,0 +1,4 @@
+nexus_repository_manager_helm_repo: https://sonatype.github.io/helm3-charts
+
+nexus_repository_manager_namespace: nexus-repository-manager
+nexus_repository_manager_name: nexus-repository-manager

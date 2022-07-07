@@ -1,0 +1,34 @@
+- name: Create Artifactory OSS namespace
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+  loop:
+    - artifactory-oss-ns.yaml
+    - artifactory-oss-scc-rolebinding.yaml
+    - artifactory-oss-scc-role.yaml
+
+- name: Add JFrog chart repo
+  community.kubernetes.helm.helm_repository:
+    name: jfrog
+    repo_url: '{{ artifactory_oss_helm_repo }}'
+
+- name: Deploy Artifactory OSS
+  community.kubernetes.helm:
+    name: '{{ artifactory_oss_name }}'
+    chart_ref: jfrog/artifactory-oss
+    chart_version: '{{ artifactory_oss_version | default(omit) }}'
+    release_namespace: '{{ artifactory_oss_namespace }}'
+    release_values:
+      artifactory:
+        nginx:
+          enabled: True
+          service:
+            type: ClusterIP
+        artifactory:
+          postgresql:
+            postgresqlPassword: '{{ generic_user_password }}'
+
+- name: Expose Artifactory OSS
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - artifactory-oss-route.yaml

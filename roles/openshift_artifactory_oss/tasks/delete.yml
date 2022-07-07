@@ -1,0 +1,14 @@
+- name: Delete Artifactory OSS
+  community.kubernetes.helm:
+    name: '{{ artifactory_oss_name }}'
+    release_namespace: '{{ artifactory_oss_namespace }}'
+    release_state: absent
+    wait: True
+
+- name: Delete Artifactory OSS namespace
+  k8s:
+    definition: '{{ lookup("template", item) }}'
+    state: absent
+    wait: True
+  loop:
+    - artifactory-oss-ns.yaml

@@ -1,17 +1,18 @@
 roles:
+
+# Requires rpm package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
-  version: 4.6.2
-  # requires rpm package python3-hvac
+  version: 4.7.0
 
 - name: devnullcake.redhat-subscription
   src: https://github.com/noseka1/ansible-role-redhat-subscription.git
   version: master
 
+# Requires EPEL enabled
 - name: mprahl.lets-encrypt-route-53
   src: https://github.com/mprahl/ansible-role-lets-encrypt-route-53.git
   version: v5.1.1
-  # requires EPEL enabled
 
 collections:
 - name: community.kubernetes

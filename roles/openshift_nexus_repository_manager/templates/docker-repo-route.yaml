@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ nexus_repository_manager_docker_repo_name }}
+  namespace: {{ nexus_repository_manager_namespace }}
+spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: {{ nexus_repository_manager_docker_repo_name }}

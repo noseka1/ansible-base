@@ -1,0 +1,52 @@
+- name: Retrieve  Docker repository if it exists
+  uri:
+    url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/repositories/docker/hosted/{{ nexus_repository_manager_docker_repo_name }}'
+    user: admin
+    password: '{{ generic_user_password }}'
+    method: GET
+    force_basic_auth: True
+    validate_certs: False
+    status_code: [ 200, 404 ]
+  register: nexus_repository_manager_docker_repo_result
+
+- name: Create Docker repository
+  uri:
+    url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/repositories/docker/hosted'
+    user: admin
+    password: '{{ generic_user_password }}'
+    method: POST
+    body_format: json
+    body:
+      name: '{{ nexus_repository_manager_docker_repo_name }}'
+      online: true
+      storage:
+        blobStoreName: default
+        strictContentTypeValidation: true
+        writePolicy: ALLOW
+      cleanup:
+        policyNames: []
+      component:
+        proprietaryComponents: false
+      docker:
+        v1Enabled: false
+        forceBasicAuth: true
+        httpPort: 8082
+    force_basic_auth: True
+    validate_certs: False
+    status_code: 201
+  when: nexus_repository_manager_docker_repo_result.status != 200
+
+- name: Expose Docker repository
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+  loop:
+    - docker-repo-svc.yaml
+    - docker-repo-route.yaml
+
+- name: Obtain Docker repository route
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ nexus_repository_manager_docker_repo_name }}'
+    namespace: '{{ nexus_repository_manager_namespace }}'
+  register: nexus_repository_manager_docker_repo_route

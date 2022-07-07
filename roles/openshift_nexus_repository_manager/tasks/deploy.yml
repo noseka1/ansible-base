@@ -82,4 +82,6 @@
     validate_certs: False
     status_code: 200
 
+- import_tasks: create_repo.yml
+
 - import_tasks: report_success.yml

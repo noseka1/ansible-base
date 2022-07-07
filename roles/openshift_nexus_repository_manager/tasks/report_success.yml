@@ -1,2 +1,7 @@
-- debug:
-    msg: Nexus repository manager installed successfully. You can browse to https://{{ nexus_repository_manager_route.resources.0.spec.host }}
+- set_fact:
+    msg: |
+      Nexus repository manager installed successfully. You can browse to https://{{ nexus_repository_manager_route.resources.0.spec.host }}
+
+      A container image registry is avaialable at: {{ nexus_repository_manager_docker_repo_route.resources.0.spec.host }}
+
+- debug: msg="{{ msg.split('\n') }}"

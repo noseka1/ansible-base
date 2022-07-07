@@ -2,15 +2,12 @@
   command: oc apply --kustomize {{ item }}
   loop: '{{ docker_registry_kustomizations }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry deployment to complete
-  k8s_info:
-    api_version: extensions/v1beta1
-    kind: Deployment
-    namespace: '{{ docker_registry_namespace }}'
-  register: docker_registry_deployment
-  until: (docker_registry_deployment.resources.0.status is defined) and (docker_registry_deployment.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: 60
-  delay: 10
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ docker_registry_name }}'
+    wait_for_deployment_namespace: '{{ docker_registry_namespace }}'
 
 - name: Obtain Docker registry route
   k8s_info:

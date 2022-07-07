@@ -4,23 +4,12 @@
   loop:
     - '{{ contour_operator_url }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ contour_operator_name }} deployment to complete
-  k8s_info:
-    api_version: apps/v1
-    kind: Deployment
-    name: '{{ contour_operator_name }}'
-    namespace: '{{ contour_operator_namespace }}'
-  register: contour_operator
-  until:
-    - contour_operator.resources is defined
-    - contour_operator.resources | length > 0
-    - contour_operator.resources.0.status is defined
-    - contour_operator.resources.0.status.conditions is defined
-    - contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status is defined
-    - (contour_operator.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: 60
-  delay: 10
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ contour_operator_name }}'
+    wait_for_deployment_namespace: '{{ contour_operator_namespace }}'
 
 - name: Deploy Contour instance
   k8s:

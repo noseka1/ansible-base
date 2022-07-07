@@ -3,7 +3,7 @@
   loop: '{{ keycloak_kustomizations }}'
 
 - name: Wait for Keycloak to come up
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: keycloak.org/v1alpha1
     kind: Keycloak
     name: keycloak
@@ -14,7 +14,7 @@
   delay: 10
 
 - name: Obtain credential-keycloak secret
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
     name: credential-keycloak
@@ -22,7 +22,7 @@
   register: keycloak_secret
 
 - name: Obtain Keycloak route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: keycloak

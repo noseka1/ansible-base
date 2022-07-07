@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operator.open-cluster-management.io/v1
     kind: MultiClusterHub
     namespace: '{{ rhacm_instance_namespace }}'
@@ -29,7 +29,7 @@
   delay: 10
 
 - name: Wait until managedcluster local-cluster object is available
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster
     name: local-cluster
@@ -41,7 +41,7 @@
   delay: 10
 
 - name: Check if namespace openshift-gitops exists
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: Namespace
     name: openshift-gitops

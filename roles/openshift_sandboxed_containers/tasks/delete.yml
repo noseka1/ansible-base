@@ -2,7 +2,7 @@
   command: oc delete --kustomize {{ sandboxed_containers_kustomizations.workload }}
 
 - name: Delete OpenShift sandboxed containers instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   register: sandboxed_containers_kataconfig

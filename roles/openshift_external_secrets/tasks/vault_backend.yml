@@ -3,9 +3,9 @@
     tasks_from: get_vault_route.yml
 
 - name: Create HashiCorp Vault backend
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'vault-secretstore.yaml') }}"
 
 - name: Create an external secret for testing
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'external-secrets-test-secret-vault.yml') }}"

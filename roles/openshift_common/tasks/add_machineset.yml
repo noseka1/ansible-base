@@ -1,5 +1,5 @@
 - name: Obtain infrastructure info
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster
@@ -18,12 +18,12 @@
     add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
 
 - name: Add machinesets to the cluster
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", "node-machineset.yml") }}'
   loop: '{{ add_machineset_availability_zones }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for nodes to join the cluster
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api

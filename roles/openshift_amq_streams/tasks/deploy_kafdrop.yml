@@ -5,7 +5,7 @@
     version: '{{ kafdrop_version }}'
 
 - name: Deploy Kafdrop chart from local path
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: kafdrop
     chart_ref: /tmp/kafdrop/chart
     release_namespace: kafka-single

@@ -1,5 +1,5 @@
 - name: Delete Kafdrop
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: kafdrop
     release_namespace: kafka-single
     release_state: absent

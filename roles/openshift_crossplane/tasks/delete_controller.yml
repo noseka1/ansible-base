@@ -1,5 +1,5 @@
 - name: Delete Crossplane Helm chart
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ crossplane_name }}'
     chart_ref: crossplane-stable/crossplane
     release_namespace: '{{ crossplane_namespace }}'

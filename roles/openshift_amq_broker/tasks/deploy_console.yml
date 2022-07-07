@@ -1,5 +1,5 @@
 - name: Deploy Fuse Console operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - fuse-console-og.yaml
@@ -14,13 +14,13 @@
     subscription_namespace: '{{ fuse_console_subscription_namespace }}'
 
 - name: Deploy Fuse Console
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - fuse-console-hawtio.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Fuse Console deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: hawt.io/v1alpha1
     kind: Hawtio
     namespace: '{{ fuse_console_instance_namespace }}'

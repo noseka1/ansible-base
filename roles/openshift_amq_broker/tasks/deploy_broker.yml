@@ -1,12 +1,12 @@
 - name: Create namespace and deploy AMQ broker instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - amq-broker-ns.yaml
     - broker-activemqartemis.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AMQ Broker deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: apps/v1
     kind: StatefulSet
     namespace: '{{ amq_broker_instance_namespace }}'

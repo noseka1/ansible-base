@@ -1,7 +1,7 @@
 - name: Create AWS credentials secret
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'aws-credentials-secret.yaml') }}"
 
 - name: Deploy External DNS instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'aws-route53-externaldns.yaml') }}"

@@ -16,7 +16,7 @@
   command: oc apply --kustomize {{ quay_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: quay.redhat.com/v1
     kind: QuayRegistry
     namespace: '{{ quay_instance_namespace }}'

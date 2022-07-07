@@ -1,5 +1,5 @@
 - name: Obtain dashboard service port number
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
     name: kubernetes-dashboard-nodeport
@@ -8,7 +8,7 @@
   become: True
 
 - name: Obtain admin sa
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: ServiceAccount
     namespace: kube-system
@@ -17,7 +17,7 @@
   become: True
 
 - name: Obtain token for the admin sa
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
     namespace: kube-system

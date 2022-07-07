@@ -1,5 +1,5 @@
 - name: Create stackrox namespace if it does not exist
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'stackrox-ns.yaml') }}"
 
 - import_tasks: get_rhacs_route.yml
@@ -38,7 +38,7 @@
   when: generate_cert_result.status == 200
 
 - name: Deploy secured cluster services
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'stackrox-secured-cluster-services-securedcluster.yaml') }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for this-cluster to become healthy

@@ -1,9 +1,9 @@
 - name: Create rhacs-this-cluster namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'rhacs-this-cluster-ns.yaml') }}"
 
 - name: Obtain RHACS route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: central
@@ -54,7 +54,7 @@
   when: generate_cert_result.status == 200
 
 - name: Deploy RHACS secured cluster services
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: rhacs-secured-cluster-services
     chart_ref: rhacs/secured-cluster-services
     chart_version: '{{ rhacs_version }}'

@@ -1,5 +1,5 @@
 - name: Deploy External Secrets operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - external-secrets-operator-sub.yaml

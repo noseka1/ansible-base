@@ -15,6 +15,6 @@ roles:
   version: v5.1.1
 
 collections:
-- name: community.kubernetes
-  src: https://github.com/ansible-collections/community.kubernetes.git
-  version: 1.1.1
+- name: kubernetes.core
+  src: https://github.com/ansible-collections/kubernetes.core
+  version: 2.3.2

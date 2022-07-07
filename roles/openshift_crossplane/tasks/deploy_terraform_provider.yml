@@ -1,12 +1,12 @@
 - name: Deploy Terraform provider
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - terraform-controllerconfig.yaml
     - terraform-provider.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
     name: terraform
@@ -24,7 +24,7 @@
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.tf.crossplane.io CRD to become available
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: apiextensions.k8s.io/v1
     kind: CustomResourceDefinition
     name: providerconfigs.tf.crossplane.io
@@ -36,13 +36,13 @@
   delay: 10
 
 - name: Deploy Terraform provider config
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - default-providerconfig-terraform.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider revision
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
     name: terraform

@@ -1,5 +1,5 @@
 - name: Delete MetalLB instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
@@ -7,7 +7,7 @@
     - metallb-pool-addresspool.yaml
 
 - name: Delete MetalLB operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:

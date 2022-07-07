@@ -1,5 +1,5 @@
 - name: Obtain existing Kubernetes objects of kind {{ outer_item.kind }}
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: '{{ outer_item.api_version }}'
     kind: '{{ outer_item.kind }}'
     name: '{{ outer_item.name | default(omit) }}'
@@ -7,7 +7,7 @@
   register: existing_objects
 
 - name: Delete {{ existing_objects.resources | length }} Kubernetes objects
-  k8s:
+  kubernetes.core.k8s:
     api_version: '{{ outer_item.api_version }}'
     kind: '{{ outer_item.kind }}'
     name: '{{ item.metadata.name }}'
@@ -16,7 +16,7 @@
   loop: '{{ existing_objects.resources }}'
 
 - name: Waiting until all objects of kind have been deleted
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: '{{ outer_item.api_version }}'
     kind: '{{ outer_item.kind }}'
     name: '{{ outer_item.name | default(omit) }}'

@@ -11,13 +11,13 @@
   become: True
 
 - name: Install flannel
-  k8s:
+  kubernetes.core.k8s:
     resource_definition: '{{ lookup("url", flannel_url, split_lines=False) }}'
     apply: True
   become: True
 
 - name: Install ingress
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("url", item, split_lines=False) }}'
     apply: True
   loop:
@@ -25,13 +25,13 @@
   become: True
 
 - name: Install dashboard
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("url", kubernetes_dashboard_url, split_lines=False) }}'
     apply: True
   become: True
 
 - name: Install dashboard service
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", "kubernetes-dashboard-service.yml", split_lines=False) }}'
     apply: True
   become: True

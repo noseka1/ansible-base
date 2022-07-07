@@ -1,5 +1,5 @@
 - name: Relax the SCC for the provider {{ crossplane_current_provider_revision }}
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - provider-scc-role.yaml

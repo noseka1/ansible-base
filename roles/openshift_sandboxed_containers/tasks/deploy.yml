@@ -10,7 +10,7 @@
     subscription_namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
 
 - name: Deploy OpenShift sandboxed containers instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
      - cluster-kataconfig-kataconfig.yaml
@@ -28,7 +28,7 @@
   when: sandboxed_containers_kataconfig is changed
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift sandboxed containers deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: kataconfiguration.openshift.io/v1
     kind: KataConfig
     name: '{{ sandboxed_containers_instance_name }}'

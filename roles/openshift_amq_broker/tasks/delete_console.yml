@@ -1,5 +1,5 @@
 - name: Obtain Fuse Console CSV name
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
     name: '{{ fuse_console_subscription_name }}'
@@ -7,14 +7,14 @@
   register: fuse_console_operator_subscription
 
 - name: Delete Fuse Console
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:
     - fuse-console-hawtio.yaml
 
 - name: Delete Fuse Console operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:

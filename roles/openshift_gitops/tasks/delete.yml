@@ -1,5 +1,5 @@
 - name: Obtain CSV name
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
     name: '{{ gitops_subscription_name }}'
@@ -15,7 +15,7 @@
         kind: ArgoCD
 
 - name: Delete GitOps operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:

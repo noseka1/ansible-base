@@ -8,7 +8,7 @@
     openshift_oauth_proxy_upstream: http://smtp4dev
 
 - name: Delete smtp4dev
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     namespace: '{{ openshift_smtp4dev_namespace }}'
     state: absent

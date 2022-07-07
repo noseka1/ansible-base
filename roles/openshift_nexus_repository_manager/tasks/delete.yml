@@ -1,12 +1,12 @@
 - name: Delete Nexus repository manager
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ nexus_repository_manager_name }}'
     release_namespace: '{{ nexus_repository_manager_namespace }}'
     release_state: absent
     wait: True
 
 - name: Delete Nexus repository manager namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", item) }}'
     state: absent
     wait: True

@@ -1,10 +1,10 @@
 - name: Add hashicorp chart repo
-  community.kubernetes.helm.helm_repository:
+  kubernetes.core.helm_repository:
     name: hashicorp
     repo_url: "https://helm.releases.hashicorp.com"
 
 - name: Deploy Vault Helm chart
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ hashicorp_vault_name }}'
     chart_ref: hashicorp/vault
     chart_version: '{{ hashicorp_vault_chart_version | default(omit) }}'
@@ -22,7 +22,7 @@
         enabled: True
 
 - name: Create route
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'vault-route.yml') }}"
 
 - name: Obtain vault route

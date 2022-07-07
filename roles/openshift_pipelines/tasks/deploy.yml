@@ -10,7 +10,7 @@
     subscription_namespace: '{{ openshift_pipelines_operator_subscription_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: tekton.dev/v1beta1
     kind: ClusterTask
   register: clustertasks

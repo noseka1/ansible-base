@@ -4,7 +4,7 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Create vSphere CSI prerequisites
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - vmware-system-csi-ns.yaml
@@ -14,7 +14,7 @@
     - thin-csi-sc.yaml
 
 - name: Deploy vSphere CSI driver
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
   loop:
     - '{{ vsphere_csi_base_url }}//manifests/vanilla/vsphere-csi-driver.yaml'

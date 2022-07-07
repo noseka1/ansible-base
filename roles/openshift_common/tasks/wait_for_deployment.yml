@@ -1,5 +1,5 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ wait_for_deployment_namespace }}/{{ wait_for_deployment_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: apps/v1
     kind: Deployment
     name: '{{ wait_for_deployment_name }}'

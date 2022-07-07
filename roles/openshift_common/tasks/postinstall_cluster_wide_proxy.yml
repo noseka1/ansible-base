@@ -1,5 +1,5 @@
 - name: Configure cluster-wide proxy
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - cluster-proxy-2.yml

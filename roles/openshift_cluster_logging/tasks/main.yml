@@ -16,7 +16,7 @@
   command: oc apply --kustomize {{ cluster_logging_kustomizations.cluster_logging_instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster logging deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: logging.openshift.io/v1
     kind: ClusterLogging
     name: '{{ cluster_logging_instance_name }}'

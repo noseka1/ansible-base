@@ -1,5 +1,5 @@
 - name: Deploy Grafana operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - operator/grafana-ns.yaml
@@ -27,7 +27,7 @@
     kustomize_op: apply
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: integreatly.org/v1alpha1
     kind: Grafana
     name: '{{ grafana_instance_name }}'
@@ -53,7 +53,7 @@
   register: grafana_serviceaccount_jwt
 
 - name: Allow Grafana to retrieve OpenShift monitoring metrics
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - metrics/grafana-cluster-monitoring-view-clusterrolebinding.yaml

@@ -1,5 +1,5 @@
 - name: Delete volsync
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ volsync_name }}'
     release_namespace: '{{ volsync_namespace }}'
     release_state: absent

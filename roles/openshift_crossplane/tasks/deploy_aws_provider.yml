@@ -1,9 +1,9 @@
 - name: Deploy AWS provider
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'aws-provider.yaml') }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
     name: aws
@@ -29,7 +29,7 @@
   when: crossplane_aws_secret_acccess_key | length == 0
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.aws.crossplane.io CRD to become available
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: apiextensions.k8s.io/v1
     kind: CustomResourceDefinition
     name: providerconfigs.aws.crossplane.io
@@ -41,14 +41,14 @@
   delay: 10
 
 - name: Deploy AWS provider config
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - default-providerconfig-aws.yaml
     - aws-creds-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider revision
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
     name: aws

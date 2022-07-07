@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ mtc_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mtc_instance_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: migration.openshift.io/v1alpha1
     kind: MigrationController
     namespace: '{{ mtc_instance_namespace }}'

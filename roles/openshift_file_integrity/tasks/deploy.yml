@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ file_integrity_kustomizations.instance }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the File Integrity instance to become active
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: fileintegrity.openshift.io/v1alpha1
     kind: FileIntegrity
     namespace: '{{ file_integrity_instance_namespace }}'
@@ -28,7 +28,7 @@
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for FileIntegrityNodeStatus to show up
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: fileintegrity.openshift.io/v1alpha1
     kind: FileIntegrityNodeStatus
     namespace: '{{ file_integrity_instance_namespace }}'

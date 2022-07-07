@@ -1,5 +1,5 @@
 - name: Deploy Contour operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
   loop:
     - '{{ contour_operator_url }}'
@@ -12,7 +12,7 @@
     wait_for_deployment_namespace: '{{ contour_operator_namespace }}'
 
 - name: Deploy Contour instance
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", item) }}'
   loop:
     - contour-ns.yaml
@@ -21,7 +21,7 @@
     - contour-contour.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ contour_instance_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operator.projectcontour.io/v1alpha1
     kind: Contour
     name: '{{ contour_instance_name }}'

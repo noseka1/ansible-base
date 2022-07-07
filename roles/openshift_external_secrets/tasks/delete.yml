@@ -15,14 +15,14 @@
         namespace: external_secrets_instance_namespace
 
 - name: Delete external-secrets namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
     - external-secrets-ns.yaml
 
 - name: Obtain CSV name
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
     name: '{{ external_secrets_subscription_name }}'
@@ -30,7 +30,7 @@
   register: operator_subscription
 
 - name: Delete External Secrets operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:

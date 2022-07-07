@@ -1,5 +1,5 @@
 - name: Deploy oauth-proxy {{ openshift_oauth_proxy_name }}
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     namespace: '{{ openshift_oauth_proxy_namespace }}'
   loop:

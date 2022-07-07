@@ -8,14 +8,14 @@
     VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
 
 - name: Save the unseal key in the Kubernetes secret for later use
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'vault-unseal-key-secret.yml') }}"
 
 - name: Unseal vault
   import_tasks: unseal.yml
 
 - name: Deploy script that unseals vault automatically
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - vault-unseal-deploy.yml

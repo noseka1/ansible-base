@@ -1,5 +1,5 @@
 - name: Create objects for deployment of {{ rhacm_managed_cluster.cluster_name }} managed cluster
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - cluster-ns.yml
@@ -12,7 +12,7 @@
     - secrets/cluster-ssh-private-key-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_managed_cluster.cluster_name }} to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster
     name: '{{ rhacm_managed_cluster.cluster_name }}'

@@ -1,5 +1,5 @@
 - name: Create namespace {{ datadog_vector_namespace }}
-  k8s:
+  kubernetes.core.k8s:
     api_version: v1
     kind: Namespace
     name: '{{ openshift_datadog_vector_namespace }}'

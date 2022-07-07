@@ -1,15 +1,15 @@
 - name: Set admin user password
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ gitops_instance_name }}-cluster-secret.yaml') }}"
 
 - name: Configure ArgoCD resource
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd.yaml') }}"
 
 - name: Configure Argo CD server
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'argocd-cm-cm.yaml') }}"
 
 - name: Grant Argo CD cluster-admin privileges
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'gitops-cluster-admin-clusterrolebinding.yaml') }}"

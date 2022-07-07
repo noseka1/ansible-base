@@ -1,12 +1,12 @@
 - name: Deploy external-secrets instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - external-secrets-ns.yaml
     - external-secrets-operatorconfig.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for External Secrets instance deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operator.external-secrets.io/v1alpha1
     kind: OperatorConfig
     namespace: '{{ external_secrets_instance_namespace }}'

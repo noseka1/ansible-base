@@ -8,7 +8,7 @@
     stable_cluster_retries: 60
 
 - name: Retrieve current cluster version
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
@@ -25,7 +25,7 @@
     var: upgrade_path.stdout | from_json
 
 - name: Provide administrator acknowledgment to upgrade
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'admin-acks-cm.yaml') }}"
 
 - name: Perform OpenShift cluster upgrade(s)
@@ -33,7 +33,7 @@
   loop: '{{ upgrade_path.stdout | from_json }}'
 
 - name: Retrieve the upgrade history
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: ClusterVersion
     name: version

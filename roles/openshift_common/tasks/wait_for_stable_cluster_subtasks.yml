@@ -7,7 +7,7 @@
   when: (stable_cluster_retry_count | int ) > stable_cluster_retries
 
 - name: Retrieve cluster status
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version

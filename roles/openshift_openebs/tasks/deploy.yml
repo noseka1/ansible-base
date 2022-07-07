@@ -1,5 +1,5 @@
 - name: Create LVM group for OpenEBS volumes on each cluster node (will cause nodes to restart)
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '99-openebs-lvm-mc.yaml') }}"
   register: machineconfig_result
   loop:
@@ -15,7 +15,7 @@
   when: machineconfig_result is changed
 
 - name: Create prerequisites for OpenEBS
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - openebs-ns.yaml
@@ -23,12 +23,12 @@
     - openebs-scc-rolebinding.yaml
 
 - name: Add OpenEBS chart repo
-  community.kubernetes.helm.helm_repository:
+  kubernetes.core.helm_repository:
     name: openebs
     repo_url: '{{ openebs_helm_repo }}'
 
 - name: Deploy OpenEBS
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ openebs_name }}'
     chart_ref: 'openebs/openebs'
     chart_version: '{{ openebs_version  }}'
@@ -59,7 +59,7 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Create openebs-lvm storage class
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - openebs-lvm-sc.yaml

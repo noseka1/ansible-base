@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ rhsso_kustomizations.instance }}
 
 - name: Wait for RHSSO to come up
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: keycloak.org/v1alpha1
     kind: Keycloak
     name: '{{ rhsso_instance_name }}'
@@ -24,7 +24,7 @@
   delay: 10
 
 - name: Obtain Keycloak route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: keycloak

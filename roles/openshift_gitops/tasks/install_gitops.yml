@@ -1,5 +1,5 @@
 - name: Deploy GitOps operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - openshift-gitops-sub.yaml
@@ -13,7 +13,7 @@
     subscription_namespace: '{{ gitops_subscription_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ gitops_instance_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1
     kind: ArgoCD
     namespace: '{{ gitops_instance_namespace }}'

@@ -1,5 +1,5 @@
 - name: Delete {{ rhacm_managed_cluster.cluster_name }} managed cluster
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
     wait: True

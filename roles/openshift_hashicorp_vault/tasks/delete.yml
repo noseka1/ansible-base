@@ -1,5 +1,5 @@
 - name: Delete Vault Helm chart
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ hashicorp_vault_name }}'
     chart_ref: hashicorp/vault
     chart_version: '{{ hashicorp_vault_chart_version | default(omit) }}'

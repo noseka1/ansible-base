@@ -1,5 +1,5 @@
 - name: Deploy MetalLB operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - metallb-system-ns.yaml
@@ -15,14 +15,14 @@
     subscription_namespace: '{{ metallb_subscription_namespace }}'
 
 - name: Create MetalLB instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - metallb-metallb.yaml
     - metallb-pool-addresspool.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for MetalLB instance to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: metallb.io/v1beta1
     kind: MetalLB
     name: '{{ metallb_instance_name }}'

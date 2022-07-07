@@ -1,5 +1,5 @@
 - name: Retrieve OpenShift worker nodes
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: Node
     label_selectors:
@@ -8,7 +8,7 @@
 
 - block:
     - name: Retrieve OpenShift master nodes
-      k8s_info:
+      kubernetes.core.k8s_info:
         api_version: v1
         kind: Node
         label_selectors:

@@ -5,12 +5,12 @@
     - { secret_name: wildcard-cert, namespace: openshift-ingress, common_name: '*.apps.cluster-{{ otlc_service_info.guid }}.{{ otlc_service_info.top_level_domain }}' }
 
 - name: Configure API server certificate
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'cluster-apiserver.yml') }}"
   register: otlc_common_openshift_api_cert
 
 - name: Configure wildcard apps certificate
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'default-ingresscontroller.yml') }}"
   register: otlc_common_openshift_apps_cert
 

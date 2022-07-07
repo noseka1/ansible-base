@@ -1,18 +1,18 @@
 - name: Create namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - kafka-cluster-ns.yaml
 
 - name: Deploy Kafka cluster
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-cluster
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent.yaml'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka cluster deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
     namespace: kafka-cluster

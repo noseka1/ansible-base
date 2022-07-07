@@ -1,5 +1,5 @@
 - name: Obtain Quay registry route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ quay_instance_name }}-quay'

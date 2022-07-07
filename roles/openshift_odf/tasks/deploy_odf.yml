@@ -18,7 +18,7 @@
   when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ odf_instance_name }} deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: ocs.openshift.io/v1
     kind: StorageCluster
     namespace: '{{ odf_instance_namespace }}'
@@ -35,7 +35,7 @@
   delay: 10
 
 - name: Deploy rook-ceph-tools
-  k8s:
+  kubernetes.core.k8s:
     definition:
       apiVersion: ocs.openshift.io/v1
       kind: OCSInitialization

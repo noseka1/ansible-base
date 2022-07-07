@@ -1,11 +1,11 @@
 - name: Check that imagepruners CRD is available
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: CustomResourceDefinition
     name: imagepruners.imageregistry.operator.openshift.io
   register: imagepruners_crd
 
 - name: Enable automatic image pruning
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'cluster-imagepruner.yml') }}"
   when: imagepruners_crd.resources | length > 0

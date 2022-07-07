@@ -16,7 +16,7 @@
   changed_when: changed.stdout is search("CHANGED")
 
 - name: Create backing PV and PVC
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
      - nfs-backing-volume-pv.yml

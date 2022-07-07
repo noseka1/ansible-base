@@ -1,5 +1,5 @@
 - name: Deploy smtp4dev
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     namespace: '{{ openshift_smtp4dev_namespace }}'
   loop:

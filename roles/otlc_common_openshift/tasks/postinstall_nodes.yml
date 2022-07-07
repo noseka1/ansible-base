@@ -9,11 +9,11 @@
   when: install_infra_nodes
 
 - name: Create cluster autoscaler
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
 
 - name: Obtain infrastructure info
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster
@@ -24,14 +24,14 @@
     cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api
   register: machinesets_result
 
 - name: Enable autoscaling for the machinesets
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
   when: item.metadata.name.startswith(cluster_id)
   loop: '{{ machinesets_result.resources }}'

@@ -1,5 +1,5 @@
 - name: Delete Terraform provider config
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
     wait: True
@@ -7,7 +7,7 @@
     - default-providerconfig-terraform.yaml
 
 - name: Delete Terraform provider
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
     wait: True

@@ -4,14 +4,14 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Delete topolvm storage class
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:
     - topolvm-sc.yaml
 
 - name: Delete TopoLVM instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:
@@ -21,7 +21,7 @@
     - topolvm-topolvmcluster.yaml
 
 - name: Delete TopoLVM operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:

@@ -4,7 +4,7 @@
 # https://issues.redhat.com/browse/GITOPS-927
 
 - name: Install Argo CD Notifications and its catalog
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: '{{ gitops_instance_namespace }}'
   loop:
@@ -12,7 +12,7 @@
     - '{{ argocd_notifications_catalog }}'
 
 - name: Obtain Argo CD route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ gitops_instance_name }}-server'
@@ -20,7 +20,7 @@
   register: argocd_route
 
 - name: Send all notifications to the custom webhook receiver
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
     - argocd-notifications-cm-cm.yaml

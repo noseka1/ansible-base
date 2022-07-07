@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ serverless_kustomizations.serving }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Serving deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operator.knative.dev/v1alpha1
     kind: KnativeServing
     name: knative-serving
@@ -31,7 +31,7 @@
   command: oc apply --kustomize {{ serverless_kustomizations.eventing }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Eventing deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operator.knative.dev/v1alpha1
     kind: KnativeEventing
     name: knative-eventing

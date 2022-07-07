@@ -4,7 +4,7 @@
   register: grafana_serviceaccount_jwt
 
 - name: Remove Grafana configuration for OpenShift monitoring metrics
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
@@ -24,7 +24,7 @@
     kustomize_op: delete
 
 - name: Delete Grafana operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:

@@ -13,7 +13,7 @@
   command: oc apply --kustomize {{ compliance_kustomizations.cis }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: compliance.openshift.io/v1alpha1
     kind: ComplianceScan
     namespace: '{{ compliance_cis_namespace }}'

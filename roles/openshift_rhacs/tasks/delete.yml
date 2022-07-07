@@ -26,7 +26,7 @@
     openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
 
 - name: Obtain CSV name
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
     name: '{{ rhacs_subscription_name }}'

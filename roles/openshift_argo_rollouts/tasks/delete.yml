@@ -2,6 +2,6 @@
   command: oc delete --namespace {{ argo_rollouts_namespace }} --filename {{ argo_rollouts_url }}
 
 - name: Delete namespace {{ argo_rollouts_namespace }} in Kubernetes
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", "argo-rollouts-ns.yaml") }}'
     state: absent

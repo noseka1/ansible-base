@@ -1,5 +1,5 @@
 - name: Obtain Argo CD route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ gitops_instance_name }}-server'
@@ -158,7 +158,7 @@
   when: (groups_list_result.json | selectattr("name", "equalto", "ArgoCDAdmins") | list | length) == 0
 
 - name: Obtain Kubernetes API server URL
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster

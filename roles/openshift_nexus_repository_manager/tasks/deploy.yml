@@ -1,5 +1,5 @@
 - name: Create Nexus repository manager namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: '{{ lookup("template", item) }}'
   loop:
     - nexus-repository-manager-ns.yaml
@@ -7,12 +7,12 @@
     - nexus-repository-manager-scc-role.yaml
 
 - name: Add Nexus chart repo
-  community.kubernetes.helm.helm_repository:
+  kubernetes.core.helm_repository:
     name: sonatype
     repo_url: '{{ nexus_repository_manager_helm_repo }}'
 
 - name: Deploy Nexus repository manager
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ nexus_repository_manager_name }}'
     chart_ref: sonatype/nexus-repository-manager
     chart_version: '{{ nexus_repository_manager_version | default(omit) }}'
@@ -32,7 +32,7 @@
     wait_for_deployment_namespace: '{{ nexus_repository_manager_namespace }}'
 
 - name: Retrieve Nexus repository manager pod
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: pod
     label_selectors:
@@ -40,7 +40,7 @@
   register: nexus_repository_manager_pod
 
 - name: Retrieve initial admin password
-  community.kubernetes.k8s_exec:
+  kubernetes.core.k8s_exec:
     namespace: '{{ nexus_repository_manager_namespace }}'
     pod: '{{ nexus_repository_manager_pod.resources.0.metadata.name }}'
     command: cat /nexus-data/admin.password
@@ -48,7 +48,7 @@
   register: nexus_repository_manager_initial_password
 
 - name: Obtain Nexus repository manager route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: docker

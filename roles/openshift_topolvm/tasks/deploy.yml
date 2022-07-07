@@ -1,5 +1,5 @@
 - name: Install TopoLVM operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - topolvm-operator-sub.yaml
@@ -13,7 +13,7 @@
     subscription_namespace: '{{ topolvm_operator_subscription_namespace }}'
 
 - name: Deploy TopoLVM instance
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - topolvm-scc-role.yaml
@@ -22,7 +22,7 @@
     - topolvm-topolvmcluster.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for TopLVM cluster to deploy
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: topolvm.cybozu.com/v2
     kind: TopolvmCluster
     namespace: '{{ topolvm_instance_namespace }}'
@@ -44,7 +44,7 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Create topolvm storage class
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - topolvm-sc.yaml

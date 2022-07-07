@@ -12,20 +12,20 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Delete openebs-lvm storage class
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:
     - openebs-lvm-sc.yaml
 
 - name: Delete OpenEBS
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: '{{ openebs_name }}'
     release_namespace: '{{ openebs_namespace }}'
     release_state: absent
 
 - name: Delete prerequisites for OpenEBS
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
   loop:

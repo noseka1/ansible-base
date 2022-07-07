@@ -37,14 +37,14 @@
   when: nexus_repository_manager_docker_repo_result.status != 200
 
 - name: Expose Docker repository
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - docker-repo-svc.yaml
     - docker-repo-route.yaml
 
 - name: Obtain Docker repository route
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ nexus_repository_manager_docker_repo_name }}'

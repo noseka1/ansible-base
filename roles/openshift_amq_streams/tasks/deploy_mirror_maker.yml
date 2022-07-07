@@ -1,11 +1,11 @@
 - name: Create namespace
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - kafka-mirror-maker-ns.yaml
 
 - name: Deploy two Kafka instances and Mirror Maker
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: kafka-mirror-maker
   loop:
@@ -14,7 +14,7 @@
     - '{{ amq_streams_examples }}/mirror-maker/kafka-mirror-maker-2-sync-groups.yaml'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Source deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
     namespace: kafka-mirror-maker
@@ -30,7 +30,7 @@
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Target deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
     namespace: kafka-mirror-maker
@@ -46,7 +46,7 @@
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Mirror Maker deployment to complete
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: KafkaMirrorMaker2
     namespace: kafka-mirror-maker

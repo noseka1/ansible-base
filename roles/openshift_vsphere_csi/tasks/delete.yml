@@ -1,5 +1,5 @@
 - name: Delete vSphere CSI driver
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     state: absent
   loop:
@@ -11,7 +11,7 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - name: Delete vSphere CSI prerequisites
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:

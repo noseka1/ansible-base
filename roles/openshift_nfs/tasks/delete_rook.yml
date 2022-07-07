@@ -1,14 +1,14 @@
 - import_tasks: pick_backing_volume_node.yml
 
 - name: Delete Rook NFS server
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
     - rook-nfs-nfsserver.yml
 
 - name: Delete backing PV and PVC
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
@@ -16,7 +16,7 @@
      - nfs-backing-volume-pvc.yml
 
 - name: Delete Rook NFS operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     state: absent
   loop:
@@ -25,6 +25,6 @@
     - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
 
 - name: Delete corrected SCC
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
     state: absent

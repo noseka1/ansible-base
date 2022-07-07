@@ -1,5 +1,5 @@
 - name: Create subscription
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'cert-manager-sub.yaml') }}"
 
 - name: Wait for cert-manager operator to deploy

@@ -1,5 +1,5 @@
 - name: Make operators hosted on OperatorHub.io available for installation via OLM
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=False) }}"
     namespace: openshift-marketplace
   loop:

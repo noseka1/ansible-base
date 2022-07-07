@@ -1,5 +1,5 @@
 - name: Switch channel to {{ item.channel }}
-  k8s:
+  kubernetes.core.k8s:
     definition:
       apiVersion: v1
       kind: ClusterVersion
@@ -9,7 +9,7 @@
         channel: '{{ item.channel }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} update to become available
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: v1
     kind: ClusterVersion
     name: version
@@ -24,7 +24,7 @@
   delay: 10
 
 - name: Trigger upgrade to version {{ item.version }}
-  k8s:
+  kubernetes.core.k8s:
     definition:
       apiVersion: v1
       kind: ClusterVersion
@@ -36,7 +36,7 @@
   register: upgrade_started
 
 - name: Wait for the upgrade to start
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version

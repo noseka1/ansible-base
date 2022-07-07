@@ -1,13 +1,13 @@
 - name: Create namespace {{ external_dns_instance_namespace }}
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', 'external-dns-ns.yaml') }}"
 
 - name: Grant the operator access to manage operand resources
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('url', 'https://raw.githubusercontent.com/openshift/external-dns-operator/release-0.1/config/rbac/extra-roles.yaml', split_lines=False) }}"
 
 - name: Deploy External DNS operator
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - external-dns-operator-ns.yaml

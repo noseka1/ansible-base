@@ -20,7 +20,7 @@
       - kustomization.yaml
       - pull-secret-secret.yaml
       - '{{ rhacm_thanos_thanos_s3_secret }}'
-    kustomize_op: delete
+    kustomize_op: absent
 
 - import_role:
     name: openshift_minio

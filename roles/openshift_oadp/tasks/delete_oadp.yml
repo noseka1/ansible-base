@@ -9,7 +9,7 @@
     kustomize_files:
       - kustomization.yaml
       - cloud-credentials-secret.yaml
-    kustomize_op: delete
+    kustomize_op: absent
 
 - name: Delete OADP operator
   kubernetes.core.k8s:

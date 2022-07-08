@@ -7,4 +7,4 @@
     kustomize_files:
       - kustomization.yaml
       - minio-server-credentials-secret.yaml
-    kustomize_op: delete
+    kustomize_op: absent

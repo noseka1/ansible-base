@@ -24,7 +24,7 @@
       - instance/kustomization.yaml
       - instance/prometheus-grafanadashboard.yaml
       - instance/prometheus-grafanadatasource.yaml
-    kustomize_op: apply
+    kustomize_op: present
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
   kubernetes.core.k8s_info:

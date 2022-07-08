@@ -9,7 +9,7 @@
       - run.sh
       - webhook-receiver-deploy.yaml
       - webhook-receiver-svc.yaml
-    kustomize_op: apply
+    kustomize_op: present
 
 - import_role:
     name: openshift_common

@@ -9,4 +9,4 @@
       - run.sh
       - webhook-receiver-deploy.yaml
       - webhook-receiver-svc.yaml
-    kustomize_op: delete
+    kustomize_op: absent

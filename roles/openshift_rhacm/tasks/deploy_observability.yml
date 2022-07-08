@@ -20,4 +20,4 @@
       - kustomization.yaml
       - pull-secret-secret.yaml
       - '{{ rhacm_thanos_thanos_s3_secret }}'
-    kustomize_op: apply
+    kustomize_op: present

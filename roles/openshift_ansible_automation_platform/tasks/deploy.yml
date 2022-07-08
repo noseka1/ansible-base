@@ -20,7 +20,6 @@
       - kustomization.yaml
       - auto-controller-automationcontroller.yaml
       - auto-controller-custom-admin-password-secret.yaml
-    kustomize_op: apply
-    kustomize_method: kustomize
+    kustomize_op: present
 
 - import_tasks: report_success.yml

@@ -21,7 +21,7 @@
     kustomize_files:
       - kustomization.yaml
       - cloud-credentials-secret.yaml
-    kustomize_op: apply
+    kustomize_op: present
 
 - import_role:
     name: openshift_common

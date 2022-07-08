@@ -12,7 +12,7 @@
     kustomize_name: vector
     kustomize_files:
       - kustomization.yaml
-    kustomize_op: apply
+    kustomize_op: present
 
 - import_role:
     name: openshift_common

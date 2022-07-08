@@ -20,5 +20,4 @@
       - kustomization.yaml
       - central-htpasswd-secret.yaml
       - stackrox-central-services-central.yaml
-    kustomize_op: apply
-    kustomize_method: kustomize
+    kustomize_op: present

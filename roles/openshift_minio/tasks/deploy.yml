@@ -13,7 +13,7 @@
     kustomize_files:
       - kustomization.yaml
       - minio-server-credentials-secret.yaml
-    kustomize_op: apply
+    kustomize_op: present
 
 - name: Obtain Minio route
   import_tasks: get_minio_api_route.yml

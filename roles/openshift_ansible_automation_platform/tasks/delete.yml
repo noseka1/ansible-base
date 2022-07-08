@@ -8,8 +8,7 @@
       - kustomization.yaml
       - auto-controller-automationcontroller.yaml
       - auto-controller-custom-admin-password-secret.yaml
-    kustomize_op: delete
-    kustomize_method: kustomize
+    kustomize_op: absent
 
 - name: Delete Ansible Automation Platform operator
   kubernetes.core.k8s:

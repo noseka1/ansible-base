@@ -7,21 +7,16 @@
 - debug:
     msg: Created temporary directory {{ tmpdir.path }}
 
-- name: Copy kustomization files to {{ tmpdir.path }}
+- name: Copy kustomization Ansible templates to {{ tmpdir.path }}
   template:
     src: '{{ item }}'
     dest: '{{ tmpdir.path }}'
   loop: '{{ kustomize_files }}'
 
-- name: Run {{ kustomize_op }} {{ kustomize_name }}
-  command: oc {{ kustomize_op }} --kustomize {{ tmpdir.path }}
-  when: kustomize_method is not defined
-
-- name: Run {{ kustomize_op }} {{ kustomize_name }}
-  shell: kustomize build {{ tmpdir.path }} | oc {{ kustomize_op }} --filename -
-  when:
-    - kustomize_method is defined
-    - kustomize_method == 'kustomize'
+- name: Set state of kustomization {{ kustomize_name }} to {{ kustomize_op }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + tmpdir.path) }}"
+    state: '{{ kustomize_op }}'
 
 - name: Delete temporary kustomize directory {{ tmpdir.path }}
   file:

@@ -6,6 +6,7 @@
     namespace: '{{ subscription_namespace }}'
   register: operator_subscription
   until:
+    - operator_subscription.resources | length > 0
     - operator_subscription.resources.0.status is defined
     - operator_subscription.resources.0.status.currentCSV is defined
   retries: 60
@@ -19,6 +20,7 @@
     namespace: '{{ subscription_namespace }}'
   register: operator_csv
   until:
+    - operator_csv.resources | length > 0
     - operator_csv.resources.0.status is defined
     - operator_csv.resources.0.status.phase is defined
     - operator_csv.resources.0.status.phase == 'Succeeded'

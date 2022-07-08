@@ -12,4 +12,6 @@
     kustomize_op: delete
 
 - name: Delete OADP operator
-  command: oc delete --kustomize {{ oadp_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + oadp_kustomizations.operator) }}"
+    state: absent

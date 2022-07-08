@@ -1,8 +1,12 @@
 - name: Delete RHACM instance
-  command: oc delete --kustomize {{ rhacm_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete RHACM operator
-  command: oc delete --kustomize {{ rhacm_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.operator) }}"
+    state: absent
 
 - import_role:
     name: openshift_common

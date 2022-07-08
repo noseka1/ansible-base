@@ -1,14 +1,18 @@
 - name: Deploy elasticsearch operator
-  command: oc apply --kustomize {{ service_mesh_kustomizations.elasticsearch_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.elasticsearch_operator) }}"
 
 - name: Deploy jaeger operator
-  command: oc apply --kustomize {{ service_mesh_kustomizations.jaeger_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.jaeger_operator) }}"
 
 - name: Deploy kiali operator
-  command: oc apply --kustomize {{ service_mesh_kustomizations.kiali_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.kiali_operator) }}"
 
 - name: Deploy service mesh operator
-  command: oc apply --kustomize {{ service_mesh_kustomizations.service_mesh_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_operator) }}"
 
 - name: Wait for service mesh operator to deploy
   import_role:
@@ -19,11 +23,13 @@
     subscription_namespace: '{{ service_mesh_subscription_namespace }}'
 
 - name: Deploy service mesh instance
-  command: oc apply --kustomize {{ service_mesh_kustomizations.service_mesh_instance }}
-  register: result
-  until: result.rc == 0
-  retries: 10
-  delay: 5
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_instance) }}"
+  register: sm_instance
+  until:
+    - sm_instance is success
+  retries: 60
+  delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for service mesh deployment to complete
   kubernetes.core.k8s_info:

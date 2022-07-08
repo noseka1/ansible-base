@@ -7,7 +7,9 @@
   register: openshift_pipelines_operator_subscription
 
 - name: Delete OpenShift Pipelines operator
-  command: oc delete --kustomize {{ openshift_pipelines_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_pipelines_kustomizations.operator) }}"
+    state: absent
 
 - name: Clean up OpenShift Pipelines CSVs
   include_role:

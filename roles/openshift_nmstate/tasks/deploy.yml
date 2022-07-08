@@ -1,5 +1,6 @@
 - name: Deploy NMState operator
-  command: oc apply --kustomize {{ nmstate_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + nmstate_kustomizations.operator) }}"
 
 - name: Wait for NMState operator to deploy
   import_role:
@@ -10,7 +11,8 @@
     subscription_namespace: '{{ nmstate_operator_subscription_namespace }}'
 
 - name: Deploy NMState instance
-  command: oc apply --kustomize {{ nmstate_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + nmstate_kustomizations.instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for NMState deployment to complete
   kubernetes.core.k8s_info:

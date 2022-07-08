@@ -1,9 +1,11 @@
 - name: Deploy OpenShift Virtualization operator (KVM)
-  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.operator_kvm }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
   when: qemu_kvm
 
 - name: Deploy OpenShift Virtualization operator (emulation)
-  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.operator_emu }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
   when: not qemu_kvm
 
 - name: Wait for OpenShift Virtualization operator to deploy
@@ -15,7 +17,8 @@
     subscription_namespace: '{{ openshift_virtualization_subscription_namespace }}'
 
 - name: Deploy OpenShift Virtualization instance
-  command: oc apply --kustomize {{ openshift_virtualization_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_virtualization_instance_name }} deployment to complete
   kubernetes.core.k8s_info:

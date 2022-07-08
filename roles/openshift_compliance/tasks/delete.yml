@@ -1,5 +1,7 @@
 - name: Delete CIS compliance scan
-  command: oc delete --kustomize {{ compliance_kustomizations.cis }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + compliance_kustomizations.cis) }}"
+    state: absent
 
 - import_role:
     name: openshift_common
@@ -10,4 +12,6 @@
         kind: ProfileBundle
 
 - name: Delete Compliance operator
-  command: oc delete --kustomize {{ compliance_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + compliance_kustomizations.operator) }}"
+    state: absent

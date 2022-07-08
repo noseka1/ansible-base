@@ -1,5 +1,6 @@
 - name: Deploy OpenShift Pipelines operator
-  command: oc apply --kustomize {{ openshift_pipelines_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_pipelines_kustomizations.operator) }}"
 
 - name: Wait for Quay operator to deploy
   import_role:

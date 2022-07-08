@@ -1,5 +1,6 @@
 - name: Deploy Serverless operator
-  command: oc apply --kustomize {{ serverless_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.operator) }}"
 
 - name: Wait for Serverless operator to deploy
   import_role:
@@ -10,7 +11,8 @@
     subscription_namespace: '{{ serverless_subscription_namespace }}'
 
 - name: Deploy Knative Serving
-  command: oc apply --kustomize {{ serverless_kustomizations.serving }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.serving) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Serving deployment to complete
   kubernetes.core.k8s_info:
@@ -28,7 +30,8 @@
   delay: 10
 
 - name: Deploy Knative Eventing
-  command: oc apply --kustomize {{ serverless_kustomizations.eventing }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.eventing) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Eventing deployment to complete
   kubernetes.core.k8s_info:

@@ -1,5 +1,6 @@
 - name: Deploy Compliance operator
-  command: oc apply --kustomize {{ compliance_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + compliance_kustomizations.operator) }}"
 
 - name: Wait for Compliance operator to deploy
   import_role:
@@ -10,7 +11,8 @@
     subscription_namespace: '{{ compliance_operator_subscription_namespace }}'
 
 - name: Deploy CIS compliance scan
-  command: oc apply --kustomize {{ compliance_kustomizations.cis }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + compliance_kustomizations.cis) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
   kubernetes.core.k8s_info:

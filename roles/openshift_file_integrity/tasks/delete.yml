@@ -1,5 +1,9 @@
 - name: Delete File Integrity instance
-  command: oc delete --kustomize {{ file_integrity_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete File Integrity operator
-  command: oc delete --kustomize {{ file_integrity_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.operator) }}"
+    state: absent

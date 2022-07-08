@@ -1,5 +1,7 @@
 - name: Delete test workload
-  command: oc delete --kustomize {{ sandboxed_containers_kustomizations.workload }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.workload) }}"
+    state: absent
 
 - name: Delete OpenShift sandboxed containers instance
   kubernetes.core.k8s:
@@ -10,7 +12,9 @@
      - cluster-kataconfig-kataconfig.yaml
 
 - name: Delete OpenShift sandboxed containers operator
-  command: oc delete --kustomize {{ sandboxed_containers_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.operator) }}"
+    state: absent
 
 - import_role:
     name: openshift_common

@@ -1,11 +1,15 @@
 - name: Create namespace
-  command: oc apply --kustomize {{ loki_kustomizations.namespace }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + loki_kustomizations.namespace) }}"
 
 - name: Deploy MinIO
-  command: oc apply --kustomize {{ loki_kustomizations.minio }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + loki_kustomizations.minio) }}"
 
 - name: Deploy Loki
-  command: oc apply --kustomize {{ loki_kustomizations.loki }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + loki_kustomizations.loki) }}"
 
 - name: Deploy Promtail
-  shell: kustomize build {{ loki_kustomizations.promtail }} | oc apply --filename -
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + loki_kustomizations.promtail) }}"

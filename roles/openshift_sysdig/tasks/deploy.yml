@@ -1,2 +1,3 @@
 - name: Deploy sysdig daemonset
-  command: oc apply --kustomize {{ sysdig_kustomization }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + sysdig_kustomization) }}"

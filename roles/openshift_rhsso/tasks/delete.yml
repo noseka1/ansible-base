@@ -9,7 +9,11 @@
         kind: KeycloakClient
 
 - name: Delete RHSSO instance
-  command: oc delete --kustomize {{ rhsso_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete RHSSO operator
-  command: oc delete --kustomize {{ rhsso_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.operator) }}"
+    state: absent

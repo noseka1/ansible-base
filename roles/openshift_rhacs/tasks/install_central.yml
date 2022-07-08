@@ -1,5 +1,6 @@
 - name: Deploy RHACS operator
-  command: oc apply --kustomize {{ rhacs_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
 
 - name: Wait for RHACS operator to deploy
   import_role:

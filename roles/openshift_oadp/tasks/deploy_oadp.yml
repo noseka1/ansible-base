@@ -1,5 +1,6 @@
 - name: Deploy OADP operator
-  command: oc apply --kustomize {{ oadp_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + oadp_kustomizations.operator) }}"
 
 - name: Wait for OADP operator to deploy
   import_role:

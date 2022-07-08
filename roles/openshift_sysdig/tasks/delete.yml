@@ -1,2 +1,4 @@
 - name: Delete sysdig daemonset
-  command: oc delete --kustomize {{ sysdig_kustomization }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + sysdig_kustomization) }}"
+    state: absent

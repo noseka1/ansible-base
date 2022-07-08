@@ -1,5 +1,6 @@
 - name: Deploy File Integrity operator
-  command: oc apply --kustomize {{ file_integrity_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.operator) }}"
 
 - name: Wait for File Integrity operator to deploy
   import_role:
@@ -10,7 +11,8 @@
     subscription_namespace: '{{ file_integrity_operator_subscription_namespace }}'
 
 - name: Deploy File Integrity instance
-  command: oc apply --kustomize {{ file_integrity_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the File Integrity instance to become active
   kubernetes.core.k8s_info:

@@ -15,13 +15,19 @@
   register: container_security_operator_subscription
 
 - name: Delete Quay instance
-  command: oc delete --kustomize {{ quay_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete Quay operator
-  command: oc delete --kustomize {{ quay_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.operator) }}"
+    state: absent
 
 - name: Delete Container Security Operator
-  command: oc delete --kustomize {{ quay_kustomizations.security }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.security) }}"
+    state: absent
 
 - name: Clean up quay-operator CSVs
   include_role:

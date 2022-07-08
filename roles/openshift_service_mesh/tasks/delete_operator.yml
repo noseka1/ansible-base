@@ -7,7 +7,9 @@
   register: operator_subscription
 
 - name: Delete kustomization {{ operator_kustomization }}
-  command: oc delete --kustomize {{ operator_kustomization }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + operator_kustomization) }}"
+    state: absent
 
 - name: Clean up CSVs
   include_role:

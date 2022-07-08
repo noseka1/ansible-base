@@ -1,5 +1,9 @@
 - name: Delete NMState instance
-  command: oc delete --kustomize {{ nmstate_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + nmstate_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete NMState operator
-  command: oc delete --kustomize {{ nmstate_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + nmstate_kustomizations.operator) }}"
+    state: absent

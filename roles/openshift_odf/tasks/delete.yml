@@ -1,12 +1,18 @@
 - import_tasks: get_infrastructure.yml
 
 - name: Delete ODF instance
-  command: oc delete --kustomize {{ odf_kustomizations.instance_aws }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_aws) }}"
+    state: absent
   when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
 
 - name: Delete ODF instance
-  command: oc delete --kustomize {{ odf_kustomizations.instance_openebs }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_openebs) }}"
+    state: absent
   when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
 
 - name: Delete ODF operator
-  command: oc delete --kustomize {{ odf_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.operator) }}"
+    state: absent

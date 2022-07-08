@@ -34,10 +34,14 @@
   register: operator_subscription
 
 - name: Delete RHACS central
-  command: oc delete --kustomize {{ rhacs_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete RHACS operator
-  command: oc delete --kustomize {{ rhacs_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
+    state: absent
 
 - name: Clean up CSVs
   include_role:

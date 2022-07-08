@@ -1,5 +1,7 @@
 - name: Delete service mesh instance
-  command: oc delete --kustomize {{ service_mesh_kustomizations.service_mesh_instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_instance) }}"
+    state: absent
 
 - name: Delete service mesh operator
   include_tasks: delete_operator.yml

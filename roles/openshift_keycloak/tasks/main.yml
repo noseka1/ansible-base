@@ -1,5 +1,6 @@
 - name: Apply kustomization
-  command: oc apply --kustomize {{ item }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + item) }}"
   loop: '{{ keycloak_kustomizations }}'
 
 - name: Wait for Keycloak to come up

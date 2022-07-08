@@ -1,5 +1,6 @@
 - name: Deploy Ansible Automation Platform operator
-  command: oc apply --kustomize {{ aap_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + aap_kustomizations.operator) }}"
 
 - name: Wait for Ansible Automation Platform operator to deploy
   import_role:

@@ -1,5 +1,6 @@
 - name: Deploy RHACM operator
-  command: oc apply --kustomize {{ rhacm_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.operator) }}"
 
 - name: Wait for RHACM operator to deploy
   import_role:
@@ -10,7 +11,8 @@
     subscription_namespace: '{{ rhacm_subscription_namespace }}'
 
 - name: Deploy RHACM instance
-  command: oc apply --kustomize {{ rhacm_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
   kubernetes.core.k8s_info:
@@ -48,5 +50,6 @@
   register: openshift_gitops_namespace
 
 - name: Put local-cluster under GitOps management
-  command: oc apply --kustomize {{ rhacm_kustomizations.gitops }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.gitops) }}"
   when: openshift_gitops_namespace.resources | length > 0

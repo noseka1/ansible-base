@@ -1,8 +1,14 @@
 - name: Delete Knative Eventing
-  command: oc delete --kustomize {{ serverless_kustomizations.eventing }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.eventing) }}"
+    state: absent
 
 - name: Delete Knative Serving
-  command: oc delete --kustomize {{ serverless_kustomizations.serving }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.serving) }}"
+    state: absent
 
 - name: Delete Serverless operator
-  command: oc delete --kustomize {{ serverless_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.operator) }}"
+    state: absent

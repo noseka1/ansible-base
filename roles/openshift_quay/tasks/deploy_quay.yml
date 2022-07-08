@@ -1,8 +1,10 @@
 - name: Install Container Security Operator
-  command: oc apply --kustomize {{ quay_kustomizations.security }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.security) }}"
 
 - name: Deploy Quay operator
-  command: oc apply --kustomize {{ quay_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.operator) }}"
 
 - name: Wait for Quay operator to deploy
   import_role:
@@ -13,7 +15,8 @@
     subscription_namespace: '{{ quay_operator_subscription_namespace }}'
 
 - name: Deploy Quay instance
-  command: oc apply --kustomize {{ quay_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete
   kubernetes.core.k8s_info:

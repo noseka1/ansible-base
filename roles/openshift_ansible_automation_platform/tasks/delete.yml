@@ -12,4 +12,6 @@
     kustomize_method: kustomize
 
 - name: Delete Ansible Automation Platform operator
-  command: oc delete --kustomize {{ aap_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + aap_kustomizations.operator) }}"
+    state: absent

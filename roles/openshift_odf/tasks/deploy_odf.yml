@@ -1,5 +1,6 @@
 - name: Deploy ODF operator
-  command: oc apply --kustomize {{ odf_kustomizations.operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.operator) }}"
 
 - name: Wait for ODF operator to deploy
   import_role:
@@ -10,11 +11,13 @@
     subscription_namespace: '{{ odf_subscription_namespace }}'
 
 - name: Deploy ODF instance
-  command: oc apply --kustomize {{ odf_kustomizations.instance_aws }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_aws) }}"
   when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
 
 - name: Deploy ODF instance
-  command: oc apply --kustomize {{ odf_kustomizations.instance_openebs }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_openebs) }}"
   when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ odf_instance_name }} deployment to complete

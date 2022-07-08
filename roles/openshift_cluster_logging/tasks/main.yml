@@ -1,8 +1,10 @@
 - name: Deploy elasticsearch operator
-  command: oc apply --kustomize {{ cluster_logging_kustomizations.elasticsearch_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + cluster_logging_kustomizations.elasticsearch_operator) }}"
 
 - name: Deploy cluster logging operator
-  command: oc apply --kustomize {{ cluster_logging_kustomizations.cluster_logging_operator }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + cluster_logging_kustomizations.cluster_logging_operator) }}"
 
 - name: Wait for cluster logging operator to deploy
   import_role:
@@ -13,7 +15,8 @@
     subscription_namespace: '{{ cluster_logging_subscription_namespace }}'
 
 - name: Deploy cluster logging instance
-  command: oc apply --kustomize {{ cluster_logging_kustomizations.cluster_logging_instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + cluster_logging_kustomizations.cluster_logging_instance) }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster logging deployment to complete
   kubernetes.core.k8s_info:

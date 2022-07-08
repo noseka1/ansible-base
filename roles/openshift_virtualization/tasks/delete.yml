@@ -11,12 +11,18 @@
         kind: VirtualMachineInstance
 
 - name: Delete OpenShift Virtualization instance
-  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.instance }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.instance) }}"
+    state: absent
 
 - name: Delete OpenShift Virtualization operator (KVM)
-  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.operator_kvm }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
+    state: absent
   when: qemu_kvm
 
 - name: Delete OpenShift Virtualization operator (emulation)
-  command: oc delete --kustomize {{ openshift_virtualization_kustomizations.operator_emu }}
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
+    state: absent
   when: not qemu_kvm

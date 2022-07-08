@@ -2,8 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.operator) }}"
 
-- name: Wait for Serverless operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

@@ -6,8 +6,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + cluster_logging_kustomizations.cluster_logging_operator) }}"
 
-- name: Wait for cluster logging operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

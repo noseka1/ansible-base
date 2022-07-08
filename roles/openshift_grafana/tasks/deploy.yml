@@ -6,8 +6,7 @@
     - operator/grafana-og.yaml
     - operator/grafana-sub.yaml
 
-- name: Wait for Grafana operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

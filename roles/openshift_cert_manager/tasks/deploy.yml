@@ -2,8 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', 'cert-manager-sub.yaml') }}"
 
-- name: Wait for cert-manager operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

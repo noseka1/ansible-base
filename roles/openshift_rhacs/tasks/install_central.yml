@@ -2,8 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
 
-- name: Wait for RHACS operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

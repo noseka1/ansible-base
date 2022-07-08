@@ -4,8 +4,7 @@
   loop:
     - amq-broker-rhel8-sub.yaml
 
-- name: Wait for AMQ Broker operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

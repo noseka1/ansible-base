@@ -14,8 +14,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_operator) }}"
 
-- name: Wait for service mesh operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

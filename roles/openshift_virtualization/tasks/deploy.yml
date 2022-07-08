@@ -8,8 +8,7 @@
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
   when: not qemu_kvm
 
-- name: Wait for OpenShift Virtualization operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

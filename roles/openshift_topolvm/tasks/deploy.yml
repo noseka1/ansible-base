@@ -4,8 +4,7 @@
   loop:
     - topolvm-operator-sub.yaml
 
-- name: Wait for TopoLVM operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

@@ -14,8 +14,7 @@
     - external-dns-operator-og.yaml
     - external-dns-operator-sub.yaml
 
-- name: Wait for External Secrets operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

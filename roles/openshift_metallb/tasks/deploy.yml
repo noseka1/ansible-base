@@ -6,8 +6,7 @@
     - metallb-operator-og.yaml
     - metallb-operator-sub.yaml
 
-- name: Wait for MetalLB operator to deploy
-  import_role:
+- import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:

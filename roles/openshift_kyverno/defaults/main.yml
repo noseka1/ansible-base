@@ -1,0 +1,4 @@
+kyverno_helm_repo: https://kyverno.github.io/kyverno/
+
+kyverno_namespace: kyverno
+kyverno_name: kyverno

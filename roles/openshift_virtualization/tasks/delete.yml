@@ -19,10 +19,10 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
     state: absent
-  when: qemu_kvm
+  when: openshift_virtualization_qemu_kvm
 
 - name: Delete OpenShift Virtualization operator (emulation)
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
     state: absent
-  when: not qemu_kvm
+  when: not openshift_virtualization_qemu_kvm

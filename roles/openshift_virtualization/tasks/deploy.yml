@@ -1,12 +1,12 @@
 - name: Deploy OpenShift Virtualization operator (KVM)
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
-  when: qemu_kvm
+  when: openshift_virtualization_qemu_kvm
 
 - name: Deploy OpenShift Virtualization operator (emulation)
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
-  when: not qemu_kvm
+  when: not openshift_virtualization_qemu_kvm
 
 - import_role:
     name: openshift_common

@@ -6,11 +6,11 @@
     url_password: '{{ vsphere_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
-    validate_certs: False
+    validate_certs: false
   register: vcenter_trusted_cert
 
 - set_fact:
-    vcenter_trusted_cert_found: True
+    vcenter_trusted_cert_found: true
   when:
     - vcenter_trusted_cert.json is defined
     - vcenter_trusted_cert.json.cert_chain is defined

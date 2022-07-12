@@ -23,7 +23,7 @@
     url: 'https://{{ minio_api_route.resources.0.spec.host }}/minio/health/live'
     method: GET
     status_code: [ 200 ]
-    validate_certs: False
+    validate_certs: false
   register: minio_health
   until: minio_health.status in [ 200 ]
   retries: 60

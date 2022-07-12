@@ -44,7 +44,7 @@
     namespace: '{{ nexus_repository_manager_namespace }}'
     pod: '{{ nexus_repository_manager_pod.resources.0.metadata.name }}'
     command: cat /nexus-data/admin.password
-  changed_when: False
+  changed_when: false
   register: nexus_repository_manager_initial_password
 
 - name: Obtain Nexus repository manager route
@@ -64,8 +64,8 @@
     headers:
       Content-Type: text/plain
     body: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 204, 401 ]
   register: nexus_repository_manager_password_update
 
@@ -78,8 +78,8 @@
     body_format: json
     body:
       enabled: false
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: 200
 
 - import_tasks: create_repo.yml

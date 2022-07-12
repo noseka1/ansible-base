@@ -5,10 +5,10 @@
   register: storage_classes
 
 - set_fact:
-    default_storage_class_exists: False
+    default_storage_class_exists: false
 
 - set_fact:
-    default_storage_class_exists: True
+    default_storage_class_exists: true
   when:
     - item.metadata is defined
     - item.metadata.annotations is defined

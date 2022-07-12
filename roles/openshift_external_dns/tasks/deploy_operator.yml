@@ -4,7 +4,7 @@
 
 - name: Grant the operator access to manage operand resources
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/openshift/external-dns-operator/release-0.1/config/rbac/extra-roles.yaml', split_lines=False) }}"
+    definition: "{{ lookup('url', 'https://raw.githubusercontent.com/openshift/external-dns-operator/release-0.1/config/rbac/extra-roles.yaml', split_lines=false) }}"
 
 - name: Deploy External DNS operator
   kubernetes.core.k8s:

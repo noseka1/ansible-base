@@ -9,5 +9,5 @@
     chart_ref: volsync/volsync
     chart_version: '{{ volsync_version  }}'
     release_namespace: '{{ volsync_namespace }}'
-    create_namespace: True
+    create_namespace: true
     release_values:

@@ -2,7 +2,7 @@
   slurp:
     src: '{{ cluster_config_dir }}/auth/kubeconfig'
   register: kubeconfig
-  become: True
+  become: true
 
 - debug:
     msg: OpenShift installation complete. You can log in with 'oc login --username admin {{ (kubeconfig.content | b64decode | from_yaml).clusters.0.cluster.server }}'

@@ -1,7 +1,7 @@
 - name: Create the certificate secrets
   kubernetes.core.k8s:
     definition: "{{ lookup('template', 'cert-secret.yml') }}"
-  no_log: True
+  no_log: true
   loop:
     - name: api-cert
       namespace: openshift-config
@@ -28,5 +28,5 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-    stable_cluster_validate_certs: False
+    stable_cluster_validate_certs: false
   when: (openshift_common_api_cert) is changed or (openshift_common_apps_cert) is changed

@@ -8,7 +8,7 @@
     name: '{{ crossplane_name }}'
     chart_ref: crossplane-stable/crossplane
     release_namespace: '{{ crossplane_namespace }}'
-    create_namespace: True
+    create_namespace: true
     release_values:
       securityContextCrossplane:
         runAsUser: null

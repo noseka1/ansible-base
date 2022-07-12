@@ -8,7 +8,7 @@
   args:
     creates: /etc/kubernetes/kubelet.conf
   register: kubeadm
-  become: True
+  become: true
 
 - debug: var=kubeadm.stdout_lines
   when: kubeadm is changed

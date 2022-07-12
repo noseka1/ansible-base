@@ -5,11 +5,11 @@
 - name: Reset retry count and job complete
   set_fact:
     stable_cluster_retry_count: -1
-    stable_cluster_job_complete: False
+    stable_cluster_job_complete: false
 
 - name: Set stable_cluster_validate_certs
   set_fact:
-    stable_cluster_validate_certs: '{{ stable_cluster_validate_certs if stable_cluster_validate_certs is defined else True }}'
+    stable_cluster_validate_certs: '{{ stable_cluster_validate_certs if stable_cluster_validate_certs is defined else true }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
   include_tasks: wait_for_stable_cluster_subtasks.yml
@@ -17,7 +17,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes APIs to become available
   command: >
     oc version {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
-  changed_when: False
+  changed_when: false
   register: oc_version_result
   until:
     - oc_version_result is not failed
@@ -31,7 +31,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift APIs to become available
   command: >
     oc api-resources {% if not stable_cluster_validate_certs %}--insecure-skip-tls-verify{% endif %}
-  changed_when: False
+  changed_when: false
   register: api_resources_result
   until:
     - api_resources_result is not failed

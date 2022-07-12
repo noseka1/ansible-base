@@ -5,7 +5,7 @@
     - br_netfilter
     - overlay
     - ip_tables
-  become: True
+  become: true
 
 - name: Setup required sysctl params
   sysctl: name={{ item.key }} value={{ item.value }} reload=yes
@@ -13,20 +13,20 @@
     - { key: net.bridge.bridge-nf-call-iptables,  value: 1 }
     - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }
     - { key: net.ipv4.ip_forward,                 value: 1 }
-  become: True
+  become: true
 
 - name: Put SELinux in permissive mode
   selinux:
     policy: targeted
     state: permissive
-  become: True
+  become: true
 
 - name: Add Kubernetes Yum repository
   copy:
     src: kubernetes.repo
     dest: /etc/yum.repos.d/kubernetes.repo
     mode: '0644'
-  become: True
+  become: true
 
 - name: Install Kubernetes bootstrap packages
   yum:
@@ -35,16 +35,16 @@
       - kubeadm
       - kubectl
     disable_excludes: kubernetes
-  become: True
+  become: true
 
 - name: Ensure the kubelet services is enabled and started
   service:
     name: '{{ item }}'
     state: started
-    enabled: True
+    enabled: true
   loop:
     - kubelet
-  become: True
+  become: true
 
 - name: Create a kubeadm config directory
   file:
@@ -55,9 +55,9 @@
 - name: Install further required packages
   yum:
     name: iproute-tc
-  become: True
+  become: true
 
 - name: Verify that container runtime socket {{ kubeadm_config_crisocket }} is functional
   command: crictl --runtime-endpoint unix://{{ kubeadm_config_crisocket }}
-  changed_when: False
-  become: True
+  changed_when: false
+  become: true

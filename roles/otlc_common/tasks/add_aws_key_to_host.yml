@@ -5,7 +5,7 @@
       --to - \
       --keys aws_access_key_id \
       2>/dev/null
-  changed_when: False
+  changed_when: false
   register: aws_access_key_id_extract
 
 - name: Extract the AWS secret key
@@ -16,7 +16,7 @@
       --to - \
       --keys aws_secret_access_key \
       2>/dev/null
-  changed_when: False
+  changed_when: false
   register: aws_secret_access_key_extract
 
 - name: Add the AWS key info to the host

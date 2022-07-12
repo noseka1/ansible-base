@@ -34,7 +34,7 @@
     method: GET
     status_code: 200
   register: result
-  ignore_errors: True
+  ignore_errors: true
   until:
     - result.json is defined
     - result.json.request_state == 'finished'

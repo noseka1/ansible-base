@@ -30,7 +30,6 @@
     chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
     chart_version: '{{ nfs_subdir_version  }}'
     release_namespace: '{{ nfs_subdir_namespace }}'
-    create_namespace: False
     release_values:
       nfs:
         server: '{{ rook_nfs_service.resources.0.spec.clusterIP }}'
@@ -40,4 +39,4 @@
       storageClass:
         name: nfs-subdir
         defaultClass: '{{ not default_storage_class_exists }}'
-        archiveOnDelete: False
+        archiveOnDelete: false

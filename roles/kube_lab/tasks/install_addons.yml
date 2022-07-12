@@ -1,37 +1,37 @@
 - name: Install pip3 tool
   yum:
     name: python36
-  become: True
+  become: true
 
 - name: Install Python modules required by Ansible
   pip:
     name:
       - kubernetes==11.0.0
       - openshift==0.11.2
-  become: True
+  become: true
 
 - name: Install flannel
   kubernetes.core.k8s:
-    resource_definition: '{{ lookup("url", flannel_url, split_lines=False) }}'
-    apply: True
-  become: True
+    resource_definition: '{{ lookup("url", flannel_url, split_lines=false) }}'
+    apply: true
+  become: true
 
 - name: Install ingress
   kubernetes.core.k8s:
-    definition: '{{ lookup("url", item, split_lines=False) }}'
-    apply: True
+    definition: '{{ lookup("url", item, split_lines=false) }}'
+    apply: true
   loop:
     - '{{ ingress_nginx_url }}'
-  become: True
+  become: true
 
 - name: Install dashboard
   kubernetes.core.k8s:
-    definition: '{{ lookup("url", kubernetes_dashboard_url, split_lines=False) }}'
-    apply: True
-  become: True
+    definition: '{{ lookup("url", kubernetes_dashboard_url, split_lines=false) }}'
+    apply: true
+  become: true
 
 - name: Install dashboard service
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "kubernetes-dashboard-service.yml", split_lines=False) }}'
-    apply: True
-  become: True
+    definition: '{{ lookup("template", "kubernetes-dashboard-service.yml", split_lines=false) }}'
+    apply: true
+  become: true

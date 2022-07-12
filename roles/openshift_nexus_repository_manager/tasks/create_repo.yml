@@ -4,8 +4,8 @@
     user: admin
     password: '{{ generic_user_password }}'
     method: GET
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 404 ]
   register: nexus_repository_manager_docker_repo_result
 
@@ -31,8 +31,8 @@
         v1Enabled: false
         forceBasicAuth: true
         httpPort: 8082
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: 201
   when: nexus_repository_manager_docker_repo_result.status != 200
 

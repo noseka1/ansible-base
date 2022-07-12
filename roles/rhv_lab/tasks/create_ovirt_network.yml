@@ -4,7 +4,7 @@
         url: '{{ rhv_lab.ovirt_url }}'
         username: '{{ rhv_lab.ovirt_username }}'
         password: '{{ rhv_lab.ovirt_password }}'
-        insecure: True
+        insecure: true
 
     - name: Create network
       ovirt_network:

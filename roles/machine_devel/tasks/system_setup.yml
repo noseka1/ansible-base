@@ -17,4 +17,4 @@
   loop:
     - '{{ github_dir }}/toolbox-container/toolbox_install_basic.sh'
     - '{{ github_dir }}/toolbox-container/toolbox_install_full.sh'
-  become: True
+  become: true

@@ -20,7 +20,7 @@
     name: '{{ rhsso_instance_name }}'
     namespace: '{{ rhsso_instance_namespace }}'
   register: rhsso_instance
-  until: rhsso_instance.resources.0.status.ready | default(False)
+  until: rhsso_instance.resources.0.status.ready | default(false)
   retries: 60
   delay: 10
 

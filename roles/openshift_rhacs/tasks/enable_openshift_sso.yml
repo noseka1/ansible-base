@@ -11,8 +11,8 @@
       enabled: true
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 400 ]
 
 - name: Get auth providers in RHACS
@@ -21,8 +21,8 @@
     method: GET
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 400 ]
   register: rhacs_auth_providers
 
@@ -42,8 +42,8 @@
       roleName: None
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 500 ]
 
 - name: Grant Admin role to users in cluster-admins group (returns HTTP 500 if the auth provider already exists)
@@ -59,6 +59,6 @@
       roleName: Admin
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 500 ]

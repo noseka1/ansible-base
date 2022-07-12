@@ -13,7 +13,6 @@
     chart_ref: rhacs/central-services
     chart_version: '{{ rhacs_version }}'
     release_namespace: '{{ rhacs_central_namespace }}'
-    create_namespace: False
     release_values:
       allowNonstandardNamespace: true
       allowNonstandardReleaseName: true

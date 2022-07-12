@@ -33,25 +33,24 @@
     chart_ref: 'openebs/openebs'
     chart_version: '{{ openebs_version  }}'
     release_namespace: '{{ openebs_namespace }}'
-    create_namespace: False
     release_values:
       localprovisioner:
-        enabled: False
+        enabled: false
       ndm:
-        enabled: False
+        enabled: false
       ndmOperator:
-        enabled: False
+        enabled: false
       webhook:
-        enabled: False
+        enabled: false
       snapshotOperator:
-        enabled: False
+        enabled: false
       provisioner:
-        enabled: False
+        enabled: false
       apiserver:
-        enabled: False
+        enabled: false
       lvm-localpv:
-        enabled: True
-        storageCapacity: False
+        enabled: true
+        storageCapacity: false
 
 - name: Check if default storage class exists
   import_role:

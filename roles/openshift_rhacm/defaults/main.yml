@@ -8,9 +8,9 @@ rhacm_subscription_name: advanced-cluster-management
 rhacm_instance_namespace: open-cluster-management
 rhacm_instance_name: multiclusterhub
 
-# False - to minio and use it as the s3 thanos backend
-# True - to use an existing s3 bucket as the s3 thanos backend
-rhacm_observability_use_existing_s3: False
+# false - to minio and use it as the s3 thanos backend
+# true - to use an existing s3 bucket as the s3 thanos backend
+rhacm_observability_use_existing_s3: false
 
 rhacm_observability_s3_bucket: s3_bucket
 rhacm_observability_s3_endpoint: s3_endpoint

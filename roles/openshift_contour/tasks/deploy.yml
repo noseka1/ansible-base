@@ -1,6 +1,6 @@
 - name: Deploy Contour operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', item, split_lines=False) }}"
+    definition: "{{ lookup('url', item, split_lines=false) }}"
   loop:
     - '{{ contour_operator_url }}'
 

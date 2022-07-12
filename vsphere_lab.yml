@@ -1,5 +1,5 @@
 - hosts: esxi
-  gather_facts: False
+  gather_facts: false
   tasks:
     - import_role:
         name: vsphere_lab
@@ -11,7 +11,7 @@
         name: vsphere_lab
 
 - hosts: vcsa
-  gather_facts: False
+  gather_facts: false
   tasks:
     - import_role:
         name: vsphere_lab

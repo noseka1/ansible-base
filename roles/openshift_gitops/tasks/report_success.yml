@@ -6,7 +6,7 @@
       username: admin
       password: '{{ generic_user_password }}'
     body_format: json
-    validate_certs: False
+    validate_certs: false
   register: result
   until: result.status == 200
   retries: 60

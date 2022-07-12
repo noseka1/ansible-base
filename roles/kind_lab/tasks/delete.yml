@@ -1,8 +1,8 @@
 - name: Check if kind cluster has already been deployed
   command: kubectl cluster-info --context kind-kind
-  ignore_errors: True
+  ignore_errors: true
   register: cluster_info_result
-  become: True
+  become: true
 
 - name: Delete kind cluster
   command: /usr/local/bin/kind delete cluster
@@ -10,7 +10,7 @@
     KIND_EXPERIMENTAL_PROVIDER: podman
   register: delete_kind_result
   when: cluster_info_result is success
-  become: True
+  become: true
 
 - debug:
     var: delete_kind_result.stderr_lines

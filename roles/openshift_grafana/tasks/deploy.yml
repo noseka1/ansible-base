@@ -48,7 +48,7 @@
 
 - name: Grab grafana service account token
   command: oc serviceaccounts get-token --namespace {{ grafana_instance_namespace }} {{ grafana_instance_name }}-serviceaccount
-  changed_when: False
+  changed_when: false
   register: grafana_serviceaccount_jwt
 
 - name: Allow Grafana to retrieve OpenShift monitoring metrics

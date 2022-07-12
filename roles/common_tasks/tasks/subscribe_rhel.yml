@@ -2,7 +2,7 @@
   file:
     dest: /etc/rhsm-host
     state: absent
-  become: True
+  become: true
 
 - name: Red Hat subscription
   include_role:

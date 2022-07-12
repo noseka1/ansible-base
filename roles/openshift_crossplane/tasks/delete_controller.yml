@@ -4,7 +4,7 @@
     chart_ref: crossplane-stable/crossplane
     release_namespace: '{{ crossplane_namespace }}'
     release_state: absent
-    wait: True
+    wait: true
 
 - import_role:
     name: openshift_common

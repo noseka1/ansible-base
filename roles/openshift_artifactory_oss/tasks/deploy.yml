@@ -20,7 +20,7 @@
     release_values:
       artifactory:
         nginx:
-          enabled: True
+          enabled: true
           service:
             type: ClusterIP
         artifactory:

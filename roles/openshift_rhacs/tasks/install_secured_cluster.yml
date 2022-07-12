@@ -9,8 +9,8 @@
     url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/ping'
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
   register: get_ping
   until:
     - get_ping.status == 200
@@ -26,8 +26,8 @@
       name: this-cluster
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ 200, 409 ]
   register: generate_cert_result
 
@@ -46,8 +46,8 @@
     url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/clusters'
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
   register: get_clusters_result
   until:
     - (get_clusters_result.json.clusters | selectattr("name", "equalto", "this-cluster") | length) == 1

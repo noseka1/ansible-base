@@ -11,14 +11,14 @@
       - abrt-libs
       - abrt-tui
     state: absent
-  become: True
+  become: true
 
 - name: Set the core file pattern
   sysctl: name=kernel.core_pattern value={{ core_pattern }} reload=yes
-  ignore_errors: True
-  become: True
+  ignore_errors: true
+  become: true
 
 - name: Enable core file generation
   lineinfile: dest=/etc/security/limits.conf regexp=" soft core unlimited" line="* soft core unlimited" insertafter=EOF state=present
-  ignore_errors: True
-  become: True
+  ignore_errors: true
+  become: true

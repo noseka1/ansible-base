@@ -2,7 +2,7 @@
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/docker-ce.repo
-  become: True
+  become: true
 
 - name: Workaround for installing containerd.io, https://bugzilla.redhat.com/show_bug.cgi?id=1756473
   ini_file:
@@ -10,7 +10,7 @@
     section: docker-ce-stable
     option: module_hotfixes
     value: "True"
-  become: True
+  become: true
 
 - name: Make sure conflicting podman is not installed
   yum:
@@ -19,31 +19,31 @@
       - podman-docker
       - podman-manpages
     state: absent
-  become: True
+  become: true
 
 - name: Install Docker
   yum:
     name:
       - docker-ce
       - docker-ce-cli
-  become: True
+  become: true
 
 - name: Encure required directory exists
   file:
     dest: /etc/docker
     state: directory
-  become: True
+  become: true
 
 - name: Install Docker daemon config
   template:
     src: daemon.json
     dest: /etc/docker/daemon.json
   notify: Restart docker
-  become: True
+  become: true
 
 - name: Start Docker service
   service:
     name: docker
     state: started
-    enabled: True
-  become: True
+    enabled: true
+  become: true

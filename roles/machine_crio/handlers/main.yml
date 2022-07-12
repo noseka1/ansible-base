@@ -2,4 +2,4 @@
   service:
     name: crio
     state: restarted
-  become: True
+  become: true

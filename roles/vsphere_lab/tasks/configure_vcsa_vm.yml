@@ -4,7 +4,7 @@
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
-    validate_certs: False
+    validate_certs: false
     state: poweredoff
 
 - name: Change memory size to {{ vsphere_lab.vcsa_vm.memory }}
@@ -13,7 +13,7 @@
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
-    validate_certs: False
+    validate_certs: false
     hardware:
       memory_mb: '{{ vsphere_lab.vcsa_vm.memory }}'
 
@@ -24,8 +24,8 @@
     password: '{{ vsphere_lab.esxi_password }}'
     datacenter: ha-datacenter
     name: '{{ vsphere_lab.vcsa_vm.name }}'
-    gather_network_info: True
-    validate_certs: False
+    gather_network_info: true
+    validate_certs: false
   register: vcsa_network_info
 
 - name: Remove the network interface from the {{ vsphere_lab.vcsa_vm.name }}
@@ -37,7 +37,7 @@
     name: '{{ vsphere_lab.vcsa_vm.name }}'
     mac_address: '{{ vcsa_network_info.network_data["0"].mac_address }}'
     state: absent
-    validate_certs: False
+    validate_certs: false
   when: vcsa_network_info.network_data["0"] is defined
 
 - name: Add network interface to the {{ vsphere_lab.vcsa_vm.name }} with well-known MAC address {{ vsphere_lab.vcsa_vm.macaddr }}
@@ -50,7 +50,7 @@
     network_name: VM Network
     mac_address: '{{ vsphere_lab.vcsa_vm.macaddr }}'
     state: present
-    validate_certs: False
+    validate_certs: false
 
 - name: Power vCSA back on
   vmware_guest:
@@ -58,7 +58,7 @@
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
-    validate_certs: False
+    validate_certs: false
     state: poweredon
 
 - name: Wait for vCenter to become available

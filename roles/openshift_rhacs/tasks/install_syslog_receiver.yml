@@ -25,8 +25,8 @@
       uiEndpoint: https://{{ rhacs_route.resources.0.spec.host }}
     url_username: admin
     url_password: '{{ generic_user_password }}'
-    force_basic_auth: True
-    validate_certs: False
+    force_basic_auth: true
+    validate_certs: false
     status_code: [ -1, 200, 500, 503 ]
   register: rhacs_notifier_result
   until: rhacs_notifier_result.status in [ 200, 500 ]

@@ -3,23 +3,23 @@
     name:
       - nfs-utils
     state: present
-  become: True
+  become: true
 
 - name: Start NFS server services
   service:
     name: '{{ item }}'
     state: started
-    enabled: True
+    enabled: true
   loop:
     - nfs-server
     - rpcbind
-  become: True
+  become: true
 
 - name: Create group kvm
   group:
     name: kvm
     gid: 36
-  become: True
+  become: true
 
 - name: Create user vdsm
   user:
@@ -27,7 +27,7 @@
     uid: 36
     groups:
       - kvm
-  become: True
+  become: true
 
 - name: Create /storage directory
   file:
@@ -36,7 +36,7 @@
     group: kvm
     state: directory
     mode: '0755'
-  become: True
+  become: true
 
 - name: Export /storage via NFS
   template:
@@ -52,4 +52,4 @@
     - nfs-server
     - rpcbind
   when: nfs_config is changed
-  become: True
+  become: true

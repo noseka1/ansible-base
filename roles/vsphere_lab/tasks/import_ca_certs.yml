@@ -5,31 +5,30 @@
   file:
     path: '{{ download_directory }}'
     state: directory
-  become: True
+  become: true
 
 - name: Download CA certificates from https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip
   get_url:
     url: 'https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip'
     dest: '{{ download_directory }}'
-    validate_certs: False
-  become: True
+    validate_certs: false
+  become: true
 
 - name: Download CA certificates from https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip
   unarchive:
     src: '{{ download_directory }}/download.zip'
     dest: '{{ download_directory }}'
-    remote_src: True
+    remote_src: true
   register: vsphere_certs
-  become: True
+  become: true
 
 - name: Update CA Trust
   command: update-ca-certificates
   when: vsphere_certs is changed
-  become: True
+  become: true
 
 - name: Check that certificates are trusted (this will fail if not)
   get_url:
     url: 'https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip'
     dest: '{{ download_directory }}'
-    validate_certs: True
-  become: True
+  become: true

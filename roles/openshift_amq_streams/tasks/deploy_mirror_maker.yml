@@ -6,7 +6,7 @@
 
 - name: Deploy two Kafka instances and Mirror Maker
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', item, split_lines=False) }}"
+    definition: "{{ lookup('url', item, split_lines=false) }}"
     namespace: kafka-mirror-maker
   loop:
     - '{{ amq_streams_examples }}/mirror-maker/kafka-source.yaml'

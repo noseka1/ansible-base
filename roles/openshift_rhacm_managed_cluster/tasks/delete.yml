@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
-    wait: True
+    wait: true
     wait_timeout: 1800
   loop:
     - cluster-managedcluster.yaml

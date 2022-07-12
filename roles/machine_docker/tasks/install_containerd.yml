@@ -1,11 +1,11 @@
 - name: Install containerd
   yum:
     name: containerd.io
-  become: True
+  become: true
 
 - name: Generate default configuration
   command: containerd config default
-  changed_when: False
+  changed_when: false
   register: containerd_config
 
 - set_fact:
@@ -16,11 +16,11 @@
     content: '{{ containerd_config }}'
     dest: /etc/containerd/config.toml
   notify: Restart containerd
-  become: True
+  become: true
 
 - name: Start containerd service
   service:
     name: containerd
     state: started
-    enabled: True
-  become: True
+    enabled: true
+  become: true

@@ -7,35 +7,35 @@
   file:
     path: '{{ kubeadm_config.cert_dir }}'
     state: directory
-  become: True
+  become: true
 
 - name: Copy over the custom CA certificate and key
   copy:
     content: '{{ item.content }}'
     dest: '{{ item.file }}'
     mode: '{{ item.mode }}'
-  no_log: True
+  no_log: true
   loop:
     - { content: '{{ kubeadm_ca_cert.crt }}', file: '{{ kubeadm_config.cert_dir }}/ca.crt', mode: '0644' }
     - { content: '{{ kubeadm_ca_cert.key }}', file: '{{ kubeadm_config.cert_dir }}/ca.key', mode: '0640' }
-  become: True
+  become: true
 
 - name: Install Kubernetes master
   command: kubeadm init --config {{ kubeadm_config_dir }}/kubeadm_master_config.yml
   args:
     creates: /etc/kubernetes/kubelet.conf
   register: kubeadm
-  become: True
+  become: true
 
 - debug: var=kubeadm.stdout_lines
   when: kubeadm is changed
 
 - name: Ensure that the /root/.kube directory exists
   file: dest=/root/.kube state=directory mode=0755
-  become: True
+  become: true
 
 - name: Copy Kubernetes admin credentials
   command: cp /etc/kubernetes/admin.conf /root/.kube/config
   args:
     creates: /root/.kube/config
-  become: True
+  become: true

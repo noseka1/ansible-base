@@ -13,4 +13,4 @@
     - { dest: /etc/ssh/ssh_host_rsa_key.pub,     content: '{{ ssh_host_keys.ssh_host_rsa_key_pub }}',     group: root,     mode: '0644' }
   loop_control:
     label: '{{ item.dest }}'
-  become: True
+  become: true

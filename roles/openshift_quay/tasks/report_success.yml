@@ -2,7 +2,7 @@
   uri:
     url: 'https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/discovery'
     method: GET
-    validate_certs: False
+    validate_certs: false
   register: result
   until: result.status == 200
   retries: 60

@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
-    wait: True
+    wait: true
   loop:
     - default-providerconfig-aws.yaml
 
@@ -10,4 +10,4 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', 'aws-provider.yaml') }}"
     state: absent
-    wait: True
+    wait: true

@@ -1,5 +1,5 @@
 - hosts: localhost
-  gather_facts: False
+  gather_facts: false
   tasks:
     - import_role:
         name: otlc_common
@@ -18,7 +18,7 @@
         body_format: json
         status_code: 200
         timeout: 120
-      ignore_errors: True
+      ignore_errors: true
       loop: '{{ rhlab_services_provisioned }}'
       loop_control:
         label: '{{ item.name }} retires on {{ item.retires_on }}'

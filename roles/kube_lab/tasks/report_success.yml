@@ -5,7 +5,7 @@
     name: kubernetes-dashboard-nodeport
     namespace: kubernetes-dashboard
   register: kubernetes_dashboard_result
-  become: True
+  become: true
 
 - name: Obtain admin sa
   kubernetes.core.k8s_info:
@@ -14,7 +14,7 @@
     namespace: kube-system
     name: admin
   register: admin_sa_result
-  become: True
+  become: true
 
 - name: Obtain token for the admin sa
   kubernetes.core.k8s_info:
@@ -23,7 +23,7 @@
     namespace: kube-system
     name: '{{ admin_sa_result.resources.0.secrets.0.name }}'
   register: admin_secret_result
-  become: True
+  become: true
 
 - set_fact:
     msg: |

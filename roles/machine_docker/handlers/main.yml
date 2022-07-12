@@ -2,10 +2,10 @@
   service:
     name: docker
     state: restarted
-  become: True
+  become: true
 
 - name: Restart containerd
   service:
     name: containerd
     state: restarted
-  become: True
+  become: true

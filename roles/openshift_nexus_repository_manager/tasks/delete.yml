@@ -3,12 +3,12 @@
     name: '{{ nexus_repository_manager_name }}'
     release_namespace: '{{ nexus_repository_manager_namespace }}'
     release_state: absent
-    wait: True
+    wait: true
 
 - name: Delete Nexus repository manager namespace
   kubernetes.core.k8s:
     definition: '{{ lookup("template", item) }}'
     state: absent
-    wait: True
+    wait: true
   loop:
     - nexus-repository-manager-ns.yaml

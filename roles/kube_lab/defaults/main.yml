@@ -11,7 +11,7 @@ kubeadm_config_crisocket: /var/run/crio/crio.sock
 kubeadm_config_dir: '{{ ansible_env["HOME"] }}/kubeadm'
 
 # Allow scheduling pods on master nodes
-kubeadm_masters_schedulable: True
+kubeadm_masters_schedulable: true
 
 kubeconfig_dir: /root/.kube
 kubeconfig_file: '{{ kubeconfig_dir }}/config'

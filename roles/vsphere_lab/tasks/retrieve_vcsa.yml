@@ -5,6 +5,6 @@
     password: '{{ vsphere_lab.esxi_password }}'
     name: '{{ vsphere_lab.vcsa_vm.name }}'
     datacenter: ha-datacenter
-    validate_certs: False
-  ignore_errors: True
+    validate_certs: false
+  ignore_errors: true
   register: vcsa_vm

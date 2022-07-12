@@ -8,7 +8,7 @@
 
 - name: Retrieve latest version on {{ openshift_upgrade_target_channel }} channel
   script: files/openshift_upgrade_path.py {{ openshift_upgrade_target_channel }}
-  changed_when: False
+  changed_when: false
   register: upgrade_path
   when: openshift_upgrade_target_version == 'latest'
 

@@ -11,11 +11,11 @@
     - { section: 'rhsm', option: 'baseurl', value: 'https://cdn.redhat.com' }
     - { section: 'rhsm', option: 'repo_ca_cert', value: '%(ca_cert_dir)sredhat-uep.pem' }
     - { section: 'rhsm', option: 'full_refresh_on_yum', value: 0 }
-  become: True
+  become: true
 
 - name: Clean up the pre-existing Red Hat subscription
   command: subscription-manager clean
-  become: True
+  become: true
 
 - name: Red Hat subscription
   include_role:
@@ -44,14 +44,14 @@
   rpm_key:
     key: '{{ epel_repo_gpg_key_url }}'
   when: not epel_repofile_result.stat.exists
-  become: True
+  become: true
 
 - name: Install EPEL repo
   yum:
     name: '{{ epel_repo_url }}'
   register: result
   when: not epel_repofile_result.stat.exists
-  become: True
+  become: true
 
 - name: Install rpms required by Ansible modules
   yum:
@@ -59,7 +59,7 @@
       - python2-kubernetes
       - python2-openshift
       - python2-boto3
-  become: True
+  become: true
   when: ansible_distribution_major_version is version('7', '==')
 
 - name: Install rpms required by Ansible modules
@@ -68,7 +68,7 @@
       - python3-kubernetes
       - python3-openshift
       - python3-boto3
-  become: True
+  become: true
   when: ansible_distribution_major_version is version('8', '==')
 
 - name: Ensure ~/.aws directory exists

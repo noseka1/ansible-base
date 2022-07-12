@@ -1,5 +1,5 @@
 - hosts: localhost
-  gather_facts: False
+  gather_facts: false
 
   tasks:
     - import_role:
@@ -14,7 +14,7 @@
         ansible_user: '{{ otlc_service_info.ssh_username }}'
         ansible_password: '{{ otlc_service_info.ssh_password }}'
         otlc_service_info: '{{ otlc_service_info }}'
-      changed_when: False
+      changed_when: false
 
 - hosts: '{{ hostvars.localhost.otlc_service_info.ssh_hostname }}'
   tasks:

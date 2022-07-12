@@ -16,14 +16,14 @@
     - root
     - ansible
     - developer
-  become: True
+  become: true
 
 - name: Set UseDNS to no in sshd config
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: '^UseDNS'
     line: UseDNS no
-  become: True
+  become: true
 
 - name: Install SSH host keys
   import_tasks: install_ssh_host_keys.yml
@@ -35,5 +35,5 @@
   copy:
     dest: /.autorelabel
     content: ''
-    force: False
-  become: True
+    force: false
+  become: true

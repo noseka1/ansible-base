@@ -5,7 +5,7 @@
     url_username: '{{ vsphere_lab.vcenter_username }}'
     url_password: '{{ vsphere_lab.vcenter_password }}'
     status_code: [ 201 ]
-    validate_certs: False
+    validate_certs: false
   register: vcenter_session
 
 - name: List vCenter trusted certs (retry if the cert component is still starting up)
@@ -16,7 +16,7 @@
     url_password: '{{ vsphere_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
-    validate_certs: False
+    validate_certs: false
   register: vcenter_trusted_certs
   until: vcenter_trusted_certs.status == 200
   retries: 60
@@ -40,7 +40,7 @@
         cert_chain:
           - '{{ vsphere_lab_certs.vcenter.ca_crt }}'
     status_code: [ 201 ]
-    validate_certs: False
+    validate_certs: false
   when:
     - vcenter_trusted_cert_found is not defined
 
@@ -52,7 +52,7 @@
     url_password: '{{ vsphere_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
-    validate_certs: False
+    validate_certs: false
   register: vcenter_certs
 
 - name: Set vCenter TLS certs
@@ -69,7 +69,7 @@
       key: '{{ vsphere_lab_certs.vcenter.key }}'
       root_cert: '{{ vsphere_lab_certs.vcenter.ca_crt }}'
     status_code: [ 204 ]
-    validate_certs: False
+    validate_certs: false
   when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
 
 - name: Wait for 60 seconds for vCenter services to begin restarting

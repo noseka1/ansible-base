@@ -10,7 +10,7 @@
   uri:
     url: 'https://{{ grafana_instance_route.resources.0.spec.host }}'
     method: GET
-    validate_certs: False
+    validate_certs: false
     status_code: [ 403 ]
   register: result
   until: result.status == 403

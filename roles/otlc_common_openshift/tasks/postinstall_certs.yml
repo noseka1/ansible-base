@@ -9,7 +9,7 @@
   route53_info:
     query: record_sets
     hosted_zone_id: '{{ cluster_dns.resources.0.spec.publicZone.id }}'
-  ignore_errors: True
+  ignore_errors: true
   register: aws_dns_access_result
 
 - name: If we have sufficient permissions, go ahead and set up OpenShift certificates

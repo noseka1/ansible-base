@@ -1,16 +1,16 @@
 - name: Grab vault's service account token
   command: oc serviceaccounts get-token --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}
-  changed_when: False
+  changed_when: false
   register: token_reviewer_jwt
 
 - name: Grab vault's service account CA
   command: oc exec --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-  changed_when: False
+  changed_when: false
   register: kubernetes_ca_cert
 
 - name: Grab OpenShift API server URL
   command: oc whoami --show-server
-  changed_when: False
+  changed_when: false
   register: kubernetes_host
 
 - name: Enable Kubernetes authentication

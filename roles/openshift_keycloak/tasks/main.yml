@@ -10,7 +10,7 @@
     name: keycloak
     namespace: '{{ keycloak_namespace }}'
   register: keycloak_keycloak
-  until: keycloak_keycloak.resources.0.status.ready | default(False)
+  until: keycloak_keycloak.resources.0.status.ready | default(false)
   retries: 60
   delay: 10
 

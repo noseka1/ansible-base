@@ -20,7 +20,7 @@
       - setools-console # sesearch
     state: present
   when: ansible_distribution in [ "RedHat", "Fedora" ]
-  become: True
+  become: true
 
 - name: Install tools RHEL7
   yum:
@@ -28,7 +28,7 @@
       - policycoreutils-python # semanage
     state: present
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 7
-  become: True
+  become: true
 
 - name: Install tools RHEL8
   yum:
@@ -41,7 +41,7 @@
       - wireshark-cli
     state: present
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int == 8
-  become: True
+  become: true
 
 - name: Install tools RHEL9
   yum:
@@ -53,7 +53,7 @@
       - wireshark-cli
     state: present
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 9
-  become: True
+  become: true
 
 - name: Install tools Fedora
   yum:
@@ -71,7 +71,7 @@
       - wireshark-cli
     state: present
   when: ansible_distribution == "Fedora"
-  become: True
+  become: true
 
 - name: Install tools used by ranger
   yum:
@@ -81,4 +81,4 @@
       - unoconv
       - mediainfo
   when: ansible_distribution == "Fedora"
-  become: True
+  become: true

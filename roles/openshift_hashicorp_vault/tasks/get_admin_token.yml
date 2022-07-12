@@ -2,7 +2,7 @@
   hashivault_token_create:
     display_name: admin
     policies: admin
-  changed_when: False
+  changed_when: false
   register: hashicorp_vault_token_result
   environment:
     VAULT_ADDR: '{{ hashicorp_vault_addr }}'

@@ -15,6 +15,6 @@
 
 - name: Deploy vSphere CSI driver
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', item, split_lines=False) }}"
+    definition: "{{ lookup('url', item, split_lines=false) }}"
   loop:
     - '{{ vsphere_csi_base_url }}//manifests/vanilla/vsphere-csi-driver.yaml'

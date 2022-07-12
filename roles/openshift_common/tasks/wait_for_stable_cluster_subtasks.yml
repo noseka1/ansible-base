@@ -12,12 +12,12 @@
     kind: ClusterVersion
     name: version
     validate_certs: '{{ stable_cluster_validate_certs }}'
-  ignore_errors: True
+  ignore_errors: true
   register: clusterversion_result
 
-- name: Set job complete to True
+- name: Set job complete to true
   set_fact:
-    stable_cluster_job_complete: True
+    stable_cluster_job_complete: true
   when:
     - clusterversion_result.resources is defined
     - clusterversion_result.resources | length > 0

@@ -1,7 +1,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.vcenter_hostname }} to come back up
   uri:
     url: 'https://{{ vsphere_lab.vcenter_hostname }}'
-    validate_certs: False
+    validate_certs: false
   register: result
   until: result.status == 200
   retries: 60
@@ -14,7 +14,7 @@
     url_username: '{{ vsphere_lab.vcenter_username }}'
     url_password: '{{ vsphere_lab.vcenter_password }}'
     status_code: [ 201 ]
-    validate_certs: False
+    validate_certs: false
   register: vcenter_session
   delegate_to: localhost
   until: vcenter_session.status == 201

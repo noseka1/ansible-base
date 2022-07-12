@@ -1,6 +1,6 @@
 - name: Execute help command
   raw: help
-  changed_when: False
+  changed_when: false
   register: vcsa_help_output
 
 - name: Change login shell from /bin/appliancesh to /bin/bash
@@ -17,7 +17,7 @@
   authorized_key:
     user: root
     key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
-  become: True
+  become: true
 
 - name: Disable session timeout (user logged out due to inactivity) for vCenter web console
   ini_file:

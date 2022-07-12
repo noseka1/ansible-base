@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
-    wait: True
+    wait: true
   loop:
     - default-providerconfig-terraform.yaml
 
@@ -10,7 +10,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', '{{ item }}') }}"
     state: absent
-    wait: True
+    wait: true
   loop:
     - terraform-controllerconfig.yaml
     - terraform-provider.yaml

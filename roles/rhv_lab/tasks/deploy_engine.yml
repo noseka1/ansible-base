@@ -1,10 +1,10 @@
 - name: Reset dnf module virt before switching it to virt:av
   command: dnf module reset virt --assumeyes
-  become: True
+  become: true
 
 - name: Enable dnf module virt:av
   command: dnf module enable virt:av --assumeyes
-  become: True
+  become: true
 
 - name: Install rpms
   yum:
@@ -13,20 +13,20 @@
       - rhvm-appliance
       - ovirt-hosted-engine-setup
     state: present
-  become: True
+  become: true
 
 - name: Ensure vdsm user is in the sanlock group (workaround for https://access.redhat.com/solutions/632983)
   user:
     name: vdsm
     groups: sanlock
-    append: True
-  become: True
+    append: true
+  become: true
 
 - name: Firewalld is required to be enabled and active in order to correctly deploy hosted-engine
   service:
     name: firewalld
     state: started
-    enabled: True
+    enabled: true
 
 - name:
   template:

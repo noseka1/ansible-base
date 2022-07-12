@@ -10,7 +10,7 @@
   uri:
     url: 'https://{{ mtc_route.resources.0.spec.host }}'
     method: GET
-    validate_certs: False
+    validate_certs: false
   register: result
   until: result.status == 200
   retries: 60

@@ -12,7 +12,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for RHACS to come up
   uri:
     url: 'https://{{ rhacs_route.resources.0.spec.host }}'
-    validate_certs: False
+    validate_certs: false
   register: result
   until: result.status == 200
   retries: 12

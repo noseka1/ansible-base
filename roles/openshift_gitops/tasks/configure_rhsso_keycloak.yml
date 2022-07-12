@@ -19,7 +19,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: realms_list_result
 
@@ -34,8 +34,8 @@
       id: argocd
       realm: argocd
       displayName: Argo CD
-      enabled: True
-    validate_certs: False
+      enabled: true
+    validate_certs: false
     status_code: [ 201 ]
   when: (realms_list_result.json | selectattr("id", "equalto", "argocd") | list| length) == 0
 
@@ -44,7 +44,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/client-scopes
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: client_scopes_list_result
 
@@ -72,7 +72,7 @@
           name: groups
           protocol: openid-connect
           protocolMapper: oidc-group-membership-mapper
-    validate_certs: False
+    validate_certs: false
     status_code: [ 201 ]
   when: (client_scopes_list_result.json | selectattr("name", "equalto", "groups") | list | length) == 0
 
@@ -81,7 +81,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: clients_list_result
 
@@ -110,7 +110,7 @@
       rootUrl: https://{{ argocd_route.resources.0.spec.host }}
       redirectUris:
         - https://{{ argocd_route.resources.0.spec.host }}/auth/callback
-    validate_certs: False
+    validate_certs: false
     status_code: [ 201 ]
   when: (clients_list_result.json | selectattr("clientId", "equalto", "argocd") | list | length) == 0
 
@@ -119,7 +119,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: clients_list_result
 
@@ -131,7 +131,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients/{{ client_id }}/client-secret
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: client_secret_result
 
@@ -140,7 +140,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/groups
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: groups_list_result
 
@@ -153,7 +153,7 @@
     body_format: json
     body:
       name: ArgoCDAdmins
-    validate_certs: False
+    validate_certs: false
     status_code: [ 201 ]
   when: (groups_list_result.json | selectattr("name", "equalto", "ArgoCDAdmins") | list | length) == 0
 
@@ -169,7 +169,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/identity-provider/instances
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: identity_providers_list_result
 
@@ -188,7 +188,7 @@
         clientSecret: keycloak
       enabled: true
       providerId: openshift-v4
-    validate_certs: False
+    validate_certs: false
     status_code: [ 201 ]
   when: (identity_providers_list_result.json | selectattr("providerId", "equalto", "openshift-v4") | list | length) == 0
 
@@ -197,7 +197,7 @@
     url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
     headers:
       Authorization: bearer {{ rhsso_access_token }}
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200 ]
   register: authentication_flow_executions_list_result
 
@@ -214,6 +214,6 @@
     body:
       id: '{{ review_profile_config_execution.id }}'
       requirement: DISABLED
-    validate_certs: False
+    validate_certs: false
     status_code: [ 202, 204 ]
   when: review_profile_config_execution.requirement != "DISABLED"

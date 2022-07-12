@@ -3,4 +3,4 @@
     name: kafdrop
     release_namespace: kafka-single
     release_state: absent
-    wait: True
+    wait: true

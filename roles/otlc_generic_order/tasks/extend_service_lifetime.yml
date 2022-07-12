@@ -13,5 +13,5 @@
         check_box_1: t
     body_format: json
     status_code: 200
-  ignore_errors: True
+  ignore_errors: true
   loop: [ 1, 2, 3 ]

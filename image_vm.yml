@@ -1,6 +1,6 @@
 - name: Configure virtual machine image
   hosts: localhost
-  gather_facts: False
+  gather_facts: false
   tasks:
   - name: Add a chroot host
     add_host:
@@ -9,6 +9,6 @@
 
 - hosts: '{{ chroot_location }}'
   connection: chroot
-  gather_facts: False
+  gather_facts: false
   roles:
     - image_vm

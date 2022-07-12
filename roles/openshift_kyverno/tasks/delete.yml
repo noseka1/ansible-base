@@ -3,19 +3,19 @@
     name: '{{ kyverno_name }}-policies'
     release_namespace: '{{ kyverno_namespace }}'
     state: absent
-    wait: True
+    wait: true
 
 - name: Delete Kyverno
   kubernetes.core.helm:
     name: '{{ kyverno_name }}'
     release_namespace: '{{ kyverno_namespace }}'
     state: absent
-    wait: True
+    wait: true
 
 - name: Delete Kyverno namespace
   kubernetes.core.k8s:
     definition: '{{ lookup("template", item) }}'
     state: absent
-    wait: True
+    wait: true
   loop:
     - kyverno-ns.yaml

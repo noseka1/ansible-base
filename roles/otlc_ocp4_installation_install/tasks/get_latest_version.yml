@@ -1,6 +1,6 @@
 - name: Retrieve latest version on {{ otlc_ocp4_installation_openshift_channel }} channel
   script: ../openshift_upgrade/files/openshift_upgrade_path.py {{ otlc_ocp4_installation_openshift_channel }}
-  changed_when: False
+  changed_when: false
   register: upgrade_path
 
 - name: Set target OpenShift version

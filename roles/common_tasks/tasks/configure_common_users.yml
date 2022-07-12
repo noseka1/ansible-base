@@ -2,7 +2,7 @@
   user:
     name: root
     password: '{{ generic_user_password | string | password_hash("sha512", "constant") }}'
-  become: True
+  become: true
 
 - name: Create users
   user:
@@ -13,7 +13,7 @@
   loop:
     - ansible
     - developer
-  become: True
+  become: true
 
 - name: Set authorized key for users
   authorized_key:
@@ -23,4 +23,4 @@
     - root
     - ansible
     - developer
-  become: True
+  become: true

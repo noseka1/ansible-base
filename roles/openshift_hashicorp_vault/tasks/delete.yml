@@ -5,7 +5,7 @@
     chart_version: '{{ hashicorp_vault_chart_version | default(omit) }}'
     release_namespace: '{{ hashicorp_vault_namespace }}'
     release_state: absent
-    wait: True
+    wait: true
 
 - import_role:
     name: openshift_common

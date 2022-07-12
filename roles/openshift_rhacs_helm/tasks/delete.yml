@@ -3,23 +3,23 @@
     name: rhacs-central-services
     release_namespace: '{{ rhacs_central_namespace }}'
     release_state: absent
-    wait: True
+    wait: true
 
 - name: Delete namespace {{ rhacs_central_namespace }}
   kubernetes.core.k8s:
     definition: "{{ lookup('template', 'rhacs-central-ns.yaml') }}"
     state: absent
-    wait: True
+    wait: true
 
 - name: Delete rhacs-secured-cluster-services
   kubernetes.core.helm:
     name: rhacs-secured-cluster-services
     release_namespace: '{{ rhacs_secured_cluster_services_namespace }}'
     release_state: absent
-    wait: True
+    wait: true
 
 - name: Delete namespace {{ rhacs_secured_cluster_services_namespace }}
   kubernetes.core.k8s:
     definition: "{{ lookup('template', 'rhacs-this-cluster-ns.yaml') }}"
     state: absent
-    wait: True
+    wait: true

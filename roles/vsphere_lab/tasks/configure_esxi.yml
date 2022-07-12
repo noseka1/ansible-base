@@ -9,7 +9,7 @@
       start_delay: 0
       stop_delay: 0
       stop_action: powerOff
-    validate_certs: False
+    validate_certs: false
 
 - name: Configure vCSA to start on ESXi host start
   community.vmware.vmware_host_auto_start:
@@ -21,7 +21,7 @@
     power_info:
       start_action: powerOn
       start_order: 1
-    validate_certs: False
+    validate_certs: false
 
 - name: Disable session timeouts
   vmware_host_config_manager:
@@ -34,7 +34,7 @@
       UserVars.ESXiShellTimeOut: 0
       UserVars.ESXiShellInteractiveTimeOut: 0
       UserVars.DcuiTimeOut: 0
-    validate_certs: False
+    validate_certs: false
   register: esxi_config
 
 - name: Reboot ESXi for configuration changes to take effect
@@ -44,8 +44,8 @@
     password: '{{ vsphere_lab.esxi_password }}'
     esxi_hostname: '{{ vsphere_lab.esxi_hostname }}'
     state: reboot-host
-    force: True
-    validate_certs: False
+    force: true
+    validate_certs: false
   when: esxi_config is changed
 
 - name: Wait for ESXi host to start rebooting

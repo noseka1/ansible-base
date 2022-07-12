@@ -6,7 +6,7 @@
       - oci-systemd-hook
       - runc
     enablerepo: rhocp-4.9-for-rhel-8-x86_64-rpms
-  become: True
+  become: true
 
 - name:
   ini_file:
@@ -15,11 +15,11 @@
     option: conmon
     value: '"/usr/bin/conmon"'
   notify: Restart crio
-  become: True
+  become: true
 
 - name: Start crio service
   service:
     name: crio
     state: started
-    enabled: True
-  become: True
+    enabled: true
+  become: true

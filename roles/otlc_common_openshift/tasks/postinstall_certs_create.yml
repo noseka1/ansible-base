@@ -20,5 +20,5 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-    stable_cluster_validate_certs: False
+    stable_cluster_validate_certs: false
   when: (otlc_common_openshift_api_cert is changed) or (otlc_common_openshift_apps_cert is changed)

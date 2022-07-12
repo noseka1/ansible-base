@@ -4,4 +4,4 @@
   loop:
     - admin-sa.yaml
     - admin-clusterrolebinding.yaml
-  become: True
+  become: true

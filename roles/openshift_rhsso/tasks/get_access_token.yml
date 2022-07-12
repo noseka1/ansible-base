@@ -8,7 +8,7 @@
       username: '{{ rhsso_username }}'
       password: '{{ rhsso_password }}'
       grant_type: password
-    validate_certs: False
+    validate_certs: false
     status_code: [ 200, 401 ]
   register: token_result
 

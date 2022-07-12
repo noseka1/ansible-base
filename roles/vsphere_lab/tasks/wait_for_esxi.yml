@@ -3,9 +3,9 @@
     hostname: '{{ vsphere_lab.esxi_hostname }}'
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
-    validate_certs: False
+    validate_certs: false
   delegate_to: localhost
-  ignore_errors: True
+  ignore_errors: true
   register: result
   until: result is success
   retries: 60

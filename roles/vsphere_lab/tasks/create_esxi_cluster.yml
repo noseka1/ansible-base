@@ -5,7 +5,7 @@
     password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.datacenter_name }}'
     state: present
-    validate_certs: False
+    validate_certs: false
 
 - name: Create Cluster
   vmware_cluster:
@@ -14,9 +14,9 @@
     password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.datacenter_name }}'
     cluster_name: '{{ vsphere_lab.cluster_name }}'
-    ignore_ha: True
-    ignore_drs: True
-    validate_certs: False
+    ignore_ha: true
+    ignore_drs: true
+    validate_certs: false
 
 - name: Obtain Cluster info
   vmware_cluster_info:
@@ -25,7 +25,7 @@
     password: '{{ vsphere_lab.vcenter_password }}'
     datacenter: '{{ vsphere_lab.datacenter_name }}'
     cluster_name: '{{ vsphere_lab.cluster_name }}'
-    validate_certs: False
+    validate_certs: false
   register: vsphere_cluster_info
 
 - set_fact:
@@ -41,7 +41,7 @@
     username: '{{ vsphere_lab.vcenter_username }}'
     password: '{{ vsphere_lab.vcenter_password }}'
     advanced_settings: '{{ vsphere_advanced_settings }}'
-    validate_certs: False
+    validate_certs: false
 
 - name: Add ESXi Host to vCenter
   vmware_host:
@@ -54,4 +54,4 @@
     esxi_username: '{{ vsphere_lab.esxi_username }}'
     esxi_password: '{{ vsphere_lab.esxi_password }}'
     state: present
-    validate_certs: False
+    validate_certs: false

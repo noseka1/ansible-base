@@ -32,5 +32,6 @@
       Kubernetes API server: https://{{ hostvars[groups['kube_master'][0]]['ansible_host'] }}:6443
       Kubernetes dashboard: https://{{ hostvars[groups['kube_master'][0]]['ansible_host'] }}:{{ kubernetes_dashboard_result.resources.0.spec.ports.0.nodePort }}
 
-      Authorization token: {{ admin_secret_result.resources.0.data.token | b64decode}}
+      Authorization token: {{ admin_secret_result.resources.0.data.token | b64decode }}
+
 - debug: msg="{{ msg.split('\n') }}"

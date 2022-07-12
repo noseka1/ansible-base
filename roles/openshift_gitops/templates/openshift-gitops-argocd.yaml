@@ -15,3 +15,4 @@ spec:
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
+  kustomizeBuildOptions: --enable-helm

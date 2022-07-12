@@ -44,6 +44,5 @@
   become: true
 
 - name: Create an SSH keypair to be used for your OpenShift environment
-  shell: ssh-keygen -f ~/.ssh/cluster-key -N ''
-  args:
-    creates: .ssh/cluster-key
+  openssh_keypair:
+    path: .ssh/cluster-key

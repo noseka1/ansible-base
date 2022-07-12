@@ -1,6 +1,6 @@
 - name: Retrieve SSH public key
-  shell: cat .ssh/cluster-key.pub
-  changed_when: false
+  slurp:
+    path: .ssh/cluster-key.pub
   register: ssh_public_key
 
 - name: Create install-config.yaml

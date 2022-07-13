@@ -8,9 +8,9 @@
     - { section: 'server', option: 'prefix', value: '/subscription' }
     - { section: 'server', option: 'hostname', value: 'subscription.rhsm.redhat.com' }
     - { section: 'server', option: 'port', value: '443' }
-    - { section: 'rhsm', option: 'baseurl', value: 'https://cdn.redhat.com' }
-    - { section: 'rhsm', option: 'repo_ca_cert', value: '%(ca_cert_dir)sredhat-uep.pem' }
-    - { section: 'rhsm', option: 'full_refresh_on_yum', value: 0 }
+    - { section: 'rhsm',   option: 'baseurl', value: 'https://cdn.redhat.com' }
+    - { section: 'rhsm',   option: 'repo_ca_cert', value: '%(ca_cert_dir)sredhat-uep.pem' }
+    - { section: 'rhsm',   option: 'full_refresh_on_yum', value: 0 }
   become: true
 
 - name: Clean up the pre-existing Red Hat subscription
@@ -53,23 +53,28 @@
   when: not epel_repofile_result.stat.exists
   become: true
 
-- name: Install rpms required by Ansible modules
+- name: Install python-pip
   yum:
     name:
-      - python2-kubernetes
-      - python2-openshift
-      - python2-boto3
+      - python2-pip
   become: true
   when: ansible_distribution_major_version is version('7', '==')
 
-- name: Install rpms required by Ansible modules
+- name: Install python-pip
   yum:
     name:
-      - python3-kubernetes
-      - python3-openshift
-      - python3-boto3
+      - python3-pip
   become: true
   when: ansible_distribution_major_version is version('8', '==')
+
+- name: Install Python packages required by Ansible modules
+  pip:
+    name:
+      - kubernetes
+      - openshift
+      - boto3
+      - json
+  become: true
 
 - name: Ensure ~/.aws directory exists
   file:

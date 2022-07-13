@@ -15,10 +15,12 @@
   copy:
     content: '{{ cloud_cfg | to_nice_yaml }}'
     dest: /etc/cloud/cloud.cfg
+    mode: '0644'
   become: true
 
 - name: Make cloud-init run on RHEL7
   copy:
     src: ds-identify.cfg
     dest: /etc/cloud/ds-identify.cfg
+    mode: '0644'
   become: true

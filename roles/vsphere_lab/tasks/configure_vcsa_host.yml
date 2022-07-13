@@ -25,6 +25,7 @@
     section:
     option: session.timeout
     value: '0'
+    mode: '0644'
   register: vcsa_session_timeout
 
 - name: Restart vsphere-ui service

@@ -2,11 +2,13 @@
   template:
     src: kubeadm_master_config.yml
     dest: '{{ kubeadm_config_dir }}'
+    mode: '0644'
 
 - name: Create Kubernetes certificate directory
   file:
     path: '{{ kubeadm_config.cert_dir }}'
     state: directory
+    mode: '0755'
   become: true
 
 - name: Copy over the custom CA certificate and key

@@ -2,6 +2,7 @@
   template:
     src: kubeadm_worker_config.yml
     dest: '{{ kubeadm_config_dir }}'
+    mode: '0644'
 
 - name: Join the Kubernetes cluster
   command: kubeadm join --config {{ kubeadm_config_dir }}/kubeadm_worker_config.yml

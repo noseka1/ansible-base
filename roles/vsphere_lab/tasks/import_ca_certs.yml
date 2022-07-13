@@ -5,6 +5,7 @@
   file:
     path: '{{ download_directory }}'
     state: directory
+    mode: '0755'
   become: true
 
 - name: Download CA certificates from https://{{ vsphere_lab.vcenter_hostname }}/certs/download.zip

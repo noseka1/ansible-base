@@ -24,6 +24,7 @@
   template:
     src: embedded_vCSA_on_ESXi.json
     dest: '{{ tmpdir.path }}'
+    mode: '0644'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vCSA installation to complete
   command: >

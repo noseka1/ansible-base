@@ -15,6 +15,7 @@
   copy:
     content: '{{ containerd_config }}'
     dest: /etc/containerd/config.toml
+    mode: '0644'
   notify: Restart containerd
   become: true
 

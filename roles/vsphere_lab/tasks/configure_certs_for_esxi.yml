@@ -2,6 +2,7 @@
   template:
     src: rui.crt
     dest: /etc/vmware/ssl/rui.crt
+    mode: '0644'
   register: esxi_cert
   become: true
 
@@ -9,6 +10,7 @@
   template:
     src: rui.key
     dest: /etc/vmware/ssl/rui.key
+    mode: '0644'
   register: esxi_key
   become: true
 

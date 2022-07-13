@@ -4,10 +4,16 @@
   register: ssh_public_key
 
 - name: Create install-config.yaml
-  template: src=install-config.yaml dest={{ cluster_config_dir }}
+  template:
+    src: install-config.yaml
+    dest: '{{ cluster_config_dir }}'
+    mode: '0644'
 
 - name: Create a copy of install-config.yaml
-  template: src=install-config.yaml dest={{ cluster_config_dir }}/install-config.copy.yaml
+  template:
+    src: install-config.yaml
+    dest: '{{ cluster_config_dir }}/install-config.copy.yaml'
+    mode: '0644'
 
 - name: Check the install_complete timestamp
   stat:
@@ -22,4 +28,5 @@
   file:
     path: '{{ cluster_config_dir }}/install_complete'
     state: touch
+    mode: '0644'
   when: not install_complete.stat.exists

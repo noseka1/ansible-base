@@ -1,5 +1,10 @@
 - name: Ensure /root/.ssh directory exists
-  file: path=/root/.ssh state=directory owner=root group=root
+  file:
+    path: /root/.ssh
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
   become: yes
 
 - name: Generate SSH keys for root
@@ -12,7 +17,12 @@
   become: yes
 
 - name: Ensure /{{ ansible_user_id }}/.ssh directory exists
-  file: path={{ ansible_user_dir }}/.ssh state=directory owner={{ ansible_user_id }} group={{ ansible_user_id }}
+  file:
+    path: '{{ ansible_user_dir }}/.ssh'
+    state: directory
+    owner: '{{ ansible_user_id }}'
+    group: '{{ ansible_user_id }}'
+    mode: '0700'
   become: yes
 
 - name: Generate SSH keys for {{ ansible_user_id }}

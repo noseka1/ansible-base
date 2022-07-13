@@ -8,12 +8,13 @@
     enablerepo: rhocp-4.9-for-rhel-8-x86_64-rpms
   become: true
 
-- name:
+- name: Configure conmon location
   ini_file:
     dest: /etc/crio/crio.conf
     section: crio.runtime
     option: conmon
     value: '"/usr/bin/conmon"'
+    mode: '0644'
   notify: Restart crio
   become: true
 

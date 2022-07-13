@@ -32,6 +32,7 @@
   template:
     src: '{{ item }}'
     dest: '{{ ansible_env["HOME"] }}/{{ item }}'
+    mode: '0644'
   loop:
     - hosted-engine-deploy-answers-file.conf
 

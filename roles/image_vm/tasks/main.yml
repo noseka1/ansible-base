@@ -36,4 +36,5 @@
     dest: /.autorelabel
     content: ''
     force: false
+    mode: '0644'
   become: true

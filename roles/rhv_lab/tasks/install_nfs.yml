@@ -42,6 +42,7 @@
   template:
     src: exports
     dest: /etc/exports
+    mode: '0644'
   register: nfs_config
 
 - name: Restart NFS services

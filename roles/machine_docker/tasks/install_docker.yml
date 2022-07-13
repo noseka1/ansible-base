@@ -10,6 +10,7 @@
     section: docker-ce-stable
     option: module_hotfixes
     value: "True"
+    mode: '0644'
   become: true
 
 - name: Make sure conflicting podman is not installed
@@ -32,12 +33,14 @@
   file:
     dest: /etc/docker
     state: directory
+    mode: '0755'
   become: true
 
 - name: Install Docker daemon config
   template:
     src: daemon.json
     dest: /etc/docker/daemon.json
+    mode: '0644'
   notify: Restart docker
   become: true
 

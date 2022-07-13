@@ -1,12 +1,14 @@
 - name: Create cluster configuration directory
-  file: path={{ cluster_config_dir }} state=directory
+  file:
+    path: '{{ cluster_config_dir }}'
+    state: directory
+    mode: '0755'
 
 - name: Copy the OpenShift installer download script
   template:
     src: download_installer.sh
     dest: '{{ cluster_config_dir }}'
     mode: '0755'
-  become: true
 
 - name: Download OpenShift installer {{ otlc_ocp4_installation_openshift_version }}
   command: '{{ cluster_config_dir }}/download_installer.sh'
@@ -20,7 +22,6 @@
     src: download_oc.sh
     dest: '{{ cluster_config_dir }}'
     mode: '0755'
-  become: true
 
 - name: Download oc CLI tool {{ otlc_ocp4_installation_openshift_version }}
   command: '{{ cluster_config_dir }}/download_oc.sh'

@@ -28,7 +28,7 @@
     state: started
     enabled: true
 
-- name:
+- name: Copy over the installation answer file
   template:
     src: '{{ item }}'
     dest: '{{ ansible_env["HOME"] }}/{{ item }}'

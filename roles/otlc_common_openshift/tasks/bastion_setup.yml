@@ -73,6 +73,7 @@
       - kubernetes
       - openshift
       - boto3
+      - urllib3>=1.26.10
   become: true
 
 - name: Ensure ~/.aws directory exists

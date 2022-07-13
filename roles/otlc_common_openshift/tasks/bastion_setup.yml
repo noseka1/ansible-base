@@ -73,7 +73,6 @@
       - kubernetes
       - openshift
       - boto3
-      - json
   become: true
 
 - name: Ensure ~/.aws directory exists

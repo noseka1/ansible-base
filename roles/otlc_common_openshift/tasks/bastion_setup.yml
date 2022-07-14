@@ -53,27 +53,27 @@
   when: not epel_repofile_result.stat.exists
   become: true
 
-- name: Install python-pip
+- name: Install Python packages distributed with RHEL and required by Ansible modules
   yum:
     name:
       - python2-pip
+      - python2-boto3
   become: true
   when: ansible_distribution_major_version is version('7', '==')
 
-- name: Install python-pip
+- name: Install Python packages distributed with RHEL
   yum:
     name:
       - python3-pip
+      - python3-boto3
   become: true
   when: ansible_distribution_major_version is version('8', '==')
 
-- name: Install Python packages required by Ansible modules
+- name: Install latest Python packages required by Ansible modules
   pip:
     name:
       - kubernetes
       - openshift
-      - boto3
-      - urllib3>=1.26.10
   become: true
 
 - name: Ensure ~/.aws directory exists

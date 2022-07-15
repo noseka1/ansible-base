@@ -22,3 +22,12 @@
   loop:
     - splunk-og.yaml
     - splunk-sub.yaml
+
+- name: Delete operator deployment
+  kubernetes.core.k8s:
+    api_version: apps/v1
+    kind: Deployment
+    name: splunk-operator-controller-manager
+    namespace: '{{ splunk_namespace }}'
+    state: absent
+    wait: true

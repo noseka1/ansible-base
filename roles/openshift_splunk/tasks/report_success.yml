@@ -1,0 +1,9 @@
+- set_fact:
+    msg: |
+      Splunk Enterprise installed successfully. You can browse to https://{{ splunk_web_route.resources.0.spec.host }} and log in as user 'admin'.
+
+      HTTP Events can be sent to the HEC endpoint 'https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event'.
+
+      To display Splunk credentials, type 'oc extract -n {{ splunk_namespace }} secret/splunk-{{ splunk_namespace }}-secret --to -'
+
+- debug: msg="{{ msg.split('\n') }}"

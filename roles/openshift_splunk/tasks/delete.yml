@@ -1,0 +1,24 @@
+- name: Delete standalone Splunk instance
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ splunk_namespace }}'
+    state: absent
+    wait: true
+  loop:
+    - instance-sa.yaml
+    - instance-scc-role.yaml
+    - instance-scc-rolebinding.yaml
+    - splunk-instance-secret.yaml
+    - instance-standalone.yaml
+    - instance-web-route.yaml
+    - instance-hec-route.yaml
+
+- name: Deploy Splunk operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ splunk_namespace }}'
+    state: absent
+    wait: true
+  loop:
+    - splunk-og.yaml
+    - splunk-sub.yaml

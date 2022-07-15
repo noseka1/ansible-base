@@ -1,0 +1,19 @@
+apiVersion: enterprise.splunk.com/v3
+kind: Standalone
+metadata:
+  name: {{ splunk_instance_name }}
+  finalizers:
+  - enterprise.splunk.com/delete-pvc
+spec:
+  etcVolumeStorageConfig:
+    storageCapacity: 10Gi
+  varVolumeStorageConfig:
+    storageCapacity: 100Gi
+  serviceAccount: {{ splunk_instance_name }}
+  defaults: |
+    splunk:
+      hec:
+        ssl: false
+  extraEnv:
+  - name: ANSIBLE_EXTRA_FLAGS
+    value: '-vvv'

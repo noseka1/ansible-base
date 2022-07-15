@@ -1,0 +1,71 @@
+- name: Deploy standalone Splunk instance
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: '{{ splunk_namespace }}'
+  loop:
+    - instance-sa.yaml
+    - instance-scc-role.yaml
+    - instance-scc-rolebinding.yaml
+    - splunk-instance-secret.yaml
+    - instance-standalone.yaml
+    - instance-web-route.yaml
+    - instance-hec-route.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ splunk_namespace }}/{{ splunk_namespace }}-{{ splunk_instance_name }}-standalone statefulset to deploy
+  kubernetes.core.k8s_info:
+    api_version: apps/v1
+    kind: StatefulSet
+    name: '{{ splunk_namespace }}-{{ splunk_instance_name }}-standalone'
+    namespace: '{{ splunk_namespace }}'
+  register: splunk_sts_result
+  until:
+    - splunk_sts_result.resources is defined
+    - splunk_sts_result.resources | length > 0
+    - splunk_sts_result.resources.0.status is defined
+    - splunk_sts_result.resources.0.status.availableReplicas is defined
+    - splunk_sts_result.resources.0.status.availableReplicas > 0
+  retries: 60
+  delay: 10
+
+- name: Look up the HEC secret token
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: splunk-{{ splunk_namespace }}-secret
+    namespace: '{{ splunk_namespace }}'
+  register: splunk_secret
+
+- name: Set splunk_hec_token
+  set_fact:
+    splunk_hec_token: '{{ splunk_secret.resources.0.data.hec_token | b64decode }}'
+
+- name: Obtain Splunk web route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ splunk_instance_name }}-web'
+    namespace: '{{ splunk_namespace }}'
+  register: splunk_web_route
+
+- name: Obtain Splunk HEC route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ splunk_instance_name }}-hec'
+    namespace: '{{ splunk_namespace }}'
+  register: splunk_hec_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Splunk to come up
+  uri:
+    url: 'https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event'
+    method: POST
+    headers:
+      Authorization: Splunk {{ splunk_hec_token }}
+    body_format: json
+    body:
+      event: Hello from Ansible at {{ lookup("pipe", "date +%r") }}
+    validate_certs: false
+  register: result
+  until: result.status == 200
+  retries: 12
+  delay: 10

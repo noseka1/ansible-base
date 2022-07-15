@@ -8,9 +8,6 @@
     msg: Private key is missing
   when: openshift_rhel_entitlements_key is not defined or openshift_rhel_entitlements_key | length == 0
 
-- set_fact:
-    rhel_entitlements_role: master
-
 - name: Configure RHEL entitlements for cluster nodes
   kubernetes.core.k8s:
     definition: "{{ lookup('template', '50-rhel-entitlements-machineconfig.yaml') }}"

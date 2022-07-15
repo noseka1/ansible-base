@@ -5,11 +5,7 @@
     password: '{{ vsphere_lab.esxi_password }}'
     validate_certs: false
   delegate_to: localhost
-  ignore_errors: true
   register: result
   until: result is success
   retries: 60
   delay: 10
-
-- fail:
-  when: result is failed

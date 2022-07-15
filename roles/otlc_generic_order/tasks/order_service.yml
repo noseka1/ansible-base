@@ -34,15 +34,11 @@
     method: GET
     status_code: 200
   register: result
-  ignore_errors: true
   until:
     - result.json is defined
     - result.json.request_state == 'finished'
   retries: '{{ otlc_order_wait_retries }}'
   delay: 10
-
-- fail:
-  when: result is failed
 
 - name: Obtain provisioned service id from the provision request
   uri:

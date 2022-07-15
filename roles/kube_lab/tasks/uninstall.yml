@@ -1,5 +1,7 @@
 - name: Uninstall the Kubernetes cluster
   command: kubeadm reset --force --cri-socket {{ kubeadm_config_crisocket }}
+  tags:
+    - skip_ansible_lint
   register: kubeadm_output
   become: true
 

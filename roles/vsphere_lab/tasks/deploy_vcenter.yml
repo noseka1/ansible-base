@@ -36,6 +36,8 @@
       --log-dir {{ tmpdir.path }}
       --no-ssl-certificate-verification
       {{ tmpdir.path }}/embedded_vCSA_on_ESXi.json
+  tags:
+    - skip_ansible_lint
 
 - name: Delete temporary directory {{ tmpdir.path }}
   file:

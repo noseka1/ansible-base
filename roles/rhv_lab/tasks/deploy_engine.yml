@@ -1,9 +1,13 @@
 - name: Reset dnf module virt before switching it to virt:av
   command: dnf module reset virt --assumeyes
+  tags:
+    - skip_ansible_lint
   become: true
 
 - name: Enable dnf module virt:av
   command: dnf module enable virt:av --assumeyes
+  tags:
+    - skip_ansible_lint
   become: true
 
 - name: Install rpms

@@ -10,6 +10,8 @@ spec:
   varVolumeStorageConfig:
     storageCapacity: 100Gi
   serviceAccount: {{ splunk_instance_name }}
+  # See the available options at:
+  # https://github.com/splunk/splunk-ansible/blob/develop/docs/advanced/default.yml.spec.md
   defaults: |
     splunk:
       hec:

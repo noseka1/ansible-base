@@ -1,4 +1,5 @@
-- set_fact:
+- name: Set download_directory
+  set_fact:
     download_directory: /usr/local/share/ca-certificates/vsphere
 
 - name: Ensure certificate directory exists

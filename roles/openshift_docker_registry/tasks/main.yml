@@ -18,7 +18,8 @@
     namespace: '{{ docker_registry_namespace }}'
   register: docker_registry_route
 
-- set_fact:
+- name: Set msg
+  set_fact:
     msg: |
       Docker registry installed successfully.
 

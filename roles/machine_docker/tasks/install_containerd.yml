@@ -8,7 +8,8 @@
   changed_when: false
   register: containerd_config
 
-- set_fact:
+- name: Set containerd_config
+  set_fact:
     containerd_config: '{{ containerd_config.stdout | regex_replace("systemd_cgroup = false", "systemd_cgroup = true") }}'
 
 - name: Create containerd configuration file

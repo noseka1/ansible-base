@@ -9,7 +9,8 @@
     validate_certs: false
   register: vcenter_trusted_cert
 
-- set_fact:
+- name: Set vcenter_trusted_cert_found
+  set_fact:
     vcenter_trusted_cert_found: true
   when:
     - vcenter_trusted_cert.json is defined

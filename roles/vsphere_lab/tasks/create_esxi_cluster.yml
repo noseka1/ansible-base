@@ -28,10 +28,12 @@
     validate_certs: false
   register: vsphere_cluster_info
 
-- set_fact:
+- name: Set vsphere_advanced_settings_key
+  set_fact:
     vsphere_advanced_settings_key: config.vcls.clusters.{{ vsphere_cluster_info.clusters[vsphere_lab.cluster_name].moid }}.enabled
 
-- set_fact:
+- name: Sset vsphere_advanced_settings
+  set_fact:
     vsphere_advanced_settings: >
       {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}
 

@@ -36,7 +36,8 @@
   loop:
     - hosted-engine-deploy-answers-file.conf
 
-- set_fact:
+- name: Set msg
+  set_fact:
     msg: |
       Continue the installation using command:
 

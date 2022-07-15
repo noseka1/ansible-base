@@ -1,8 +1,10 @@
-- fail:
+- name: Check if openshift_upgrade_target_version is defined
+  fail:
     msg: Upgrade target version not defined
   when: openshift_upgrade_target_version is undefined
 
-- fail:
+- name: Check if openshift_upgrade_target_channel is defined
+  fail:
     msg: Upgrade target channel not defined
   when: openshift_upgrade_target_channel is undefined
 

@@ -2,7 +2,8 @@
     name: otlc_common
     tasks_from: retrieve_provisioned_service.yml
 
-- set_fact:
+- name: Set newly_provisioned_service
+  set_fact:
     newly_provisioned_service: true
   when: otlc_service | length == 0
 

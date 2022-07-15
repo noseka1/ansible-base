@@ -25,7 +25,8 @@
   register: admin_secret_result
   become: true
 
-- set_fact:
+- name: Set msg
+  set_fact:
     msg: |
       Kubernetes {{ kubeadm_config.kubernetes_version }} installed successfully
 

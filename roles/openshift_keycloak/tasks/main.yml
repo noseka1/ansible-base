@@ -30,7 +30,8 @@
     namespace: '{{ keycloak_namespace }}'
   register: keycloak_route
 
-- set_fact:
+- name: Set msg
+  set_fact:
     msg: |
       Keycloak installed successfully.
 

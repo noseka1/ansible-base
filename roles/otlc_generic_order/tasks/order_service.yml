@@ -49,5 +49,6 @@
     status_code: 200
   register: otlc_provision_request
 
-- set_fact:
+- name: Set otlc_service_id
+  set_fact:
     otlc_service_id: '{{ otlc_provision_request.json.resources.0.destination_id }}'

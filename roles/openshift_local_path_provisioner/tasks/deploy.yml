@@ -1,0 +1,52 @@
+- name: Create Local path provisioner namespace
+  kubernetes.core.k8s:
+    definition: '{{ lookup("template", item) }}'
+    namespace: '{{ local_path_provisioner_namespace }}'
+  loop:
+    - local-path-provisioner-ns.yaml
+    - local-path-provisioner-scc-rolebinding.yaml
+    - local-path-provisioner-scc-role.yaml
+
+- name: Create temporary directory
+  tempfile:
+    state: directory
+    suffix: -{{ local_path_provisioner_name }}
+  register: local_path_provisioner_tmpdir
+
+- name: Pull the Helm chart
+  git:
+    repo: '{{ local_path_provisioner_helm_chart_git_repo }}'
+    dest: '{{ local_path_provisioner_tmpdir.path }}'
+
+- name: Deploy Local path provisioner
+  kubernetes.core.helm:
+    name: '{{ local_path_provisioner_name }}'
+    chart_ref: '{{ local_path_provisioner_tmpdir.path }}/{{ local_path_provisioner_helm_chart_git_path }}'
+    release_namespace: '{{ local_path_provisioner_namespace }}'
+    release_values:
+      nodePathMap:
+        - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+          paths:
+            - /var/local/{{ local_path_provisioner_name }}
+      serviceAccount:
+        create: true
+        name: '{{ local_path_provisioner_name }}'
+
+- name: Fix the crashing helper-pod-create-pvc pod
+  kubernetes.core.k8s:
+    definition: '{{ lookup("template", item) }}'
+    namespace: '{{ local_path_provisioner_namespace }}'
+  loop:
+    - local-path-config-cm.yaml
+
+- name: Delete temporary directory {{ local_path_provisioner_tmpdir.path }}
+  file:
+    path: '{{ local_path_provisioner_tmpdir.path }}'
+    state: absent
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ local_path_provisioner_name }}'
+    wait_for_deployment_namespace: '{{ local_path_provisioner_namespace }}'

@@ -1,0 +1,5 @@
+local_path_provisioner_helm_chart_git_repo: https://github.com/rancher/local-path-provisioner
+local_path_provisioner_helm_chart_git_path: deploy/chart/local-path-provisioner
+
+local_path_provisioner_namespace: local-path-provisioner
+local_path_provisioner_name: local-path-provisioner

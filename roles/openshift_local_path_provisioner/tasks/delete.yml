@@ -1,0 +1,15 @@
+- name: Delete Local path provisioner
+  kubernetes.core.helm:
+    name: '{{ local_path_provisioner_name }}'
+    release_namespace: '{{ local_path_provisioner_namespace }}'
+    release_state: absent
+    wait: true
+
+- name: Delete Local path provisioner namespace
+  kubernetes.core.k8s:
+    definition: '{{ lookup("template", item) }}'
+    namespace: '{{ local_path_provisioner_namespace }}'
+    state: absent
+    wait: true
+  loop:
+    - local-path-provisioner-ns.yaml

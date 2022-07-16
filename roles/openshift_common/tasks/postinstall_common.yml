@@ -4,6 +4,8 @@
 
 - import_tasks: postinstall_rhel_entitlements.yml
 
+- import_tasks: postinstall_install_custom_rpms.yml
+
 - import_tasks: postinstall_users.yml
 
 - import_tasks: postinstall_oauth.yml

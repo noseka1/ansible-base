@@ -1,0 +1,14 @@
+# See also:
+# https://docs.fedoraproject.org/en-US/fedora-coreos/os-extensions/
+
+[Unit]
+Description=Layer custom RPM packages on top of base CoreOS
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/var/usrlocal/bin/install-custom-rpms.sh
+
+[Install]
+WantedBy=multi-user.target

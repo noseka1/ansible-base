@@ -4,4 +4,4 @@
 
 - name: Enable OIDC backend in Argo CD and configure RBAC
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ gitops_instance_name }}-argocd-2.yaml') }}"
+    definition: "{{ lookup('template', 'openshift-gitops-argocd-rhsso.yaml') }}"

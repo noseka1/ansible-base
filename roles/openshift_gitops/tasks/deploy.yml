@@ -1,4 +1,4 @@
-- import_tasks: install_gitops.yml
+- import_tasks: install_gitops_operator.yml
 
 - import_tasks: install_argocd_notifications.yml
 

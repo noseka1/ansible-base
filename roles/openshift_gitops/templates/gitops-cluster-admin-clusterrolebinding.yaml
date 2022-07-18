@@ -7,6 +7,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
+# Grant Argo CD cluster-admin privileges
 - kind: ServiceAccount
   name: openshift-gitops-argocd-application-controller
   namespace: {{ gitops_instance_namespace }}

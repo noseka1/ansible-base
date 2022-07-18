@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
   name: {{ gitops_instance_name }}
-  namespace: {{ gitops_instance_namespace }}
 spec:
   repo:
     replicas: 1
@@ -10,9 +9,10 @@ spec:
     replicas: 1
     # Configure TLS edge-terminated route instead of passthrough
     insecure: true
+  # Enable Helm templating in Kustomize
+  kustomizeBuildOptions: --enable-helm
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
-  kustomizeBuildOptions: --enable-helm

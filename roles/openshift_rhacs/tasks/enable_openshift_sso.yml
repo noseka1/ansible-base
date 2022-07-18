@@ -26,7 +26,8 @@
     status_code: [ 200, 400 ]
   register: rhacs_auth_providers
 
-- set_fact:
+- name: Set rhacs_auth_provider_id
+  set_fact:
     rhacs_auth_provider_id: "{{ (rhacs_auth_providers.json.authProviders | selectattr('name', 'equalto', 'OpenShift OAuth') | first).id }}"
 
 - name: Set minimum access role (returns HTTP 500 if the auth provider already exists)

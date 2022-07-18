@@ -1,6 +1,6 @@
 - name: Create stackrox namespace if it does not exist
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'stackrox-ns.yaml') }}"
+    template: stackrox-ns.yaml
 
 - import_tasks: get_rhacs_route.yml
 
@@ -32,14 +32,14 @@
   register: generate_cert_result
 
 - name: Apply the generated init-bundle (skip if no new bundle generated in the previous step)
-  command: oc apply --namespace {{ rhacs_instance_namespace }} --filename -
-  args:
-    stdin: '{{ generate_cert_result.json.kubectlBundle | b64decode }}'
+  kubernetes.core.k8s:
+    definition: '{{ generate_cert_result.json.kubectlBundle | b64decode }}'
+    namespace: '{{ rhacs_instance_namespace }}'
   when: generate_cert_result.status == 200
 
 - name: Deploy secured cluster services
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'stackrox-secured-cluster-services-securedcluster.yaml') }}"
+    template: stackrox-secured-cluster-services-securedcluster.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for this-cluster to become healthy
   uri:

@@ -18,5 +18,11 @@
   retries: 12
   delay: 10
 
-- debug:
-    msg: RHACS installed successfully. You can browse to https://{{ rhacs_route.resources.0.spec.host }}
+- name: Set msg
+  set_fact:
+    msg: |
+      RHACS installed successfully.
+
+      You can browse to https://{{ rhacs_route.resources.0.spec.host }}
+
+- debug: msg="{{ msg.split('\n') }}"

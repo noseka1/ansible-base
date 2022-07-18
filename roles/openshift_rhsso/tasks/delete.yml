@@ -12,8 +12,10 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.instance) }}"
     state: absent
+    wait: true
 
 - name: Delete RHSSO operator
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.operator) }}"
     state: absent
+    wait: true

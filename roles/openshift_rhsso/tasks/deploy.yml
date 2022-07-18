@@ -13,7 +13,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.instance) }}"
 
-- name: Wait for RHSSO to come up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for RHSSO to come up
   kubernetes.core.k8s_info:
     api_version: keycloak.org/v1alpha1
     kind: Keycloak
@@ -34,5 +34,11 @@
 
 - import_tasks: set_admin_password.yml
 
-- debug:
-    msg: RHSSO installed successfully. You can browse to https://{{ rhsso_hostname }}
+- name: Report success
+  set_fact:
+    msg: |
+      RHSSO installed successfully.
+
+      You can browse to https://{{ rhsso_hostname }}
+
+- debug: msg="{{ msg.split('\n') }}"

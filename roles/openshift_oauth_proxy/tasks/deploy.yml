@@ -1,14 +1,13 @@
 - name: Deploy oauth-proxy {{ openshift_oauth_proxy_name }}
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - oauth-proxy-clusterrolebinding.yaml
+      - oauth-proxy-clusterrole.yaml
+      - oauth-proxy-sa.yaml
+      - oauth-proxy-deploy.yaml
+      - oauth-proxy-svc.yaml
+      - oauth-proxy-route.yaml
     namespace: '{{ openshift_oauth_proxy_namespace }}'
-  loop:
-    - oauth-proxy-clusterrolebinding.yaml
-    - oauth-proxy-clusterrole.yaml
-    - oauth-proxy-sa.yaml
-    - oauth-proxy-deploy.yaml
-    - oauth-proxy-svc.yaml
-    - oauth-proxy-route.yaml
 
 - import_role:
     name: openshift_common

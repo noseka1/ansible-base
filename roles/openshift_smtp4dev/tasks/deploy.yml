@@ -1,13 +1,12 @@
 - name: Deploy smtp4dev
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - smtp4dev-scc-role.yaml
+      - smtp4dev-scc-rolebinding.yaml
+      - smtp4dev-sa.yaml
+      - smtp4dev-deploy.yaml
+      - smtp4dev-svc.yaml
     namespace: '{{ openshift_smtp4dev_namespace }}'
-  loop:
-    - smtp4dev-scc-role.yaml
-    - smtp4dev-scc-rolebinding.yaml
-    - smtp4dev-sa.yaml
-    - smtp4dev-deploy.yaml
-    - smtp4dev-svc.yaml
 
 - import_role:
     name: openshift_common

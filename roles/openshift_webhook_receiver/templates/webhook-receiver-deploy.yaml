@@ -26,5 +26,3 @@ spec:
       - name: run
         configMap:
           name: webhook-receiver-run
-      tolerations:
-      - operator: Exists

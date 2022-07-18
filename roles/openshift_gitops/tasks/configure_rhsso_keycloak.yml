@@ -1,10 +1,4 @@
-- name: Obtain Argo CD route
-  kubernetes.core.k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: '{{ gitops_instance_name }}-server'
-    namespace: '{{ gitops_instance_namespace }}'
-  register: argocd_route
+- import_tasks: get_argocd_route.yml
 
 - import_role:
     name: openshift_rhsso

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-cm
+  namespace: {{ gitops_instance_namespace }}
 data:
   repositories: |
     - type: helm

@@ -1,7 +1,5 @@
-- name: Update secret with argocd client password
+- name: Configure OIDC authentication in Argo CD
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'argocd-secret-secret.yaml') }}"
-
-- name: Enable OIDC backend in Argo CD and configure RBAC
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'openshift-gitops-argocd-rhsso.yaml') }}"
+    template:
+      - argocd-secret-secret.yaml
+      - openshift-gitops-argocd-rhsso.yaml

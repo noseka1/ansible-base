@@ -1,5 +1,6 @@
 gitops_subscription_namespace: openshift-operators
 gitops_subscription_name: openshift-gitops
+
 gitops_instance_namespace: openshift-gitops
 gitops_instance_name: openshift-gitops
 

@@ -1,7 +1,10 @@
 #!/bin/bash -x
 
-# Exit immediately if a command exits with a non-zero status.
-set -e
+# Safe configuration
+# -e will exit the entire script at the first error.
+# -u will exit the entire script if you use an unset variable.
+# -o pipefail will fail pipelines if any command, not just the last one, exits with nonzero.
+set -euo pipefail
 
 nbd_device=/dev/nbd0
 

@@ -16,11 +16,10 @@
 
 - name: Create prerequisites for OpenEBS
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - openebs-ns.yaml
-    - openebs-scc-role.yaml
-    - openebs-scc-rolebinding.yaml
+    template:
+      - openebs-ns.yaml
+      - openebs-scc-role.yaml
+      - openebs-scc-rolebinding.yaml
 
 - name: Add OpenEBS chart repo
   kubernetes.core.helm_repository:
@@ -59,6 +58,4 @@
 
 - name: Create openebs-lvm storage class
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - openebs-lvm-sc.yaml
+    template: openebs-lvm-sc.yaml

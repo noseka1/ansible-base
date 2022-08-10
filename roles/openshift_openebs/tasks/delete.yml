@@ -13,10 +13,8 @@
 
 - name: Delete openebs-lvm storage class
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: openebs-lvm-sc.yaml
     state: absent
-  loop:
-    - openebs-lvm-sc.yaml
 
 - name: Delete OpenEBS
   kubernetes.core.helm:
@@ -26,7 +24,5 @@
 
 - name: Delete prerequisites for OpenEBS
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: openebs-ns.yaml
     state: absent
-  loop:
-    - openebs-ns.yaml

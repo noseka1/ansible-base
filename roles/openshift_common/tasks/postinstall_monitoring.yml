@@ -2,4 +2,4 @@
 
 - name: Use persistent storage for monitoring and enable monitoring of user-defined workloads
   kubernetes.core.k8s:
-    template: cluster-monitoring-config-cm.yml
+    template: cluster-monitoring-config-cm.yaml

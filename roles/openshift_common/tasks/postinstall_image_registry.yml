@@ -1,6 +1,6 @@
 - name: Expose the registry via an external route
   kubernetes.core.k8s:
-    template: cluster-registry.yml
+    template: cluster-registry.yaml
 
 - name: Retrieve status of the integrated image registry
   kubernetes.core.k8s_info:

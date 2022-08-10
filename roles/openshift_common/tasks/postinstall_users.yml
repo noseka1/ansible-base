@@ -20,12 +20,12 @@
 
 - name: Create htpasswd secret
   kubernetes.core.k8s:
-    template: htpasswd-secret.yml
+    template: htpasswd-secret.yaml
 
 - name: Create admins group
   kubernetes.core.k8s:
-    template: cluster-admins-group.yml
+    template: cluster-admins-group.yaml
 
 - name: Grant cluster-admins group the cluster-admin role
   kubernetes.core.k8s:
-    definition: cluster-admin-0-clusterrolebinding.yml
+    definition: cluster-admin-0-clusterrolebinding.yaml

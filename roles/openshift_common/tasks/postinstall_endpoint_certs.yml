@@ -1,6 +1,6 @@
 - name: Create the certificate secrets
   kubernetes.core.k8s:
-    template: cert-secret.yml
+    template: cert-secret.yaml
   no_log: true
   loop:
     - name: api-cert
@@ -14,12 +14,12 @@
 
 - name: Configure API server certificate
   kubernetes.core.k8s:
-    template: cluster-apiserver-2.yml
+    template: cluster-apiserver-2.yaml
   register: openshift_common_api_cert
 
 - name: Configure wildcard apps certificate
   kubernetes.core.k8s:
-    template: default-ingresscontroller-2.yml
+    template: default-ingresscontroller-2.yaml
   register: openshift_common_apps_cert
 
 - import_role:

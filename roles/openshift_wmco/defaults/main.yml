@@ -1,0 +1,10 @@
+wmco_subscription_namespace: openshift-windows-machine-config-operator
+wmco_subscription_name: windows-machine-config-operator
+
+wmco_instance_namespace: openshift-windows-machine-config-operator
+
+wmco_byoh_instances: {}
+#  worker1.mycluster.example.com: |-
+#    username=Administrator
+#  192.168.150.22: |-
+#    username=Administrator

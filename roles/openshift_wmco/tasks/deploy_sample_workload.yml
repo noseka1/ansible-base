@@ -1,0 +1,30 @@
+- name: Deploy sample workload
+  kubernetes.core.k8s:
+    template:
+      - workload/win-webserver-deploy.yaml
+      - workload/win-webserver-svc.yaml
+      - workload/win-webserver-route.yaml
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: win-webserver
+    wait_for_deployment_namespace: '{{ wmco_instance_namespace }}'
+
+- name: Obtain sample workload route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: win-webserver
+    namespace: '{{ wmco_instance_namespace }}'
+  register: wmco_workload_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for https://{{ wmco_workload_route.resources.0.spec.host }} to become available
+  uri:
+    url: 'https://{{ wmco_workload_route.resources.0.spec.host }}'
+    validate_certs: false
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 10

@@ -7,5 +7,5 @@
 
 - name: Enable automatic image pruning
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-imagepruner.yml') }}"
+    template: cluster-imagepruner.yml
   when: imagepruners_crd.resources | length > 0

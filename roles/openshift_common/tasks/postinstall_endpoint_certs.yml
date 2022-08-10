@@ -1,6 +1,6 @@
 - name: Create the certificate secrets
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cert-secret.yml') }}"
+    template: cert-secret.yml
   no_log: true
   loop:
     - name: api-cert
@@ -14,12 +14,12 @@
 
 - name: Configure API server certificate
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-apiserver-2.yml') }}"
+    template: cluster-apiserver-2.yml
   register: openshift_common_api_cert
 
 - name: Configure wildcard apps certificate
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'default-ingresscontroller-2.yml') }}"
+    template: default-ingresscontroller-2.yml
   register: openshift_common_apps_cert
 
 - import_role:
@@ -29,4 +29,4 @@
     stable_cluster_delay: 120
     stable_cluster_retries: 10
     stable_cluster_validate_certs: false
-  when: (openshift_common_api_cert) is changed or (openshift_common_apps_cert) is changed
+  when: (openshift_common_api_cert is changed) or (openshift_common_apps_cert is changed)

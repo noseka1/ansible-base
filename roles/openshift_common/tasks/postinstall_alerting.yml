@@ -1,4 +1,4 @@
 - name: Configure OpenShift to send alerts to Slack
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'alertmanager-main-secret.yml') }}"
+    template: alertmanager-main-secret.yml
   when: openshift_send_alerts_to_slack_url is defined

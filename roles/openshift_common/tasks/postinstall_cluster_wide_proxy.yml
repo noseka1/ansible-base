@@ -1,8 +1,6 @@
 - name: Configure cluster-wide proxy
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - cluster-proxy-2.yml
+    template: cluster-proxy-2.yml
   register: proxy_result
   when: openshift_common_cluster_wide_proxy is defined
 

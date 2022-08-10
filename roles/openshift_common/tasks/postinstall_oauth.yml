@@ -1,3 +1,3 @@
 - name: Configure authentication using htpasswd and set token expiration to 31 days
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-oauth.yml') }}"
+    template: cluster-oauth.yml

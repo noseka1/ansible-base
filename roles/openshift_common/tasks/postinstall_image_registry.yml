@@ -1,6 +1,6 @@
 - name: Expose the registry via an external route
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-registry.yml') }}"
+    template: cluster-registry.yml
 
 - name: Retrieve status of the integrated image registry
   kubernetes.core.k8s_info:
@@ -10,4 +10,8 @@
   register: image_registry_config
 
 - include_tasks: postinstall_image_registry_volume.yml
-  when: image_registry_config.resources.0.spec.managementState == 'Removed'
+  when:
+    - image_registry_config.resources | length > 0
+    - image_registry_config.resources.0.spec is defined
+    - image_registry_config.resources.0.spec.managementState is defined
+    - image_registry_config.resources.0.spec.managementState == 'Removed'

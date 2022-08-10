@@ -20,12 +20,12 @@
 
 - name: Create htpasswd secret
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'htpasswd-secret.yml') }}"
+    template: htpasswd-secret.yml
 
 - name: Create admins group
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-admins-group.yml') }}"
+    template: cluster-admins-group.yml
 
 - name: Grant cluster-admins group the cluster-admin role
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-admin-0-clusterrolebinding.yml') }}"
+    definition: cluster-admin-0-clusterrolebinding.yml

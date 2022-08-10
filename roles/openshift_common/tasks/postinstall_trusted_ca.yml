@@ -1,6 +1,6 @@
 - name: Add custom CA to the cluster trusted CA bundle
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: '{{ item }}'
   loop:
    - user-ca-bundle-cm.yml
    - cluster-proxy.yml

@@ -1,6 +1,6 @@
 - name: Install custom RPMS on OpenShift nodes (will cause nodes to restart)
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '60-install-custom-rpms-mc.yaml') }}"
+    template: 60-install-custom-rpms-mc.yaml
   register: machineconfig_result
   loop:
     - worker

@@ -19,7 +19,7 @@
 
 - name: Add machinesets to the cluster
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "node-machineset.yml") }}'
+    template: node-machineset.yml
   loop: '{{ add_machineset_availability_zones }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for nodes to join the cluster

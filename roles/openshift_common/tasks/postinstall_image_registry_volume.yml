@@ -1,7 +1,7 @@
 - name: Allocate persistent volume
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'registry-pvc.yml') }}"
+    template: registry-pvc.yml
 -
 - name: Attach persistent volume to image registry
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'cluster-config.yml') }}"
+    template: cluster-config.yml

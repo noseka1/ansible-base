@@ -1,10 +1,9 @@
 - name: Delete Contour instance
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    template:
+      - contour-contour.yaml
+      - contour-ns.yaml
     state: absent
-  loop:
-    - contour-contour.yaml
-    - contour-ns.yaml
 
 - name: Delete Contour operator
   kubernetes.core.k8s:

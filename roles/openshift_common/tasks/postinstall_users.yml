@@ -28,4 +28,4 @@
 
 - name: Grant cluster-admins group the cluster-admin role
   kubernetes.core.k8s:
-    definition: cluster-admin-0-clusterrolebinding.yaml
+    template: cluster-admin-0-clusterrolebinding.yaml

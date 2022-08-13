@@ -2,6 +2,6 @@
 
 - import_tasks: configure_argocd.yml
 
-- import_tasks: install_argocd_notifications.yml
+- import_tasks: configure_argocd_notifications.yml
 
 - import_tasks: report_success.yml

@@ -17,6 +17,8 @@ spec:
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
+  notifications:
+    enabled: true
   extraConfig:
     repositories: |
       - type: helm

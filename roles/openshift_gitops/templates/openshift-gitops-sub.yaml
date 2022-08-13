@@ -4,7 +4,7 @@ metadata:
   name: {{ gitops_subscription_name }}
   namespace: {{ gitops_subscription_namespace }}
 spec:
-  channel: stable
+  channel: latest
   installPlanApproval: Automatic
   name: openshift-gitops-operator
   source: redhat-operators

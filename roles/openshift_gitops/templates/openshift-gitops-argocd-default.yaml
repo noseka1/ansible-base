@@ -17,3 +17,8 @@ spec:
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
+  extraConfig:
+    repositories: |
+      - type: helm
+        url: https://external-secrets.github.io/kubernetes-external-secrets
+        name: external-secrets

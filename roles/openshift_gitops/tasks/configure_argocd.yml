@@ -3,5 +3,4 @@
     template:
       - openshift-gitops-cluster-secret.yaml
       - openshift-gitops-argocd-default.yaml
-      - argocd-cm-cm.yaml
       - gitops-cluster-admin-clusterrolebinding.yaml

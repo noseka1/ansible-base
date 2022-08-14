@@ -29,6 +29,7 @@
 # Labs not managed by Ansible:
 # ODF 4 Implementation - runs on OpenStack, was able to only add one extra node
 # OpenShift 4 Virtualization Foundations - runs on RHV (oVirt), OCP console was not reachable
+# OpenShift 4 Operators Lab - AWS - no Let's Encrypt TLS certs, OCP 4.6.20
 
 otlc_labs:
   # OCP 4.5.4, cannot add records to the DNS zone, shuts down after 8 hours, deleted after 2 days, RHACM 2.0.3 preinstalled
@@ -128,7 +129,7 @@ otlc_labs:
       dialog_region: na_sandbox_gpte
       dialog_runtime: "8"
 
-  # Cannot add records to the DNS zone, shuts down after 8 hours
+  # OCP 4.6.20, cannot add records to the DNS zone, no Let's Encrypt TLS certs, shuts down after 8 hours
   ocp4_configuration:
     api_host: labs.opentlc.com
     catalog_id: '20000000000040'

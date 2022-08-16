@@ -1,6 +1,6 @@
 rhacm_managed_cluster:
-  cluster_name: mycluster
-  base_domain: mycluster.example.com
+  cluster_name: mycluster1
+  base_domain: mycluster1.example.com
   ocp_release_image: img4.8.18-x86-64-appsub
   aws_region: us-east-2
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX

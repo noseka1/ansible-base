@@ -3,7 +3,7 @@ hashicorp_vault_name: vault
 hashicorp_vault_skip_verify: true
 
 rhacm_vault_cluster:
-  base_domain: mycluster.example.com
+  base_domain: mycluster1.example.com
   aws_region: us-east-2
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

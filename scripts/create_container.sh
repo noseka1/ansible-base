@@ -1,5 +1,5 @@
 #!/bin/bash
-NAME=container-1
+NAME=container1
 IMAGE=ubi8/ubi
 
 podman run \

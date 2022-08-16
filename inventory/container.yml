@@ -2,30 +2,30 @@ all:
   children:
     ungrouped:
       hosts:
-        container-1:
-          remote_addr: container-1
+        container1:
+          remote_addr: container1
           remote_user: root
-        container-2:
-          remote_addr: container-2
+        container2:
+          remote_addr: container2
           remote_user: root
-        container-3:
-          remote_addr: container-3
+        container3:
+          remote_addr: container3
           remote_user: root
-        container-4:
-          remote_addr: container-4
+        container4:
+          remote_addr: container4
           remote_user: root
-        container-5:
-          remote_addr: container-5
+        container5:
+          remote_addr: container5
           remote_user: root
-        container-6:
-          remote_addr: container-6
+        container6:
+          remote_addr: container6
           remote_user: root
-        container-7:
-          remote_addr: container-7
+        container7:
+          remote_addr: container7
           remote_user: root
-        container-8:
-          remote_addr: container-8
+        container8:
+          remote_addr: container8
           remote_user: root
-        container-9:
-          remote_addr: container-9
+        container9:
+          remote_addr: container9
           remote_user: root

@@ -2,30 +2,30 @@ all:
   children:
     ungrouped:
       hosts:
-        machine-1:
-          ansible_host: machine-1.lab.example.com
+        machine1:
+          ansible_host: machine1.lab.example.com
           ansible_user: ansible
-        machine-2:
-          ansible_host: machine-2.lab.example.com
+        machine2:
+          ansible_host: machine2.lab.example.com
           ansible_user: ansible
-        machine-3:
-          ansible_host: machine-3.lab.example.com
+        machine3:
+          ansible_host: machine3.lab.example.com
           ansible_user: ansible
-        machine-4:
-          ansible_host: machine-4.lab.example.com
+        machine4:
+          ansible_host: machine4.lab.example.com
           ansible_user: ansible
-        machine-5:
-          ansible_host: machine-5.lab.example.com
+        machine5:
+          ansible_host: machine5.lab.example.com
           ansible_user: ansible
-        machine-6:
-          ansible_host: machine-6.lab.example.com
+        machine6:
+          ansible_host: machine6.lab.example.com
           ansible_user: ansible
-        machine-7:
-          ansible_host: machine-7.lab.example.com
+        machine7:
+          ansible_host: machine7.lab.example.com
           ansible_user: ansible
-        machine-8:
-          ansible_host: machine-8.lab.example.com
+        machine8:
+          ansible_host: machine8.lab.example.com
           ansible_user: ansible
-        machine-9:
-          ansible_host: machine-9.lab.example.com
+        machine9:
+          ansible_host: machine9.lab.example.com
           ansible_user: ansible

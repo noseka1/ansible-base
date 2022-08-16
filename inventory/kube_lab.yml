@@ -2,11 +2,11 @@ kube_lab:
   children:
     kube_master:
       hosts:
-        kube-1:
-          ansible_host: kube-1.lab.example.com
+        kube1:
+          ansible_host: kube1.lab.example.com
           ansible_user: ansible
     kube_worker:
       hosts:
-        kube-2:
-          ansible_host: kube-2.lab.example.com
+        kube2:
+          ansible_host: kube2.lab.example.com
           ansible_user: ansible

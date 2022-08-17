@@ -8,14 +8,20 @@
     tasks_from: deploy.yml
   when: not default_storage_class_exists
 
+- name: Set openshift_common_cluster_wide_proxy
+  set_fact:
+    openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy | default({}) }}'
+
 - import_role:
     name: openshift_common
     tasks_from: postinstall_common.yml
-  vars:
-    openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy | default(omit) }}'
+  when: openshift_common_cluster_wide_proxy
+
+- name: Set openshift_common_endpoint_certs
+  set_fact:
+    openshift_common_endpoint_certs: '{{ osh_lab_certs | default({}) }}'
 
 - import_role:
     name: openshift_common
     tasks_from: postinstall_endpoint_certs.yml
-  vars:
-    openshift_common_endpoint_certs: '{{ osh_lab_certs | default(omit) }}'
+  when: openshift_common_endpoint_certs

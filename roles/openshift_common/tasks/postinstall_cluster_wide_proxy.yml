@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template: cluster-proxy-2.yaml
   register: proxy_result
-  when: openshift_common_cluster_wide_proxy is defined
 
 - import_role:
     name: openshift_common

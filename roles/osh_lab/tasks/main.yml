@@ -15,7 +15,6 @@
 - import_role:
     name: openshift_common
     tasks_from: postinstall_common.yml
-  when: openshift_common_cluster_wide_proxy
 
 - name: Obtain infrastructure info
   kubernetes.core.k8s_info:

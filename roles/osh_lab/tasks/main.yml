@@ -12,10 +12,6 @@
   set_fact:
     openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy | default({}) }}'
 
-- import_role:
-    name: openshift_common
-    tasks_from: postinstall_common.yml
-
 - name: Obtain infrastructure info
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
@@ -33,5 +29,4 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: postinstall_endpoint_certs.yml
-  when: openshift_common_endpoint_certs
+    tasks_from: postinstall_common.yml

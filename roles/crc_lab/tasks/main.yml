@@ -33,7 +33,6 @@
 - import_role:
     name: openshift_common
     tasks_from: postinstall_cluster_wide_proxy.yml
-  when: openshift_common_cluster_wide_proxy
 
 - name: Set openshift_common_endpoint_certs
   set_fact:
@@ -42,4 +41,3 @@
 - import_role:
     name: openshift_common
     tasks_from: postinstall_endpoint_certs.yml
-  when: openshift_common_endpoint_certs

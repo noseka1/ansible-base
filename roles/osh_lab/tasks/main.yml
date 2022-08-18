@@ -17,9 +17,20 @@
     tasks_from: postinstall_common.yml
   when: openshift_common_cluster_wide_proxy
 
+- name: Obtain infrastructure info
+  kubernetes.core.k8s_info:
+    api_version: config.openshift.io/v1
+    kind: Infrastructure
+    name: cluster
+  register: osh_lab_infrastructure
+
+- name: Set osh_lab_cluster_domain
+  set_fact:
+    osh_lab_cluster_domain: '{{ osh_lab_infrastructure.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}'
+
 - name: Set openshift_common_endpoint_certs
   set_fact:
-    openshift_common_endpoint_certs: '{{ osh_lab_certs | default({}) }}'
+    openshift_common_endpoint_certs: '{{ osh_lab_certs[osh_lab_cluster_domain] | default({}) }}'
 
 - import_role:
     name: openshift_common

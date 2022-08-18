@@ -6,5 +6,5 @@ wmco_instance_namespace: openshift-windows-machine-config-operator
 wmco_byoh_instances: {}
 #  worker1.mycluster1.example.com: |-
 #    username=Administrator
-#  192.168.150.22: |-
+#  192.168.120.22: |-
 #    username=Administrator

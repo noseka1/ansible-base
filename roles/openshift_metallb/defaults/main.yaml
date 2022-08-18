@@ -1,4 +1,4 @@
-metallb_address_pool: 192.168.150.10-192.168.150.19
+metallb_address_pool: 192.168.120.12-192.168.120.19
 
 metallb_subscription_name: metallb-operator
 metallb_subscription_namespace: metallb-system

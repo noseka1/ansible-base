@@ -1,31 +1,31 @@
-- import_tasks: postinstall_ensure_storage.yml
+- import_tasks: ensure_storage.yml
 
-- import_tasks: postinstall_trusted_ca.yml
+- import_tasks: trusted_ca.yml
 
-- import_tasks: postinstall_cluster_wide_proxy.yml
+- import_tasks: cluster_wide_proxy.yml
 
-- import_tasks: postinstall_rhel_entitlements.yml
+- import_tasks: rhel_entitlements.yml
 
-- import_tasks: postinstall_install_custom_rpms.yml
+- import_tasks: install_custom_rpms.yml
 
-- import_tasks: postinstall_users.yml
+- import_tasks: users.yml
 
-- import_tasks: postinstall_oauth.yml
+- import_tasks: oauth.yml
 
-- import_tasks: postinstall_operatorhub_io.yml
+- import_tasks: operatorhub_io.yml
 
-- import_tasks: postinstall_image_registry.yml
+- import_tasks: image_registry.yml
 
-- import_tasks: postinstall_image_prunning.yml
+- import_tasks: image_prunning.yml
 
-- import_tasks: postinstall_monitoring.yml
+- import_tasks: monitoring.yml
 
-- import_tasks: postinstall_alerting.yml
+- import_tasks: alerting.yml
 
-- import_tasks: postinstall_audit.yml
+- import_tasks: audit.yml
 
-- import_tasks: postinstall_access_logging.yml
+- import_tasks: access_logging.yml
 
-- import_tasks: postinstall_delete_succeeded_pods.yml
+- import_tasks: delete_succeeded_pods.yml
 
-- import_tasks: postinstall_endpoint_certs.yml
+- import_tasks: endpoint_certs.yml

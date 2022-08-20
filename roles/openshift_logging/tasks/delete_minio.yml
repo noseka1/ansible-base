@@ -1,0 +1,5 @@
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ openshift_logging_namespace }}'

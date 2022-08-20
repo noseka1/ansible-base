@@ -1,0 +1,7 @@
+- import_tasks: delete_openshift_logging.yml
+
+- import_tasks: delete_loki.yml
+
+- import_tasks: delete_minio.yml
+
+- import_tasks: delete_namespace.yml

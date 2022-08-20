@@ -1,0 +1,7 @@
+- import_tasks: deploy_namespace.yml
+
+- import_tasks: deploy_minio.yml
+
+- import_tasks: deploy_loki.yml
+
+- import_tasks: deploy_openshift_logging.yml

@@ -1,0 +1,16 @@
+- name: Deploy OpenShift Logging operator
+  kubernetes.core.k8s:
+    template:
+      - openshift-logging-og.yaml
+      - cluster-logging-sub.yaml
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: cluster-logging
+    subscription_namespace: '{{ openshift_logging_namespace }}'
+
+- name: Deploy OpenShift Logging instance
+  kubernetes.core.k8s:
+    template: instance-clusterlogging.yaml

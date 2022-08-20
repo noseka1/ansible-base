@@ -1,5 +1,0 @@
-- hosts: localhost
-  tasks:
-    - import_role:
-        name: openshift_common
-        tasks_from: postinstall_common.yml

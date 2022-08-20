@@ -21,5 +21,5 @@
     openshift_common_endpoint_certs: '{{ osh_lab_certs[osh_lab_cluster_domain] | default({}) }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: postinstall_common.yml
+    name: openshift_postinstall
+    tasks_from: postinstall.yml

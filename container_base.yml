@@ -1,6 +1,6 @@
 - hosts: all
   connection: podman
   tasks:
-    - include_role:
+    - import_role:
         name: container_base
       tags: container_base

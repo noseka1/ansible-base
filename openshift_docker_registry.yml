@@ -1,5 +1,5 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - include_role:
+    - import_role:
         name: openshift_docker_registry

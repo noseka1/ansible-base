@@ -1,11 +1,3 @@
-- name: Obtain CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ gitops_subscription_name }}'
-    namespace: '{{ gitops_subscription_namespace }}'
-  register: operator_subscription
-
 - import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
@@ -15,18 +7,12 @@
         kind: ArgoCD
 
 - name: Delete GitOps operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-    state: absent
-  loop:
-    - openshift-gitops-sub.yaml
-
-- name: Clean up CSVs
-  include_role:
+  import_role:
     name: openshift_common
-    tasks_from: delete_csvs.yml
+    tasks_from: delete_operator.yml
   vars:
-    delete_csvs_name: '{{ operator_subscription.resources.0.status.currentCSV }}'
+    delete_operator_subscription_name: '{{ gitops_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ gitops_subscription_namespace }}'
 
 - import_role:
     name: openshift_common

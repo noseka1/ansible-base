@@ -25,27 +25,15 @@
   vars:
     openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
 
-- name: Obtain CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ rhacs_subscription_name }}'
-    namespace: '{{ rhacs_subscription_namespace }}'
-  register: operator_subscription
-
 - name: Delete RHACS central
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.instance) }}"
     state: absent
 
 - name: Delete RHACS operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
-    state: absent
-
-- name: Clean up CSVs
-  include_role:
+  import_role:
     name: openshift_common
-    tasks_from: delete_csvs.yml
+    tasks_from: delete_operator.yml
   vars:
-    delete_csvs_name: '{{ operator_subscription.resources.0.status.currentCSV }}'
+    delete_operator_subscription_name: '{{ rhacs_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ rhacs_subscription_namespace }}'

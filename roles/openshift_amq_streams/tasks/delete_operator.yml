@@ -1,21 +1,7 @@
-- name: Obtain AMQ Streams CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ amq_streams_subscription_name }}'
-    namespace: '{{ amq_streams_subscription_namespace }}'
-  register: amq_streams_operator_subscription
-
 - name: Delete AMQ Streams operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-    state: absent
-  loop:
-    - amq-streams-sub.yaml
-
-- name: Clean up AMQ Streams CSVs
-  include_role:
+  import_role:
     name: openshift_common
-    tasks_from: delete_csvs.yml
+    tasks_from: delete_operator.yml
   vars:
-    delete_csvs_name: '{{ amq_streams_operator_subscription.resources.0.status.currentCSV }}'
+    delete_operator_subscription_name: '{{ amq_streams_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ amq_streams_subscription_namespace }}'

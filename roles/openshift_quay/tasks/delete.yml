@@ -1,44 +1,20 @@
-- name: Obtain quay-operator CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ quay_operator_subscription_name }}'
-    namespace: '{{ quay_operator_subscription_namespace }}'
-  register: quay_operator_subscription
-
-- name: Obtain container-security-operator CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ container_security_operator_subscription_name }}'
-    namespace: '{{ container_security_operator_subscription_namespace }}'
-  register: container_security_operator_subscription
-
 - name: Delete Quay instance
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.instance) }}"
     state: absent
 
 - name: Delete Quay operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.operator) }}"
-    state: absent
+  import_role:
+    name: openshift_common
+    tasks_from: delete_operator.yml
+  vars:
+    delete_operator_subscription_name: '{{ quay_operator_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ quay_operator_subscription_namespace }}'
 
 - name: Delete Container Security Operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + quay_kustomizations.security) }}"
-    state: absent
-
-- name: Clean up quay-operator CSVs
-  include_role:
+  import_role:
     name: openshift_common
-    tasks_from: delete_csvs.yml
+    tasks_from: delete_operator.yml
   vars:
-    delete_csvs_name: '{{ quay_operator_subscription.resources.0.status.currentCSV }}'
-
-- name: Clean up container-security-operator CSVs
-  include_role:
-    name: openshift_common
-    tasks_from: delete_csvs.yml
-  vars:
-    delete_csvs_name: '{{ container_security_operator_subscription.resources.0.status.currentCSV }}'
+    delete_operator_subscription_name: '{{ container_security_operator_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ container_security_operator_subscription_namespace }}'

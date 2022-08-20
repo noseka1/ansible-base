@@ -5,4 +5,4 @@ metadata:
   namespace: openshift-config
 data:
   ca-bundle.crt: |
-    {{ openshift_common_trusted_ca_bundle | indent(4) }}
+    {{ openshift_postinstall_trusted_ca_bundle | indent(4) }}

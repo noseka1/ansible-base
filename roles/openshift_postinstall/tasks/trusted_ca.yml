@@ -4,4 +4,4 @@
   loop:
    - user-ca-bundle-cm.yaml
    - cluster-proxy.yaml
-  when: openshift_common_trusted_ca_bundle is defined
+  when: openshift_postinstall_trusted_ca_bundle is defined

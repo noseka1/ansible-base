@@ -6,6 +6,6 @@ spec:
   servingCerts:
     namedCertificates:
     - names:
-      - {{ openshift_common_endpoint_certs.api.domain }}
+      - {{ openshift_postinstall_endpoint_certs[openshift_postinstall_cluster_domain].api.domain }}
       servingCertificate:
         name: api-cert

@@ -1,10 +1,10 @@
 - name: Configure cluster-wide proxy
   kubernetes.core.k8s:
     template: cluster-proxy-2.yaml
-  register: openshift_common_proxy_result
+  register: openshift_postinstall_proxy_result
   when:
-    - openshift_common_cluster_wide_proxy is defined
-    - openshift_common_cluster_wide_proxy
+    - openshift_postinstall_cluster_wide_proxy is defined
+    - openshift_postinstall_cluster_wide_proxy[openshift_postinstall_cluster_domain] is defined
 
 - import_role:
     name: openshift_common
@@ -12,4 +12,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_common_proxy_result is changed
+  when: openshift_postinstall_proxy_result is changed

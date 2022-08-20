@@ -1,33 +1,3 @@
-- name: Grab grafana service account token
-  command: oc serviceaccounts get-token --namespace {{ grafana_instance_namespace }} {{ grafana_instance_name }}-serviceaccount
-  changed_when: false
-  register: grafana_serviceaccount_jwt
+- import_tasks: delete_instance.yml
 
-- name: Remove Grafana configuration for OpenShift monitoring metrics
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-    state: absent
-  loop:
-    - metrics/grafana-cluster-monitoring-view-clusterrolebinding.yaml
-    - metrics/openshift-monitoring-grafanadatasource.yaml
-
-- name: Delete Grafana instance
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: grafana
-    kustomize_files:
-      - instance/kustomization.yaml
-      - instance/prometheus-grafanadashboard.yaml
-      - instance/prometheus-grafanadatasource.yaml
-    kustomize_op: absent
-
-- name: Delete Grafana operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-    state: absent
-  loop:
-    - operator/grafana-sub.yaml
-    - operator/grafana-og.yaml
-    - operator/grafana-ns.yaml
+- import_tasks: delete_operator.yml

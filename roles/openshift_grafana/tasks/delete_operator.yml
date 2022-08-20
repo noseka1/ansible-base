@@ -1,0 +1,9 @@
+- name: Delete Grafana operator
+  kubernetes.core.k8s:
+    template:
+      - operator/grafana-ns.yaml
+      - operator/grafana-og.yaml
+      - operator/grafana-sub.yaml
+    namespace: '{{ grafana_subscription_namespace }}'
+    wait: true
+    state: absent

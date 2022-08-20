@@ -1,0 +1,11 @@
+- name: Delete Grafana instance
+  kubernetes.core.k8s:
+    template:
+      - instance/grafana-grafana.yaml
+      - instance/grafana-k8s-proxy-secret.yaml
+      - instance/grafana-proxy-clusterrolebinding.yaml
+      - instance/grafana-proxy-clusterrole.yaml
+      - instance/ocp-injected-certs-cm.yaml
+    namespace: '{{ grafana_instance_namespace }}'
+    wait: true
+    state: absent

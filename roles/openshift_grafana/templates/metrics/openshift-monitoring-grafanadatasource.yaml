@@ -5,7 +5,7 @@ metadata:
 spec:
   name: openshift-monitoring.yaml
   datasources:
-  - name: OpenShift Monitoring
+  - name: default
     type: prometheus
     access: proxy
     editable: true

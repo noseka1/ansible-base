@@ -1,17 +1,3 @@
-- name: Check if default storage class exists
-  import_role:
-    name: openshift_common
-    tasks_from: check_default_storage_class_exists.yml
-
-- import_role:
-    name: openshift_openebs
-    tasks_from: deploy.yml
-  when: not default_storage_class_exists
-
-- name: Set openshift_common_cluster_wide_proxy
-  set_fact:
-    openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy | default({}) }}'
-
 - name: Obtain infrastructure info
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
@@ -22,6 +8,13 @@
 - name: Set osh_lab_cluster_domain
   set_fact:
     osh_lab_cluster_domain: '{{ osh_lab_infrastructure.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}'
+
+- debug:
+    var: osh_lab_cluster_domain
+
+- name: Set openshift_common_cluster_wide_proxy
+  set_fact:
+    openshift_common_cluster_wide_proxy: '{{ osh_lab_proxy[osh_lab_cluster_domain] | default({}) }}'
 
 - name: Set openshift_common_endpoint_certs
   set_fact:

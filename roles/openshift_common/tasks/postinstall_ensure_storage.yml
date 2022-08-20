@@ -1,0 +1,7 @@
+- name: Check if default storage class exists
+  import_tasks: check_default_storage_class_exists.yml
+
+- import_role:
+    name: openshift_openebs
+    tasks_from: deploy.yml
+  when: not default_storage_class_exists

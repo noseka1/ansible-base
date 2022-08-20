@@ -8,28 +8,13 @@
     wait: true
     state: absent
 
-- name: Obtain Loki CSV name
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: loki-operator
-    namespace: openshift-operators-redhat
-  register: openshift_loki_operator_subscription
-
 - name: Delete Loki operator
-  kubernetes.core.k8s:
-    template:
-      - openshift-operators-redhat-og.yaml
-      - loki-operator-sub.yaml
-    wait: true
-    state: absent
-
-- name: Clean up Loki CSVs
-  include_role:
+  import_role:
     name: openshift_common
-    tasks_from: delete_csvs.yml
+    tasks_from: delete_operator.yml
   vars:
-    delete_csvs_name: '{{ openshift_loki_operator_subscription.resources.0.status.currentCSV }}'
+    delete_operator_subscription_name: loki-operator
+    delete_operator_subscription_namespace: openshift-operators-redhat
 
 - import_role:
     name: openshift_common

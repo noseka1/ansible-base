@@ -1,0 +1,17 @@
+- name: Retrieve all configmaps in namespace openshift-config-managed
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    namespace: openshift-config-managed
+  register: grafana_openshift_configmaps_result
+
+- name: Copy dashboard from namespace openshift-config-managed
+  kubernetes.core.k8s:
+    template:
+      - dashboards/grafana-dashboard-cm.yaml
+      - dashboards/grafana-dashboard-grafanadashboard.yaml
+    namespace: '{{ grafana_subscription_namespace }}'
+  when: item.metadata.name.startswith("grafana-dashboard-")
+  loop: '{{ grafana_openshift_configmaps_result.resources }}'
+  loop_control:
+    label: '{{ item.metadata.name }}'

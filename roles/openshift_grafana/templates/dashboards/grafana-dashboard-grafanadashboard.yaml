@@ -1,0 +1,11 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: {{ item.metadata.name }}
+  labels:
+    app: grafana
+spec:
+  customFolderName: OpenShift Monitoring
+  configMapRef:
+    name: {{ item.metadata.name }}
+    key: {{ item.data.keys() | first }}

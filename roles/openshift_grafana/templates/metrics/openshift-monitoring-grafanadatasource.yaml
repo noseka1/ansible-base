@@ -2,7 +2,6 @@ apiVersion: integreatly.org/v1alpha1
 kind: GrafanaDataSource
 metadata:
   name: openshift-monitoring
-  namespace: grafana
 spec:
   name: openshift-monitoring.yaml
   datasources:
@@ -16,5 +15,5 @@ spec:
       timeInterval: 5s
       tlsSkipVerify: true
     secureJsonData:
-      httpHeaderValue1: Bearer {{ grafana_serviceaccount_jwt.stdout }}
+      httpHeaderValue1: Bearer {{ grafana_serviceaccount_token }}
     url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091

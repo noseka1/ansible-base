@@ -1,13 +1,4 @@
-- name: Deploy RHACS operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
-  vars:
-    subscription_name: '{{ rhacs_subscription_name }}'
-    subscription_namespace: '{{ rhacs_subscription_namespace }}'
+- import_tasks: install_operator.yml
 
 - name: Deploy RHACS Central
   import_role:

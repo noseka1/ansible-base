@@ -1,8 +1,8 @@
-- import_tasks: get_rhacs_route.yml
+- import_tasks: get_rhacs_central_host.yml
 
 - name: Create OpenShift auth provider in RHACS (returns HTTP 400 if the auth provider already exists)
   uri:
-    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/authProviders'
+    url: 'https://{{ rhacs_central_host }}/v1/authProviders'
     method: POST
     body_format: json
     body:
@@ -17,7 +17,7 @@
 
 - name: Get auth providers in RHACS
   uri:
-    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/authProviders'
+    url: 'https://{{ rhacs_central_host }}/v1/authProviders'
     method: GET
     url_username: admin
     url_password: '{{ generic_user_password }}'
@@ -32,7 +32,7 @@
 
 - name: Set minimum access role (returns HTTP 409 if the auth provider already exists)
   uri:
-    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/groups'
+    url: 'https://{{ rhacs_central_host }}/v1/groups'
     method: POST
     body_format: json
     body:
@@ -49,7 +49,7 @@
 
 - name: Grant Admin role to users in cluster-admins group (returns HTTP 500 if the auth provider already exists)
   uri:
-    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/groups'
+    url: 'https://{{ rhacs_central_host }}/v1/groups'
     method: POST
     body_format: json
     body:

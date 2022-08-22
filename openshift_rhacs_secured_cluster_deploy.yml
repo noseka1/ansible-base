@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - fail:
+        msg: >-
+          Variable "rhacs_central_host" must be defined.
+      when: >
+        rhacs_central_host is not defined or
+        rhacs_central_host | length == 0
+
+    - import_role:
+        name: openshift_rhacs
+        tasks_from: install_secured_cluster.yml

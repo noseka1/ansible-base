@@ -8,3 +8,6 @@
   until: rhacs_route.resources | length > 0
   retries: 12
   delay: 10
+
+- set_fact:
+    rhacs_central_host: '{{ rhacs_route.resources.0.spec.host }}'

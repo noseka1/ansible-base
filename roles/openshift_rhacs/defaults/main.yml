@@ -5,3 +5,5 @@ rhacs_subscription_namespace: openshift-operators
 rhacs_subscription_name: rhacs-operator
 rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services
+
+rhacs_central_host: ''

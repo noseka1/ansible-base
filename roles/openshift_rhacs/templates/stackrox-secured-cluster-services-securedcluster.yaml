@@ -15,8 +15,8 @@ spec:
     # It will not have any effect unless Listen On Creates is set to true as well.
     # The default value is false.
     listenOnUpdates: true
-  centralEndpoint: {{ rhacs_route.resources.0.spec.host }}:443
-  clusterName: this-cluster
+  centralEndpoint: {{ rhacs_central_host }}:443
+  clusterName: {{ openshift_common_cluster_domain }}
   perNode:
     collector:
       collection: KernelModule

@@ -8,23 +8,10 @@
         name: stackrox-secured-cluster-services
         namespace: stackrox
 
-- name: Delete custom webhook receiver
-  import_role:
-    name: openshift_webhook_receiver
-    tasks_from: delete.yml
-  vars:
-    openshift_webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
-
-- name: Delete smtp4dev email receiver
-  import_role:
-    name: openshift_smtp4dev
-    tasks_from: delete.yml
-  vars:
-    openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
-
-- name: Delete RHACS central
+- name: Delete stackrox namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.instance) }}"
+    template: stackrox-ns.yaml
+    wait: true
     state: absent
 
 - name: Delete RHACS operator

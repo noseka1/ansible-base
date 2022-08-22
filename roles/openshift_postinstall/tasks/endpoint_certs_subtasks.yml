@@ -5,12 +5,12 @@
   loop:
     - name: api-cert
       namespace: openshift-config
-      crt: '{{ openshift_postinstall_endpoint_certs[openshift_postinstall_cluster_domain].api.crt }}'
-      key: '{{ openshift_postinstall_endpoint_certs[openshift_postinstall_cluster_domain].api.key }}'
+      crt: '{{ openshift_postinstall_endpoint_certs[openshift_common_cluster_domain].api.crt }}'
+      key: '{{ openshift_postinstall_endpoint_certs[openshift_common_cluster_domain].api.key }}'
     - name: wildcard-cert
       namespace: openshift-ingress
-      crt: '{{ openshift_postinstall_endpoint_certs[openshift_postinstall_cluster_domain].ingress.crt }}'
-      key: '{{ openshift_postinstall_endpoint_certs[openshift_postinstall_cluster_domain].ingress.key }}'
+      crt: '{{ openshift_postinstall_endpoint_certs[openshift_common_cluster_domain].ingress.crt }}'
+      key: '{{ openshift_postinstall_endpoint_certs[openshift_common_cluster_domain].ingress.key }}'
 
 - name: Configure API server certificate
   kubernetes.core.k8s:

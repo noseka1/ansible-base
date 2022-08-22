@@ -3,9 +3,9 @@ kind: Proxy
 metadata:
   name: cluster
 spec:
-  httpProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_postinstall_cluster_domain].http_proxy }}
-  httpsProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_postinstall_cluster_domain].https_proxy }}
-  noProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_postinstall_cluster_domain].no_proxy }}
+  httpProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_common_cluster_domain].http_proxy }}
+  httpsProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_common_cluster_domain].https_proxy }}
+  noProxy: {{ openshift_postinstall_cluster_wide_proxy[openshift_common_cluster_domain].no_proxy }}
   readinessEndpoints:
     - http://www.google.com
     - https://www.google.com

@@ -4,7 +4,7 @@
   register: openshift_postinstall_proxy_result
   when:
     - openshift_postinstall_cluster_wide_proxy is defined
-    - openshift_postinstall_cluster_wide_proxy[openshift_postinstall_cluster_domain] is defined
+    - openshift_postinstall_cluster_wide_proxy[openshift_common_cluster_domain] is defined
 
 - import_role:
     name: openshift_common

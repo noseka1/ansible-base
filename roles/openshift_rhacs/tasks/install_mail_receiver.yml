@@ -5,11 +5,11 @@
   vars:
     openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
 
-- import_tasks: get_rhacs_route.yml
+- import_tasks: get_rhacs_central_host.yml
 
 - name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
   uri:
-    url: 'https://{{ rhacs_route.resources.0.spec.host }}/v1/notifiers'
+    url: 'https://{{ rhacs_central_host }}/v1/notifiers'
     method: POST
     body_format: json
     body:
@@ -24,7 +24,7 @@
       name: My Email Notifier
       labelDefault: acs-alerts@example.com
       type: email
-      uiEndpoint: https://{{ rhacs_route.resources.0.spec.host }}
+      uiEndpoint: https://{{ rhacs_central_host }}
     url_username: admin
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true

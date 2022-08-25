@@ -7,6 +7,7 @@ odf_kustomizations:
   operator:         github.com/noseka1/odf-kustomization/odf-operator/base?ref=myauto
   instance_aws:     github.com/noseka1/odf-kustomization/odf-instance/overlays/aws?ref=myauto
   instance_openebs: github.com/noseka1/odf-kustomization/odf-instance/overlays/openebs?ref=myauto
+  instance_vsphere: github.com/noseka1/odf-kustomization/odf-instance/overlays/vsphere?ref=myauto
   tools:            github.com/noseka1/odf-kustomization/rook-ceph-tools/base?ref=myauto
 odf_subscription_namespace: openshift-storage
 odf_subscription_name: odf-operator

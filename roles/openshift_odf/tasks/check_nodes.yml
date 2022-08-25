@@ -7,5 +7,6 @@
   register: odf_nodes_result
 
 - fail:
-    msg: "Need at least 3 ODF nodes. You can label cluster nodes using: 'oc label nodes <node> {{ odf_node_label }}='"
+    msg: >
+      Need at least 3 ODF nodes. You can label cluster nodes using: 'oc label nodes <node> cluster.ocs.openshift.io/openshift-storage='
   when: (odf_nodes_result.resources | list | length) < 3

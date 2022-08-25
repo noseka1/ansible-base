@@ -16,8 +16,15 @@
 
 - name: Deploy ODF instance
   kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_aws) }}"
+  when: infrastructure.resources.0.status.platformStatus.type == 'VSphere'
+
+- name: Deploy ODF instance
+  kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + odf_kustomizations.instance_openebs) }}"
-  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
+  when:
+    - infrastructure.resources.0.status.platformStatus.type != 'AWS'
+    - infrastructure.resources.0.status.platformStatus.type != 'VSphere'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ odf_instance_name }} deployment to complete
   kubernetes.core.k8s_info:

@@ -3,15 +3,15 @@
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster
-  register: infrastructure
+  register: add_machineset_infrastructure
 
 - name: Set cluster_id
   set_fact:
-    cluster_id: '{{ infrastructure.resources.0.status.infrastructureName }}'
+    cluster_id: '{{ add_machineset_infrastructure.resources.0.status.infrastructureName }}'
 
 - name: Set AWS region
   set_fact:
-    aws_region: '{{ infrastructure.resources.0.status.platformStatus.aws.region }}'
+    aws_region: '{{ add_machineset_infrastructure.resources.0.status.platformStatus.aws.region }}'
 
 - name: Set AWS ami id
   set_fact:

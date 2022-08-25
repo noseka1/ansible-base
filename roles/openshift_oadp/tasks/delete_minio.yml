@@ -3,3 +3,4 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ oadp_subscription_namespace }}'
+  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openshift-toolbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openshift-toolbox
+  template:
+    metadata:
+      labels:
+        app: openshift-toolbox
+    spec:
+      containers:
+      - image: quay.io/noseka1/toolbox-container:basic
+        imagePullPolicy: Always
+        name: openshift-toolbox
+        volumeMounts:
+        - mountPath: /mnt
+          name: myvolume
+      serviceAccountName: openshift-toolbox
+      volumes:
+      - name: myvolume
+        persistentVolumeClaim:
+          claimName: myvolume

@@ -1,0 +1,7 @@
+- name: Delete Velero instance
+  kubernetes.core.k8s:
+    template:
+      - velero-instance/cloud-credentials-secret.yaml
+      - velero-instance/velero-dataprotectionapplication.yaml
+    wait: true
+    state: absent

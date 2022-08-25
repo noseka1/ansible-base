@@ -1,17 +1,8 @@
-- import_tasks: get_infrastructure.yml
-
-- name: Delete Velero instance
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: oadp
-    kustomize_files:
-      - kustomization.yaml
-      - cloud-credentials-secret.yaml
-    kustomize_op: absent
-
 - name: Delete OADP operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + oadp_kustomizations.operator) }}"
+    template:
+      - oadp-operator/oadp-operator-og.yaml
+      - oadp-operator/oadp-operator-sub.yaml
+      - oadp-operator/oadp-operator-ns.yaml
+    wait: true
     state: absent

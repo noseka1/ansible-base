@@ -1,3 +1,7 @@
+- import_tasks: get_infrastructure.yml
+
 - import_tasks: deploy_minio.yml
 
 - import_tasks: deploy_oadp.yml
+
+- import_tasks: deploy_velero.yml

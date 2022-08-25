@@ -1,6 +1,9 @@
 - name: Deploy OADP operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + oadp_kustomizations.operator) }}"
+    template:
+      - oadp-operator/oadp-operator-ns.yaml
+      - oadp-operator/oadp-operator-og.yaml
+      - oadp-operator/oadp-operator-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -8,23 +11,3 @@
   vars:
     subscription_name: '{{ oadp_subscription_name }}'
     subscription_namespace: '{{ oadp_subscription_namespace }}'
-
-- import_tasks: get_infrastructure.yml
-
-- name: Deploy Velero instance
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: oadp
-    kustomize_files:
-      - kustomization.yaml
-      - cloud-credentials-secret.yaml
-    kustomize_op: present
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: velero
-    wait_for_deployment_namespace: '{{ oadp_subscription_namespace }}'

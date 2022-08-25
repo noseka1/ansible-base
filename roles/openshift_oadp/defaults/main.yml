@@ -1,6 +1,10 @@
-oadp_kustomizations:
-  operator:       github.com/noseka1/oadp-operator-kustomization/oadp-operator/base?ref=myauto
-  velero_base:    github.com/noseka1/oadp-operator-kustomization/velero-instance/base?ref=myauto
-  velero_vsphere: github.com/noseka1/oadp-operator-kustomization/velero-instance/overlays/vsphere?ref=myauto
 oadp_subscription_namespace: oadp-operator
 oadp_subscription_name: oadp-operator
+
+velero_instance_namespace: oadp-operator
+velero_instance_name: velero
+
+velero_instance_aws_access_key_id: admin
+velero_instance_aws_secret_access_key: '{{ generic_user_password }}'
+velero_instance_bucket_name: mybucket-1
+velero_instance_bucket_region: minio

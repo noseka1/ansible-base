@@ -1,8 +1,6 @@
 - name: Deploy GitOps operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - openshift-gitops-sub.yaml
+    template: openshift-gitops-sub.yaml
 
 - import_role:
     name: openshift_common

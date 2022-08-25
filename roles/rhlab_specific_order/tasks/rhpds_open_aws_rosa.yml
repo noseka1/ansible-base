@@ -13,6 +13,8 @@
       env9: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 009") | first).value }}'
       env22: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 022") | first).value }}'
       env23: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 023") | first).value }}'
+      env33: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 033") | first).value }}'
+      env35: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "Environment Info 035") | first).value }}'
       target_host: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "targetHost") | first).value }}'
       aws_region: '{{ (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "ec2region") | first).value }}'
 
@@ -26,8 +28,10 @@
       ssh_hostname:          '{{ otlc_service_raw.env22.split(" ")[-1].split("@").1 | trim }}'
       ssh_password:          '{{ otlc_service_raw.env23.split(" ")[-1] | trim }}'
       aws_region:            '{{ otlc_service_raw.aws_region }}'
-      web_console_access:    '{{ otlc_service_raw.env8 | trim }}'
-      web_console_creds:     '{{ otlc_service_raw.env9 | trim }}'
+      aws_web_console_url:   '{{ otlc_service_raw.env8 | trim }}'
+      aws_web_console_creds: '{{ otlc_service_raw.env9 | trim }}'
+      openshift_console_url: '{{ otlc_service_raw.env33 | trim }}'
+      openshift_console_creds: '{{ otlc_service_raw.env35 | trim }}'
 
 - debug:
     var: otlc_service_info

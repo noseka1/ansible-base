@@ -263,7 +263,7 @@ rhpds_labs:
     api_host: rhpds.redhat.com
     catalog_id: '30000000000080'
     catalog_name: 'Red Hat Open Environments'
-    template_id: '30000000000840'
+    template_id: '30000000001046'
     template_name: 'AWS Blank Open Environment'
     order_options:
       dialog_check: t

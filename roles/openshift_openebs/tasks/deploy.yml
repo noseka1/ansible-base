@@ -56,6 +56,8 @@
     name: openshift_common
     tasks_from: check_default_storage_class_exists.yml
 
-- name: Create openebs-lvm storage class
+- name: Create openebs-lvm storage class and snapshot class
   kubernetes.core.k8s:
-    template: openebs-lvm-sc.yaml
+    template:
+      - openebs-lvm-sc.yaml
+      - openebs-lvm-vsclass.yaml

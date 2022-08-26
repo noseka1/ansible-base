@@ -1,10 +1,20 @@
-- name: Grab vault's service account token
-  command: oc serviceaccounts get-token --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}
-  changed_when: false
-  register: token_reviewer_jwt
+- name: Create a static service account token
+  kubernetes.core.k8s:
+    template: vault-token-static-secret.yaml
+    namespace: '{{ hashicorp_vault_namespace }}'
+    wait: true
+
+- name: Grab vault's service account token secret
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ hashicorp_vault_name }}-token-static'
+    namespace: '{{ hashicorp_vault_namespace }}'
+  register: vault_serviceaccount_secret
 
 - name: Grab vault's service account CA
-  command: oc exec --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  command: >-
+    oc exec --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
   changed_when: false
   register: kubernetes_ca_cert
 
@@ -27,7 +37,7 @@
     secret: /auth/kubernetes/config
     data:
       issuer: https://kubernetes.default.svc
-      token_reviewer_jwt: '{{ token_reviewer_jwt.stdout }}'
+      token_reviewer_jwt: '{{ vault_serviceaccount_secret.resources.0.data.token | b64decode | default("") }}'
       kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
       kubernetes_host: '{{ kubernetes_host.stdout }}'
   environment:

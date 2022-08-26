@@ -4,6 +4,12 @@
       - velero-instance/cloud-credentials-secret.yaml
       - velero-instance/velero-dataprotectionapplication.yaml
 
+- name: Enable CSI volume snapshotting on AWS
+  kubernetes.core.k8s:
+    template:
+      - aws/velero-ebs-csi-aws-vsclass.yaml
+  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+
 - import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml

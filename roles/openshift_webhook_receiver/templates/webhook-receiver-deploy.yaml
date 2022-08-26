@@ -13,7 +13,7 @@ spec:
         app: webhook-receiver
     spec:
       containers:
-      - image: toolbox-container
+      - image: quay.io/noseka1/toolbox-container:basic
         imagePullPolicy: Always
         name: webhook-receiver
         volumeMounts:
@@ -25,4 +25,4 @@ spec:
       volumes:
       - name: run
         configMap:
-          name: webhook-receiver-run
+          name: webhook-receiver-script

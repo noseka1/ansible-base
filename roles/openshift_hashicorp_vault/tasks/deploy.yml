@@ -23,6 +23,4 @@
 - name: Insert secrets
   import_tasks: insert_secrets.yml
 
-- name: Vault installed successfully
-  debug:
-    msg: Vault installed successfully. You can log in with 'VAULT_ADDR={{ hashicorp_vault_addr }} VAULT_SKIP_VERIFY={{ hashicorp_vault_skip_verify }} vault login -method=userpass username=admin password=<password>'
+- import_tasks: report_success.yml

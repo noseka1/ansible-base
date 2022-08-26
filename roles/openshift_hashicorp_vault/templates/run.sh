@@ -4,14 +4,19 @@ while true; do
   status=$(curl \
     --insecure \
     --silent \
-    --show-error \
-    --location $VAULT_ADDR/v1/sys/seal-status \
-    | \
-    jq \
-    --raw-output \
-    '.sealed' \
+    --fail \
+    --location \
+    $VAULT_ADDR/v1/sys/seal-status \
   )
-  if [ "$status" = "true" ]; then
+  status_seal=""
+  if [ $? -eq 0 ]; then
+    status_seal=$(echo "$status" | \
+      jq \
+      --raw-output \
+      '.sealed' \
+    )
+  fi
+  if [ "$status_seal" = "true" ]; then
     echo $(date) Vault sealed, unsealing!
     key=$(cat /mnt/key)
     curl \

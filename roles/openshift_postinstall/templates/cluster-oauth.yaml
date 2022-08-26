@@ -8,7 +8,7 @@ spec:
     # See also https://docs.openshift.com/container-platform/4.9/authentication/configuring-internal-oauth.html
     accessTokenMaxAgeSeconds: {{ 31 * 24 * 60 * 60 | int }}
   identityProviders:
-  - name: htpasswd
+  - name: {{ openshift_postinstall_identity_name }}
     mappingMethod: claim
     type: HTPasswd
     htpasswd:

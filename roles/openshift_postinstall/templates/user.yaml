@@ -1,0 +1,6 @@
+apiVersion: user.openshift.io/v1
+kind: User
+metadata:
+  name: {{ item }}
+identities:
+- {{ openshift_postinstall_identity_name }}:{{ item }}

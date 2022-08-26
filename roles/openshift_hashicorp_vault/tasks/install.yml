@@ -23,7 +23,7 @@
 
 - name: Create route
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'vault-route.yml') }}"
+    template: vault-route.yml
 
 - name: Obtain vault route
   import_tasks: get_vault_route.yml

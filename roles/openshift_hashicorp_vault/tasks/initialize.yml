@@ -9,7 +9,7 @@
 
 - name: Save the unseal key in the Kubernetes secret for later use
   kubernetes.core.k8s:
-    template: vault-unseal-key-secret.yml
+    template: vault-unseal-key-secret.yaml
 
 - name: Unseal vault
   import_tasks: unseal.yml
@@ -17,8 +17,8 @@
 - name: Deploy script that unseals vault automatically
   kubernetes.core.k8s:
     template:
-      - vault-unseal-deploy.yml
-      - vault-unseal-script-cm.yml
+      - vault-unseal-deploy.yaml
+      - vault-unseal-script-cm.yaml
 
 - name: Enable user/password authentication
   hashivault_auth_method:

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auto-approve-csr-script
+data:
+  run.sh: |
+    {{ lookup('template', 'run.sh') | indent(4) }}

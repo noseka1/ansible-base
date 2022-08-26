@@ -2,6 +2,10 @@
     name: openshift_common
     tasks_from: get_cluster_domain.yml
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
 - import_tasks: ensure_storage.yml
 
 - import_tasks: trusted_ca.yml
@@ -29,6 +33,8 @@
 - import_tasks: audit.yml
 
 - import_tasks: access_logging.yml
+
+- import_tasks: auto_approve_csr.yml
 
 - import_tasks: delete_succeeded_pods.yml
 

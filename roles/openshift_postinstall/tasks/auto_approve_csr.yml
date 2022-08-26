@@ -1,0 +1,4 @@
+- import_role:
+    name: openshift_auto_approve_csr
+    tasks_from: deploy.yml
+  when: openshift_common_infrastructure.status.platformStatus.type == 'None'

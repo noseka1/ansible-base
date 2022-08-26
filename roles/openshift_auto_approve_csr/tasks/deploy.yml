@@ -1,0 +1,17 @@
+- name: Deploy auto-approve-csr
+  kubernetes.core.k8s:
+    template:
+      - auto-approve-csr-ns.yaml
+      - auto-approve-csr-clusterrolebinding.yaml
+      - auto-approve-csr-clusterrole.yaml
+      - auto-approve-csr-sa.yaml
+      - auto-approve-csr-script-cm.yml
+      - auto-approve-csr-deploy.yaml
+    namespace: '{{ auto_approve_csr_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: auto-approve-csr
+    wait_for_deployment_namespace: '{{ auto_approve_csr_namespace }}'

@@ -1,0 +1,8 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: myvolume
+spec:
+  volumeSnapshotClassName: odf-lvm-loop1-vg
+  source:
+    persistentVolumeClaimName: myvolume

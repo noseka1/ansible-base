@@ -1,0 +1,22 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 99-{{ item }}-odf-lvm-block
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - path: /var/usrlocal/bin/create-odf-lvm-block.sh
+        mode: 0755
+        contents:
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'create-odf-lvm-block.sh') | b64encode }}
+    systemd:
+      units:
+      - name: create-odf-lvm-block.service
+        enabled: true
+        contents: |
+          {{ lookup('file', 'create-odf-lvm-block.service') | indent(10) }}

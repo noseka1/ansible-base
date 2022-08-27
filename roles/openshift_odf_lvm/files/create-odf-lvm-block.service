@@ -1,0 +1,10 @@
+[Unit]
+Description=Create block device for ODF LVM
+
+[Service]
+Type=simple
+
+ExecStart=/var/usrlocal/bin/create-odf-lvm-block.sh
+
+[Install]
+WantedBy=multi-user.target

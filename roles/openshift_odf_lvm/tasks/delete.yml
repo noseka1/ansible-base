@@ -1,0 +1,27 @@
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: check_default_storage_class_exists.yml
+
+- name: Delete storage class and snapshot class
+  kubernetes.core.k8s:
+    template:
+      - odf-lvm-loop1-vg-sc.yaml
+      - odf-lvm-loop1-vg-vsclass.yaml
+    wait: true
+    state: absent
+
+- name: Delete ODF LVM instance
+  kubernetes.core.k8s:
+    template:
+      - odf-lvmcluster-lvmcluster.yaml
+    wait: true
+    state: absent
+
+- name: Delete ODF LVM operator
+  kubernetes.core.k8s:
+    template:
+      - openshift-storage-ns.yaml
+      - odf-lvm-operator-sub.yaml
+    wait: true
+    state: absent

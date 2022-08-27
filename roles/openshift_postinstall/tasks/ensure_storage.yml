@@ -4,6 +4,6 @@
     tasks_from: check_default_storage_class_exists.yml
 
 - import_role:
-    name: openshift_openebs
+    name: openshift_odf_lvm
     tasks_from: deploy.yml
   when: not default_storage_class_exists

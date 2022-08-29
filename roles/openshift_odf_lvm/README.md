@@ -11,4 +11,4 @@ This Ansible role:
 * Creates an ODF LVM cluster
 * Sets ODF LVM as a default storageclass unless there is a default storageclass already defined on the cluster
 * Enables CSI snapshotting
-* Enables creating of volume snapshots using Velero
+* Enables creating of CSI volume snapshots using Velero

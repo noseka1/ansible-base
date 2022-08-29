@@ -6,7 +6,7 @@ ODF LVM deployment documentation can be found here: [Deploying and managing Open
 
 This Ansible role:
 
-* Creates a block device on each of the cluster nodes. This block device is backed by a sparse file so the storage space is only allocated when actually needed.
+* Creates a block device on each of the cluster nodes. Each block device is backed by a sparse file so the storage space is only allocated when actually needed. ODF LVM will discover these block devices and add them to the LVM volume group.
 * Deploys ODF LVM operator
 * Creates a ODF LVM instance
 * Sets ODF LVM as a default storageclass unless there is a default storageclass already defined on the cluster

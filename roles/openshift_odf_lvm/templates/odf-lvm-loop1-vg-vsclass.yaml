@@ -4,6 +4,6 @@ metadata:
   annotations:
     snapshot.storage.kubernetes.io/is-default-class: "true"
   labels:
-    # Enable creating of openebs-lvm snapshots using Velero
+    # Enable creating of volume snapshots using Velero
     velero.io/csi-volumesnapshot-class: "true"
   name: odf-lvm-loop1-vg

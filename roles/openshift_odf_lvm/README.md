@@ -8,7 +8,7 @@ This Ansible role:
 
 * Creates a block device on each of the cluster nodes. Each block device is backed by a sparse file so the storage space is only allocated when actually needed. ODF LVM will discover these block devices and add them to the LVM volume group.
 * Deploys ODF LVM operator
-* Creates a ODF LVM instance
+* Creates an ODF LVM cluster
 * Sets ODF LVM as a default storageclass unless there is a default storageclass already defined on the cluster
 * Enables CSI snapshotting
 * Enables creating of volume snapshots using Velero

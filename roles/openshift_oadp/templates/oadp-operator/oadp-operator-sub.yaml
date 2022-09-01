@@ -4,7 +4,7 @@ metadata:
   name: {{ oadp_subscription_name }}
   namespace: {{ oadp_subscription_namespace }}
 spec:
-  channel: stable
+  channel: {{ oadp_subscription_channel }}
   installPlanApproval: Automatic
   name: redhat-oadp-operator
   source: redhat-operators

@@ -4,6 +4,7 @@
   loop:
     - amq-broker-ns.yaml
     - broker-activemqartemis.yaml
+    - broker-servicemonitor.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AMQ Broker deployment to complete
   kubernetes.core.k8s_info:

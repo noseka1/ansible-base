@@ -3,6 +3,7 @@
     definition: "{{ lookup('template', '{{ item }}') }}"
   loop:
     - amq-broker-ns.yaml
+    - broker-credentials-secret-secret.yaml
     - broker-activemqartemis.yaml
     - broker-servicemonitor.yaml
 

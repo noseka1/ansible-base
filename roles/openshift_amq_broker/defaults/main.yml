@@ -1,5 +1,6 @@
 amq_broker_subscription_name: amq-broker-rhel8
 amq_broker_subscription_namespace: openshift-operators
+amq_broker_subscription_channel: 7.10.x
 
 amq_broker_instance_name: broker
 amq_broker_instance_namespace: amq-broker

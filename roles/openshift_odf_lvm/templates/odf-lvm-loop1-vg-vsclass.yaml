@@ -7,3 +7,5 @@ metadata:
     # Enable creating of volume snapshots using Velero
     velero.io/csi-volumesnapshot-class: "true"
   name: odf-lvm-loop1-vg
+deletionPolicy: Delete
+driver: topolvm.cybozu.com

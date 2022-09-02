@@ -3,7 +3,7 @@
 - name: Delete Kafka instance
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: kafka-single
+    namespace: '{{ amq_streams_kafka_single_namespace }}'
     state: absent
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'

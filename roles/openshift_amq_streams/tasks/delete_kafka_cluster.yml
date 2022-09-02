@@ -1,7 +1,7 @@
 - name: Delete Kafka cluster
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: kafka-cluster
+    namespace: '{{ amq_streams_kafka_cluster_namespace }}'
     state: absent
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent.yaml'

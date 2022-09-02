@@ -7,7 +7,7 @@
 - name: Deploy Kafka instance
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: kafka-single
+    namespace: '{{ amq_streams_kafka_single_namespace }}'
   loop:
     - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'
 
@@ -15,7 +15,7 @@
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
-    namespace: kafka-single
+    namespace: '{{ amq_streams_kafka_single_namespace }}'
     name: my-cluster
   register: kafka_instance
   until:

@@ -1,7 +1,7 @@
 - name: Delete two Kafka instances and Mirror Maker
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: kafka-mirror-maker
+    namespace: '{{ amq_streams_kafka_mirror_maker_namespace }}'
     state: absent
   loop:
     - '{{ amq_streams_examples }}/mirror-maker/kafka-source.yaml'

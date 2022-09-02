@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kafka-single
+  name: '{{ amq_streams_kafka_single_namespace }}'

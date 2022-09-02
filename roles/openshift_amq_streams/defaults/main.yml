@@ -1,6 +1,6 @@
 amq_streams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/0.28.0/examples
 
-kafdrop_version: 3.29.0
+amq_streams_kafdrop_version: 3.30.0
 
 amq_streams_subscription_name: amq-streams
 amq_streams_subscription_namespace: openshift-operators

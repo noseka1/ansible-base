@@ -8,7 +8,7 @@
   kubernetes.core.helm:
     name: kafdrop
     chart_ref: /tmp/kafdrop/chart
-    release_namespace: '{{ amq_streams_kafka_single_namespace }}'
+    release_namespace: '{{ amq_streams_kafdrop_namespace }}'
     values:
       image:
         tag: '{{ amq_streams_kafdrop_version }}'

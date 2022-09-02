@@ -1,4 +1,6 @@
 - import_tasks: delete_kafdrop.yml
+  vars:
+    amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_single_namespace }}'
 
 - name: Delete Kafka instance
   kubernetes.core.k8s:

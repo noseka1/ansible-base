@@ -26,3 +26,5 @@
   delay: 10
 
 - import_tasks: deploy_kafdrop.yml
+  vars:
+    amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_single_namespace }}'

@@ -1,3 +1,7 @@
+- import_tasks: delete_kafdrop.yml
+  vars:
+    amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_cluster_namespace }}'
+
 - name: Delete Kafka cluster
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"

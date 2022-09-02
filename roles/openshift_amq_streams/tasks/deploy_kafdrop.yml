@@ -14,3 +14,14 @@
         tag: '{{ amq_streams_kafdrop_version }}'
       kafka:
         brokerConnect: my-cluster-kafka-bootstrap:9092
+      service:
+        type: ClusterIP
+
+- name: Deploy oauth-proxy
+  import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: kafdrop
+    openshift_oauth_proxy_namespace: '{{ amq_streams_kafdrop_namespace }}'
+    openshift_oauth_proxy_upstream: http://kafdrop:9000

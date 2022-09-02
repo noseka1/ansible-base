@@ -1,3 +1,12 @@
+- name: Deploy oauth-proxy
+  import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
+  vars:
+    openshift_oauth_proxy_name: kafdrop
+    openshift_oauth_proxy_namespace: '{{ amq_streams_kafdrop_namespace }}'
+    openshift_oauth_proxy_upstream: http://kafdrop:9000
+
 - name: Delete Kafdrop
   kubernetes.core.helm:
     name: kafdrop

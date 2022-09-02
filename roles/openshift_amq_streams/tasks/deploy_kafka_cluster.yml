@@ -1,8 +1,6 @@
 - name: Create namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - kafka-cluster-ns.yaml
+    template: kafka-cluster-ns.yaml
 
 - name: Deploy Kafka cluster
   kubernetes.core.k8s:

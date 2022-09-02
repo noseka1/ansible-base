@@ -8,7 +8,5 @@
 
 - name: Delete namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: kafka-cluster-ns.yaml
     state: absent
-  loop:
-    - kafka-cluster-ns.yaml

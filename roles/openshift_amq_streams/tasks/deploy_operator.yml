@@ -1,8 +1,6 @@
 - name: Deploy AMQ Streams operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - amq-streams-sub.yaml
+    template: amq-streams-sub.yaml
 
 - import_role:
     name: openshift_common

@@ -1,8 +1,6 @@
 - name: Create namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - kafka-mirror-maker-ns.yaml
+    template: kafka-mirror-maker-ns.yaml
 
 - name: Deploy two Kafka instances and Mirror Maker
   kubernetes.core.k8s:

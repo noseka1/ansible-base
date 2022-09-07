@@ -1,0 +1,9 @@
+- name: Create Kafka test topics
+  kubernetes.core.k8s:
+    template: mytopic-kafkatopic.yaml
+  loop:
+    - mytopic1
+    - mytopic2
+    - mytopic3
+    - mytopic4
+    - mytopic5

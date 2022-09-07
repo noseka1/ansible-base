@@ -25,6 +25,11 @@
   retries: 60
   delay: 10
 
+- import_tasks: create_topics.yml
+  vars:
+    amq_streams_topics_namespace: '{{ amq_streams_kafka_cluster_namespace }}'
+    amq_streams_topics_replicas: 3
+
 - import_tasks: deploy_kafdrop.yml
   vars:
     amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_cluster_namespace }}'

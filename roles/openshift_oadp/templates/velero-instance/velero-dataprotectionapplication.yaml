@@ -13,9 +13,7 @@ spec:
 {% if infrastructure.resources.0.status.platformStatus.type != 'VSphere' %}
         - csi
       featureFlags:
-        # OADP operator sets the EnableCSI feature flag automatically if the csi plugin
-        # was included in the defaultVeleroPlugins list.
-        #- EnableCSI
+        - EnableCSI
 {% endif %}
 {% if infrastructure.resources.0.status.platformStatus.type == 'VSphere' %}
       customPlugins:

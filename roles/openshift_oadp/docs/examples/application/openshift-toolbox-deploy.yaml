@@ -7,6 +7,8 @@ spec:
   selector:
     matchLabels:
       app: openshift-toolbox
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

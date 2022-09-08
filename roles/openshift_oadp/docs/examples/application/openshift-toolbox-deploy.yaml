@@ -21,7 +21,6 @@ spec:
         volumeMounts:
         - mountPath: /mnt
           name: myvolume
-      serviceAccountName: openshift-toolbox
       volumes:
       - name: myvolume
         persistentVolumeClaim:

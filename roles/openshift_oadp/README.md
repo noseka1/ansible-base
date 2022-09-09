@@ -171,11 +171,11 @@ $ oc delete backup -n openshift-adp mybackup
 Scale the oadp operator down to zero replicas:
 
 ```
-$ oc edit csv oadp-operator.v1.0.3
+$ oc edit csv -n openshift-adp oadp-operator.v1.1.0
 ```
 
 Add `--log-level=debug` to the server command-line:
 
 ```
-$ oc edit deploy velero
+$ oc edit -n openshift-adp deploy velero
 ```

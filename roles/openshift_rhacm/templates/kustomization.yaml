@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-bases:
-- {{ rhacm_kustomizations.observability }}
-
-patchesStrategicMerge:
-- pull-secret-secret.yaml
-- {{ rhacm_thanos_thanos_s3_secret }}

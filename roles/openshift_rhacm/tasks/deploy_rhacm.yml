@@ -1,6 +1,9 @@
 - name: Deploy RHACM operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.operator) }}"
+    template:
+      - rhacm-operator/open-cluster-management-ns.yaml
+      - rhacm-operator/open-cluster-management-og.yaml
+      - rhacm-operator/advanced-cluster-management-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -11,7 +14,8 @@
 
 - name: Deploy RHACM instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.instance) }}"
+    template:
+      - rhacm-instance/multiclusterhub-multiclusterhub.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
   kubernetes.core.k8s_info:
@@ -50,5 +54,10 @@
 
 - name: Put local-cluster under GitOps management
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacm_kustomizations.gitops) }}"
+    template:
+      - rhacm-gitops/all-openshift-clusters-managedclustersetbinding.yaml
+      - rhacm-gitops/all-openshift-clusters-managedclusterset.yaml
+      - rhacm-gitops/all-openshift-clusters-placement.yaml
+      - rhacm-gitops/argo-acm-importer-gitopscluster.yaml
+      - rhacm-gitops/local-cluster-managedcluster.yaml
   when: openshift_gitops_namespace.resources | length > 0

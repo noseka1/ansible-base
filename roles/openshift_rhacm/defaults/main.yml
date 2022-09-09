@@ -1,21 +1,22 @@
-rhacm_kustomizations:
-  operator: github.com/noseka1/rhacm-kustomization/rhacm-operator/base?ref=myauto
-  instance: github.com/noseka1/rhacm-kustomization/rhacm-instance/overlays/basic?ref=myauto
-  gitops: github.com/noseka1/rhacm-kustomization/rhacm-gitops/base?ref=myauto
-  observability: github.com/noseka1/rhacm-kustomization/rhacm-observability/overlays/basic?ref=myauto
 rhacm_subscription_namespace: open-cluster-management
 rhacm_subscription_name: advanced-cluster-management
 rhacm_instance_namespace: open-cluster-management
 rhacm_instance_name: multiclusterhub
 
-# false - to minio and use it as the s3 thanos backend
-# true - to use an existing s3 bucket as the s3 thanos backend
-rhacm_observability_use_existing_s3: false
+# To deploy a highly-available RHACM change this value from Basic to High:
+rhacm_instance_availability: Basic
 
-rhacm_observability_s3_bucket: s3_bucket
-rhacm_observability_s3_endpoint: s3_endpoint
-rhacm_observability_s3_access_key: s3_access_key
-rhacm_observability_s3_secret_key: s3_secret_key
+# To deploy a highly-available Observability change this value from Basic to High:
+rhacm_observability_availability: Basic
+
+# If you want to use an existing S3 bucket, set this value to false:
+rhacm_observability_deploy_minio: true
+
+# If you are using an existing S3 bucket, configure the bucket connection here:
+rhacm_observability_s3_bucket: YOUR_S3_BUCKET
+rhacm_observability_s3_endpoint: s3.amazonaws.com
+rhacm_observability_s3_access_key: YOUR_ACCESS_KEY
+rhacm_observability_s3_secret_key: YOUR_SECRET_KEY
 
 rhacm_minio_name: minio
 rhacm_minio_namespace: open-cluster-management

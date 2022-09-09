@@ -4,30 +4,26 @@
     tasks_from: get_minio_api_route.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
-  when: not rhacm_observability_use_existing_s3
+  when: rhacm_observability_deploy_minio
 
 - import_tasks: retrieve_pull_secret.yml
 
-- import_tasks: set_thanos_secret.yml
-
 - name: Delete Observability component
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: rhacm_observability
-    kustomize_files:
-      - kustomization.yaml
-      - pull-secret-secret.yaml
-      - '{{ rhacm_thanos_thanos_s3_secret }}'
-    kustomize_op: absent
+  kubernetes.core.k8s:
+    template:
+      - rhacm-observability/observability-mco.yaml
+      - rhacm-observability/pull-secret-secret.yaml
+      - rhacm-observability/thanos-object-storage-secret.yaml
+      - rhacm-observability/open-cluster-management-observability-ns.yaml
+    wait: true
+    state: absent
 
 - import_role:
     name: openshift_minio
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
-  when: not rhacm_observability_use_existing_s3
+  when: rhacm_observability_deploy_minio
 
 - import_role:
     name: openshift_common

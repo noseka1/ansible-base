@@ -1,0 +1,36 @@
+- name: Delete RHACM instance
+  kubernetes.core.k8s:
+    template:
+      - rhacm-instance/multiclusterhub-multiclusterhub.yaml
+    wait: true
+    state: absent
+
+- name: Delete RHACM operator
+  kubernetes.core.k8s:
+    template:
+      - rhacm-operator/advanced-cluster-management-sub.yaml
+      - rhacm-operator/open-cluster-management-og.yaml
+      - rhacm-operator/open-cluster-management-ns.yaml
+    wait: true
+    state: absent
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: application-webhook-validator
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: channels.apps.open.cluster.management.webhook.validator
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: multiclusterhub-operator-validating-webhook
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: multiclusterengines.multicluster.openshift.io
+      - api_version: v1
+        kind: Namespace
+        name: hive

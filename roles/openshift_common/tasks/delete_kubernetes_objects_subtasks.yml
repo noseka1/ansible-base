@@ -14,6 +14,8 @@
     namespace: '{{ item.metadata.namespace | default(omit) }}'
     state: absent
   loop: '{{ existing_objects.resources }}'
+  loop_control:
+    label: '{{ outer_item.kind }} {{ item.metadata.namespace + "/" if item.metadata.namespace is defined else "" }}{{ item.metadata.name }}'
 
 - name: Waiting until all objects of kind have been deleted
   kubernetes.core.k8s_info:

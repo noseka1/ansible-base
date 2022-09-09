@@ -43,9 +43,13 @@ spec:
           prefix: velero
         config:
 {% if infrastructure.resources.0.status.platformStatus.type != 'AWS' %}
-          s3Url: http://minio.oadp-operator.svc.cluster.local:9000
+          s3Url: https://{{ minio_api_route.resources.0.spec.host }}
           s3ForcePathStyle: "true"
           #insecureSkipTLSVerify: "true"
+{% if rhacs_additional_trusted_ca is defined %}
+          caCert: |
+            {{ rhacs_additional_trusted_ca | indent(12) }}
+{% endif %}
 {% endif %}
           region: {{ velero_instance_bucket_region }}
           # Choose a profile from the AWS config file

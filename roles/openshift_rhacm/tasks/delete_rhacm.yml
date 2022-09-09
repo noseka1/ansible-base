@@ -3,6 +3,7 @@
     template:
       - rhacm-instance/multiclusterhub-multiclusterhub.yaml
     wait: true
+    wait_timeout: 600
     state: absent
 
 - name: Delete RHACM operator

@@ -31,7 +31,7 @@ spec:
         args:
         - -c
         - |
-          set -e
+          set -euo pipefail
           mc --config-dir /config config host add minio http://minio:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
           for I in $(seq 1 9); do
             mc --config-dir /config mb --ignore-existing minio/mybucket-$I

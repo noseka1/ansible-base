@@ -4,7 +4,7 @@ metadata:
   name: advanced-cluster-management
   namespace: open-cluster-management
 spec:
-  channel: release-2.5
+  channel: release-2.6
   installPlanApproval: Automatic
   name: advanced-cluster-management
   source: redhat-operators

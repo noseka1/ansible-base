@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-bucket
+spec:
+  selector:
+    matchLabels:
+      app: minio-bucket
+  template:
+    metadata:
+      labels:
+        app: minio-bucket
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: mc
+        image: minio/mc:latest
+        env:
+        - name: MINIO_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-server-credentials
+              key: minio_access_key
+        - name: MINIO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-server-credentials
+              key: minio_secret_key
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - |
+          set -e
+          mc --config-dir /config config host add minio http://minio:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+          for I in $(seq 1 9); do
+            mc --config-dir /config mb --ignore-existing minio/mybucket-$I
+          done
+          mc --config-dir /config watch minio/
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+      volumes:
+      - name: config
+        emptyDir: {}

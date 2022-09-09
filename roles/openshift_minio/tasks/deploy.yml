@@ -1,19 +1,19 @@
 - name: Create namespace {{ minio_namespace }}
   kubernetes.core.k8s:
-    api_version: v1
-    kind: Namespace
-    name: '{{ minio_namespace }}'
+    template: minio-ns.yaml
 
 - name: Deploy minio
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: minio
-    kustomize_files:
-      - kustomization.yaml
+  kubernetes.core.k8s:
+    template:
+      - minio-api-route.yaml
+      - minio-bucket-deploy.yaml
+      - minio-config-pvc.yaml
+      - minio-console-route.yaml
+      - minio-deploy.yaml
       - minio-server-credentials-secret.yaml
-    kustomize_op: present
+      - minio-storage-pvc.yaml
+      - minio-svc.yaml
+    namespace: '{{ minio_namespace }}'
 
 - name: Obtain Minio route
   import_tasks: get_minio_api_route.yml

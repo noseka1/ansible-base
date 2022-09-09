@@ -1,10 +1,14 @@
 - name: Delete minio
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: minio
-    kustomize_files:
-      - kustomization.yaml
+  kubernetes.core.k8s:
+    template:
+      - minio-api-route.yaml
+      - minio-bucket-deploy.yaml
+      - minio-console-route.yaml
+      - minio-deploy.yaml
       - minio-server-credentials-secret.yaml
-    kustomize_op: absent
+      - minio-svc.yaml
+      - minio-storage-pvc.yaml
+      - minio-config-pvc.yaml
+    namespace: '{{ minio_namespace }}'
+    wait: true
+    state: absent

@@ -3,6 +3,6 @@
     template:
       - oadp-operator/oadp-operator-og.yaml
       - oadp-operator/oadp-operator-sub.yaml
-      - oadp-operator/oadp-operator-ns.yaml
+      - oadp-operator/openshift-adp-ns.yaml
     wait: true
     state: absent

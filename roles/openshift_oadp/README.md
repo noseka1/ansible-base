@@ -4,10 +4,10 @@ See also oadp operator [documentation](https://github.com/openshift/oadp-operato
 
 ## Velero Client
 
-Configure Velero client to use non-default namespace `oadp-operator`:
+Configure Velero client to use non-default namespace `openshift-adp`:
 
 ```
-$ velero client config set namespace=oadp-operator
+$ velero client config set namespace=openshift-adp
 ```
 
 Velero client configuration file can be found at `~/.config/velero/config.json`
@@ -55,7 +55,7 @@ $ velero backup create mybackup --include-namespaces volume-test
 Check the backup status:
 
 ```
-$ oc get backup -n oadp-operator mybackup -o yaml
+$ oc get backup -n openshift-adp mybackup -o yaml
 ```
 
 Create a test restore project:
@@ -76,13 +76,13 @@ $ velero restore create \
 Check the restore status:
 
 ```
-$ oc get restore -n oadp-operator myrestore -o yaml
+$ oc get restore -n openshift-adp myrestore -o yaml
 ```
 
 Delete the backup from the S3 storage. After that, delete the backup in OpenShift:
 
 ```
-$ oc delete backup -n oadp-operator mybackup
+$ oc delete backup -n openshift-adp mybackup
 ```
 
 ## Backup and Restore of vSphere Volumes
@@ -124,13 +124,13 @@ $ velero backup create \
 Check the backup status:
 
 ```
-$ oc get backup -n oadp-operator mybackup -o yaml
+$ oc get backup -n openshift-adp mybackup -o yaml
 ```
 
 Check that the backup was correctly uploaded into the S3 storage:
 
 ```
-$ oc get upload -n oadp-operator -o yaml upload-77b1db62-ad5d-41bb-a867-72392fac816e
+$ oc get upload -n openshift-adp -o yaml upload-77b1db62-ad5d-41bb-a867-72392fac816e
 ```
 
 Create a test restore project:
@@ -151,19 +151,19 @@ $ velero restore create \
 Check the restore status:
 
 ```
-$ oc get restore -n oadp-operator myrestore -o yaml
+$ oc get restore -n openshift-adp myrestore -o yaml
 ```
 
 Check the backup download status:
 
 ```
-$ oc get download -n oadp-operator -o yaml download-916f7fba-39d4-4a96-bc64-770d931b6c2a-3205911d-6026-4d09-a8da-ab3c4dba4992
+$ oc get download -n openshift-adp -o yaml download-916f7fba-39d4-4a96-bc64-770d931b6c2a-3205911d-6026-4d09-a8da-ab3c4dba4992
 ```
 
 Delete the backup from the S3 storage. After that, delete the backup in OpenShift:
 
 ```
-$ oc delete backup -n oadp-operator mybackup
+$ oc delete backup -n openshift-adp mybackup
 ```
 
 ## Troubleshooting

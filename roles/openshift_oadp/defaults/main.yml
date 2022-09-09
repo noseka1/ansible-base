@@ -1,8 +1,8 @@
-oadp_subscription_namespace: oadp-operator
+oadp_subscription_namespace: openshift-adp
 oadp_subscription_name: oadp-operator
 oadp_subscription_channel: stable-1.1
 
-velero_instance_namespace: oadp-operator
+velero_instance_namespace: openshift-adp
 velero_instance_name: velero
 
 velero_instance_aws_access_key_id: admin

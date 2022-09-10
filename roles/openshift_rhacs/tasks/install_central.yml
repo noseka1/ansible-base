@@ -11,3 +11,18 @@
       - central-htpasswd-secret.yaml
       - stackrox-central-services-central.yaml
     kustomize_op: present
+
+- name: Obtain Central TLS  secret
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: central-tls
+    namespace: '{{ rhacs_instance_namespace }}'
+  register: rhacs_central_tls
+  until: rhacs_central_tls.resources | length == 1
+  retries: 12
+  delay: 10
+
+- name: Create a reencrypt route
+  kubernetes.core.k8s:
+    template: central-reencrypt-route.yaml

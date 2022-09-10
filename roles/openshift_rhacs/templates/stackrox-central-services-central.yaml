@@ -8,6 +8,15 @@ spec:
       name: central-htpasswd
     defaultTLSSecret:
       name: central-tls
+  customize:
+    annotations:
+      # These annotations make the central-reencrypt route work with OIDC. The annotations are required to be
+      # attached to the central serviceaccount object only. Unfortunately, the operator configuration doesn't
+      # allow attaching annotations to a select object. The annotations are attached to all managed objects
+      # even when not necessary.
+      serviceaccounts.openshift.io/oauth-redirectreference.custom: >-
+        {"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"central-reencrypt"}}
+      serviceaccounts.openshift.io/oauth-redirecturi.custom: sso/providers/openshift/callback
 {% if rhacs_additional_trusted_ca is defined %}
   tls:
     additionalCAs:

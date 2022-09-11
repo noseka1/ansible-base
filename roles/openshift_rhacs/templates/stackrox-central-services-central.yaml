@@ -8,6 +8,8 @@ spec:
       name: central-htpasswd
     defaultTLSSecret:
       name: central-tls
+    monitoring:
+      exposeEndpoint: Enabled
   customize:
     annotations:
       # These annotations make the central-reencrypt route work with OIDC. The annotations are required to be

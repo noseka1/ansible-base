@@ -1,4 +1,2 @@
-volsync_helm_repo: https://backube.github.io/helm-charts
-volsync_version: 0.3.0
-volsync_name: volsync
-volsync_namespace: volsync-system
+volsync_subscription_name: volsync-product
+volsync_subscription_namespace: openshift-operators

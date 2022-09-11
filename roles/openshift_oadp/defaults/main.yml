@@ -9,3 +9,6 @@ velero_instance_aws_access_key_id: admin
 velero_instance_aws_secret_access_key: '{{ generic_user_password }}'
 velero_instance_bucket_name: mybucket1
 velero_instance_bucket_region: minio
+
+# Install and configure VolSync data mover
+velero_datamover_enabled: false

@@ -2,6 +2,11 @@
 
 - import_tasks: deploy_minio.yml
 
+- import_role:
+    name: openshift_volsync
+    tasks_from: deploy.yml
+  when: velero_datamover_enabled
+
 - import_tasks: deploy_oadp.yml
 
 - import_tasks: deploy_velero.yml

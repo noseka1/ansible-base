@@ -63,3 +63,7 @@ spec:
     - velero:
         provider: velero.io/vsphere
 {% endif %}
+  features:
+    dataMover:
+      enable: {{ velero_datamover_enabled }}
+      credentialName: dm-credential

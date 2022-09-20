@@ -14,7 +14,19 @@ roles:
   src: https://github.com/mprahl/ansible-role-lets-encrypt-route-53.git
   version: v5.1.1
 
+- name: ruzickap.virtio-win
+  src: https://github.com/noseka1/ansible-role-virtio-win
+  version: main
+
 collections:
 - name: kubernetes.core
   src: https://github.com/ansible-collections/kubernetes.core
   version: 2.3.2
+
+- name: ansible.windows
+  src: https://github.com/ansible-collections/ansible.windows
+  version: 1.11.1
+
+- name: chocolatey.chocolatey
+  src: https://github.com/chocolatey/chocolatey-ansible
+  version: 1.3.0

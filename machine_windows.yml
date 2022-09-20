@@ -1,0 +1,9 @@
+- hosts: all
+  tasks:
+    - import_role:
+        name: ruzickap.virtio-win
+      tags: virtio_win
+
+    - import_role:
+        name: machine_windows
+      tags: machine_windows

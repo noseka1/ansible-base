@@ -1,0 +1,5 @@
+- import_tasks: configure_windows.yml
+
+- import_tasks: install_tools.yml
+
+- import_tasks: install_updates.yml

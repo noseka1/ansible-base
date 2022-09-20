@@ -1,0 +1,29 @@
+all:
+  children:
+    ungrouped:
+      hosts:
+        win1:
+          ansible_host: win1.lab.example.com
+          ansible_user: administrator
+          ansible_connection: ssh
+          ansible_shell_type: cmd
+        win2:
+          ansible_host: win2.lab.example.com
+          ansible_user: administrator
+          ansible_connection: ssh
+          ansible_shell_type: cmd
+        win3:
+          ansible_host: win3.lab.example.com
+          ansible_user: administrator
+          ansible_connection: ssh
+          ansible_shell_type: cmd
+        win4:
+          ansible_host: win4.lab.example.com
+          ansible_user: administrator
+          ansible_connection: ssh
+          ansible_shell_type: cmd
+        win5:
+          ansible_host: win5.lab.example.com
+          ansible_user: administrator
+          ansible_connection: ssh
+          ansible_shell_type: cmd

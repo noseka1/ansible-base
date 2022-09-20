@@ -1,0 +1,6 @@
+- name: Install all critical and security updates and reboot as many times as needed
+  ansible.windows.win_updates:
+    category_names:
+      - SecurityUpdates
+      - CriticalUpdates
+    reboot: true

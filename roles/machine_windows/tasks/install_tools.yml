@@ -1,0 +1,15 @@
+- name: Ensure Chocolatey itself is installed, using community repo for the bootstrap
+  chocolatey.chocolatey.win_chocolatey:
+    name: chocolatey
+
+- name: Install useful tools
+  chocolatey.chocolatey.win_chocolatey:
+    name: '{{ item }}'
+  loop:
+    - 7zip
+    - curl
+    - googlechrome
+    - mobaxterm
+    - notepadplusplus
+    - sysinternals
+    - wireshark

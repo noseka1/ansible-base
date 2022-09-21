@@ -1,26 +1,18 @@
-- name: Install vault on OpenShift
-  import_tasks: install.yml
+- import_tasks: install.yml
 
-- name: Initialize vault
-  import_tasks: initialize.yml
+- import_tasks: initialize.yml
   when: hashicorp_vault_health.status == 501
 
-- name: Ensure vault is unsealed
-  import_tasks: unseal.yml
+- import_tasks: unseal.yml
 
-- name: Retrieve admin token
-  import_tasks: get_admin_token.yml
+- import_tasks: get_admin_token.yml
 
-- name: Enable the Kubernetes auth method
-  import_tasks: enable_kube_auth.yml
+- import_tasks: enable_kube_auth.yml
 
-- name: Enable audit logs
-  import_tasks: enable_audit.yml
+- import_tasks: enable_audit.yml
 
-- name: Create kv store
-  import_tasks: create_kv_store.yml
+- import_tasks: create_kv_store.yml
 
-- name: Insert secrets
-  import_tasks: insert_secrets.yml
+- import_tasks: insert_secrets.yml
 
 - import_tasks: report_success.yml

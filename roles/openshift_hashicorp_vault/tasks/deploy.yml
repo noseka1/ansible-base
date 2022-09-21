@@ -7,9 +7,9 @@
 
 - import_tasks: get_admin_token.yml
 
-- import_tasks: enable_kube_auth.yml
-
 - import_tasks: enable_audit.yml
+
+- import_tasks: enable_kube_auth.yml
 
 - import_tasks: create_kv_store.yml
 

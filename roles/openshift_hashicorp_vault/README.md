@@ -14,11 +14,12 @@ This Ansible role performs the following configuration:
 * Create an external Route to reach Vault from outside of the OpenShift cluster.
 * Enable Vault Web UI.
 * Initialize Vault and unseal it. The unseal key is stored as a Kubernetes Secret, allowing to unseal Vault by re-running the Ansible playbook.
+* Create an *admin* user with unlimited privileges.
 * Enable Usename & Password authentication method.
 * Enable Kubernetes authentication method.
-* Define Vault roles that grant read access to all secrets to all Kubernetes identities. These roles leave the access to the secrets in Vault wide open. They are used for testing purposes.
-* Create an *admin* user with unlimited privileges.
 * Enable audit logs.
+* Create key-value secret store.
+* Define Vault roles that grant read access to all secrets to all Kubernetes identities. These roles leave the access to the secrets in Vault wide open. They are used for testing purposes.
 * Insert test secrets to Vault.
 
 ## Production considerations

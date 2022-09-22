@@ -16,5 +16,12 @@
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
+    wait_for_deployment_name: '{{ cert_manager_instance_name }}-webhook'
+    wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
     wait_for_deployment_name: '{{ cert_manager_instance_name }}'
     wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'

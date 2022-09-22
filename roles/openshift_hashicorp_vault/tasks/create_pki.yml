@@ -1,0 +1,70 @@
+- name: Enable pki secrets engine, adjust the TTL to one year
+  hashivault_secret_engine:
+    name: pki
+    backend: pki
+    config:
+      default_lease_ttl: '{{ 365 * 24 * 60 * 60 }}'
+      max_lease_ttl: '{{ 365 * 24 * 60 * 60 }}'
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+
+- name: Set URLs for issue certificate endpoints
+  hashivault_pki_url:
+    mount_point: pki
+    crl_distribution_points:
+      - '{{ hashicorp_vault_addr }}/v1/pki/crl'
+    issuing_certificates:
+      - '{{ hashicorp_vault_addr }}/v1/pki/ca'
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+
+- name: Generate root certificate
+  hashivault_pki_ca:
+    mount_point: pki
+    common_name: myroot
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- name: Define role for generating certificates
+  hashivault_write:
+    secret: /pki/roles/mycluster
+    data:
+      allowed_domains: apps.{{ openshift_common_cluster_domain }}
+      allow_subdomains: true
+      max_ttl: '{{ 30 * 24 * 60 * 60 }}'
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+
+- name: Create policy that grants access to certificate generator
+  hashivault_policy:
+    name: mycluster_signer
+    rules: |
+      path "pki/sign/mycluster"  { capabilities = ["update"] }
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+
+- name: Define cert-manager role
+  hashivault_write:
+    secret: /auth/kubernetes/role/cert-manager
+    data:
+      bound_service_account_names: cert-manager
+      bound_service_account_namespaces: openshift-cert-manager
+      policies: mycluster_signer
+  environment:
+    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
+    VAULT_TOKEN: '{{ hashicorp_vault_token }}'

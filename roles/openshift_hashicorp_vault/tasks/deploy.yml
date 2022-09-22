@@ -15,4 +15,6 @@
 
 - import_tasks: insert_secrets.yml
 
+- import_tasks: create_pki.yml
+
 - import_tasks: report_success.yml

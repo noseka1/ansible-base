@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-issuer-test
+spec:
+  secretName: vault-issuer-test
+  issuerRef:
+    kind: ClusterIssuer
+    name: vault-issuer
+  commonName: mytest.apps.{{ openshift_common_cluster_domain }}
+  dnsNames:
+  - mytest.apps.{{ openshift_common_cluster_domain }}

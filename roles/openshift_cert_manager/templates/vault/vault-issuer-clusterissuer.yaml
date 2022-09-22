@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-issuer
+spec:
+  vault:
+    path: pki/sign/mycluster
+    server: {{ hashicorp_vault_addr }}
+{% if cert_manager_vault_ca_bundle | length > 0 %}
+    caBundle: {{ external_secrets_vault_ca_bundle | b64encode }}
+{% endif %}
+    auth:
+      kubernetes:
+        role: cert-manager
+        mountPath: /v1/auth/kubernetes
+        secretRef:
+          name: cert-manager-token-static
+          key: token

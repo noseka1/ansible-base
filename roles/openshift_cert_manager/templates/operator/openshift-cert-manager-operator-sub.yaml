@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ cert_manager_subscription_name }}
+  namespace: {{ cert_manager_subscription_namespace }}
+spec:
+  channel: {{ cert_manager_subscription_channel }}
+  installPlanApproval: Automatic
+  name: openshift-cert-manager-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

@@ -1,0 +1,20 @@
+- name: Deploy cert-manager operator
+  kubernetes.core.k8s:
+    template:
+      - operator/openshift-cert-manager-operator-ns.yaml
+      - operator/openshift-cert-manager-operator-og.yaml
+      - operator/openshift-cert-manager-operator-sub.yaml
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ cert_manager_subscription_name }}'
+    subscription_namespace: '{{ cert_manager_subscription_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ cert_manager_instance_name }}'
+    wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'

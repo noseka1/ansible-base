@@ -1,2 +1,8 @@
-cert_manager_subscription_namespace: openshift-operators
-cert_manager_subscription_name: cert-manager
+cert_manager_subscription_name: openshift-cert-manager-operator
+cert_manager_subscription_namespace: openshift-cert-manager-operator
+cert_manager_subscription_channel: tech-preview
+
+cert_manager_instance_name: cert-manager
+cert_manager_instance_namespace: openshift-cert-manager
+
+cert_manager_vault_ca_bundle: ''

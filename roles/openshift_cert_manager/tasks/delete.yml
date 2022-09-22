@@ -1,7 +1,19 @@
-- name: Delete Cert Manager operator
+- name: Delete cert-manager operator
   import_role:
     name: openshift_common
     tasks_from: delete_operator.yml
   vars:
     delete_operator_subscription_name: '{{ cert_manager_subscription_name }}'
     delete_operator_subscription_namespace: '{{ cert_manager_subscription_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: v1
+        kind: Namespace
+        name: '{{ cert_manager_instance_namespace }}'
+      - api_version: v1
+        kind: Namespace
+        name: '{{ cert_manager_subscription_namespace }}'

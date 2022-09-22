@@ -13,15 +13,15 @@
   register: vault_serviceaccount_secret
 
 - name: Grab vault's service account CA
-  command: >-
-    oc exec --namespace {{ hashicorp_vault_namespace }} {{ hashicorp_vault_name }}-0 -- cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-  changed_when: false
+  kubernetes.core.k8s_exec:
+    namespace: '{{ hashicorp_vault_namespace }}'
+    pod: '{{ hashicorp_vault_name }}-0'
+    command: cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
   register: kubernetes_ca_cert
 
-- name: Grab OpenShift API server URL
-  command: oc whoami --show-server
-  changed_when: false
-  register: kubernetes_host
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
 
 - name: Enable Kubernetes authentication
   hashivault_auth_method:
@@ -39,7 +39,7 @@
       issuer: https://kubernetes.default.svc
       token_reviewer_jwt: '{{ vault_serviceaccount_secret.resources.0.data.token | b64decode | default("") }}'
       kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
-      kubernetes_host: '{{ kubernetes_host.stdout }}'
+      kubernetes_host: 'https://api.{{ openshift_common_cluster_domain }}:6443'
   environment:
     VAULT_ADDR: '{{ hashicorp_vault_addr }}'
     VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'

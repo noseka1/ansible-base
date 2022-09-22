@@ -15,5 +15,5 @@ spec:
       # Replace this token with a token that can authenticate against HashiCorp Vault. Assuming that you deployed HashiCorp Vault
       # and External Secrets on the RHACM Hub cluster, you can get this token by running this command against the RHACM Hub cluster:
       # oc sa get-token -n external-secrets external-secrets-kubernetes-external-secrets
-      token: {{ sa_secret.resources.0.data.token }}
+      token: {{ external_secrets_serviceaccount_secret.resources.0.data.token }}
     type: Opaque

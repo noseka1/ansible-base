@@ -16,10 +16,8 @@
 
 - name: Delete external-secrets namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template: external-secrets-ns.yaml
     state: absent
-  loop:
-    - external-secrets-ns.yaml
 
 - name: Delete External Secrets operator
   import_role:

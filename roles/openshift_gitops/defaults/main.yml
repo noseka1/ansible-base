@@ -6,9 +6,3 @@ gitops_instance_name: openshift-gitops
 
 rhsso_instance_namespace: rhsso
 rhsso_instance_name: keycloak
-
-argocd_notifications_version: 1.2.1
-argocd_notifications_git: https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/v{{ argocd_notifications_version }}
-argocd_notifications_manifests: '{{ argocd_notifications_git }}/manifests/install.yaml'
-argocd_notifications_catalog: '{{ argocd_notifications_git }}/catalog/install.yaml'
-argocd_notifications_controller_name: argocd-notifications-controller

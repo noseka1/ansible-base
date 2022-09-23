@@ -1,7 +1,7 @@
 - name: Add hashicorp chart repo
   kubernetes.core.helm_repository:
     name: hashicorp
-    repo_url: "https://helm.releases.hashicorp.com"
+    repo_url: https://helm.releases.hashicorp.com
 
 - name: Deploy Vault Helm chart
   kubernetes.core.helm:

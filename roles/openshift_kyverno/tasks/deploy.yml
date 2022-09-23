@@ -1,8 +1,6 @@
 - name: Create Kyverno namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
-  loop:
-    - kyverno-ns.yaml
+    template: kyverno-ns.yaml
 
 - name: Add Kyverno chart repo
   kubernetes.core.helm_repository:

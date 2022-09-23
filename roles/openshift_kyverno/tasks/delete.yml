@@ -14,8 +14,6 @@
 
 - name: Delete Kyverno namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    definition: kyverno-ns.yaml
     state: absent
     wait: true
-  loop:
-    - kyverno-ns.yaml

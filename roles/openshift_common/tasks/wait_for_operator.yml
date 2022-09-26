@@ -8,15 +8,15 @@
   until:
     - operator_subscription.resources | length > 0
     - operator_subscription.resources.0.status is defined
-    - operator_subscription.resources.0.status.currentCSV is defined
+    - operator_subscription.resources.0.status.installedCSV is defined
   retries: 60
   delay: 10
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ subscription_namespace }}/{{ operator_subscription.resources.0.status.currentCSV }} to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ subscription_namespace }}/{{ operator_subscription.resources.0.status.installedCSV }} to deploy
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: ClusterServiceVersion
-    name: '{{ operator_subscription.resources.0.status.currentCSV }}'
+    name: '{{ operator_subscription.resources.0.status.installedCSV }}'
     namespace: '{{ subscription_namespace }}'
   register: operator_csv
   until:

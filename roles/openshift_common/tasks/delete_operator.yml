@@ -8,7 +8,7 @@
 
 - name: Set delete_operator_csv_name
   set_fact:
-    delete_operator_csv_name: '{{ delete_operator_subscription.resources.0.status.currentCSV | default("") }}'
+    delete_operator_csv_name: '{{ delete_operator_subscription.resources.0.status.installedCSV | default("") }}'
 
 - name: Delete operator subscription {{ delete_operator_subscription_namespace }}/{{ delete_operator_subscription_name }}
   kubernetes.core.k8s:

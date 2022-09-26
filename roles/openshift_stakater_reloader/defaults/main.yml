@@ -1,0 +1,5 @@
+stakater_reloader_name: stakater-reloader
+stakater_reloader_namespace: stakater-reloader
+
+# Pin the Helm Chart version
+#stakater_reloader_chart_version: 0.0.119

@@ -1,0 +1,11 @@
+- name: Delete Reloader chart
+  kubernetes.core.helm:
+    name: '{{ stakater_reloader_name }}'
+    release_namespace: '{{ stakater_reloader_namespace }}'
+    state: absent
+    wait: true
+
+- name: Delete stakater-reloader namespace
+  kubernetes.core.k8s:
+    template: stakater-reloader-ns.yaml
+    state: absent

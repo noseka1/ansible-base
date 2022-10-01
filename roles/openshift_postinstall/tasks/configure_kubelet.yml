@@ -1,0 +1,12 @@
+- name: Apply Kubelet configuration
+  kubernetes.core.k8s:
+    template: registry-pull-kubeletconfig.yaml
+  register: openshift_postinstall_kubelet_config_result
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: openshift_postinstall_kubelet_config_result is changed

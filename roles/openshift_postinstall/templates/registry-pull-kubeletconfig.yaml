@@ -1,0 +1,15 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: registry-pull
+spec:
+  # Match all cluster nodes
+  machineConfigPoolSelector:
+    matchLabels:
+      machineconfiguration.openshift.io/mco-built-in: ""
+  kubeletConfig:
+    # Registry image pull Queries Per Second. Set to no limit to avoid pull QPS exceeded on cluster reboot.
+    # See also:
+    # Why pod fails to start with the message " ErrImagePull: "pull QPS exceeded"" in OpenShift Container Platform ?
+    # https://access.redhat.com/solutions/4767061
+    registryPullQPS: 0

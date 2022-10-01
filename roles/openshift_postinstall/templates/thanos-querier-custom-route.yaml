@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: thanos-querier-custom
+  namespace: openshift-monitoring
+spec:
+  port:
+    targetPort: web
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: thanos-querier

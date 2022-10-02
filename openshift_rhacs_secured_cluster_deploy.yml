@@ -10,4 +10,4 @@
 
     - import_role:
         name: openshift_rhacs
-        tasks_from: install_secured_cluster.yml
+        tasks_from: deploy_secured_cluster.yml

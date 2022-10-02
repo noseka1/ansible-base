@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_rhacs
-        tasks_from: delete.yml
+        tasks_from: deploy_combo.yml

@@ -1,6 +1,6 @@
 - name: Deploy RHACS operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.operator) }}"
+    template: rhacs-operator-sub.yaml
 
 - import_role:
     name: openshift_common

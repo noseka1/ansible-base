@@ -1,0 +1,20 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ rhacs_subscription_name }}
+  namespace: {{ rhacs_subscription_namespace }}
+spec:
+  channel: {{ rhacs_subscription_channel }}
+  installPlanApproval: Automatic
+  name: rhacs-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  config:
+    env:
+    # HTTP proxy settings
+    - name: HTTP_PROXY
+      value: ''
+    - name: HTTPS_PROXY
+      value: ''
+    - name: NO_PROXY
+      value: ''

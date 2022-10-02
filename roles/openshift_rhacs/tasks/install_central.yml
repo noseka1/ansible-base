@@ -1,18 +1,14 @@
 - import_tasks: install_operator.yml
 
 - name: Deploy RHACS Central
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: rhacs
-    kustomize_files:
-      - kustomization.yaml
+  kubernetes.core.k8s:
+    template:
+      - stackrox-ns.yaml
       - central-htpasswd-secret.yaml
       - stackrox-central-services-central.yaml
-    kustomize_op: present
+    namespace: '{{ rhacs_instance_namespace }}'
 
-- name: Obtain Central TLS  secret
+- name: Obtain Central TLS secret
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret

@@ -24,7 +24,10 @@
 
 - name: Delete RHACS central
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhacs_kustomizations.instance) }}"
+    template:
+      - central-htpasswd-secret.yaml
+      - stackrox-central-services-central.yaml
+    wait: true
     state: absent
 
 - name: Delete RHACS operator

@@ -1,9 +1,10 @@
-rhacs_kustomizations:
-  operator: github.com/noseka1/rhacs-kustomization/rhacs-operator/base?ref=myauto
-  instance: github.com/noseka1/rhacs-kustomization/rhacs-instance/overlays/dev?ref=myauto
 rhacs_subscription_namespace: openshift-operators
 rhacs_subscription_name: rhacs-operator
+rhacs_subscription_channel: latest
+
 rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services
+
+rhacs_central_deployment_mode: dev
 
 rhacs_central_host: ''

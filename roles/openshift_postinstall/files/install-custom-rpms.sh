@@ -11,6 +11,8 @@ sudo rpm-ostree install \
   --allow-inactive \
   --idempotent \
   --reboot \
+  kernel-debuginfo \
+  perf \
   vim \
   lsof \
   tcpdump \

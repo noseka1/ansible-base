@@ -11,7 +11,7 @@
 
 [rhel-8-for-x86_64-appstream-rpms]
 name = Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
-baseurl = https://cdn.redhat.com/content/dist/rhel8/8.4/x86_64/appstream/os
+baseurl = https://cdn.redhat.com/content/dist/rhel8/$releasever/x86_64/appstream/os
 enabled = 1
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
@@ -24,7 +24,20 @@ enabled_metadata = 1
 
 [rhel-8-for-x86_64-baseos-rpms]
 name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)
-baseurl = https://cdn.redhat.com/content/dist/rhel8/8.4/x86_64/baseos/os
+baseurl = https://cdn.redhat.com/content/dist/rhel8/$releasever/x86_64/baseos/os
+enabled = 1
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+sslverify = 1
+sslcacert = /etc/rhsm/ca/redhat-uep.pem
+sslclientkey = /etc/pki/entitlement/entitlement-key.pem
+sslclientcert = /etc/pki/entitlement/entitlement.pem
+metadata_expire = 86400
+enabled_metadata = 1
+
+[rhel-8-for-x86_64-baseos-debug-rpms]
+name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS (Debug RPMs)
+baseurl = https://cdn.redhat.com/content/dist/rhel8/$releasever/x86_64/baseos/debug
 enabled = 1
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
@@ -37,7 +50,20 @@ enabled_metadata = 1
 
 [rhel-8-for-x86_64-baseos-eus-rpms]
 name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support (RPMs)
-baseurl = https://cdn.redhat.com/content/eus/rhel8/8.4/x86_64/baseos/os
+baseurl = https://cdn.redhat.com/content/eus/rhel8/$releasever/x86_64/baseos/os
+enabled = 1
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+sslverify = 1
+sslcacert = /etc/rhsm/ca/redhat-uep.pem
+sslclientkey = /etc/pki/entitlement/entitlement-key.pem
+sslclientcert = /etc/pki/entitlement/entitlement.pem
+metadata_expire = 86400
+enabled_metadata = 1
+
+[rhel-8-for-x86_64-baseos-eus-debug-rpms]
+name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support (Debug RPMs)
+baseurl = https://cdn.redhat.com/content/eus/rhel8/$releasever/x86_64/baseos/debug
 enabled = 1
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release

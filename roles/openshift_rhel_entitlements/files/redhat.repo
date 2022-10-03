@@ -50,7 +50,7 @@ enabled_metadata = 1
 
 [rhel-8-for-x86_64-baseos-eus-rpms]
 name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support (RPMs)
-baseurl = https://cdn.redhat.com/content/eus/rhel8/$releasever/x86_64/baseos/os
+baseurl = https://cdn.redhat.com/content/eus/rhel8/8.6/x86_64/baseos/os
 enabled = 1
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
@@ -63,7 +63,7 @@ enabled_metadata = 1
 
 [rhel-8-for-x86_64-baseos-eus-debug-rpms]
 name = Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support (Debug RPMs)
-baseurl = https://cdn.redhat.com/content/eus/rhel8/$releasever/x86_64/baseos/debug
+baseurl = https://cdn.redhat.com/content/eus/rhel8/8.6/x86_64/baseos/debug
 enabled = 1
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release

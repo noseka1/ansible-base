@@ -2,4 +2,4 @@ kind: ConfigMap
 metadata:
   name: {{ item.metadata.name }}
 data:
- {{ item.data | to_yaml }}
+  {{ item.data | to_yaml }}

@@ -16,6 +16,8 @@
 
 - import_tasks: install_custom_rpms.yml
 
+- import_tasks: custom_kernel_args.yml
+
 - import_tasks: configure_kubelet.yml
 
 - import_tasks: users.yml

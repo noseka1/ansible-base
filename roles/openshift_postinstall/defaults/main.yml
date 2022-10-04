@@ -1,1 +1,5 @@
 openshift_postinstall_identity_name: htpasswd
+
+openshift_postinstall_kernel_arguments:
+#  - loglevel=7
+#  - udev.log_priority=debug

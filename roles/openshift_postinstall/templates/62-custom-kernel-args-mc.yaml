@@ -1,0 +1,9 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 62-{{ item }}-custom-kernel-args
+spec:
+  kernelArguments:
+    {{ openshift_postinstall_kernel_arguments | to_yaml }}

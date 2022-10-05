@@ -7,26 +7,22 @@ metadata:
 spec:
   config:
     ignition:
-      version: 2.2.0
+      version: 3.2.0
     storage:
       files:
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlements_cert | b64encode}}
-        filesystem: root
         mode: 0644
         path: /etc/pki/entitlement/entitlement.pem
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlements_key | b64encode}}
-        filesystem: root
         mode: 0644
         path: /etc/pki/entitlement/entitlement-key.pem
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'rhsm.conf', rstrip=false) | b64encode }}
-        filesystem: root
         mode: 0644
         path: /etc/rhsm/rhsm.conf
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'redhat.repo', rstrip=false) | b64encode }}
-        filesystem: root
         mode: 0644
         path: /etc/yum.repos.d/redhat.repo

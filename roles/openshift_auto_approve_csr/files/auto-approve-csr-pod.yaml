@@ -8,6 +8,11 @@ spec:
   containers:
   - image: quay.io/noseka1/toolbox-container:full
     name: auto-approve-csr
+    env:
+    - name: KUBERNETES_SERVICE_HOST
+      value: localhost
+    - name: KUBERNETES_SERVICE_PORT
+      value: 6443
     volumeMounts:
     - mountPath: /toolbox
       name: static-pod-resources
@@ -15,7 +20,7 @@ spec:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       name: static-pod-resources
       readOnly: true
-  enableServiceLinks: true
+  enableServiceLinks: false
   tolerations:
   - operator: Exists
   volumes:

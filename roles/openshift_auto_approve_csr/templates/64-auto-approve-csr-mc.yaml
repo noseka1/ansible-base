@@ -16,7 +16,7 @@ spec:
         path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod/ca.crt
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ auto_approve_csr_serviceaccount_secret.resources.0.data.token }}
-        mode: 0644
+        mode: 0600
         path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod/token
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'run.sh', rstrip=false) | b64encode }}

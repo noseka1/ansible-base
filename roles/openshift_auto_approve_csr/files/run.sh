@@ -7,5 +7,5 @@ while true; do
   oc get csr -o json | \
     jq -r '.items[] | select(.status == {} ) | .metadata.name' | \
     xargs --no-run-if-empty oc adm certificate approve
-  sleep 10
+  sleep 30
 done

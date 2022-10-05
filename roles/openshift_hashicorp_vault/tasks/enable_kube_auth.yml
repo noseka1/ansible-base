@@ -37,7 +37,7 @@
     secret: /auth/kubernetes/config
     data:
       issuer: https://kubernetes.default.svc
-      token_reviewer_jwt: '{{ vault_serviceaccount_secret.resources.0.data.token | b64decode | default("") }}'
+      token_reviewer_jwt: '{{ vault_serviceaccount_secret.resources.0.data.token | b64decode }}'
       kubernetes_ca_cert: '{{ kubernetes_ca_cert.stdout }}'
       kubernetes_host: 'https://api.{{ openshift_common_cluster_domain }}:6443'
   environment:

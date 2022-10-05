@@ -18,4 +18,5 @@ sudo rpm-ostree install \
   tcpdump \
   wireshark-cli \
   setroubleshoot-server \
-  setools-console
+  setools-console \
+  2>&1

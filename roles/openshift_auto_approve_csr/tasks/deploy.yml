@@ -5,13 +5,27 @@
       - auto-approve-csr-clusterrolebinding.yaml
       - auto-approve-csr-clusterrole.yaml
       - auto-approve-csr-sa.yaml
-      - auto-approve-csr-script-cm.yml
-      - auto-approve-csr-deploy.yaml
+      - auto-approve-csr-token-static-secret.yaml
     namespace: '{{ auto_approve_csr_namespace }}'
+    wait: true
+
+- name: Retrieve service account token secret
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: auto-approve-csr-token-static
+    namespace: '{{ auto_approve_csr_namespace }}'
+  register: auto_approve_csr_serviceaccount_secret
+
+- name: Install auto-approve-csr to master nodes (will cause nodes to restart)
+  kubernetes.core.k8s:
+    template: 64-auto-approve-csr-mc.yaml
+  register: machineconfig_result
 
 - import_role:
     name: openshift_common
-    tasks_from: wait_for_deployment.yml
+    tasks_from: wait_for_stable_cluster.yml
   vars:
-    wait_for_deployment_name: auto-approve-csr
-    wait_for_deployment_namespace: '{{ auto_approve_csr_namespace }}'
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: machineconfig_result is changed

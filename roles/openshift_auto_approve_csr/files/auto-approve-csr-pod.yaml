@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: auto-approve-csr
+  namespace: auto-approve-csr
+spec:
+  hostNetwork: true
+  containers:
+  - image: quay.io/noseka1/toolbox-container:full
+    name: auto-approve-csr
+    volumeMounts:
+    - mountPath: /toolbox
+      name: static-pod-resources
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: static-pod-resources
+      readOnly: true
+  enableServiceLinks: true
+  tolerations:
+  - operator: Exists
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod
+    name: static-pod-resources

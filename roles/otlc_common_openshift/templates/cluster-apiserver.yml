@@ -5,7 +5,5 @@ metadata:
 spec:
   servingCerts:
     namedCertificates:
-    - names:
-      - api.cluster-{{ otlc_service_info.guid }}.{{ otlc_service_info.top_level_domain }}
-      servingCertificate:
+    - servingCertificate:
         name: api-cert

@@ -10,7 +10,7 @@
 
 - name: Configure RHEL entitlements for cluster nodes
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '50-rhel-entitlements-machineconfig.yaml') }}"
+    template: 50-rhel-entitlements-mc.yaml
   register: openshift_rhel_entitlements_result
   loop:
     - master

@@ -5,7 +5,7 @@ metadata:
   namespace: {{ cert_manager_subscription_namespace }}
 spec:
   channel: {{ cert_manager_subscription_channel }}
-  installPlanApproval: Automatic
+  installPlanApproval: {{ cert_manager_subscription_approval }}
   name: openshift-cert-manager-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

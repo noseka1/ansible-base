@@ -5,7 +5,7 @@ metadata:
   namespace: {{ external_dns_subscription_namespace }}
 spec:
   channel: alpha
-  installPlanApproval: Automatic
+  installPlanApproval: {{ external_dns_subscription_approval }}
   name: external-dns-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

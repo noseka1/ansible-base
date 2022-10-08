@@ -5,7 +5,7 @@ metadata:
   namespace: {{ wmco_subscription_namespace }}
 spec:
   channel: stable
-  installPlanApproval: Automatic
+  installPlanApproval: {{ wmco_subscription_approval }}
   name: windows-machine-config-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

@@ -1,6 +1,7 @@
 cert_manager_subscription_name: openshift-cert-manager-operator
 cert_manager_subscription_namespace: openshift-cert-manager-operator
 cert_manager_subscription_channel: tech-preview
+cert_manager_subscription_approval: Automatic
 
 cert_manager_instance_name: cert-manager
 cert_manager_instance_namespace: openshift-cert-manager

@@ -1,5 +1,6 @@
 topolvm_operator_subscription_namespace: openshift-operators
 topolvm_operator_subscription_name: topolvm-operator
+topolvm_operator_subscription_approval: Automatic
 
 topolvm_instance_namespace: openshift-operators
 topolvm_instance_name: topolvm

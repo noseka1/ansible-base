@@ -5,7 +5,7 @@ metadata:
   namespace: {{ gitops_subscription_namespace }}
 spec:
   channel: {{ gitops_subscription_channel }}
-  installPlanApproval: Automatic
+  installPlanApproval: {{ gitops_subscription_approval }}
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

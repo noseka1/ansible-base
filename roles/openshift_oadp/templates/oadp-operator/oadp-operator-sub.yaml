@@ -5,7 +5,7 @@ metadata:
   namespace: {{ oadp_subscription_namespace }}
 spec:
   channel: {{ oadp_subscription_channel }}
-  installPlanApproval: Automatic
+  installPlanApproval: {{ oadp_subscription_approval }}
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

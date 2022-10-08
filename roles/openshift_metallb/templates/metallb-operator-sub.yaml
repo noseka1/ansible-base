@@ -5,7 +5,7 @@ metadata:
   namespace: {{ metallb_subscription_namespace }}
 spec:
   channel: stable
-  installPlanApproval: Automatic
+  installPlanApproval: {{ metallb_subscription_approval }}
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

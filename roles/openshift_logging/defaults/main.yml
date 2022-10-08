@@ -1,1 +1,5 @@
 openshift_logging_namespace: openshift-logging
+
+openshift_logging_subscription_approval: Automatic
+
+loki_subscription_approval: Automatic

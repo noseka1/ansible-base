@@ -8,4 +8,4 @@ spec:
   sourceNamespace: openshift-marketplace
   name: topolvm-operator
   channel: alpha
-  installPlanApproval: Automatic
+  installPlanApproval: {{ topolvm_operator_subscription_approval }}

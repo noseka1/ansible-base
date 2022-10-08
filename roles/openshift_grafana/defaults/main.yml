@@ -1,4 +1,5 @@
 grafana_subscription_namespace: grafana
 grafana_subscription_name: grafana
+grafana_subscription_approval: Automatic
 grafana_instance_namespace: grafana
 grafana_instance_name: grafana

@@ -1,6 +1,7 @@
 external_secrets_subscription_namespace: openshift-operators
 external_secrets_subscription_name: external-secrets-operator
 external_secrets_subscription_channel: stable
+external_secrets_subscription_approval: Automatic
 
 external_secrets_instance_namespace: external-secrets
 external_secrets_instance_name: external-secrets

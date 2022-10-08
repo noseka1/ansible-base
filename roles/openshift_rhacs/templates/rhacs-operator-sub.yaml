@@ -5,7 +5,7 @@ metadata:
   namespace: {{ rhacs_subscription_namespace }}
 spec:
   channel: {{ rhacs_subscription_channel }}
-  installPlanApproval: Automatic
+  installPlanApproval: {{ rhacs_subscription_approval }}
   name: rhacs-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

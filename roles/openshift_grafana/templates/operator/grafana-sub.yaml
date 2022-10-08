@@ -4,7 +4,7 @@ metadata:
   name: grafana
 spec:
   channel: v4
-  installPlanApproval: Automatic
+  installPlanApproval: {{ grafana_subscription_approval }}
   name: grafana-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

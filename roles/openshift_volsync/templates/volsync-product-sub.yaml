@@ -5,7 +5,7 @@ metadata:
   namespace: {{ volsync_subscription_namespace }}
 spec:
   channel: stable
-  installPlanApproval: Automatic
+  installPlanApproval: {{ volsync_subscription_approval }}
   name: volsync-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace

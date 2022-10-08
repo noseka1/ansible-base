@@ -1,5 +1,6 @@
 splunk_namespace: splunk
 
 splunk_subscription_name: splunk
+splunk_subscription_approval: Automatic
 
 splunk_instance_name: standalone

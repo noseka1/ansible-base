@@ -5,7 +5,7 @@ metadata:
   namespace: {{ amq_streams_subscription_namespace }}
 spec:
   channel: stable
-  installPlanApproval: Automatic
+  installPlanApproval: {{ amq_streams_subscription_approval }}
   name: amq-streams
   source: redhat-operators
   sourceNamespace: openshift-marketplace

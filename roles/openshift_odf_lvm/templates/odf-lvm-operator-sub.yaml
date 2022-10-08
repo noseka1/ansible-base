@@ -7,7 +7,7 @@ spec:
 {% if odf_lvm_subscription_channel | length > 0 %}
   channel: {{ odf_lvm_subscription_channel }}
 {% endif %}
-  installPlanApproval: Automatic
+  installPlanApproval: {{ odf_lvm_subscription_approval }}
   name: odf-lvm-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

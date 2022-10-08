@@ -1,6 +1,7 @@
 rhacs_subscription_namespace: openshift-operators
 rhacs_subscription_name: rhacs-operator
 rhacs_subscription_channel: latest
+rhacs_subscription_approval: Automatic
 
 rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services

@@ -5,7 +5,7 @@ metadata:
   namespace: {{ fuse_console_subscription_namespace }}
 spec:
   channel: 7.10.x
-  installPlanApproval: Automatic
+  installPlanApproval: {{ fuse_console_subscription_approval }}
   name: fuse-console
   source: redhat-operators
   sourceNamespace: openshift-marketplace

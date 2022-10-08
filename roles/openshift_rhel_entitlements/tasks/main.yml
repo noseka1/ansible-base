@@ -1,12 +1,12 @@
 - name: Check that certificate is defined
   fail:
     msg: Certificate is missing
-  when: openshift_rhel_entitlements_cert is not defined or openshift_rhel_entitlements_cert | length == 0
+  when: openshift_rhel_entitlements_cert | length == 0
 
 - name: Check that key is defined
   fail:
     msg: Private key is missing
-  when: openshift_rhel_entitlements_key is not defined or openshift_rhel_entitlements_key | length == 0
+  when: openshift_rhel_entitlements_key | length == 0
 
 - name: Configure RHEL entitlements for cluster nodes
   kubernetes.core.k8s:

@@ -4,7 +4,7 @@ metadata:
   name: {{ external_dns_subscription_name }}
   namespace: {{ external_dns_subscription_namespace }}
 spec:
-  channel: alpha
+  channel: stable-v1.0
   installPlanApproval: {{ external_dns_subscription_approval }}
   name: external-dns-operator
   source: redhat-operators

@@ -33,7 +33,7 @@
 - name: >
     {{ stable_cluster_retries - (stable_cluster_retry_count | int) }} retries remaining.
     {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
-  pause:
+  ansible.builtin.pause:
     seconds: 120
   when: not stable_cluster_job_complete
 

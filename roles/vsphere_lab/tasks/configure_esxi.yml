@@ -49,7 +49,7 @@
   when: esxi_config is changed
 
 - name: Wait for ESXi host to start rebooting
-  pause:
+  ansible.builtin.pause:
     seconds: 30
   when: esxi_config is changed
 

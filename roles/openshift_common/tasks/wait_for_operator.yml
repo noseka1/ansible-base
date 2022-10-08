@@ -1,3 +1,26 @@
+- name: Retrive subscription {{ subscription_namespace }}/{{ subscription_name }}
+  kubernetes.core.k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: '{{ subscription_name }}'
+    namespace: '{{ subscription_namespace }}'
+  register: operator_subscription
+  until:
+    - operator_subscription.resources | length > 0
+    - operator_subscription.resources.0.status is defined
+  retries: 60
+  delay: 10
+
+- ansible.builtin.pause:
+    seconds: 600
+    prompt: >-
+      The install plan for the {{ subscription_namespace }}/{{ subscription_name }} subscription must be approved manually.
+      Please, approve the install plan. After that, press Ctrl+C followed by 'C' to continue.
+  when:
+    - operator_subscription.resources.0.spec.installPlanApproval is defined
+    - operator_subscription.resources.0.spec.installPlanApproval == 'Manual'
+    - operator_subscription.resources.0.status.installedCSV is not defined
+
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for subscription {{ subscription_namespace }}/{{ subscription_name }} to deploy
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1

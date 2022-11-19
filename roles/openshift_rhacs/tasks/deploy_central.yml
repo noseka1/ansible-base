@@ -6,7 +6,6 @@
       - stackrox-ns.yaml
       - central-htpasswd-secret.yaml
       - stackrox-central-services-central.yaml
-    namespace: '{{ rhacs_instance_namespace }}'
 
 - name: Obtain Central TLS secret
   kubernetes.core.k8s_info:

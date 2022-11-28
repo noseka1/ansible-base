@@ -1,0 +1,36 @@
+- import_tasks: get_rhacs_central_host.yml
+
+- name: Create Slack notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_central_host }}/v1/notifiers'
+    method: GET
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 500, 503 ]
+  register: rhacs_notifier_result
+  until: rhacs_notifier_result.status in [ 200, 500 ]
+  retries: 12
+  delay: 10
+
+- name: Create Slack notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_central_host }}/v1/notifiers'
+    method: POST
+    body_format: json
+    body:
+      name: My Slack Receiver
+      type: slack
+      labelDefault: '{{ rhacs_notifications_slack_url }}'
+      labelKey: ''
+      uiEndpoint: https://{{ rhacs_central_host }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 500, 503 ]
+  register: rhacs_notifier_result
+  until: rhacs_notifier_result.status in [ 200, 500 ]
+  retries: 12
+  delay: 10

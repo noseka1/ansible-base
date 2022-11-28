@@ -9,3 +9,5 @@ rhacs_instance_name: stackrox-central-services
 rhacs_central_deployment_mode: dev
 
 rhacs_central_host: ''
+
+rhacs_notifications_slack_url: ''

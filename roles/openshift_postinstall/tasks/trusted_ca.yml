@@ -4,7 +4,9 @@
       - user-ca-bundle-cm.yaml
       - cluster-proxy.yaml
   register: openshift_postinstall_trusted_ca_bundle_result
-  when: openshift_postinstall_trusted_ca_bundle is defined
+  when:
+    - openshift_postinstall_trusted_ca_bundle is defined
+    - openshift_postinstall_trusted_ca_bundle[openshift_common_cluster_domain] is defined
 
 - import_role:
     name: openshift_common

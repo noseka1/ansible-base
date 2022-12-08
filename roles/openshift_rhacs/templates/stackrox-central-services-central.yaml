@@ -9,6 +9,10 @@ spec:
       name: central-htpasswd
     defaultTLSSecret:
       name: central-tls
+    db:
+      isEnabled: Enabled
+      passwordSecret:
+        name: central-db-password
     exposure:
       loadBalancer:
         enabled: false

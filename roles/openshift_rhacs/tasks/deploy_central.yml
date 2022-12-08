@@ -5,6 +5,7 @@
     template:
       - stackrox-ns.yaml
       - central-htpasswd-secret.yaml
+      - central-db-password-secret.yaml
       - stackrox-central-services-central.yaml
 
 - name: Obtain Central TLS secret

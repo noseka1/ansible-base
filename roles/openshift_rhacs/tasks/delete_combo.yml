@@ -33,6 +33,7 @@
   kubernetes.core.k8s:
     template:
       - central-htpasswd-secret.yaml
+      - central-db-password-secret.yaml
       - stackrox-central-services-central.yaml
     wait: true
     state: absent

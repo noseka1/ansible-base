@@ -29,6 +29,12 @@
   vars:
     openshift_datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
 
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ rhacs_instance_namespace }}'
+
 - name: Delete RHACS central
   kubernetes.core.k8s:
     template:

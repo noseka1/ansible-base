@@ -1,0 +1,58 @@
+- import_role:
+    name: openshift_minio
+    tasks_from: deploy.yml
+  vars:
+    minio_namespace: '{{ rhacs_instance_namespace }}'
+
+- name: Obtain Minio API route
+  import_role:
+    name: openshift_minio
+    tasks_from: get_minio_api_route.yml
+  vars:
+    minio_namespace: '{{ rhacs_instance_namespace }}'
+
+- name: Retrive existing backup configuration
+  uri:
+    url: 'https://{{ rhacs_central_host }}/v1/externalbackups'
+    method: GET
+    body_format: json
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+  register: rhacs_external_backups_result
+  until: rhacs_external_backups_result.status in [ 200 ]
+  retries: 12
+  delay: 10
+
+- name: Back up RHACS to MinIO
+  uri:
+    url: 'https://{{ rhacs_central_host }}/v1/externalbackups'
+    method: POST
+    body_format: json
+    body:
+      name: My MinIO
+      type: s3
+      schedule:
+        intervalType: DAILY
+        hour: 0
+        minute: 0
+      backupsToKeep: 14
+      s3:
+        bucket: '{{ minio_api_route.resources.0.spec.host.split(".", 1).0 }}'
+        useIam: false
+        accessKeyId: admin
+        secretAccessKey: '{{ generic_user_password }}'
+        region: someregion
+        objectPrefix: mybucket1
+        endpoint: '{{ minio_api_route.resources.0.spec.host.split(".", 1).1 }}'
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 503 ]
+  when: rhacs_external_backups_result.json.externalBackups | selectattr("name", "equalto", "My MinIO") | list | length == 0
+  register: rhacs_external_backups_result
+  until: rhacs_external_backups_result.status in [ 200 ]
+  retries: 12
+  delay: 10

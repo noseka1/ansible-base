@@ -4,6 +4,8 @@ metadata:
   name: {{ gitops_instance_name }}
   namespace: {{ gitops_instance_namespace }}
 spec:
+  ha:
+    enabled: {{ gitops_instance_high_availability }}
   repo:
     replicas: 1
   server:

@@ -4,7 +4,7 @@ metadata:
   name: advanced-cluster-management
   namespace: open-cluster-management
 spec:
-  channel: release-2.6
+  channel: {{ rhacm_subscription_channel }}
   installPlanApproval: {{ rhacm_subscription_approval }}
   name: advanced-cluster-management
   source: redhat-operators

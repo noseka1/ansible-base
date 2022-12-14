@@ -1,5 +1,6 @@
 rhacm_subscription_namespace: open-cluster-management
 rhacm_subscription_name: advanced-cluster-management
+rhacm_subscription_channel: release-2.6
 rhacm_subscription_approval: Automatic
 rhacm_instance_namespace: open-cluster-management
 rhacm_instance_name: multiclusterhub

@@ -3,6 +3,3 @@ kind: OperatorGroup
 metadata:
   name: metallb-operator
   namespace: {{ metallb_subscription_namespace }}
-spec:
-  targetNamespaces:
-  - {{ metallb_subscription_namespace }}

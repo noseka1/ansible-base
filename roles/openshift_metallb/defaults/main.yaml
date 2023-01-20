@@ -1,4 +1,4 @@
-metallb_address_pool: 192.168.120.12-192.168.120.19
+metallb_address_pool: 192.168.20.12-192.168.20.19
 
 metallb_subscription_name: metallb-operator
 metallb_subscription_namespace: metallb-system
@@ -6,3 +6,5 @@ metallb_subscription_approval: Automatic
 
 metallb_instance_name: metallb
 metallb_instance_namespace: metallb-system
+
+metallb_loglevel: info

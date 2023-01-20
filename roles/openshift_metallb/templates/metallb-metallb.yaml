@@ -3,3 +3,5 @@ kind: MetalLB
 metadata:
   name: metallb
   namespace: {{ metallb_instance_namespace }}
+spec:
+  logLevel: {{ metallb_loglevel }}

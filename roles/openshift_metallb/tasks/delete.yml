@@ -4,7 +4,8 @@
     state: absent
   loop:
     - metallb-metallb.yaml
-    - metallb-pool-addresspool.yaml
+    - metallb-pool-ipaddresspool.yaml
+    - metallb-pool-l2advertisement.yaml
 
 - name: Delete MetalLB operator
   kubernetes.core.k8s:

@@ -23,6 +23,11 @@ spec:
       imageFlavor: Regular
     taintToleration: TolerateTaints
 {% if rhacs_additional_trusted_ca is defined %}
+  customize:
+    envVars:
+      # Set log level for Sensor, Admission Controller, Collector. Allowed values are debug, info, ...
+      - name: LOGLEVEL
+        value: '{{ rhacs_loglevel }}'
   tls:
     additionalCAs:
       - name: custom_trusted_ca

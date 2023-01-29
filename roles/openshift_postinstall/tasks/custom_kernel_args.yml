@@ -5,6 +5,7 @@
   loop:
     - worker
     - master
+  when: openshift_postinstall_kernel_arguments
 
 - import_role:
     name: openshift_common

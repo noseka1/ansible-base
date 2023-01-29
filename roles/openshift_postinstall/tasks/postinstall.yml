@@ -1,5 +1,12 @@
 - import_role:
     name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 0
+    stable_cluster_retries: 10
+
+- import_role:
+    name: openshift_common
     tasks_from: get_cluster_domain.yml
 
 - import_role:

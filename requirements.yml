@@ -11,8 +11,8 @@ roles:
 
 # Requires EPEL enabled
 - name: mprahl.lets-encrypt-route-53
-  src: https://github.com/mprahl/ansible-role-lets-encrypt-route-53.git
-  version: v5.1.1
+  src: https://github.com/noseka1/ansible-role-lets-encrypt-route-53.git
+  version: master
 
 - name: ruzickap.virtio-win
   src: https://github.com/noseka1/ansible-role-virtio-win
@@ -30,3 +30,8 @@ collections:
 - name: chocolatey.chocolatey
   src: https://github.com/chocolatey/chocolatey-ansible
   version: 1.3.0
+
+# Newer version is required by mprahl/ansible-role-lets-encrypt-route-53
+- name: community.crypto
+  src: https://github.com/ansible-collections/community.crypto
+  version: 2.10.0

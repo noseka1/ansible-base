@@ -49,4 +49,6 @@
 
 - import_tasks: delete_succeeded_pods.yml
 
-- import_tasks: endpoint_certs.yml
+- import_tasks: endpoint_certs_aws.yml
+
+- import_tasks: endpoint_certs_private.yml

@@ -1,0 +1,46 @@
+- name: Create temporary directory for certificate {{ item.cert_common_name }}
+  tempfile:
+    state: directory
+    suffix: -{{ item.cert_common_name }}
+  register: tmpdir
+
+- debug:
+    msg: Created temporary directory {{ tmpdir.path }}
+
+- name: Generate certificate
+  import_role:
+    name: mprahl.lets-encrypt-route-53
+  vars:
+    - ler53_cert_common_name: '{{ item.cert_common_name }}'
+    - ler53_route_53_zone_id: '{{ openshift_postinstall_cluster_dns.resources.0.spec.publicZone.id }}'
+    - ler53_cert_dir: '{{ tmpdir.path }}/cert'
+    - ler53_account_key_dir: '{{ tmpdir.path }}/accountkey'
+    - ler53_cert_files_owner: '{{ ansible_user_uid }}'
+    - ler53_cert_files_group: '{{ ansible_user_gid }}'
+    - ler53_intermediate_download_url: https://letsencrypt.org/certs/lets-encrypt-r3.pem
+    # Prevent the lets-encrypt-route-53 role from manipulating Python interpreter or
+    # installing any distribution packages
+    - ansible_os_family: non_existing_os_family
+
+- name: Fetch the pem file for {{ item.cert_common_name }}
+  slurp:
+    src: '{{ tmpdir.path }}/cert/{{ item.cert_common_name }}.pem'
+  changed_when: false
+  register: endpoint_cert_pem
+
+- set_fact:
+    '{{ item.output_var_prefix }}_crt': '{{ endpoint_cert_pem.content | b64decode }}'
+
+- name: Fetch the key file for {{ item.cert_common_name }}
+  slurp:
+    src: '{{ tmpdir.path }}/cert/{{ item.cert_common_name }}.key'
+  changed_when: false
+  register: endpoint_cert_key
+
+- set_fact:
+    '{{ item.output_var_prefix }}_key': '{{ endpoint_cert_key.content | b64decode }}'
+
+- name: Delete temporary kustomize directory {{ tmpdir.path }}
+  file:
+    path: '{{ tmpdir.path }}'
+    state: absent

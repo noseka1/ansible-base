@@ -1,4 +1,4 @@
-- import_tasks: endpoint_certs_subtasks.yml
+- import_tasks: endpoint_certs_private_subtasks.yml
   when:
     - openshift_postinstall_endpoint_certs is defined
     - openshift_postinstall_endpoint_certs[openshift_common_cluster_domain] is defined

@@ -1,0 +1,18 @@
+- name: Create certificates
+  include_tasks: endpoint_certs_aws_ler53.yml
+  loop:
+    - { cert_common_name:    'api.{{ openshift_common_cluster_domain }}', output_var_prefix: 'cert_api' }
+    - { cert_common_name: '*.apps.{{ openshift_common_cluster_domain }}', output_var_prefix: 'cert_wildcard' }
+
+- set_fact:
+    openshift_postinstall_endpoint_certs_info:
+      api:
+        domain: 'api.{{ openshift_common_cluster_domain }}'
+        crt: '{{ cert_api_crt }}'
+        key: '{{ cert_api_key }}'
+      ingress:
+        crt: '{{ cert_wildcard_crt }}'
+        key: '{{ cert_wildcard_key }}'
+
+- name: Configure certificates on OpenShift
+  import_tasks: endpoint_certs_complete.yml

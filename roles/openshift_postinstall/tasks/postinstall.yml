@@ -13,6 +13,12 @@
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
+- import_tasks: deploy_infra_nodes.yml
+  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+
+- import_tasks: enable_autoscaling.yml
+  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+
 - import_tasks: ensure_storage.yml
 
 - import_tasks: trusted_ca.yml

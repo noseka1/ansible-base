@@ -1,0 +1,9 @@
+- name: Deploy infra nodes MachineSet
+  import_role:
+    name: openshift_common
+    tasks_from: add_machineset.yml
+  vars:
+    add_machineset_role: infra
+    add_machineset_labels:
+      node-role.kubernetes.io/infra: ""
+  when: openshift_postinstall_deploy_infra_nodes

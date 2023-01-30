@@ -2,4 +2,4 @@
 
 - import_tasks: configure_users.yml
 
-- import_tasks: report_success.yml
+- import_tasks: report_success_hub.yml

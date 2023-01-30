@@ -1,0 +1,10 @@
+- name: Obtain Observability route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: grafana
+    namespace: open-cluster-management-observability
+  register: rhacm_observability_route
+
+- debug:
+    msg: You can now access RHACM Observability Grafana instance at https://{{ rhacm_observability_route.resources.0.spec.host }}

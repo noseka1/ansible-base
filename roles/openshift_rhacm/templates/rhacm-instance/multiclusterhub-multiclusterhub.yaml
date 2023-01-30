@@ -5,5 +5,9 @@ metadata:
   name: multiclusterhub
 spec:
   availabilityConfig: {{ rhacm_instance_availability }}
-  enableClusterBackup: true
-  enableClusterProxyAddon: false
+  overrides:
+    components:
+    - name: cluster-backup
+      enabled: true
+    - name: cluster-proxy-addon
+      enabled: true

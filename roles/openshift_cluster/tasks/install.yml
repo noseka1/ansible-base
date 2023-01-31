@@ -1,0 +1,38 @@
+- import_tasks: get_latest_version.yml
+  when: openshift_cluster_install.version == 'latest'
+
+- import_tasks: preinstall.yml
+
+- name: Create install-config.yaml
+  template:
+    src: install-config.yaml
+    dest: '{{ openshift_cluster_install.config_dir }}'
+    mode: '0644'
+
+- name: Create a backup copy of install-config.yaml
+  template:
+    src: install-config.yaml
+    dest: '{{ openshift_cluster_install.config_dir }}/install-config.backup.yaml'
+    mode: '0644'
+
+- name: Check the install_complete timestamp
+  stat:
+    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+  register: openshift_cluster_install_complete
+
+- debug:
+    msg: Installation logs are located at {{ openshift_cluster_install.config_dir }}/.openshift_install.log
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift {{ openshift_cluster_install_version_resolved }} installation to complete
+  ansible.builtin.command: >-
+    ./openshift-install create cluster --dir . --log-level debug
+  args:
+    chdir: '{{ openshift_cluster_install.config_dir }}'
+  when: not openshift_cluster_install_complete.stat.exists
+
+- name: Create the timestamp
+  file:
+    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    state: touch
+    mode: '0644'
+  when: not openshift_cluster_install_complete.stat.exists

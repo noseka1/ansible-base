@@ -1,0 +1,27 @@
+- name: Create cluster configuration directory {{ openshift_cluster_install.config_dir }}
+  file:
+    path: '{{ openshift_cluster_install.config_dir }}'
+    state: directory
+    mode: '0755'
+
+- name: Download openshift-install archive {{ openshift_cluster_install_installer_url }}
+  get_url:
+    url: '{{ openshift_cluster_install_installer_url }}'
+    dest: '{{ openshift_cluster_install.config_dir }}/{{ openshift_cluster_install_installer_url | basename }}'
+  retries: 3
+
+- name: Extract openshift-install
+  unarchive:
+    src: '{{ openshift_cluster_install.config_dir }}/{{ openshift_cluster_install_installer_url | basename }}'
+    dest: '{{ openshift_cluster_install.config_dir }}'
+    exclude:
+      - README.md
+
+- name: Get installer info
+  command: '{{ openshift_cluster_install.config_dir }}/openshift-install version'
+  changed_when: False
+  register: openshift_cluster_install_installer_version
+
+- name: Show installer info
+  debug:
+    var: openshift_cluster_install_installer_version.stdout_lines

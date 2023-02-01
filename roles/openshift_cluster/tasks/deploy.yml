@@ -21,3 +21,7 @@
     path: '{{ openshift_cluster_install.config_dir }}/install_complete'
     state: touch
     mode: '0644'
+  when:
+    - not openshift_cluster_install_complete.stat.exists
+
+- import_tasks: cluster_info.yml

@@ -1,7 +1,2 @@
-- name: Fetch the {{ openshift_cluster_install.config_dir }}/auth/kubeconfig file
-  slurp:
-    src: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
-  register: openshift_cluster_kubeconfig
-
 - debug:
-    msg: OpenShift installation complete. You can log in with 'oc login --username admin {{ (openshift_cluster_kubeconfig.content | b64decode | from_yaml).clusters.0.cluster.server }}'
+    msg: OpenShift installation complete. You can check the cluster status using 'KUBECONFIG={{ openshift_cluster_install.config_dir }}/auth/kubeconfig oc get co'

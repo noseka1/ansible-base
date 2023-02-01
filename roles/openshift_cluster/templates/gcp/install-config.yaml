@@ -1,0 +1,41 @@
+apiVersion: v1
+metadata:
+  name: {{ openshift_cluster_install.cluster_name }}
+baseDomain: {{ openshift_cluster_install.base_domain }}
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  platform:
+    gcp:
+      type: n2-standard-8
+      zones:
+      - {{ openshift_cluster_install.gcp_region }}-a
+      - {{ openshift_cluster_install.gcp_region }}-b
+      - {{ openshift_cluster_install.gcp_region }}-c
+  replicas: {{ openshift_cluster_install.control_plane_replicas }}
+compute:
+- hyperthreading: Enabled
+  name: worker
+  platform:
+    gcp:
+      type: n2-standard-4
+      zones:
+      - {{ openshift_cluster_install.gcp_region }}-a
+      - {{ openshift_cluster_install.gcp_region }}-b
+      - {{ openshift_cluster_install.gcp_region }}-c
+  replicas: 3
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: {{ openshift_cluster_install.network_type }}
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  gcp:
+    projectID: {{ openshift_cluster_install.gcp_projectid }}
+    region: {{ openshift_cluster_install.gcp_region }}
+pullSecret: '{{ redhat_cloud_pull_secret }}'
+sshKey: '{{ generic_ssh_key_pair.public_key }}'

@@ -4,6 +4,8 @@
     - import_role:
         name: openshift_cluster
         tasks_from: deploy.yml
+      vars:
+        openshift_cluster_install_platform: AWS
 
 - hosts: localhost
   environment:

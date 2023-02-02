@@ -2,7 +2,8 @@
 Description=Create block device for ODF LVM
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=yes
 
 ExecStart=/var/usrlocal/bin/create-odf-lvm-block.sh
 

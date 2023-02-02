@@ -2,7 +2,8 @@
 Description=Create LVM group for OpenEBS volumes
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=yes
 
 ExecStart=/var/usrlocal/bin/create-openebs-lvm.sh
 

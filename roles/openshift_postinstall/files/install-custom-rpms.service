@@ -8,6 +8,8 @@ After=network-online.target
 
 [Service]
 Type=oneshot
+RemainAfterExit=yes
+
 ExecStart=/var/usrlocal/bin/install-custom-rpms.sh
 
 [Install]

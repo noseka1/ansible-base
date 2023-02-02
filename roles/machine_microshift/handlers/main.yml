@@ -14,3 +14,9 @@
     name: create-odf-lvm
     state: restarted
   become: true
+
+- name: Restart microshift
+  service:
+    name: microshift
+    state: restarted
+  become: true

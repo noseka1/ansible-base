@@ -1,0 +1,81 @@
+- name: Red Hat subscription
+  include_role:
+    name: devnullcake.redhat-subscription
+  vars:
+    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
+    redhat_subscription_enable_repos:
+      - rhocp-4.12-for-rhel-8-{{ ansible_architecture }}-rpms
+      - fast-datapath-for-rhel-8-{{ ansible_architecture }}-rpms
+
+- name: Install MicroShift and lvm2 package
+  yum:
+    name:
+      - microshift
+      - lvm2
+  become: true
+
+- name: Copy pull secret to CRI-O
+  copy:
+    dest: /etc/crio/openshift-pull-secret
+    content: '{{ redhat_cloud_pull_secret }}'
+    mode: '0600'
+    owner: root
+    group: root
+  become: true
+
+- name: Create directory /etc/systemd/system/crio.service.d
+  file:
+    path: /etc/systemd/system/crio.service.d
+    state: directory
+  become: true
+
+- name: Configure CRI-O proxy
+  template:
+    src: 00-proxy.conf
+    dest: /etc/systemd/system/crio.service.d/00-proxy.conf
+  when:
+    - machine_microshift_crio_proxy is defined
+    - machine_microshift_crio_proxy[ansible_domain] is defined
+  notify:
+    - Reload systemd
+    - Restart crio
+  become: true
+
+- name: Start crio service
+  service:
+    name: crio
+    state: started
+    enabled: true
+  become: true
+
+- name: Install ODF LVM service script
+  copy:
+    src: create-odf-lvm.sh
+    dest: /usr/local/bin
+    mode: '0755'
+  notify:
+    - Restart create-odf-lvm
+  become: true
+
+- name: Create ODF LVM service
+  copy:
+    src: create-odf-lvm.service
+    dest: /etc/systemd/system
+  notify:
+    - Reload systemd
+    - Restart create-odf-lvm
+  become: true
+
+- name: Start create-odf-lvm service
+  service:
+    name: create-odf-lvm
+    state: started
+    enabled: true
+  become: true
+
+- name: Start microshift service
+  service:
+    name: microshift
+    state: started
+    enabled: true
+  become: true

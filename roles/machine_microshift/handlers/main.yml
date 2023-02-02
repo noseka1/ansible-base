@@ -1,0 +1,16 @@
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+  become: true
+
+- name: Restart crio
+  service:
+    name: crio
+    state: restarted
+  become: true
+
+- name: Restart create-odf-lvm
+  service:
+    name: create-odf-lvm
+    state: restarted
+  become: true

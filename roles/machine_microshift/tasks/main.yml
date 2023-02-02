@@ -14,6 +14,24 @@
       - lvm2
   become: true
 
+- name: Install custom trusted CA
+  copy:
+    content: '{{ machine_microshift_trusted_ca_bundle[ansible_domain] }}'
+    dest: /etc/pki/ca-trust/source/anchors/custom-ca-bundle.pem
+  register:
+    machine_microshift_trusted_ca_bundle_result
+  notify:
+    - Restart crio
+  when:
+    - machine_microshift_trusted_ca_bundle is defined
+    - machine_microshift_trusted_ca_bundle[ansible_domain] is defined
+  become: true
+
+- name: Update CA trust
+  command: update-ca-trust
+  when: machine_microshift_trusted_ca_bundle_result is changed
+  become: true
+
 - name: Copy pull secret to CRI-O
   copy:
     dest: /etc/crio/openshift-pull-secret

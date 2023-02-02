@@ -1,0 +1,7 @@
+all:
+  children:
+    ungrouped:
+      hosts:
+        master1:
+          ansible_host: master1.mycluster7.example.com
+          ansible_user: ansible

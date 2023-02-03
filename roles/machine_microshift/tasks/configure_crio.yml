@@ -1,0 +1,33 @@
+- name: Copy pull secret to CRI-O
+  copy:
+    dest: /etc/crio/openshift-pull-secret
+    content: '{{ redhat_cloud_pull_secret }}'
+    mode: '0600'
+    owner: root
+    group: root
+  become: true
+
+- name: Create directory /etc/systemd/system/crio.service.d
+  file:
+    path: /etc/systemd/system/crio.service.d
+    state: directory
+  become: true
+
+- name: Configure CRI-O proxy
+  template:
+    src: 00-proxy.conf
+    dest: /etc/systemd/system/crio.service.d/00-proxy.conf
+  when:
+    - machine_microshift_crio_proxy is defined
+    - machine_microshift_crio_proxy[ansible_domain] is defined
+  notify:
+    - Reload systemd
+    - Restart crio
+  become: true
+
+- name: Start crio service
+  service:
+    name: crio
+    state: started
+    enabled: true
+  become: true

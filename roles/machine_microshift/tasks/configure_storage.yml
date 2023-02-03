@@ -1,0 +1,24 @@
+- name: Install ODF LVM service script
+  copy:
+    src: create-odf-lvm.sh
+    dest: /usr/local/bin
+    mode: '0755'
+  notify:
+    - Restart create-odf-lvm
+  become: true
+
+- name: Create ODF LVM service
+  copy:
+    src: create-odf-lvm.service
+    dest: /etc/systemd/system
+  notify:
+    - Reload systemd
+    - Restart create-odf-lvm
+  become: true
+
+- name: Start create-odf-lvm service
+  service:
+    name: create-odf-lvm
+    state: started
+    enabled: true
+  become: true

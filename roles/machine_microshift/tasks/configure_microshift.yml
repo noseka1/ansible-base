@@ -1,0 +1,14 @@
+- name: Configure MicroShift
+  template:
+    src: config.yaml
+    dest: /etc/microshift/config.yaml
+  notify:
+    - Restart microshift
+  become: True
+
+- name: Start microshift service
+  service:
+    name: microshift
+    state: started
+    enabled: true
+  become: true

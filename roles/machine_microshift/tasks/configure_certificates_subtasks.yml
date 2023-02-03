@@ -1,0 +1,16 @@
+- name: Ensure certificate directory exists
+  file:
+    path: '{{ outer_item.dir }}'
+    state: directory
+  become: true
+
+- name: Install leaf certificate
+  copy:
+    content: '{{ item.content }}'
+    dest: '{{ outer_item.dir }}/{{ item.name }}'
+  notify:
+    - Restart microshift
+  loop: '{{ outer_item.files }}'
+  loop_control:
+    label: '{{ outer_item.dir }}/{{ item.name }}'
+  become: true

@@ -15,3 +15,25 @@
   command: update-ca-trust
   when: machine_microshift_trusted_ca_bundle_result is changed
   become: true
+
+- name: Install Kubernetes API and ingress certificates
+  include_tasks: configure_certificates_subtasks.yml
+  loop:
+    - dir: /var/lib/microshift/certs/kube-apiserver-external-signer/kube-external-serving
+      files:
+        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].api.crt }}'
+          name: server.crt
+        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].api.key }}'
+          name: server.key
+    - dir: /var/lib/microshift/certs/ingress-ca/router-default-serving
+      files:
+        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].ingress.crt }}'
+          name: server.crt
+        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].ingress.key }}'
+          name: server.key
+  loop_control:
+    loop_var: outer_item
+    label: '{{ outer_item.dir }}'
+  when:
+    - machine_microshift_endpoint_certs is defined
+    - machine_microshift_endpoint_certs[ansible_domain] is defined

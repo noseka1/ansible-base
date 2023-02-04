@@ -1,0 +1,15 @@
+apiVersion: work.open-cluster-management.io/v1
+kind: ManifestWork
+metadata:
+  name: test-hello-work
+  namespace: local-cluster
+spec:
+  workload:
+    manifests:
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: test-hello-work
+        namespace: default
+      data:
+        hello: work

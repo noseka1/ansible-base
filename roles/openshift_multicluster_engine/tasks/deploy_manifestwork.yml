@@ -1,0 +1,31 @@
+- name: Deploy test-hello-work manifestwork
+  kubernetes.core.k8s:
+    template: instance/test-hello-work-manifestwork.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for test-hello-work deployment to complete
+  kubernetes.core.k8s_info:
+    api_version: work.open-cluster-management.io/v1
+    kind: ManifestWork
+    namespace: local-cluster
+    name: test-hello-work
+  register: test_manifestwork
+  until:
+    - test_manifestwork.resources is defined
+    - test_manifestwork.resources | length > 0
+    - test_manifestwork.resources.0.status is defined
+    - test_manifestwork.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (test_manifestwork.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 80
+  delay: 10
+
+- name: Retrieve test configmap
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    name: test-hello-work
+    namespace: default
+  register: test_configmap
+
+- name: Fail if the test configmap can't be found
+  fail:
+  when: test_configmap.resources | length != 1

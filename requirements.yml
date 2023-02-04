@@ -23,6 +23,10 @@ collections:
   src: https://github.com/ansible-collections/kubernetes.core
   version: 2.3.2
 
+- name: amazon.aws
+  src: https://github.com/ansible-collections/amazon.aws
+  version: 4.4.0
+
 - name: ansible.windows
   src: https://github.com/ansible-collections/ansible.windows
   version: 1.11.1

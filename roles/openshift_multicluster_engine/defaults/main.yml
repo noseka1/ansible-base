@@ -10,3 +10,10 @@ multicluster_engine_place_on_infra_nodes: false
 
 # To deploy a highly-available MCE change this value from Basic to High:
 multicluster_engine_instance_availability: Basic
+
+# Hosting service cluster configuration
+multicluster_engine_hypershift_aws:
+  enabled: false
+  aws_access_key_id: ''
+  aws_secret_access_key: ''
+  aws_region: ''

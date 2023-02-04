@@ -4,6 +4,9 @@
 
 - import_tasks: deploy_manifestwork.yml
 
-- import_tasks: deploy_hypershift_addon.yaml
+- import_tasks: deploy_hypershift_addon.yml
+
+- import_tasks: configure_hypershift_aws.yml
+  when: multicluster_engine_hypershift_aws.enabled
 
 - import_tasks: report_success.yml

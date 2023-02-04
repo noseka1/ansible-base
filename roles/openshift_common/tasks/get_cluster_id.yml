@@ -1,0 +1,14 @@
+- name: Obtain clusterversion info
+  kubernetes.core.k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: openshift_common_clusterversion
+
+- name: Set openshift_common_cluster_id
+  set_fact:
+    openshift_common_cluster_id: >-
+      {{ openshift_common_clusterversion.resources.0.spec.clusterID }}
+
+- debug:
+    var: openshift_common_cluster_id

@@ -1,0 +1,35 @@
+- name: Delete local cluster import
+  kubernetes.core.k8s:
+    template:
+      - instance/local-cluster-mcl.yaml
+    wait: true
+    wait_timeout: 600
+    state: absent
+
+- name: Delete multi-cluster engine instance
+  kubernetes.core.k8s:
+    template:
+      - instance/engine-mce.yaml
+    wait: true
+    state: absent
+
+- name: Delete multicluster-engine operator
+  kubernetes.core.k8s:
+    template:
+      - operator/multicluster-engine-sub.yaml
+      - operator/multicluster-engine-og.yaml
+      - operator/multicluster-engine-ns.yaml
+    wait: true
+    state: absent
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: multiclusterengines.multicluster.openshift.io
+      - api_version: v1
+        kind: Namespace
+        name: hive

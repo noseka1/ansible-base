@@ -1,15 +1,14 @@
 - name: Create objects for deployment of {{ rhacm_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - cluster-ns.yml
-    - cluster-clusterdeployment.yaml
-    - cluster-klusterletaddonconfig.yaml
-    - cluster-managedcluster.yaml
-    - secrets/cluster-aws-creds-secret.yaml
-    - secrets/cluster-install-config-secret.yaml
-    - secrets/cluster-pull-secret-secret.yaml
-    - secrets/cluster-ssh-private-key-secret.yaml
+    template:
+      - cluster-ns.yml
+      - cluster-clusterdeployment.yaml
+      - cluster-klusterletaddonconfig.yaml
+      - cluster-managedcluster.yaml
+      - secrets/cluster-aws-creds-secret.yaml
+      - secrets/cluster-install-config-secret.yaml
+      - secrets/cluster-pull-secret-secret.yaml
+      - secrets/cluster-ssh-private-key-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_managed_cluster.cluster_name }} to deploy
   kubernetes.core.k8s_info:

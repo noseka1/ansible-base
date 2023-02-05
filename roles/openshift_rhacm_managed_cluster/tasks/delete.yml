@@ -1,9 +1,8 @@
 - name: Delete {{ rhacm_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - cluster-managedcluster.yaml
+      - cluster-ns.yml
     state: absent
     wait: true
     wait_timeout: 1800
-  loop:
-    - cluster-managedcluster.yaml
-    - cluster-ns.yml

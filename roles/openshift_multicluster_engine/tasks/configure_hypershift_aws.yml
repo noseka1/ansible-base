@@ -14,5 +14,5 @@
 - name: Create hypershift configuration secrets
   kubernetes.core.k8s:
     template:
-      - instance/hypershift-operator-oidc-provider-s3-credentials-secret.yaml
-      - instance/hypershift-operator-private-link-credentials.yaml
+      - hypershift/hypershift-operator-oidc-provider-s3-credentials-secret.yaml
+      - hypershift/hypershift-operator-private-link-credentials.yaml

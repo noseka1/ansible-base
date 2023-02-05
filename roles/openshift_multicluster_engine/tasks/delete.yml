@@ -56,3 +56,4 @@
     secret_key: '{{ multicluster_engine_hypershift_aws.aws_secret_access_key }}'
     region: '{{ multicluster_engine_hypershift_aws.aws_region }}'
     state: absent
+  when: multicluster_engine_hypershift_aws.enabled

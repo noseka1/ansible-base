@@ -7,7 +7,7 @@ openshift_cluster_install:
   control_plane_replicas: 1
   network_type: OVNKubernetes
   aws_region: us-west-2
-  gcp_service_account_file: '{{ lookup("env", "HOME") +  "/.gcp/osServiceAccount.json" }}'
+  gcp_service_account_file: '{{ lookup("env", "HOME") + "/.gcp/osServiceAccount.json" }}'
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt
 

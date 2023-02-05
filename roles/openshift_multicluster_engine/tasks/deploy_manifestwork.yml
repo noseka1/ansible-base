@@ -1,6 +1,6 @@
 - name: Deploy test-hello-work manifestwork
   kubernetes.core.k8s:
-    template: instance/test-hello-work-manifestwork.yaml
+    template: manifestwork/test-hello-work-manifestwork.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for test-hello-work deployment to complete
   kubernetes.core.k8s_info:

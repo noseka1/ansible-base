@@ -15,6 +15,8 @@
         kind: Namespace
         name: local-cluster
 
+- import_tasks: delete_common.yml
+
 - name: Delete multi-cluster engine instance
   kubernetes.core.k8s:
     template:
@@ -39,5 +41,6 @@
       - api_version: admissionregistration.k8s.io/v1
         kind: ValidatingWebhookConfiguration
         name: multiclusterengines.multicluster.openshift.io
-
-- import_tasks: delete_common.yml
+      - api_version: v1
+        kind: Namespace
+        name: hive

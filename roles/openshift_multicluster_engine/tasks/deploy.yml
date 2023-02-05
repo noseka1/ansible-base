@@ -1,15 +1,11 @@
 - import_tasks: deploy_mce.yml
 
-- import_tasks: configure_cluster_discovery.yml
-  when: redhat_ocm_api_token | length > 0
-
 - import_tasks: deploy_managed_service_account.yml
 
 - import_tasks: deploy_manifestwork.yml
 
 - import_tasks: deploy_hypershift_addon.yml
 
-- import_tasks: configure_hypershift_aws.yml
-  when: multicluster_engine_hypershift_aws.enabled
+- import_tasks: deploy_common.yml
 
 - import_tasks: report_success.yml

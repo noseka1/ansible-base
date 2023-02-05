@@ -5,7 +5,7 @@ metadata:
 spec:
   availabilityConfig: {{ rhacm_observability_availability }} # Available values are High or Basic
   imagePullPolicy: IfNotPresent
-  imagePullSecret: pull-secret
+  imagePullSecret: openshift-pull-secret
   observabilityAddonSpec: # The ObservabilityAddonSpec defines the global settings for all managed clusters which have observability add-on enabled
     enableMetrics: true # EnableMetrics indicates the observability addon push metrics to hub server
     interval: 60 # Interval for the observability addon push metrics to hub server

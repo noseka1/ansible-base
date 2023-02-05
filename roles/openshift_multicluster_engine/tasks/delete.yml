@@ -1,9 +1,9 @@
 - name: Delete cluster discovery via OpenShift Cluster Manager
   kubernetes.core.k8s:
     template:
-      - discovery/discovered-clusters-ns.yaml
-      - discovery/ocm-api-token-secret.yaml
-      - discovery/discovery-discoveryconfig.yaml
+      - cluster-discovery/discovered-clusters-ns.yaml
+      - cluster-discovery/ocm-api-token-secret.yaml
+      - cluster-discovery/discovery-discoveryconfig.yaml
     wait: true
     wait_timeout: 600
     state: absent

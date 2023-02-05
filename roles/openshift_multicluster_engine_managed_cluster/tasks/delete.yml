@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     template:
       - cluster-managedcluster.yaml
-      - cluster-ns.yml
+      - cluster-ns.yaml
     state: absent
     wait: true
     wait_timeout: 1800

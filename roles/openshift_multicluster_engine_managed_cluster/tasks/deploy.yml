@@ -1,7 +1,7 @@
 - name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
     template:
-      - cluster-ns.yml
+      - cluster-ns.yaml
       - cluster-clusterdeployment.yaml
       - cluster-klusterletaddonconfig.yaml
       - cluster-managedcluster.yaml

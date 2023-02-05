@@ -27,7 +27,7 @@ spec:
     - enabled: true
       name: console-mce
   targetNamespace: {{ multicluster_engine_instance_namespace }}
-  imagePullSecret: pull-secret
+  imagePullSecret: openshift-pull-secret
 {% if multicluster_engine_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

@@ -1,0 +1,6 @@
+- name: Enable cluster discovery via OpenShift Cluster Manager
+  kubernetes.core.k8s:
+    template:
+      - discovery/discovered-clusters-ns.yaml
+      - discovery/ocm-api-token-secret.yaml
+      - discovery/discovery-discoveryconfig.yaml

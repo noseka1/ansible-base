@@ -14,6 +14,10 @@ multicluster_engine_instance_availability: Basic
 # Hosting service cluster configuration
 multicluster_engine_hypershift_aws:
   enabled: false
-  aws_access_key_id: ''
-  aws_secret_access_key: ''
-  aws_region: ''
+  aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
+  aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_region: us-west-2
+
+# OpenShift Cluster Manager API Token is required by RHACM to discover clusters.
+# It can be downloaded from https://console.redhat.com/openshift/token
+redhat_ocm_api_token: ''

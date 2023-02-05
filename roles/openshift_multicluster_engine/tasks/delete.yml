@@ -1,3 +1,14 @@
+- name: Delete cluster discovery via OpenShift Cluster Manager
+  kubernetes.core.k8s:
+    template:
+      - discovery/discovered-clusters-ns.yaml
+      - discovery/ocm-api-token-secret.yaml
+      - discovery/discovery-discoveryconfig.yaml
+    wait: true
+    wait_timeout: 600
+    state: absent
+  when: redhat_ocm_api_token | length > 0
+
 - name: Delete local cluster import
   kubernetes.core.k8s:
     template:

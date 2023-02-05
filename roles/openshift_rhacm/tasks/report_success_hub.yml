@@ -1,4 +1,4 @@
-- name: Obtain RHACM route
+- name: Obtain OpenShift Console route
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route

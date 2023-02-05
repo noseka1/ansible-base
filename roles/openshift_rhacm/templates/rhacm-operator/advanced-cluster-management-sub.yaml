@@ -18,3 +18,11 @@ spec:
       value: ""
     - name: NO_PROXY
       value: ""
+{% if rhacm_instance_place_on_infra_nodes %}
+    nodeSelector:
+      node-role.kubernetes.io/infra: ""
+    tolerations:
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
+{% endif %}

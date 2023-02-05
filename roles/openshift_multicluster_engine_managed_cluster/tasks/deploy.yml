@@ -1,4 +1,4 @@
-- name: Create objects for deployment of {{ rhacm_managed_cluster.cluster_name }} managed cluster
+- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
     template:
       - cluster-ns.yml
@@ -10,11 +10,11 @@
       - secrets/cluster-pull-secret-secret.yaml
       - secrets/cluster-ssh-private-key-secret.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_managed_cluster.cluster_name }} to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_name }} to deploy
   kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster
-    name: '{{ rhacm_managed_cluster.cluster_name }}'
+    name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
   register: managed_cluster
   until:
     - managed_cluster.resources is defined

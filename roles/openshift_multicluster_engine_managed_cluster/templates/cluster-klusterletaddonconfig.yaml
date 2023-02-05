@@ -1,8 +1,8 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: {{ rhacm_managed_cluster.cluster_name }}
-  namespace: {{ rhacm_managed_cluster.cluster_name }}
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:
   applicationManager:
     enabled: true

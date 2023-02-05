@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_rhacm_managed_cluster
+        name: openshift_multicluster_engine_managed_cluster
         tasks_from: delete.yml

@@ -1,4 +1,4 @@
-- name: Delete {{ rhacm_managed_cluster.cluster_name }} managed cluster
+- name: Delete {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
     template:
       - cluster-managedcluster.yaml

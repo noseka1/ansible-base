@@ -1,0 +1,15 @@
+apiVersion: cluster.open-cluster-management.io/v1alpha1
+kind: HypershiftDeployment
+metadata:
+  name: {{ multicluster_engine_hosted_cluster.cluster_name }}
+  namespace: default
+spec:
+  hostingCluster: local-cluster
+  hostingNamespace: clusters
+  infrastructure:
+    cloudProvider:
+      name: {{ multicluster_engine_hosted_cluster.cluster_name }}-aws-creds
+    configure: true
+    platform:
+      aws:
+        region: {{ multicluster_engine_hosted_cluster.aws_region }}

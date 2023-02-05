@@ -1,0 +1,6 @@
+multicluster_engine_hosted_cluster:
+  cluster_name: mycluster12
+  base_domain: sandbox2311.opentlc.com
+  aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
+  aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_region: us-west-1

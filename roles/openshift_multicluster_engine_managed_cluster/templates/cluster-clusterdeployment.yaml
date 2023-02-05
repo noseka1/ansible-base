@@ -24,6 +24,6 @@ spec:
     sshPrivateKeySecretRef:
       name: {{ multicluster_engine_managed_cluster.cluster_name }}-ssh-private-key
     imageSetRef:
-      name: {{ multicluster_engine_managed_cluster.ocp_release_image }}
+      name: img{{ multicluster_engine_managed_cluster.ocp_release_image }}-appsub
   pullSecretRef:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}-pull-secret

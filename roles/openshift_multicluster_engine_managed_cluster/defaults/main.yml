@@ -1,7 +1,7 @@
 multicluster_engine_managed_cluster:
   cluster_name: mycluster11
   base_domain: sandbox2727.opentlc.com
-  ocp_release_image: img4.12.0-x86-64-appsub
+  ocp_release_image: 4.12.0-x86-64
   aws_region: us-east-1
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

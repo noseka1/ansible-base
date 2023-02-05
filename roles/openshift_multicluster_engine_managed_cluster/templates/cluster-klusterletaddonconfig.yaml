@@ -1,4 +1,4 @@
-{% if klusterletaddonconfig_result.resources | length == 1 %}
+{% if rhacm_detected %}
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:

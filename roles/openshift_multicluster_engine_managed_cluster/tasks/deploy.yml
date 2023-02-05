@@ -1,9 +1,10 @@
-- name: Check if KlusterletAddonConfig kind exists
-  kubernetes.core.k8s_info:
-    api_version: apiextensions.k8s.io/v1
-    kind: CustomResourceDefinition
-    name: klusterletaddonconfig.spec.applicationManager
-  register: klusterletaddonconfig_result
+- import_tasks: detect_rhacm.yml
+
+- name: Create ClusterImageSet for OCP version {{ multicluster_engine_managed_cluster.ocp_release_image }}
+  kubernetes.core.k8s:
+    template:
+      - clusterimageset/clusterimageset.yaml
+  when: not rhacm_detected
 
 - name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:

@@ -10,25 +10,25 @@ spec:
     - enabled: true
       name: cluster-backup
     - enabled: true
+      name: cluster-lifecycle
+    - enabled: true
       name: cluster-proxy-addon
-    - enabled: true
-      name: multiclusterhub-repo
-    - enabled: true
-      name: management-ingress
     - enabled: true
       name: console
     - enabled: true
-      name: insights
-    - enabled: true
       name: grc
     - enabled: true
-      name: cluster-lifecycle
+      name: insights
     - enabled: true
-      name: volsync
+      name: management-ingress
     - enabled: true
       name: multicluster-engine
     - enabled: true
+      name: multiclusterhub-repo
+    - enabled: true
       name: search
+    - enabled: true
+      name: volsync
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

@@ -5,6 +5,7 @@
 - name: Create objects for deployment of {{ multicluster_engine_hosted_cluster.cluster_name }} hosted cluster
   kubernetes.core.k8s:
     template:
+      - cluster-ns.yaml
       - cluster-aws-creds-secret.yaml
       - cluster-hd.yaml
 
@@ -13,7 +14,7 @@
     api_version: hypershift.openshift.io/v1alpha1
     kind: HostedCluster
     name: '{{ multicluster_engine_hosted_cluster.cluster_name }}'
-    namespace: clusters
+    namespace: hosted-clusters
   register: hosted_cluster
   until:
     - hosted_cluster.resources is defined
@@ -28,4 +29,4 @@
 - debug:
     msg: |
       Cluster {{ multicluster_engine_hosted_cluster.cluster_name }} deployd successfully.
-      You can download the admin kubeconfig by issuing 'oc extract -n clusters secret/{{ multicluster_engine_hosted_cluster.cluster_name }}-admin-kubeconfig'
+      You can download the admin kubeconfig by issuing 'oc extract -n hosted-clusters secret/{{ multicluster_engine_hosted_cluster.cluster_name }}-admin-kubeconfig'

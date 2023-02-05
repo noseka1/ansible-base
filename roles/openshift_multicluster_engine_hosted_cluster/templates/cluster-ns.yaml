@@ -1,0 +1,4 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hosted-cluster-{{ multicluster_engine_hosted_cluster.cluster_name }}

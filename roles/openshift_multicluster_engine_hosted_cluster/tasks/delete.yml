@@ -1,16 +1,13 @@
-- name: Retrieve OpenShift pull secret
-  kubernetes.core.k8s_info:
-    api_version: v1
-    kind: Secret
-    name: pull-secret
-    namespace: openshift-config
-  register: openshift_pull_secret
+- import_role:
+    name: openshift_common
+    tasks_from: get_openshift_pull_secret.yml
 
 - name: Delete deployment objects of {{ multicluster_engine_hosted_cluster.cluster_name }} hosted cluster
   kubernetes.core.k8s:
     template:
       - cluster-hd.yaml
       - cluster-aws-creds-secret.yaml
+      - cluster-ns.yaml
     state: absent
     wait: true
     wait_timeout: 1800

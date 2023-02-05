@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   hostingCluster: local-cluster
-  hostingNamespace: clusters
+  hostingNamespace: hosted-clusters
   infrastructure:
     cloudProvider:
       name: {{ multicluster_engine_hosted_cluster.cluster_name }}-aws-creds

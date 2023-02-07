@@ -10,8 +10,8 @@
 
 - hosts: localhost
   environment:
-    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
-    KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
+    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install_aws.config_dir }}/auth/kubeconfig'
+    KUBECONFIG: '{{ openshift_cluster_install_aws.config_dir }}/auth/kubeconfig'
   tasks:
     - import_role:
         name: openshift_cluster_postinstall

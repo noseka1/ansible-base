@@ -12,7 +12,7 @@
     name: mprahl.lets-encrypt-route-53
   vars:
     - ler53_cert_common_name: '{{ item.cert_common_name }}'
-    - ler53_route_53_zone_id: '{{ openshift_postinstall_cluster_dns.resources.0.spec.publicZone.id }}'
+    - ler53_route_53_zone_id: '{{ openshift_cluster_postinstall_cluster_dns.resources.0.spec.publicZone.id }}'
     - ler53_cert_dir: '{{ tmpdir.path }}/cert'
     - ler53_account_key_dir: '{{ tmpdir.path }}/accountkey'
     - ler53_cert_files_owner: '{{ ansible_user_uid }}'

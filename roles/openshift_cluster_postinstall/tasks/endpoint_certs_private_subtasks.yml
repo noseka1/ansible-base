@@ -1,0 +1,5 @@
+- set_fact:
+    openshift_cluster_postinstall_endpoint_certs_info: '{{ openshift_cluster_postinstall_endpoint_certs[openshift_common_cluster_domain] }}'
+
+- name: Configure certificates on OpenShift
+  import_tasks: endpoint_certs_complete.yml

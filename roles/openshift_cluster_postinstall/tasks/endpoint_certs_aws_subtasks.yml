@@ -5,7 +5,7 @@
     - { cert_common_name: '*.apps.{{ openshift_common_cluster_domain }}', output_var_prefix: 'cert_wildcard' }
 
 - set_fact:
-    openshift_postinstall_endpoint_certs_info:
+    openshift_cluster_postinstall_endpoint_certs_info:
       api:
         domain: 'api.{{ openshift_common_cluster_domain }}'
         crt: '{{ cert_api_crt }}'

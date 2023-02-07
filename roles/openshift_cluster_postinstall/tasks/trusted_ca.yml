@@ -3,10 +3,10 @@
     template:
       - user-ca-bundle-cm.yaml
       - cluster-proxy.yaml
-  register: openshift_postinstall_trusted_ca_bundle_result
+  register: openshift_cluster_postinstall_trusted_ca_bundle_result
   when:
-    - openshift_postinstall_trusted_ca_bundle is defined
-    - openshift_postinstall_trusted_ca_bundle[openshift_common_cluster_domain] is defined
+    - openshift_cluster_postinstall_trusted_ca_bundle is defined
+    - openshift_cluster_postinstall_trusted_ca_bundle[openshift_common_cluster_domain] is defined
 
 - import_role:
     name: openshift_common
@@ -14,4 +14,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_postinstall_trusted_ca_bundle_result is changed
+  when: openshift_cluster_postinstall_trusted_ca_bundle_result is changed

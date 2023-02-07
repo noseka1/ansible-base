@@ -4,4 +4,4 @@ metadata:
   name: cluster
 spec:
   audit:
-    profile: {{ openshift_postinstall_audit_profile | default('Default') }}
+    profile: {{ openshift_cluster_postinstall_audit_profile | default('Default') }}

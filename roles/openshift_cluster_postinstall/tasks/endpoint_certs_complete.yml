@@ -5,22 +5,22 @@
   loop:
     - name: api-cert
       namespace: openshift-config
-      crt: '{{ openshift_postinstall_endpoint_certs_info.api.crt }}'
-      key: '{{ openshift_postinstall_endpoint_certs_info.api.key }}'
+      crt: '{{ openshift_cluster_postinstall_endpoint_certs_info.api.crt }}'
+      key: '{{ openshift_cluster_postinstall_endpoint_certs_info.api.key }}'
     - name: wildcard-cert
       namespace: openshift-ingress
-      crt: '{{ openshift_postinstall_endpoint_certs_info.ingress.crt }}'
-      key: '{{ openshift_postinstall_endpoint_certs_info.ingress.key }}'
+      crt: '{{ openshift_cluster_postinstall_endpoint_certs_info.ingress.crt }}'
+      key: '{{ openshift_cluster_postinstall_endpoint_certs_info.ingress.key }}'
 
 - name: Configure API server certificate
   kubernetes.core.k8s:
     template: cluster-apiserver-2.yaml
-  register: openshift_postinstall_api_cert
+  register: openshift_cluster_postinstall_api_cert
 
 - name: Configure wildcard apps certificate
   kubernetes.core.k8s:
     template: default-ingresscontroller-2.yaml
-  register: openshift_postinstall_apps_cert
+  register: openshift_cluster_postinstall_apps_cert
 
 - import_role:
     name: openshift_common
@@ -30,5 +30,5 @@
     stable_cluster_retries: 10
     stable_cluster_validate_certs: false
   when: >
-    (openshift_postinstall_api_cert is changed) or
-    (openshift_postinstall_apps_cert is changed)
+    (openshift_cluster_postinstall_api_cert is changed) or
+    (openshift_cluster_postinstall_apps_cert is changed)

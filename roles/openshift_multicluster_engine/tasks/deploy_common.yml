@@ -1,0 +1,5 @@
+- import_tasks: configure_cluster_discovery.yml
+  when: redhat_ocm_api_token | length > 0
+
+- import_tasks: configure_hypershift_aws.yml
+  when: multicluster_engine_hypershift_aws.enabled

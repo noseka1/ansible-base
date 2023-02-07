@@ -1,0 +1,34 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: v1
+        kind: Namespace
+        name: hosted-clusters
+      - api_version: v1
+        kind: Namespace
+        name: discovery-clusters
+
+- name: Delete cluster discovery configuration
+  kubernetes.core.k8s:
+    template:
+      - cluster-discovery/discovery-discoveryconfig.yaml
+      - cluster-discovery/discovered-clusters-ns.yaml
+    state: absent
+    wait: true
+    wait_timeout: 1800
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_id.yml
+
+- name: Delete S3 bucket with public access to host OIDC discovery documents
+  amazon.aws.s3_bucket:
+    name: openshift-oidc-bucket-{{ openshift_common_cluster_id }}
+    access_key: '{{ multicluster_engine_hypershift_aws.aws_access_key_id }}'
+    secret_key: '{{ multicluster_engine_hypershift_aws.aws_secret_access_key }}'
+    region: '{{ multicluster_engine_hypershift_aws.aws_region }}'
+    force: true
+    state: absent
+  when: multicluster_engine_hypershift_aws.enabled

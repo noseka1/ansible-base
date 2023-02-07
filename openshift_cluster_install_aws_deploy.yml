@@ -2,9 +2,10 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_cluster
+        name: openshift_cluster_install
         tasks_from: deploy.yml
       vars:
+        openshift_cluster_install: '{{ openshift_cluster_install_aws }}'
         openshift_cluster_install_platform: AWS
 
 - hosts: localhost

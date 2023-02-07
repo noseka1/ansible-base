@@ -1,12 +1,21 @@
-openshift_cluster_install:
-  config_dir: /var/tmp/mycluster10
+openshift_cluster_install_aws:
+  config_dir: /home/anosek/lab/openshift/mycluster10
   cluster_name: mycluster10
-  base_domain: sandbox1154.opentlc.com
+  base_domain: sandbox1422.opentlc.com
   channel: stable-4.12
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
   aws_region: us-west-2
+
+openshift_cluster_install_gcp:
+  config_dir: /home/anosek/lab/openshift/mycluster11
+  cluster_name: mycluster11
+  base_domain: sandbox1422.opentlc.com
+  channel: stable-4.12
+  version: latest
+  control_plane_replicas: 1
+  network_type: OVNKubernetes
   gcp_service_account_file: '{{ lookup("env", "HOME") + "/.gcp/osServiceAccount.json" }}'
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt

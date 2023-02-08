@@ -1,5 +1,4 @@
 roles:
-
 # Requires rpm package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git

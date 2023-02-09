@@ -36,10 +36,6 @@
   retries: 80
   delay: 10
 
-- name: Import local cluster
-  kubernetes.core.k8s:
-    template: instance/local-cluster-mcl.yaml
-
 - name: Wait until managedcluster local-cluster object is available
   kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1

@@ -1,7 +1,33 @@
+- import_tasks: delete_common.yml
+
+- name: Delete test-hello-work manifestwork
+  kubernetes.core.k8s:
+    template: manifestwork/test-hello-work-manifestwork.yaml
+    wait: true
+    state: absent
+
 - name: Detach local-cluster
   kubernetes.core.k8s:
+    api_version: cluster.open-cluster-management.io/v1
+    kind: ManagedCluster
+    name: local-cluster
+    wait: true
+    wait_timeout: 600
+    state: absent
+
+- name: Delete local-cluster namespace
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: local-cluster
+    wait: true
+    wait_timeout: 600
+    state: absent
+
+- name: Delete multi-cluster engine instance
+  kubernetes.core.k8s:
     template:
-      - instance/local-cluster-mcl.yaml
+      - instance/engine-mce.yaml
     wait: true
     wait_timeout: 600
     state: absent
@@ -13,16 +39,7 @@
     delete_kubernetes_objects:
       - api_version: v1
         kind: Namespace
-        name: local-cluster
-
-- import_tasks: delete_common.yml
-
-- name: Delete multi-cluster engine instance
-  kubernetes.core.k8s:
-    template:
-      - instance/engine-mce.yaml
-    wait: true
-    state: absent
+        name: hive
 
 - name: Delete multicluster-engine operator
   kubernetes.core.k8s:
@@ -41,6 +58,3 @@
       - api_version: admissionregistration.k8s.io/v1
         kind: ValidatingWebhookConfiguration
         name: multiclusterengines.multicluster.openshift.io
-      - api_version: v1
-        kind: Namespace
-        name: hive

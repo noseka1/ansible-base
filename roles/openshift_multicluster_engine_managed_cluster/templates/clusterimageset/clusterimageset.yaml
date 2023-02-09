@@ -4,6 +4,6 @@ metadata:
   labels:
     channel: fast
     visible: 'true'
-  name: img{{ multicluster_engine_managed_cluster.ocp_release_image }}-appsub
+  name: img{{ multicluster_engine_managed_cluster.ocp_release_image | regex_replace('_', '-',) }}-appsub
 spec:
   releaseImage: quay.io/openshift-release-dev/ocp-release:{{ multicluster_engine_managed_cluster.ocp_release_image }}

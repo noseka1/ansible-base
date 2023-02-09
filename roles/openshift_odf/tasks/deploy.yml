@@ -1,23 +1,9 @@
-- import_tasks: get_infrastructure.yml
-
-- name: Deploy ODF nodes machineset
-  import_role:
+- import_role:
     name: openshift_common
-    tasks_from: add_machineset.yml
-  vars:
-    add_machineset_role: odf
-    add_machineset_instance_type: '{{ odf_aws.instance_type }}'
-    add_machineset_availability_zones: '{{ odf_aws.availability_zones }}'
-    add_machineset_nodes_per_zone: '{{ odf_aws.nodes_per_zone }}'
-    add_machineset_labels:
-      node-role.kubernetes.io/odf: ""
-      cluster.ocs.openshift.io/openshift-storage: ""
-    add_machineset_taints:
-      - effect: NoSchedule
-        key: node.ocs.openshift.io/storage
-        value: "true"
-  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+    tasks_from: get_infrastructure.yml
 
-- import_tasks: check_nodes.yml
+- import_tasks: deploy_cluster_nodes.yml
+
+- import_tasks: check_cluster_nodes.yml
 
 - import_tasks: deploy_odf.yml

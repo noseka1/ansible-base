@@ -12,23 +12,12 @@
   set_fact:
     add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
 
-- name: Add machinesets to the cluster
+- name: Remove machinesets from the cluster
   kubernetes.core.k8s:
-    template: node-machineset.yaml
-  loop: '{{ add_machineset_availability_zones }}'
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for nodes to join the cluster
-  kubernetes.core.k8s_info:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
-    namespace: openshift-machine-api
     name: '{{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}'
-  register: machineset
-  until:
-    - machineset.resources | length > 0
-    - machineset.resources.0.status is defined
-    - machineset.resources.0.status.availableReplicas is defined
-    - machineset.resources.0.status.availableReplicas == (add_machineset_nodes_per_zone | int)
-  retries: 120
-  delay: 10
+    namespace: openshift-machine-api
+    wait: true
+    state: absent
   loop: '{{ add_machineset_availability_zones }}'

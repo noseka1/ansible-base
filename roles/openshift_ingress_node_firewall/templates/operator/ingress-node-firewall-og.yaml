@@ -1,0 +1,5 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ ingress_node_firewall_subscription_name }}
+  namespace: {{ ingress_node_firewall_subscription_namespace }}

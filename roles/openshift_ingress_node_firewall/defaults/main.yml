@@ -1,0 +1,7 @@
+ingress_node_firewall_subscription_namespace: openshift-ingress-node-firewall
+ingress_node_firewall_subscription_name: ingress-node-firewall
+ingress_node_firewall_subscription_channel: stable
+ingress_node_firewall_subscription_approval: Automatic
+
+ingress_node_firewall_instance_namespace: openshift-ingress-node-firewall
+ingress_node_firewall_instance_name: ingressnodefirewallconfig

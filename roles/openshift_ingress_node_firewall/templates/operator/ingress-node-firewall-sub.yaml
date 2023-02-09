@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ ingress_node_firewall_subscription_name }}
+  namespace: {{ ingress_node_firewall_subscription_namespace }}
+spec:
+  channel: {{ ingress_node_firewall_subscription_channel }}
+  installPlanApproval: {{ ingress_node_firewall_subscription_approval }}
+  name: ingress-node-firewall
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

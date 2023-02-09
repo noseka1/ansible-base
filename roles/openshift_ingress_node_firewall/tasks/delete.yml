@@ -1,0 +1,15 @@
+- name: Delete ingress node firewall daemonset
+  kubernetes.core.k8s:
+    template:
+      - instance/ingressnodefirewallconfig-ingressnodefirewallconfig.yaml
+    wait: true
+    state: absent
+
+- name: Delete ingress node firewall operator
+  kubernetes.core.k8s:
+    template:
+      - operator/ingress-node-firewall-sub.yaml
+      - operator/ingress-node-firewall-og.yaml
+      - operator/ingress-node-firewall-ns.yaml
+    wait: true
+    state: absent

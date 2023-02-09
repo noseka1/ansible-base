@@ -18,6 +18,6 @@ multicluster_engine_hypershift_aws:
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_region: us-west-2
 
-# OpenShift Cluster Manager API Token is required by RHACM to discover clusters.
+# OpenShift Cluster Manager API Token is required by multi-cluster engine to discover clusters.
 # It can be downloaded from https://console.redhat.com/openshift/token
 redhat_ocm_api_token: ''

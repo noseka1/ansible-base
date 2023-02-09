@@ -1,4 +1,4 @@
-- name: Delete local cluster import
+- name: Detach local-cluster
   kubernetes.core.k8s:
     template:
       - instance/local-cluster-mcl.yaml

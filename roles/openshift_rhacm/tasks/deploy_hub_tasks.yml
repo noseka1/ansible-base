@@ -1,9 +1,9 @@
 - name: Deploy RHACM operator
   kubernetes.core.k8s:
     template:
-      - rhacm-operator/open-cluster-management-ns.yaml
-      - rhacm-operator/open-cluster-management-og.yaml
-      - rhacm-operator/advanced-cluster-management-sub.yaml
+      - operator/open-cluster-management-ns.yaml
+      - operator/open-cluster-management-og.yaml
+      - operator/advanced-cluster-management-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -19,8 +19,8 @@
 - name: Deploy RHACM instance
   kubernetes.core.k8s:
     template:
-      - rhacm-instance/multiclusterhub-multiclusterhub.yaml
-      - rhacm-instance/openshift-pull-secret-secret.yaml
+      - instance/multiclusterhub-multiclusterhub.yaml
+      - instance/openshift-pull-secret-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ rhacm_instance_name }} deployment to complete
   kubernetes.core.k8s_info:

@@ -8,9 +8,9 @@
 - name: Put local-cluster under GitOps management
   kubernetes.core.k8s:
     template:
-      - rhacm-gitops/all-openshift-clusters-managedclustersetbinding.yaml
-      - rhacm-gitops/all-openshift-clusters-managedclusterset.yaml
-      - rhacm-gitops/all-openshift-clusters-placement.yaml
-      - rhacm-gitops/argo-acm-importer-gitopscluster.yaml
-      - rhacm-gitops/local-cluster-managedcluster.yaml
+      - gitops/all-openshift-clusters-managedclustersetbinding.yaml
+      - gitops/all-openshift-clusters-managedclusterset.yaml
+      - gitops/all-openshift-clusters-placement.yaml
+      - gitops/argo-acm-importer-gitopscluster.yaml
+      - gitops/local-cluster-managedcluster.yaml
   when: openshift_gitops_namespace.resources | length > 0

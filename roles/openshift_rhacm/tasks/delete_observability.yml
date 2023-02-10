@@ -13,10 +13,10 @@
 - name: Delete Observability component
   kubernetes.core.k8s:
     template:
-      - rhacm-observability/observability-mco.yaml
-      - rhacm-observability/openshift-pull-secret-secret.yaml
-      - rhacm-observability/thanos-object-storage-secret.yaml
-      - rhacm-observability/open-cluster-management-observability-ns.yaml
+      - observability/observability-mco.yaml
+      - observability/openshift-pull-secret-secret.yaml
+      - observability/thanos-object-storage-secret.yaml
+      - observability/open-cluster-management-observability-ns.yaml
     wait: true
     state: absent
 

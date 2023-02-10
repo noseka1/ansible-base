@@ -1,7 +1,7 @@
 - name: Create subscription-admins group
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'open-cluster-management-subscription-admins-group.yml') }}"
+    template: instance/open-cluster-management-subscription-admins-group.yml
 
 - name: Add the subscription-admins group the the existing open-cluster-management:subscription-admin binding
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'open-cluster-management:subscription-admin-clusterrolebinding.yml') }}"
+    template: instance/open-cluster-management:subscription-admin-clusterrolebinding.yml

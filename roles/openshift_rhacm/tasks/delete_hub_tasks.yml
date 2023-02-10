@@ -1,7 +1,7 @@
 - name: Delete RHACM instance
   kubernetes.core.k8s:
     template:
-      - rhacm-instance/multiclusterhub-multiclusterhub.yaml
+      - instance/multiclusterhub-multiclusterhub.yaml
     wait: true
     wait_timeout: 600
     state: absent
@@ -9,9 +9,9 @@
 - name: Delete RHACM operator
   kubernetes.core.k8s:
     template:
-      - rhacm-operator/advanced-cluster-management-sub.yaml
-      - rhacm-operator/open-cluster-management-og.yaml
-      - rhacm-operator/open-cluster-management-ns.yaml
+      - operator/advanced-cluster-management-sub.yaml
+      - operator/open-cluster-management-og.yaml
+      - operator/open-cluster-management-ns.yaml
     wait: true
     state: absent
 

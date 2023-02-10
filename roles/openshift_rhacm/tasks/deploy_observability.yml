@@ -13,10 +13,10 @@
 - name: Deploy Observability component
   kubernetes.core.k8s:
     template:
-      - rhacm-observability/open-cluster-management-observability-ns.yaml
-      - rhacm-observability/openshift-pull-secret-secret.yaml
-      - rhacm-observability/thanos-object-storage-secret.yaml
-      - rhacm-observability/observability-mco.yaml
+      - observability/open-cluster-management-observability-ns.yaml
+      - observability/openshift-pull-secret-secret.yaml
+      - observability/thanos-object-storage-secret.yaml
+      - observability/observability-mco.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Observability deployment to complete
   kubernetes.core.k8s_info:

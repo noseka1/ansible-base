@@ -6,7 +6,7 @@
     namespace: '{{ outer_item.namespace | default(omit) }}'
   register: existing_objects
 
-- name: Delete {{ existing_objects.resources | length }} Kubernetes objects
+- name: Delete {{ existing_objects.resources | length }} Kubernetes object(s)
   kubernetes.core.k8s:
     api_version: '{{ outer_item.api_version }}'
     kind: '{{ outer_item.kind }}'
@@ -17,7 +17,7 @@
   loop_control:
     label: '{{ outer_item.kind }} {{ item.metadata.namespace + "/" if item.metadata.namespace is defined else "" }}{{ item.metadata.name }}'
 
-- name: Waiting until all objects of kind have been deleted
+- name: Waiting until all objects of kind {{ outer_item.kind }} have been deleted
   kubernetes.core.k8s_info:
     api_version: '{{ outer_item.api_version }}'
     kind: '{{ outer_item.kind }}'

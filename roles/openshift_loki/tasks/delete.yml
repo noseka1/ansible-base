@@ -21,7 +21,7 @@
     name: openshift_common
     tasks_from: delete_operator.yml
   vars:
-    delete_operator_subscription_name: '{{ loki_operator_subscription_name }}'
-    delete_operator_subscription_namespace: '{{ loki_operator_subscription_namespace }}'
+    delete_operator_subscription_name: '{{ loki_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ loki_subscription_namespace }}'
 
 - import_tasks: delete_minio.yml

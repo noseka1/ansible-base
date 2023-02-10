@@ -11,7 +11,7 @@
   vars:
     minio_namespace: '{{ rhacs_instance_namespace }}'
 
-- name: Retrive existing backup configuration
+- name: Retrieve existing backup configuration
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/externalbackups'
     method: GET

@@ -9,12 +9,19 @@
     wait: true
     state: absent
 
-- name: Delete Loki operator
+- name: Delete Loki prometheus rule
   kubernetes.core.k8s:
     template:
-      - operator/loki-operator-sub.yaml
       - operator/loki-alerts-prometheusrule.yaml
     wait: true
     state: absent
+
+- name: Delete Loki operator
+  import_role:
+    name: openshift_common
+    tasks_from: delete_operator.yml
+  vars:
+    delete_operator_subscription_name: '{{ loki_operator_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ loki_operator_subscription_namespace }}'
 
 - import_tasks: delete_minio.yml

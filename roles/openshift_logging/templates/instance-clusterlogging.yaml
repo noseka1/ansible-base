@@ -1,9 +1,10 @@
 apiVersion: logging.openshift.io/v1
 kind: ClusterLogging
 metadata:
-  name: instance
-  namespace: openshift-logging
+  name: {{ openshift_logging_instance_name }}
+  namespace: {{ openshift_logging_namespace }}
 spec:
+  managementState: Managed
   logStore:
     type: lokistack
     lokistack:

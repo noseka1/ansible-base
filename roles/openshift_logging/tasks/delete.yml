@@ -1,7 +1,10 @@
 - import_tasks: delete_openshift_logging.yml
 
-- import_tasks: delete_loki.yml
-
-- import_tasks: delete_minio.yml
+- import_role:
+    name: openshift_loki
+    tasks_from: delete.yml
+  vars:
+    loki_instance_namespace: '{{ openshift_logging_namespace }}'
+    loki_instance_tenants_mode: openshift-logging
 
 - import_tasks: delete_namespace.yml

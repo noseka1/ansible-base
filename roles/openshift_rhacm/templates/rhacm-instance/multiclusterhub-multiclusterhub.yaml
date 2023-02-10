@@ -18,6 +18,8 @@ spec:
     - enabled: true
       name: grc
     - enabled: true
+      name: hypershift-local-hosting
+    - enabled: true
       name: hypershift-preview
     - enabled: true
       name: insights
@@ -33,6 +35,7 @@ spec:
       name: search
     - enabled: true
       name: volsync
+  imagePullSecret: openshift-pull-secret
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

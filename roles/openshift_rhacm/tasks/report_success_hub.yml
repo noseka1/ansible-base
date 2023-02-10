@@ -6,5 +6,16 @@
     namespace: openshift-console
   register: openshift_console_route
 
+- name: Set msg
+  set_fact:
+    msg: |
+      RHACM installed successfully.
+
+      Use your browser to access the RHACM Web UI at:
+      https://{{ openshift_console_route.resources.0.spec.host }}/multicloud/home/welcome?perspective=acm
+
+      If the All Clusters item doesn't show up in the OpenShift Console, you may need to restart console pods:
+      $ oc delete pods -n openshift-console -l app=console
+
 - debug:
-    msg: RHACM installed successfully. Use your browser to access the RHACM Web UI at https://{{ openshift_console_route.resources.0.spec.host }}/multicloud/home/welcome?perspective=acm
+    msg: "{{ msg.split('\n') }}"

@@ -8,6 +8,8 @@ spec:
   overrides:
     components:
     - enabled: true
+      name: app-lifecycle
+    - enabled: true
       name: cluster-backup
     - enabled: true
       name: cluster-lifecycle
@@ -26,11 +28,7 @@ spec:
     - enabled: true
       name: managedserviceaccount-preview
     - enabled: true
-      name: management-ingress
-    - enabled: true
       name: multicluster-engine
-    - enabled: true
-      name: multiclusterhub-repo
     - enabled: true
       name: search
     - enabled: true

@@ -8,6 +8,9 @@
     openshift_common_default_storage_class: ''
 
 - set_fact:
+    openshift_common_default_storage_class_exists: false
+
+- set_fact:
     openshift_common_default_storage_class: '{{ item.metadata.name }}'
   when:
     - item.metadata.annotations is defined
@@ -17,6 +20,6 @@
   loop_control:
     label: '{{ item.metadata.name }}'
 
-- fail:
-    msg: No default storage class found on the cluster.
-  when: openshift_common_default_storage_class | length == 0
+- set_fact:
+    openshift_common_default_storage_class_exists: true
+  when: openshift_common_default_storage_class | length > 0

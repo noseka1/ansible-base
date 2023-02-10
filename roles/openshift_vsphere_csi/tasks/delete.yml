@@ -8,7 +8,7 @@
 - name: Check if default storage class exists
   import_role:
     name: openshift_common
-    tasks_from: check_default_storage_class_exists.yml
+    tasks_from: get_default_storage_class.yml
 
 - name: Delete vSphere CSI prerequisites
   kubernetes.core.k8s:

@@ -1,0 +1,6 @@
+network_observability_subscription_namespace: openshift-operators
+network_observability_subscription_name: netobserv-operator
+network_observability_subscription_channel: v1.0.x
+network_observability_subscription_approval: Automatic
+
+network_observability_instance_name: cluster

@@ -1,0 +1,20 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+
+- name: Delete Loki instance
+  kubernetes.core.k8s:
+    template:
+      - instance/loki-lokistack.yaml
+    wait: true
+    state: absent
+
+- name: Delete Loki operator
+  kubernetes.core.k8s:
+    template:
+      - operator/loki-operator-sub.yaml
+      - operator/loki-alerts-prometheusrule.yaml
+    wait: true
+    state: absent
+
+- import_tasks: delete_minio.yml

@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ loki_subscription_name }}j
+  namespace: {{ loki_subscription_namespace }}
+spec:
+  channel: {{ loki_subscription_channel }}
+  installPlanApproval: {{ loki_subscription_approval }}
+  name: loki-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

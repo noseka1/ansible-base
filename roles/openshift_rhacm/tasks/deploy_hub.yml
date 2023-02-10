@@ -1,4 +1,6 @@
-- import_tasks: deploy_rhacm.yml
+- import_tasks: deploy_hub_tasks.yml
+
+- import_tasks: configure_gitops.yml
 
 - import_tasks: configure_users.yml
 

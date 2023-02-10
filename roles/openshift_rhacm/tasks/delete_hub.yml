@@ -1,1 +1,1 @@
-- import_tasks: delete_rhacm.yml
+- import_tasks: delete_hub_tasks.yml

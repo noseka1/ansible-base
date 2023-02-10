@@ -1,3 +1,0 @@
-- name: Configure OpenShift audit log policy profile
-  kubernetes.core.k8s:
-    template: cluster-apiserver.yaml

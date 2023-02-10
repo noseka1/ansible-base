@@ -47,7 +47,7 @@
 
 - import_tasks: alerting.yml
 
-- import_tasks: audit.yml
+- import_tasks: kube_apiserver_audit.yml
 
 - import_tasks: access_logging.yml
 

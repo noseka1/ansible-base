@@ -1,0 +1,12 @@
+- name: Configure OpenShift audit log policy profile
+  kubernetes.core.k8s:
+    template: cluster-apiserver.yaml
+  register: openshift_cluster_postinstall_apiserver_result
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when: openshift_cluster_postinstall_apiserver_result is changed

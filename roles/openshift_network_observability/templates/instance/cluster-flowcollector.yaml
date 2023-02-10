@@ -109,7 +109,7 @@ spec:
     tls:
       caCert:
         certFile: service-ca.crt
-        name: loki-ca-bundle
+        name: openshift-service-ca.crt
         type: configmap
       enable: true
       insecureSkipVerify: false

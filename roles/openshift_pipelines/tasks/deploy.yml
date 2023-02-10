@@ -1,13 +1,14 @@
 - name: Deploy OpenShift Pipelines operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_pipelines_kustomizations.operator) }}"
+    template: operator/openshift-pipelines-operator-sub.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ openshift_pipelines_operator_subscription_name }}'
-    subscription_namespace: '{{ openshift_pipelines_operator_subscription_namespace }}'
+    subscription_name: '{{ openshift_pipelines_subscription_name }}'
+    subscription_namespace: '{{ openshift_pipelines_subscription_namespace }}'
+
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
   kubernetes.core.k8s_info:
@@ -18,3 +19,10 @@
     - clustertasks.resources | length > 0
   retries: 60
   delay: 10
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: tekton-pipelines-controller
+    wait_for_deployment_namespace: '{{ openshift_pipelines_instance_namespace }}'

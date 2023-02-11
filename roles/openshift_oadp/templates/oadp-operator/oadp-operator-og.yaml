@@ -5,4 +5,5 @@ metadata:
   namespace: {{ oadp_subscription_namespace }}
 spec:
   targetNamespaces:
-    - {{ oadp_subscription_namespace }}
+  - {{ oadp_subscription_namespace }}
+  upgradeStrategy: Default

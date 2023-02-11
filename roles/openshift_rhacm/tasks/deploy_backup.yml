@@ -22,7 +22,7 @@
     - backupschedule_result.resources.0.status is defined
     - backupschedule_result.resources.0.status.phase is defined
     - backupschedule_result.resources.0.status.phase == 'Enabled'
-  retries: 6
+  retries: 30
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete successfully

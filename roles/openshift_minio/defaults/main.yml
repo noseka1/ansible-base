@@ -1,2 +1,2 @@
 minio_namespace: minio
-minio_remove_namespace_on_deletion: true
+minio_manage_namespace: true

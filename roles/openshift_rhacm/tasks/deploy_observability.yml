@@ -4,6 +4,7 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ rhacm_minio_namespace }}'
+    minio_manage_namespace: false
   when: rhacm_observability_minio_enabled
 
 - import_role:

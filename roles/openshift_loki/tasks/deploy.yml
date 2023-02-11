@@ -1,5 +1,3 @@
-- import_tasks: deploy_minio.yml
-
 - name: Deploy Loki operator
   kubernetes.core.k8s:
     template:
@@ -29,6 +27,8 @@
       - instance/loki-ns.yaml
       - instance/loki-lokistack.yaml
       - instance/loki-s3-secret.yaml
+
+- import_tasks: deploy_minio.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Loki instance to deploy
   kubernetes.core.k8s_info:

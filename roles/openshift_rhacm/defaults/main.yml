@@ -18,9 +18,6 @@ rhacm_observability_availability: Basic
 # If you want to use an existing S3 bucket, set this value to false:
 rhacm_observability_minio_enabled: true
 
-# Deploy OADP (Velero) and configure RHACM to create periodic backups
-rhacm_instance_backup_enabled: false
-
 # If you are using an existing S3 bucket, configure the bucket connection here:
 rhacm_observability_s3_bucket: YOUR_S3_BUCKET
 rhacm_observability_s3_endpoint: s3.amazonaws.com

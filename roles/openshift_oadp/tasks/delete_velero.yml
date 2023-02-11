@@ -3,5 +3,6 @@
     template:
       - instance/cloud-credentials-secret.yaml
       - instance/velero-dataprotectionapplication.yaml
+      - instance/openshift-adp-ns.yaml
     wait: true
     state: absent

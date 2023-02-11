@@ -3,6 +3,13 @@
     template: instance/dm-credential-secret.yaml
   when: velero_datamover_enabled
 
+- name: Create Velero instance namespace
+  kubernetes.core.k8s:
+    template:
+      - instance/openshift-adp-ns.yaml
+
+- import_tasks: deploy_minio.yml
+
 - name: Deploy Velero instance
   kubernetes.core.k8s:
     template:

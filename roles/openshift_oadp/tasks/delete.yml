@@ -6,5 +6,3 @@
     name: openshift_volsync
     tasks_from: delete.yml
   when: velero_datamover_enabled
-
-- import_tasks: delete_minio.yml

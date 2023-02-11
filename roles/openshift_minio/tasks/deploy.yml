@@ -1,6 +1,7 @@
 - name: Create namespace {{ minio_namespace }}
   kubernetes.core.k8s:
     template: minio-ns.yaml
+  when: minio_manage_namespace
 
 - name: Deploy minio
   kubernetes.core.k8s:

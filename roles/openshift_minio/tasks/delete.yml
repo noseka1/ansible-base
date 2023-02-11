@@ -18,4 +18,4 @@
     template: minio-ns.yaml
     wait: true
     state: absent
-  when: minio_remove_namespace_on_deletion
+  when: minio_manage_namespace

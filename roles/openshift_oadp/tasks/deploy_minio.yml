@@ -3,4 +3,5 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ velero_instance_namespace }}'
+    minio_manage_namespace: false
   when: velero_instance_minio_enabled

@@ -1,0 +1,17 @@
+- name: Delete periodic RHACM backup
+  kubernetes.core.k8s:
+    template: backup/schedule-acm-backupschedule.yaml
+    wait: true
+    state: absent
+
+- import_role:
+    name: openshift_oadp
+    tasks_from: delete.yml
+  vars:
+    velero_instance_namespace: '{{ rhacm_backup_namespace }}'
+
+- name: Delete namespace {{ rhacm_backup_namespace }}
+  kubernetes.core.k8s:
+    template: backup/open-cluster-management-backup-ns.yaml
+    wait: true
+    state: absent

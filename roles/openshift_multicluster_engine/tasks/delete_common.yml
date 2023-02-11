@@ -1,3 +1,11 @@
+# Remove manifestwork early enough so that it doesn't block the deletion
+# of local-cluster namespace
+- name: Delete test-hello-work manifestwork
+  kubernetes.core.k8s:
+    template: manifestwork/test-hello-work-manifestwork.yaml
+    wait: true
+    state: absent
+
 - import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
@@ -29,9 +37,3 @@
     state: absent
     wait: true
     wait_timeout: 1800
-
-- name: Delete test-hello-work manifestwork
-  kubernetes.core.k8s:
-    template: manifestwork/test-hello-work-manifestwork.yaml
-    wait: true
-    state: absent

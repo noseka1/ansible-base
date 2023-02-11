@@ -1,3 +1,15 @@
+- name: Retrieve dataprotectionapplication resources
+  kubernetes.core.k8s_info:
+    api_version: oadp.openshift.io/v1alpha1
+    kind: DataProtectionApplication
+  register: dataprotectionapplication_result
+
+- debug:
+    msg: There are existing dataprotectionapplication resources. Skipping OADP operator deletion.
+  when:
+    - dataprotectionapplication_result.resources is defined
+    - dataprotectionapplication_result.resources | length > 0
+
 - name: Delete OADP operator
   kubernetes.core.k8s:
     template:
@@ -6,3 +18,6 @@
       - operator/openshift-adp-ns.yaml
     wait: true
     state: absent
+  when:
+    - dataprotectionapplication_result.resources is not defined or
+      dataprotectionapplication_result.resources | length == 0

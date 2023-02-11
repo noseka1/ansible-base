@@ -1,11 +1,5 @@
 - import_tasks: delete_common.yml
 
-- name: Delete test-hello-work manifestwork
-  kubernetes.core.k8s:
-    template: manifestwork/test-hello-work-manifestwork.yaml
-    wait: true
-    state: absent
-
 - name: Detach local-cluster
   kubernetes.core.k8s:
     api_version: cluster.open-cluster-management.io/v1

@@ -1,9 +1,5 @@
 - import_tasks: deploy_mce.yml
 
-- import_tasks: deploy_managed_service_account.yml
-
-- import_tasks: deploy_manifestwork.yml
-
 - import_tasks: deploy_hypershift_addon.yml
 
 - import_tasks: deploy_common.yml

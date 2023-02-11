@@ -14,5 +14,8 @@
       Use your browser to access the multi-cluster engine Web UI at:
       https://{{ openshift_console_route.resources.0.spec.host }}/multicloud/infrastructure/clusters/managed
 
+      If the All Clusters item doesn't show up in the OpenShift Console, you may need to restart console pods:
+      $ oc delete pods -n openshift-console -l app=console
+
 - debug:
     msg: "{{ msg.split('\n') }}"

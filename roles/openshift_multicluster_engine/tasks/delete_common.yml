@@ -7,15 +7,6 @@
         kind: Namespace
         name: hosted-clusters
 
-- name: Delete cluster discovery configuration
-  kubernetes.core.k8s:
-    template:
-      - cluster-discovery/discovery-discoveryconfig.yaml
-      - cluster-discovery/discovered-clusters-ns.yaml
-    state: absent
-    wait: true
-    wait_timeout: 1800
-
 - import_role:
     name: openshift_common
     tasks_from: get_cluster_id.yml
@@ -29,3 +20,18 @@
     force: true
     state: absent
   when: multicluster_engine_hypershift_aws.enabled
+
+- name: Delete cluster discovery configuration
+  kubernetes.core.k8s:
+    template:
+      - cluster-discovery/discovery-discoveryconfig.yaml
+      - cluster-discovery/discovered-clusters-ns.yaml
+    state: absent
+    wait: true
+    wait_timeout: 1800
+
+- name: Delete test-hello-work manifestwork
+  kubernetes.core.k8s:
+    template: manifestwork/test-hello-work-manifestwork.yaml
+    wait: true
+    state: absent

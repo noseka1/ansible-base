@@ -1,13 +1,13 @@
 - name: DataMover repository configuration
   kubernetes.core.k8s:
-    template: velero-instance/dm-credential-secret.yaml
+    template: instance/dm-credential-secret.yaml
   when: velero_datamover_enabled
 
 - name: Deploy Velero instance
   kubernetes.core.k8s:
     template:
-      - velero-instance/cloud-credentials-secret.yaml
-      - velero-instance/velero-dataprotectionapplication.yaml
+      - instance/cloud-credentials-secret.yaml
+      - instance/velero-dataprotectionapplication.yaml
 
 - name: Enable CSI volume snapshotting on AWS
   kubernetes.core.k8s:

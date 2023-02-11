@@ -1,8 +1,8 @@
 - name: Delete OADP operator
   kubernetes.core.k8s:
     template:
-      - oadp-operator/oadp-operator-og.yaml
-      - oadp-operator/oadp-operator-sub.yaml
-      - oadp-operator/openshift-adp-ns.yaml
+      - operator/oadp-operator-og.yaml
+      - operator/oadp-operator-sub.yaml
+      - operator/openshift-adp-ns.yaml
     wait: true
     state: absent

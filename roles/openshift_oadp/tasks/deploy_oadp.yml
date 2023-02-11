@@ -1,9 +1,9 @@
 - name: Deploy OADP operator
   kubernetes.core.k8s:
     template:
-      - oadp-operator/openshift-adp-ns.yaml
-      - oadp-operator/oadp-operator-og.yaml
-      - oadp-operator/oadp-operator-sub.yaml
+      - operator/openshift-adp-ns.yaml
+      - operator/oadp-operator-og.yaml
+      - operator/oadp-operator-sub.yaml
 
 - import_role:
     name: openshift_common

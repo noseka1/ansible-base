@@ -3,6 +3,15 @@
     template:
       - instance/cloud-credentials-secret.yaml
       - instance/velero-dataprotectionapplication.yaml
+    wait: true
+    state: absent
+
+- name: Delete Velero namespace
+  kubernetes.core.k8s:
+    template:
       - instance/openshift-adp-ns.yaml
     wait: true
     state: absent
+  when:
+    - velero_instance_manage_namespace
+    - velero_instance_namespace != oadp_subscription_namespace

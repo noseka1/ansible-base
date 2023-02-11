@@ -9,6 +9,7 @@
     tasks_from: delete.yml
   vars:
     velero_instance_namespace: '{{ rhacm_backup_namespace }}'
+    velero_instance_manage_namespace: false
 
 - name: Delete namespace {{ rhacm_backup_namespace }}
   kubernetes.core.k8s:

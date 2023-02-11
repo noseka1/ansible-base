@@ -5,8 +5,8 @@
 
 - name: Create Velero instance namespace
   kubernetes.core.k8s:
-    template:
-      - instance/openshift-adp-ns.yaml
+    template: instance/openshift-adp-ns.yaml
+  when: velero_instance_manage_namespace
 
 - import_tasks: deploy_minio.yml
 

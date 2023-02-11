@@ -8,6 +8,7 @@
   vars:
     # Note that OADP (Velero) must be deployed to the open-cluster-management-backup namespace
     velero_instance_namespace: '{{ rhacm_backup_namespace }}'
+    velero_instance_manage_namespace: false
 
 - name: Schedule periodic RHACM backup (note that this requires OADP operator to be installed)
   kubernetes.core.k8s:

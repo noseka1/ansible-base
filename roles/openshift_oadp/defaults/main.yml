@@ -5,6 +5,7 @@ oadp_subscription_approval: Automatic
 
 velero_instance_namespace: openshift-adp
 velero_instance_name: velero
+velero_instance_manage_namespace: true
 
 # If OpenShift is deployed on top of AWS then enabled this
 velero_instance_aws_enabled: false

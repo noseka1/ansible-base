@@ -21,7 +21,7 @@
     msg: No default storage class found on the cluster.
   when: openshift_common_default_storage_class | length == 0
 
-- name: Create Loki instance namespace
+- name: Create Loki instance namespace {{ loki_instance_namespace }}
   kubernetes.core.k8s:
     template: instance/loki-ns.yaml
   when: loki_manage_namespace

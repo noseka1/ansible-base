@@ -1,5 +1,3 @@
-- import_tasks: get_infrastructure.yml
-
 - import_tasks: delete_velero.yml
 
 - import_tasks: delete_oadp.yml

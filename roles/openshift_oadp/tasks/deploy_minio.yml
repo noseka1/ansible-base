@@ -2,5 +2,5 @@
     name: openshift_minio
     tasks_from: deploy.yml
   vars:
-    minio_namespace: '{{ oadp_subscription_namespace }}'
-  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
+    minio_namespace: '{{ velero_instance_namespace }}'
+  when: velero_instance_minio_enabled

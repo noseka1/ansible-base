@@ -1,11 +1,3 @@
-- name: Obtain Minio API route
-  import_role:
-    name: openshift_minio
-    tasks_from: get_minio_api_route.yml
-  vars:
-    minio_namespace: '{{ oadp_subscription_namespace }}'
-  when: infrastructure.resources.0.status.platformStatus.type != 'AWS'
-
 - name: DataMover repository configuration
   kubernetes.core.k8s:
     template: velero-instance/dm-credential-secret.yaml
@@ -21,7 +13,7 @@
   kubernetes.core.k8s:
     template:
       - aws/csi-aws-vsc-vsclass.yaml
-  when: infrastructure.resources.0.status.platformStatus.type == 'AWS'
+  when: velero_instance_aws_enabled
 
 - import_role:
     name: openshift_common

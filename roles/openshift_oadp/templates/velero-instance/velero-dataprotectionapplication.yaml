@@ -10,12 +10,12 @@ spec:
         # The openshift plug-in is mandatory.
         - openshift
         - aws
-{% if infrastructure.resources.0.status.platformStatus.type != 'VSphere' %}
+{% if not velero_instance_vsphere_enabled %}
         - csi
       featureFlags:
         - EnableCSI
 {% endif %}
-{% if infrastructure.resources.0.status.platformStatus.type == 'VSphere' %}
+{% if velero_instance_vsphere_enabled %}
       customPlugins:
         # OADP operator doesn't support vsphere on the default Velero plugin list.
         # Need to enable vsphere plugin as a custom Velero plugin.
@@ -38,27 +38,33 @@ spec:
         default: true
         objectStorage:
           # Name of an existing bucket
-          bucket: {{ velero_instance_bucket_name }}
+          bucket: '{{ velero_s3_storage.bucket_name }}'
           # In the bucket, a prefix subdirectory will be created
           prefix: velero
         config:
-{% if infrastructure.resources.0.status.platformStatus.type != 'AWS' %}
-          s3Url: https://{{ minio_api_route.resources.0.spec.host }}
-          s3ForcePathStyle: "true"
-          #insecureSkipTLSVerify: "true"
-{% if velero_instance_trusted_ca is defined %}
+{% if velero_s3_storage.s3_url is defined %}
+          s3Url: '{{ velero_s3_storage.s3_url }}'
+{% endif %}
+{% if velero_s3_storage.s3_force_path_style is defined %}
+          s3ForcePathStyle: '{{ velero_s3_storage.s3_force_path_style }}'
+{% endif %}
+{% if velero_s3_storage.insecure_skip_tls_verify is defined %}
+          insecureSkipTLSVerify: '{{ velero_s3_storage.insecure_skip_tls_verify }}'
+{% endif %}
+{% if velero_s3_storage.ca_cert is defined and velero_s3_storage.ca_cert | length > 0 %}
           caCert: |
-            {{ velero_instance_trusted_ca | indent(12) }}
+            {{ velero_s3_storage.ca_cert | indent(12) }}
 {% endif %}
+{% if velero_s3_storage.aws_region is defined %}
+          region: '{{ velero_s3_storage.aws_region }}'
 {% endif %}
-          region: {{ velero_instance_bucket_region }}
           # Choose a profile from the AWS config file
           profile: default
         accessMode: ReadWrite
         credential:
           name: cloud-credentials
           key: data
-{% if infrastructure.resources.0.status.platformStatus.type == 'VSphere' %}
+{% if velero_instance_vsphere_enabled %}
   snapshotLocations:
     - velero:
         provider: velero.io/vsphere

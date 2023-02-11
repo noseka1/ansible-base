@@ -8,4 +8,7 @@
     name: openshift_multicluster_engine
     tasks_from: deploy_common.yml
 
+- import_tasks: deploy_backup.yml
+  when: rhacm_instance_backup_enabled
+
 - import_tasks: report_success_hub.yml

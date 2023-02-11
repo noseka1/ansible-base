@@ -13,6 +13,14 @@
     wait: true
     state: absent
 
+- name: Delete Loki instance namespace
+  kubernetes.core.k8s:
+    template:
+      - instance/loki-ns.yaml
+    wait: true
+    state: absent
+  when: loki_manage_namespace
+
 - name: Delete Loki prometheus rule
   kubernetes.core.k8s:
     template:

@@ -5,6 +5,7 @@ loki_subscription_approval: Automatic
 
 loki_instance_namespace: loki
 loki_instance_name: loki
+loki_manage_namespace: true
 
 # Defines the mode in which lokistack-gateway component will be configured
 loki_instance_tenants_mode: openshift-network

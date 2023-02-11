@@ -20,6 +20,7 @@
     tasks_from: delete.yml
   vars:
     loki_instance_namespace: netobserv
+    loki_manage_namespace: false
     loki_instance_tenants_mode: openshift-network
 
 - name: Delete Network Observability namespace

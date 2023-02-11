@@ -3,3 +3,4 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ loki_instance_namespace }}'
+    minio_remove_namespace_on_deletion: false

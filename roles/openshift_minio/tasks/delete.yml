@@ -12,3 +12,10 @@
     namespace: '{{ minio_namespace }}'
     wait: true
     state: absent
+
+- name: Delete namespace {{ minio_namespace }}
+  kubernetes.core.k8s:
+    template: minio-ns.yaml
+    wait: true
+    state: absent
+  when: minio_remove_namespace_on_deletion

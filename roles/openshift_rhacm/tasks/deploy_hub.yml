@@ -4,4 +4,8 @@
 
 - import_tasks: configure_users.yml
 
+- import_role:
+    name: openshift_multicluster_engine
+    tasks_from: deploy_common.yml
+
 - import_tasks: report_success_hub.yml

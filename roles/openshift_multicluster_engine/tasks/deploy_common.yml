@@ -1,4 +1,4 @@
-- import_tasks: deploy_managed_service_account.yml
+- import_tasks: deploy_managed_serviceaccount.yml
 
 - import_tasks: deploy_manifestwork.yml
 

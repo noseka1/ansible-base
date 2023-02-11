@@ -1,1 +1,5 @@
+- import_role:
+    name: openshift_multicluster_engine
+    tasks_from: delete_common.yml
+
 - import_tasks: delete_hub_tasks.yml

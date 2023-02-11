@@ -22,7 +22,7 @@ velero_s3_storage:
   aws_secret_access_key: '{{ generic_user_password }}'
   aws_region: minio
   bucket_name: mybucket1
-  s3_url: 'http://minio.{{ oadp_subscription_namespace }}.svc:9000'
+  s3_url: 'http://minio.{{ velero_instance_namespace }}.svc:9000'
   s3_force_path_style: 'true'
   #insecure_skip_tls_verify: 'false'
   #ca_cert: ''

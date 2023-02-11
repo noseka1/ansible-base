@@ -21,12 +21,27 @@
     state: absent
   when: loki_manage_namespace
 
+- name: Retrieve dataprotectionapplication resources
+  kubernetes.core.k8s_info:
+    api_version: loki.grafana.com/v1
+    kind: LokiStack
+  register: lokistack_result
+
+- debug:
+    msg: There are existing lokistack resources. Skipping Loki operator deletion.
+  when:
+    - lokistack_result.resources is defined
+    - lokistack_result.resources | length > 0
+
 - name: Delete Loki prometheus rule
   kubernetes.core.k8s:
     template:
       - operator/loki-alerts-prometheusrule.yaml
     wait: true
     state: absent
+  when:
+    - lokistack_result.resources is not defined or
+      lokistack_result.resources | length == 0
 
 - name: Delete Loki operator
   import_role:
@@ -35,5 +50,8 @@
   vars:
     delete_operator_subscription_name: '{{ loki_subscription_name }}'
     delete_operator_subscription_namespace: '{{ loki_subscription_namespace }}'
+  when:
+    - lokistack_result.resources is not defined or
+      lokistack_result.resources | length == 0
 
 - import_tasks: delete_minio.yml

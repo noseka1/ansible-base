@@ -42,3 +42,19 @@
     msg: >-
       Found {{ backup_result.resources | json_query("[?status.phase=='Completed']") | list | length }} completed backup(s)
       in namespace '{{ rhacm_backup_namespace }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup-restore-enabled policy to change status to Compliant
+  kubernetes.core.k8s_info:
+    api_version: policy.open-cluster-management.io/v1
+    kind: Policy
+    name: backup-restore-enabled
+    namespace: '{{ rhacm_backup_namespace }}'
+  register: policy_result
+  until:
+    - policy_result.resources is defined
+    - policy_result.resources | length > 0
+    - policy_result.resources.0.status is defined
+    - policy_result.resources.0.status.compliant is defined
+    - policy_result.resources.0.status.compliant == 'Compliant'
+  retries: 60
+  delay: 10

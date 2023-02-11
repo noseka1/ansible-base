@@ -4,7 +4,7 @@ metadata:
   name: {{ metallb_subscription_name }}
   namespace: {{ metallb_subscription_namespace }}
 spec:
-  channel: stable
+  channel: {{ metallb_subscription_channel }}
   installPlanApproval: {{ metallb_subscription_approval }}
   name: metallb-operator
   source: redhat-operators

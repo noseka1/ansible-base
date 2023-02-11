@@ -2,9 +2,9 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
-    - metallb-system-ns.yaml
-    - metallb-operator-og.yaml
-    - metallb-operator-sub.yaml
+    - operator/metallb-system-ns.yaml
+    - operator/metallb-operator-og.yaml
+    - operator/metallb-operator-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -17,9 +17,9 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
   loop:
-    - metallb-metallb.yaml
-    - metallb-pool-ipaddresspool.yaml
-    - metallb-pool-l2advertisement.yaml
+    - instance/metallb-metallb.yaml
+    - instance/metallb-pool-ipaddresspool.yaml
+    - instance/metallb-pool-l2advertisement.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for MetalLB instance to deploy
   kubernetes.core.k8s_info:

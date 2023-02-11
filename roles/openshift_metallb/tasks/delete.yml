@@ -3,15 +3,15 @@
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
-    - metallb-metallb.yaml
-    - metallb-pool-ipaddresspool.yaml
-    - metallb-pool-l2advertisement.yaml
+    - instance/metallb-metallb.yaml
+    - instance/metallb-pool-ipaddresspool.yaml
+    - instance/metallb-pool-l2advertisement.yaml
 
 - name: Delete MetalLB operator
   kubernetes.core.k8s:
     definition: "{{ lookup('template', item) }}"
     state: absent
   loop:
-    - metallb-operator-sub.yaml
-    - metallb-operator-og.yaml
-    - metallb-system-ns.yaml
+    - operator/metallb-operator-sub.yaml
+    - operator/metallb-operator-og.yaml
+    - operator/metallb-system-ns.yaml

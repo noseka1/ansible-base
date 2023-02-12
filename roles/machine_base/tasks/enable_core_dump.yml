@@ -1,5 +1,4 @@
-# configure core dumps to be saved in /tmp
-#
+# Configure core dumps to be saved in /tmp
 - name: Uninstall Automatic Bug-Reporting Tool (ABRT)
   yum:
     name:
@@ -14,11 +13,19 @@
   become: true
 
 - name: Set the core file pattern
-  sysctl: name=kernel.core_pattern value={{ core_pattern }} reload=yes
+  sysctl:
+    name: kernel.core_pattern
+    value: '{{ machine_base_core_pattern }}'
+    reload: true
   ignore_errors: true
   become: true
 
 - name: Enable core file generation
-  lineinfile: dest=/etc/security/limits.conf regexp=" soft core unlimited" line="* soft core unlimited" insertafter=EOF state=present
+  lineinfile:
+    dest: /etc/security/limits.conf
+    regexp: " soft core unlimited"
+    line: "* soft core unlimited"
+    insertafter: EOF
+    state: present
   ignore_errors: true
   become: true

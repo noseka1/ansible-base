@@ -13,7 +13,10 @@
   become: yes
 
 - name: Set as authorized key
-  authorized_key: user=root state=present key={{ result.public_key }}
+  authorized_key:
+    user: root
+    key: '{{ result.public_key }}'
+    state: present
   become: yes
 
 - name: Ensure /{{ ansible_user_id }}/.ssh directory exists
@@ -26,8 +29,12 @@
   become: yes
 
 - name: Generate SSH keys for {{ ansible_user_id }}
-  openssh_keypair: path={{ ansible_user_dir }}/.ssh/id_rsa
+  openssh_keypair:
+    path: '{{ ansible_user_dir }}/.ssh/id_rsa'
   register: result
 
 - name: Set as authorized key
-  authorized_key: user={{ ansible_user_id }} state=present key={{ result.public_key }}
+  authorized_key:
+    user: '{{ ansible_user_id }}'
+    key: '{{ result.public_key }}'
+    state: present

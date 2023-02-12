@@ -1,5 +1,8 @@
 - name: Display messages on boot
-  replace: path=/etc/sysconfig/grub regexp='rhgb quiet' replace=''
+  replace:
+    path: /etc/sysconfig/grub
+    regexp: 'rhgb quiet'
+    replace: ''
   register: grub_config
   become: yes
 

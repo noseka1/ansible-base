@@ -14,13 +14,18 @@
 
 - import_tasks: generate_ssh_keys.yml
 
-- import_tasks: set_timezone.yml
-  when: timezone | length > 0
+- name: Set timezone to {{ machine_base_timezone }}
+  timezone:
+    name: '{{ machine_base_timezone }}'
+  when: machine_base_timezone | length > 0
+  become: true
 
 - import_tasks: configure_ntp.yml
 
 - import_tasks: display_boot.yml
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 8
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_major_version | int <= 8
 
 - import_tasks: fix_hostname.yml
 

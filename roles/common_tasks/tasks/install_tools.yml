@@ -27,7 +27,9 @@
     name:
       - policycoreutils-python # semanage
     state: present
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int <= 7
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_major_version | int <= 7
   become: true
 
 - name: Install tools RHEL8
@@ -40,7 +42,9 @@
       - tmux
       - wireshark-cli
     state: present
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int == 8
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_major_version | int == 8
   become: true
 
 - name: Install tools RHEL9
@@ -52,7 +56,9 @@
       - tmux
       - wireshark-cli
     state: present
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version | int >= 9
+  when:
+    - ansible_distribution == "RedHat"
+    - ansible_distribution_major_version | int >= 9
   become: true
 
 - name: Install tools Fedora

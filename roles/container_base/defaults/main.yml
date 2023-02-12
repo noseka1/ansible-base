@@ -1,2 +1,2 @@
-update_all_packages: true
-update_all_packages_reboot: false
+container_base_update_all_packages: true
+container_base_update_all_packages_reboot: false

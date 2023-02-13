@@ -14,6 +14,7 @@ sudo rpm-ostree install \
   kernel-debuginfo \
   lsof \
   perf \
+  python3-six \
   setools-console \
   setroubleshoot-server \
   tcpdump \

@@ -1,10 +1,9 @@
 - name: Create Nexus repository manager namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
-  loop:
-    - nexus-repository-manager-ns.yaml
-    - nexus-repository-manager-scc-rolebinding.yaml
-    - nexus-repository-manager-scc-role.yaml
+    template:
+      - nexus-repository-manager-ns.yaml
+      - nexus-repository-manager-scc-rolebinding.yaml
+      - nexus-repository-manager-scc-role.yaml
 
 - name: Add Nexus chart repo
   kubernetes.core.helm_repository:
@@ -23,13 +22,7 @@
         portName: nexus-ui
       route:
         enabled: true
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: '{{ nexus_repository_manager_name }}'
-    wait_for_deployment_namespace: '{{ nexus_repository_manager_namespace }}'
+    wait: true
 
 - name: Retrieve Nexus repository manager pod
   kubernetes.core.k8s_info:

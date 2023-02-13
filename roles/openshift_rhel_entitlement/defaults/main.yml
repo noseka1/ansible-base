@@ -20,3 +20,6 @@ openshift_rhel_entitlement_cert: ''
 #  ...
 
 openshift_rhel_entitlement_key: ''
+
+# Use custom trusted CA certificate instead of the default redhat-uep.pem
+openshift_rhel_entitlement_custom_yum_sslcacert: ''

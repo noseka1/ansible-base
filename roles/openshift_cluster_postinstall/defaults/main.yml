@@ -5,3 +5,6 @@ openshift_cluster_postinstall_kernel_arguments:
 #  - udev.log_priority=debug
 
 openshift_cluster_postinstall_deploy_infra_nodes: false
+
+# # Use custom trusted CA certificate instead of the default redhat-uep.pem
+openshift_cluster_postinstall_custom_yum_sslcacert: {}

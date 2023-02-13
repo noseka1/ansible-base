@@ -4,4 +4,6 @@ machine_base_update_all_packages: true
 machine_base_update_all_packages_reboot: true
 
 machine_base_http_proxy: {}
+
+# Use custom trusted CA certificate instead of the default redhat-uep.pem
 machine_base_custom_yum_sslcacert: {}

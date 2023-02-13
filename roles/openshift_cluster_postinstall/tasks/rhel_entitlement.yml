@@ -4,5 +4,7 @@
   vars:
     openshift_rhel_entitlement_cert: '{{ openshift_rhel_entitlement.crt }}'
     openshift_rhel_entitlement_key: '{{ openshift_rhel_entitlement.key }}'
+    openshift_rhel_entitlement_custom_yum_sslcacert: >-
+      {{ openshift_cluster_postinstall_custom_yum_sslcacert[openshift_common_cluster_domain] | default('') }}
   register: openshift_rhel_entitlement_result
   when: openshift_rhel_entitlement is defined

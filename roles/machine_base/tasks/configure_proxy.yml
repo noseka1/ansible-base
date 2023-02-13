@@ -1,0 +1,19 @@
+- name: Configure dnf to use http proxy
+  ini_file:
+    dest: /etc/dnf/dnf.conf
+    section: main
+    option: proxy
+    value: '{{ machine_base_http_proxy[ansible_domain].https_proxy }}'
+    backup: true
+  when:
+    - machine_base_http_proxy[ansible_domain] is defined
+  become: true
+
+- name: Overwrite yum trusted CA certificate
+  copy:
+    dest: /etc/rhsm/ca/redhat-uep.pem
+    content: '{{ machine_base_custom_yum_sslcacert[ansible_domain] }}'
+    backup: true
+  when:
+    - machine_base_custom_yum_sslcacert[ansible_domain] is defined
+  become: true

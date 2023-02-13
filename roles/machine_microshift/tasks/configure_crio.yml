@@ -18,8 +18,7 @@
     src: 00-proxy.conf
     dest: /etc/systemd/system/crio.service.d/00-proxy.conf
   when:
-    - machine_microshift_crio_proxy is defined
-    - machine_microshift_crio_proxy[ansible_domain] is defined
+    - machine_microshift_http_proxy[ansible_domain] is defined
   notify:
     - Reload systemd
     - Restart crio

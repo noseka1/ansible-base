@@ -3,6 +3,10 @@
     name: common_tasks
     tasks_from: configure_passwordless_sudo.yml
 
+- import_tasks: configure_proxy.yml
+  when:
+    - ansible_distribution == "RedHat"
+
 - name: Subscribe RHEL
   import_role:
     name: common_tasks

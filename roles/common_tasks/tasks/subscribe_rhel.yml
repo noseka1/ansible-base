@@ -4,23 +4,22 @@
     state: absent
   become: true
 
-- name: Red Hat subscription
-  include_role:
-    name: devnullcake.redhat-subscription
-  vars:
-    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
-    redhat_subscription_enable_repos:
+- name: Register with RHSM as user {{ redhat_subscription_username }}
+  community.general.redhat_subscription:
+    username: '{{ redhat_subscription_username }}'
+    password: '{{ redhat_subscription_password }}'
+    pool: '^$'
+    auto_attach: false
+    force_register: false
+    state: present
+  become: true
+
+- name: Enable specified RHEL repositories
+  community.general.rhsm_repository:
+    name:
       - rhel-7-server-optional-rpms
       - rhel-7-server-extras-rpms
+    state: enabled
+  become: true
   when:
-    - ansible_distribution == "RedHat"
     - ansible_distribution_major_version | int <= 7
-
-- name: Red Hat subscription
-  include_role:
-    name: devnullcake.redhat-subscription
-  vars:
-    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
-  when:
-    - ansible_distribution == "RedHat"
-    - ansible_distribution_major_version | int >= 8

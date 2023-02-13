@@ -1,11 +1,10 @@
-- name: Red Hat subscription
-  import_role:
-    name: devnullcake.redhat-subscription
-  vars:
-    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
-    redhat_subscription_enable_repos:
+- name: Enable required RHEL repositories
+  community.general.rhsm_repository:
+    name:
       - rhel-8-for-x86_64-baseos-rpms
       - rhel-8-for-x86_64-appstream-rpms
       - rhv-4-mgmt-agent-for-rhel-8-x86_64-rpms
       - fast-datapath-for-rhel-8-x86_64-rpms
       - advanced-virt-for-rhel-8-x86_64-rpms
+    state: enabled
+  become: true

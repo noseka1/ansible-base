@@ -1,11 +1,10 @@
-- name: Red Hat subscription
-  include_role:
-    name: devnullcake.redhat-subscription
-  vars:
-    redhat_subscription_pool_regex: '{{ redhat_subscription_pool_id }}'
-    redhat_subscription_enable_repos:
+- name: Enable required RHEL repositories
+  community.general.rhsm_repository:
+    name:
       - rhocp-4.12-for-rhel-8-{{ ansible_architecture }}-rpms
       - fast-datapath-for-rhel-8-{{ ansible_architecture }}-rpms
+    state: enabled
+  become: true
 
 - name: Install MicroShift and lvm2 package
   yum:

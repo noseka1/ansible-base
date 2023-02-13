@@ -12,11 +12,11 @@ sudo rpm-ostree install \
   --idempotent \
   --reboot \
   kernel-debuginfo \
-  perf \
-  vim \
   lsof \
-  tcpdump \
-  wireshark-cli \
-  setroubleshoot-server \
+  perf \
   setools-console \
+  setroubleshoot-server \
+  tcpdump \
+  vim \
+  wireshark-cli \
   2>&1

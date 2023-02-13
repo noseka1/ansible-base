@@ -25,7 +25,7 @@
 
 - import_tasks: cluster_wide_proxy.yml
 
-- import_tasks: rhel_entitlements.yml
+- import_tasks: rhel_entitlement.yml
 
 - import_tasks: install_custom_rpms.yml
 

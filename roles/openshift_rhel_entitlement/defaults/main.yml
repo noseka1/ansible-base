@@ -1,0 +1,22 @@
+# On a host that is subscribed using RHSM, the entitlement certificate
+# can be found in /etc/pki/entitlement/entitlement.pem
+#
+#openshift_rhel_entitlement_cert: |
+#  -----BEGIN CERTIFICATE-----
+#  MIIcMDCCGhigAwIBAgIIR0jdX8pNLMAwDQYJKoZIhvcNAQELBQAwgaQxCzAJBgNV
+#  BAYTAlVTMRcwFQYDVQQIDA5Ob3J0aCBDYXJvbGluYTEWMBQGA1UECgwNUmVkIEhh
+#  ...
+#
+
+openshift_rhel_entitlement_cert: ''
+
+# On a host that is subscribed using RHSM, the entitlement key
+# can be found in /etc/pki/entitlement/entitlement-key.pem
+#
+#openshift_rhel_entitlement_key: |
+#  -----BEGIN RSA PRIVATE KEY-----
+#  MIIJKgIBAAKCAgEA2Ie0f+xfmpDfeRpZDNijOWYNSK/WMJK38X8zxOg1/Y2+d/6O
+#  pZ25taaqz5mgS15+r4iK/QLFP7Cn/+30p+2dGUfMU3zLbEMl0jNkj8P5gtK2/59C
+#  ...
+
+openshift_rhel_entitlement_key: ''

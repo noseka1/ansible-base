@@ -1,0 +1,8 @@
+- name: Configure RHEL entitlement on OpenShift nodes
+  import_role:
+    name: openshift_rhel_entitlement
+  vars:
+    openshift_rhel_entitlement_cert: '{{ openshift_rhel_entitlement.crt }}'
+    openshift_rhel_entitlement_key: '{{ openshift_rhel_entitlement.key }}'
+  register: openshift_rhel_entitlement_result
+  when: openshift_rhel_entitlement is defined

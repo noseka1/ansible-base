@@ -3,7 +3,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: {{ item }}
-  name: 50-{{ item }}-rhel-entitlements
+  name: 50-{{ item }}-rhel-entitlement
 spec:
   config:
     ignition:
@@ -11,11 +11,11 @@ spec:
     storage:
       files:
       - contents:
-          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlements_cert | b64encode}}
+          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlement_cert | b64encode}}
         mode: 0644
         path: /etc/pki/entitlement/entitlement.pem
       - contents:
-          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlements_key | b64encode}}
+          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlement_key | b64encode}}
         mode: 0644
         path: /etc/pki/entitlement/entitlement-key.pem
       - contents:

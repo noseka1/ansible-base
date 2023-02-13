@@ -1,17 +1,17 @@
 - name: Check that certificate is defined
   fail:
     msg: Certificate is missing
-  when: openshift_rhel_entitlements_cert | length == 0
+  when: openshift_rhel_entitlement_cert | length == 0
 
 - name: Check that key is defined
   fail:
     msg: Private key is missing
-  when: openshift_rhel_entitlements_key | length == 0
+  when: openshift_rhel_entitlement_key | length == 0
 
-- name: Configure RHEL entitlements for cluster nodes
+- name: Configure RHEL entitlement for cluster nodes
   kubernetes.core.k8s:
-    template: 50-rhel-entitlements-mc.yaml
-  register: openshift_rhel_entitlements_result
+    template: 50-rhel-entitlement-mc.yaml
+  register: openshift_rhel_entitlement_result
   loop:
     - master
     - worker
@@ -22,4 +22,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_rhel_entitlements_result is changed
+  when: openshift_rhel_entitlement_result is changed

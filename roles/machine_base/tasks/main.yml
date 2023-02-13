@@ -3,14 +3,17 @@
     name: common_tasks
     tasks_from: configure_passwordless_sudo.yml
 
-- import_tasks: configure_proxy.yml
-  when:
-    - ansible_distribution == "RedHat"
-
 - name: Subscribe RHEL
   import_role:
     name: common_tasks
     tasks_from: subscribe_rhel.yml
+  when:
+    - ansible_distribution == "RedHat"
+
+- import_tasks: configure_proxy.yml
+  when:
+    - ansible_distribution == "RedHat"
+    - machine_base_http_proxy[ansible_domain] is defined
 
 - import_tasks: disable_password_expiration.yml
 

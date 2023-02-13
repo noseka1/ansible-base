@@ -7,3 +7,5 @@
 - import_tasks: configure_storage.yml
 
 - import_tasks: configure_microshift.yml
+
+- import_tasks: report_success.yml

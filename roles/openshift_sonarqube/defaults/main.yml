@@ -1,0 +1,4 @@
+sonarqube_helm_repo: https://SonarSource.github.io/helm-chart-sonarqube
+
+sonarqube_namespace: sonarqube
+sonarqube_name: sonarqube

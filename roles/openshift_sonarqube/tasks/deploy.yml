@@ -1,0 +1,36 @@
+- name: Create {{ sonarqube_namespace }} namespace
+  kubernetes.core.k8s:
+    template:
+      - sonarqube-ns.yaml
+      - sonarqube-scc-role.yaml
+      - sonarqube-scc-rolebinding.yaml
+
+- name: Add SonarQube chart repo
+  kubernetes.core.helm_repository:
+    name: sonarqube
+    repo_url: '{{ sonarqube_helm_repo }}'
+
+- name: Deploy SonarQube
+  kubernetes.core.helm:
+    name: '{{ sonarqube_name }}'
+    chart_ref: sonarqube/sonarqube
+    chart_version: '{{ sonarqube_version | default(omit) }}'
+    release_namespace: '{{ sonarqube_namespace }}'
+    release_values:
+      postgresql:
+        securityContext:
+          enabled: false
+        containerSecurityContext:
+          enabled: false
+        volumePermissions:
+          enabled: true
+          securityContext:
+            runAsUser: auto
+      serviceAccount:
+        create: true
+      OpenShift:
+        enabled: true
+        createSCC: false
+      route:
+        enabled: true
+    wait: true

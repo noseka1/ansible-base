@@ -7,7 +7,6 @@
   notify:
     - Restart crio
   when:
-    - machine_microshift_trusted_ca_bundle is defined
     - machine_microshift_trusted_ca_bundle[ansible_domain] is defined
   become: true
 
@@ -35,5 +34,4 @@
     loop_var: outer_item
     label: '{{ outer_item.dir }}'
   when:
-    - machine_microshift_endpoint_certs is defined
     - machine_microshift_endpoint_certs[ansible_domain] is defined

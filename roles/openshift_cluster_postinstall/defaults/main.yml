@@ -6,5 +6,13 @@ openshift_cluster_postinstall_kernel_arguments:
 
 openshift_cluster_postinstall_deploy_infra_nodes: false
 
+openshift_cluster_postinstall_cluster_wide_proxy: {}
+
+openshift_cluster_postinstall_trusted_ca_bundle: {}
+
+openshift_cluster_postinstall_endpoint_certs: {}
+
+openshift_send_alerts_to_slack_url: ''
+
 # # Use custom trusted CA certificate instead of the default redhat-uep.pem
 openshift_cluster_postinstall_custom_yum_sslcacert: {}

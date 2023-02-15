@@ -16,7 +16,6 @@
     template:
       - contour-ns.yaml
       - contour-scc-rolebinding.yaml
-      - contour-scc-role.yaml
       - contour-contour.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ contour_instance_name }} deployment to complete

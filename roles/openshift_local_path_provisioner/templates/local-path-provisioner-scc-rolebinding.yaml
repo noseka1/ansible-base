@@ -4,8 +4,8 @@ metadata:
   name: {{ local_path_provisioner_name }}-scc
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ local_path_provisioner_name }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
 subjects:
 - kind: ServiceAccount
   name: {{ local_path_provisioner_name }}

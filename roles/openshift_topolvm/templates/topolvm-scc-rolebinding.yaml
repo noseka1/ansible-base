@@ -5,8 +5,8 @@ metadata:
   namespace: {{ topolvm_instance_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: topolvm-scc
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
 subjects:
 - kind: ServiceAccount
   name: topolvm-preparevg

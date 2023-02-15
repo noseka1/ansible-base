@@ -3,7 +3,6 @@
     template:
       - local-path-provisioner-ns.yaml
       - local-path-provisioner-scc-rolebinding.yaml
-      - local-path-provisioner-scc-role.yaml
     namespace: '{{ local_path_provisioner_namespace }}'
 
 - name: Create temporary directory

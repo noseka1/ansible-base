@@ -5,8 +5,8 @@ metadata:
   namespace: {{ openebs_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ openebs_name }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
 subjects:
 - kind: ServiceAccount
   name: openebs

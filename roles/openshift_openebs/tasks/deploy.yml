@@ -18,7 +18,6 @@
   kubernetes.core.k8s:
     template:
       - openebs-ns.yaml
-      - openebs-scc-role.yaml
       - openebs-scc-rolebinding.yaml
 
 - name: Add OpenEBS chart repo

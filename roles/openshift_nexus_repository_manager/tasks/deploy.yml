@@ -3,7 +3,6 @@
     template:
       - nexus-repository-manager-ns.yaml
       - nexus-repository-manager-scc-rolebinding.yaml
-      - nexus-repository-manager-scc-role.yaml
 
 - name: Add Nexus chart repo
   kubernetes.core.helm_repository:

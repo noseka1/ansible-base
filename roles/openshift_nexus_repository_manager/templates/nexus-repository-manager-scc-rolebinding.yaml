@@ -5,8 +5,8 @@ metadata:
   namespace: {{ nexus_repository_manager_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ nexus_repository_manager_name }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
   name: {{ nexus_repository_manager_name }}

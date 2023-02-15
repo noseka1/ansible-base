@@ -5,8 +5,8 @@ metadata:
   namespace: {{ artifactory_oss_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ artifactory_oss_name }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
   name: default

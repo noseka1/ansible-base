@@ -3,7 +3,6 @@
     template:
       - artifactory-oss-ns.yaml
       - artifactory-oss-scc-rolebinding.yaml
-      - artifactory-oss-scc-role.yaml
 
 - name: Add JFrog chart repo
   kubernetes.core.helm_repository:

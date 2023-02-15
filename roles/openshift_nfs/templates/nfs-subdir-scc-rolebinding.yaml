@@ -5,8 +5,8 @@ metadata:
   namespace: {{ nfs_subdir_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: nfs-subdir-scc
+  kind: ClusterRole
+  name: system:openshift:scc:hostmount-anyuid
 subjects:
 - kind: ServiceAccount
   name: nfs-subdir

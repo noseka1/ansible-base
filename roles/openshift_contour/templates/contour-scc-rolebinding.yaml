@@ -5,8 +5,8 @@ metadata:
   namespace: contour
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: contour-scc
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
   name: contour

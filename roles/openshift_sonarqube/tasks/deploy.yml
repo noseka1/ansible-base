@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - sonarqube-ns.yaml
-      - sonarqube-scc-role.yaml
       - sonarqube-scc-rolebinding.yaml
 
 - name: Add SonarQube chart repo

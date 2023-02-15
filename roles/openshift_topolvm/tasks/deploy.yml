@@ -13,7 +13,6 @@
 - name: Deploy TopoLVM instance
   kubernetes.core.k8s:
     template:
-      - topolvm-scc-role.yaml
       - topolvm-scc-rolebinding.yaml
       - global-info-cm.yaml
       - topolvm-topolvmcluster.yaml

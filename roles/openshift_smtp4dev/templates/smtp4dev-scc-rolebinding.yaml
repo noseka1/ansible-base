@@ -4,8 +4,8 @@ metadata:
   name: smtp4dev-scc
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: smtp4dev-scc
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
   name: smtp4dev

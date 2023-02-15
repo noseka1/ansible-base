@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - instance-sa.yaml
-      - instance-scc-role.yaml
       - instance-scc-rolebinding.yaml
       - splunk-instance-secret.yaml
       - instance-standalone.yaml

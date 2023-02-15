@@ -10,7 +10,6 @@
 - name: Delete smtp4dev
   kubernetes.core.k8s:
     template:
-      - smtp4dev-scc-role.yaml
       - smtp4dev-scc-rolebinding.yaml
       - smtp4dev-sa.yaml
       - smtp4dev-deploy.yaml

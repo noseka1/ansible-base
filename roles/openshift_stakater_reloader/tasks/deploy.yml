@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - stakater-reloader-ns.yaml
-      - stakater-reloader-scc-role.yaml
       - stakater-reloader-scc-rolebinding.yaml
     namespace: '{{ stakater_reloader_namespace }}'
 

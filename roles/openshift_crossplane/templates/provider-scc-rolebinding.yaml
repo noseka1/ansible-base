@@ -5,8 +5,8 @@ metadata:
   namespace: {{ crossplane_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ crossplane_current_provider_revision }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
   name: {{ crossplane_current_provider_revision }}

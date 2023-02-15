@@ -5,8 +5,8 @@ metadata:
   namespace: {{ sonarqube_namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ sonarqube_name }}-scc
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
 subjects:
 - kind: ServiceAccount
   name: {{ sonarqube_name }}-sonarqube

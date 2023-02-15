@@ -13,12 +13,8 @@
     chart_ref: rhacs/central-services
     chart_version: '{{ rhacs_version }}'
     release_namespace: '{{ rhacs_central_namespace }}'
-    release_values:
-      allowNonstandardNamespace: true
-      allowNonstandardReleaseName: true
-      central:
-        adminPassword:
-          htpasswd: admin:{{ generic_user_password | string | password_hash('bcrypt', 'constant1234567890123.') }}
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - name: Create route for Central
   kubernetes.core.k8s:

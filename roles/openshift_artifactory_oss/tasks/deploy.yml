@@ -17,15 +17,8 @@
     chart_ref: jfrog/artifactory-oss
     chart_version: '{{ artifactory_oss_version | default(omit) }}'
     release_namespace: '{{ artifactory_oss_namespace }}'
-    release_values:
-      artifactory:
-        nginx:
-          enabled: true
-          service:
-            type: ClusterIP
-        artifactory:
-          postgresql:
-            postgresqlPassword: '{{ generic_user_password }}'
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - name: Expose Artifactory OSS
   kubernetes.core.k8s:

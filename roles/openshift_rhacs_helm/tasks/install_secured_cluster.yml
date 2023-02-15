@@ -60,4 +60,5 @@
     chart_version: '{{ rhacs_version }}'
     release_namespace: '{{ rhacs_secured_cluster_services_namespace }}'
     release_values: '{{ release_values_combined }}'
+    wait: true
   when: generate_cert_result.status == 200

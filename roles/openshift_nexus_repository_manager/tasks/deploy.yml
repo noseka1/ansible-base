@@ -16,12 +16,7 @@
     chart_ref: sonatype/nexus-repository-manager
     chart_version: '{{ nexus_repository_manager_version | default(omit) }}'
     release_namespace: '{{ nexus_repository_manager_namespace }}'
-    release_values:
-      service:
-        name: '{{ nexus_repository_manager_name }}'
-        portName: nexus-ui
-      route:
-        enabled: true
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     wait: true
 
 - name: Retrieve Nexus repository manager pod

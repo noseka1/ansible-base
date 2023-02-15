@@ -23,6 +23,7 @@
     name: '{{ openebs_name }}'
     release_namespace: '{{ openebs_namespace }}'
     release_state: absent
+    wait: true
 
 - name: Delete prerequisites for OpenEBS
   kubernetes.core.k8s:

@@ -9,13 +9,8 @@
     chart_ref: crossplane-stable/crossplane
     release_namespace: '{{ crossplane_namespace }}'
     create_namespace: true
-    release_values:
-      securityContextCrossplane:
-        runAsUser: null
-        runAsGroup: null
-      securityContextRBACManager:
-        runAsUser: null
-        runAsGroup: null
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - import_role:
     name: openshift_common

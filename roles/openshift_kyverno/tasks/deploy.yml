@@ -13,18 +13,8 @@
     chart_ref: kyverno/kyverno
     chart_version: '{{ kyverno_version | default(omit) }}'
     release_namespace: '{{ kyverno_namespace }}'
-    release_values:
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop: [ ALL ]
-        privileged: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        # See also https://github.com/kyverno/kyverno/issues/4118
-        seccompProfile: null
-      livenessProbe:
-        initialDelaySeconds: 60
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - import_role:
     name: openshift_common

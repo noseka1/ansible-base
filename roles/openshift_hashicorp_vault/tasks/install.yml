@@ -10,16 +10,8 @@
     chart_version: '{{ hashicorp_vault_chart_version | default(omit) }}'
     release_namespace: '{{ hashicorp_vault_namespace }}'
     create_namespace: true
-    release_values:
-      global:
-        openshift: true
-      server:
-        auditStorage:
-          enabled: true
-        extraEnvironmentVars:
-          VAULT_LOG_LEVEL: debug
-      ui:
-        enabled: true
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - name: Create route
   kubernetes.core.k8s:

@@ -1,0 +1,5 @@
+service:
+  name: '{{ nexus_repository_manager_name }}'
+  portName: nexus-ui
+route:
+  enabled: true

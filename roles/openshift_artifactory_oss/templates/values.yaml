@@ -1,0 +1,8 @@
+artifactory:
+  nginx:
+    enabled: true
+    service:
+      type: ClusterIP
+  artifactory:
+    postgresql:
+      postgresqlPassword: '{{ generic_user_password }}'

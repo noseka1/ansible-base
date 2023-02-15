@@ -18,8 +18,5 @@
     chart_version: '{{ stakater_reloader_chart_version | default(omit) }}'
     release_namespace: '{{ stakater_reloader_namespace }}'
     create_namespace: true
-    release_values:
-      reloader:
-        isOpenshift: true
-        podMonitor:
-          enabled: true
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true

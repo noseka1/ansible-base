@@ -32,24 +32,8 @@
     chart_ref: 'openebs/openebs'
     chart_version: '{{ openebs_version  }}'
     release_namespace: '{{ openebs_namespace }}'
-    release_values:
-      localprovisioner:
-        enabled: false
-      ndm:
-        enabled: false
-      ndmOperator:
-        enabled: false
-      webhook:
-        enabled: false
-      snapshotOperator:
-        enabled: false
-      provisioner:
-        enabled: false
-      apiserver:
-        enabled: false
-      lvm-localpv:
-        enabled: true
-        storageCapacity: false
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - name: Check if default storage class exists
   import_role:

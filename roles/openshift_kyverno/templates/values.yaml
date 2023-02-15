@@ -1,0 +1,11 @@
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: [ ALL ]
+  privileged: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  # See also https://github.com/kyverno/kyverno/issues/4118
+  seccompProfile: null
+livenessProbe:
+  initialDelaySeconds: 60

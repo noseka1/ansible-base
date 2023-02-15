@@ -23,14 +23,8 @@
     name: '{{ local_path_provisioner_name }}'
     chart_ref: '{{ local_path_provisioner_tmpdir.path }}/{{ local_path_provisioner_helm_chart_git_path }}'
     release_namespace: '{{ local_path_provisioner_namespace }}'
-    release_values:
-      nodePathMap:
-        - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
-          paths:
-            - /var/local/{{ local_path_provisioner_name }}
-      serviceAccount:
-        create: true
-        name: '{{ local_path_provisioner_name }}'
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true
 
 - name: Fix the crashing helper-pod-create-pvc pod
   kubernetes.core.k8s:

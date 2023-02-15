@@ -1,6 +1,15 @@
 - name: Create namespace {{ argo_rollouts_namespace }} in Kubernetes
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "argo-rollouts-ns.yaml") }}'
+    template: argo-rollouts-ns.yaml
 
 - name: Deploy Argo Rollouts
-  command: oc apply --namespace {{ argo_rollouts_namespace }} --filename {{ argo_rollouts_url }}
+  kubernetes.core.k8s:
+    definition: '{{ lookup("url", argo_rollouts_url, split_lines=false) }}'
+    namespace: '{{ argo_rollouts_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: argo-rollouts
+    wait_for_deployment_namespace: '{{ argo_rollouts_namespace }}'

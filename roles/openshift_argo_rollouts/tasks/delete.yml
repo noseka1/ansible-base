@@ -1,7 +1,12 @@
 - name: Delete Argo Rollouts
-  command: oc delete --namespace {{ argo_rollouts_namespace }} --filename {{ argo_rollouts_url }}
+  kubernetes.core.k8s:
+    definition: '{{ lookup("url", argo_rollouts_url, split_lines=false) }}'
+    namespace: '{{ argo_rollouts_namespace }}'
+    wait: true
+    state: absent
 
 - name: Delete namespace {{ argo_rollouts_namespace }} in Kubernetes
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "argo-rollouts-ns.yaml") }}'
+    template: argo-rollouts-ns.yaml
+    wait: true
     state: absent

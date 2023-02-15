@@ -6,6 +6,9 @@ rhacs_subscription_approval: Automatic
 rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services
 
+# If RHACS is not connected to the Internet, set this to 'Offline' to enable offline mode
+rhacs_central_connectivity_policy: Online
+
 rhacs_central_deployment_mode: dev
 
 rhacs_loglevel: info

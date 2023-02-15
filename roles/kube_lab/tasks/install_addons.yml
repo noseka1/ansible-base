@@ -12,7 +12,7 @@
 
 - name: Install flannel
   kubernetes.core.k8s:
-    resource_definition: '{{ lookup("url", flannel_url, split_lines=false) }}'
+    definition: '{{ lookup("url", flannel_url, split_lines=false) }}'
     apply: true
   become: true
 
@@ -32,6 +32,6 @@
 
 - name: Install dashboard service
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "kubernetes-dashboard-service.yml", split_lines=false) }}'
+    template: kubernetes-dashboard-service.yml
     apply: true
   become: true

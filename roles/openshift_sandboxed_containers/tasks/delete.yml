@@ -5,11 +5,10 @@
 
 - name: Delete OpenShift sandboxed containers instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template:
+      - cluster-kataconfig-kataconfig.yaml
     state: absent
   register: sandboxed_containers_kataconfig
-  loop:
-     - cluster-kataconfig-kataconfig.yaml
 
 - name: Delete OpenShift sandboxed containers operator
   kubernetes.core.k8s:

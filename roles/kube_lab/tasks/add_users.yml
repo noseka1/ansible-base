@@ -1,7 +1,6 @@
 - name: Create admin user
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-    - admin-sa.yaml
-    - admin-clusterrolebinding.yaml
+    template:
+      - admin-sa.yaml
+      - admin-clusterrolebinding.yaml
   become: true

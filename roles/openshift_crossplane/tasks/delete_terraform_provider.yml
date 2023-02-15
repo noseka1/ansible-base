@@ -1,16 +1,14 @@
 - name: Delete Terraform provider config
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - default-providerconfig-terraform.yaml
     state: absent
     wait: true
-  loop:
-    - default-providerconfig-terraform.yaml
 
 - name: Delete Terraform provider
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - terraform-controllerconfig.yaml
+      - terraform-provider.yaml
     state: absent
     wait: true
-  loop:
-    - terraform-controllerconfig.yaml
-    - terraform-provider.yaml

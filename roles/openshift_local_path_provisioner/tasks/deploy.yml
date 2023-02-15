@@ -1,11 +1,10 @@
 - name: Create Local path provisioner namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    template:
+      - local-path-provisioner-ns.yaml
+      - local-path-provisioner-scc-rolebinding.yaml
+      - local-path-provisioner-scc-role.yaml
     namespace: '{{ local_path_provisioner_namespace }}'
-  loop:
-    - local-path-provisioner-ns.yaml
-    - local-path-provisioner-scc-rolebinding.yaml
-    - local-path-provisioner-scc-role.yaml
 
 - name: Create temporary directory
   tempfile:
@@ -28,10 +27,9 @@
 
 - name: Fix the crashing helper-pod-create-pvc pod
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    template:
+      - local-path-config-cm.yaml
     namespace: '{{ local_path_provisioner_namespace }}'
-  loop:
-    - local-path-config-cm.yaml
 
 - name: Delete temporary directory {{ local_path_provisioner_tmpdir.path }}
   file:

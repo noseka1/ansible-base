@@ -1,11 +1,10 @@
 - name: Create namespace and deploy AMQ broker instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - amq-broker-ns.yaml
-    - broker-credentials-secret-secret.yaml
-    - broker-activemqartemis.yaml
-    - broker-servicemonitor.yaml
+    template:
+      - amq-broker-ns.yaml
+      - broker-credentials-secret-secret.yaml
+      - broker-activemqartemis.yaml
+      - broker-servicemonitor.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AMQ Broker deployment to complete
   kubernetes.core.k8s_info:

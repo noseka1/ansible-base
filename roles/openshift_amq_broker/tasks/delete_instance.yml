@@ -1,7 +1,6 @@
 - name: Delete namespace and AMQ broker instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - broker-activemqartemis.yaml
+      - amq-broker-ns.yaml
     state: absent
-  loop:
-    - broker-activemqartemis.yaml
-    - amq-broker-ns.yaml

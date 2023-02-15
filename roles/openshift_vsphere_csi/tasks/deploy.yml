@@ -5,13 +5,12 @@
 
 - name: Create vSphere CSI prerequisites
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-    - vmware-system-csi-ns.yaml
-    - vsphere-config-secret-secret.yml
-    - vsphere-scc-rolebinding.yaml
-    - vsphere-scc-role.yaml
-    - thin-csi-sc.yaml
+    template:
+      - vmware-system-csi-ns.yaml
+      - vsphere-config-secret-secret.yml
+      - vsphere-scc-rolebinding.yaml
+      - vsphere-scc-role.yaml
+      - thin-csi-sc.yaml
 
 - name: Deploy vSphere CSI driver
   kubernetes.core.k8s:

@@ -1,6 +1,6 @@
 - name: Deploy corrected SCC
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+    template: rook-nfs-scc.yml
 
 - name: Deploy Rook NFS operator
   kubernetes.core.k8s:

@@ -7,9 +7,8 @@
 
 - name: Delete Local path provisioner namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    template:
+      - local-path-provisioner-ns.yaml
     namespace: '{{ local_path_provisioner_namespace }}'
     state: absent
     wait: true
-  loop:
-    - local-path-provisioner-ns.yaml

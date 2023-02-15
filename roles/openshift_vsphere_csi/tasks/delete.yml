@@ -12,8 +12,7 @@
 
 - name: Delete vSphere CSI prerequisites
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template:
+      - vmware-system-csi-ns.yaml
+      - thin-csi-sc.yaml
     state: absent
-  loop:
-    - vmware-system-csi-ns.yaml
-    - thin-csi-sc.yaml

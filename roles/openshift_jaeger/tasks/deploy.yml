@@ -1,9 +1,8 @@
 - name: Deploy Jaeger instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-     - jaeger-ns.yaml
-     - jaeger-jaeger.yaml
+    template:
+      - jaeger-ns.yaml
+      - jaeger-jaeger.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Jaeger deployment to complete
   kubernetes.core.k8s_info:

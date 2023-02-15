@@ -1,11 +1,10 @@
 - name: Deploy Splunk operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - splunk-ns.yaml
+      - splunk-og.yaml
+      - splunk-sub.yaml
     namespace: '{{ splunk_namespace }}'
-  loop:
-    - splunk-ns.yaml
-    - splunk-og.yaml
-    - splunk-sub.yaml
 
 - import_role:
     name: openshift_common

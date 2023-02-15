@@ -1,6 +1,6 @@
 - name: Deploy AWS provider
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'aws-provider.yaml') }}"
+    template: aws-provider.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to deploy
   kubernetes.core.k8s_info:
@@ -42,10 +42,9 @@
 
 - name: Deploy AWS provider config
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - default-providerconfig-aws.yaml
-    - aws-creds-secret.yaml
+    template:
+      - default-providerconfig-aws.yaml
+      - aws-creds-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider revision
   kubernetes.core.k8s_info:

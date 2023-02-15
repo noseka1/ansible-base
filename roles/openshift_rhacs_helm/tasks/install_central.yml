@@ -1,6 +1,6 @@
 - name: Create namespace {{ rhacs_central_namespace }}
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'rhacs-central-ns.yaml') }}"
+    template: rhacs-central-ns.yaml
 
 - name: Add RHACS chart repo
   kubernetes.core.helm_repository:
@@ -18,4 +18,4 @@
 
 - name: Create route for Central
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'central-route.yaml') }}"
+    template: central-route.yaml

@@ -20,7 +20,7 @@
 
 - name: Add machine sets to the cluster
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "gpu-machineset.yml") }}'
+    template: gpu-machineset.yml
   loop: '{{ ngpu_availability_zones }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for machines to come up

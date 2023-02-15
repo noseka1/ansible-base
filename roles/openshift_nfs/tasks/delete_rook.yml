@@ -2,18 +2,16 @@
 
 - name: Delete Rook NFS server
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template:
+      - rook-nfs-nfsserver.yml
     state: absent
-  loop:
-    - rook-nfs-nfsserver.yml
 
 - name: Delete backing PV and PVC
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template:
+      - nfs-backing-volume-pv.yml
+      - nfs-backing-volume-pvc.yml
     state: absent
-  loop:
-     - nfs-backing-volume-pv.yml
-     - nfs-backing-volume-pvc.yml
 
 - name: Delete Rook NFS operator
   kubernetes.core.k8s:
@@ -26,5 +24,6 @@
 
 - name: Delete corrected SCC
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'rook-nfs-scc.yml') }}"
+    template:
+      - rook-nfs-scc.yml
     state: absent

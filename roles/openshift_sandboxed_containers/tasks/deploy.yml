@@ -11,9 +11,8 @@
 
 - name: Deploy OpenShift sandboxed containers instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-     - cluster-kataconfig-kataconfig.yaml
+    template:
+      - cluster-kataconfig-kataconfig.yaml
   register: sandboxed_containers_kataconfig
   until: sandboxed_containers_kataconfig is succeeded
   retries: 10

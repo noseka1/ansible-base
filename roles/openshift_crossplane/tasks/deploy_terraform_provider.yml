@@ -1,9 +1,8 @@
 - name: Deploy Terraform provider
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - terraform-controllerconfig.yaml
-    - terraform-provider.yaml
+    template:
+      - terraform-controllerconfig.yaml
+      - terraform-provider.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider to deploy
   kubernetes.core.k8s_info:
@@ -37,9 +36,8 @@
 
 - name: Deploy Terraform provider config
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - default-providerconfig-terraform.yaml
+    template:
+      - default-providerconfig-terraform.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider revision
   kubernetes.core.k8s_info:

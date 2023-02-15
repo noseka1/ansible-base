@@ -1,13 +1,11 @@
 - name: Delete AWS provider config
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: default-providerconfig-aws.yaml
     state: absent
     wait: true
-  loop:
-    - default-providerconfig-aws.yaml
 
 - name: Delete AWS provider
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'aws-provider.yaml') }}"
+    template: aws-provider.yaml
     state: absent
     wait: true

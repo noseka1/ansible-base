@@ -1,6 +1,5 @@
 - name: Delete Jaeger instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
+    template:
+      - jaeger-jaeger.yaml
     state: absent
-  loop:
-     - jaeger-jaeger.yaml

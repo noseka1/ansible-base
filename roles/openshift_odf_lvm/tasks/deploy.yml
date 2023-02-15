@@ -1,6 +1,6 @@
 - name: Create loop block device for ODF LVM volumes on each cluster node (will cause nodes to restart)
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '99-odf-lvm-block-mc.yaml') }}"
+    template: 99-odf-lvm-block-mc.yaml
   register: machineconfig_result
   loop:
     - worker

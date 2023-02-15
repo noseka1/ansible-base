@@ -1,8 +1,7 @@
 - name: Deploy AMQ Broker operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - amq-broker-rhel8-sub.yaml
+    template:
+      - amq-broker-rhel8-sub.yaml
 
 - import_role:
     name: openshift_common

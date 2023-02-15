@@ -1,9 +1,8 @@
 - name: Deploy Fuse Console operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - fuse-console-og.yaml
-    - fuse-console-sub.yaml
+    template:
+      - fuse-console-og.yaml
+      - fuse-console-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -14,9 +13,8 @@
 
 - name: Deploy Fuse Console
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - fuse-console-hawtio.yaml
+    template:
+      - fuse-console-hawtio.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Fuse Console deployment to complete
   kubernetes.core.k8s_info:

@@ -1,10 +1,9 @@
 - name: Create Artifactory OSS namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
-  loop:
-    - artifactory-oss-ns.yaml
-    - artifactory-oss-scc-rolebinding.yaml
-    - artifactory-oss-scc-role.yaml
+    template:
+      - artifactory-oss-ns.yaml
+      - artifactory-oss-scc-rolebinding.yaml
+      - artifactory-oss-scc-role.yaml
 
 - name: Add JFrog chart repo
   kubernetes.core.helm_repository:
@@ -22,6 +21,5 @@
 
 - name: Expose Artifactory OSS
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - artifactory-oss-route.yaml
+    template:
+      - artifactory-oss-route.yaml

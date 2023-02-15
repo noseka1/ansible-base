@@ -1,14 +1,13 @@
 - name: Create namespace {{ external_dns_instance_namespace }}
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'external-dns-ns.yaml') }}"
+    template: external-dns-ns.yaml
 
 - name: Deploy External DNS operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - external-dns-operator-ns.yaml
-    - external-dns-operator-og.yaml
-    - external-dns-operator-sub.yaml
+    template:
+      - external-dns-operator-ns.yaml
+      - external-dns-operator-og.yaml
+      - external-dns-operator-sub.yaml
 
 - import_role:
     name: openshift_common

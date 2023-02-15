@@ -1,13 +1,11 @@
 - name: Delete namespace {{ external_dns_instance_namespace }}
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'external-dns-ns.yaml') }}"
+    template: external-dns-ns.yaml
     state: absent
     wait: true
 
 - name: Delete External DNS operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template: external-dns-operator-ns.yaml
     state: absent
     wait: true
-  loop:
-    - external-dns-operator-ns.yaml

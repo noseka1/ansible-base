@@ -10,7 +10,7 @@
 
 - name: Create cluster autoscaler
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'default-clusterautoscaler.yml') }}"
+    template: default-clusterautoscaler.yml
 
 - name: Obtain infrastructure info
   kubernetes.core.k8s_info:
@@ -32,7 +32,7 @@
 
 - name: Enable autoscaling for the machinesets
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'machineautoscaler.yml') }}"
+    template: machineautoscaler.yml
   when: item.metadata.name.startswith(cluster_id)
   loop: '{{ machinesets_result.resources }}'
   loop_control:

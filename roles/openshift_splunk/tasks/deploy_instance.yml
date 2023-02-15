@@ -1,15 +1,14 @@
 - name: Deploy standalone Splunk instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
+    template:
+      - instance-sa.yaml
+      - instance-scc-role.yaml
+      - instance-scc-rolebinding.yaml
+      - splunk-instance-secret.yaml
+      - instance-standalone.yaml
+      - instance-web-route.yaml
+      - instance-hec-route.yaml
     namespace: '{{ splunk_namespace }}'
-  loop:
-    - instance-sa.yaml
-    - instance-scc-role.yaml
-    - instance-scc-rolebinding.yaml
-    - splunk-instance-secret.yaml
-    - instance-standalone.yaml
-    - instance-web-route.yaml
-    - instance-hec-route.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ splunk_namespace }}/{{ splunk_namespace }}-{{ splunk_instance_name }}-standalone statefulset to deploy
   kubernetes.core.k8s_info:

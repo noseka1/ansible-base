@@ -17,7 +17,6 @@
 
 - name: Create backing PV and PVC
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', item) }}"
-  loop:
-     - nfs-backing-volume-pv.yml
-     - nfs-backing-volume-pvc.yml
+    template:
+      - nfs-backing-volume-pv.yml
+      - nfs-backing-volume-pvc.yml

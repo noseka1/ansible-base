@@ -1,9 +1,8 @@
 - name: Relax the SCC for the provider {{ crossplane_current_provider_revision }}
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - provider-scc-role.yaml
-    - provider-scc-rolebinding.yaml
+    template:
+      - provider-scc-role.yaml
+      - provider-scc-rolebinding.yaml
   register: crossplane_provider_scc
 
 - name: Remove the failing {{ crossplane_current_provider_revision }} provider pod

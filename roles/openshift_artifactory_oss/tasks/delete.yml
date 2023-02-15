@@ -7,8 +7,7 @@
 
 - name: Delete Artifactory OSS namespace
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", item) }}'
+    template:
+      - artifactory-oss-ns.yaml
     state: absent
     wait: true
-  loop:
-    - artifactory-oss-ns.yaml

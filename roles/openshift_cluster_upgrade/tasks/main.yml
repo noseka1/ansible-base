@@ -26,7 +26,7 @@
 
 - name: Provide administrator acknowledgment to upgrade
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'admin-acks-cm.yaml') }}"
+    template: admin-acks-cm.yaml
 
 - name: Perform OpenShift cluster upgrade(s)
   include_tasks: upgrade.yml

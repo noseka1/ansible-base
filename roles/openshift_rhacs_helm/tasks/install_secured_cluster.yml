@@ -1,6 +1,6 @@
 - name: Create rhacs-this-cluster namespace
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'rhacs-this-cluster-ns.yaml') }}"
+    template: rhacs-this-cluster-ns.yaml
 
 - name: Obtain RHACS route
   kubernetes.core.k8s_info:

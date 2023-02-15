@@ -38,10 +38,9 @@
 
 - name: Expose Docker repository
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}') }}"
-  loop:
-    - docker-repo-svc.yaml
-    - docker-repo-route.yaml
+    template:
+      - docker-repo-svc.yaml
+      - docker-repo-route.yaml
 
 - name: Obtain Docker repository route
   kubernetes.core.k8s_info:

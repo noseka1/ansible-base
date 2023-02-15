@@ -1,4 +1,4 @@
 - name: Make master node schedulable
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'node.yaml') }}"
+    template: node.yaml
   become: true

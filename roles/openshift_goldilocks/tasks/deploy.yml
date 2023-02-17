@@ -1,0 +1,27 @@
+- name: Create goldilocks namespace
+  kubernetes.core.k8s:
+    template:
+      - goldilocks-ns.yaml
+      - goldilocks-controller-rolebinding.yaml
+      - goldilocks-dashboard-rolebinding.yaml
+
+- name: Add Fairwinds chart repo
+  kubernetes.core.helm_repository:
+    name: fairwinds-stable
+    repo_url: '{{ goldilocks_helm_repo }}'
+
+- name: Deploy Goldilocks
+  kubernetes.core.helm:
+    name: '{{ goldilocks_name }}'
+    chart_ref: fairwinds-stable/goldilocks
+    chart_version: '{{ goldilocks_version | default(omit) }}'
+    release_namespace: '{{ goldilocks_namespace }}'
+    wait: true
+
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: '{{ goldilocks_name }}'
+    openshift_oauth_proxy_namespace: '{{ goldilocks_namespace }}'
+    openshift_oauth_proxy_upstream: http://{{ goldilocks_name }}-dashboard

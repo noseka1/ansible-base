@@ -1,0 +1,10 @@
+- name: Delete Goldilocks
+  kubernetes.core.helm:
+    name: '{{ goldilocks_name }}'
+    release_namespace: '{{ goldilocks_namespace }}'
+    state: absent
+    wait: true
+
+- name: Delete goldilocks namespace
+  kubernetes.core.k8s:
+    template: goldilocks-ns.yaml

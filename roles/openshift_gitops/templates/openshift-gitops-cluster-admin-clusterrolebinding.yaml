@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: gitops-cluster-admin
+  name: {{ gitops_instance_namespace }}-{{ gitops_instance_name }}-cluster-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -9,5 +9,5 @@ roleRef:
 subjects:
 # Grant Argo CD cluster-admin privileges
 - kind: ServiceAccount
-  name: openshift-gitops-argocd-application-controller
+  name: {{ gitops_instance_name }}-argocd-application-controller
   namespace: {{ gitops_instance_namespace }}

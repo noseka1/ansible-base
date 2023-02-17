@@ -1,0 +1,7 @@
+vertical_pod_autoscaler_subscription_name: vertical-pod-autoscaler
+vertical_pod_autoscaler_subscription_namespace: openshift-vertical-pod-autoscaler
+vertical_pod_autoscaler_subscription_channel: stable
+vertical_pod_autoscaler_subscription_approval: Automatic
+
+vertical_pod_autoscaler_instance_name: default
+vertical_pod_autoscaler_instance_namespace: openshift-vertical-pod-autoscaler

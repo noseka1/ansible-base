@@ -45,6 +45,12 @@
     wait: true
     state: absent
 
+- name: Delete stackrox namespace
+  kubernetes.core.k8s:
+    template: namespace/stackrox-ns.yaml
+    wait: true
+    state: absent
+
 - name: Delete RHACS operator
   import_role:
     name: openshift_common

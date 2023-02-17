@@ -9,4 +9,4 @@
 
 - name: Send all notifications to the custom webhook receiver
   kubernetes.core.k8s:
-    template: argocd-notifications-cm-cm.yaml
+    template: notifications/argocd-notifications-cm-cm.yaml

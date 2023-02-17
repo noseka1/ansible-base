@@ -1,0 +1,18 @@
+cloudflared_namespace: cloudflared
+cloudflared_manage_namespace: true
+
+# Certificate and private key that allows creating Cloudflare tunnels
+cloudflared_tunnel_origin_cert: ''
+
+# Replace the domain suffix with your registered Internet domain
+# The DNS zone for this domain must be managed by Cloudflare DNS
+# For example 'alesnosek.work'
+cloudflared_domain_suffix: ''
+
+# Name of the host to forward the traffic to
+# For example 'api.mycluster2.example.com'
+cloudflared_target_hostname: ''
+
+# Port number to forward the traffic to
+# For example, set this to 6443 for Kubernetes API server
+cloudflared_target_port: 443

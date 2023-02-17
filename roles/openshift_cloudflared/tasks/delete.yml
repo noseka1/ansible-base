@@ -1,0 +1,25 @@
+- import_tasks: prep.yml
+
+- name: Delete cloudflared deployment
+  kubernetes.core.k8s:
+    template:
+      - cloudflared-deploy.yaml
+    state: absent
+    wait: true
+
+- name: Delete cloudflared configuration
+  kubernetes.core.k8s:
+    template:
+      - cloudflared-tunnel-config-cm.yaml
+      - cloudflared-run-script-cm.yaml
+      - cloudflared-tunnel-origin-cert-secret.yaml
+    state: absent
+    wait: true
+  register: cloudflared_config_result
+
+- name: Delete {{ cloudflared_namespace }} namespace
+  kubernetes.core.k8s:
+    template: cloudflared-ns.yaml
+    state: absent
+    wait: true
+  when: cloudflared_manage_namespace

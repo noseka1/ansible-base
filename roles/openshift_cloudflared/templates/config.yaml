@@ -1,0 +1,33 @@
+# Name of the tunnel you want to run
+tunnel: {{ cloudflared_tunnel_name }}
+
+# Serves the metrics server under /metrics and the readiness server under /ready
+metrics: 0.0.0.0:2000
+
+# Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
+# autoupdate doesn't make sense in Kubernetes.
+no-autoupdate: true
+
+# Specifies the verbosity of logging. Available levels are: trace, debug, info, warn, error, fatal, panic.
+loglevel: info
+
+# Specifies the verbosity of logs for the transport between cloudflared and the Cloudflare global network.
+# Available levels are: trace, debug, info, warn, error, fatal, panic
+transport-loglevel: warn
+
+# The `ingress` block tells cloudflared which local service to route incoming
+# requests to. For more about ingress rules, see
+# https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+ingress:
+- hostname: {{ cloudflared_ingress_hostname }}
+  service: https://{{ cloudflared_target_hostname }}:{{ cloudflared_target_port }}
+  originRequest:
+     httpHostHeader: {{ cloudflared_target_hostname }}
+     noTLSVerify: true
+# This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
+# issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
+# in the connection from cloudflared to your local service, not from the internet to cloudflared.
+- hostname: hello.example.com
+  service: hello_world
+# This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
+- service: http_status:404

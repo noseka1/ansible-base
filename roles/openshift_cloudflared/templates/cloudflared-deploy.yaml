@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: {{ cloudflared_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflared
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+      - command:
+        - /bin/bash
+        args:
+        - -c
+        - 'exec /cloudflared/run.sh'
+        env:
+        - name: TUNNEL_NAME
+          value: '{{ cloudflared_tunnel_name }}'
+        - name: INGRESS_HOSTNAME
+          value: '{{ cloudflared_ingress_hostname }}'
+        image: quay.io/noseka1/cloudflared-custom:latest
+        name: cloudflared
+        livenessProbe:
+          httpGet:
+            # Cloudflared has a /ready endpoint which returns 200 if and only if
+            # it has an active connection to the edge.
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - mountPath: /cloudflared
+          name: cloudflared
+        - mountPath: /cloudflared/config.yaml
+          name: tunnel-config
+          subPath: config.yaml
+        - mountPath: /cloudflared/run.sh
+          name: run-script
+          subPath: run.sh
+        - mountPath: /cloudflared/cert.pem
+          subPath: cert.pem
+          name: tunnel-origin-cert
+      volumes:
+      - name: cloudflared
+        emptyDir: {}
+      - name: tunnel-config
+        configMap:
+          name: cloudflared-tunnel-config
+      - name: run-script
+        configMap:
+          name: cloudflared-run-script
+          defaultMode: 0755
+      - name: tunnel-origin-cert
+        secret:
+          secretName: cloudflared-tunnel-origin-cert

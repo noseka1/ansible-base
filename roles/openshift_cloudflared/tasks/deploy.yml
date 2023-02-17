@@ -1,0 +1,33 @@
+- import_tasks: prep.yml
+
+- debug:
+    msg: Creating tunnel to forward from {{ cloudflared_ingress_hostname }} to {{ cloudflared_target_hostname }}
+
+- name: Create {{ cloudflared_namespace }} namespace
+  kubernetes.core.k8s:
+    template: cloudflared-ns.yaml
+  when: cloudflared_manage_namespace
+
+- name: Deploy cloudflared configuration
+  kubernetes.core.k8s:
+    template:
+      - cloudflared-tunnel-config-cm.yaml
+      - cloudflared-run-script-cm.yaml
+      - cloudflared-tunnel-origin-cert-secret.yaml
+  register: cloudflared_config_result
+
+- name: Create cloudflared deployment
+  kubernetes.core.k8s:
+    template:
+      - cloudflared-deploy.yaml
+
+- name: Restart cloudflared pods after configuration changed
+  command: oc rollout restart -n {{ cloudflared_namespace }} deployment/cloudflared
+  when:  cloudflared_config_result is changed
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: cloudflared
+    wait_for_deployment_namespace: '{{ cloudflared_namespace }}'

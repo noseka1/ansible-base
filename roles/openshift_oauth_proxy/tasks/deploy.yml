@@ -13,5 +13,5 @@
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ openshift_oauth_proxy_name }}'
+    wait_for_deployment_name: '{{ openshift_oauth_proxy_name }}-oauth-proxy'
     wait_for_deployment_namespace: '{{ openshift_oauth_proxy_namespace }}'

@@ -1,6 +1,6 @@
 # OpenShift External DNS
 
-This roled deploys External DNS to OpenShift.
+This role deploys External DNS to OpenShift.
 
 ## Example routes
 

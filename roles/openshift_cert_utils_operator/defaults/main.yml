@@ -1,0 +1,4 @@
+cert_utils_operator_subscription_name: cert-utils-operator
+cert_utils_operator_subscription_namespace: cert-utils-operator
+cert_utils_operator_subscription_channel: alpha
+cert_utils_operator_subscription_approval: Automatic

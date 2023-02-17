@@ -1,0 +1,6 @@
+- name: Delete cert-utils-operator
+  kubernetes.core.k8s:
+    template:
+      - cert-utils-operator-ns.yaml
+    wait: true
+    state: absent

@@ -14,5 +14,8 @@
   when: cloudflared_target_hostname | length == 0
 
 - set_fact:
-    cloudflared_tunnel_name: '{{ cloudflared_target_hostname | regex_replace("\.", "-") }}'
-    cloudflared_ingress_hostname: '{{ cloudflared_target_hostname | regex_replace("\.", "-") }}.{{ cloudflared_domain_suffix }}'
+    cloudflared_tunnel_name: '{{ cloudflared_target_hostname }}'
+    # Make sure that domain name length won't exceed 78 characters.
+    # Cloudflare refuses domain names that exceed this limit.
+    cloudflared_ingress_hostname: >-
+      {{ (cloudflared_target_hostname.split('.', 1).0)[:(78 - 7 - 2 - (cloudflared_domain_suffix | length))] }}-{{ (cloudflared_target_hostname | hash("sha1"))[:7] }}.{{ cloudflared_domain_suffix }}

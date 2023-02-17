@@ -1,0 +1,4 @@
+gitwebhook_operator_subscription_name: gitwebhook-operator
+gitwebhook_operator_subscription_namespace: gitwebhook-operator
+gitwebhook_operator_subscription_channel: alpha
+gitwebhook_operator_subscription_approval: Automatic

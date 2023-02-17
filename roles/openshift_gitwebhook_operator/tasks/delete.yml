@@ -1,0 +1,6 @@
+- name: Delete gitwebhook-operator
+  kubernetes.core.k8s:
+    template:
+      - gitwebhook-operator-ns.yaml
+    wait: true
+    state: absent

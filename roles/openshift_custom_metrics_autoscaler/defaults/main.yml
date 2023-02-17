@@ -1,0 +1,7 @@
+custom_metrics_operator_subscription_name: openshift-custom-metrics-autoscaler-operator
+custom_metrics_operator_subscription_namespace: openshift-keda
+custom_metrics_operator_subscription_channel: stable
+custom_metrics_operator_subscription_approval: Automatic
+
+custom_metrics_operator_instance_name: keda
+custom_metrics_operator_instance_namespace: openshift-keda

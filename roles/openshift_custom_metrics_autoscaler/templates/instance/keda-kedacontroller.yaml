@@ -1,0 +1,13 @@
+kind: KedaController
+apiVersion: keda.sh/v1alpha1
+metadata:
+  name: {{ custom_metrics_operator_instance_name }}
+  namespace: {{ custom_metrics_operator_instance_namespace }}
+spec:
+  watchNamespace: ''
+  operator:
+    logLevel: info
+    logEncoder: console
+  metricsServer:
+    logLevel: '0'
+  serviceAccount: {}

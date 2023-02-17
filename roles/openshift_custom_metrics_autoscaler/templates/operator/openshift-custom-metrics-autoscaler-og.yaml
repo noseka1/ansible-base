@@ -1,0 +1,7 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ custom_metrics_operator_subscription_name }}
+  namespace: {{ custom_metrics_operator_subscription_namespace }}
+spec:
+  upgradeStrategy: Default

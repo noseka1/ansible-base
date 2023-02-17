@@ -8,5 +8,7 @@ gitops_instance_name: openshift-gitops
 
 gitops_instance_high_availability: false
 
+gitops_create_cloudflare_tunnel: false
+
 rhsso_instance_namespace: rhsso
 rhsso_instance_name: keycloak

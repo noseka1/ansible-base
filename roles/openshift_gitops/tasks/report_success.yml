@@ -1,3 +1,5 @@
+- import_tasks: get_argocd_route.yml
+
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo CD to come up
   uri:
     url: 'https://{{ argocd_route.resources.0.spec.host }}/api/v1/session'

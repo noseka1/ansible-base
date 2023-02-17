@@ -7,4 +7,7 @@
 
 - name: Delete goldilocks namespace
   kubernetes.core.k8s:
-    template: goldilocks-ns.yaml
+    template:
+      - goldilocks-controller-fix-clusterrolebinding.yaml
+      - goldilocks-controller-fix-clusterrole.yaml
+      - goldilocks-ns.yaml

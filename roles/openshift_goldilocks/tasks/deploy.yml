@@ -4,6 +4,8 @@
       - goldilocks-ns.yaml
       - goldilocks-controller-rolebinding.yaml
       - goldilocks-dashboard-rolebinding.yaml
+      - goldilocks-controller-fix-clusterrolebinding.yaml
+      - goldilocks-controller-fix-clusterrole.yaml
 
 - name: Add Fairwinds chart repo
   kubernetes.core.helm_repository:

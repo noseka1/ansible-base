@@ -1,16 +1,16 @@
 - name: Delete Automation Controller
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: app
-    kustomize_files:
-      - kustomization.yaml
-      - auto-controller-automationcontroller.yaml
-      - auto-controller-custom-admin-password-secret.yaml
-    kustomize_op: absent
+  kubernetes.core.k8s:
+    template:
+      - auto-controller/auto-controller-automationcontroller.yaml
+      - auto-controller/auto-controller-custom-admin-password-secret.yaml
+    wait: true
+    state: absent
 
 - name: Delete Ansible Automation Platform operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + aap_kustomizations.operator) }}"
+    template:
+      - operator/ansible-automation-platform-sub.yaml
+      - operator/ansible-automation-platform-og.yaml
+      - operator/aap-ns.yaml
+    wait: true
     state: absent

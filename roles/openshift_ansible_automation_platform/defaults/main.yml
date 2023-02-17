@@ -1,8 +1,7 @@
-aap_kustomizations:
-  operator:        github.com/noseka1/ansible-automation-platform-kustomization/aap-operator/base?ref=myauto
-  auto_controller: github.com/noseka1/ansible-automation-platform-kustomization/auto-controller/base?ref=myauto
+aap_subscription_namespace: aap
+aap_subscription_name: ansible-automation-platform
+aap_subscription_channel: stable-2.3-cluster-scoped
+aap_subscription_approval: Automatic
 
-aap_subscription_namespace: ansible-automation-platform
-aap_subscription_name: ansible-automation-platform-operator
-auto_controller_namespace: ansible-automation-platform
+auto_controller_namespace: aap
 auto_controller_name: auto-controller

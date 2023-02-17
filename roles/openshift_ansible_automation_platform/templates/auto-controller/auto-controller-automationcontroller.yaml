@@ -1,0 +1,24 @@
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: {{ auto_controller_name }}
+  namespace: {{ auto_controller_namespace }}
+spec:
+  admin_user: admin
+  admin_password_secret: auto-controller-custom-admin-password
+  auto_upgrade: true
+  create_preload_data: true
+  garbage_collect_secrets: false
+  image_pull_policy: IfNotPresent
+  ingress_type: Route
+  loadbalancer_port: 80
+  loadbalancer_protocol: http
+  no_log: true
+  nodeport_port: 30080
+  projects_persistence: false
+  projects_storage_access_mode: ReadWriteMany
+  projects_storage_size: 8Gi
+  replicas: 1
+  route_tls_termination_mechanism: Edge
+  set_self_labels: true
+  task_privileged: false

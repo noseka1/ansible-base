@@ -18,5 +18,13 @@
   retries: 30
   delay: 10
 
+- name: Set msg
+  set_fact:
+    msg: |
+      Ansible Automation Platform installed successfully.
+
+      You can browse to:
+      https://{{ auto_controller_route.resources.0.spec.host }}
+
 - debug:
-    msg: Ansible Automation Platform installed successfully. You can browse to https://{{ auto_controller_route.resources.0.spec.host }}
+    msg: "{{ msg.split('\n') }}"

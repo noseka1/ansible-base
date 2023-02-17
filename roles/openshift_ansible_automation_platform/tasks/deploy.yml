@@ -1,6 +1,9 @@
 - name: Deploy Ansible Automation Platform operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + aap_kustomizations.operator) }}"
+    template:
+      - operator/aap-ns.yaml
+      - operator/ansible-automation-platform-og.yaml
+      - operator/ansible-automation-platform-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -10,15 +13,9 @@
     subscription_namespace: '{{ aap_subscription_namespace }}'
 
 - name: Install Automation Controller
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: app
-    kustomize_files:
-      - kustomization.yaml
-      - auto-controller-automationcontroller.yaml
-      - auto-controller-custom-admin-password-secret.yaml
-    kustomize_op: present
+  kubernetes.core.k8s:
+    template:
+      - auto-controller/auto-controller-custom-admin-password-secret.yaml
+      - auto-controller/auto-controller-automationcontroller.yaml
 
 - import_tasks: report_success.yml

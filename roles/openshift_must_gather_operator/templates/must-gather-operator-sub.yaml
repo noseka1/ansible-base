@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ must_gather_operator_subscription_name }}
+  namespace: {{ must_gather_operator_subscription_namespace }}
+spec:
+  channel: {{ must_gather_operator_subscription_channel }}
+  installPlanApproval: {{ must_gather_operator_subscription_approval }}
+  name: must-gather-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace

@@ -1,0 +1,19 @@
+- name: Create namespace {{ must_gather_operator_subscription_namespace }}
+  kubernetes.core.k8s:
+    template: must-gather-operator-ns.yaml
+
+- name: Deploy must-gather-operator
+  kubernetes.core.k8s:
+    template:
+      - case-management-creds-secret.yaml
+      - must-gather-admin-clusterrolebinding.yaml
+      - must-gather-admin-sa.yaml
+      - must-gather-operator-og.yaml
+      - must-gather-operator-sub.yaml
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ must_gather_operator_subscription_name }}'
+    subscription_namespace: '{{ must_gather_operator_subscription_namespace }}'

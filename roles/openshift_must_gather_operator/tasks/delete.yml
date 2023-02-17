@@ -1,0 +1,5 @@
+- name: Delete namespace {{ must_gather_operator_subscription_namespace }}
+  kubernetes.core.k8s:
+    template: must-gather-operator-ns.yaml
+    wait: true
+    state: absent

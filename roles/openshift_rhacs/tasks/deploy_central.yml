@@ -3,11 +3,11 @@
 - name: Deploy RHACS Central
   kubernetes.core.k8s:
     template:
-      - stackrox-ns.yaml
-      - central-htpasswd-secret.yaml
-      - central-db-password-secret.yaml
-      - scanner-db-password-secret.yaml
-      - stackrox-central-services-central.yaml
+      - namespace/stackrox-ns.yaml
+      - central/central-htpasswd-secret.yaml
+      - central/central-db-password-secret.yaml
+      - central/scanner-db-password-secret.yaml
+      - central/stackrox-central-services-central.yaml
 
 - name: Obtain Central TLS secret
   kubernetes.core.k8s_info:
@@ -22,4 +22,4 @@
 
 - name: Create a reencrypt route
   kubernetes.core.k8s:
-    template: central-reencrypt-route.yaml
+    template: central/central-reencrypt-route.yaml

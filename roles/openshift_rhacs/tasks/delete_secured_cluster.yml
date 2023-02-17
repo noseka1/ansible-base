@@ -10,7 +10,7 @@
 
 - name: Delete stackrox namespace
   kubernetes.core.k8s:
-    template: stackrox-ns.yaml
+    template: namespace/stackrox-ns.yaml
     wait: true
     state: absent
 

@@ -2,7 +2,7 @@
 
 - name: Create stackrox namespace if it does not exist
   kubernetes.core.k8s:
-    template: stackrox-ns.yaml
+    template: namespace/stackrox-ns.yaml
 
 - import_role:
     name: openshift_common
@@ -46,7 +46,7 @@
 
 - name: Deploy secured cluster services
   kubernetes.core.k8s:
-    template: stackrox-secured-cluster-services-securedcluster.yaml
+    template: secured-cluster/stackrox-secured-cluster-services-securedcluster.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_common_cluster_domain }} to become healthy
   uri:

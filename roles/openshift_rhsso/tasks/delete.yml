@@ -10,12 +10,16 @@
 
 - name: Delete RHSSO instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.instance) }}"
+    template:
+      - instance/keycloak-keycloak.yaml
     state: absent
     wait: true
 
 - name: Delete RHSSO operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.operator) }}"
+    template:
+      - operator/rhsso-operator-sub.yaml
+      - operator/rhsso-og.yaml
+      - operator/rhsso-ns.yml
     state: absent
     wait: true

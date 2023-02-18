@@ -1,17 +1,21 @@
 - name: Deploy RHSSO operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.operator) }}"
+    template:
+      - operator/rhsso-ns.yml
+      - operator/rhsso-og.yaml
+      - operator/rhsso-operator-sub.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ rhsso_subscription_name }}'
-    subscription_namespace: '{{ rhsso_subscription_namespace }}'
+    subscription_name: '{{ rhsso_operator_subscription_name }}'
+    subscription_namespace: '{{ rhsso_operator_subscription_namespace }}'
 
 - name: Deploy RHSSO instance
   kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + rhsso_kustomizations.instance) }}"
+    template:
+      - instance/keycloak-keycloak.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for RHSSO to come up
   kubernetes.core.k8s_info:
@@ -24,21 +28,8 @@
   retries: 60
   delay: 10
 
-- name: Obtain Keycloak route
-  kubernetes.core.k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: keycloak
-    namespace: '{{ rhsso_instance_namespace }}'
-  register: keycloak_route
+- import_tasks: get_connection.yml
 
 - import_tasks: set_admin_password.yml
 
-- name: Report success
-  set_fact:
-    msg: |
-      RHSSO installed successfully.
-
-      You can browse to https://{{ rhsso_hostname }}
-
-- debug: msg="{{ msg.split('\n') }}"
+- import_tasks: report_success.yml

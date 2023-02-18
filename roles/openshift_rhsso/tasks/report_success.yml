@@ -1,0 +1,9 @@
+- name: Report success
+  set_fact:
+    msg: |
+      RHSSO installed successfully.
+
+      You can browse to:
+      https://{{ rhsso_hostname }}
+
+- debug: msg="{{ msg.split('\n') }}"

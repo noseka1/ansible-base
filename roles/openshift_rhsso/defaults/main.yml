@@ -1,8 +1,7 @@
-rhsso_namespace: rhsso
-rhsso_kustomizations:
-  operator: github.com/noseka1/rhsso-kustomization/rhsso-operator/base?ref=myauto
-  instance: github.com/noseka1/rhsso-kustomization/rhsso-instance/base?ref=myauto
-rhsso_subscription_namespace: rhsso
-rhsso_subscription_name: rhsso-operator
-rhsso_instance_namespace: rhsso
+rhsso_operator_subscription_name: rhsso-operator
+rhsso_operator_subscription_namespace: rhsso
+rhsso_operator_subscription_channel: stable
+rhsso_operator_subscription_approval: Automatic
+
 rhsso_instance_name: keycloak
+rhsso_instance_namespace: rhsso

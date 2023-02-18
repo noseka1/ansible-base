@@ -4,12 +4,12 @@
     kind: Route
     name: keycloak
     namespace: '{{ rhsso_instance_namespace }}'
-  register: keycloak_route
+  register: rhsso_route
 
 - name: Fail if Keycloak route doesn't exist
   fail:
-    msg: Keycloak route doesn't exist. Is Keycloak installed on the cluster?
-  when: keycloak_route.resources | length == 0
+    msg: Keycloak route doesn't exist. Is Keycloak (RHSSO) installed on the cluster?
+  when: rhsso_route.resources | length == 0
 
 - name: Obtain credential-keycloak secret
   kubernetes.core.k8s_info:
@@ -17,10 +17,10 @@
     kind: Secret
     name: credential-keycloak
     namespace: '{{ rhsso_instance_namespace }}'
-  register: keycloak_secret
+  register: rhsso_secret
 
 - name: Set Keycloak admin credentials
   set_fact:
-    rhsso_username: '{{ keycloak_secret.resources.0.data.ADMIN_USERNAME | b64decode }}'
-    rhsso_password: '{{ keycloak_secret.resources.0.data.ADMIN_PASSWORD | b64decode }}'
-    rhsso_hostname: '{{ keycloak_route.resources.0.spec.host }}'
+    rhsso_username: '{{ rhsso_secret.resources.0.data.ADMIN_USERNAME | b64decode }}'
+    rhsso_password: '{{ rhsso_secret.resources.0.data.ADMIN_PASSWORD | b64decode }}'
+    rhsso_hostname: '{{ rhsso_route.resources.0.spec.host }}'

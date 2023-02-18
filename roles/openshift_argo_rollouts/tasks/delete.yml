@@ -1,6 +1,13 @@
-- name: Delete Argo Rollouts
+- name: Delete Argo Rollouts dashboard
   kubernetes.core.k8s:
-    definition: '{{ lookup("url", argo_rollouts_url, split_lines=false) }}'
+    definition: '{{ lookup("url", argo_rollouts_dashboard_url, split_lines=false) }}'
+    namespace: '{{ argo_rollouts_namespace }}'
+    wait: true
+    state: absent
+
+- name: Delete Argo Rollouts controller
+  kubernetes.core.k8s:
+    definition: '{{ lookup("url", argo_rollouts_controller_url, split_lines=false) }}'
     namespace: '{{ argo_rollouts_namespace }}'
     wait: true
     state: absent

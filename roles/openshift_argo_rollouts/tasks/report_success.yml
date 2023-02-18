@@ -1,0 +1,26 @@
+- name: Obtain Argo Rollouts dashboard route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ argo_rollouts_name }}'
+    namespace: '{{ argo_rollouts_namespace }}'
+  register: argo_rollouts_route
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo Rollouts dashboard to come up
+  uri:
+    url: 'https://{{ argo_rollouts_route.resources.0.spec.host }}/rollouts'
+    status_code: [ 403 ]
+  register: result
+  until: result.status == 403
+  retries: 60
+  delay: 10
+
+- name: Report success
+  set_fact:
+    msg: |
+      Argo Rollouts installed successfully.
+
+      You can browse to:
+      https://{{ argo_rollouts_route.resources.0.spec.host }}
+
+- debug: msg="{{ msg.split('\n') }}"

@@ -1,3 +1,5 @@
 argo_rollouts_version: 1.4.0
-argo_rollouts_url: https://github.com/argoproj/argo-rollouts/releases/download/v{{ argo_rollouts_version }}/install.yaml
+argo_rollouts_controller_url: https://github.com/argoproj/argo-rollouts/releases/download/v{{ argo_rollouts_version }}/install.yaml
+argo_rollouts_dashboard_url: https://github.com/argoproj/argo-rollouts/releases/download/v{{ argo_rollouts_version }}/dashboard-install.yaml
 argo_rollouts_namespace: argo-rollouts
+argo_rollouts_name: argo-rollouts

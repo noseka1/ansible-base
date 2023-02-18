@@ -2,9 +2,14 @@
   kubernetes.core.k8s:
     template: argo-rollouts-ns.yaml
 
-- name: Deploy Argo Rollouts
+- name: Deploy Argo Rollouts controller
   kubernetes.core.k8s:
-    definition: '{{ lookup("url", argo_rollouts_url, split_lines=false) }}'
+    definition: '{{ lookup("url", argo_rollouts_controller_url, split_lines=false) }}'
+    namespace: '{{ argo_rollouts_namespace }}'
+
+- name: Deploy Argo Rollouts dashboard
+  kubernetes.core.k8s:
+    definition: '{{ lookup("url", argo_rollouts_dashboard_url, split_lines=false) }}'
     namespace: '{{ argo_rollouts_namespace }}'
 
 - import_role:
@@ -13,3 +18,13 @@
   vars:
     wait_for_deployment_name: argo-rollouts
     wait_for_deployment_namespace: '{{ argo_rollouts_namespace }}'
+
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: '{{ argo_rollouts_name }}'
+    openshift_oauth_proxy_namespace: '{{ argo_rollouts_namespace }}'
+    openshift_oauth_proxy_upstream: http://{{ argo_rollouts_name }}-dashboard:3100
+
+- import_tasks: report_success.yml

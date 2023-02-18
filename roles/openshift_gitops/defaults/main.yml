@@ -8,6 +8,14 @@ gitops_instance_name: openshift-gitops
 
 gitops_instance_high_availability: false
 
+# If your OIDC provider is setup with a certificate which is not signed by one of the well known
+# certificate authorities you can provide a custom certificate which will be used in verifying
+# the OIDC provider's TLS certificate when communicating with it.
+gitops_instance_oidc_config_root_ca: ''
+
+# Disable the certificate validation for all connections made by the API server to the OIDC provider
+gitops_instance_oidc_tls_insecure_skip_verify: false
+
 gitops_create_cloudflare_tunnel: false
 
 rhsso_instance_namespace: rhsso

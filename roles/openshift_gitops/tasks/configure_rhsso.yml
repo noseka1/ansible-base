@@ -1,5 +1,7 @@
-# See also: Configuring SSO for Argo CD on OpenShift
+# See also Configuring SSO for Argo CD on OpenShift
 # https://docs.openshift.com/container-platform/4.8/cicd/gitops/configuring-sso-for-argo-cd-on-openshift.html
+# See also Integrating Keycloak and ArgoCD
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/#configuring-argocd-oidc
 
 - import_tasks: configure_rhsso_keycloak.yml
 

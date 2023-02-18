@@ -11,6 +11,8 @@ spec:
     clientID: argocd
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]
+    rootCA: |
+      {{ gitops_instance_oidc_config_root_ca | indent(6) }}
   # Configure RBAC to use groups provided by OIDC
   rbac:
     defaultPolicy: 'role:readonly'
@@ -20,4 +22,4 @@ spec:
   sso:
     # Make sure Dex is disabled as it seems to clash with the RH SSO login
     dex:
-    provider: keycloak
+    provider: ''

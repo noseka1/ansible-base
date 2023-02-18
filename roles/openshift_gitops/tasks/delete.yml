@@ -6,6 +6,13 @@
       - api_version: argoproj.io/v1alpha1
         kind: ArgoCD
 
+- name: Delete cluster role
+  kubernetes.core.k8s:
+    template:
+      - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+    wait: true
+    state: absent
+
 - name: Delete GitOps operator
   import_role:
     name: openshift_common

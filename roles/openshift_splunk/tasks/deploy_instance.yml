@@ -1,20 +1,20 @@
 - name: Deploy standalone Splunk instance
   kubernetes.core.k8s:
     template:
-      - instance-sa.yaml
-      - instance-scc-rolebinding.yaml
-      - splunk-instance-secret.yaml
-      - instance-standalone.yaml
-      - instance-web-route.yaml
-      - instance-hec-route.yaml
-    namespace: '{{ splunk_namespace }}'
+      - instance/splunk-ns.yaml
+      - instance/standalone-sa.yaml
+      - instance/standalone-scc-rolebinding.yaml
+      - instance/splunk-splunk-secret.yaml
+      - instance/standalone-standalone.yaml
+      - instance/standalone-hec-route.yaml
+      - instance/standalone-web-route.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ splunk_namespace }}/{{ splunk_namespace }}-{{ splunk_instance_name }}-standalone statefulset to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ splunk_instance_namespace }}/{{ splunk_instance_namespace }}-{{ splunk_instance_name }}-standalone statefulset to deploy
   kubernetes.core.k8s_info:
     api_version: apps/v1
     kind: StatefulSet
-    name: '{{ splunk_namespace }}-{{ splunk_instance_name }}-standalone'
-    namespace: '{{ splunk_namespace }}'
+    name: '{{ splunk_instance_namespace }}-{{ splunk_instance_name }}-standalone'
+    namespace: '{{ splunk_instance_namespace }}'
   register: splunk_sts_result
   until:
     - splunk_sts_result.resources is defined
@@ -29,8 +29,8 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
-    name: splunk-{{ splunk_namespace }}-secret
-    namespace: '{{ splunk_namespace }}'
+    name: splunk-{{ splunk_instance_namespace }}-secret
+    namespace: '{{ splunk_instance_namespace }}'
   register: splunk_secret
 
 - name: Set splunk_hec_token
@@ -42,7 +42,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ splunk_instance_name }}-web'
-    namespace: '{{ splunk_namespace }}'
+    namespace: '{{ splunk_instance_namespace }}'
   register: splunk_web_route
 
 - name: Obtain Splunk HEC route
@@ -50,7 +50,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: '{{ splunk_instance_name }}-hec'
-    namespace: '{{ splunk_namespace }}'
+    namespace: '{{ splunk_instance_namespace }}'
   register: splunk_hec_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Splunk to come up

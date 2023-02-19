@@ -1,14 +1,11 @@
 - name: Deploy Splunk operator
   kubernetes.core.k8s:
     template:
-      - splunk-ns.yaml
-      - splunk-og.yaml
-      - splunk-sub.yaml
-    namespace: '{{ splunk_namespace }}'
+      - operator/splunk-sub.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ splunk_subscription_name }}'
-    subscription_namespace: '{{ splunk_namespace }}'
+    subscription_name: '{{ splunk_operator_subscription_name }}'
+    subscription_namespace: '{{ splunk_operator_subscription_namespace }}'

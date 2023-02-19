@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ splunk_namespace }}
+  name: {{ splunk_instance_namespace }}

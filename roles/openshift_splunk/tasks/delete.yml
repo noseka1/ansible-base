@@ -1,30 +1,13 @@
-- name: Delete standalone Splunk instance
+- name: Delete standalone Splunk instance namespace
   kubernetes.core.k8s:
     template:
-      - instance-sa.yaml
-      - instance-scc-rolebinding.yaml
-      - splunk-instance-secret.yaml
-      - instance-standalone.yaml
-      - instance-web-route.yaml
-      - instance-hec-route.yaml
-    namespace: '{{ splunk_namespace }}'
-    state: absent
+      - instance/splunk-ns.yaml
     wait: true
+    state: absent
 
-- name: Deploy Splunk operator
+- name: Delete Splunk operator
   kubernetes.core.k8s:
     template:
-      - splunk-og.yaml
-      - splunk-sub.yaml
-    namespace: '{{ splunk_namespace }}'
-    state: absent
+      - operator/splunk-sub.yaml
     wait: true
-
-- name: Delete operator deployment
-  kubernetes.core.k8s:
-    api_version: apps/v1
-    kind: Deployment
-    name: splunk-operator-controller-manager
-    namespace: '{{ splunk_namespace }}'
     state: absent
-    wait: true

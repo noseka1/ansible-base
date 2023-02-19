@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ splunk_operator_subscription_name }}
+  namespace: {{ splunk_operator_subscription_namespace }}
+spec:
+  channel: {{ splunk_operator_subscription_channel }}
+  installPlanApproval: {{ splunk_operator_subscription_approval }}
+  name: splunk
+  source: operatorhub-io
+  sourceNamespace: openshift-marketplace

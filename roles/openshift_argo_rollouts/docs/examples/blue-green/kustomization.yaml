@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: bluegreen-demo
+
+resources:
+- bluegreen-demo-ns.yaml
+- bluegreen-demo-rollout.yaml
+- bluegreen-demo-active-svc.yaml
+- bluegreen-demo-preview-svc.yaml
+- bluegreen-demo-active-route.yaml
+- bluegreen-demo-preview-route.yaml

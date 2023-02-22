@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: canary-demo
+spec:
+  gateways:
+  - canary-demo
+  hosts:
+  - "*"
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: canary-demo-stable
+      weight: 100
+    - destination:
+        host: canary-demo-canary
+      weight: 0

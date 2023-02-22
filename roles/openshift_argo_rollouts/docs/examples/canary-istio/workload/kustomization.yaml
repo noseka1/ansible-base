@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: canary-istio
+
+resources:
+- canary-demo-canary-svc.yaml
+- canary-demo-gw.yaml
+- canary-demo-rollout.yaml
+- canary-demo-stable-svc.yaml
+- canary-demo-vs.yaml

@@ -1,5 +1,8 @@
 - hosts: localhost
   gather_facts: false
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ openshift_cluster_install_aws.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ openshift_cluster_install_aws.aws_secret_access_key }}'
   tasks:
     - import_role:
         name: openshift_cluster_install
@@ -12,6 +15,8 @@
   environment:
     K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install_aws.config_dir }}/auth/kubeconfig'
     KUBECONFIG: '{{ openshift_cluster_install_aws.config_dir }}/auth/kubeconfig'
+    AWS_ACCESS_KEY_ID: '{{ openshift_cluster_install_aws.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ openshift_cluster_install_aws.aws_secret_access_key }}'
   tasks:
     - import_role:
         name: openshift_cluster_postinstall

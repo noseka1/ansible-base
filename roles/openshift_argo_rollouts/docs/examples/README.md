@@ -5,3 +5,7 @@ Create a Prometheus service that bypasses the authentication proxy:
 ```
 $ oc apply -f prometheus/prometheus-noauth-svc.yaml
 ```
+
+TODO:
+
+Fix the Istio analysis, it is failing

@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: http-benchmark
+spec:
+  args:
+  - name: host
+  metrics:
+  - name: http-benchmark
+    provider:
+      job:
+        spec:
+          template:
+            spec:
+              containers:
+              - name: load-tester
+                image: docker.io/argoproj/load-tester:latest
+                command: [sh, -xec]
+                args:
+                - |
+                  cd /tmp
+                  wrk -t1 -c1 -d5 -s /report.lua http://{{ args.host }}/color
+                  jq -e '.errors_ratio <= 0.05' report.json
+              restartPolicy: Never
+          backoffLimit: 0

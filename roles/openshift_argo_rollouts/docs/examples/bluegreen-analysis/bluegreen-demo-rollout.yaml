@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: bluegreen-demo
+spec:
+  strategy:
+    blueGreen:
+      # Pre-promotion analysis run which performs analysis before the service
+      # cutover. +optional
+      prePromotionAnalysis:
+        templates:
+        - templateName: http-benchmark
+        args:
+        - name: host
+          value: bluegreen-demo-preview
+      postPromotionAnalysis:
+        templates:
+        - templateName: http-benchmark
+        args:
+        - name: host
+          value: bluegreen-demo-active

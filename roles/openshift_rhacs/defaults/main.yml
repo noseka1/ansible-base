@@ -9,6 +9,9 @@ rhacs_instance_name: stackrox-central-services
 # If RHACS is not connected to the Internet, set this to 'Offline' to enable offline mode
 rhacs_central_connectivity_policy: Online
 
+# CA certificates that will be added to the RHACS trusted certificates
+rhacs_additional_trusted_ca: ''
+
 rhacs_central_deployment_mode: dev
 
 rhacs_loglevel: info

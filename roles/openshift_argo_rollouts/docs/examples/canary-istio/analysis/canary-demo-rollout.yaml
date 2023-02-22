@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: canary-demo
+spec:
+  strategy:
+    canary:
+      analysis:
+        startingStep: 1 # index of step list, of when to start this analysis
+        templates:
+        - templateName: istio-success-rate
+        args: # arguments allow AnalysisTemplates to be re-used
+        - name: service
+          value: canary-demo-canary
+        - name: namespace
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace

@@ -3,6 +3,9 @@ kind: Kustomization
 
 namespace: canary-istio
 
+components:
+- ../analysis
+
 resources:
 - canary-demo-canary-svc.yaml
 - canary-demo-gw.yaml

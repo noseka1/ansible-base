@@ -7,8 +7,8 @@ openshift_cluster_install_aws:
   control_plane_replicas: 1
   network_type: OVNKubernetes
   aws_region: us-west-2
-  aws_access_key_id: to_be_provided
-  aws_secret_access_key: to_be_provided
+  aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
+  aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 openshift_cluster_install_gcp:
   config_dir: /home/anosek/lab/openshift/mycluster11

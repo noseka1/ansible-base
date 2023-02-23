@@ -9,6 +9,7 @@ spec:
   tls:
     destinationCACertificate: |
       {{ rhacs_central_tls.resources.0.data['ca.pem'] | b64decode | indent(6) }}
+      {{ rhacs_additional_trusted_ca | indent(6) }}
     insecureEdgeTerminationPolicy: Redirect
     termination: reencrypt
   to:

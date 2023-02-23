@@ -9,7 +9,7 @@
     username: '{{ redhat_subscription_username }}'
     password: '{{ redhat_subscription_password }}'
     pool: '^$'
-    auto_attach: false
+    auto_attach: true
     force_register: false
     state: present
   become: true

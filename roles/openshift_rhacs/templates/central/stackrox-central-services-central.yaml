@@ -13,6 +13,8 @@ spec:
       isEnabled: Enabled
       passwordSecret:
         name: central-db-password
+    defaultTLSSecret:
+      name: central-default-tls-cert
     exposure:
       loadBalancer:
         enabled: false

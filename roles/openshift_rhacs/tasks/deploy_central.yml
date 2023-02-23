@@ -9,6 +9,16 @@
       - central/scanner-db-password-secret.yaml
       - central/stackrox-central-services-central.yaml
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- name: Configure custom Central ingress certificate
+  kubernetes.core.k8s:
+    template:
+      - central/central-default-tls-cert-secret.yaml
+  when: rhacs_central_default_tls_cert[openshift_common_cluster_domain] is defined
+
 - name: Obtain Central TLS secret
   kubernetes.core.k8s_info:
     api_version: v1

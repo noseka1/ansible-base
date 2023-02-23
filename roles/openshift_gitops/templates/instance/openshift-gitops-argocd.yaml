@@ -8,6 +8,15 @@ spec:
     enabled: {{ gitops_instance_high_availability }}
   repo:
     replicas: 1
+    volumeMounts:
+    - mountPath: /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+      subPath: ca-bundle.crt
+      name: trusted-ca-bundle
+    volumes:
+      - configMap:
+          name: trusted-ca-bundle
+        name: trusted-ca-bundle
+        optional: true
   server:
     replicas: 1
     # Configure TLS edge-terminated route instead of passthrough

@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: trusted-ca-bundle
+  namespace: {{ gitops_instance_namespace }}
+  labels:
+    config.openshift.io/inject-trusted-cabundle: 'true'

@@ -1,6 +1,7 @@
 - name: Configure Argo CD
   kubernetes.core.k8s:
     template:
+      - instance/trusted-ca-bundle-cm.yaml
       - instance/openshift-gitops-cluster-secret.yaml
       - instance/openshift-gitops-argocd.yaml
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml

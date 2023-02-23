@@ -7,8 +7,6 @@ spec:
   central:
     adminPasswordSecret:
       name: central-htpasswd
-    defaultTLSSecret:
-      name: central-tls
     db:
       isEnabled: Enabled
       passwordSecret:

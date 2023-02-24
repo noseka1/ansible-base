@@ -1,0 +1,11 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: {{ item | basename | regex_replace('\.json$', '') | regex_replace('_', '-') }}
+  labels:
+    app: grafana
+spec:
+  customFolderName: Custom
+  configMapRef:
+    name: {{ item | basename | regex_replace('\.json$', '') | regex_replace('_', '-') }}
+    key: '{{ item | basename }}'

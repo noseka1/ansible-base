@@ -2,4 +2,4 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: metallb-operator
-  namespace: {{ metallb_subscription_namespace }}
+  namespace: {{ metallb_operator_subscription_namespace }}

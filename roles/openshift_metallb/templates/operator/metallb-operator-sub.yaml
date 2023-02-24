@@ -1,11 +1,11 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: {{ metallb_subscription_name }}
-  namespace: {{ metallb_subscription_namespace }}
+  name: {{ metallb_operator_subscription_name }}
+  namespace: {{ metallb_operator_subscription_namespace }}
 spec:
-  channel: {{ metallb_subscription_channel }}
-  installPlanApproval: {{ metallb_subscription_approval }}
+  channel: {{ metallb_operator_subscription_channel }}
+  installPlanApproval: {{ metallb_operator_subscription_approval }}
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

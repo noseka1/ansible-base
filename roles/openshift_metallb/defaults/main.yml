@@ -1,7 +1,7 @@
-metallb_subscription_name: metallb-operator
-metallb_subscription_namespace: metallb-system
-metallb_subscription_channel: stable
-metallb_subscription_approval: Automatic
+metallb_operator_subscription_name: metallb-operator
+metallb_operator_subscription_namespace: metallb-system
+metallb_operator_subscription_channel: stable
+metallb_operator_subscription_approval: Automatic
 
 metallb_instance_name: metallb
 metallb_instance_namespace: metallb-system

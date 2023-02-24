@@ -1,0 +1,4 @@
+redhat_subscription_username: ''
+redhat_subscription_password: ''
+redhat_subscription_pool_ids: []
+redhat_subscription_auto_attach: true

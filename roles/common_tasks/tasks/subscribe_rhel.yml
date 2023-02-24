@@ -4,12 +4,20 @@
     state: absent
   become: true
 
+- assert:
+    that: redhat_subscription_username | length > 0
+    fail_msg: "Variable 'redhat_subscription_username' must not be empty"
+
+- assert:
+    that: redhat_subscription_password | length > 0
+    fail_msg: "Variable 'redhat_subscription_password' must not be empty"
+
 - name: Register with RHSM as user {{ redhat_subscription_username }}
   community.general.redhat_subscription:
     username: '{{ redhat_subscription_username }}'
     password: '{{ redhat_subscription_password }}'
-    pool: '^$'
-    auto_attach: true
+    pool_ids: '{{ redhat_subscription_pool_ids }}'
+    auto_attach: '{{ redhat_subscription_auto_attach }}'
     force_register: false
     state: present
   become: true

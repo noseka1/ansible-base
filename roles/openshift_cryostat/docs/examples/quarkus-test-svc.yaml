@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: quarkus-test
+spec:
+  ports:
+  - name: 9097-tcp
+    port: 9097
+    protocol: TCP
+    targetPort: 9097
+  - name: 10010-tcp
+    port: 10010
+    protocol: TCP
+    targetPort: 10010
+  selector:
+    deployment: quarkus-test

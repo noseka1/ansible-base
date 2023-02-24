@@ -1,0 +1,16 @@
+- name: Set msg
+  set_fact:
+    msg: |
+      Cryostat installed successfully.
+
+      You can browse to:
+      {{ cryostat_instance.resources.0.status.applicationUrl }}
+
+      To display Grafana credentials type:
+      oc extract --namespace {{ cryostat_instance_namespace }} secret/cryostat-grafana-basic --to -
+
+      To display Cryostat JMX credentials type:
+      oc extract --namespace {{ cryostat_instance_namespace }} secret/cryostat-jmx-auth --to -
+
+- debug:
+    msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,13 @@
+- name: Delete Cryostat instance
+  kubernetes.core.k8s:
+    template:
+      - instance/cryostat-cryostat.yaml
+    wait: true
+    state: absent
+
+- name: Delete Cryostat namespace
+  kubernetes.core.k8s:
+    template:
+      - operator/cryostat-ns.yaml
+    wait: true
+    state: absent

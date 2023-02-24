@@ -1,0 +1,37 @@
+- name: Deploy Cryostat operator
+  kubernetes.core.k8s:
+    template:
+      - operator/cryostat-ns.yaml
+      - operator/cryostat-operator-og.yaml
+      - operator/cryostat-operator-sub.yaml
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: '{{ cryostat_operator_subscription_name }}'
+    subscription_namespace: '{{ cryostat_operator_subscription_namespace }}'
+
+- name: Create Cryostat instance
+  kubernetes.core.k8s:
+    template:
+      - instance/cryostat-cryostat.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Cryostat instance to deploy
+  kubernetes.core.k8s_info:
+    api_version: operator.cryostat.io/v1beta1
+    kind: Cryostat
+    name: '{{ cryostat_instance_name }}'
+    namespace: '{{ cryostat_instance_namespace }}'
+  register: cryostat_instance
+  until:
+    - cryostat_instance.resources is defined
+    - cryostat_instance.resources | length > 0
+    - cryostat_instance.resources.0.status is defined
+    - cryostat_instance.resources.0.status.conditions is defined
+    - cryostat_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'MainDeploymentAvailable') | list | length > 0
+    - (cryostat_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'MainDeploymentAvailable') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- import_tasks: report_success.yml

@@ -1,0 +1,19 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ cryostat_operator_subscription_name }}
+  namespace: {{ cryostat_operator_subscription_namespace }}
+spec:
+  channel: {{ cryostat_operator_subscription_channel }}
+  installPlanApproval: {{ cryostat_operator_subscription_approval }}
+  name: cryostat-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  config:
+    env:
+    # By default, the operator expects cert-manager to be available in the cluster.
+    # This allows the operator to deploy Cryostat with all communication between its
+    # internal services done over HTTPS. If you wish to disable this feature and not
+    # use cert-manager, you can set the environment variable DISABLE_SERVICE_TLS=true
+    - name: DISABLE_SERVICE_TLS
+      value: '{{ (not cryostat_instance_cert_manager) | string }}'

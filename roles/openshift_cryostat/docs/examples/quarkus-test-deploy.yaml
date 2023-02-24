@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-test
+spec:
+  selector:
+    matchLabels:
+      deployment: quarkus-test
+  template:
+    metadata:
+      labels:
+        deployment: quarkus-test
+    spec:
+      containers:
+      - image: quay.io/andrewazores/quarkus-test:0.0.10
+        name: quarkus-test
+        ports:
+        - containerPort: 10010
+          protocol: TCP
+        - containerPort: 9097
+          protocol: TCP
+        env:
+        - name: JAVA_OPTS
+          value: >-
+            -Dquarkus.http.host=0.0.0.0
+            -Djava.util.logging.manager=org.jboss.logmanager.LogManager
+            -Dcom.sun.management.jmxremote.port=9097
+            -Dcom.sun.management.jmxremote.ssl=false
+            -Dcom.sun.management.jmxremote.authenticate=false
+            -javaagent:/deployments/app/cryostat-agent.jar
+            -Dcryostat.agent.baseuri=http://cryostat:8181

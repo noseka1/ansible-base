@@ -3,3 +3,8 @@ grafana_subscription_name: grafana
 grafana_subscription_approval: Automatic
 grafana_instance_namespace: grafana
 grafana_instance_name: grafana
+
+# The default Grafana image version that was tested to work with the operator # can be found here:
+# https://github.com/grafana-operator/grafana-operator/blob/master/controllers/constants/constants.go#L5
+# Override this default Grafana version with a more recent version:
+grafana_base_image: docker.io/grafana/grafana-oss:9.3.6

@@ -3,6 +3,7 @@ kind: Grafana
 metadata:
   name: grafana
 spec:
+  baseImage: {{ grafana_base_image }}
   config:
     auth:
       disable_login_form: true

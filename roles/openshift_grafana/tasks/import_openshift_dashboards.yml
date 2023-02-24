@@ -8,8 +8,8 @@
 - name: Copy dashboard from namespace openshift-config-managed
   kubernetes.core.k8s:
     template:
-      - dashboards/grafana-dashboard-cm.yaml
-      - dashboards/grafana-dashboard-grafanadashboard.yaml
+      - dashboards/openshift/grafana-dashboard-cm.yaml
+      - dashboards/openshift/grafana-dashboard-grafanadashboard.yaml
     namespace: '{{ grafana_subscription_namespace }}'
   when: item.metadata.name.startswith("grafana-dashboard-")
   loop: '{{ grafana_openshift_configmaps_result.resources }}'

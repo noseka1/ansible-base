@@ -1,0 +1,9 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: {{ item.name }}
+  labels:
+    app: grafana
+spec:
+  customFolderName: {{ item.folder }}
+  url: {{ item.url }}

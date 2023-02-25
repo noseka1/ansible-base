@@ -8,4 +8,6 @@
 
 - import_tasks: import_openshift_dashboards.yml
 
+- import_tasks: import_kubernetes_dashboards.yml
+
 - import_tasks: report_success.yml

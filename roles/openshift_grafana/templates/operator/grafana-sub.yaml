@@ -8,3 +8,12 @@ spec:
   name: grafana-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
+  config:
+    env:
+    # HTTP proxy settings
+    - name: HTTP_PROXY
+      value: ''
+    - name: HTTPS_PROXY
+      value: ''
+    - name: NO_PROXY
+      value: ''

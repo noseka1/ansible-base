@@ -1535,7 +1535,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "go_memstats_heap_alloc_bytes{job=\"argocd-metrics\",namespace=~\"$namespace\"}",
+              "expr": "go_memstats_heap_alloc_bytes{job=\"openshift-gitops-metrics\",namespace=~\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{namespace}}",
@@ -1632,7 +1632,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(process_cpu_seconds_total{job=\"argocd-metrics\",namespace=~\"$namespace\"}[1m])",
+              "expr": "irate(process_cpu_seconds_total{job=\"openshift-gitops-metrics\",namespace=~\"$namespace\"}[1m])",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{namespace}}",
@@ -1730,7 +1730,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "go_goroutines{job=\"argocd-metrics\",namespace=~\"$namespace\"}",
+              "expr": "go_goroutines{job=\"openshift-gitops-metrics\",namespace=~\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{namespace}}",

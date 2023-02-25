@@ -2450,7 +2450,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "go_memstats_heap_alloc_bytes{job=\"argocd-repo-server\",namespace=~\"$namespace\"}",
+              "expr": "go_memstats_heap_alloc_bytes{job=\"openshift-gitops-repo-server\",namespace=~\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{pod}}",
@@ -2541,7 +2541,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "go_goroutines{job=\"argocd-repo-server\",namespace=~\"$namespace\"}",
+              "expr": "go_goroutines{job=\"openshift-gitops-repo-server\",namespace=~\"$namespace\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{pod}}",

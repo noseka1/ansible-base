@@ -120,7 +120,7 @@
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "P37A8EEC1CE19687D"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -1130,7 +1130,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P37A8EEC1CE19687D"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }
@@ -1142,7 +1142,7 @@
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "P37A8EEC1CE19687D"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -4268,7 +4268,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P37A8EEC1CE19687D"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }

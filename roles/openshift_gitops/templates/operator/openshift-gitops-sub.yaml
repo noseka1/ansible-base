@@ -32,3 +32,10 @@ spec:
     # https://github.com/redhat-developer/gitops-operator/blob/9f7698583cce8a22931951e57aab0ea9b36ff98f/docs/OpenShift%20GitOps%20Usage%20Guide.md#default-permissions-provided-to-argo-cd-instance
     - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
       value: "openshift-gitops"
+    # HTTP proxy settings
+    - name: HTTP_PROXY
+      value: ""
+    - name: HTTPS_PROXY
+      value: ""
+    - name: NO_PROXY
+      value: ""

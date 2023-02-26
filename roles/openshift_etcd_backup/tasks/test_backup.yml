@@ -7,7 +7,11 @@
   register: etcd_backup_job_result
 
 - name: Trigger etcd backup manually
-  command: oc create job --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} etcd-backup-test
+  command: |
+    oc create job \
+      --namespace {{ etcd_backup_namespace }} \
+      --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} \
+      etcd-backup-test
   when: etcd_backup_job_result.resources | length == 0
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete

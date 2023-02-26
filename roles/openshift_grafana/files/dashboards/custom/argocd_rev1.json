@@ -3761,7 +3761,7 @@
           "refId": "Prometheus-namespace-Variable-Query"
         },
         "refresh": 1,
-        "regex": ".*argocd.*",
+        "regex": "/(.*argocd.*|openshift-gitops)/",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",

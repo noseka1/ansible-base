@@ -2,19 +2,19 @@
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job
-    name: etcd-backup-ansible
+    name: etcd-backup-test
     namespace: '{{ etcd_backup_namespace }}'
   register: etcd_backup_job_result
 
 - name: Trigger etcd backup manually
-  command: oc create job --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} etcd-backup-ansible
+  command: oc create job --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} etcd-backup-test
   when: etcd_backup_job_result.resources | length == 0
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job
-    name: etcd-backup-ansible
+    name: etcd-backup-test
     namespace: '{{ etcd_backup_namespace }}'
   register: etcd_backup_job_result
   until:

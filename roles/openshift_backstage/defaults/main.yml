@@ -1,0 +1,4 @@
+backstage_helm_repo: https://backstage.github.io/charts
+
+backstage_namespace: backstage
+backstage_name: backstage

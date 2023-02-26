@@ -1,0 +1,13 @@
+- name: Delete backstage Helm chart
+  kubernetes.core.helm:
+    name: '{{ backstage_name }}'
+    release_namespace: '{{ backstage_namespace }}'
+    wait: true
+    state: absent
+
+- name: Delete backstage namespace
+  kubernetes.core.k8s:
+    template:
+      - backstage-ns.yaml
+    wait: true
+    state: absent

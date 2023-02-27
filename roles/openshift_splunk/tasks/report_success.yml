@@ -2,7 +2,7 @@
     msg: |
       Splunk Enterprise installed successfully.
 
-      You can browse to Splunk dashboard and log  and log in as user 'admin':
+      You can browse to Splunk dashboard and log in as user 'admin':
       https://{{ splunk_web_route.resources.0.spec.host }}
 
       HTTP Events can be sent to the HEC endpoint:

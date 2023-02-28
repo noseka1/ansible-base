@@ -4,5 +4,8 @@ openshift_logging_subscription_channel: stable
 openshift_logging_subscription_approval: Automatic
 
 openshift_logging_instance_name: instance
+openshift_logging_instance_namespace: openshift-logging
+
+openshift_logging_forward_to_syslog: false
 
 openshift_logging_forward_to_splunk: false

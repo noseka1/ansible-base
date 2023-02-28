@@ -5,16 +5,41 @@ metadata:
   namespace: {{ openshift_logging_namespace }}
 spec:
   outputs:
-  - name: splunk-receiver
+{% if openshift_logging_forward_to_syslog %}
+  - name: syslog
+    type: syslog
+    url: tcp://vector:9000
+    syslog:
+      addLogSource: true
+      facility: local0
+      payloadKey: message
+      rfc: RFC3164
+      severity: Informational
+      tag: mytag
+{% endif %}
+{% if openshift_logging_forward_to_splunk %}
+  - name: splunk
     type: splunk
     url: {{ splunk_hec_json_endpoint }}
     secret:
       name: vector-splunk-secret
+{% endif %}
   pipelines:
-    - name: splunk-pipeline
+{% if openshift_logging_forward_to_syslog %}
+    - name: syslog
       inputRefs:
       - application
       - infrastructure
       - audit
       outputRefs:
-      - splunk-receiver
+      - syslog
+{% endif %}
+{% if openshift_logging_forward_to_splunk %}
+    - name: splunk
+      inputRefs:
+      - application
+      - infrastructure
+      - audit
+      outputRefs:
+      - splunk
+{% endif %}

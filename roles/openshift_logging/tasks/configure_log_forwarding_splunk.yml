@@ -6,4 +6,3 @@
   kubernetes.core.k8s:
     template:
       - log-forwarding/vector-splunk-secret-secret.yaml
-      - log-forwarding/instance-clusterlogforwarder.yaml

@@ -1,2 +1,10 @@
+- import_tasks: configure_log_forwarding_syslog.yml
+  when: openshift_logging_forward_to_syslog
+
 - import_tasks: configure_log_forwarding_splunk.yml
   when: openshift_logging_forward_to_splunk
+
+- name: Create cluster log forwarder
+  kubernetes.core.k8s:
+    template:
+      - log-forwarding/instance-clusterlogforwarder.yaml

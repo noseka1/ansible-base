@@ -1,0 +1,2 @@
+- import_tasks: configure_log_forwarding_splunk.yml
+  when: openshift_logging_forward_to_splunk

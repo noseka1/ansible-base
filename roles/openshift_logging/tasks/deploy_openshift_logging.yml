@@ -13,4 +13,7 @@
 
 - name: Deploy OpenShift Logging instance
   kubernetes.core.k8s:
-    template: instance-clusterlogging.yaml
+    template:
+      - instance-clusterlogging.yaml
+
+- import_tasks: configure_log_forwarding.yml

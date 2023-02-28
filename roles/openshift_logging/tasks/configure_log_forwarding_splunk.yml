@@ -1,0 +1,9 @@
+- import_role:
+    name: openshift_splunk
+    tasks_from: get_hec_connection.yml
+
+- name: Configure log forwarding to Splunk
+  kubernetes.core.k8s:
+    template:
+      - log-forwarding/vector-splunk-secret-secret.yaml
+      - log-forwarding/instance-clusterlogforwarder.yaml

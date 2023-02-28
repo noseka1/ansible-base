@@ -1,3 +1,11 @@
+- name: Obtain Splunk web route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ splunk_instance_name }}-web'
+    namespace: '{{ splunk_instance_namespace }}'
+  register: splunk_web_route
+
 - set_fact:
     msg: |
       Splunk Enterprise installed successfully.
@@ -5,8 +13,11 @@
       You can browse to Splunk dashboard and log in as user 'admin':
       https://{{ splunk_web_route.resources.0.spec.host }}
 
-      HTTP Events can be sent to the HEC endpoint:
-      https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event
+      HTTP Events in JSON format can be sent to the HEC endpoint:
+      {{ splunk_hec_json_endpoint }}
+
+      HTTP Events in raw format can be sent to the HEC endpoint:
+      {{ splunk_hec_raw_endpoint }}
 
       To display Splunk credentials, type:
       oc extract -n {{ splunk_instance_namespace }} secret/splunk-{{ splunk_instance_namespace }}-secret --to -

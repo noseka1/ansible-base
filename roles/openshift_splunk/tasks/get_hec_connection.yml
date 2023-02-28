@@ -1,0 +1,26 @@
+- name: Obtain Splunk HEC route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ splunk_instance_name }}-hec'
+    namespace: '{{ splunk_instance_namespace }}'
+  register: splunk_hec_route
+
+- name: Fail if Splunk route doesn't exist
+  fail:
+    msg: Splunk route doesn't exist. Is Splunk installed on the cluster?
+  when: splunk_hec_route.resources | length == 0
+
+- name: Obtain Splunk credentials
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: splunk-{{ splunk_instance_namespace }}-secret
+    namespace: '{{ splunk_instance_namespace }}'
+  register: splunk_secret_result
+
+- name: Set Splunk HEC connection info
+  set_fact:
+    splunk_hec_json_endpoint: https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event
+    splunk_hec_raw_endpoint:  https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/raw
+    splunk_hec_token: '{{ splunk_secret_result.resources.0.data.hec_token | b64decode }}'

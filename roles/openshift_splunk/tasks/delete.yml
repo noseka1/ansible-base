@@ -6,8 +6,9 @@
     state: absent
 
 - name: Delete Splunk operator
-  kubernetes.core.k8s:
-    template:
-      - operator/splunk-sub.yaml
-    wait: true
-    state: absent
+  import_role:
+    name: openshift_common
+    tasks_from: delete_operator.yml
+  vars:
+    delete_operator_subscription_name: '{{ splunk_operator_subscription_name }}'
+    delete_operator_subscription_namespace: '{{ splunk_operator_subscription_namespace }}'

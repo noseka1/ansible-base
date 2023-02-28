@@ -1,0 +1,9 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleNotification
+metadata:
+  name: cluster-banner
+spec:
+  backgroundColor: {{ openshift_cluster_postinstall_cluster_banner.background_color }}
+  color: '#ffffff'
+  location: BannerTop
+  text: {{ openshift_common_cluster_domain }}

@@ -1,0 +1,3 @@
+- name: Install cluster console banner to distinquish different clusters
+  kubernetes.core.k8s:
+    template: cluster-banner-consolenotification.yaml

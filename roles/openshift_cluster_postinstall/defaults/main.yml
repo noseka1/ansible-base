@@ -16,3 +16,10 @@ openshift_send_alerts_to_slack_url: ''
 
 # # Use custom trusted CA certificate instead of the default redhat-uep.pem
 openshift_cluster_postinstall_custom_yum_sslcacert: {}
+
+openshift_cluster_postinstall_cluster_banner:
+  enabled: false
+  background_color: '#008000' # green (dev)
+  #background_color: '#9fc5e8' # light blue (test)
+  #background_color: '#ddaa11' # yellow (stage)
+  #background_color: '#dd0000' # red (prod)

@@ -53,6 +53,9 @@
 
 - import_tasks: auto_approve_csr.yml
 
+- import_tasks: cluster_banner.yml
+  when: openshift_cluster_postinstall_cluster_banner.enabled
+
 - import_tasks: delete_succeeded_pods.yml
 
 - import_tasks: endpoint_certs_aws.yml

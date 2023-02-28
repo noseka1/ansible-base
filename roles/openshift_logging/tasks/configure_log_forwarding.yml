@@ -8,3 +8,6 @@
   kubernetes.core.k8s:
     template:
       - log-forwarding/instance-clusterlogforwarder.yaml
+  when:
+    - openshift_logging_forward_to_syslog or
+      openshift_logging_forward_to_splunk

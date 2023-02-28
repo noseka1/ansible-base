@@ -15,5 +15,5 @@ spec:
   storageClassName: {{ openshift_common_default_storage_class }}
 {% if loki_instance_tenants_mode | length > 0 %}
   tenants:
-    mode: openshift-network
+    mode: {{ loki_instance_tenants_mode }}
 {% endif %}

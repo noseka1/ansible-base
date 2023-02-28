@@ -15,8 +15,11 @@ rhacs_central_default_tls_cert: {}
 # CA certificates that will be added to the RHACS trusted certificates
 rhacs_additional_trusted_ca: ''
 
-# Optionally, create a Slack notifier in Central sending alert notifications to this URL
+# Optionally, create a Slack notifier in Central to send alert notifications to this Slack URL
 rhacs_notifications_slack_url: ''
+
+# Optionally, create a Splunk notifier in Central to send alert notifications to Splunk
+rhacs_notifications_splunk_enabled: false
 
 # Deployment mode is either 'dev' or 'prod'. Prod enables Scanner autoscaling and higher resource requests.
 rhacs_central_deployment_mode: dev

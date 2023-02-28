@@ -11,6 +11,9 @@
 - import_tasks: configure_slack_notifier.yml
   when: rhacs_notifications_slack_url | length > 0
 
+- import_tasks: configure_splunk_notifier.yml
+  when: rhacs_notifications_splunk_enabled
+
 - import_tasks: enable_openshift_sso.yml
 
 - import_tasks: deploy_secured_cluster.yml

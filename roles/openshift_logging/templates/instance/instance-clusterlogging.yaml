@@ -8,6 +8,6 @@ spec:
   logStore:
     type: lokistack
     lokistack:
-      name: logging-loki
+      name: loki
   collection:
     type: vector

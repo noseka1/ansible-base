@@ -5,5 +5,13 @@
   vars:
     kustomize_name: vector
     kustomize_files:
-      - kustomization.yaml
+      - instance/kustomization.yaml
     kustomize_op: absent
+
+- name: Delete namespace {{ datadog_vector_namespace }}
+  kubernetes.core.k8s:
+    template:
+      - namespace/vector-ns.yaml
+    wait: true
+    state: absent
+  when: datadog_vector_manage_namespace

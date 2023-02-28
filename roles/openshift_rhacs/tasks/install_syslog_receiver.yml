@@ -3,7 +3,8 @@
     name: openshift_datadog_vector
     tasks_from: deploy.yml
   vars:
-    openshift_datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+    datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+    datadog_vector_manage_namespace: false
 
 - import_tasks: get_rhacs_central_host.yml
 

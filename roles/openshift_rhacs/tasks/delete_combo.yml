@@ -27,7 +27,8 @@
     name: openshift_datadog_vector
     tasks_from: delete.yml
   vars:
-    openshift_datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+    datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+    datadog_vector_manage_namespace: false
 
 - import_role:
     name: openshift_minio

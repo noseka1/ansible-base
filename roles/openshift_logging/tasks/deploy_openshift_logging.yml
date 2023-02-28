@@ -1,8 +1,8 @@
 - name: Deploy OpenShift Logging operator
   kubernetes.core.k8s:
     template:
-      - openshift-logging-og.yaml
-      - cluster-logging-sub.yaml
+      - operator/openshift-logging-og.yaml
+      - operator/cluster-logging-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -14,6 +14,6 @@
 - name: Deploy OpenShift Logging instance
   kubernetes.core.k8s:
     template:
-      - instance-clusterlogging.yaml
+      - instance/instance-clusterlogging.yaml
 
 - import_tasks: configure_log_forwarding.yml

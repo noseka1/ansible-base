@@ -1,13 +1,13 @@
 - name: Delete OpenShift Logging instance
   kubernetes.core.k8s:
-    template: instance-clusterlogging.yaml
+    template: instance/instance-clusterlogging.yaml
     wait: true
     state: absent
 
 - name: Delete OpenShift Logging operator
   kubernetes.core.k8s:
     template:
-      - openshift-logging-og.yaml
-      - cluster-logging-sub.yaml
+      - operator/openshift-logging-og.yaml
+      - operator/cluster-logging-sub.yaml
     wait: true
     state: absent

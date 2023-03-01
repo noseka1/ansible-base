@@ -1,0 +1,7 @@
+- name: Create admins group
+  kubernetes.core.k8s:
+    template: cluster-admins-group.yaml
+
+- name: Grant cluster-admins group the cluster-admin role
+  kubernetes.core.k8s:
+    template: cluster-admin-0-clusterrolebinding.yaml

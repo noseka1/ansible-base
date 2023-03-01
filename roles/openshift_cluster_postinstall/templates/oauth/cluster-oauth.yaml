@@ -1,0 +1,47 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  tokenConfig:
+    # Increase token validity period to 31 days
+    # See also https://docs.openshift.com/container-platform/4.9/authentication/configuring-internal-oauth.html
+    accessTokenMaxAgeSeconds: {{ 31 * 24 * 60 * 60 | int }}
+  identityProviders:
+{% if openshift_cluster_postinstall_htpasswd.enabled %}
+  - name: {{ openshift_cluster_postinstall_htpasswd.name }}
+    mappingMethod: claim
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: htpasswd
+{% endif %}
+{% if openshift_cluster_postinstall_oidc.enabled %}
+  - name: {{ openshift_cluster_postinstall_oidc.name }}
+    mappingMethod: claim
+    type: OpenID
+    openID:
+      clientID: '{{ openshift_cluster_postinstall_oidc.client_id }}'
+      clientSecret:
+        name: openidconnect
+      extraScopes:
+      - email
+      - profile
+      # The "groups" scope must be explicitely requested
+      # or Okta won't add groups claim to the token
+      - groups
+      extraAuthorizeParameters:
+        include_granted_scopes: 'true'
+      claims:
+        preferredUsername:
+        - preferred_username
+        - email
+        name:
+        - name
+        - email
+        email:
+        - email
+        groups:
+        - groups
+      issuer: {{ openshift_cluster_postinstall_oidc.issuer }}
+{% endif %}

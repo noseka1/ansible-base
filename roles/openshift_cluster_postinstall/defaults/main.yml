@@ -1,4 +1,13 @@
-openshift_cluster_postinstall_identity_name: htpasswd
+openshift_cluster_postinstall_htpasswd:
+  enabled: true
+  name: htpasswd
+
+openshift_cluster_postinstall_oidc:
+  enabled: false
+  name: okta
+  issuer: https://dev-67244641-admin.okta.com
+  client_id: 0oa8j5quabJj7xug05d7
+  client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXX
 
 openshift_cluster_postinstall_kernel_arguments:
 #  - loglevel=7

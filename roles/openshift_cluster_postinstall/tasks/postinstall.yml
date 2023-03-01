@@ -36,9 +36,9 @@
 
 - import_tasks: configure_kubelet.yml
 
-- import_tasks: users.yml
+- import_tasks: user_groups.yml
 
-- import_tasks: oauth.yml
+- import_tasks: oauth_provider.yml
 
 - import_tasks: operatorhub_io.yml
 

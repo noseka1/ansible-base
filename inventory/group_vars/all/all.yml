@@ -1,7 +1,0 @@
-# This list of images needs to be updated time to time. The current images can be found by issuing the command:
-# $ openshift-install coreos print-stream-json | jq '.architectures.x86_64.images.aws'
-aws_rhcos_ami:
-  us-east-1: ami-0fe05b1aa8dacfa90
-  us-east-2: ami-0ff64f495c7e977cf
-  us-west-1: ami-01dc5d8e6bb6f23f4
-  us-west-2: ami-0404a109adfd00019

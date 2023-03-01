@@ -8,9 +8,16 @@
   set_fact:
     aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
 
+- name: Retrieve existing machinesets
+  kubernetes.core.k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    namespace: openshift-machine-api
+  register: existing_machinesets_result
+
 - name: Set AWS ami id
   set_fact:
-    add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
+    add_machineset_ami_id: '{{ existing_machinesets_result.resources.0.spec.template.spec.providerSpec.value.ami.id }}'
 
 - name: Add {{ add_machineset_role }} machinesets to the cluster
   kubernetes.core.k8s:

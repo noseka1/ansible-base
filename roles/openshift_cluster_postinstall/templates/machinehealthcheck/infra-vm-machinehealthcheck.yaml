@@ -1,0 +1,24 @@
+# This configuration is based on the settings used in ROSA clusters
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineHealthCheck
+metadata:
+  name: infra-vm
+  namespace: openshift-machine-api
+spec:
+  maxUnhealthy: 80%
+  nodeStartupTimeout: 10m
+  selector:
+    matchExpressions:
+    - key: machine.openshift.io/cluster-api-machine-role
+      operator: In
+      values:
+      - infra
+    - key: machine.openshift.io/cluster-api-machineset
+      operator: Exists
+  unhealthyConditions:
+  - status: "False"
+    timeout: 480s
+    type: Ready
+  - status: Unknown
+    timeout: 480s
+    type: Ready

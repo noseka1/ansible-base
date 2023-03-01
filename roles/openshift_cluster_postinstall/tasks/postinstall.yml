@@ -19,6 +19,9 @@
 - import_tasks: enable_autoscaling.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
+- import_tasks: configure_machine_healthcheck.yml
+  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+
 - import_tasks: ensure_storage.yml
 
 - import_tasks: trusted_ca.yml

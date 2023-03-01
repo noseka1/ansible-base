@@ -1,0 +1,11 @@
+- name: Deploy machinehealthcheck for worker machines
+  kubernetes.core.k8s:
+    template:
+      - machinehealthcheck/worker-vm-machinehealthcheck.yaml
+      - machinehealthcheck/worker-metal-machinehealthcheck.yaml
+
+- name: Deploy machinehealthcheck for infra machines
+  kubernetes.core.k8s:
+    template:
+      - machinehealthcheck/infra-vm-machinehealthcheck.yaml
+  when: openshift_cluster_postinstall_deploy_infra_nodes

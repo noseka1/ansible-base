@@ -8,10 +8,6 @@
   set_fact:
     aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
 
-- name: Set AWS ami id
-  set_fact:
-    add_machineset_ami_id: '{{ aws_rhcos_ami[aws_region] }}'
-
 - name: Remove machinesets from the cluster
   kubernetes.core.k8s:
     api_version: machine.openshift.io/v1beta1

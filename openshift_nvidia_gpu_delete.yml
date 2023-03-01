@@ -3,3 +3,4 @@
   tasks:
     - import_role:
         name: openshift_nvidia_gpu
+        tasks_from: delete.yml

@@ -1,0 +1,14 @@
+- name: Deploy GPU Nodes MachineSet
+  import_role:
+    name: openshift_common
+    tasks_from: add_machineset.yml
+  vars:
+    add_machineset_role: gpu
+    add_machineset_instance_type: '{{ ngpu_instance_type }}'
+    add_machineset_availability_zones: '{{ ngpu_availability_zones }}'
+    add_machineset_nodes_per_zone: '{{ ngpu_nodes_per_zone }}'
+    add_machineset_labels:
+      node-role.kubernetes.io/gpu: ""
+    add_machineset_taints:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/gpu

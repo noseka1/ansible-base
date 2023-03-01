@@ -6,6 +6,10 @@
     add_machineset_role: infra
     add_machineset_labels:
       node-role.kubernetes.io/infra: ""
+    add_machineset_taints:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+
   when: install_infra_nodes
 
 - name: Create cluster autoscaler

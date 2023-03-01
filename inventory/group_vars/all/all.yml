@@ -1,6 +1,7 @@
-# AMI name: rhcos-47.83.202103251640-0, creation date: March 25, 2021 at 10:41:40
+# This list of images needs to be updated time to time. The current images can be found by issuing the command:
+# $ openshift-install coreos print-stream-json | jq '.architectures.x86_64.images.aws'
 aws_rhcos_ami:
-  us-east-1: ami-03d1c2cba04df838c
-  us-east-2: ami-0ddab715d6b88a315
-  us-west-1: ami-09b797de07577bf33
-  us-west-2: ami-0617611237b58ac93
+  us-east-1: ami-0fe05b1aa8dacfa90
+  us-east-2: ami-0ff64f495c7e977cf
+  us-west-1: ami-01dc5d8e6bb6f23f4
+  us-west-2: ami-0404a109adfd00019

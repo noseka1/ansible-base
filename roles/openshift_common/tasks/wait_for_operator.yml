@@ -49,3 +49,6 @@
     - operator_csv.resources.0.status.phase == 'Succeeded'
   retries: 60
   delay: 10
+
+- debug:
+    msg: Installed operator {{ operator_subscription.resources.0.status.installedCSV }}

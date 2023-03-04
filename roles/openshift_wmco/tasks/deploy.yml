@@ -24,8 +24,6 @@
     name: windows-user-data
   register: wmco_windows_user_data
   until:
-    - wmco_windows_user_data.resources | length > 0
-    - wmco_windows_user_data.resources.0.data is defined
     - wmco_windows_user_data.resources.0.data.userData is defined
   retries: 60
   delay: 10

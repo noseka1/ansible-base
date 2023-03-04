@@ -16,8 +16,6 @@
     namespace: '{{ grafana_instance_namespace }}'
   register: grafana_instance
   until:
-    - grafana_instance.resources | length > 0
-    - grafana_instance.resources.0.status is defined
     - grafana_instance.resources.0.status.phase is defined
     - grafana_instance.resources.0.status.phase == 'reconciling'
     - grafana_instance.resources.0.status.message is defined

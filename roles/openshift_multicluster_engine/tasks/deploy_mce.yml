@@ -28,9 +28,7 @@
     name: '{{ multicluster_engine_instance_name }}'
   register: multiclusterengine
   until:
-    - multiclusterengine.resources is defined
-    - multiclusterengine.resources | length > 0
-    - multiclusterengine.resources.0.status is defined
+    - multiclusterengine.resources.0.status.conditions is defined
     - multiclusterengine.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
     - (multiclusterengine.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 80
@@ -43,9 +41,7 @@
     name: local-cluster
   register: managedcluster
   until:
-    - managedcluster.resources is defined
-    - managedcluster.resources | length > 0
-    - managedcluster.resources.0.status is defined
+    - managedcluster.resources.0.status.conditions is defined
     - managedcluster.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | list | length > 0
     - (managedcluster.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | first).status == "True"
   retries: 80

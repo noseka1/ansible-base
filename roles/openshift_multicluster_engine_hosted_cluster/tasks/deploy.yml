@@ -17,9 +17,6 @@
     namespace: hosted-clusters
   register: hostedcluster_result
   until:
-    - hostedcluster_result.resources is defined
-    - hostedcluster_result.resources | length > 0
-    - hostedcluster_result.resources.0.status is defined
     - hostedcluster_result.resources.0.status.conditions is defined
     - hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
     - (hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"

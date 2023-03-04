@@ -33,10 +33,6 @@
     name: '{{ sandboxed_containers_instance_name }}'
   register: sandboxed_containers_kataconfig
   until:
-    - sandboxed_containers_kataconfig.resources is defined
-    - sandboxed_containers_kataconfig.resources | length == 1
-    - sandboxed_containers_kataconfig.resources.0.status is defined
-    - sandboxed_containers_kataconfig.resources.0.status.installationStatus is defined
     - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress is defined
     - sandboxed_containers_kataconfig.resources.0.status.installationStatus.IsInProgress == 'false'
   retries: 60

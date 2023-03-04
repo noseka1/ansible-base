@@ -22,9 +22,6 @@
     name: efs.csi.aws.com
   register: efs_instance
   until:
-    - efs_instance.resources is defined
-    - efs_instance.resources | length > 0
-    - efs_instance.resources.0.status is defined
     - efs_instance.resources.0.status.conditions is defined
     - efs_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'AWSEFSDriverCredentialsRequestControllerAvailable') | list | length > 0
     - (efs_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'AWSEFSDriverCredentialsRequestControllerAvailable') | first).status == "True"
@@ -59,8 +56,6 @@
     namespace: '{{ efs_operator_subscription_namespace }}'
   register: test_volume_result
   until:
-    - test_volume_result.resources.0.status is defined
-    - test_volume_result.resources.0.status.phase is defined
     - test_volume_result.resources.0.status.phase is defined
     - test_volume_result.resources.0.status.phase == 'Bound'
   retries: 60

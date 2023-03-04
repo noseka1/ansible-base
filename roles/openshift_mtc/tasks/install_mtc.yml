@@ -21,8 +21,6 @@
     name: '{{ mtc_instance_name }}'
   register: mtc_instance
   until:
-    - mtc_instance.resources | length > 0
-    - mtc_instance.resources.0.status is defined
     - mtc_instance.resources.0.status.phase is defined
     - mtc_instance.resources.0.status.phase == 'Reconciled'
   retries: 30

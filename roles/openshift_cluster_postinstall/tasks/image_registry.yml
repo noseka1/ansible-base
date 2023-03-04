@@ -11,7 +11,5 @@
 
 - import_tasks: image_registry_volume.yml
   when:
-    - image_registry_config.resources | length > 0
-    - image_registry_config.resources.0.spec is defined
     - image_registry_config.resources.0.spec.managementState is defined
     - image_registry_config.resources.0.spec.managementState == 'Removed'

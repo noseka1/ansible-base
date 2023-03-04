@@ -14,9 +14,6 @@
     name: '{{ amq_broker_instance_name }}-ss'
   register: broker_sts
   until:
-    - broker_sts.resources is defined
-    - broker_sts.resources | length > 0
-    - broker_sts.resources.0.status is defined
     - broker_sts.resources.0.status.availableReplicas is defined
     - broker_sts.resources.0.status.availableReplicas == amq_broker_replicas
   retries: 60

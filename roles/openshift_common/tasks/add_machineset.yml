@@ -32,8 +32,6 @@
     name: '{{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}'
   register: machineset
   until:
-    - machineset.resources | length > 0
-    - machineset.resources.0.status is defined
     - machineset.resources.0.status.availableReplicas is defined
     - machineset.resources.0.status.availableReplicas == (add_machineset_nodes_per_zone | int)
   retries: 120

@@ -17,9 +17,6 @@
     name: '{{ gitops_instance_name }}'
   register: argocd_instance
   until:
-    - argocd_instance.resources is defined
-    - argocd_instance.resources | length > 0
-    - argocd_instance.resources.0.status is defined
     - argocd_instance.resources.0.status.phase is defined
     - argocd_instance.resources.0.status.phase == 'Available'
   retries: 30

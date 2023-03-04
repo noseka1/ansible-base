@@ -24,9 +24,6 @@
     name: '{{ fuse_console_instance_name }}'
   register: hawtio
   until:
-    - hawtio.resources is defined
-    - hawtio.resources | length > 0
-    - hawtio.resources.0.status is defined
     - hawtio.resources.0.status.phase is defined
     - hawtio.resources.0.status.phase == 'Deployed'
   retries: 60

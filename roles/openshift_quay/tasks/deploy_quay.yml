@@ -25,9 +25,7 @@
     name: '{{ quay_instance_name }}'
   register: quayregistry_result
   until:
-    - quayregistry_result.resources is defined
-    - quayregistry_result.resources | length > 0
-    - quayregistry_result.resources.0.status is defined
+    - quayregistry_result.resources.0.status.conditions is defined
     - quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
     - (quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == 'True'
     - quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RolloutBlocked') | list | length > 0

@@ -21,8 +21,6 @@
     name: '{{ file_integrity_instance_name }}'
   register: fileintegrity_result
   until:
-    - fileintegrity_result.resources | length > 0
-    - fileintegrity_result.resources.0.status is defined
     - fileintegrity_result.resources.0.status.phase is defined
     - fileintegrity_result.resources.0.status.phase == 'Active'
   retries: 60

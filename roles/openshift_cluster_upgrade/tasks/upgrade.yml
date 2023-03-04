@@ -15,9 +15,6 @@
     name: version
   register: clusterversion_result
   until:
-    - clusterversion_result.resources is defined
-    - clusterversion_result.resources | length > 0
-    - clusterversion_result.resources.0.status is defined
     - clusterversion_result.resources.0.status.availableUpdates is defined
     - clusterversion_result.resources.0.status.availableUpdates | selectattr('version', 'equalto', item.version) | list | length > 0
   retries: 60
@@ -42,7 +39,6 @@
     name: version
   register: clusterversion_result
   until:
-    - clusterversion_result.resources.0.status is defined
     - clusterversion_result.resources.0.status.conditions is defined
     - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
     - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"

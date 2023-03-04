@@ -41,11 +41,8 @@
     namespace: openshift-storage
   register: odf_lvm_lvmcluster
   until:
-    - odf_lvm_lvmcluster.resources | length > 0
-    - odf_lvm_lvmcluster.resources.0.status is defined
     - odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses is defined
     - odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | list | length > 0
-    - (odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus is defined
     - (odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
   retries: 60
   delay: 10

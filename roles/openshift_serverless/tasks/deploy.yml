@@ -21,8 +21,7 @@
     namespace: knative-serving
   register: serving_instance
   until:
-    - serving_instance.resources | length > 0
-    - serving_instance.resources.0.status is defined
+    - serving_instance.resources.0.status.conditions is defined
     - serving_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (serving_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
   retries: 60
@@ -40,8 +39,7 @@
     namespace: knative-eventing
   register: eventing_instance
   until:
-    - eventing_instance.resources | length > 0
-    - eventing_instance.resources.0.status is defined
+    - eventing_instance.resources.0.status.conditions is defined
     - eventing_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (eventing_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
   retries: 60

@@ -17,8 +17,6 @@
     name: my-cluster
   register: kafka_instance
   until:
-    - kafka_instance.resources | length > 0
-    - kafka_instance.resources.0.status is defined
     - kafka_instance.resources.0.status.conditions is defined
     - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"

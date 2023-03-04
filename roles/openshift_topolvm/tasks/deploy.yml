@@ -25,12 +25,7 @@
     name: '{{ topolvm_instance_name }}'
   register: topolvm_cluster
   until:
-    - topolvm_cluster.resources | length > 0
-    - topolvm_cluster.resources.0.status is defined
-    - topolvm_cluster.resources.0.status.nodeStorageState is defined
-    - topolvm_cluster.resources.0.status.nodeStorageState | length > 0
-    - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses is defined
-    - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses | length  > 0
+    - topolvm_cluster.resources.0.status.nodeStorageState.0.successClasses | default([]) | length  > 0
   retries: 60
   delay: 10
 

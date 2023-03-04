@@ -21,8 +21,6 @@
     name: ocp4-cis
   register: cis_scan_result
   until:
-    - cis_scan_result.resources | length > 0
-    - cis_scan_result.resources.0.status is defined
     - cis_scan_result.resources.0.status.phase is defined
     - cis_scan_result.resources.0.status.phase == 'DONE'
   retries: 60

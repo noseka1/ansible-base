@@ -25,9 +25,6 @@
     namespace: '{{ cryostat_instance_namespace }}'
   register: cryostat_instance
   until:
-    - cryostat_instance.resources is defined
-    - cryostat_instance.resources | length > 0
-    - cryostat_instance.resources.0.status is defined
     - cryostat_instance.resources.0.status.conditions is defined
     - cryostat_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'MainDeploymentAvailable') | list | length > 0
     - (cryostat_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'MainDeploymentAvailable') | first).status == "True"

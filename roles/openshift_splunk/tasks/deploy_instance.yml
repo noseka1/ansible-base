@@ -17,9 +17,6 @@
     namespace: '{{ splunk_instance_namespace }}'
   register: splunk_sts_result
   until:
-    - splunk_sts_result.resources is defined
-    - splunk_sts_result.resources | length > 0
-    - splunk_sts_result.resources.0.status is defined
     - splunk_sts_result.resources.0.status.availableReplicas is defined
     - splunk_sts_result.resources.0.status.availableReplicas > 0
   retries: 60

@@ -19,8 +19,6 @@
     name: my-source-cluster
   register: kafka_instance
   until:
-    - kafka_instance.resources | length > 0
-    - kafka_instance.resources.0.status is defined
     - kafka_instance.resources.0.status.conditions is defined
     - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
@@ -35,8 +33,6 @@
     name: my-target-cluster
   register: kafka_instance
   until:
-    - kafka_instance.resources | length > 0
-    - kafka_instance.resources.0.status is defined
     - kafka_instance.resources.0.status.conditions is defined
     - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
@@ -51,8 +47,6 @@
     name: my-mirror-maker-2
   register: mirror_maker_instance
   until:
-    - mirror_maker_instance.resources | length > 0
-    - mirror_maker_instance.resources.0.status is defined
     - mirror_maker_instance.resources.0.status.conditions is defined
     - mirror_maker_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (mirror_maker_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"

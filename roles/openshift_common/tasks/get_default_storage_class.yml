@@ -13,7 +13,6 @@
 - set_fact:
     openshift_common_default_storage_class: '{{ item.metadata.name }}'
   when:
-    - item.metadata.annotations is defined
     - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] is defined
     - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] == 'true'
   loop: '{{ openshift_common_storage_classes.resources }}'

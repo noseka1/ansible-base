@@ -12,8 +12,6 @@
     namespace: '{{ jaeger_instance_namespace }}'
   register: jaeger_instance
   until:
-    - jaeger_instance.resources | length > 0
-    - jaeger_instance.resources.0.status is defined
     - jaeger_instance.resources.0.status.phase is defined
     - jaeger_instance.resources.0.status.phase == "Running"
   retries: 60

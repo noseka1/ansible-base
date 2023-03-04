@@ -23,7 +23,6 @@
   register: etcd_backup_job_result
   until:
     - etcd_backup_job_result.resources | length == 1
-    - etcd_backup_job_result.resources.0.status is defined
     - etcd_backup_job_result.resources.0.status.succeeded is defined
     - etcd_backup_job_result.resources.0.status.succeeded == 1
   retries: 6

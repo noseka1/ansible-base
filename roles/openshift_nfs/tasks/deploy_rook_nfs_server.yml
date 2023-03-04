@@ -11,9 +11,7 @@
     namespace: rook-nfs
   register: rook_nfs_server
   until:
-    - rook_nfs_server.resources is defined
-    - rook_nfs_server.resources | length > 0
-    - rook_nfs_server.resources.0.status is defined
+    - rook_nfs_server.resources.0.status.state is defined
     - rook_nfs_server.resources.0.status.state == 'Running'
   retries: 60
   delay: 10

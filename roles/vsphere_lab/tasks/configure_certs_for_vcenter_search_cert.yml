@@ -13,8 +13,5 @@
   set_fact:
     vcenter_trusted_cert_found: true
   when:
-    - vcenter_trusted_cert.json is defined
-    - vcenter_trusted_cert.json.cert_chain is defined
-    - vcenter_trusted_cert.json.cert_chain.cert_chain is defined
     - vcenter_trusted_cert.json.cert_chain.cert_chain.0 is defined
     - vcenter_trusted_cert.json.cert_chain.cert_chain.0 == vsphere_lab_certs.vcenter.ca_crt

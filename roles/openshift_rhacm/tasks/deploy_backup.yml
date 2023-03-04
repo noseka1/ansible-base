@@ -22,9 +22,6 @@
     namespace: '{{ rhacm_backup_namespace }}'
   register: backupschedule_result
   until:
-    - backupschedule_result.resources is defined
-    - backupschedule_result.resources | length > 0
-    - backupschedule_result.resources.0.status is defined
     - backupschedule_result.resources.0.status.phase is defined
     - backupschedule_result.resources.0.status.phase == 'Enabled'
   retries: 30
@@ -56,9 +53,6 @@
     namespace: '{{ rhacm_backup_namespace }}'
   register: policy_result
   until:
-    - policy_result.resources is defined
-    - policy_result.resources | length > 0
-    - policy_result.resources.0.status is defined
     - policy_result.resources.0.status.compliant is defined
     - policy_result.resources.0.status.compliant == 'Compliant'
   retries: 60

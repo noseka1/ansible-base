@@ -25,7 +25,6 @@
     namespace: '{{ cluster_logging_instance_namespace }}'
   register: cl_instance
   until:
-    - cl_instance.resources | length > 0
     - cl_instance.resources.0.status is defined
   retries: 80
   delay: 10

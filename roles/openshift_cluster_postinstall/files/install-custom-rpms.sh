@@ -11,6 +11,7 @@ sudo rpm-ostree install \
   --allow-inactive \
   --idempotent \
   --reboot \
+  iotop \
   kernel-debuginfo \
   lsof \
   perf \

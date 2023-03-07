@@ -10,4 +10,6 @@
 
 - import_tasks: import_kubernetes_dashboards.yml
 
+- import_tasks: import_kubevirt_dashboards.yml
+
 - import_tasks: report_success.yml

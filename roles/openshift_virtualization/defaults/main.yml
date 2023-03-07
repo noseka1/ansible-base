@@ -7,7 +7,7 @@ openshift_virtualization_subscription_name: kubevirt-hyperconverged
 openshift_virtualization_instance_namespace: openshift-cnv
 openshift_virtualization_instance_name: kubevirt-hyperconverged
 
-openshift_virtualization_qemu_kvm: false
+openshift_virtualization_qemu_kvm: true
 
 openshift_virtualization_aws:
   instance_type: c5n.metal

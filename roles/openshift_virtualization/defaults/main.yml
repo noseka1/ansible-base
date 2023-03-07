@@ -8,3 +8,11 @@ openshift_virtualization_instance_namespace: openshift-cnv
 openshift_virtualization_instance_name: kubevirt-hyperconverged
 
 openshift_virtualization_qemu_kvm: false
+
+openshift_virtualization_aws:
+  instance_type: c5n.metal
+  availability_zones: [ a ]
+  nodes_per_zone: 1
+
+openshift_virtualization_aws_nodes_total: >-
+  {{ (openshift_virtualization_aws.availability_zones | length) * openshift_virtualization_aws.nodes_per_zone }}

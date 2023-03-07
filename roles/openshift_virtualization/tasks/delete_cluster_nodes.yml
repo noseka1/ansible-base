@@ -1,0 +1,9 @@
+- name: Deploy bare metal nodes machineset
+  import_role:
+    name: openshift_common
+    tasks_from: delete_machineset.yml
+  vars:
+    add_machineset_role: baremetal
+    add_machineset_availability_zones: '{{ openshift_virtualization_aws.availability_zones }}'
+    add_machineset_nodes_per_zone: '{{ openshift_virtualization_aws.nodes_per_zone }}'
+  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'

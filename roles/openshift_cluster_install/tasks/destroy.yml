@@ -5,6 +5,7 @@
 
 - debug:
     msg: You can follow the logs using 'tail -f {{ openshift_cluster_install.config_dir }}/.openshift_install.log'
+  when: openshift_cluster_install_complete.stat.exists
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift deletion to complete
   ansible.builtin.command: >-

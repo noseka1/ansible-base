@@ -26,6 +26,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
     wait: true
+    wait_timeout: 600
     state: absent
   when: openshift_virtualization_qemu_kvm
 
@@ -33,5 +34,6 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
     wait: true
+    wait_timeout: 600
     state: absent
   when: not openshift_virtualization_qemu_kvm

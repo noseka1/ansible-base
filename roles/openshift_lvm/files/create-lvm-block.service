@@ -5,7 +5,7 @@ Description=Create block device for ODF LVM
 Type=oneshot
 RemainAfterExit=yes
 
-ExecStart=/var/usrlocal/bin/create-odf-lvm-block.sh
+ExecStart=/var/usrlocal/bin/create-lvm-block.sh
 
 [Install]
 WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 - name: Create loop block device for ODF LVM volumes on each cluster node (will cause nodes to restart)
   kubernetes.core.k8s:
-    template: 99-odf-lvm-block-mc.yaml
+    template: 99-lvm-block-mc.yaml
   register: machineconfig_result
   loop:
     - worker
@@ -19,31 +19,31 @@
     template:
       - openshift-storage-ns.yaml
       - openshift-storage-og.yaml
-      - odf-lvm-operator-sub.yaml
+      - lvm-operator-sub.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: odf-lvm-operator
+    subscription_name: lvm-operator
     subscription_namespace: openshift-storage
 
 - name: Deploy ODF LVM instance
   kubernetes.core.k8s:
     template:
-      - odf-lvmcluster-lvmcluster.yaml
+      - lvmcluster-lvmcluster.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for LVMCluster to deploy
   kubernetes.core.k8s_info:
     api_version: lvm.topolvm.io/v1alpha1
     kind: LVMCluster
-    name: odf-lvmcluster
+    name: lvmcluster
     namespace: openshift-storage
-  register: odf_lvm_lvmcluster
+  register: lvm_lvmcluster
   until:
-    - odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses is defined
-    - odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | list | length > 0
-    - (odf_lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
+    - lvm_lvmcluster.resources.0.status.deviceClassStatuses is defined
+    - lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | list | length > 0
+    - (lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
   retries: 60
   delay: 10
 
@@ -55,5 +55,5 @@
 - name: Update storage class and snapshot class
   kubernetes.core.k8s:
     template:
-      - odf-lvm-loop1-vg-sc.yaml
-      - odf-lvm-loop1-vg-vsclass.yaml
+      - lvm-loop1-vg-sc.yaml
+      - lvm-loop1-vg-vsclass.yaml

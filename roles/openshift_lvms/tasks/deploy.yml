@@ -20,13 +20,13 @@
     template:
       - operator/openshift-storage-ns.yaml
       - operator/openshift-storage-og.yaml
-      - operator/lvm-operator-sub.yaml
+      - operator/lvms-operator-sub.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: lvm-operator
+    subscription_name: lvms-operator
     subscription_namespace: openshift-storage
 
 - name: Deploy ODF LVM instance
@@ -40,11 +40,11 @@
     kind: LVMCluster
     name: lvmcluster
     namespace: openshift-storage
-  register: lvm_lvmcluster
+  register: lvms_lvmcluster
   until:
-    - lvm_lvmcluster.resources.0.status.deviceClassStatuses is defined
-    - lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | list | length > 0
-    - (lvm_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
+    - lvms_lvmcluster.resources.0.status.deviceClassStatuses is defined
+    - lvms_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | list | length > 0
+    - (lvms_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
   retries: 60
   delay: 10
 
@@ -56,5 +56,5 @@
 - name: Update storage class and snapshot class
   kubernetes.core.k8s:
     template:
-      - instance/lvm-loop1-vg-sc.yaml
-      - instance/lvm-loop1-vg-vsclass.yaml
+      - instance/lvms-loop1-vg-sc.yaml
+      - instance/lvms-loop1-vg-vsclass.yaml

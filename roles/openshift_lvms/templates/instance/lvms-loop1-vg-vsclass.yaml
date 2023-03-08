@@ -6,6 +6,6 @@ metadata:
   labels:
     # Enable creating of volume snapshots using Velero
     velero.io/csi-volumesnapshot-class: "true"
-  name: lvm-loop1-vg
+  name: lvms-loop1-vg
 deletionPolicy: Delete
 driver: topolvm.cybozu.com

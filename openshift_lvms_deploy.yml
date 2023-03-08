@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_lvm
-        tasks_from: delete.yml
+        name: openshift_lvms
+        tasks_from: deploy.yml

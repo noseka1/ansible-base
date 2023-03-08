@@ -6,22 +6,22 @@
 - name: Delete storage class and snapshot class
   kubernetes.core.k8s:
     template:
-      - lvm-loop1-vg-sc.yaml
-      - lvm-loop1-vg-vsclass.yaml
+      - instance/lvm-loop1-vg-sc.yaml
+      - instance/lvm-loop1-vg-vsclass.yaml
     wait: true
     state: absent
 
 - name: Delete ODF LVM instance
   kubernetes.core.k8s:
     template:
-      - lvmcluster-lvmcluster.yaml
+      - instance/lvmcluster-lvmcluster.yaml
     wait: true
     state: absent
 
 - name: Delete ODF LVM operator
   kubernetes.core.k8s:
     template:
-      - openshift-storage-ns.yaml
-      - lvm-operator-sub.yaml
+      - operator/openshift-storage-ns.yaml
+      - operator/lvm-operator-sub.yaml
     wait: true
     state: absent

@@ -1,6 +1,7 @@
 - name: Create loop block device for ODF LVM volumes on each cluster node (will cause nodes to restart)
   kubernetes.core.k8s:
-    template: 99-lvm-block-mc.yaml
+    template:
+      - instance/99-lvm-block-mc.yaml
   register: machineconfig_result
   loop:
     - worker
@@ -17,9 +18,9 @@
 - name: Deploy ODF LVM operator
   kubernetes.core.k8s:
     template:
-      - openshift-storage-ns.yaml
-      - openshift-storage-og.yaml
-      - lvm-operator-sub.yaml
+      - operator/openshift-storage-ns.yaml
+      - operator/openshift-storage-og.yaml
+      - operator/lvm-operator-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -31,7 +32,7 @@
 - name: Deploy ODF LVM instance
   kubernetes.core.k8s:
     template:
-      - lvmcluster-lvmcluster.yaml
+      - instance/lvmcluster-lvmcluster.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for LVMCluster to deploy
   kubernetes.core.k8s_info:
@@ -55,5 +56,5 @@
 - name: Update storage class and snapshot class
   kubernetes.core.k8s:
     template:
-      - lvm-loop1-vg-sc.yaml
-      - lvm-loop1-vg-vsclass.yaml
+      - instance/lvm-loop1-vg-sc.yaml
+      - instance/lvm-loop1-vg-vsclass.yaml

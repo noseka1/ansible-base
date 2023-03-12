@@ -1,0 +1,10 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_openshift_pull_secret.yml
+
+- name: Deploy Assisted installer service
+  kubernetes.core.k8s:
+    template:
+      - assisted-installer/agent-agentserviceconfig.yaml
+      - assisted-installer/provisioning-configuration-provisioning.yaml
+      - assisted-installer/host-inventory-creds-secret.yaml

@@ -34,6 +34,14 @@
     template:
       - cluster-discovery/discovery-discoveryconfig.yaml
       - cluster-discovery/discovered-clusters-ns.yaml
-    state: absent
     wait: true
     wait_timeout: 1800
+    state: absent
+
+- name: Delete Assisted installer service
+  kubernetes.core.k8s:
+    template:
+      - assisted-installer/agent-agentserviceconfig.yaml
+      - assisted-installer/provisioning-configuration-provisioning.yaml
+    wait: true
+    state: absent

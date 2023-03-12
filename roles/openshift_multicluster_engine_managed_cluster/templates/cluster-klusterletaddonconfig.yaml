@@ -14,6 +14,12 @@ spec:
     enabled: true
   policyController:
     enabled: true
+{% if multicluster_engine_managed_cluster.clusterwide_proxy %}
+  proxyConfig:
+    httpProxy: {{ multicluster_engine_managed_clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ multicluster_engine_managed_clusterwide_proxy.https_proxy }}
+    noProxy: {{ multicluster_engine_managed_clusterwide_proxy.no_proxy }}
+{% endif %}
   searchCollector:
     enabled: true
 {% endif %}

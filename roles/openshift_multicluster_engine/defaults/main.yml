@@ -21,3 +21,6 @@ multicluster_engine_hypershift_aws:
 # OpenShift Cluster Manager API Token is required by multi-cluster engine to discover clusters.
 # It can be downloaded from https://console.redhat.com/openshift/token
 redhat_ocm_api_token: ''
+
+# SSH public key that will be added to the authorized keys on deployed OpenShift nodes
+multicluster_engine_ssh_authorized_key: ''

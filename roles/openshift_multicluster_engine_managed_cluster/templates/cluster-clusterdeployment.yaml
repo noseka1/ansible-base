@@ -4,12 +4,15 @@ metadata:
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
   labels:
-    cloud: AWS
+    cloud: {{ multicluster_engine_managed_cluster_platform }}
+{% if multicluster_engine_managed_cluster_platform == 'AWS' %}
     region: {{ multicluster_engine_managed_cluster.aws_region }}
+{% endif %}
     vendor: OpenShift
 spec:
   baseDomain: {{ multicluster_engine_managed_cluster.base_domain }}
   clusterName: {{ multicluster_engine_managed_cluster.cluster_name }}
+{% if multicluster_engine_managed_cluster_platform == 'AWS' %}
   controlPlaneConfig:
     servingCertificates: {}
   installAttemptsLimit: 2
@@ -25,5 +28,16 @@ spec:
       name: {{ multicluster_engine_managed_cluster.cluster_name }}-ssh-private-key
     imageSetRef:
       name: img{{ multicluster_engine_managed_cluster.ocp_release_image | regex_replace('_', '-',) }}-appsub
+{% endif %}
+{% if multicluster_engine_managed_cluster_platform == 'BareMetal' %}
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: {{ multicluster_engine_managed_cluster.cluster_name }}
+    version: v1beta1
+  platform:
+    agentBareMetal:
+      agentSelector: {}
+{% endif %}
   pullSecretRef:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}-pull-secret

@@ -1,0 +1,89 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_openshift_pull_secret.yml
+
+- name: Create infrastructure environment for deploying OpenShift cluster {{ multicluster_engine_managed_cluster.cluster_name }}
+  kubernetes.core.k8s:
+    template:
+      - infraenv/cluster-infraenv-ns.yaml
+      - infraenv/capi-provider-role-role.yaml
+      - infraenv/pullsecret-cluster-secret.yaml
+      - infraenv/cluster-infraenv.yaml
+
+- set_fact:
+    msg: |
+      Cluster installation cannot proceed until the required cluster hosts are added to the inventory.
+
+      Browse to the Multi-cluster Engine (or RHACM) Dashboard. From the left-side menu click on Infrastructure and select Host inventory.
+      Click on the {{ multicluster_engine_managed_cluster.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.
+
+- debug: msg="{{ msg.split('\n') }}"
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_nodes.keys() | length }} cluster host(s) to show up in the inventory
+  kubernetes.core.k8s_info:
+    api_version: agent-install.openshift.io/v1beta1
+    kind: Agent
+    namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}-infraenv'
+  register: agent_result
+  until: >-
+    multicluster_engine_managed_cluster.cluster_nodes.keys() is
+      subset(agent_result.resources | json_query("[*].status.inventory.interfaces[*].macAddress") | flatten)
+  retries: 180
+  delay: 10
+
+- name: Bind host to the cluster
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: agent-install.openshift.io/v1beta1
+      kind: Agent
+      metadata:
+        name:  '{{ item.0.metadata.name }}'
+        namespace: '{{ item.0.metadata.namespace }}'
+      spec:
+        approved: true
+        clusterDeploymentName:
+          name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+          namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+        role: '{{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role }}'
+  when: multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress] is defined
+  loop: >-
+    {{ agent_result.resources | subelements('status.inventory.interfaces') }}
+  loop_control:
+    label: >-
+      {{ item.1.macAddress }} ->
+      {{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role }}
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
+  kubernetes.core.k8s_info:
+    api_version: extensions.hive.openshift.io/v1beta1
+    kind: AgentClusterInstall
+    name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+    namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+  register: agentclusterinstall_result
+  until:
+    - agentclusterinstall_result.resources.0.status.conditions is defined
+    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | list | length > 0
+    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | first).status == "True"
+  retries: 60
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster instalallation to stop
+  kubernetes.core.k8s_info:
+    api_version: extensions.hive.openshift.io/v1beta1
+    kind: AgentClusterInstall
+    name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+    namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+  register: agentclusterinstall_result
+  until:
+    - agentclusterinstall_result.resources.0.status.conditions is defined
+    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | list | length > 0
+    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | first).status == "True"
+  retries: 360
+  delay: 10
+
+- fail:
+    msg: Cluster installation failed.
+  when:
+    - agentclusterinstall_result.resources.0.status.conditions is defined
+    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
+    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True"

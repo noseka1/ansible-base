@@ -1,0 +1,7 @@
+- name: Delete infrastructure environment
+  kubernetes.core.k8s:
+    template:
+      - infraenv/cluster-infraenv.yaml
+      - infraenv/cluster-infraenv-ns.yaml
+    wait: true
+    state: absent

@@ -1,0 +1,26 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
+    networkType: {{ multicluster_engine_managed_cluster.network_type }}
+spec:
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
+  pullSecretRef:
+    name: pullsecret-{{ multicluster_engine_managed_cluster.cluster_name }}
+  sshAuthorizedKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
+  nmStateConfigLabelSelector:
+    matchLabels:
+      infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
+{% if multicluster_engine_managed_cluster.clusterwide_proxy %}
+  proxy:
+    httpProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.https_proxy }}
+    noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
+{% else %}
+  proxy: {}
+{% endif %}
+  cpuArchitecture: {{ multicluster_engine_managed_cluster.cpu_architecture }}

@@ -3,7 +3,7 @@
     template: cluster-proxy-2.yaml
   register: openshift_cluster_postinstall_proxy_result
   when:
-    - openshift_cluster_postinstall_cluster_wide_proxy[openshift_common_cluster_domain] is defined
+    - openshift_cluster_postinstall_clusterwide_proxy[openshift_common_cluster_domain] is defined
 
 - import_role:
     name: openshift_common

@@ -1,3 +1,15 @@
+- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
+  kubernetes.core.k8s:
+    template:
+      - common/cluster-ns.yaml
+      - common/cluster-clusterdeployment.yaml
+      - common/cluster-klusterletaddonconfig.yaml
+      - common/cluster-managedcluster.yaml
+      - common/cluster-pull-secret-secret.yaml
+      - aws/cluster-aws-creds-secret.yaml
+      - aws/cluster-install-config-secret.yaml
+      - aws/cluster-ssh-private-key-secret.yaml
+
 - name: Retrieve cluster provisioning reference
   kubernetes.core.k8s_info:
     api_version:

@@ -6,19 +6,6 @@
       - clusterimageset/clusterimageset.yaml
   when: not rhacm_detected
 
-- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
-  kubernetes.core.k8s:
-    template:
-      - cluster-ns.yaml
-      - cluster-clusterdeployment.yaml
-      - cluster-agentclusterinstall.yaml
-      - cluster-klusterletaddonconfig.yaml
-      - cluster-managedcluster.yaml
-      - secrets/cluster-aws-creds-secret.yaml
-      - secrets/cluster-install-config-secret.yaml
-      - secrets/cluster-pull-secret-secret.yaml
-      - secrets/cluster-ssh-private-key-secret.yaml
-
 - import_tasks: deploy_cluster_aws.yml
   when: multicluster_engine_managed_cluster_platform == 'AWS'
 

@@ -1,8 +1,8 @@
 - name: Delete {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
     template:
-      - cluster-managedcluster.yaml
-      - cluster-ns.yaml
+      - common/cluster-managedcluster.yaml
+      - common/cluster-ns.yaml
     state: absent
     wait: true
     wait_timeout: 1800

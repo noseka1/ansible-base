@@ -1,4 +1,3 @@
-{% if multicluster_engine_managed_cluster_platform == 'BareMetal' %}
 apiVersion: extensions.hive.openshift.io/v1beta1
 kind: AgentClusterInstall
 metadata:
@@ -41,4 +40,3 @@ spec:
     noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
 {% endif %}
   sshPublicKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
-{% endif %}

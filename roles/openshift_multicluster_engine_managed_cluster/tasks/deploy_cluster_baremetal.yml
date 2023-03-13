@@ -1,3 +1,13 @@
+- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
+  kubernetes.core.k8s:
+    template:
+      - common/cluster-ns.yaml
+      - common/cluster-clusterdeployment.yaml
+      - common/cluster-klusterletaddonconfig.yaml
+      - common/cluster-managedcluster.yaml
+      - comomn/cluster-pull-secret-secret.yaml
+      - cluster-agentclusterinstall.yaml
+
 - import_role:
     name: openshift_common
     tasks_from: get_openshift_pull_secret.yml

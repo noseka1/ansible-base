@@ -6,8 +6,10 @@ metadata:
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:
+{% if not multicluster_engine_managed_cluster.user_managed_networking %}
   apiVIP: {{ multicluster_engine_managed_cluster.api_vip }}
   ingressVIP: {{ multicluster_engine_managed_cluster.ingress_vip }}
+{% endif %}
   clusterDeploymentRef:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}
   holdInstallation: false

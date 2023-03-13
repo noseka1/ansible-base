@@ -18,6 +18,7 @@ multicluster_engine_managed_cluster_baremetal:
   ssh_authorized_key: ''
   location: myregion
   cpu_architecture: x86_64
+  user_managed_networking: false
   network_type: static
   cluster_nodes:
     '52:54:00:2c:0e:01':

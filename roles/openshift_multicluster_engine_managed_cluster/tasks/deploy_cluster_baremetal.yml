@@ -1,12 +1,15 @@
-- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
-  kubernetes.core.k8s:
-    template:
-      - common/cluster-ns.yaml
-      - common/cluster-clusterdeployment.yaml
-      - common/cluster-klusterletaddonconfig.yaml
-      - common/cluster-managedcluster.yaml
-      - comomn/cluster-pull-secret-secret.yaml
-      - cluster-agentclusterinstall.yaml
+- set_fact:
+    multicluster_engine_managed_cluster_control_plane_agents: >-
+      {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'master') | length }}
+    multicluster_engine_managed_cluster_worker_agents: >-
+      {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'worker') | length }}
+
+- fail:
+    msg: user_managed_networking  must be set to true with SNO
+  when:
+    - multicluster_engine_managed_cluster_control_plane_agents | int == 1
+    - multicluster_engine_managed_cluster_worker_agents | int == 0
+    - multicluster_engine_managed_cluster.user_managed_networking == false
 
 - import_role:
     name: openshift_common
@@ -19,6 +22,16 @@
       - assisted-installer/infraenv/capi-provider-role-role.yaml
       - assisted-installer/infraenv/pullsecret-cluster-secret.yaml
       - assisted-installer/infraenv/cluster-infraenv.yaml
+
+- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
+  kubernetes.core.k8s:
+    template:
+      - common/cluster-ns.yaml
+      - common/cluster-clusterdeployment.yaml
+      - common/cluster-klusterletaddonconfig.yaml
+      - common/cluster-managedcluster.yaml
+      - common/cluster-pull-secret-secret.yaml
+      - assisted-installer/cluster-agentclusterinstall.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for installer ISO image to be generated
   kubernetes.core.k8s_info:

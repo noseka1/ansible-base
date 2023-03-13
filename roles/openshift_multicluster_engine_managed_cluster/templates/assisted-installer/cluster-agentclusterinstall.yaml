@@ -12,8 +12,8 @@ spec:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}
   holdInstallation: false
   provisionRequirements:
-    controlPlaneAgents: {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'master') | length }}
-    workerAgents: {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'worker') | length }}
+    controlPlaneAgents: {{ multicluster_engine_managed_cluster_control_plane_agents | int }}
+    workerAgents: {{ multicluster_engine_managed_cluster_worker_agents | int }}
   # By default, SMT (or hyperthreading) is enabled to increase the performance of your machines' cores.
   # Therefore, you can omit this section unless you wish to disable hyperthreading.
   # You can disable SMT by setting the parameter value to 'Disabled'. Then, you must disable it in all cluster machines;
@@ -32,7 +32,7 @@ spec:
       hostPrefix: 23
     serviceNetwork:
     - 172.30.0.0/16
-    userManagedNetworking: false
+    userManagedNetworking: {{ multicluster_engine_managed_cluster.user_managed_networking }}
 {% if multicluster_engine_managed_cluster.clusterwide_proxy %}
   proxy:
     httpProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.http_proxy }}

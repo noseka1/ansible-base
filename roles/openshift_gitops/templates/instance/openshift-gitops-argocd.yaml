@@ -28,6 +28,8 @@ spec:
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
+  monitoring:
+    enabled: true
   notifications:
     enabled: true
   extraConfig:

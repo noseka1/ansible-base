@@ -3,9 +3,14 @@ output "cluster_endpoint" {
   value       = module.eks.cluster_endpoint
 }
 
-output "cluster_platform_version" {
-  description = "Platform version for the cluster"
-  value       = module.eks.cluster_platform_version
+output "cluster_certificate_authority_data" {
+  description = "Base64 encoded CA certificate required to communicate with the cluster"
+  value       = module.eks.cluster_certificate_authority_data
+}
+
+output "cluster_version" {
+  description = "The Kubernetes version for the cluster"
+  value       = module.eks.cluster_version
 }
 
 output "cluster_status" {

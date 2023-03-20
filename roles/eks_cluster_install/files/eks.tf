@@ -36,9 +36,9 @@ module "eks" {
       # so we need to disable it to use the default template provided by the AWS EKS managed node group service
       use_custom_launch_template = false
 
-      min_size = 3
+      min_size = 1
       max_size = 6
-      desired_size = 3
+      desired_size = 1
 
       disk_size = 50
 

@@ -16,6 +16,17 @@
     - developer
   when: openshift_cluster_postinstall_htpasswd.enabled
 
-- name: Configure authentication using htpasswd and oidc and set token expiration to 31 days
+- name: Configure authentication using htpasswd and OIDC and set token expiration to 31 days
   kubernetes.core.k8s:
     template: oauth/cluster-oauth.yaml
+  register: openshift_cluster_postinstall_oauth_result
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when:
+    - openshift_cluster_postinstall_oidc.enabled
+    - openshift_cluster_postinstall_oauth_result is changed

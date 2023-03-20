@@ -14,6 +14,9 @@
 - import_tasks: configure_splunk_notifier.yml
   when: rhacs_notifications_splunk_enabled
 
+- import_tasks: create_cloudflare_tunnel.yml
+  when: rhacs_create_cloudflare_tunnel
+
 - import_tasks: enable_openshift_sso.yml
 
 - import_tasks: deploy_secured_cluster.yml

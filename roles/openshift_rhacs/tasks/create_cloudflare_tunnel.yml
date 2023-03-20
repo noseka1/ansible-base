@@ -1,0 +1,9 @@
+- import_tasks: get_rhacs_central_host.yml
+
+- import_role:
+    name: openshift_cloudflared
+    tasks_from: deploy.yml
+  vars:
+    cloudflared_namespace: '{{ rhacs_instance_namespace }}'
+    cloudflared_manage_namespace: false
+    cloudflared_target_hostname: '{{ rhacs_central_host }}'

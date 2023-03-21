@@ -3,6 +3,13 @@
     path: '{{ openshift_cluster_install.config_dir }}/install_complete'
   register: openshift_cluster_install_complete
 
+- name: Set target OpenShift version
+  set_fact:
+    openshift_cluster_install_version_resolved: '{{ openshift_cluster_install.version }}'
+  when:
+    - openshift_cluster_install.version != 'latest'
+    - not openshift_cluster_install_complete.stat.exists
+
 - import_tasks: get_latest_version.yml
   when:
     - openshift_cluster_install.version == 'latest'

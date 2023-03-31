@@ -10,12 +10,12 @@
 
     - import_role:
         name: machine_devel
-        tasks_from: system_setup
+        tasks_from: system_setup.yml
       tags: machine_devel
 
     - import_role:
         name: machine_devel
-        tasks_from: user_setup
+        tasks_from: user_setup.yml
       tags: machine_devel
 
     # Switch to user developer
@@ -27,5 +27,5 @@
   tasks:
     - import_role:
         name: machine_devel
-        tasks_from: user_setup
+        tasks_from: user_setup.yml
       tags: machine_devel

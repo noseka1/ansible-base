@@ -18,6 +18,7 @@
       - wget
       - setroubleshoot-server # sealert
       - setools-console # sesearch
+      - zsh
     state: present
   when: ansible_distribution in [ "RedHat", "Fedora" ]
   become: true

@@ -1,5 +1,5 @@
 roles:
-# Requires rpm package python3-hvac
+# Requires RPM package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
   version: 4.7.0
@@ -34,3 +34,8 @@ collections:
 - name: community.crypto
   src: https://github.com/ansible-collections/community.crypto
   version: 2.10.0
+
+# Requires RPM package python3-pyvmomi
+- name: community.vmware
+  src: https://github.com/ansible-collections/community.vmware
+  version: 3.5.0

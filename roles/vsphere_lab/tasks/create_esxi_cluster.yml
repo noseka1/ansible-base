@@ -14,8 +14,6 @@
     password: '{{ vsphere_lab.vcenter_password }}'
     datacenter_name: '{{ vsphere_lab.datacenter_name }}'
     cluster_name: '{{ vsphere_lab.cluster_name }}'
-    ignore_ha: true
-    ignore_drs: true
     validate_certs: false
 
 - name: Obtain Cluster info
@@ -32,7 +30,7 @@
   set_fact:
     vsphere_advanced_settings_key: config.vcls.clusters.{{ vsphere_cluster_info.clusters[vsphere_lab.cluster_name].moid }}.enabled
 
-- name: Sset vsphere_advanced_settings
+- name: Set vsphere_advanced_settings
   set_fact:
     vsphere_advanced_settings: >
       {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}

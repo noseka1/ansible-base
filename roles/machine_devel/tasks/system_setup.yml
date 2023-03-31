@@ -12,9 +12,17 @@
     dest: '{{ github_dir }}/toolbox-container'
     version: master
 
+- assert:
+    that:
+      - github_readonly_token is defined
+      - github_readonly_token | length > 0
+    fail_msg: "Variable 'github_readonly_token' must not be empty"
+
 - name: Run installation scripts
   command: '{{ item }}'
   loop:
     - '{{ github_dir }}/toolbox-container/toolbox_install_basic.sh'
     - '{{ github_dir }}/toolbox-container/toolbox_install_full.sh'
+  environment:
+    GITHUB_TOKEN: '{{ github_readonly_token }}'
   become: true

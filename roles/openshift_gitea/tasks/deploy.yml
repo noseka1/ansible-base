@@ -1,0 +1,21 @@
+- name: Create Gitea namespace
+  kubernetes.core.k8s:
+    template:
+      - gitea-ns.yaml
+      - gitea-admin-secret.yaml
+      - gitea-route.yaml
+      - gitea-scc-rolebinding.yaml
+
+- name: Add Gitea chart repo
+  kubernetes.core.helm_repository:
+    name: gitea
+    repo_url: '{{ gitea_helm_repo }}'
+
+- name: Deploy Gitea
+  kubernetes.core.helm:
+    name: '{{ gitea_name }}'
+    chart_ref: gitea/gitea
+    chart_version: '{{ gitea_version | default(omit) }}'
+    release_namespace: '{{ gitea_namespace }}'
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true

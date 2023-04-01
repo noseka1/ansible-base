@@ -1,0 +1,25 @@
+gitea:
+  admin:
+    existingSecret: gitea-admin
+    email: gitea@local.domain
+  config:
+    service:
+      DISABLE_REGISTRATION: true
+      SHOW_REGISTRATION_BUTTON: false
+      REQUIRE_SIGNIN_VIEW: true
+
+  # Enable Gitea metrics
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        postgresPassword: gitea
+        username: gitea
+        password: gitea
+        database: gitea

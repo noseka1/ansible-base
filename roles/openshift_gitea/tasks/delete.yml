@@ -1,0 +1,13 @@
+- name: Delete Gitea
+  kubernetes.core.helm:
+    name: '{{ gitea_name }}'
+    release_namespace: '{{ gitea_namespace }}'
+    wait: true
+    state: absent
+
+- name: Delete Gitea namespace
+  kubernetes.core.k8s:
+    template:
+      - gitea-ns.yaml
+    wait: true
+    state: absent

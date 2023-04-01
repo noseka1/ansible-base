@@ -5,3 +5,5 @@ gitea_name: gitea
 
 gitea_admin_username: gitadmin
 gitea_admin_password: '{{ generic_user_password }}'
+
+gitea_create_repos: []

@@ -1,0 +1,16 @@
+- name: Obtain Gitea route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: gitea
+    namespace: '{{ gitea_namespace }}'
+  register: gitea_route
+
+- name: Fail if Gitea route doesn't exist
+  fail:
+    msg: Gitea route doesn't exist. Is Gitea installed on the cluster?
+  when: gitea_route.resources | length == 0
+
+- name: Set Gitea connection
+  set_fact:
+    gitea_hostname: '{{ gitea_route.resources.0.spec.host }}'

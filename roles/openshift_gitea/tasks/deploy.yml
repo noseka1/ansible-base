@@ -19,3 +19,19 @@
     release_namespace: '{{ gitea_namespace }}'
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     wait: true
+
+- import_tasks: get_connection.yml
+
+- name: Create git repository
+  uri:
+    url: 'https://{{ gitea_hostname }}/api/v1/user/repos'
+    method: POST
+    body_format: json
+    body:
+      name: '{{ item }}'
+    url_username: '{{ gitea_admin_username }}'
+    url_password: '{{ gitea_admin_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ 201, 409 ]
+  loop: '{{ gitea_create_repos }}'

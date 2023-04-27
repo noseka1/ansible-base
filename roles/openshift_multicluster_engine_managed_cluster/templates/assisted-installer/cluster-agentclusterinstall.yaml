@@ -12,6 +12,7 @@ spec:
 {% endif %}
   clusterDeploymentRef:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}
+  # Start the OpenShift installation automatically as soon as the node requirements are met
   holdInstallation: false
   provisionRequirements:
     controlPlaneAgents: {{ multicluster_engine_managed_cluster_control_plane_agents | int }}

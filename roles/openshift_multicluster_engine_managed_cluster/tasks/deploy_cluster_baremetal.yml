@@ -5,7 +5,7 @@
       {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'worker') | length }}
 
 - fail:
-    msg: user_managed_networking  must be set to true with SNO
+    msg: user_managed_networking must be set to true when deploying SNO
   when:
     - multicluster_engine_managed_cluster_control_plane_agents | int == 1
     - multicluster_engine_managed_cluster_worker_agents | int == 0
@@ -15,10 +15,17 @@
     name: openshift_common
     tasks_from: get_openshift_pull_secret.yml
 
-- name: Create infrastructure environment for deploying OpenShift cluster {{ multicluster_engine_managed_cluster.cluster_name }}
+- name: Create infrastructure environment namespace for deploying OpenShift cluster {{ multicluster_engine_managed_cluster.cluster_name }}
   kubernetes.core.k8s:
     template:
       - assisted-installer/infraenv/cluster-infraenv-ns.yaml
+
+- import_tasks: deploy_cluster_baremetal_network.yml
+  when: multicluster_engine_managed_cluster_baremetal.network_config_fileglob | default('') | length > 0
+
+- name: Create infrastructure environment objects
+  kubernetes.core.k8s:
+    template:
       - assisted-installer/infraenv/capi-provider-role-role.yaml
       - assisted-installer/infraenv/pullsecret-cluster-secret.yaml
       - assisted-installer/infraenv/cluster-infraenv.yaml

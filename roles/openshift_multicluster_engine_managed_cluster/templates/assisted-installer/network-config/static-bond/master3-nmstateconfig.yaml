@@ -1,0 +1,40 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  labels:
+    infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
+  name: master3
+  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+spec:
+  config:
+    interfaces:
+    - name: bond0
+      type: bond
+      state: up
+      ipv4:
+        enabled: true
+        address:
+        - ip: 192.168.80.23
+          prefix-length: 24
+        dhcp: false
+      link-aggregation:
+        mode: active-backup
+        options:
+          miimon: '140'
+        port:
+        - eth0
+        - eth1
+    dns-resolver:
+      config:
+        server:
+          - 192.168.80.2
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.80.1
+        next-hop-interface: bond0
+  interfaces:
+  - name: eth0
+    macAddress: 52:54:00:2c:0e:03
+  - name: eth1
+    macAddress: 52:54:00:2c:0f:03

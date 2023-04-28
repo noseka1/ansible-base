@@ -3,3 +3,5 @@
 additionalTrustBundle: |
   {{ multicluster_engine_managed_cluster.trusted_ca_bundle | indent(2) }}
 {% endif %}
+networking:
+  networkType: OVNKubernetes

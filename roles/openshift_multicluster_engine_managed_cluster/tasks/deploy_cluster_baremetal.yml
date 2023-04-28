@@ -81,7 +81,7 @@
   retries: 180
   delay: 10
 
-- name: Bind host to the cluster
+- name: Bind hosts to the cluster
   kubernetes.core.k8s:
     definition:
       apiVersion: agent-install.openshift.io/v1beta1
@@ -101,7 +101,7 @@
   loop_control:
     label: >-
       {{ item.1.macAddress }} ->
-      {{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role }}
+      {{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role | default('') }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
   kubernetes.core.k8s_info:

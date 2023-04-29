@@ -81,27 +81,11 @@
   retries: 180
   delay: 10
 
-- name: Bind hosts to the cluster
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: agent-install.openshift.io/v1beta1
-      kind: Agent
-      metadata:
-        name:  '{{ item.0.metadata.name }}'
-        namespace: '{{ item.0.metadata.namespace }}'
-      spec:
-        approved: true
-        clusterDeploymentName:
-          name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
-          namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
-        role: '{{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role }}'
-  when: multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress] is defined
-  loop: >-
-    {{ agent_result.resources | subelements('status.inventory.interfaces') }}
+- include_tasks: deploy_cluster_baremetal_bind_host.yml
+  loop: '{{ agent_result.resources }}'
   loop_control:
-    label: >-
-      {{ item.1.macAddress }} ->
-      {{ multicluster_engine_managed_cluster.cluster_nodes[item.1.macAddress].role | default('') }}
+    loop_var: outer_item
+    label: '{{ outer_item.metadata.name }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
   kubernetes.core.k8s_info:

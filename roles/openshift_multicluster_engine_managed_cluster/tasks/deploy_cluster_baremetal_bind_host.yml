@@ -1,0 +1,18 @@
+- name: Bind host to the cluster
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: agent-install.openshift.io/v1beta1
+      kind: Agent
+      metadata:
+        name:  '{{ outer_item.metadata.name }}'
+        namespace: '{{ outer_item.metadata.namespace }}'
+      spec:
+        approved: true
+        clusterDeploymentName:
+          name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+          namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+        role: '{{ multicluster_engine_managed_cluster.cluster_nodes[item].role }}'
+  when: multicluster_engine_managed_cluster.cluster_nodes[item] is defined
+  loop: '{{ outer_item.status.inventory.interfaces | json_query("[].macAddress") | unique }}'
+  loop_control:
+    label: '{{ outer_item.metadata.name }}: {{ item }} -> {{ multicluster_engine_managed_cluster.cluster_nodes[item].role | default ("") }}'

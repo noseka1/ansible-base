@@ -24,7 +24,7 @@
     validate_certs: false
 
 - name: Disable session timeouts
-  vmware_host_config_manager:
+  community.vmware.vmware_host_config_manager:
     hostname: '{{ vsphere_lab.esxi_hostname }}'
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'
@@ -38,7 +38,7 @@
   register: esxi_config
 
 - name: Reboot ESXi for configuration changes to take effect
-  vmware_host_powerstate:
+  community.vmware.vmware_host_powerstate:
     hostname: '{{ vsphere_lab.esxi_hostname }}'
     username: '{{ vsphere_lab.esxi_username }}'
     password: '{{ vsphere_lab.esxi_password }}'

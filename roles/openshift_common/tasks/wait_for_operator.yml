@@ -10,7 +10,7 @@
   retries: 60
   delay: 10
 
-- ansible.builtin.pause:
+- pause:
     seconds: 600
     prompt: >-
       The install plan for the {{ subscription_namespace }}/{{ subscription_name }} subscription must be approved manually.

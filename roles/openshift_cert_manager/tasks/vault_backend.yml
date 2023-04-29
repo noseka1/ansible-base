@@ -39,7 +39,7 @@
   delay: 1
 
 - name: Extract the certificate subject name
-  ansible.builtin.command:
+  command:
     cmd: openssl x509 -noout -subject
     stdin: '{{ cert_manager_test_secret.resources.0.data["tls.crt"] | b64decode }}'
   changed_when: false

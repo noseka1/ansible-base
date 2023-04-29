@@ -8,7 +8,7 @@
   when: openshift_cluster_install_complete.stat.exists
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift deletion to complete
-  ansible.builtin.command: >-
+  command: >-
     ./openshift-install destroy cluster --dir . --log-level debug
   args:
     chdir: '{{ openshift_cluster_install.config_dir }}'

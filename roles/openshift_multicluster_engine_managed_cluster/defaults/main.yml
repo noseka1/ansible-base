@@ -22,7 +22,7 @@ multicluster_engine_managed_cluster_baremetal:
   user_managed_networking: false
   network_type: static
   # List of network configuration files that will be applied before cluster installation.
-  # For example: '{{ role_path }}/templates/assisted-installer/network-config/dhcp-bond/*.yaml'
+  # For example: '{{ role_path }}/templates/assisted-installer/network-config/static/*.yaml'
   network_config_fileglob: ''
   cluster_nodes:
     '52:54:00:2c:0e:01':

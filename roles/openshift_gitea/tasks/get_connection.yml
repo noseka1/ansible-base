@@ -14,3 +14,5 @@
 - name: Set Gitea connection
   set_fact:
     gitea_hostname: '{{ gitea_route.resources.0.spec.host }}'
+    gitea_username: '{{ gitea_username }}'
+    gitea_password: '{{ gitea_password }}'

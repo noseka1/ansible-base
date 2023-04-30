@@ -29,8 +29,8 @@
     body_format: json
     body:
       name: '{{ item }}'
-    url_username: '{{ gitea_admin_username }}'
-    url_password: '{{ gitea_admin_password }}'
+    url_username: '{{ gitea_username }}'
+    url_password: '{{ gitea_password }}'
     force_basic_auth: true
     validate_certs: false
     status_code: [ 201, 409 ]

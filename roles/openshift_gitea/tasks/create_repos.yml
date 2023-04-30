@@ -1,0 +1,19 @@
+- import_tasks: get_connection.yml
+
+- name: Create git repository
+  uri:
+    url: 'https://{{ gitea_hostname }}/api/v1/user/repos'
+    method: POST
+    body_format: json
+    body:
+      name: '{{ item.name }}'
+      description: '{{ item.description }}'
+      private: true
+      auto_init: true
+      default_branch: master
+    url_username: '{{ gitea_username }}'
+    url_password: '{{ gitea_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ 201, 409 ]
+  loop: '{{ gitea_create_repos }}'

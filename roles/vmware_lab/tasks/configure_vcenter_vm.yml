@@ -3,56 +3,56 @@
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     validate_certs: false
     state: poweredoff
   delegate_to: localhost
 
-- name: Change memory size to {{ vsphere_lab.vcenter_vm.memory }}
+- name: Change memory size to {{ vmware_lab.vcenter_vm.memory }}
   vmware_guest:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     validate_certs: false
     hardware:
-      memory_mb: '{{ vsphere_lab.vcenter_vm.memory }}'
+      memory_mb: '{{ vmware_lab.vcenter_vm.memory }}'
   delegate_to: localhost
 
-- name: Gather network info about {{ vsphere_lab.vcenter_vm.name }}
+- name: Gather network info about {{ vmware_lab.vcenter_vm.name }}
   vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
     datacenter: ha-datacenter
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     gather_network_info: true
     validate_certs: false
   delegate_to: localhost
   register: vcenter_network_info
 
-- name: Remove the network interface from the {{ vsphere_lab.vcenter_vm.name }}
+- name: Remove the network interface from the {{ vmware_lab.vcenter_vm.name }}
   vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
     datacenter: ha-datacenter
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     mac_address: '{{ vcenter_network_info.network_data["0"].mac_address }}'
     state: absent
     validate_certs: false
   delegate_to: localhost
   when: vcenter_network_info.network_data["0"] is defined
 
-- name: Add network interface to the {{ vsphere_lab.vcenter_vm.name }} with well-known MAC address {{ vsphere_lab.vcenter_vm.macaddr }}
+- name: Add network interface to the {{ vmware_lab.vcenter_vm.name }} with well-known MAC address {{ vmware_lab.vcenter_vm.macaddr }}
   vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
     datacenter: ha-datacenter
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     network_name: VM Network
-    mac_address: '{{ vsphere_lab.vcenter_vm.macaddr }}'
+    mac_address: '{{ vmware_lab.vcenter_vm.macaddr }}'
     state: present
     validate_certs: false
   delegate_to: localhost
@@ -62,7 +62,7 @@
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     validate_certs: false
     state: poweredon
   delegate_to: localhost

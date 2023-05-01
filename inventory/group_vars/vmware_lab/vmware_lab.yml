@@ -1,4 +1,4 @@
-vsphere_lab:
+vmware_lab:
   vcenter_iso_mount_path: /mnt/vcenter
   vcenter_vm:
     name: Embedded-vCenter-Server-Appliance
@@ -22,7 +22,7 @@ vsphere_lab:
     network_name: OpenShift Network
     target_folder: mycluster
 
-vsphere_lab_certs:
+vmware_lab_certs:
   vcenter:
     crt: '{{ lookup("file", "~/.mysecrets/certs/photon-machine.lab.example.com.crt.pem") }}'
     key: '{{ lookup("file", "~/.mysecrets/certs/photon-machine.lab.example.com.key.pem") }}'

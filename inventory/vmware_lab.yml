@@ -1,4 +1,4 @@
-vsphere_lab:
+vmware_lab:
   children:
     esxi:
       hosts:

@@ -1,29 +1,29 @@
 - name: Create datacenter
   vmware_datacenter:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    datacenter_name: '{{ vmware_lab.datacenter_name }}'
     validate_certs: false
   delegate_to: localhost
   run_once: true
 
 - name: Create cluster
   vmware_cluster:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    datacenter_name: '{{ vmware_lab.datacenter_name }}'
     cluster_name: '{{ cluster_name }}'
     validate_certs: false
   delegate_to: localhost
 
 - name: Obtain Cluster info
   vmware_cluster_info:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    datacenter: '{{ vmware_lab.datacenter_name }}'
     cluster_name: '{{ cluster_name }}'
     validate_certs: false
   delegate_to: localhost
@@ -40,19 +40,19 @@
 
 - name: Disable vCLS for cluster {{ cluster_name }} (https://kb.vmware.com/kb/80472)
   community.vmware.vmware_vcenter_settings:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
     advanced_settings: '{{ vsphere_advanced_settings }}'
     validate_certs: false
   delegate_to: localhost
 
 - name: Add ESXi Host to vCenter
   vmware_host:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    datacenter: '{{ vmware_lab.datacenter_name }}'
     cluster: '{{ cluster_name }}'
     esxi_hostname: '{{ esxi_hostname }}'
     esxi_username: '{{ esxi_username }}'
@@ -62,11 +62,11 @@
 
 - name: Configure vCenter to start on ESXi host start
   community.vmware.vmware_host_auto_start:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
     esxi_hostname: '{{ esxi_hostname }}'
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     power_info:
       start_action: powerOn
       start_order: 1
@@ -74,13 +74,13 @@
   delegate_to: localhost
   run_once: true
 
-- name: Create target folder {{ vsphere_lab.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
+- name: Create target folder {{ vmware_lab.datacenter_name }}/{{ vmware_lab.openshift_deployment_prereqs.target_folder }}
   vcenter_folder:
-    hostname: '{{ vsphere_lab.vcenter_hostname }}'
-    username: '{{ vsphere_lab.vcenter_username }}'
-    password: '{{ vsphere_lab.vcenter_password }}'
-    datacenter: '{{ vsphere_lab.datacenter_name }}'
-    folder_name: '{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}'
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    datacenter: '{{ vmware_lab.datacenter_name }}'
+    folder_name: '{{ vmware_lab.openshift_deployment_prereqs.target_folder }}'
     folder_type: vm
     validate_certs: false
   delegate_to: localhost
@@ -92,7 +92,7 @@
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
     switch: OpenShift
-    nics: '{{ vsphere_lab.openshift_deployment_prereqs.network_nic }}'
+    nics: '{{ vmware_lab.openshift_deployment_prereqs.network_nic }}'
     validate_certs: false
   delegate_to: localhost
 
@@ -103,6 +103,6 @@
     password: '{{ esxi_password }}'
     esxi_hostname: '{{ esxi_hostname }}'
     switch_name: OpenShift
-    portgroup_name: '{{ vsphere_lab.openshift_deployment_prereqs.network_name }}'
+    portgroup_name: '{{ vmware_lab.openshift_deployment_prereqs.network_name }}'
     validate_certs: false
   delegate_to: localhost

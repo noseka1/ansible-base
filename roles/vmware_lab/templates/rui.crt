@@ -1,0 +1,2 @@
+{{ vmware_lab_certs[esxi_hostname].crt }}
+{{ vmware_lab_certs[esxi_hostname].ca_crt }}

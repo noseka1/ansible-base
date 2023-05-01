@@ -6,8 +6,8 @@
             "hostname": "{{ esxi_hostname }}",
             "username": "{{ esxi_username }}",
             "password": "{{ esxi_password }}",
-            "deployment_network": "{{ vsphere_lab.vcenter_vm.deployment_network }}",
-            "datastore": "{{ vsphere_lab.vcenter_vm.datastore }}"
+            "deployment_network": "{{ vmware_lab.vcenter_vm.deployment_network }}",
+            "datastore": "{{ vmware_lab.vcenter_vm.datastore }}"
         },
         "appliance": {
             "__comments": [
@@ -15,30 +15,30 @@
             ],
             "thin_disk_mode": true,
             "deployment_option": "tiny",
-            "name": "{{ vsphere_lab.vcenter_vm.name }}"
+            "name": "{{ vmware_lab.vcenter_vm.name }}"
         },
         "network": {
             "ip_family": "ipv4",
             "mode": "static",
-            "ip": "{{ vsphere_lab.vcenter_vm.static_network.ip }}",
+            "ip": "{{ vmware_lab.vcenter_vm.static_network.ip }}",
             "dns_servers": [
-                "{{ vsphere_lab.vcenter_vm.static_network.dns }}"
+                "{{ vmware_lab.vcenter_vm.static_network.dns }}"
             ],
-            "prefix": "{{ vsphere_lab.vcenter_vm.static_network.prefix }}",
-            "gateway": "{{ vsphere_lab.vcenter_vm.static_network.gateway }}",
-            "system_name": "{{ vsphere_lab.vcenter_vm.static_network.system_name }}"
+            "prefix": "{{ vmware_lab.vcenter_vm.static_network.prefix }}",
+            "gateway": "{{ vmware_lab.vcenter_vm.static_network.gateway }}",
+            "system_name": "{{ vmware_lab.vcenter_vm.static_network.system_name }}"
         },
         "os": {
-            "password": "{{ vsphere_lab.vcenter_password }}",
-{% if vsphere_lab.vcenter_vm.ntp_servers is defined and vsphere_lab.vcenter_vm.ntp_servers != "" %}
-            "ntp_servers": "{{ vsphere_lab.vcenter_vm.ntp_servers }}",
+            "password": "{{ vmware_lab.vcenter_password }}",
+{% if vmware_lab.vcenter_vm.ntp_servers is defined and vmware_lab.vcenter_vm.ntp_servers != "" %}
+            "ntp_servers": "{{ vmware_lab.vcenter_vm.ntp_servers }}",
 {% else %}
             "time_tools_sync": false,
 {% endif %}
             "ssh_enable": true
         },
         "sso": {
-            "password": "{{ vsphere_lab.vcenter_password }}",
+            "password": "{{ vmware_lab.vcenter_password }}",
             "domain_name": "mysso.com"
         }
     },

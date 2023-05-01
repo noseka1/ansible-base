@@ -3,7 +3,7 @@
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
-    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    name: '{{ vmware_lab.vcenter_vm.name }}'
     datacenter: ha-datacenter
     validate_certs: false
   delegate_to: localhost

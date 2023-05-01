@@ -1,9 +1,9 @@
 - name: Get vCenter trusted cert {{ item.chain }}
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains/{{ item.chain }}'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains/{{ item.chain }}'
     method: GET
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
     validate_certs: false
@@ -14,4 +14,4 @@
     vcenter_trusted_cert_found: true
   when:
     - vcenter_trusted_cert.json.cert_chain.cert_chain.0 is defined
-    - vcenter_trusted_cert.json.cert_chain.cert_chain.0 == vsphere_lab_certs.vcenter.ca_crt
+    - vcenter_trusted_cert.json.cert_chain.cert_chain.0 == vmware_lab_certs.vcenter.ca_crt

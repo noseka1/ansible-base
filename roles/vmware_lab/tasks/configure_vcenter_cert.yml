@@ -1,19 +1,19 @@
 - name: Create session
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/session'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/session'
     method: POST
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     status_code: [ 201 ]
     validate_certs: false
   register: vcenter_session
 
 - name: List vCenter trusted certs (retry if the cert component is still starting up)
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
     method: GET
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
     validate_certs: false
@@ -28,17 +28,17 @@
 
 - name: Add CA cert to trusted certs
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
     method: POST
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
     body_format: json
     body:
       cert_chain:
         cert_chain:
-          - '{{ vsphere_lab_certs.vcenter.ca_crt }}'
+          - '{{ vmware_lab_certs.vcenter.ca_crt }}'
     status_code: [ 201 ]
     validate_certs: false
   when:
@@ -46,10 +46,10 @@
 
 - name: Get current vCenter TLS certs
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
     method: GET
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
     validate_certs: false
@@ -57,26 +57,26 @@
 
 - name: Set vCenter TLS certs
   uri:
-    url: 'https://{{ vsphere_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
+    url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
     method: PUT
-    url_username: '{{ vsphere_lab.vcenter_username }}'
-    url_password: '{{ vsphere_lab.vcenter_password }}'
+    url_username: '{{ vmware_lab.vcenter_username }}'
+    url_password: '{{ vmware_lab.vcenter_password }}'
     headers:
       vmware-api-session-id: '{{ vcenter_session.vmware_api_session_id }}'
     body_format: json
     body:
-      cert: '{{ vsphere_lab_certs.vcenter.crt }}'
-      key: '{{ vsphere_lab_certs.vcenter.key }}'
-      root_cert: '{{ vsphere_lab_certs.vcenter.ca_crt }}'
+      cert: '{{ vmware_lab_certs.vcenter.crt }}'
+      key: '{{ vmware_lab_certs.vcenter.key }}'
+      root_cert: '{{ vmware_lab_certs.vcenter.ca_crt }}'
     status_code: [ 204 ]
     validate_certs: false
-  when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
+  when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt
 
 - name: Wait for 60 seconds for vCenter services to begin restarting
   wait_for:
     timeout: 60
-  when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
+  when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt
 
 - name: Wait for vCenter to become available
   import_tasks: wait_for_vcenter.yml
-  when: vcenter_certs.json.cert != vsphere_lab_certs.vcenter.crt
+  when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt

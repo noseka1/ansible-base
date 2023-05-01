@@ -1,5 +1,5 @@
 - import_tasks: configure_esxi_cert.yml
-  when: vsphere_lab_certs[esxi_hostname] is defined
+  when: vmware_lab_certs[esxi_hostname] is defined
 
 - name: Enable autostart on ESXi host
   community.vmware.vmware_host_auto_start:

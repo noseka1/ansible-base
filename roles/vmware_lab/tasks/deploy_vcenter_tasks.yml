@@ -1,20 +1,20 @@
 - name: Check that the vCenter Server Appliance ISO is mounted
   stat:
-    path: '{{ vsphere_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
+    path: '{{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
   delegate_to: localhost
   register: vcsa_deploy
 
 - name: Fail if not mounted
   fail:
     msg: >
-      Mount the vCenter Server Appliance ISO on {{ vsphere_lab.vcenter_iso_mount_path }} are re-run this script.
-      For example: sudo mount VMware-VCSA-all-7.0.2-17958471.iso {{ vsphere_lab.vcenter_iso_mount_path }}
+      Mount the vCenter Server Appliance ISO on {{ vmware_lab.vcenter_iso_mount_path }} are re-run this script.
+      For example: sudo mount VMware-VCSA-all-7.0.2-17958471.iso {{ vmware_lab.vcenter_iso_mount_path }}
   delegate_to: localhost
   when: not vcsa_deploy.stat.exists
 
 - name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
   command: >
-    {{ vsphere_lab.vcenter_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help
+    {{ vmware_lab.vcenter_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help
   delegate_to: localhost
   changed_when: false
 
@@ -34,7 +34,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vCenter installation to complete
   command: >
-    {{ vsphere_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
+    {{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
       install
       --accept-eula
       --acknowledge-ceip

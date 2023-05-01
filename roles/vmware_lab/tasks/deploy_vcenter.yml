@@ -12,5 +12,5 @@
 - name: Reconfigure vCenter instance if needed
   import_tasks: configure_vcenter_vm.yml
   when: >
-    vcenter_vm.instance.hw_memtotal_mb != vsphere_lab.vcenter_vm.memory
-    or vcenter_vm.instance.hw_eth0.macaddress != vsphere_lab.vcenter_vm.macaddr
+    vcenter_vm.instance.hw_memtotal_mb != vmware_lab.vcenter_vm.memory
+    or vcenter_vm.instance.hw_eth0.macaddress != vmware_lab.vcenter_vm.macaddr

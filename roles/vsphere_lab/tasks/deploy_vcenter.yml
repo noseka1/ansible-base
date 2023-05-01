@@ -1,45 +1,16 @@
-- name: Check that the vCenter Server Appliance ISO is mounted
-  stat:
-    path: '{{ vsphere_lab.vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
-  register: vcsa_deploy
+- name: Retrieve vCenter virtual machine
+  import_tasks: retrieve_vcenter_vm.yml
 
-- name: Fail if not mounted
-  fail:
-    msg: >
-      Mount the vCenter Server Appliance ISO on {{ vsphere_lab.vcsa_iso_mount_path }} are re-run this script.
-      For example: sudo mount VMware-VCSA-all-7.0.2-17958471.iso {{ vsphere_lab.vcsa_iso_mount_path }}
-  when: not vcsa_deploy.stat.exists
+- name: Deploy vCenter Server Appliance
+  import_tasks: deploy_vcenter_tasks.yml
+  when: vcenter_vm is failed
 
-- name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
-  command: >
-    {{ vsphere_lab.vcsa_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help
-  changed_when: false
+- name: Retrieve vCenter virtual machine
+  import_tasks: retrieve_vcenter_vm.yml
+  when: vcenter_vm
 
-- name: Create temporary directory
-  tempfile:
-    state: directory
-    suffix: -vcsa
-  register: tmpdir
-
-- name: Copy install config to {{ tmpdir.path }}
-  template:
-    src: embedded_vCSA_on_ESXi.json
-    dest: '{{ tmpdir.path }}'
-    mode: '0644'
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for vCSA installation to complete
-  command: >
-    {{ vsphere_lab.vcsa_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
-      install
-      --accept-eula
-      --acknowledge-ceip
-      --log-dir {{ tmpdir.path }}
-      --no-ssl-certificate-verification
-      {{ tmpdir.path }}/embedded_vCSA_on_ESXi.json
-  tags:
-    - skip_ansible_lint
-
-- name: Delete temporary directory {{ tmpdir.path }}
-  file:
-    path: '{{ tmpdir.path }}'
-    state: absent
+- name: Reconfigure vCenter instance if needed
+  import_tasks: configure_vcenter_vm.yml
+  when: >
+    vcenter_vm.instance.hw_memtotal_mb != vsphere_lab.vcenter_vm.memory
+    or vcenter_vm.instance.hw_eth0.macaddress != vsphere_lab.vcenter_vm.macaddr

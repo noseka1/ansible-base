@@ -1,0 +1,53 @@
+- import_tasks: configure_esxi_cert.yml
+  when: vsphere_lab_certs[esxi_hostname] is defined
+
+- name: Enable autostart on ESXi host
+  community.vmware.vmware_host_auto_start:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    system_defaults:
+      enabled: true
+      start_delay: 0
+      stop_delay: 0
+      stop_action: powerOff
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Disable session timeouts
+  community.vmware.vmware_host_config_manager:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    options:
+      UserVars.HostClientSessionTimeout: 0
+      UserVars.ESXiShellTimeOut: 0
+      UserVars.ESXiShellInteractiveTimeOut: 0
+      UserVars.DcuiTimeOut: 0
+    validate_certs: false
+  delegate_to: localhost
+  register: esxi_config
+
+- name: Reboot ESXi for configuration changes to take effect
+  community.vmware.vmware_host_powerstate:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    state: reboot-host
+    force: true
+    validate_certs: false
+  delegate_to: localhost
+  when: esxi_config is changed
+
+- name: Wait for ESXi host to start rebooting
+  pause:
+    seconds: 30
+  delegate_to: localhost
+  when: esxi_config is changed
+
+- name: Wait for ESXi to become reachable
+  import_tasks: wait_for_esxi.yml
+  when: esxi_config is changed

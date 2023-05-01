@@ -1,17 +1,14 @@
 vsphere_lab:
-  vcsa_iso_mount_path: /mnt/vcsa
-  esxi_hostname: esxi.lab.example.com
-  esxi_username: root
-  esxi_password: '{{ generic_user_password }}'
-  vcsa_vm:
+  vcenter_iso_mount_path: /mnt/vcenter
+  vcenter_vm:
     name: Embedded-vCenter-Server-Appliance
     memory: 6144
     macaddr: 00:50:56:11:22:19
     static_network:
-      ip: 192.168.110.61
-      dns: 192.168.110.1
+      ip: 192.168.10.60
+      dns: 192.168.10.1
       prefix: 24
-      gateway: 192.168.110.1
+      gateway: 192.168.10.1
       system_name: photon-machine.lab.example.com
     ntp_servers: time.nist.gov
     deployment_network: VM Network
@@ -19,9 +16,26 @@ vsphere_lab:
   vcenter_hostname: photon-machine.lab.example.com
   vcenter_username: administrator@mysso.com
   vcenter_password: '{{ generic_user_password }}'
-  datacenter_name: Datacenter
-  cluster_name: Cluster
+  datacenter_name: datacenter
   openshift_deployment_prereqs:
     network_nic: vmnic1
     network_name: OpenShift Network
     target_folder: mycluster
+
+vsphere_lab_certs:
+  vcenter:
+    crt: '{{ lookup("file", "~/.mysecrets/certs/photon-machine.lab.example.com.crt.pem") }}'
+    key: '{{ lookup("file", "~/.mysecrets/certs/photon-machine.lab.example.com.key.pem") }}'
+    ca_crt: '{{ lookup("file", "~/.mysecrets/certs/root.crt.pem") }}'
+  esxi1.lab.example.com:
+    crt: '{{ lookup("file", "~/.mysecrets/certs/esxi1.lab.example.com.crt.pem") }}'
+    key: '{{ lookup("file", "~/.mysecrets/certs/esxi1.lab.example.com.key.pem") }}'
+    ca_crt: '{{ lookup("file", "~/.mysecrets/certs/root.crt.pem") }}'
+  esxi2.lab.example.com:
+    crt: '{{ lookup("file", "~/.mysecrets/certs/esxi2.lab.example.com.crt.pem") }}'
+    key: '{{ lookup("file", "~/.mysecrets/certs/esxi2.lab.example.com.key.pem") }}'
+    ca_crt: '{{ lookup("file", "~/.mysecrets/certs/root.crt.pem") }}'
+  esxi3.lab.example.com:
+    crt: '{{ lookup("file", "~/.mysecrets/certs/esxi3.lab.example.com.crt.pem") }}'
+    key: '{{ lookup("file", "~/.mysecrets/certs/esxi3.lab.example.com.key.pem") }}'
+    ca_crt: '{{ lookup("file", "~/.mysecrets/certs/root.crt.pem") }}'

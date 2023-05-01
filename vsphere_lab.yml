@@ -3,16 +3,33 @@
   tasks:
     - import_role:
         name: vsphere_lab
-        tasks_from: configure_certs_for_esxi.yml
+        tasks_from: configure_esxi_host.yml
 
-- hosts: localhost
-  tasks:
-    - import_role:
-        name: vsphere_lab
-
-- hosts: vcsa
+- hosts: esxi1
   gather_facts: false
   tasks:
     - import_role:
         name: vsphere_lab
-        tasks_from: configure_vcsa_host.yml
+        tasks_from: deploy_vcenter.yml
+
+- hosts: vcenter
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: configure_vcenter_host.yml
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: configure_vcenter_cert.yml
+      when: vsphere_lab_certs.vcenter is defined
+
+- hosts: esxi
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: vsphere_lab
+        tasks_from: create_vcenter_objects.yml

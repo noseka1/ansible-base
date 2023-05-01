@@ -2,6 +2,7 @@
   uri:
     url: 'https://{{ vsphere_lab.vcenter_hostname }}'
     validate_certs: false
+  delegate_to: localhost
   register: result
   until: result.status == 200
   retries: 60
@@ -15,8 +16,8 @@
     url_password: '{{ vsphere_lab.vcenter_password }}'
     status_code: [ 201 ]
     validate_certs: false
-  register: vcenter_session
   delegate_to: localhost
+  register: vcenter_session
   until: vcenter_session.status == 201
   retries: 60
   delay: 10

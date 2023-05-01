@@ -1,2 +1,2 @@
-{{ vsphere_lab_certs.esxi.crt }}
-{{ vsphere_lab_certs.esxi.ca_crt }}
+{{ vsphere_lab_certs[esxi_hostname].crt }}
+{{ vsphere_lab_certs[esxi_hostname].ca_crt }}

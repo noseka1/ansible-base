@@ -1,0 +1,108 @@
+- name: Create datacenter
+  vmware_datacenter:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    validate_certs: false
+  delegate_to: localhost
+  run_once: true
+
+- name: Create cluster
+  vmware_cluster:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter_name: '{{ vsphere_lab.datacenter_name }}'
+    cluster_name: '{{ cluster_name }}'
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Obtain Cluster info
+  vmware_cluster_info:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    cluster_name: '{{ cluster_name }}'
+    validate_certs: false
+  delegate_to: localhost
+  register: vsphere_cluster_info
+
+- name: Set vsphere_advanced_settings_key
+  set_fact:
+    vsphere_advanced_settings_key: config.vcls.clusters.{{ vsphere_cluster_info.clusters[cluster_name].moid }}.enabled
+
+- name: Set vsphere_advanced_settings
+  set_fact:
+    vsphere_advanced_settings: >
+      {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}
+
+- name: Disable vCLS for cluster {{ cluster_name }} (https://kb.vmware.com/kb/80472)
+  community.vmware.vmware_vcenter_settings:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    advanced_settings: '{{ vsphere_advanced_settings }}'
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Add ESXi Host to vCenter
+  vmware_host:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    cluster: '{{ cluster_name }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    esxi_username: '{{ esxi_username }}'
+    esxi_password: '{{ esxi_password }}'
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Configure vCenter to start on ESXi host start
+  community.vmware.vmware_host_auto_start:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    power_info:
+      start_action: powerOn
+      start_order: 1
+    validate_certs: false
+  delegate_to: localhost
+  run_once: true
+
+- name: Create target folder {{ vsphere_lab.datacenter_name }}/{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}
+  vcenter_folder:
+    hostname: '{{ vsphere_lab.vcenter_hostname }}'
+    username: '{{ vsphere_lab.vcenter_username }}'
+    password: '{{ vsphere_lab.vcenter_password }}'
+    datacenter: '{{ vsphere_lab.datacenter_name }}'
+    folder_name: '{{ vsphere_lab.openshift_deployment_prereqs.target_folder }}'
+    folder_type: vm
+    validate_certs: false
+  delegate_to: localhost
+  run_once: true
+
+- name: Add a VMware vSwitch
+  vmware_vswitch:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    switch: OpenShift
+    nics: '{{ vsphere_lab.openshift_deployment_prereqs.network_nic }}'
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Create portgroup
+  vmware_portgroup:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    esxi_hostname: '{{ esxi_hostname }}'
+    switch_name: OpenShift
+    portgroup_name: '{{ vsphere_lab.openshift_deployment_prereqs.network_name }}'
+    validate_certs: false
+  delegate_to: localhost

@@ -3,11 +3,11 @@
     "__comments": "Sample template to deploy a vCenter Server Appliance with an embedded Platform Services Controller on an ESXi host.",
     "new_vcsa": {
         "esxi": {
-            "hostname": "{{ vsphere_lab.esxi_hostname }}",
-            "username": "{{ vsphere_lab.esxi_username }}",
-            "password": "{{ vsphere_lab.esxi_password }}",
-            "deployment_network": "{{ vsphere_lab.vcsa_vm.deployment_network }}",
-            "datastore": "{{ vsphere_lab.vcsa_vm.datastore }}"
+            "hostname": "{{ esxi_hostname }}",
+            "username": "{{ esxi_username }}",
+            "password": "{{ esxi_password }}",
+            "deployment_network": "{{ vsphere_lab.vcenter_vm.deployment_network }}",
+            "datastore": "{{ vsphere_lab.vcenter_vm.datastore }}"
         },
         "appliance": {
             "__comments": [
@@ -15,23 +15,23 @@
             ],
             "thin_disk_mode": true,
             "deployment_option": "tiny",
-            "name": "{{ vsphere_lab.vcsa_vm.name }}"
+            "name": "{{ vsphere_lab.vcenter_vm.name }}"
         },
         "network": {
             "ip_family": "ipv4",
             "mode": "static",
-            "ip": "{{ vsphere_lab.vcsa_vm.static_network.ip }}",
+            "ip": "{{ vsphere_lab.vcenter_vm.static_network.ip }}",
             "dns_servers": [
-                "{{ vsphere_lab.vcsa_vm.static_network.dns }}"
+                "{{ vsphere_lab.vcenter_vm.static_network.dns }}"
             ],
-            "prefix": "{{ vsphere_lab.vcsa_vm.static_network.prefix }}",
-            "gateway": "{{ vsphere_lab.vcsa_vm.static_network.gateway }}",
-            "system_name": "{{ vsphere_lab.vcsa_vm.static_network.system_name }}"
+            "prefix": "{{ vsphere_lab.vcenter_vm.static_network.prefix }}",
+            "gateway": "{{ vsphere_lab.vcenter_vm.static_network.gateway }}",
+            "system_name": "{{ vsphere_lab.vcenter_vm.static_network.system_name }}"
         },
         "os": {
             "password": "{{ vsphere_lab.vcenter_password }}",
-{% if vsphere_lab.vcsa_vm.ntp_servers is defined and vsphere_lab.vcsa_vm.ntp_servers != "" %}
-            "ntp_servers": "{{ vsphere_lab.vcsa_vm.ntp_servers }}",
+{% if vsphere_lab.vcenter_vm.ntp_servers is defined and vsphere_lab.vcenter_vm.ntp_servers != "" %}
+            "ntp_servers": "{{ vsphere_lab.vcenter_vm.ntp_servers }}",
 {% else %}
             "time_tools_sync": false,
 {% endif %}

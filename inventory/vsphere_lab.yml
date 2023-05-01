@@ -1,10 +1,33 @@
 vsphere_lab:
-  hosts:
+  children:
     esxi:
-      ansible_host: esxi.lab.example.com
-      ansible_user: root
-      ansible_python_interpreter: /bin/python
-    vcsa:
+      hosts:
+        esxi1:
+          ansible_host: esxi1.lab.example.com
+          ansible_user: root
+          ansible_python_interpreter: /bin/python
+          esxi_hostname: esxi1.lab.example.com
+          esxi_username: root
+          esxi_password: '{{ generic_user_password }}'
+          cluster_name: cluster1
+        esxi2:
+          ansible_host: esxi2.lab.example.com
+          ansible_user: root
+          ansible_python_interpreter: /bin/python
+          esxi_hostname: esxi2.lab.example.com
+          esxi_username: root
+          esxi_password: '{{ generic_user_password }}'
+          cluster_name: cluster2
+        esxi3:
+          ansible_host: esxi3.lab.example.com
+          ansible_user: root
+          ansible_python_interpreter: /bin/python
+          esxi_hostname: esxi3.lab.example.com
+          esxi_username: root
+          esxi_password: '{{ generic_user_password }}'
+          cluster_name: cluster3
+  hosts:
+    vcenter:
       ansible_host: photon-machine.lab.example.com
       ansible_user: root
       ansible_ssh_password: '{{ generic_user_password }}'

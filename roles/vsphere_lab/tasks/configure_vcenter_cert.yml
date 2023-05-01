@@ -23,7 +23,7 @@
   delay: 10
 
 - name: Search for CA cert in trusted certs
-  include_tasks: configure_certs_for_vcenter_search_cert.yml
+  include_tasks: configure_vcenter_cert_search_cert.yml
   loop: '{{ vcenter_trusted_certs.json }}'
 
 - name: Add CA cert to trusted certs

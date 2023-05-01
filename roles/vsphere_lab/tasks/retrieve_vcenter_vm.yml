@@ -1,0 +1,11 @@
+- name: Retrieve vCenter virtual machine
+  vmware_guest_info:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    name: '{{ vsphere_lab.vcenter_vm.name }}'
+    datacenter: ha-datacenter
+    validate_certs: false
+  delegate_to: localhost
+  ignore_errors: true
+  register: vcenter_vm

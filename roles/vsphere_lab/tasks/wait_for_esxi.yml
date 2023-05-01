@@ -1,8 +1,8 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vsphere_lab.esxi_hostname }} to come back up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ esxi_hostname }} to come back up
   vmware_about_info:
-    hostname: '{{ vsphere_lab.esxi_hostname }}'
-    username: '{{ vsphere_lab.esxi_username }}'
-    password: '{{ vsphere_lab.esxi_password }}'
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
     validate_certs: false
   delegate_to: localhost
   register: result

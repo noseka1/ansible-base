@@ -1,6 +1,19 @@
 - import_tasks: configure_esxi_cert.yml
   when: vmware_lab_certs[esxi_hostname] is defined
 
+- name: Mount NFS datastore to ESXi
+  community.vmware.vmware_host_datastore:
+      hostname: '{{ esxi_hostname }}'
+      username: '{{ esxi_username }}'
+      password: '{{ esxi_password }}'
+      datastore_name: '{{ vmware_lab_datastore.datastore_name }}'
+      datastore_type: '{{ vmware_lab_datastore.datastore_type }}'
+      nfs_server: '{{ vmware_lab_datastore.nfs_server }}'
+      nfs_path: '{{ vmware_lab_datastore.nfs_path }}'
+      esxi_hostname: '{{ esxi_hostname }}'
+  delegate_to: localhost
+  when: vmware_lab_datastore is defined
+
 - name: Enable autostart on ESXi host
   community.vmware.vmware_host_auto_start:
     hostname: '{{ esxi_hostname }}'

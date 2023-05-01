@@ -39,3 +39,11 @@ vmware_lab_certs:
     crt: '{{ lookup("file", "~/.mysecrets/certs/esxi3.lab.example.com.crt.pem") }}'
     key: '{{ lookup("file", "~/.mysecrets/certs/esxi3.lab.example.com.key.pem") }}'
     ca_crt: '{{ lookup("file", "~/.mysecrets/certs/root.crt.pem") }}'
+
+vmware_lab_datastore:
+  datastore_name: nfs1
+  # Select NFS3 (= nfs) datastore here.
+  # Tried NFS4 but the VMDK images were getting corrupted and the upload failed.
+  datastore_type: nfs
+  nfs_server: nfs.lab.example.com
+  nfs_path: /exports/vmware/nfs1

@@ -60,6 +60,52 @@
     validate_certs: false
   delegate_to: localhost
 
+- name: Retrieve the default datastore1
+  community.vmware.vmware_datastore_info:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    validate_certs: false
+  register: default_datastore_result
+  delegate_to: localhost
+  when:
+    - default_datastore_rename is defined
+
+# vmware_object_rename requires installing vSphere Automation SDK for Python
+# See also: https://developer.vmware.com/web/sdk/7.0/vsphere-automation-python
+# Example installation command:
+# pip install --upgrade git+https://github.com/vmware/vsphere-automation-sdk-python.git@v7.0.3.2
+- name: Rename the default datastore
+  community.vmware.vmware_object_rename:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    object_name: '{{ item.name }}'
+    object_type: Datastore
+    new_name: '{{ default_datastore_rename }}'
+    validate_certs: false
+  delegate_to: localhost
+  loop: '{{ default_datastore_result.datastores }}'
+  when:
+    - default_datastore_rename is defined
+    - item.type == 'VMFS'
+    - item.name | regex_search('^datastore1')
+
+- name: Wait until datastore is renamed
+  community.vmware.vmware_datastore_info:
+    hostname: '{{ esxi_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    name: '{{ default_datastore_rename}}'
+    validate_certs: false
+  delegate_to: localhost
+  register: default_datastore_result
+  when:
+    - default_datastore_rename is defined
+  until: default_datastore_result.datastores | length == 1
+  retries: 30
+  delay: 5
+
 - name: Configure vCenter to start on ESXi host start
   community.vmware.vmware_host_auto_start:
     hostname: '{{ vmware_lab.vcenter_hostname }}'

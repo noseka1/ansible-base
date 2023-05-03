@@ -152,3 +152,63 @@
     portgroup_name: '{{ vmware_lab.openshift_deployment_prereqs.network_name }}'
     validate_certs: false
   delegate_to: localhost
+
+- name: Create tag categories
+  community.vmware.vmware_category:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    category_name: '{{ item.name }}'
+    category_description: '{{ item.description }}'
+    validate_certs: false
+  delegate_to: localhost
+  run_once: true
+  loop:
+    - { name: 'openshift-region', description: 'OpenShift region'}
+    - { name: 'openshift-zone', description: 'OpenShift zone'}
+
+- name: Create region tag
+  community.vmware.vmware_tag:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    category_name: openshift-region
+    tag_name: '{{ vmware_lab.datacenter_region }}'
+    tag_description: 'OpenShift region'
+    validate_certs: false
+  delegate_to: localhost
+  run_once: true
+
+- name: Create zone tags
+  community.vmware.vmware_tag:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    category_name: openshift-zone
+    tag_name: '{{ cluster_zone }}'
+    tag_description: 'OpenShift zone'
+    validate_certs: false
+  delegate_to: localhost
+
+- name: Attach region tag to vCenter datacenter
+  community.vmware.vmware_tag_manager:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    tag_names:
+      - openshift-region:{{ vmware_lab.datacenter_region }}
+    object_name: '{{ vmware_lab.datacenter_name }}'
+    object_type: Datacenter
+  delegate_to: localhost
+  run_once: true
+
+- name: Attach zone tags to vCenter clusters
+  community.vmware.vmware_tag_manager:
+    hostname: '{{ vmware_lab.vcenter_hostname }}'
+    username: '{{ vmware_lab.vcenter_username }}'
+    password: '{{ vmware_lab.vcenter_password }}'
+    tag_names:
+      - openshift-zone:{{ cluster_zone }}
+    object_name: '{{ cluster_name }}'
+    object_type: ClusterComputeResource
+  delegate_to: localhost

@@ -17,6 +17,7 @@ vmware_lab:
   vcenter_username: administrator@mysso.com
   vcenter_password: '{{ generic_user_password }}'
   datacenter_name: datacenter
+  datacenter_region: region1
   openshift_deployment_prereqs:
     network_nic: vmnic1
     network_name: OpenShift Network

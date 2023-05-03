@@ -11,6 +11,7 @@ vmware_lab:
           esxi_password: '{{ generic_user_password }}'
           default_datastore_rename: esxi1-local
           cluster_name: cluster1
+          cluster_zone: zone1
         esxi2:
           ansible_host: esxi2.lab.example.com
           ansible_user: root
@@ -20,6 +21,7 @@ vmware_lab:
           esxi_password: '{{ generic_user_password }}'
           default_datastore_rename: esxi2-local
           cluster_name: cluster2
+          cluster_zone: zone2
         esxi3:
           ansible_host: esxi3.lab.example.com
           ansible_user: root
@@ -29,6 +31,7 @@ vmware_lab:
           esxi_password: '{{ generic_user_password }}'
           default_datastore_rename: esxi3-local
           cluster_name: cluster3
+          cluster_zone: zone3
   hosts:
     vcenter:
       ansible_host: photon-machine.lab.example.com

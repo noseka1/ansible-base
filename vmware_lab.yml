@@ -33,3 +33,4 @@
     - import_role:
         name: vmware_lab
         tasks_from: create_vcenter_objects.yml
+      tags: create_vcenter_objects

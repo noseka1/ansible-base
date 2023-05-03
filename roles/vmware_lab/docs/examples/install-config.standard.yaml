@@ -1,0 +1,73 @@
+apiVersion: v1
+baseDomain: example.com
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: 0
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+metadata:
+  name: mycluster6
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 192.168.60.0/24
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  vsphere:
+    vCenter: photon-machine.lab.example.com
+    username: administrator@mysso.com
+    password: 'REPLACEME'
+    datacenter: datacenter
+    defaultDatastore: esxi1-local
+    network: OpenShift Network
+    cluster: cluster1
+    apiVIPs: [ 192.168.60.10 ]
+    ingressVIPs: [ 192.168.60.11 ]
+pullSecret: 'REPLACEME'
+sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzLiL31YTM+haec6P9UuqW8Z2CV/EE9QBX2kD7elMKpRIb4jEOx6MCnKu+unIofvwWJ3/doiYh/mqTbr7yU6LTQ0nkL+2QTKD3y2St1OjJcHO9oC2SjXxVZFMkCf4c59SC+zqqRI/pY+QUkiR8XvEFZevNajTY1KML5sd8lCs58Yz94rdBfkCvuD9Y+XHhcxJJ9i6WW3Joz/TlLQUcQfEuZ6V0Hd+fhT51hX5tmJJPBcjkF9hmXE/n/lLHpOO9MjuVAu25kyyiwU/jzFncLjksN984KABYqrk4vgpJ8lDAr06CODfnQG6FE26QmJ019kprwN80lwG+mo6HVyY/34R/ anosek@zihadlo'
+proxy:
+  httpsProxy: http://proxy.lab.example.com:3128
+  httpProxy: http://proxy.lab.example.com:3128
+  noProxy: .example.com,192.168.0.0/16
+additionalTrustBundle: |
+  -----BEGIN CERTIFICATE-----
+  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
+  UG3U5wKk91vppQCtg9AV4Q==
+  -----END CERTIFICATE-----

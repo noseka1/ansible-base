@@ -20,6 +20,7 @@ spec:
   server:
     replicas: 1
     # Configure TLS edge-terminated route instead of passthrough
+    # so that the route utilizes OpenShift wildcard certificate
     insecure: true
   # Enable Helm templating in Kustomize
   kustomizeBuildOptions: --enable-helm

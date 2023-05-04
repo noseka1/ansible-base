@@ -1,0 +1,10 @@
+{% if gitops_autogitops_enabled %}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-tls-certs-cm
+  namespace: openshift-gitops
+data:
+  {{ autogitops_git_hostname }}: |-
+    {{ autogitops_git_cacert | indent(4) }}
+{% endif %}

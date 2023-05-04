@@ -8,4 +8,3 @@
 - import_tasks: configure_rhsso_openshift.yml
 
 - import_tasks: configure_rhsso_argocd.yml
-

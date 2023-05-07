@@ -40,7 +40,7 @@ spec:
         name: external-secrets
 {% if gitops_autogitops_enabled %}
       - type: git
-        url: https://{{ autogitops_git_hostname }}/{{ autogitops_git_username }}/{{ autogitops_git_repo_name }}.git
+        url: {{ autogitops_git_repo_url_plain }}
         name: auto-gitops
         usernameSecret:
           name: auto-gitops

@@ -1,0 +1,17 @@
+- import_tasks: get_argocd_route.yml
+
+- name: Get API token
+  uri:
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/session
+    method: POST
+    body_format: json
+    body:
+      username: admin
+      password: '{{ generic_user_password }}'
+    validate_certs: false
+    status_code: [ 200 ]
+  register: argocd_session_result
+
+- set_fact:
+    argocd_api_url: https://{{ argocd_route.resources.0.spec.host }}
+    argocd_api_token: '{{ argocd_session_result.json.token }}'

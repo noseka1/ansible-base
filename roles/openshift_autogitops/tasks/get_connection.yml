@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_gitea
+    tasks_from: get_connection.yml
+
+- name: Set auto-gitops connection
+  set_fact:
+    autogitops_git_hostname: '{{ gitea_hostname }}'
+    autogitops_git_username: '{{ gitea_username }}'
+    autogitops_git_password: '{{ gitea_password }}'
+    autogitops_git_cacert:   '{{ gitea_cacert }}'
+    autogitops_git_repo_name: '{{ autogitops_git_repo_name }}'
+    autogitops_git_repo_url_plain: https://{{ gitea_hostname }}/{{ gitea_username }}/{{ autogitops_git_repo_name }}.git
+    autogitops_git_repo_url_creds: https://{{ gitea_username | urlencode }}:{{ gitea_password | urlencode }}@{{ gitea_hostname }}/{{ gitea_username }}/{{ autogitops_git_repo_name }}.git

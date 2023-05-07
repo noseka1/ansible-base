@@ -1,0 +1,27 @@
+- import_tasks: get_connection.yml
+
+- name: Retrieve cluster URL
+  command: oc whoami --show-server
+  changed_when: false
+  register: oc_whoami_result
+
+- set_fact:
+    autogitops_cluster_name: '{{ oc_whoami_result.stdout | regex_replace("https://api\.(.*):6443", "\1") }}'
+
+- set_fact:
+    autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ autogitops_cluster_name }}'
+
+- name: Cluster local git directory
+  debug:
+    var: autogitops_git_dir
+
+- name: Ensure local git directory exists
+  file:
+    path: '{{ autogitops_git_dir }}'
+    state: directory
+
+- name: Pull GitOps state from cluster
+  git:
+    repo: '{{ autogitops_git_repo_url_creds }}'
+    dest: '{{ autogitops_git_dir }}'
+    force: true

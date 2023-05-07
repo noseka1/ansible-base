@@ -1,0 +1,8 @@
+- import_tasks: remote_repo_create.yml
+
+- import_tasks: local_repo_create.yml
+
+- name: Create auto-gitops application set
+  kubernetes.core.k8s:
+    template:
+      - auto-gitops-appset.yaml

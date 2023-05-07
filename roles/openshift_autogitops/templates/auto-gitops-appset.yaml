@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: auto-gitops
+  namespace: {{ autogitops_argocd_namespace }}
+spec:
+  goTemplate: true
+  generators:
+  - git:
+      files:
+      - path: envs/in-cluster/infra/**/argocd_config_manual.yaml
+      repoURL: {{ autogitops_git_repo_url_plain }}
+      requeueAfterSeconds: 60
+      revision: master
+      template:
+        metadata: {}
+        spec:
+          destination: {}
+          project: ""
+          source:
+            repoURL: {{ autogitops_git_repo_url_plain }}
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+{% raw %}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{ .path.basename }}'
+      name: '{{ index .path.segments 1 }}-{{ index .path.segments 2 }}-{{ .path.basename }}'
+      namespace: openshift-gitops
+    spec:
+      destination:
+        name: '{{ index .path.segments 1 }}'
+        namespace: '{{ .destNamespace }}'
+      project: default
+      source:
+        path: '{{ .sourcePath }}'
+        repoURL: ""
+        targetRevision: master
+        helm:
+          valueFiles:
+            - ./values.yaml
+            - /{{ .path.path }}/values.yaml
+      syncPolicy:
+        syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - FailOnSharedResource=true
+        - ServerSideApply=true
+{% endraw %}

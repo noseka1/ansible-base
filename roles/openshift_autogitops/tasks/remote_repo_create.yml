@@ -1,0 +1,7 @@
+- import_role:
+    name: openshift_gitea
+    tasks_from: create_repos.yml
+  vars:
+    gitea_create_repos:
+      - name: '{{ autogitops_git_repo_name }}'
+        description: Auto GitOps content

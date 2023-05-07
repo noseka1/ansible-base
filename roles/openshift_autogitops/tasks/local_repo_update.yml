@@ -1,0 +1,33 @@
+- set_fact:
+    autogitops_app_path: '{{ autogitops_app_path | default(autogitops_app_name) }}'
+
+- set_fact:
+    autogitops_app_helm_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_path }}'
+    autogitops_app_env_dir:  '{{ autogitops_git_dir}}/envs/in-cluster/infra/{{ autogitops_app_name }}'
+
+- name: Ensure application directories exist
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop:
+    - '{{ autogitops_app_helm_dir }}'
+    - '{{ autogitops_app_env_dir }}'
+
+- name: Sync application helm directory
+  ansible.posix.synchronize:
+    src: '{{ autogitops_catalog_dir }}/{{ autogitops_app_path }}/'
+    dest: '{{ autogitops_app_helm_dir }}/'
+    recursive: true
+    links: true
+    perms: true
+    delete: true
+
+- name: Create argocd_config_manual.yaml
+  template:
+    src: argocd_config_manual.yaml
+    dest: '{{ autogitops_app_env_dir }}/argocd_config_manual.yaml'
+
+- name: Create values.yaml
+  copy:
+    content: '{{ autogitops_app_values | default("") }}'
+    dest: '{{ autogitops_app_env_dir }}/values.yaml'

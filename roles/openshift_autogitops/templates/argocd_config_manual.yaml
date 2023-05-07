@@ -1,0 +1,2 @@
+sourcePath: apps/{{ autogitops_app_path }}
+destNamespace: ""

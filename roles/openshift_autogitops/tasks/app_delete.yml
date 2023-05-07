@@ -1,0 +1,41 @@
+- import_tasks: local_repo_create.yml
+
+- set_fact:
+    autogitops_app_path: '{{ autogitops_app_path | default(autogitops_app_name) }}'
+
+- set_fact:
+    autogitops_app_helm_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_path }}'
+    autogitops_app_env_dir:  '{{ autogitops_git_dir}}/envs/in-cluster/infra/{{ autogitops_app_name }}'
+
+- name: Delete application helm template directory {{ autogitops_app_helm_dir }}/templates
+  file:
+    path: '{{ autogitops_app_helm_dir }}/templates'
+    state: absent
+
+- import_tasks: local_repo_push.yml
+
+- import_tasks: app_sync.yml
+  when: autogitops_git_updated
+
+- name: Delete application directories
+  file:
+    path: '{{ item }}'
+    state: absent
+  loop:
+    - '{{ autogitops_app_helm_dir }}'
+    - '{{ autogitops_app_env_dir }}'
+
+- import_tasks: local_repo_push.yml
+
+- name: Wait for application {{ autogitops_app_name }} to disappear
+  kubernetes.core.k8s_info:
+    api_version: argoproj.io/v1alpha1
+    kind: Application
+    name: 'in-cluster-infra-{{ autogitops_app_name }}'
+    namespace: '{{ autogitops_argocd_namespace }}'
+  register: autogitops_app_resource_result
+  when: autogitops_git_updated
+  until:
+    - autogitops_app_resource_result.resources | length == 0
+  retries: 60
+  delay: 1

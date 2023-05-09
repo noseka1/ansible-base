@@ -1,7 +1,4 @@
 - set_fact:
-    autogitops_app_path: '{{ autogitops_app_path | default(autogitops_app_name) }}'
-
-- set_fact:
     autogitops_app_helm_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_path }}'
     autogitops_app_env_dir:  '{{ autogitops_git_dir}}/envs/in-cluster/infra/{{ autogitops_app_name }}'
 

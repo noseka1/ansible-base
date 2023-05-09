@@ -1,0 +1,21 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: compliance-scan
+    autogitops_app_path: compliance-operator/scan
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: compliance.openshift.io/v1alpha1
+        kind: ProfileBundle
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: compliance-operator
+    autogitops_app_path: compliance-operator/operator

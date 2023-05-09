@@ -1,0 +1,26 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: compliance-operator
+    autogitops_app_path: compliance-operator/operator
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: compliance-scan
+    autogitops_app_path: compliance-operator/scan
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
+  kubernetes.core.k8s_info:
+    api_version: compliance.openshift.io/v1alpha1
+    kind: ComplianceScan
+    namespace: '{{ compliance_cis_namespace }}'
+    name: '{{ compliance_cis_name }}'
+  register: cis_scan_result
+  until:
+    - cis_scan_result.resources.0.status.phase is defined
+    - cis_scan_result.resources.0.status.phase == 'DONE'
+  retries: 60
+  delay: 10

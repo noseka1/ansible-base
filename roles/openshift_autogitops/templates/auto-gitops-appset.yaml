@@ -10,7 +10,7 @@ spec:
       files:
       - path: envs/in-cluster/infra/**/argocd_config_manual.yaml
       repoURL: {{ autogitops_git_repo_url_plain }}
-      requeueAfterSeconds: 60
+      requeueAfterSeconds: 10
       revision: master
       template:
         metadata: {}

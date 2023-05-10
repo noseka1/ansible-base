@@ -16,7 +16,8 @@
     status_code: [ 200, 400 ]
   register: argocd_app_sync_result
   until:
-    argocd_app_sync_result.status == 200
+    - argocd_app_sync_result.status == 200
+    - argocd_app_sync_result.json.status.reconciledAt is defined
   retries: 120
   delay: 5
 

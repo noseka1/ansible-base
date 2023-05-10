@@ -3,6 +3,13 @@
     tasks_from: get_connection.yml
   when: gitops_autogitops_enabled
 
+- name: Look up resource health-check files
+  find:
+    paths: '{{ role_path }}/files/health-checks'
+    patterns: '*.lua'
+    recurse: true
+  register: gitops_instance_health_check_files
+
 - name: Configure Argo CD
   kubernetes.core.k8s:
     template:

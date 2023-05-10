@@ -54,3 +54,10 @@ spec:
     # By default, all connections made by the API server to OIDC providers must pass certificate validation.
     # See also https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#skipping-certificate-verification-on-oidc-provider-connections
     oidc.tls.insecure.skip.verify: '{{ gitops_instance_oidc_tls_insecure_skip_verify }}'
+  resourceHealthChecks:
+{% for item in gitops_instance_health_check_files.files %}
+    - group: {{ item.path | dirname | dirname | basename }}
+      kind: {{ item.path | dirname | basename }}
+      check: |
+        {{ lookup('file', item.path, rstrip=false) | indent(8) }}
+{% endfor %}

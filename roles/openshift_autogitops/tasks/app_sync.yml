@@ -14,10 +14,10 @@
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: false
     status_code: [ 200, 400 ]
-  register: argocd_app_sync_result
+  register: autogitops_app_sync_result
   until:
-    - argocd_app_sync_result.status == 200
-    - argocd_app_sync_result.json.status.reconciledAt is defined
+    - autogitops_app_sync_result.status == 200
+    - autogitops_app_sync_result.json.status.reconciledAt is defined
   retries: 120
   delay: 5
 
@@ -29,41 +29,41 @@
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: false
     status_code: [ 200 ]
-  failed_when: argocd_app_get_result.status != 200
-  register: argocd_app_get_result
+  failed_when: autogitops_app_get_result.status != 200
+  register: autogitops_app_get_result
   until:
-    - argocd_app_get_result.json.status.reconciledAt != argocd_app_sync_result.json.status.reconciledAt
-    - argocd_app_get_result.json.status.sync.status == 'Synced'
-    - argocd_app_get_result.json.status.health.status == 'Healthy'
+    - autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt
+    - autogitops_app_get_result.json.status.sync.status == 'Synced'
+    - autogitops_app_get_result.json.status.health.status == 'Healthy'
   retries: 120
   delay: 5
 
 - set_fact:
-    argocd_app_reconciled: >-
-      {{ argocd_app_get_result.json.status.reconciledAt != argocd_app_sync_result.json.status.reconciledAt }}
-    argocd_app_synced: >-
-      {{ argocd_app_get_result.json.status.sync.status == 'Synced' }}
-    argocd_app_healthy: >-
-      {{ argocd_app_get_result.json.status.health.status == 'Healthy' }}
+    autogitops_app_reconciled: >-
+      {{ autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt }}
+    autogitops_app_synced: >-
+      {{ autogitops_app_get_result.json.status.sync.status == 'Synced' }}
+    autogitops_app_healthy: >-
+      {{ autogitops_app_get_result.json.status.health.status == 'Healthy' }}
 
 - debug:
     msg: "Application {{ autogitops_app_name }} updated successfully"
-  when: argocd_app_reconciled and argocd_app_synced and argocd_app_healthy
+  when: autogitops_app_reconciled and autogitops_app_synced and autogitops_app_healthy
 
 - debug:
     msg: "Application {{ autogitops_app_name }} reconciliation failed"
-  when: not argocd_app_reconciled
+  when: not autogitops_app_reconciled
 
 - name: Resources failed to sync
   debug:
-    var: argocd_app_get_result.json.status | json_query("resources[?status!='Synced']")
-  when: not argocd_app_synced
+    var: autogitops_app_get_result.json.status | json_query("resources[?status!='Synced']")
+  when: not autogitops_app_synced
 
 - name: Unhealthy resources
   debug:
-    var: argocd_app_get_result.json.status | json_query("resources[?health.status!=nil && health.status!='Healthy']")
-  when: not argocd_app_healthy
+    var: autogitops_app_get_result.json.status | json_query("resources[?health.status!=nil && health.status!='Healthy']")
+  when: not autogitops_app_healthy
 
 - fail:
     msg: Application update failed
-  when: not (argocd_app_reconciled and argocd_app_synced and argocd_app_healthy)
+  when: not (autogitops_app_reconciled and autogitops_app_synced and autogitops_app_healthy)

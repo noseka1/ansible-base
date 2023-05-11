@@ -22,5 +22,25 @@ openshift_cluster_install_gcp:
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt
 
+openshift_cluster_install_azure:
+  config_dir: /home/ccornejo/lab/openshift/ocp-azure
+  cluster_name: ocp4-azure
+  base_domain: XXXX.azure.redhatworkshops.io
+  version: latest
+  channel: stable-4.12
+  network_type: OVNKubernetes
+  data_plane_replicas: 2
+  control_plane_replicas: 3
+  azure_client_id: XXXX-XXXX-XXXX-XXXX-XXXX
+  azure_secret: XXXXX_XXXXX
+  azure_tenant_id: redhat0.onmicrosoft.com
+  subscription_id: XX-XX-XXXX-XX-XXXX
+  resource_group_name: openenv-XXXX
+  base_domain_resource_group_name: openenv-XXXX
+  azure_dns_zone: az.ccornejo.com
+  azure_region: eastus
+  azure_config_path: /home/ccornejo/.azure/osServicePrincipal.json
+  create_azure_rg: False
+
 openshift_cluster_install_installer_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_cluster_install_version_resolved }}/openshift-install-linux-{{ openshift_cluster_install_version_resolved }}.tar.gz

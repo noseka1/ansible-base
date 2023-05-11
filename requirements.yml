@@ -39,3 +39,7 @@ collections:
 - name: community.vmware
   src: https://github.com/ansible-collections/community.vmware
   version: 3.5.0
+
+- name: azure.azcollection
+  src: https://github.com/ansible-collections/azure
+  version: 1.15.0

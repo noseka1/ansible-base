@@ -17,4 +17,4 @@
   retries: 60
   delay: 1
 
-- import_tasks: app_sync.yml
+- import_tasks: app_sync_deploy.yml

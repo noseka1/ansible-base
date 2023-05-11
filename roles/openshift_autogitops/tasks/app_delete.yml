@@ -11,8 +11,16 @@
 
 - import_tasks: local_repo_push.yml
 
-- import_tasks: app_sync.yml
-  when: autogitops_git_updated
+- name: Check if application {{ autogitops_app_name }} exists
+  kubernetes.core.k8s_info:
+    api_version: argoproj.io/v1alpha1
+    kind: Application
+    name: 'in-cluster-infra-{{ autogitops_app_name }}'
+    namespace: '{{ autogitops_argocd_namespace }}'
+  register: autogitops_app_resource_result
+
+- import_tasks: app_sync_delete.yml
+  when: autogitops_app_resource_result.resources | length == 1
 
 - name: Delete application directories
   file:

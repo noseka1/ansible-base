@@ -1,0 +1,42 @@
+- import_tasks: app_sync_trigger.yml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ autogitops_app_name }} to reconcile
+  uri:
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-infra-{{ autogitops_app_name }}
+    method: GET
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: false
+    status_code: [ 200 ]
+  failed_when: autogitops_app_get_result.status != 200
+  register: autogitops_app_get_result
+  until:
+    - autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt
+    # Any remaining resources must be OutOfSync and Missing
+    - (autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status!=nil && health.status=='Missing' && status=='OutOfSync']") | length)
+       ==
+      (autogitops_app_get_result.json.status.resources | default ([]) | length)
+  retries: 120
+  delay: 5
+
+- set_fact:
+    autogitops_app_reconciled: >-
+      {{ autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt }}
+    autogitops_app_remaining: >-
+      {{ autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status==nil || health.status!='Missing' || status!='OutOfSync']") }}
+
+- fail:
+    msg: Application {{ autogitops_app_name }} failed to reconcile
+  when: not autogitops_app_reconciled
+
+- name: Resources failed to delete
+  debug:
+    var: autogitops_app_remaining
+  when: autogitops_app_remaining | length > 0
+
+- fail:
+    msg: Application {{ autogitops_app_name }} failed to delete
+  when: autogitops_app_remaining | length > 0
+
+- debug:
+    msg: Application {{ autogitops_app_name }} deleted successfully

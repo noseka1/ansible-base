@@ -1,25 +1,4 @@
-- import_role:
-    name: openshift_gitops
-    tasks_from: get_argocd_api_connection.yml
-
-- name: Trigger application sync
-  uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-infra-{{ autogitops_app_name }}/sync
-    method: POST
-    body_format: json
-    body:
-      prune: true
-      revision: '{{ autogitops_git_last_commit }}'
-    headers:
-      Authorization: Bearer {{ argocd_api_token }}
-    validate_certs: false
-    status_code: [ 200, 400 ]
-  register: autogitops_app_sync_result
-  until:
-    - autogitops_app_sync_result.status == 200
-    - autogitops_app_sync_result.json.status.reconciledAt is defined
-  retries: 120
-  delay: 5
+- import_tasks: app_sync_trigger.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ autogitops_app_name }} to reconcile
   uri:
@@ -46,12 +25,8 @@
     autogitops_app_healthy: >-
       {{ autogitops_app_get_result.json.status.health.status == 'Healthy' }}
 
-- debug:
-    msg: "Application {{ autogitops_app_name }} updated successfully"
-  when: autogitops_app_reconciled and autogitops_app_synced and autogitops_app_healthy
-
-- debug:
-    msg: "Application {{ autogitops_app_name }} reconciliation failed"
+- fail:
+    msg: Application {{ autogitops_app_name }} failed to reconcile
   when: not autogitops_app_reconciled
 
 - name: Resources failed to sync
@@ -65,5 +40,8 @@
   when: not autogitops_app_healthy
 
 - fail:
-    msg: Application update failed
-  when: not (autogitops_app_reconciled and autogitops_app_synced and autogitops_app_healthy)
+    msg: Application {{ autogitops_app_name }} deployment failed
+  when: not (autogitops_app_synced and autogitops_app_healthy)
+
+- debug:
+    msg: Application {{ autogitops_app_name }} deployed successfully

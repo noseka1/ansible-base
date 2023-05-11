@@ -25,7 +25,7 @@
     autogitops_app_remaining: >-
       {{ autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status==nil || health.status!='Missing' || status!='OutOfSync']") }}
 
-- fail:
+- debug:
     msg: Application {{ autogitops_app_name }} failed to reconcile
   when: not autogitops_app_reconciled
 
@@ -36,7 +36,7 @@
 
 - fail:
     msg: Application {{ autogitops_app_name }} failed to delete
-  when: autogitops_app_remaining | length > 0
+  when: not ( autogitops_app_reconciled and autogitops_app_remaining | length == 0)
 
 - debug:
     msg: Application {{ autogitops_app_name }} deleted successfully

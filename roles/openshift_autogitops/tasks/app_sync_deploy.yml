@@ -25,7 +25,7 @@
     autogitops_app_healthy: >-
       {{ autogitops_app_get_result.json.status.health.status == 'Healthy' }}
 
-- fail:
+- debug:
     msg: Application {{ autogitops_app_name }} failed to reconcile
   when: not autogitops_app_reconciled
 
@@ -41,7 +41,7 @@
 
 - fail:
     msg: Application {{ autogitops_app_name }} deployment failed
-  when: not (autogitops_app_synced and autogitops_app_healthy)
+  when: not (autogitops_app_reconciled and autogitops_app_synced and autogitops_app_healthy)
 
 - debug:
     msg: Application {{ autogitops_app_name }} deployed successfully

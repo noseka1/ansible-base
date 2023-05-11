@@ -11,7 +11,7 @@
     delete_kubernetes_objects:
       - api_version: kubevirt.io/v1
         kind: VirtualMachine
-      - api_version: kubevirt.io/v1
+      - api_version: cdi.kubevirt.io/v1beta1
         kind: DataVolume
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance

@@ -1,13 +1,4 @@
-openshift_virtualization_kustomizations:
-  operator_kvm: github.com/noseka1/openshift-virtualization-kustomization/openshift-virtualization-operator/base?ref=myauto
-  operator_emu: github.com/noseka1/openshift-virtualization-kustomization/openshift-virtualization-operator/overlays/emulation?ref=myauto
-  instance: github.com/noseka1/openshift-virtualization-kustomization/openshift-virtualization-instance/base?ref=myauto
-openshift_virtualization_subscription_namespace: openshift-cnv
-openshift_virtualization_subscription_name: kubevirt-hyperconverged
-openshift_virtualization_instance_namespace: openshift-cnv
-openshift_virtualization_instance_name: kubevirt-hyperconverged
-
-openshift_virtualization_qemu_kvm: true
+openshift_virtualization_kvm_emulation_enabled: false
 
 openshift_virtualization_aws:
   instance_type: c5n.metal

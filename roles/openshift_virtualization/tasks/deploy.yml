@@ -1,37 +1,17 @@
-- name: Deploy OpenShift Virtualization operator (KVM)
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
-  when: openshift_virtualization_qemu_kvm
-
-- name: Deploy OpenShift Virtualization operator (emulation)
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
-  when: not openshift_virtualization_qemu_kvm
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: openshift-virtualization-operator
+    autogitops_app_path: openshift-virtualization/operator
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ openshift_virtualization_subscription_name }}'
-    subscription_namespace: '{{ openshift_virtualization_subscription_namespace }}'
-
-- name: Deploy OpenShift Virtualization instance
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.instance) }}"
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_virtualization_instance_name }} deployment to complete
-  kubernetes.core.k8s_info:
-    api_version: hco.kubevirt.io/v1beta1
-    kind: HyperConverged
-    namespace: '{{ openshift_virtualization_instance_namespace }}'
-    name: '{{ openshift_virtualization_instance_name }}'
-  register: openshift_virtualization_instance
-  until:
-    - openshift_virtualization_instance.resources.0.status.conditions is defined
-    - openshift_virtualization_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (openshift_virtualization_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: 60
-  delay: 10
+    autogitops_app_name: openshift-virtualization-instance
+    autogitops_app_path: openshift-virtualization/instance
+    autogitops_app_values: '{{ lookup("template", "values.yaml" ) }}'
 
 - import_role:
     name: openshift_common

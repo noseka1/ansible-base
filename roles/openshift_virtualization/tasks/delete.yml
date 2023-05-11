@@ -16,24 +16,16 @@
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
 
-- name: Delete OpenShift Virtualization instance
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.instance) }}"
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-virtualization-instance
+    autogitops_app_path: openshift-virtualization/instance
 
-- name: Delete OpenShift Virtualization operator (KVM)
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_kvm) }}"
-    wait: true
-    wait_timeout: 600
-    state: absent
-  when: openshift_virtualization_qemu_kvm
-
-- name: Delete OpenShift Virtualization operator (emulation)
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + openshift_virtualization_kustomizations.operator_emu) }}"
-    wait: true
-    wait_timeout: 600
-    state: absent
-  when: not openshift_virtualization_qemu_kvm
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-virtualization-operator
+    autogitops_app_path: openshift-virtualization/operator

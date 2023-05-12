@@ -1,0 +1,34 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: metallb-operator
+    autogitops_app_path: metallb/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: metallb-operator
+    subscription_namespace: metallb-system
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: '{{ metallb_app_name }}'
+    autogitops_app_path: metallb/instance
+
+#- name: Waiting since {{ lookup("pipe", "date +%r") }} for MetalLB instance to deploy
+#  kubernetes.core.k8s_info:
+#    api_version: metallb.io/v1beta1
+#    kind: MetalLB
+#    name: '{{ metallb_instance_name }}'
+#    namespace: '{{ metallb_instance_namespace }}'
+#  register: metallb_instance
+#  until:
+#    - metallb_instance.resources.0.status.conditions is defined
+#    - metallb_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+#    - (metallb_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+#  retries: 60
+#  delay: 10

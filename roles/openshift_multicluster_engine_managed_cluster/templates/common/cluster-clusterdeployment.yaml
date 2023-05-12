@@ -4,9 +4,12 @@ metadata:
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
   labels:
-    cloud: {{ multicluster_engine_managed_cluster_platform }}
+    cloud: {{ multicluster_engine_managed_cluster_platform | lower}}
 {% if multicluster_engine_managed_cluster_platform == 'AWS' %}
     region: {{ multicluster_engine_managed_cluster.aws_region }}
+{% endif %}
+{% if multicluster_engine_managed_cluster_platform == 'AZURE' %}
+    region: {{ multicluster_engine_managed_cluster.azure_region }}
 {% endif %}
     vendor: OpenShift
 spec:
@@ -21,6 +24,19 @@ spec:
       credentialsSecretRef:
         name: {{ multicluster_engine_managed_cluster.cluster_name }}-aws-creds
       region: {{ multicluster_engine_managed_cluster.aws_region }}
+{% endif %}
+{% if multicluster_engine_managed_cluster_platform == 'AZURE' %}
+  controlPlaneConfig:
+    servingCertificates: {}
+  installAttemptsLimit: 2
+  platform:
+    azure:
+      credentialsSecretRef:
+        name: {{ multicluster_engine_managed_cluster.cluster_name }}-azure-creds
+      region: {{ multicluster_engine_managed_cluster.azure_region }}
+      baseDomainResourceGroupName: {{ multicluster_engine_managed_cluster.base_domain_resource_group_name }}
+      cloudName: AzurePublicCloud
+{% endif %}
   provisioning:
     installConfigSecretRef:
       name: {{ multicluster_engine_managed_cluster.cluster_name }}-install-config
@@ -28,7 +44,6 @@ spec:
       name: {{ multicluster_engine_managed_cluster.cluster_name }}-ssh-private-key
     imageSetRef:
       name: img{{ multicluster_engine_managed_cluster.ocp_release_image | regex_replace('_', '-',) }}-appsub
-{% endif %}
 {% if multicluster_engine_managed_cluster_platform == 'BareMetal' %}
   clusterInstallRef:
     group: extensions.hive.openshift.io

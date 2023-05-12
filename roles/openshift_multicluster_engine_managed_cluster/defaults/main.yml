@@ -7,6 +7,23 @@ multicluster_engine_managed_cluster_aws:
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_region: us-east-1
 
+# Azure Subscription Based Blank Open Environment setup (https://demo.redhat.com/catalog?category=Open_Environments&item=babylon-catalog-prod%2Fazure-gpte.open-environment-azure-subscription.prod)
+multicluster_engine_managed_cluster_azure:
+  cluster_name: mycluster12
+  base_domain: sandbox2727.opentlc.com
+  ocp_release_image: 4.12.5-x86_64
+  clusterwide_proxy: {}
+  os_service_ppal: '{"clientId":"XXXXX","clientSecret":"XXXXX","tenantId":"XXXXXX","subscriptionId":"XXXXXX"}'
+  azure_region: eastus
+  control_plane_replicas: 3
+  data_plane_replicas: 1
+  base_domain_resource_group_name: XXXX-XXX
+  # resource_group_name: XXXX-XXX
+  service_network_cidr: 172.32.0.0/16
+  cluster_network_cidr: 10.136.0.0/14
+  # managed_cluster_set: tenant-01
+  # generate_name: tenant-01-
+
 multicluster_engine_managed_cluster_baremetal:
   cluster_name: mycluster8
   base_domain: example.com
@@ -31,3 +48,4 @@ multicluster_engine_managed_cluster_baremetal:
       role: master
     '52:54:00:2c:0e:03':
       role: master
+

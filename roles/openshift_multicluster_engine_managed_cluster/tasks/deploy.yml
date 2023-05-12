@@ -9,6 +9,9 @@
 - import_tasks: deploy_cluster_aws.yml
   when: multicluster_engine_managed_cluster_platform == 'AWS'
 
+- import_tasks: deploy_cluster_azure.yml
+  when: multicluster_engine_managed_cluster_platform == 'AZURE'
+
 - import_tasks: deploy_cluster_baremetal.yml
   when: multicluster_engine_managed_cluster_platform == 'BareMetal'
 

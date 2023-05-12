@@ -6,11 +6,8 @@
       - clusterimageset/clusterimageset.yaml
   when: not rhacm_detected
 
-- import_tasks: deploy_cluster_aws.yml
-  when: multicluster_engine_managed_cluster_platform == 'AWS'
-
-- import_tasks: deploy_cluster_azure.yml
-  when: multicluster_engine_managed_cluster_platform == 'AZURE'
+- import_tasks: deploy_cluster_cloud.yml
+  when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]
 
 - import_tasks: deploy_cluster_baremetal.yml
   when: multicluster_engine_managed_cluster_platform == 'BareMetal'
@@ -35,7 +32,7 @@
     kind: ManagedCluster
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
   register: managedcluster_result
-  when: multicluster_engine_managed_cluster_platform == 'AWS'
+  when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]
   until:
     - managedcluster_result.resources.0.status.conditions is defined
     - managedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | list | length > 0

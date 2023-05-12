@@ -20,7 +20,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: openshift-virtualization-instance
+    autogitops_app_name: openshift-virtualization
     autogitops_app_path: openshift-virtualization/instance
 
 - import_role:

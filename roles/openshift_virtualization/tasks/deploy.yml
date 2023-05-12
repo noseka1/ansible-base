@@ -9,7 +9,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: openshift-virtualization-instance
+    autogitops_app_name: openshift-virtualization
     autogitops_app_path: openshift-virtualization/instance
     autogitops_app_values: '{{ lookup("template", "values.yaml" ) }}'
 

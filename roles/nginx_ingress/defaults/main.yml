@@ -1,0 +1,2 @@
+nginx_ingress_app_name: nginx-ingress
+nginx_ingress_app_namespace: nginx-ingress

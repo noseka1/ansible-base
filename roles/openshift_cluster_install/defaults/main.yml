@@ -39,8 +39,8 @@ openshift_cluster_install_azure:
   base_domain_resource_group_name: openenv-XXXX
   azure_dns_zone: az.ccornejo.com
   azure_region: eastus
-  azure_config_path: /home/ccornejo/.azure/osServicePrincipal.json
-  create_azure_rg: False
+  azure_config_path: '{{ lookup("env", "HOME") + "/.azure/osServicePrincipal.json" }}'
+  create_azure_dns_zone: false
 
 openshift_cluster_install_installer_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_cluster_install_version_resolved }}/openshift-install-linux-{{ openshift_cluster_install_version_resolved }}.tar.gz

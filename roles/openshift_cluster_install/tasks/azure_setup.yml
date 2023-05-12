@@ -1,11 +1,11 @@
 - name: Create the root DNS zone
   azure_rm_dnszone:
-    name: "{{ openshift_cluster_install_azure.azure_dns_zone }}"
-    resource_group: "{{ openshift_cluster_install_azure.resource_group }}"
-  when: openshift_cluster_install_azure.create_azure_rg
+    name: '{{ openshift_cluster_install_azure.azure_dns_zone }}'
+    resource_group: '{{ openshift_cluster_install_azure.resource_group }}'
+  when: openshift_cluster_install_azure.create_azure_dns_zone
 
 - name: Add osServicePrincipal.json file for OpenShift Installer
   template:
-    src: "azure/osServicePrincipal.json.j2"
-    dest: "{{ openshift_cluster_install_azure.azure_config_path }}"
+    src: azure/osServicePrincipal.json
+    dest: '{{ openshift_cluster_install_azure.azure_config_path }}'
     mode: 0600

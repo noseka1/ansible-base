@@ -10,5 +10,5 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: '{{ nginx_ingress_app_name }}'
-    autogitops_app_namespace: '{{ nginx_ingress_app_namespace }}'
     autogitops_app_path: nginx-ingress/instance
+    autogitops_app_namespace: '{{ nginx_ingress_app_namespace }}'

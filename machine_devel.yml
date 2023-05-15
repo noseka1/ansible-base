@@ -11,6 +11,7 @@
     - import_role:
         name: machine_devel
         tasks_from: system_setup.yml
+      when: ansible_distribution == "Fedora"
       tags: machine_devel
 
     - import_role:

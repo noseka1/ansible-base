@@ -11,7 +11,7 @@
   vars:
     autogitops_app_name: openshift-virtualization
     autogitops_app_path: openshift-virtualization/instance
-    autogitops_app_values: '{{ lookup("template", "values.yaml" ) }}'
+    autogitops_app_values: '{{ lookup("template", "values.yaml") }}'
 
 - import_role:
     name: openshift_common

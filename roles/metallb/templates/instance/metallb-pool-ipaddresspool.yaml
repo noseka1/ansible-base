@@ -1,9 +1,0 @@
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: metallb-pool
-  namespace: {{ metallb_instance_namespace }}
-spec:
-  addresses:
-  - {{ metallb_address_pool }}
-  autoAssign: true

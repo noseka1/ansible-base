@@ -1,8 +1,4 @@
-metallb_operator_subscription_channel: stable
-metallb_operator_subscription_approval: Automatic
-
 metallb_app_name: metallb
 
 metallb_address_pool: 192.168.20.12-192.168.20.19
-
 metallb_loglevel: info

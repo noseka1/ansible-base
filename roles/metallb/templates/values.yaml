@@ -1,0 +1,2 @@
+logLevel: {{ metallb_loglevel }}
+addressPool: {{ metallb_address_pool }}

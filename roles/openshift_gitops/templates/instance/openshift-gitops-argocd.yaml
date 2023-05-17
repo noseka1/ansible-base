@@ -34,6 +34,12 @@ spec:
   notifications:
     enabled: true
   extraConfig:
+    # See also Known Kubernetes types in CRDs (Resource limits, Volume mounts etc)
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/#known-kubernetes-types-in-crds-resource-limits-volume-mounts-etc
+    # This makes the sonarqube-postgresql StatefulSet sync
+    resource.customizations.knownTypeFields.apps_StatefulSet: |
+      - field: spec.volumeClaimTemplates
+        type: core/v1/PersistentVolumeClaimTemplate
     repositories: |
       - type: helm
         url: https://external-secrets.github.io/kubernetes-external-secrets

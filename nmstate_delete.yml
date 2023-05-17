@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_nmstate
+        name: nmstate
         tasks_from: delete.yml

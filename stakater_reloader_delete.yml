@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_stakater_reloader
+        name: stakater_reloader
         tasks_from: delete.yml

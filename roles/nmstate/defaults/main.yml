@@ -1,8 +1,0 @@
-nmstate_kustomizations:
-  operator: github.com/noseka1/gitops-catalog/nmstate/operator?ref=main
-  instance: github.com/noseka1/gitops-catalog/nmstate/instance?ref=main
-
-nmstate_operator_subscription_namespace: openshift-nmstate
-nmstate_operator_subscription_name: kubernetes-nmstate-operator
-
-nmstate_instance_name: nmstate

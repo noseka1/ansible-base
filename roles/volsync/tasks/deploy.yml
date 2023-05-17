@@ -1,0 +1,7 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: volsync
+    autogitops_app_path: volsync
+    autogitops_app_namespace: openshift-operators

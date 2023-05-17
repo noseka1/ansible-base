@@ -1,3 +1,0 @@
-volsync_subscription_name: volsync-product
-volsync_subscription_namespace: openshift-operators
-volsync_subscription_approval: Automatic

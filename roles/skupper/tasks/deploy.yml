@@ -4,11 +4,12 @@
   vars:
     autogitops_app_name: skupper-operator
     autogitops_app_path: skupper/operator
+    autogitops_app_namespace: openshift-operators
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: '{{ skupper_app_name }}'
+    autogitops_app_name: skupper
     autogitops_app_path: skupper/instance
     autogitops_app_namespace: skupper

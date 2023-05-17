@@ -39,8 +39,7 @@ spec:
         targetRevision: master
         helm:
           valueFiles:
-            - ./values.yaml
-            - /{{ .path.path }}/values.yaml
+          - /{{ .path.path }}/values.yaml
       syncPolicy:
         syncOptions:
         - ApplyOutOfSyncOnly=true

@@ -1,0 +1,1 @@
+subscriptionName: {{ openshift_pipelines_subscription_name }}

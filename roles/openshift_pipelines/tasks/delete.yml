@@ -4,4 +4,11 @@
     tasks_from: delete_operator.yml
   vars:
     delete_operator_subscription_name: '{{ openshift_pipelines_subscription_name }}'
-    delete_operator_subscription_namespace: '{{ openshift_pipelines_subscription_namespace }}'
+    delete_operator_subscription_namespace: openshift-operators
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-pipelines
+    autogitops_app_path: openshift-pipelines

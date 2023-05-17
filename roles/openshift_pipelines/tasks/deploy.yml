@@ -1,14 +1,11 @@
-- name: Deploy OpenShift Pipelines operator
-  kubernetes.core.k8s:
-    template: operator/openshift-pipelines-operator-sub.yaml
-
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ openshift_pipelines_subscription_name }}'
-    subscription_namespace: '{{ openshift_pipelines_subscription_namespace }}'
-
+    autogitops_app_name: openshift-pipelines
+    autogitops_app_path: openshift-pipelines
+    autogitops_app_namespace: openshift-operators
+    autogitops_app_values: '{{ lookup("template", "values.yaml") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
   kubernetes.core.k8s_info:
@@ -25,4 +22,4 @@
     tasks_from: wait_for_deployment.yml
   vars:
     wait_for_deployment_name: tekton-pipelines-controller
-    wait_for_deployment_namespace: '{{ openshift_pipelines_instance_namespace }}'
+    wait_for_deployment_namespace: openshift-pipelines

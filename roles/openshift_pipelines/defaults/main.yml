@@ -1,6 +1,1 @@
 openshift_pipelines_subscription_name: openshift-pipelines-operator
-openshift_pipelines_subscription_namespace: openshift-operators
-openshift_pipelines_subscription_channel: latest
-openshift_pipelines_subscription_approval: Automatic
-
-openshift_pipelines_instance_namespace: openshift-pipelines

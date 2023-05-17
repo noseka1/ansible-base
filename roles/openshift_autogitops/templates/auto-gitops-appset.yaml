@@ -26,7 +26,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: '{{ .path.basename }}'
-      name: '{{ index .path.segments 1 }}-{{ index .path.segments 2 }}-{{ .path.basename }}'
+      name: '{{ index .path.segments 1 }}-{{ .path.basename }}'
       namespace: openshift-gitops
     spec:
       destination:

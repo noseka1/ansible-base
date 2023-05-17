@@ -4,7 +4,7 @@
 
 - name: Trigger application sync
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-infra-{{ autogitops_app_name }}/sync
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}/sync
     method: POST
     body_format: json
     body:

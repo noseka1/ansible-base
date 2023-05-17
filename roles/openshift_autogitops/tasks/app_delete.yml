@@ -9,6 +9,17 @@
     path: '{{ autogitops_app_helm_dir }}/templates'
     state: absent
 
+- name: Retrieve application Chart.yaml
+  slurp:
+    path: '{{ autogitops_app_helm_dir }}/Chart.yaml'
+  register: autogitops_app_chart_result
+
+- name: Remove dependencies from Chart.yaml
+  copy:
+    content: >-
+      {{ autogitops_app_chart_result.content | b64decode | from_yaml | combine({"dependencies":[]}) | to_nice_yaml }}
+    dest: '{{ autogitops_app_helm_dir }}/Chart.yaml'
+
 - import_tasks: local_repo_push.yml
 
 - name: Check if application {{ autogitops_app_name }} exists

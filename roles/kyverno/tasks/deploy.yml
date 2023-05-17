@@ -1,0 +1,15 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: kyverno
+    autogitops_app_path: kyverno/operator
+    autogitops_app_namespace: kyverno
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: kyverno-policies
+    autogitops_app_path: kyverno/policies
+    autogitops_app_namespace: kyverno

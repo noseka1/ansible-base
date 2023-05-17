@@ -1,5 +1,0 @@
-- import_tasks: deploy_operator.yml
-
-- import_tasks: deploy_instance.yml
-
-- import_tasks: report_success.yml

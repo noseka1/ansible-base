@@ -1,7 +1,0 @@
-splunk_operator_subscription_name: splunk
-splunk_operator_subscription_namespace: openshift-operators
-splunk_operator_subscription_channel: stable
-splunk_operator_subscription_approval: Automatic
-
-splunk_instance_name: standalone
-splunk_instance_namespace: splunk

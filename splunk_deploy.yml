@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_splunk
-        tasks_from: delete.yml
+        name: splunk
+        tasks_from: deploy.yml

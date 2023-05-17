@@ -18,6 +18,10 @@
     name: splunk-{{ splunk_instance_namespace }}-secret
     namespace: '{{ splunk_instance_namespace }}'
   register: splunk_secret_result
+  until:
+    - splunk_secret_result.resources.0.data.hec_token is defined
+  retries: 30
+  delay: 2
 
 - name: Set Splunk HEC connection info
   set_fact:

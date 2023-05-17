@@ -1,0 +1,36 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: splunk-operator
+    autogitops_app_path: splunk/operator
+    autogitops_app_namespace: openshift-operators
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: splunk
+    autogitops_app_path: splunk/instance
+    autogitops_app_namespace: '{{ splunk_instance_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
+
+- import_tasks: get_hec_connection.yml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Splunk to come up
+  uri:
+    url: '{{ splunk_hec_json_endpoint }}'
+    method: POST
+    headers:
+      Authorization: Splunk {{ splunk_hec_token }}
+    body_format: json
+    body:
+      event: Hello from Ansible at {{ lookup("pipe", "date +%r") }}
+    validate_certs: false
+  register: result
+  until: result.status == 200
+  retries: 12
+  delay: 10
+
+- import_tasks: report_success.yml

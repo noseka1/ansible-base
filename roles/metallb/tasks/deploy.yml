@@ -4,6 +4,7 @@
   vars:
     autogitops_app_name: metallb-operator
     autogitops_app_path: metallb/operator
+    autogitops_app_namespace: metallb-system
 
 - import_role:
     name: openshift_common
@@ -18,4 +19,5 @@
   vars:
     autogitops_app_name: '{{ metallb_app_name }}'
     autogitops_app_path: metallb/instance
+    autogitops_app_namespace: metallb-system
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

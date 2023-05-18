@@ -1,0 +1,2 @@
+storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type] }}
+encryptionEnable: false

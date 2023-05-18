@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_odf
+        name: openshift_data_foundation
         tasks_from: delete.yml

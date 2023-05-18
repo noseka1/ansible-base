@@ -1,0 +1,9 @@
+odf_aws:
+  instance_type: m4.4xlarge
+  availability_zones: [ a, b, c ]
+  nodes_per_zone: 1
+
+odf_platform_to_storageclass:
+  AWS: gp3-csi
+  VSphere: thin-csi
+  None: lvms-loop1-vg

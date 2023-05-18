@@ -1,0 +1,9 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
+- import_tasks: cluster_nodes_deploy.yml
+
+- import_tasks: cluster_nodes_check.yml
+
+- import_tasks: odf_deploy.yml

@@ -2,7 +2,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ autogitops_app_name }} to reconcile
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}?refresh=normal
     method: GET
     headers:
       Authorization: Bearer {{ argocd_api_token }}
@@ -11,10 +11,11 @@
   failed_when: autogitops_app_get_result.status != 200
   register: autogitops_app_get_result
   until:
+    - autogitops_app_get_result.json.status.reconciledAt is defined
     - autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt
-    - autogitops_app_get_result.json.status.sync.status == 'Synced'
-    - autogitops_app_get_result.json.status.health.status == 'Healthy'
-  retries: 120
+    - autogitops_app_get_result.json.status.sync.status | default('') == 'Synced'
+    - autogitops_app_get_result.json.status.health.status | default('') == 'Healthy'
+  retries: '{{ autogitops_app_sync_retries | default(120) }}'
   delay: 5
 
 - set_fact:

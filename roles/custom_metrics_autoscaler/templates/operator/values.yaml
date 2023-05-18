@@ -1,0 +1,2 @@
+subscriptionApproval: '{{ custom_metrics_operator_subscription_approval }}'
+subscriptionChannel: '{{ custom_metrics_operator_subscription_channel }}'

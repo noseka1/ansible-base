@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: custom-metrics-autoscaler
+    autogitops_app_path: custom-metrics-autoscaler/instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: custom-metrics-autoscaler-operator
+    autogitops_app_path: custom-metrics-autoscaler/operator

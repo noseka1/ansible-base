@@ -1,0 +1,17 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: custom-metrics-autoscaler-operator
+    autogitops_app_path: custom-metrics-autoscaler/operator
+    autogitops_app_namespace: openshift-keda
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: custom-metrics-autoscaler
+    autogitops_app_path: custom-metrics-autoscaler/instance
+    autogitops_app_namespace: openshift-keda
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'

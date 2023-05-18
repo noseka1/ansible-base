@@ -5,6 +5,8 @@ metadata:
   name: argocd-tls-certs-cm
   namespace: openshift-gitops
 data:
+{% if autogitops_git_cacert | length > 0 %}
   {{ autogitops_git_hostname }}: |-
     {{ autogitops_git_cacert | indent(4) }}
+{% endif %}
 {% endif %}

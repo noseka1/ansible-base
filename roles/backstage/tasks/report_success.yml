@@ -3,6 +3,6 @@
       Backstage installed successfully.
 
       You can browse to Backstage dashboard:
-      https://{{ backstage_name }}-{{ backstage_namespace }}.apps.{{ openshift_common_cluster_domain }}
+      https://backstage-backstage.apps.{{ openshift_common_cluster_domain }}
 
 - debug: msg="{{ msg.split('\n') }}"

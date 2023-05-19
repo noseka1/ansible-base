@@ -1,0 +1,3 @@
+backstage:
+  ingress:
+    host: backstage-backstage.apps.{{ openshift_common_cluster_domain }}

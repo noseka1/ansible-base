@@ -1,22 +1,14 @@
-- name: Create Nexus repository manager namespace
-  kubernetes.core.k8s:
-    template:
-      - nexus-repository-manager-ns.yaml
-      - nexus-repository-manager-scc-rolebinding.yaml
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
 
-- name: Add Nexus chart repo
-  kubernetes.core.helm_repository:
-    name: sonatype
-    repo_url: '{{ nexus_repository_manager_helm_repo }}'
-
-- name: Deploy Nexus repository manager
-  kubernetes.core.helm:
-    name: '{{ nexus_repository_manager_name }}'
-    chart_ref: sonatype/nexus-repository-manager
-    chart_version: '{{ nexus_repository_manager_version | default(omit) }}'
-    release_namespace: '{{ nexus_repository_manager_namespace }}'
-    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
-    wait: true
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: nexus-repository-manager
+    autogitops_app_path: nexus-repository-manager
+    autogitops_app_namespace: nexus-repository-manager
 
 - name: Retrieve Nexus repository manager pod
   kubernetes.core.k8s_info:

@@ -39,8 +39,8 @@
 - name: Expose Docker repository
   kubernetes.core.k8s:
     template:
-      - docker-repo-svc.yaml
-      - docker-repo-route.yaml
+      - repo/docker-repo-svc.yaml
+      - repo/docker-repo-route.yaml
 
 - name: Obtain Docker repository route
   kubernetes.core.k8s_info:

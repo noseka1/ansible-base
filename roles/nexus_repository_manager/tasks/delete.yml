@@ -1,0 +1,6 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: nexus-repository-manager
+    autogitops_app_path: nexus-repository-manager

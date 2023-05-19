@@ -8,5 +8,4 @@ spec:
   - port: {{ nexus_repository_manager_docker_repo_port }}
     protocol: TCP
   selector:
-    app.kubernetes.io/instance: {{ nexus_repository_manager_name }}
     app.kubernetes.io/name: {{ nexus_repository_manager_name }}

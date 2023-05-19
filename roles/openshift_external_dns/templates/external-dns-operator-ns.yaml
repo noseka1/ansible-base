@@ -1,4 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ external_dns_subscription_namespace }}

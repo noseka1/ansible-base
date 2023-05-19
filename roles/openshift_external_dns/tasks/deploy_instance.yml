@@ -1,7 +1,0 @@
-- name: Create AWS credentials secret
-  kubernetes.core.k8s:
-    template: aws-credentials-secret.yaml
-
-- name: Deploy External DNS instance
-  kubernetes.core.k8s:
-    template: aws-route53-externaldns.yaml

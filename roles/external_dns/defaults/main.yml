@@ -1,0 +1,4 @@
+external_dns_domain_name: myzonedomain.example.com
+
+external_dns_aws_access_key_id: ''
+external_dns_aws_secret_access_key: ''

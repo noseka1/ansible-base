@@ -1,8 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ external_dns_subscription_name }}
-  namespace: {{ external_dns_subscription_namespace }}
-spec:
-  targetNamespaces:
-  - {{ external_dns_subscription_namespace }}

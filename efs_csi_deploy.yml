@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_efs_csi
-        tasks_from: delete.yml
+        name: efs_csi
+        tasks_from: deploy.yml

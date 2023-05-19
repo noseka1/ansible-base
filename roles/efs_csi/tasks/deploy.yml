@@ -1,0 +1,30 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: efs-csi-operator
+    autogitops_app_path: efs-csi/operator
+    autogitops_app_namespace: openshift-cluster-csi-drivers
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- assert:
+    that: efs_aws_file_system_id | length > 0
+    fail_msg: "Variable 'efs_aws_file_system_id' must not be empty"
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: efs-csi
+    autogitops_app_path: efs-csi/instance
+    autogitops_app_namespace: ''
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: efs-csi-volume
+    autogitops_app_path: efs-csi/volume
+    autogitops_app_namespace: openshift-cluster-csi-drivers
+    autogitops_app_values: '{{ lookup("template", "volume/values.yaml") }}'

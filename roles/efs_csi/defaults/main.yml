@@ -1,0 +1,4 @@
+efs_operator_subscription_channel: stable
+efs_operator_subscription_approval: Automatic
+
+efs_aws_file_system_id: ''

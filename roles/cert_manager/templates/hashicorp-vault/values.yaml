@@ -1,0 +1,9 @@
+vault:
+  server: {{ hashicorp_vault_addr }}
+  caBundle: {{ external_secrets_vault_ca_bundle | b64encode }}
+  auth:
+    kubernetes:
+     role: cert-manager
+     mountPath: /v1/auth/kubernetes
+certificate:
+  dnsName: mytest.apps.{{ openshift_common_cluster_domain }}

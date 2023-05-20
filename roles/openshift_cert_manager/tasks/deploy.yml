@@ -1,3 +1,0 @@
-- import_tasks: deploy_operator.yml
-
-- import_tasks: vault_backend.yml

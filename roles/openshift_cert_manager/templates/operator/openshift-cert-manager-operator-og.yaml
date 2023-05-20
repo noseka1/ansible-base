@@ -1,7 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ cert_manager_subscription_name }}
-  namespace: {{ cert_manager_subscription_namespace }}
-spec:
-  upgradeStrategy: Default

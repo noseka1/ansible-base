@@ -73,7 +73,7 @@
     secret: /auth/kubernetes/role/cert-manager
     data:
       bound_service_account_names: cert-manager
-      bound_service_account_namespaces: openshift-cert-manager
+      bound_service_account_namespaces: cert-manager,default
       policies: mycluster_signer
   environment:
     VAULT_ADDR: '{{ hashicorp_vault_addr }}'

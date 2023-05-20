@@ -2,7 +2,7 @@
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
-- import_tasks: delete_cluster_nodes.yml
+- import_tasks: cluster_nodes_delete.yml
 
 - import_role:
     name: openshift_common

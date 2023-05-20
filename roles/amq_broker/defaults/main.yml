@@ -1,0 +1,12 @@
+amq_broker_subscription_channel: 7.10.x
+amq_broker_subscription_approval: Automatic
+
+amq_broker_instance_namespace: amq-broker
+
+amq_broker_replicas: 3
+
+fuse_console_subscription_channel: 7.10.x
+fuse_console_subscription_approval: Automatic
+fuse_console_subscription_namespace: amq-broker
+
+fuse_console_instance_namespace: amq-broker

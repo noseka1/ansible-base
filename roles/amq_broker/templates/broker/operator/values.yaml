@@ -1,0 +1,2 @@
+subscriptionApproval: {{ amq_broker_subscription_approval }}
+subscriptionChannel: {{ amq_broker_subscription_channel }}

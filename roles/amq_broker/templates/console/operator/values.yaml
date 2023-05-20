@@ -1,0 +1,2 @@
+subscriptionApproval: {{ fuse_console_subscription_approval }}
+subscriptionChannel: {{ fuse_console_subscription_channel }}

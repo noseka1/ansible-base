@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_ansible_automation_platform
+        name: ansible_automation_platform
         tasks_from: delete.yml

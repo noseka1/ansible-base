@@ -2,8 +2,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ auto_controller_name }}'
-    namespace: '{{ auto_controller_namespace }}'
+    name: auto-controller
+    namespace: aap
   register: auto_controller_route
   until: auto_controller_route.resources | length > 0
   retries: 12

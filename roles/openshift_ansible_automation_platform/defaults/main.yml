@@ -1,7 +1,0 @@
-aap_subscription_namespace: aap
-aap_subscription_name: ansible-automation-platform
-aap_subscription_channel: stable-2.3-cluster-scoped
-aap_subscription_approval: Automatic
-
-auto_controller_namespace: aap
-auto_controller_name: auto-controller

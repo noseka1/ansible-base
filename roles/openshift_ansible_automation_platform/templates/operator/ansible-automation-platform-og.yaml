@@ -1,7 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ aap_subscription_name }}
-  namespace: {{ aap_subscription_namespace }}
-spec:
-  upgradeStrategy: Default

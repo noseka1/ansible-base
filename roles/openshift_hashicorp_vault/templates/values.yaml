@@ -1,9 +1,0 @@
-global:
-  openshift: true
-server:
-  auditStorage:
-    enabled: true
-  extraEnvironmentVars:
-    VAULT_LOG_LEVEL: debug
-ui:
-  enabled: true

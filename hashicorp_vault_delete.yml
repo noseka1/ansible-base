@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_hashicorp_vault
+        name: hashicorp_vault
         tasks_from: delete.yml

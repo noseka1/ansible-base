@@ -1,4 +1,0 @@
-artifactory_oss_helm_repo: https://charts.jfrog.io
-
-artifactory_oss_namespace: artifactory-oss
-artifactory_oss_name: artifactory-oss

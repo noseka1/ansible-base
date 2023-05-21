@@ -2,5 +2,14 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
+    autogitops_app_name: migration-toolkit-virt-operator
+    autogitops_app_path: migration-toolkit-virt/operator
+    autogitops_app_namespace: openshift-mtv
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
     autogitops_app_name: migration-toolkit-virt
-    autogitops_app_path: migration-toolkit-virt
+    autogitops_app_path: migration-toolkit-virt/instance
+    autogitops_app_namespace: openshift-mtv

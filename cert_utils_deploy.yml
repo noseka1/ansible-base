@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_cert_utils_operator
+        name: cert_utils
         tasks_from: deploy.yml

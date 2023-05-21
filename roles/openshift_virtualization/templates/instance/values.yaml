@@ -1,1 +1,0 @@
-kvmEmulationEnabled: {{ openshift_virtualization_kvm_emulation_enabled }}

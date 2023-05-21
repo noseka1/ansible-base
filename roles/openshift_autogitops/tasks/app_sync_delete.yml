@@ -11,6 +11,7 @@
   failed_when: autogitops_app_get_result.status != 200
   register: autogitops_app_get_result
   until:
+    - autogitops_app_get_result.json.status.reconciledAt is defined
     - autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt
     # Any remaining resources must be OutOfSync and Missing
     - (autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status!=nil && health.status=='Missing' && status=='OutOfSync']") | length)

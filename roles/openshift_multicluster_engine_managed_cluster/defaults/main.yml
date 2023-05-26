@@ -2,6 +2,8 @@ multicluster_engine_managed_cluster_aws:
   cluster_name: mycluster12
   base_domain: sandbox2727.opentlc.com
   ocp_release_image: 4.12.5-x86_64
+  control_plane_replicas: 3
+  data_plane_replicas: 1
   clusterwide_proxy: {}
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

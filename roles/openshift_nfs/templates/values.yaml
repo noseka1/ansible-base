@@ -5,5 +5,5 @@ serviceAccount:
   name: '{{ nfs_subdir_service_account }}'
 storageClass:
   name: nfs-subdir
-  defaultClass: '{{ not openshift_common_default_storage_class_exists }}'
+  defaultClass: {{ not openshift_common_default_storage_class_exists }}
   archiveOnDelete: false

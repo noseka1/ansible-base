@@ -2,6 +2,7 @@
   kubernetes.core.k8s:
     template:
       - nfs-subdir-ns.yaml
+      - nfs-subdir-scc-role.yaml
       - nfs-subdir-scc-rolebinding.yaml
 
 - name: Add nfs-subdir-external-provisioner chart repo

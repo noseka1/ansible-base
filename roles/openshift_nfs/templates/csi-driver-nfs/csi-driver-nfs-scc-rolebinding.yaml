@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: csi-driver-nfs-scc
+  namespace: {{ csi_driver_nfs_namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
+subjects:
+- kind: ServiceAccount
+  name: csi-nfs-controller-sa
+- kind: ServiceAccount
+  name: csi-nfs-node-sa

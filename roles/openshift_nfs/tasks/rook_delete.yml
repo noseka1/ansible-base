@@ -1,17 +1,10 @@
-- import_tasks: pick_backing_volume_node.yml
-
 - name: Delete Rook NFS server
   kubernetes.core.k8s:
     template:
       - rook-nfs/rook-nfs-nfsserver.yml
     state: absent
 
-- name: Delete backing PV and PVC
-  kubernetes.core.k8s:
-    template:
-      - backing-volume/nfs-backing-volume-pv.yml
-      - backing-volume/nfs-backing-volume-pvc.yml
-    state: absent
+- import_tasks: backing_volume_delete.yml
 
 - name: Delete Rook NFS operator
   kubernetes.core.k8s:

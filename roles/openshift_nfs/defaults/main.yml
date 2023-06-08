@@ -1,7 +1,6 @@
 rook_volume_path: /var/local/rook-nfs-backing-volume
 rook_base_url: https://raw.githubusercontent.com/rook/nfs/v1.7.3
 
-nfs_subdir_version: 4.0.13
-nfs_subdir_name: nfs-subdir
-nfs_subdir_namespace: nfs-subdir
-nfs_subdir_service_account: nfs-subdir
+csi_driver_nfs_version: v4.4.0
+csi_driver_nfs_name: csi-driver-nfs
+csi_driver_nfs_namespace:  csi-driver-nfs

@@ -1,0 +1,8 @@
+- import_tasks: backing_volume_pick_node.yml
+
+- name: Delete backing PV and PVC
+  kubernetes.core.k8s:
+    template:
+      - backing-volume/nfs-backing-volume-pv.yml
+      - backing-volume/nfs-backing-volume-pvc.yml
+    state: absent

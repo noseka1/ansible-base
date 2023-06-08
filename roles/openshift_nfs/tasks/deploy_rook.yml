@@ -1,7 +1,0 @@
-- import_tasks: deploy_rook_nfs_operator.yml
-
-- import_tasks: pick_backing_volume_node.yml
-
-- import_tasks: create_backing_volume.yml
-
-- import_tasks: deploy_rook_nfs_server.yml

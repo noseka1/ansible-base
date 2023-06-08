@@ -1,3 +1,5 @@
+- import_tasks: backing_volume_pick_node.yml
+
 - name: Create directory on the {{ rook_volume_node }} node for the volume
   command: >
     oc debug node/{{ rook_volume_node }} --namespace default --

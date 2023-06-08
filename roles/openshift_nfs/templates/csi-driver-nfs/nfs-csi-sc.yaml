@@ -9,6 +9,7 @@ parameters:
   server: '{{ rook_nfs_service.resources.0.spec.clusterIP }}'
   share: /nfs-backing-volume
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 volumeBindingMode: Immediate
 mountOptions:
   - nfsvers=4.1

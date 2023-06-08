@@ -18,5 +18,5 @@
 - name: Create backing PV and PVC
   kubernetes.core.k8s:
     template:
-      - nfs-backing-volume-pv.yml
-      - nfs-backing-volume-pvc.yml
+      - backing-volume/nfs-backing-volume-pv.yml
+      - backing-volume/nfs-backing-volume-pvc.yml

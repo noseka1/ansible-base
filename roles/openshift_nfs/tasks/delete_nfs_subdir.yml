@@ -8,5 +8,5 @@
 - name: Delete prerequisites for nfs-subdir
   kubernetes.core.k8s:
     template:
-      - nfs-subdir-ns.yaml
+      - nfs-subdir/nfs-subdir-ns.yaml
     state: absent

@@ -1,7 +1,7 @@
 - name: Deploy Rook NFS server
   kubernetes.core.k8s:
     template:
-      - rook-nfs-nfsserver.yml
+      - rook-nfs/rook-nfs-nfsserver.yml
 
 - name: Wait until Rook NFS service shows up
   kubernetes.core.k8s_info:

@@ -3,14 +3,14 @@
 - name: Delete Rook NFS server
   kubernetes.core.k8s:
     template:
-      - rook-nfs-nfsserver.yml
+      - rook-nfs/rook-nfs-nfsserver.yml
     state: absent
 
 - name: Delete backing PV and PVC
   kubernetes.core.k8s:
     template:
-      - nfs-backing-volume-pv.yml
-      - nfs-backing-volume-pvc.yml
+      - backing-volume/nfs-backing-volume-pv.yml
+      - backing-volume/nfs-backing-volume-pvc.yml
     state: absent
 
 - name: Delete Rook NFS operator
@@ -25,5 +25,5 @@
 - name: Delete corrected SCC
   kubernetes.core.k8s:
     template:
-      - rook-nfs-scc.yml
+      - rook-nfs/rook-nfs-scc.yml
     state: absent

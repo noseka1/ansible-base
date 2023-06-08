@@ -1,9 +1,9 @@
 - name: Create prerequisites for nfs-subdir
   kubernetes.core.k8s:
     template:
-      - nfs-subdir-ns.yaml
-      - nfs-subdir-scc-role.yaml
-      - nfs-subdir-scc-rolebinding.yaml
+      - nfs-subdir/nfs-subdir-ns.yaml
+      - nfs-subdir/nfs-subdir-scc-role.yaml
+      - nfs-subdir/nfs-subdir-scc-rolebinding.yaml
 
 - name: Add nfs-subdir-external-provisioner chart repo
   kubernetes.core.helm_repository:
@@ -29,5 +29,5 @@
     chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
     chart_version: '{{ nfs_subdir_version  }}'
     release_namespace: '{{ nfs_subdir_namespace }}'
-    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    release_values: '{{ lookup("template", "nfs-subdir/values.yaml") | from_yaml }}'
     wait: true

@@ -1,6 +1,6 @@
 oadp_subscription_namespace: openshift-adp
 oadp_subscription_name: oadp-operator
-oadp_subscription_channel: stable-1.1
+oadp_subscription_channel: stable-1.2
 oadp_subscription_approval: Automatic
 
 velero_instance_namespace: openshift-adp

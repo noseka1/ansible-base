@@ -3,6 +3,6 @@
 - import_tasks: delete_oadp.yml
 
 - import_role:
-    name: openshift_volsync
+    name: volsync
     tasks_from: delete.yml
   when: velero_datamover_enabled

@@ -1,5 +1,5 @@
 - import_role:
-    name: openshift_volsync
+    name: volsync
     tasks_from: deploy.yml
   when: velero_datamover_enabled
 

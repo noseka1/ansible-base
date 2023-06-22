@@ -1,6 +1,16 @@
-#Note that "creating a volume using snapshot is not supported", see also:
-#CSI Controller driver compliance
-#https://github.com/openebs/lvm-localpv/blob/develop/docs/csi_capability.md
+# OpenEBS DOES NOT SUPPORT CREATING VOLUMES FROM SNAPSHOTS and this time.
+#
+# Note that "creating a volume using snapshot is not supported", see also:
+#
+# CSI Controller driver compliance
+# https://github.com/openebs/lvm-localpv/blob/develop/docs/csi_capability.md
+#
+# add support to create clone out of lvm snapshot
+# https://github.com/openebs/lvm-localpv/issues/13
+#
+# How to restore data through snapshot of localpv LVM
+# https://github.com/openebs/lvm-localpv/issues/175
+#
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

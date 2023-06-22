@@ -10,6 +10,9 @@ spec:
         # The openshift plug-in is mandatory.
         - openshift
         - aws
+{% if oadp_instance_datamover_enabled %}
+        - vsm
+{% endif %}
 {% if not oadp_instance_vsphere_enabled %}
         - csi
       featureFlags:
@@ -73,3 +76,6 @@ spec:
     dataMover:
       enable: {{ oadp_instance_datamover_enabled }}
       credentialName: dm-credential
+      maxConcurrentBackupVolumes: "3"
+      maxConcurrentRestoreVolumes: "3"
+      pruneInterval: "14"

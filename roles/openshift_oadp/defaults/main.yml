@@ -32,4 +32,4 @@ oadp_instance_s3_storage:
   #ca_cert: ''
 
 # Install and configure VolSync data mover
-oadp_instance_datamover_enabled: false
+oadp_instance_datamover_enabled: true

@@ -1,4 +1,4 @@
-- name: Create namespace {{ rhacm_backup_namespace }}
+- name: Ensure namespace {{ rhacm_backup_namespace }}
   kubernetes.core.k8s:
     template: backup/open-cluster-management-backup-ns.yaml
 
@@ -7,8 +7,9 @@
     tasks_from: deploy.yml
   vars:
     # Note that OADP (Velero) must be deployed to the open-cluster-management-backup namespace
-    velero_instance_namespace: '{{ rhacm_backup_namespace }}'
-    velero_instance_manage_namespace: false
+    oadp_operator_subscription_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_operator_manage_namespace: false
+    oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
 
 - name: Schedule periodic RHACM backup (note that this requires OADP operator to be installed)
   kubernetes.core.k8s:

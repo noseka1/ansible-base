@@ -8,8 +8,9 @@
     name: openshift_oadp
     tasks_from: delete.yml
   vars:
-    velero_instance_namespace: '{{ rhacm_backup_namespace }}'
-    velero_instance_manage_namespace: false
+    oadp_operator_subscription_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_operator_manage_namespace: false
+    oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
 
 - name: Delete namespace {{ rhacm_backup_namespace }}
   kubernetes.core.k8s:

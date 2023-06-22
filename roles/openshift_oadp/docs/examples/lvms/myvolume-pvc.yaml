@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: myvolume
 spec:
-  storageClassName: odf-lvm-loop1-vg
+  storageClassName: lvms-loop1-vg
   accessModes:
     - ReadWriteOnce
   resources:

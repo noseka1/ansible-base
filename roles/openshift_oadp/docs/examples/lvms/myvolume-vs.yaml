@@ -3,6 +3,6 @@ kind: VolumeSnapshot
 metadata:
   name: myvolume
 spec:
-  volumeSnapshotClassName: odf-lvm-loop1-vg
+  volumeSnapshotClassName: lvms-loop1-vg
   source:
     persistentVolumeClaimName: myvolume

@@ -1,8 +1,29 @@
-- import_tasks: delete_velero.yml
+- name: Delete Velero instance
+  kubernetes.core.k8s:
+    template:
+      - instance/cloud-credentials-secret.yaml
+      - instance/dm-credential-secret.yaml
+      - instance/velero-dataprotectionapplication.yaml
+    wait: true
+    state: absent
 
-- import_tasks: delete_oadp.yml
+- name: Delete OADP operator
+  kubernetes.core.k8s:
+    template:
+      - operator/oadp-operator-og.yaml
+      - operator/oadp-operator-sub.yaml
+      - operator/openshift-adp-ns.yaml
+    wait: true
+    state: absent
+
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ oadp_instance_minio_namespace }}'
+  when: oadp_instance_minio_enabled
 
 - import_role:
     name: volsync
     tasks_from: delete.yml
-  when: velero_datamover_enabled
+  when: oadp_instance_datamover_enabled

@@ -1,11 +1,11 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: {{ oadp_subscription_name }}
-  namespace: {{ oadp_subscription_namespace }}
+  name: {{ oadp_operator_subscription_name }}
+  namespace: {{ oadp_operator_subscription_namespace }}
 spec:
-  channel: {{ oadp_subscription_channel }}
-  installPlanApproval: {{ oadp_subscription_approval }}
+  channel: {{ oadp_operator_subscription_channel }}
+  installPlanApproval: {{ oadp_operator_subscription_approval }}
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

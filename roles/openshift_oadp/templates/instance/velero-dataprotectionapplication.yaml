@@ -2,7 +2,7 @@ apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
 metadata:
   name: velero
-  namespace: {{ velero_instance_namespace }}
+  namespace: {{ oadp_instance_namespace }}
 spec:
   configuration:
     velero:
@@ -10,12 +10,12 @@ spec:
         # The openshift plug-in is mandatory.
         - openshift
         - aws
-{% if not velero_instance_vsphere_enabled %}
+{% if not oadp_instance_vsphere_enabled %}
         - csi
       featureFlags:
         - EnableCSI
 {% endif %}
-{% if velero_instance_vsphere_enabled %}
+{% if oadp_instance_vsphere_enabled %}
       customPlugins:
         # OADP operator doesn't support vsphere on the default Velero plugin list.
         # Need to enable vsphere plugin as a custom Velero plugin.
@@ -38,25 +38,25 @@ spec:
         default: true
         objectStorage:
           # Name of an existing bucket
-          bucket: '{{ velero_s3_storage.bucket_name }}'
+          bucket: '{{ oadp_instance_s3_storage.bucket_name }}'
           # In the bucket, a prefix subdirectory will be created
           prefix: velero
         config:
-{% if velero_s3_storage.s3_url is defined %}
-          s3Url: '{{ velero_s3_storage.s3_url }}'
+{% if oadp_instance_s3_storage.s3_url is defined %}
+          s3Url: '{{ oadp_instance_s3_storage.s3_url }}'
 {% endif %}
-{% if velero_s3_storage.s3_force_path_style is defined %}
-          s3ForcePathStyle: '{{ velero_s3_storage.s3_force_path_style }}'
+{% if oadp_instance_s3_storage.s3_force_path_style is defined %}
+          s3ForcePathStyle: '{{ oadp_instance_s3_storage.s3_force_path_style }}'
 {% endif %}
-{% if velero_s3_storage.insecure_skip_tls_verify is defined %}
-          insecureSkipTLSVerify: '{{ velero_s3_storage.insecure_skip_tls_verify }}'
+{% if oadp_instance_s3_storage.insecure_skip_tls_verify is defined %}
+          insecureSkipTLSVerify: '{{ oadp_instance_s3_storage.insecure_skip_tls_verify }}'
 {% endif %}
-{% if velero_s3_storage.ca_cert is defined and velero_s3_storage.ca_cert | length > 0 %}
+{% if oadp_instance_s3_storage.ca_cert is defined and oadp_instance_s3_storage.ca_cert | length > 0 %}
           caCert: |
-            {{ velero_s3_storage.ca_cert | indent(12) }}
+            {{ oadp_instance_s3_storage.ca_cert | indent(12) }}
 {% endif %}
-{% if velero_s3_storage.aws_region is defined %}
-          region: '{{ velero_s3_storage.aws_region }}'
+{% if oadp_instance_s3_storage.aws_region is defined %}
+          region: '{{ oadp_instance_s3_storage.aws_region }}'
 {% endif %}
           # Choose a profile from the AWS config file
           profile: default
@@ -64,12 +64,12 @@ spec:
         credential:
           name: cloud-credentials
           key: data
-{% if velero_instance_vsphere_enabled %}
+{% if oadp_instance_vsphere_enabled %}
   snapshotLocations:
     - velero:
         provider: velero.io/vsphere
 {% endif %}
   features:
     dataMover:
-      enable: {{ velero_datamover_enabled }}
+      enable: {{ oadp_instance_datamover_enabled }}
       credentialName: dm-credential

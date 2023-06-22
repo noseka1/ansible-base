@@ -1,32 +1,35 @@
-oadp_subscription_namespace: openshift-adp
-oadp_subscription_name: oadp-operator
-oadp_subscription_channel: stable-1.2
-oadp_subscription_approval: Automatic
+oadp_operator_subscription_name: oadp-operator
+oadp_operator_subscription_namespace: openshift-adp
+oadp_operator_subscription_channel: stable-1.2
+oadp_operator_subscription_approval: Automatic
 
-velero_instance_namespace: openshift-adp
-velero_instance_name: velero
-velero_instance_manage_namespace: true
+oadp_operator_manage_namespace: true
+
+oadp_instance_namespace: openshift-adp
+oadp_instance_name: velero
 
 # If OpenShift is deployed on top of AWS then enabled this
-velero_instance_aws_enabled: false
+oadp_instance_aws_enabled: false
 
 # If OpenShift is deployed on top of vSphere then enabled this
-velero_instance_vsphere_enabled: false
+oadp_instance_vsphere_enabled: false
 
 # Deploy MinIO S3-compatible storage along with Velero
 # Set this to false if using Amazon S3 or if you bringing your own S3-compatible storage
-velero_instance_minio_enabled: true
+oadp_instance_minio_enabled: true
+# Namespace where minio S3-compatible storage was deployed
+oadp_instance_minio_namespace: openshift-adp-minio
 
 # Configure Velero connection to an S3 or S3-compatible storage
-velero_s3_storage:
+oadp_instance_s3_storage:
   aws_access_key_id: admin
   aws_secret_access_key: '{{ generic_user_password }}'
   aws_region: minio
   bucket_name: mybucket1
-  s3_url: 'http://minio.{{ velero_instance_namespace }}.svc:9000'
+  s3_url: 'http://minio.{{ oadp_instance_minio_namespace }}.svc:9000'
   s3_force_path_style: 'true'
   #insecure_skip_tls_verify: 'false'
   #ca_cert: ''
 
 # Install and configure VolSync data mover
-velero_datamover_enabled: false
+oadp_instance_datamover_enabled: false

@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: myvolume-restore
 spec:
-  storageClassName: odf-lvm-loop1-vg
+  storageClassName: lvms-loop1-vg
   dataSource:
     name: myvolume
     kind: VolumeSnapshot

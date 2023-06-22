@@ -21,6 +21,14 @@ spec:
         volumeMounts:
         - mountPath: /mnt
           name: myvolume
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
       volumes:
       - name: myvolume
         persistentVolumeClaim:

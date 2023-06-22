@@ -1,4 +1,4 @@
-# Ansible role for deploying OpenShift API for Data Protection operator
+# OpenShift API for Data Protection operator
 
 See also oadp operator [documentation](https://github.com/openshift/oadp-operator/tree/master/docs).
 
@@ -171,7 +171,7 @@ $ oc delete backup -n openshift-adp mybackup
 Scale the oadp operator down to zero replicas:
 
 ```
-$ oc edit csv -n openshift-adp oadp-operator.v1.1.0
+$ oc edit csv -n openshift-adp oadp-operator.v1.2.0
 ```
 
 Add `--log-level=debug` to the server command-line:

@@ -2,10 +2,10 @@ apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
   annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
+    snapshot.storage.kubernetes.io/is-default-class: 'true'
   labels:
     # Enable creating of volume snapshots using Velero
-    velero.io/csi-volumesnapshot-class: "true"
+    velero.io/csi-volumesnapshot-class: 'true'
   name: lvms-loop1-vg
 deletionPolicy: Delete
 driver: topolvm.io

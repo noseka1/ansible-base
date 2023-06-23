@@ -3,9 +3,9 @@ apiVersion: snapshot.storage.k8s.io/v1
 metadata:
   name: openebs-lvm
   annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
+    snapshot.storage.kubernetes.io/is-default-class: 'true'
   labels:
     # Enable creating of openebs-lvm snapshots using Velero
-    velero.io/csi-volumesnapshot-class: "true"
+    velero.io/csi-volumesnapshot-class: 'true'
 driver: local.csi.openebs.io
 deletionPolicy: Delete

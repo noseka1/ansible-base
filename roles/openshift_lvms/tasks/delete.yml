@@ -11,17 +11,17 @@
     wait: true
     state: absent
 
-- name: Delete ODF LVM instance
+- name: Delete LVM Storage instance
   kubernetes.core.k8s:
     template:
       - instance/lvmcluster-lvmcluster.yaml
     wait: true
     state: absent
 
-- name: Delete ODF LVM operator
+- name: Delete LVM Storage operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-storage-ns.yaml
+      - operator/openshift-lvms-ns.yaml
       - operator/lvms-operator-sub.yaml
     wait: true
     state: absent

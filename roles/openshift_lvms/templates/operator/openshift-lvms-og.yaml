@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: openshift-storage
-  namespace: openshift-storage
+  name: openshift-lvms
+  namespace: openshift-lvms
 spec:
   targetNamespaces:
-  - openshift-storage
+  - openshift-lvms

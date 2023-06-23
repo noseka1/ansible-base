@@ -1,5 +1,5 @@
 [Unit]
-Description=Create block device for ODF LVM
+Description=Create block device for LVM Storage
 
 [Service]
 Type=oneshot

@@ -1,4 +1,4 @@
-- name: Create loop block device for ODF LVM volumes on each cluster node (will cause nodes to restart)
+- name: Create loop block device for LVM Storage volumes on each cluster node (will cause nodes to restart)
   kubernetes.core.k8s:
     template:
       - instance/99-lvm-block-mc.yaml
@@ -15,11 +15,11 @@
     stable_cluster_retries: 10
   when: machineconfig_result is changed
 
-- name: Deploy ODF LVM operator
+- name: Deploy LVM Storage operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-storage-ns.yaml
-      - operator/openshift-storage-og.yaml
+      - operator/openshift-lvms-ns.yaml
+      - operator/openshift-lvms-og.yaml
       - operator/lvms-operator-sub.yaml
 
 - import_role:
@@ -27,9 +27,9 @@
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: lvms-operator
-    subscription_namespace: openshift-storage
+    subscription_namespace: openshift-lvms
 
-- name: Deploy ODF LVM instance
+- name: Deploy LVM Storage instance
   kubernetes.core.k8s:
     template:
       - instance/lvmcluster-lvmcluster.yaml
@@ -39,7 +39,7 @@
     api_version: lvm.topolvm.io/v1alpha1
     kind: LVMCluster
     name: lvmcluster
-    namespace: openshift-storage
+    namespace: openshift-lvms
   register: lvms_lvmcluster
   until:
     - lvms_lvmcluster.resources.0.status.deviceClassStatuses is defined

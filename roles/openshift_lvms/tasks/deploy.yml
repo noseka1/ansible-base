@@ -18,8 +18,8 @@
 - name: Deploy LVM Storage operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-lvms-ns.yaml
-      - operator/openshift-lvms-og.yaml
+      - operator/openshift-storage-ns.yaml
+      - operator/openshift-storage-og.yaml
       - operator/lvms-operator-sub.yaml
 
 - import_role:
@@ -27,7 +27,7 @@
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: lvms-operator
-    subscription_namespace: openshift-lvms
+    subscription_namespace: openshift-storage
 
 - name: Deploy LVM Storage instance
   kubernetes.core.k8s:
@@ -39,7 +39,7 @@
     api_version: lvm.topolvm.io/v1alpha1
     kind: LVMCluster
     name: lvmcluster
-    namespace: openshift-lvms
+    namespace: openshift-storage
   register: lvms_lvmcluster
   until:
     - lvms_lvmcluster.resources.0.status.deviceClassStatuses is defined

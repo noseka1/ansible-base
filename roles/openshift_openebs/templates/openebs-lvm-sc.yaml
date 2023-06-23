@@ -1,10 +1,8 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-{% if not openshift_common_default_storage_class_exists %}
   annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-{% endif %}
+    storageclass.kubernetes.io/is-default-class: '{{ not openshift_common_default_storage_class_exists }}'
   name: openebs-lvm
 parameters:
   storage: lvm

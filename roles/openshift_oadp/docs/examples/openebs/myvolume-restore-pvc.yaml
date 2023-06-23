@@ -1,4 +1,5 @@
-# OpenEBS DOES NOT SUPPORT CREATING VOLUMES FROM SNAPSHOTS and this time.
+# OpenEBS DOES NOT SUPPORT CREATING VOLUMES FROM SNAPSHOTS and this time,
+# so the PVC defined in this file won't work, won't be bound.
 #
 # Note that "creating a volume using snapshot is not supported", see also:
 #

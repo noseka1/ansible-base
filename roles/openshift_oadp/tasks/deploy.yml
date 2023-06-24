@@ -38,6 +38,12 @@
     wait_for_deployment_name: '{{ oadp_instance_name }}'
     wait_for_deployment_namespace: '{{ oadp_instance_namespace }}'
 
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+  when: oadp_instance_aws_enabled
+
 - name: Enable CSI volume snapshotting on AWS
   kubernetes.core.k8s:
     template:

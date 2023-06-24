@@ -1,7 +1,13 @@
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
+  annotations:
+{% if not openshift_common_default_volume_snapshot_class_exists %}
+    snapshot.storage.kubernetes.io/is-default-class: 'true'
+{% endif %}
   labels:
     # Enable creating of openebs-lvm snapshots using Velero
     velero.io/csi-volumesnapshot-class: 'true'
   name: csi-aws-vsc
+# Deletion policy must be set to Retain or Velero backup using data mover fails
+deletionPolicy: Retain

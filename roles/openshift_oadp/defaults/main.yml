@@ -8,16 +8,17 @@ oadp_operator_manage_namespace: true
 oadp_instance_namespace: openshift-adp
 oadp_instance_name: velero
 
-# If OpenShift is deployed on top of AWS then enabled this
+# If OpenShift is deployed on top of AWS then enable this
 oadp_instance_aws_enabled: false
 
-# If OpenShift is deployed on top of vSphere then enabled this
+# If OpenShift is deployed on top of vSphere then enable this
 oadp_instance_vsphere_enabled: false
 
 # Deploy MinIO S3-compatible storage along with Velero
 # Set this to false if using Amazon S3 or if you bringing your own S3-compatible storage
 oadp_instance_minio_enabled: true
-# Namespace where minio S3-compatible storage was deployed
+
+# Namespace where minio S3-compatible storage is deployed
 oadp_instance_minio_namespace: openshift-adp-minio
 
 # Configure Velero connection to an S3 or S3-compatible storage

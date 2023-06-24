@@ -179,3 +179,11 @@ Add `--log-level=debug` to the server command-line:
 ```
 $ oc edit -n openshift-adp deploy velero
 ```
+
+## References
+
+* [OpenShift APIs for Data Protection (OADP) FAQ](https://access.redhat.com/articles/5456281)
+* [Using Data Mover for CSI snapshots](https://docs.openshift.com/container-platform/4.13/backup_and_restore/application_backup_and_restore/backing_up_and_restoring/backing-up-applications.html#oadp-using-data-mover-for-csi-snapshots_backing-up-applications)
+* [Stateful Application Backup/Restore - MySQL](https://github.com/openshift/oadp-operator/blob/master/docs/examples/CSI/csi_example.md)
+* [Stateful Application Backup/Restore - VolumeSnapshotMover](https://github.com/openshift/oadp-operator/blob/master/docs/examples/data_mover.md)
+* [Data Mover CRD design](https://github.com/openshift/oadp-operator/blob/master/docs/design/datamover.md)

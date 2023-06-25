@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_oadp
+        name: oadp
         tasks_from: delete.yml

@@ -10,26 +10,23 @@
     minio_namespace: '{{ oadp_instance_minio_namespace }}'
   when: oadp_instance_minio_enabled
 
-- name: Deploy OADP operator
-  kubernetes.core.k8s:
-    template:
-      - operator/openshift-adp-ns.yaml
-      - operator/oadp-operator-og.yaml
-      - operator/oadp-operator-sub.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: oadp-operator
+    autogitops_app_path: oadp/operator
+    autogitops_app_namespace: '{{ oadp_operator_subscription_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ oadp_operator_subscription_name }}'
-    subscription_namespace: '{{ oadp_operator_subscription_namespace }}'
-
-- name: Deploy Velero instance
-  kubernetes.core.k8s:
-    template:
-      - instance/cloud-credentials-secret.yaml
-      - instance/dm-credential-secret.yaml
-      - instance/velero-dataprotectionapplication.yaml
+    autogitops_app_name: oadp
+    autogitops_app_path: oadp/instance
+    autogitops_app_namespace: '{{ oadp_instance_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_role:
     name: openshift_common

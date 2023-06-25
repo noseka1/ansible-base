@@ -1,7 +1,5 @@
 oadp_operator_subscription_name: oadp-operator
 oadp_operator_subscription_namespace: openshift-adp
-oadp_operator_subscription_channel: stable-1.2
-oadp_operator_subscription_approval: Automatic
 
 oadp_operator_manage_namespace: true
 
@@ -28,9 +26,9 @@ oadp_instance_s3_storage:
   aws_region: minio
   bucket_name: mybucket1
   s3_url: 'http://minio.{{ oadp_instance_minio_namespace }}.svc:9000'
-  s3_force_path_style: 'true'
-  #insecure_skip_tls_verify: 'false'
-  #ca_cert: ''
+  s3_force_path_style: true
+  insecure_skip_tls_verify: false
+  ca_cert: ''
 
 # Install and configure VolSync data mover
 oadp_instance_datamover_enabled: true

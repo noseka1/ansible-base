@@ -1,0 +1,9 @@
+{% for ns in prune_csvs_existing_namespaces.resources %}
+{% for item in prune_csvs_delete %}
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  metadata:
+    name: {{ item }}
+    namespace: {{ ns.metadata.name }}
+{% endfor %}
+{% endfor %}

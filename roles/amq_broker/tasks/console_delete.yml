@@ -11,3 +11,7 @@
   vars:
     autogitops_app_name: fuse-console-operator
     autogitops_app_path: fuse-console/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

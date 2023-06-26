@@ -11,3 +11,7 @@
   vars:
     autogitops_app_name: skupper-operator
     autogitops_app_path: skupper/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

@@ -11,3 +11,7 @@
   vars:
     autogitops_app_name: splunk-operator
     autogitops_app_path: splunk/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

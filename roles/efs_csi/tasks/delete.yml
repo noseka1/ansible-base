@@ -18,3 +18,7 @@
   vars:
     autogitops_app_name: efs-csi-operator
     autogitops_app_path: efs-csi/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

@@ -1,32 +1,38 @@
-- name: Delete service mesh instance
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_instance) }}"
-    state: absent
-
-- name: Delete service mesh operator
-  import_tasks: delete_operator.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    operator_subscription_name: '{{ service_mesh_subscription_name }}'
-    operator_subscription_namespace: '{{ service_mesh_subscription_namespace }}'
-    operator_kustomization: '{{ service_mesh_kustomizations.service_mesh_operator }}'
+    autogitops_app_name: ossm
+    autogitops_app_path: openshift-service-mesh/service-mesh/instance
 
-- name: Delete kiali operator
-  import_tasks: delete_operator.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    operator_subscription_name: '{{ kiali_subscription_name }}'
-    operator_subscription_namespace: '{{ kiali_subscription_namespace }}'
-    operator_kustomization: '{{ service_mesh_kustomizations.kiali_operator }}'
+    autogitops_app_name: ossm-operator
+    autogitops_app_path: openshift-service-mesh/service-mesh/operator
 
-- name: Delete jaeger operator
-  import_tasks: delete_operator.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    operator_subscription_name: '{{ jaeger_subscription_name }}'
-    operator_subscription_namespace: '{{ jaeger_subscription_namespace }}'
-    operator_kustomization: '{{ service_mesh_kustomizations.jaeger_operator }}'
+    autogitops_app_name: kiali-operator
+    autogitops_app_path: openshift-service-mesh/kiali/operator
 
-- name: Delete elasticsearch operator
-  import_tasks: delete_operator.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    operator_subscription_name: '{{ elasticsearch_subscription_name }}'
-    operator_subscription_namespace: '{{ elasticsearch_subscription_namespace }}'
-    operator_kustomization: '{{ service_mesh_kustomizations.elasticsearch_operator }}'
+    autogitops_app_name: jaeger-operator
+    autogitops_app_path: openshift-service-mesh/jaeger/operator
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: elasticsearch-operator
+    autogitops_app_path: openshift-service-mesh/elasticsearch/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

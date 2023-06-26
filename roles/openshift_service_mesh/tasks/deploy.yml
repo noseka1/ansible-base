@@ -1,45 +1,48 @@
-- name: Deploy elasticsearch operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.elasticsearch_operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: elasticsearch-operator
+    autogitops_app_path: openshift-service-mesh/elasticsearch/operator
+    autogitops_app_namespace: openshift-operators-redhat
 
-- name: Deploy jaeger operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.jaeger_operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: jaeger-operator
+    autogitops_app_path: openshift-service-mesh/jaeger/operator
+    autogitops_app_namespace: openshift-distributed-tracing
 
-- name: Deploy kiali operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.kiali_operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: kiali-operator
+    autogitops_app_path: openshift-service-mesh/kiali/operator
+    autogitops_app_namespace: openshift-operators
 
-- name: Deploy service mesh operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: ossm-operator
+    autogitops_app_path: openshift-service-mesh/service-mesh/operator
+    autogitops_app_namespace: openshift-operators
+    autogitops_app_values: '{{ lookup("template", "service-mesh/operator/values.yaml") }}'
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ service_mesh_subscription_name }}'
-    subscription_namespace: '{{ service_mesh_subscription_namespace }}'
+    subscription_name: servicemeshoperator
+    subscription_namespace: openshift-operators
 
-- name: Deploy service mesh instance
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + service_mesh_kustomizations.service_mesh_instance) }}"
-  register: sm_instance
-  until:
-    - sm_instance is success
-  retries: 60
-  delay: 10
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for service mesh deployment to complete
-  kubernetes.core.k8s_info:
-    api_version: maistra.io/v2
-    kind: ServiceMeshControlPlane
-    name: '{{ service_mesh_instance_name }}'
-    namespace: '{{ service_mesh_instance_namespace }}'
-  register: sm_instance
-  until:
-    - sm_instance.resources.0.status.conditions is defined
-    - sm_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | list | length > 0
-    - (sm_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Installed') | first).status == "True"
-  retries: 80
-  delay: 10
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: ossm
+    autogitops_app_path: openshift-service-mesh/service-mesh/instance
+    autogitops_app_namespace: istio-system
+    autogitops_app_values: '{{ lookup("template", "service-mesh/instance/values.yaml") }}'

@@ -23,9 +23,9 @@
     loki_manage_namespace: false
     loki_instance_tenants_mode: openshift-network
 
-- name: Delete Network Observability namespace
+- name: Delete Network Observability operator namespace
   kubernetes.core.k8s:
     template:
-      - instance/netobserv-ns.yaml
+      - operator/netobserv-ns.yaml
     wait: true
     state: absent

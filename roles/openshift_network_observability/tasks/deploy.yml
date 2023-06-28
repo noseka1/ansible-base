@@ -1,6 +1,8 @@
 - name: Deploy Network Observability operator
   kubernetes.core.k8s:
     template:
+      - operator/netobserv-ns.yaml
+      - operator/netobserv-operator-og.yaml
       - operator/netobserv-operator-sub.yaml
 
 - import_role:
@@ -9,11 +11,6 @@
   vars:
     subscription_name: '{{ network_observability_subscription_name }}'
     subscription_namespace: '{{ network_observability_subscription_namespace }}'
-
-- name: Create Network Observability namespace
-  kubernetes.core.k8s:
-    template:
-      - instance/netobserv-ns.yaml
 
 - import_role:
     name: openshift_loki
@@ -30,7 +27,7 @@
       - instance/loki-netobserv-tenant-clusterrolebinding.yaml
       - instance/cluster-flowcollector.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Loki instance to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Network Observability instance to deploy
   kubernetes.core.k8s_info:
     api_version: flows.netobserv.io/v1alpha1
     kind: FlowCollector

@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_quay
+        name: quay
         tasks_from: delete.yml

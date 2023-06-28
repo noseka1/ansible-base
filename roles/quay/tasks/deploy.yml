@@ -1,4 +1,4 @@
-- import_tasks: deploy_quay.yml
+- import_tasks: quay_deploy.yml
 
 - import_tasks: create_user.yml
 

@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_jaeger
-        tasks_from: deploy.yml
+        name: jaeger
+        tasks_from: delete.yml

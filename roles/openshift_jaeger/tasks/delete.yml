@@ -1,5 +1,0 @@
-- name: Delete Jaeger instance
-  kubernetes.core.k8s:
-    template:
-      - jaeger-jaeger.yaml
-    state: absent

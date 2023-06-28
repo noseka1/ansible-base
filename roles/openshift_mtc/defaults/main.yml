@@ -1,7 +1,0 @@
-mtc_kustomizations:
-  operator: github.com/noseka1/mtc-kustomization/mtc-operator/base?ref=myauto
-  instance: github.com/noseka1/mtc-kustomization/mtc-instance/base?ref=myauto
-mtc_subscription_namespace: openshift-migration
-mtc_subscription_name: mtc-operator
-mtc_instance_namespace: openshift-migration
-mtc_instance_name: migration-controller

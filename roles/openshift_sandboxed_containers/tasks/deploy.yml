@@ -1,22 +1,18 @@
-- name: Deploy OpenShift sandboxed containers operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: openshift-sandboxed-containers-operator
+    autogitops_app_path: openshift-sandboxed-containers/operator
+    autogitops_app_namespace: openshift-sandboxed-containers-operator
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ sandboxed_containers_operator_subscription_name }}'
-    subscription_namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
-
-- name: Deploy OpenShift sandboxed containers instance
-  kubernetes.core.k8s:
-    template:
-      - cluster-kataconfig-kataconfig.yaml
-  register: sandboxed_containers_kataconfig
-  until: sandboxed_containers_kataconfig is succeeded
-  retries: 10
-  delay: 10
+    autogitops_app_name: openshift-sandboxed-containers
+    autogitops_app_path: openshift-sandboxed-containers/instance
 
 - import_role:
     name: openshift_common
@@ -24,7 +20,6 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: sandboxed_containers_kataconfig is changed
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift sandboxed containers deployment to complete
   kubernetes.core.k8s_info:
@@ -38,13 +33,10 @@
   retries: 60
   delay: 10
 
-- name: Deploy test workload
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.workload) }}"
-
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    wait_for_deployment_name: example
-    wait_for_deployment_namespace: '{{ sandboxed_containers_operator_subscription_namespace }}'
+    autogitops_app_name: openshift-sandboxed-containers-example
+    autogitops_app_path: openshift-sandboxed-containers/example-workload
+    autogitops_app_namespace: openshift-sandboxed-containers-operator

@@ -1,19 +1,25 @@
-- name: Delete test workload
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.workload) }}"
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-sandboxed-containers-example
+    autogitops_app_path: openshift-sandboxed-containers/example-workload
 
-- name: Delete OpenShift sandboxed containers instance
-  kubernetes.core.k8s:
-    template:
-      - cluster-kataconfig-kataconfig.yaml
-    state: absent
-  register: sandboxed_containers_kataconfig
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-sandboxed-containers
+    autogitops_app_path: openshift-sandboxed-containers/instance
 
-- name: Delete OpenShift sandboxed containers operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + sandboxed_containers_kustomizations.operator) }}"
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: openshift-sandboxed-containers-operator
+    autogitops_app_path: openshift-sandboxed-containers/operator
+    autogitops_app_namespace: openshift-sandboxed-containers-operator
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
     name: openshift_common
@@ -21,4 +27,3 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: sandboxed_containers_kataconfig is changed

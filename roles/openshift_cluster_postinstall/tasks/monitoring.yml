@@ -1,6 +1,6 @@
 # See also: https://docs.openshift.com/container-platform/4.9/monitoring/enabling-monitoring-for-user-defined-projects.html
 
-- name: Use persistent storage for monitoring and enable monitoring of user-defined workloads
+- name: Configure persistent storage for monitoring and enable monitoring of user-defined workloads
   kubernetes.core.k8s:
     template: cluster-monitoring-config-cm.yaml
 

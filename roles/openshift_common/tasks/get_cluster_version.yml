@@ -5,10 +5,19 @@
     name: version
   register: openshift_common_clusterversion
 
-- name: Set openshift_common_cluster_uuid
-  set_fact:
+- set_fact:
     openshift_common_cluster_uuid: >-
       {{ openshift_common_clusterversion.resources.0.spec.clusterID }}
-
-- debug:
-    var: openshift_common_cluster_uuid
+    openshift_common_cluster_version_str: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version }}
+    openshift_common_cluster_version_list: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version.split('.') }}
+    openshift_common_cluster_version_major: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version.split('.').0 }}
+    openshift_common_cluster_version_minor: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version.split('.').1 }}
+    openshift_common_cluster_version_patch: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version.split('.').2 }}
+    openshift_common_cluster_version_majorminor: >-
+      {{ openshift_common_clusterversion.resources.0.status.desired.version.split('.').0 + '.' +
+         openshift_common_clusterversion.resources.0.status.desired.version.split('.').1 }}

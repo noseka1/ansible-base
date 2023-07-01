@@ -20,7 +20,7 @@ collections:
 
 - name: amazon.aws
   src: https://github.com/ansible-collections/amazon.aws
-  version: 3.5.1
+  version: 6.1.0
 
 - name: ansible.windows
   src: https://github.com/ansible-collections/ansible.windows

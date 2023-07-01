@@ -5,10 +5,10 @@
     name: version
   register: openshift_common_clusterversion
 
-- name: Set openshift_common_cluster_id
+- name: Set openshift_common_cluster_uuid
   set_fact:
-    openshift_common_cluster_id: >-
+    openshift_common_cluster_uuid: >-
       {{ openshift_common_clusterversion.resources.0.spec.clusterID }}
 
 - debug:
-    var: openshift_common_cluster_id
+    var: openshift_common_cluster_uuid

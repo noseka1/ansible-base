@@ -1,12 +1,21 @@
-- name: Check that certificate is defined
-  fail:
-    msg: Certificate is missing
-  when: openshift_rhel_entitlement_cert | length == 0
+- assert:
+    that: openshift_rhel_entitlement_cert | length > 0
+    fail_msg: Variable 'openshift_rhel_entitlement_cert' must not be empty
 
-- name: Check that key is defined
-  fail:
-    msg: Private key is missing
-  when: openshift_rhel_entitlement_key | length == 0
+- assert:
+    that: openshift_rhel_entitlement_key | length > 0
+    fail_msg: Variable 'openshift_rhel_entitlement_key' must not be empty
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_version.yml
+
+- set_fact:
+    openshift_rhel_entitlement_repo_file: redhat8.repo
+
+- set_fact:
+    openshift_rhel_entitlement_repo_file: redhat9.repo
+  when: openshift_common_cluster_version_majorminor is version('4.13', '>=', strict=true)
 
 - name: Configure RHEL entitlement for cluster nodes
   kubernetes.core.k8s:

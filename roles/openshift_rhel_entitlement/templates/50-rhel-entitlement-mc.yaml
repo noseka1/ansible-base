@@ -24,7 +24,7 @@ spec:
         path: /etc/rhsm/rhsm.conf
 {% if openshift_rhel_entitlement_custom_yum_sslcacert | length == 0 %}
       - contents:
-          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'redhat.repo', rstrip=false) | b64encode }}
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', openshift_rhel_entitlement_repo_file, rstrip=false) | b64encode }}
         mode: 0644
         path: /etc/yum.repos.d/redhat.repo
 {% endif %}
@@ -32,7 +32,7 @@ spec:
       - contents:
           source: >-
             data:text/plain;charset=utf-8;base64,{{
-              lookup('file', 'redhat.repo', rstrip=false) |
+              lookup('file', openshift_rhel_entitlement_repo_file, rstrip=false) |
               regex_replace('redhat-uep.pem', 'redhat-uep-custom.pem') |
               regex_replace('sslverifystatus = 1', 'sslverifystatus = 0') |
               b64encode

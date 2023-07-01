@@ -6,11 +6,11 @@
 
 - assert:
     that: redhat_subscription_username | length > 0
-    fail_msg: "Variable 'redhat_subscription_username' must not be empty"
+    fail_msg: Variable 'redhat_subscription_username' must not be empty
 
 - assert:
     that: redhat_subscription_password | length > 0
-    fail_msg: "Variable 'redhat_subscription_password' must not be empty"
+    fail_msg: Variable 'redhat_subscription_password' must not be empty
 
 - name: Register with RHSM as user {{ redhat_subscription_username }}
   community.general.redhat_subscription:

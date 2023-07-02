@@ -11,6 +11,11 @@
     name: openshift_common
     tasks_from: get_default_storage_class.yml
 
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+
 - name: Delete openebs-lvm storage class and snapshot class
   kubernetes.core.k8s:
     template:

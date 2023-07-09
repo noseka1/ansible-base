@@ -31,7 +31,7 @@ spec:
           - ebs:
               iops: 0
               volumeSize: 120
-              volumeType: gp2
+              volumeType: gp3
           credentialsSecret:
             name: aws-cloud-credentials
           deviceIndex: 0

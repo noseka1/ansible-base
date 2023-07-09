@@ -4,4 +4,22 @@ metadata:
   name: cluster
 spec:
   audit:
+    # See also "Configuring the audit log policy" at https://docs.openshift.com/container-platform/4.13/security/audit-log-policy-config.html
+    #
+    # Available profiles:
+    #
+    # 'Default' Logs only metadata for read and write requests; does not log request bodies except
+    # for OAuth access token requests. This is the default policy.
+    #
+    # 'WriteRequestBodies' In addition to logging metadata for all requests, logs request bodies for
+    # every write request to the API servers (create, update, patch). This profile has more resource
+    # overhead than the Default profile.
+    #
+    # 'AllRequestBodies' In addition to logging metadata for all requests, logs request bodies for
+    # every read and write request to the API servers (get, list, create, update, patch). This
+    # profile has the most resource overhead.
+    #
+    # 'None' No requests are logged; even OAuth access token requests and OAuth authorize token
+    # requests are not logged.
+    #
     profile: {{ openshift_cluster_postinstall_audit_profile | default('Default') }}

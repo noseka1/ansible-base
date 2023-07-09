@@ -30,6 +30,7 @@ spec:
           blockDevices:
           - ebs:
               iops: 0
+              kmsKey: {}
               volumeSize: 120
               volumeType: gp3
           credentialsSecret:

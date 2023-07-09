@@ -6,7 +6,7 @@
   register: cluster_dns
 
 - name: Check if we have AWS permissions to list the records in the DNS zone (if not, this will fail)
-  route53_info:
+  amazon.aws.route53_info:
     query: record_sets
     hosted_zone_id: '{{ cluster_dns.resources.0.spec.publicZone.id }}'
   ignore_errors: true

@@ -2,8 +2,8 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: migration-toolkit-containers-operator
-    autogitops_app_path: migration-toolkit-containers/operator
+    autogitops_app_name: mtc-operator
+    autogitops_app_path: mtc/operator
     autogitops_app_namespace: openshift-migration
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -11,8 +11,8 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: migration-toolkit-containers
-    autogitops_app_path: migration-toolkit-containers/instance
+    autogitops_app_name: mtc
+    autogitops_app_path: mtc/instance
     autogitops_app_namespace: openshift-migration
 
 - import_tasks: report_success.yml

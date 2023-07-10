@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: migration_toolkit_containers
+        name: mtc
         tasks_from: deploy.yml

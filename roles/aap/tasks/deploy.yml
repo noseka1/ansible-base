@@ -3,7 +3,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: aap-operator
-    autogitops_app_path: ansible-automation-platform/operator
+    autogitops_app_path: aap/operator
     autogitops_app_namespace: aap
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,7 +12,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: aap-auto-controller
-    autogitops_app_path: ansible-automation-platform/auto-controller
+    autogitops_app_path: aap/auto-controller
     autogitops_app_namespace: aap
     autogitops_app_values: '{{ lookup("template", "auto-controller/values.yaml") }}'
 

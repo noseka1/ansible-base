@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: ansible_automation_platform
+        name: aap
         tasks_from: deploy.yml

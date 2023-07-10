@@ -3,7 +3,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: elasticsearch-operator
-    autogitops_app_path: openshift-service-mesh/elasticsearch/operator
+    autogitops_app_path: ossm/elasticsearch/operator
     autogitops_app_namespace: openshift-operators-redhat
 
 - import_role:
@@ -11,7 +11,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: jaeger-operator
-    autogitops_app_path: openshift-service-mesh/jaeger/operator
+    autogitops_app_path: ossm/jaeger/operator
     autogitops_app_namespace: openshift-distributed-tracing
 
 - import_role:
@@ -19,7 +19,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: kiali-operator
-    autogitops_app_path: openshift-service-mesh/kiali/operator
+    autogitops_app_path: ossm/kiali/operator
     autogitops_app_namespace: openshift-operators
 
 - import_role:
@@ -27,7 +27,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: ossm-operator
-    autogitops_app_path: openshift-service-mesh/service-mesh/operator
+    autogitops_app_path: ossm/service-mesh/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: '{{ lookup("template", "service-mesh/operator/values.yaml") }}'
 
@@ -43,6 +43,6 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: ossm
-    autogitops_app_path: openshift-service-mesh/service-mesh/instance
+    autogitops_app_path: ossm/service-mesh/instance
     autogitops_app_namespace: istio-system
     autogitops_app_values: '{{ lookup("template", "service-mesh/instance/values.yaml") }}'

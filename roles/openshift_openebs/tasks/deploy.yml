@@ -28,7 +28,7 @@
 - name: Deploy OpenEBS
   kubernetes.core.helm:
     name: '{{ openebs_name }}'
-    chart_ref: 'openebs/openebs'
+    chart_ref: openebs/openebs
     chart_version: '{{ openebs_version  }}'
     release_namespace: '{{ openebs_namespace }}'
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'

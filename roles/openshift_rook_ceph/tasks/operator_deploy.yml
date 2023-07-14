@@ -1,0 +1,19 @@
+- name: Deploy Rook Ceph CRDs
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/crds.yaml', split_lines=false) }}"
+
+- name: Deploy Rook Ceph common resources
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/common.yaml', split_lines=false) }}"
+
+- name: Deploy Rook Ceph operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/operator-openshift.yaml', split_lines=false) |
+                 regex_replace('ROOK_CEPH_ALLOW_LOOP_DEVICES: \"false\"', 'ROOK_CEPH_ALLOW_LOOP_DEVICES: \"true\"') }}"
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: rook-ceph-operator
+    wait_for_deployment_namespace: '{{ rook_ceph_namespace }}'

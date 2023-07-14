@@ -1,0 +1,55 @@
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+
+- name: Delete Rook Ceph NFS
+  kubernetes.core.k8s:
+    definition: |
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/nfs-test.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/nfs/storageclass.yaml', split_lines=false) }}
+      ---
+      {{ lookup('template', 'instance/csi-nfsplugin-snapclass-vsclass.yaml') }}
+    state: absent
+    wait: true
+
+- name: Delete Rook Ceph object store
+  kubernetes.core.k8s:
+    definition: |
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/object-test.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
+    state: absent
+    wait: true
+
+- name: Delete Rook Ceph file system
+  kubernetes.core.k8s:
+    definition: |
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/filesystem-test.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/cephfs/storageclass.yaml', split_lines=false) }}
+      ---
+      {{ lookup('template', 'instance/csi-cephfsplugin-snapclass-vsclass.yaml') }}
+    state: absent
+    wait: true
+
+- name: Delete Rook Ceph cluster
+  kubernetes.core.k8s:
+    template:
+      - instance/my-cluster-cephcluster.yaml
+      - instance/rook-ceph-block-sc.yaml
+      - instance/csi-rbdplugin-snapclass-vsclass.yaml
+    state: absent
+    wait: true
+
+- name: Delete Rook Ceph toolbox
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/toolbox.yaml', split_lines=false) }}"
+    state: absent
+    wait: true

@@ -1,0 +1,3 @@
+- import_tasks: instance_delete.yml
+
+- import_tasks: operator_delete.yml

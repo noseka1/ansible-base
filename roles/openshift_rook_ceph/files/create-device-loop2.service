@@ -1,0 +1,11 @@
+[Unit]
+Description=Create device loop2
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+ExecStart=/var/usrlocal/bin/create-device-loop2.sh
+
+[Install]
+WantedBy=multi-user.target

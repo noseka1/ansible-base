@@ -1,0 +1,11 @@
+- name: Delete Rook Ceph operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/operator-openshift.yaml', split_lines=false) }}"
+    state: absent
+    wait: true
+
+- name: Delete Rook Ceph common resources
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/common.yaml', split_lines=false) }}"
+    state: absent
+    wait: true

@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rook-ceph-mgr-dashboard
+  namespace: {{ rook_ceph_namespace }}
+spec:
+  port:
+    targetPort: http-dashboard
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  to:
+    kind: Service
+    name: rook-ceph-mgr-dashboard

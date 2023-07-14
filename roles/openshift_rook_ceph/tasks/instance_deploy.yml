@@ -12,6 +12,11 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/toolbox.yaml', split_lines=false) }}"
 
+- name: Configure Ceph dashboard
+  kubernetes.core.k8s:
+    template:
+      - templates/instance/rook-ceph-mgr-dashboard-route.yaml
+
 - name: Deploy Rook Ceph cluster
   kubernetes.core.k8s:
     template:

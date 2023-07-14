@@ -1,0 +1,29 @@
+- name: Obtain Ceph dashboard route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: rook-ceph-mgr-dashboard
+    namespace: '{{ rook_ceph_namespace }}'
+  register: rook_ceph_dashboard_result
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph dashboard to become available
+  uri:
+    url: 'https://{{ rook_ceph_dashboard_result.resources.0.spec.host }}'
+    status_code: [ 200 ]
+  register: rook_ceph_dashboard_http_result
+  until: rook_ceph_dashboard_http_result is succeeded
+  retries: 60
+  delay: 10
+
+- name: Report success
+  set_fact:
+    msg: |
+      Rook Ceph installed successfully.
+
+      You can browse to:
+      https://{{ rook_ceph_dashboard_result.resources.0.spec.host }}
+
+      The 'admin' user password can be retrieved using:
+      $ oc get -n {{ rook_ceph_namespace }} secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
+
+- debug: msg="{{ msg.split('\n') }}"

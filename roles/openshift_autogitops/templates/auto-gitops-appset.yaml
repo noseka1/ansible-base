@@ -9,7 +9,7 @@ spec:
   - git:
       files:
       - path: envs/in-cluster/infra/**/argocd_config_manual.yaml
-      repoURL: {{ autogitops_git_repo_url_plain }}
+      repoURL: {{ gitea_repo_url_plain }}
       requeueAfterSeconds: 10
       revision: master
       template:
@@ -18,7 +18,7 @@ spec:
           destination: {}
           project: ""
           source:
-            repoURL: {{ autogitops_git_repo_url_plain }}
+            repoURL: {{ gitea_repo_url_plain }}
   syncPolicy:
     preserveResourcesOnDeletion: true
 {% raw %}

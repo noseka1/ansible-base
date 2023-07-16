@@ -17,3 +17,12 @@
     gitea_username: '{{ gitea_username }}'
     gitea_password: '{{ gitea_password }}'
     gitea_cacert:   '{{ gitea_cacert }}'
+
+- name: Set git repository connection
+  set_fact:
+    gitea_repo_name: '{{ gitea_repo_name }}'
+    gitea_repo_url_plain: https://{{ gitea_hostname }}/{{ gitea_username }}/{{ gitea_repo_name }}.git
+    gitea_repo_url_creds: https://{{ gitea_username | urlencode }}:{{ gitea_password | urlencode }}@{{ gitea_hostname }}/{{ gitea_username }}/{{ gitea_repo_name }}.git
+  when:
+    - gitea_repo_name is defined
+    - gitea_repo_name | length > 0

@@ -1,0 +1,20 @@
+- import_tasks: get_argocd_api_connection.yml
+
+- name: Create repository '{{ gitops_repo_name }}'
+  uri:
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/repositories
+    method: POST
+    body_format: json
+    body:
+      name: '{{ gitops_repo_name }}'
+      repo: '{{ gitops_repo_repo }}'
+      username: '{{ gitops_repo_username }}'
+      password: '{{ gitops_repo_password }}'
+      forceHttpBasicAuth: '{{ gitops_repo_force_http_basic_auth }}'
+      type: '{{ gitops_repo_type }}'
+      insecure: '{{ gitops_repo_insecure | default(false) }}'
+      insecureIgnoreHostKey: '{{ gitops_repo_insecure_ignore_host_key | default(false) }}'
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: false
+    status_code: [ 200 ]

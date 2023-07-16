@@ -1,0 +1,21 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhsso-operator
+    autogitops_app_path: rhsso/operator
+    autogitops_app_namespace: '{{ rhsso_operator_subscription_namespace }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhsso
+    autogitops_app_path: rhsso/instance
+    autogitops_app_namespace: '{{ rhsso_instance_namespace }}'
+
+- import_tasks: get_connection.yml
+
+- import_tasks: set_admin_password.yml
+
+- import_tasks: report_success.yml

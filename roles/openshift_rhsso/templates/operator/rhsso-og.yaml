@@ -1,8 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ rhsso_operator_subscription_name }}
-  namespace: {{ rhsso_operator_subscription_namespace }}
-spec:
-  targetNamespaces:
-  - {{ rhsso_operator_subscription_namespace }}

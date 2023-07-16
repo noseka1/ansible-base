@@ -1,5 +1,0 @@
-allowNonstandardNamespace: true
-allowNonstandardReleaseName: true
-central:
-  adminPassword:
-    htpasswd: admin:{{ generic_user_password | string | password_hash('bcrypt', 'constant1234567890123.') }}

@@ -1,5 +1,0 @@
-- import_tasks: install_central.yml
-
-- import_tasks: install_secured_cluster.yml
-
-- import_tasks: report_success.yml

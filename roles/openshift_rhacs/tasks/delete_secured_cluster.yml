@@ -21,3 +21,10 @@
   vars:
     delete_operator_subscription_name: '{{ rhacs_subscription_name }}'
     delete_operator_subscription_namespace: '{{ rhacs_subscription_namespace }}'
+
+- name: Delete RHACS operator namespace
+  kubernetes.core.k8s:
+    template:
+      - operator/rhacs-operator-ns.yaml
+    state: absent
+    wait: true

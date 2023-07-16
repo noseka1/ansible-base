@@ -1,4 +1,4 @@
-rhacs_subscription_namespace: openshift-operators
+rhacs_subscription_namespace: rhacs-operator
 rhacs_subscription_name: rhacs-operator
 rhacs_subscription_channel: stable
 rhacs_subscription_approval: Automatic

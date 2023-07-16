@@ -1,6 +1,9 @@
 - name: Deploy RHACS operator
   kubernetes.core.k8s:
-    template: operator/rhacs-operator-sub.yaml
+    template:
+      - operator/rhacs-operator-ns.yaml
+      - operator/rhacs-operator-og.yaml
+      - operator/rhacs-operator-sub.yaml
 
 - import_role:
     name: openshift_common

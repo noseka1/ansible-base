@@ -2,7 +2,7 @@
 
 - name: Create repository certificate for '{{ gitops_repo_cert_server_name }}'
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/certificates
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/certificates?upsert=true
     method: POST
     body_format: json
     body:

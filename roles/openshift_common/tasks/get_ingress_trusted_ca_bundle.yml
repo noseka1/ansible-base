@@ -1,0 +1,11 @@
+- name: Obtain ingress trusted CA configmap
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    name: trusted-ca
+    namespace: openshift-ingress-operator
+  register: openshift_common_trusted_ca_result
+
+- name: Set openshift_common_ingress_trusted_ca_bundle
+  set_fact:
+    openshift_common_ingress_trusted_ca_bundle: '{{ openshift_common_trusted_ca_result.resources.0.data["ca-bundle.crt"] }}'

@@ -26,7 +26,7 @@ spec:
     persistence:
       persistentVolumeClaim:
         claimName: stackrox-db
-{% if rhacs_central_deployment_mode == 'dev' %}
+{% if rhacs_central_deployment_mode == 'prod' %}
     resources:
       limits:
         cpu: 4000m

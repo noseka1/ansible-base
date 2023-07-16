@@ -1,0 +1,16 @@
+- import_tasks: get_argocd_api_connection.yml
+
+- name: Create repository certificate for '{{ gitops_repo_cert_server_name }}'
+  uri:
+    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/certificates
+    method: POST
+    body_format: json
+    body:
+      items:
+        - certData: '{{ gitops_repo_cert_cert_data }}'
+          certType: '{{ gitops_repo_cert_cert_type }}'
+          serverName: '{{ gitops_repo_cert_server_name }}'
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: false
+    status_code: [ 200 ]

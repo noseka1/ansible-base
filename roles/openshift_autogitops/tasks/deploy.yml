@@ -2,6 +2,20 @@
 
 - import_tasks: local_repo_create.yml
 
+- import_role:
+    name: openshift_gitea
+    tasks_from: get_connection.yml
+
+- import_role:
+    name: openshift_gitops
+    tasks_from: create_repo_cert.yml
+  vars:
+    gitops_repo_cert_cert_data: '{{ gitea_cacert | b64encode }}'
+    gitops_repo_cert_cert_info: '{{ gitea_hostname }}'
+    gitops_repo_cert_cert_type: https
+    gitops_repo_cert_server_name: '{{ gitea_hostname }}'
+  when: gitea_cacert | length > 0
+
 - name: Create auto-gitops application set
   kubernetes.core.k8s:
     template:

@@ -8,8 +8,10 @@
 
 - name: Deploy Rook Ceph operator
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/operator-openshift.yaml', split_lines=false) |
-                 regex_replace('ROOK_CEPH_ALLOW_LOOP_DEVICES: \"false\"', 'ROOK_CEPH_ALLOW_LOOP_DEVICES: \"true\"') }}"
+    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/operator-openshift.yaml', split_lines=false)
+                   | regex_replace('ROOK_CEPH_ALLOW_LOOP_DEVICES: \"false\"', 'ROOK_CEPH_ALLOW_LOOP_DEVICES: \"true\"')
+                   | regex_replace('CSI_ENABLE_CSIADDONS: \"false\"', 'CSI_ENABLE_CSIADDONS: \"true\"')
+                 }}"
 
 - import_role:
     name: openshift_common

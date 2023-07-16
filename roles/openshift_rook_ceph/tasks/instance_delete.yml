@@ -56,6 +56,15 @@
     state: absent
     wait: true
 
+- name: Delete CSI Addons
+  kubernetes.core.k8s:
+    definition: |
+      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/rbac.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/setup-controller.yaml', split_lines=false) }}
+    state: absent
+    wait: true
+
 - name: Delete Rook Ceph toolbox
   kubernetes.core.k8s:
     definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/toolbox.yaml', split_lines=false) }}"

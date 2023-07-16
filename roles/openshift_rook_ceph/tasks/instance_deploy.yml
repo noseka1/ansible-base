@@ -17,6 +17,15 @@
     template:
       - templates/instance/rook-ceph-mgr-dashboard-route.yaml
 
+- name: Deploy CSI Addons
+  kubernetes.core.k8s:
+    definition: |
+      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/crds.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/rbac.yaml', split_lines=false) }}
+      ---
+      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/setup-controller.yaml', split_lines=false) }}
+
 - name: Deploy Rook Ceph cluster
   kubernetes.core.k8s:
     template:

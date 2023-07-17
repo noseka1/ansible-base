@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: smtp4dev
+        tasks_from: deploy.yml

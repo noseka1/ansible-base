@@ -1,2 +1,0 @@
-openshift_webhook_receiver_namespace: webhook-receiver
-openshift_webhook_receiver_deployment_name: webhook-receiver

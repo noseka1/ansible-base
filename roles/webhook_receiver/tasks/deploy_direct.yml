@@ -1,0 +1,18 @@
+- name: Generate webhook receiver resources from Helm Chart
+  kubernetes.core.helm_template:
+    chart_ref: '{{ autogitops_catalog_dir }}/webhook-receiver'
+    values_files:
+      - '{{ autogitops_catalog_dir }}/webhook-receiver/values.yaml'
+    values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+  register: webhook_receiver_helm_result
+
+- name: Deploy webhook receiver
+  kubernetes.core.k8s:
+    definition: '{{ webhook_receiver_helm_result.stdout }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ webhook_receiver_deployment_name }}'
+    wait_for_deployment_namespace: '{{ webhook_receiver_namespace }}'

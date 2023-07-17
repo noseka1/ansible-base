@@ -1,0 +1,6 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: webhook-receiver{{ webhook_receiver_app_suffix }}
+    autogitops_app_path: webhook-receiver

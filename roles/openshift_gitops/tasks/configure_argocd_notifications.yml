@@ -1,9 +1,10 @@
 - name: Deploy custom webhook receiver
   import_role:
-    name: openshift_webhook_receiver
-    tasks_from: deploy.yml
+    name: webhook_receiver
+    tasks_from: deploy_direct.yml
   vars:
-    openshift_webhook_receiver_namespace: '{{ gitops_instance_namespace }}'
+    webhook_receiver_namespace: '{{ gitops_instance_namespace }}'
+    webhook_receiver_manage_namespace: false
 
 - import_tasks: get_argocd_route.yml
 

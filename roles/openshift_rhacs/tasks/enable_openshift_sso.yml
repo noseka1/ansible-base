@@ -47,7 +47,7 @@
     validate_certs: false
     status_code: [ 200, 409 ]
 
-- name: Grant Admin role to users in cluster-admins group (returns HTTP 500 if the auth provider already exists)
+- name: Grant Admin role to users in cluster-admins group (returns HTTP 409 if the auth provider already exists)
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/groups'
     method: POST
@@ -62,4 +62,4 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 500 ]
+    status_code: [ 200, 409 ]

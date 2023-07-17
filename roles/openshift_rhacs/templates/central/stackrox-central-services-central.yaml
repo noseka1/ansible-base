@@ -11,6 +11,15 @@ spec:
       isEnabled: Enabled
       passwordSecret:
         name: central-db-password
+{% if rhacs_deployment_mode == 'dev' %}
+      resources:
+        limits:
+          cpu: 4000m
+          memory: 500Mi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+{% endif %}
     defaultTLSSecret:
       name: central-default-tls-cert
     exposure:
@@ -26,31 +35,40 @@ spec:
     persistence:
       persistentVolumeClaim:
         claimName: stackrox-db
-{% if rhacs_central_deployment_mode == 'prod' %}
+{% if rhacs_deployment_mode == 'dev' %}
     resources:
       limits:
         cpu: 4000m
-        memory: 4Gi
+        memory: 500Mi
       requests:
         cpu: 100m
-        memory: 1Gi
+        memory: 500Mi
 {% endif %}
   egress:
     connectivityPolicy: {{ rhacs_central_connectivity_policy }}
   scanner:
     analyzer:
       scaling:
-{% if rhacs_central_deployment_mode == 'dev' %}
+{% if rhacs_deployment_mode == 'dev' %}
         autoScaling: Disabled
         replicas: 1
 {% endif %}
-{% if rhacs_central_deployment_mode == 'prod' %}
+{% if rhacs_deployment_mode == 'prod' %}
         autoScaling: Enabled
         maxReplicas: 5
         minReplicas: 2
         replicas: 3
 {% endif %}
     scannerComponent: Enabled
+{% if rhacs_deployment_mode == 'dev' %}
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 500Mi
+{% endif %}
   customize:
     annotations:
       # These annotations make the central-reencrypt route work with OIDC. The annotations are required to be

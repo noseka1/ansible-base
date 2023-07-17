@@ -22,7 +22,7 @@ rhacs_notifications_slack_url: ''
 rhacs_notifications_splunk_enabled: false
 
 # Deployment mode is either 'dev' or 'prod'. Prod enables Scanner autoscaling and higher resource requests.
-rhacs_central_deployment_mode: dev
+rhacs_deployment_mode: dev
 
 rhacs_create_cloudflare_tunnel: false
 

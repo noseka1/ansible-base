@@ -1,9 +1,3 @@
-- import_tasks: install_operator.yml
-
-- name: Create stackrox namespace if it does not exist
-  kubernetes.core.k8s:
-    template: namespace/stackrox-ns.yaml
-
 - import_role:
     name: openshift_common
     tasks_from: get_cluster_domain.yml
@@ -44,9 +38,14 @@
     namespace: '{{ rhacs_instance_namespace }}'
   when: generate_cert_result.status == 200
 
-- name: Deploy secured cluster services
-  kubernetes.core.k8s:
-    template: secured-cluster/stackrox-secured-cluster-services-securedcluster.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhacs-secured-cluster
+    autogitops_app_path: rhacs/secured-cluster
+    autogitops_app_namespace: '{{ rhacs_instance_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "secured-cluster/values.yaml") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_common_cluster_domain }} to become healthy
   uri:

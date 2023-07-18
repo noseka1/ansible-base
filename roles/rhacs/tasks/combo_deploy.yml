@@ -1,8 +1,17 @@
-- import_tasks: deploy_central.yml
+- import_tasks: operator_deploy.yml
 
-- import_tasks: install_webhook_receiver.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhacs-namespace
+    autogitops_app_path: rhacs/namespace
 
-- import_tasks: install_mail_receiver.yml
+- import_tasks: central_deploy.yml
+
+- import_tasks: webhook_receiver_deploy.yml
+
+- import_tasks: mail_receiver_deploy.yml
 
 - import_tasks: install_syslog_receiver.yml
 
@@ -19,6 +28,6 @@
 
 - import_tasks: enable_openshift_sso.yml
 
-- import_tasks: deploy_secured_cluster.yml
+- import_tasks: secured_cluster_common_deploy.yml
 
 - import_tasks: report_success.yml

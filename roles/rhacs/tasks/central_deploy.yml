@@ -1,18 +1,15 @@
-- import_tasks: install_operator.yml
-
 - import_role:
     name: openshift_common
     tasks_from: get_cluster_domain.yml
 
-- name: Deploy RHACS Central
-  kubernetes.core.k8s:
-    template:
-      - namespace/stackrox-ns.yaml
-      - central/central-htpasswd-secret.yaml
-      - central/central-db-password-secret.yaml
-      - central/scanner-db-password-secret.yaml
-      - central/central-default-tls-cert-secret.yaml
-      - central/stackrox-central-services-central.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhacs-central
+    autogitops_app_path: rhacs/central
+    autogitops_app_namespace: '{{ rhacs_instance_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "central/values.yaml") }}'
 
 - name: Obtain Central TLS secret
   kubernetes.core.k8s_info:

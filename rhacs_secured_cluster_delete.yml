@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_rhacs
-        tasks_from: deploy_combo.yml
+        name: rhacs
+        tasks_from: secured_cluster_delete.yml

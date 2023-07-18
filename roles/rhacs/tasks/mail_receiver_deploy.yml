@@ -1,9 +1,10 @@
-- name: Deploy smtp4dev email receiver
-  import_role:
-    name: openshift_smtp4dev
+- import_role:
+    name: smtp4dev
     tasks_from: deploy.yml
   vars:
-    openshift_smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
+    smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
+    smtp4dev_manage_namespace: false
+    smtp4dev_app_suffix: '-rhacs'
 
 - import_tasks: get_rhacs_central_host.yml
 

@@ -9,5 +9,5 @@
         rhacs_central_host | length == 0
 
     - import_role:
-        name: openshift_rhacs
-        tasks_from: deploy_secured_cluster.yml
+        name: rhacs
+        tasks_from: secured_cluster_deploy.yml

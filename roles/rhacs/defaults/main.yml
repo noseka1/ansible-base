@@ -1,7 +1,5 @@
-rhacs_subscription_namespace: rhacs-operator
-rhacs_subscription_name: rhacs-operator
-rhacs_subscription_channel: stable
-rhacs_subscription_approval: Automatic
+rhacs_operator_subscription_namespace: rhacs-operator
+rhacs_operator_subscription_name: rhacs-operator
 
 rhacs_instance_namespace: stackrox
 rhacs_instance_name: stackrox-central-services
@@ -21,10 +19,11 @@ rhacs_notifications_slack_url: ''
 # Optionally, create a Splunk notifier in Central to send alert notifications to Splunk
 rhacs_notifications_splunk_enabled: false
 
+# Expose RHACS Central to the public Internet using a Cloudflare tunnel
+rhacs_create_cloudflare_tunnel: false
+
 # Deployment mode is either 'dev' or 'prod'. Prod enables Scanner autoscaling and higher resource requests.
 rhacs_deployment_mode: dev
-
-rhacs_create_cloudflare_tunnel: false
 
 rhacs_loglevel: info
 rhacs_rox_network_access_log: 'false'

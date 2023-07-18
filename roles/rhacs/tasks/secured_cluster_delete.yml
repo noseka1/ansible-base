@@ -1,0 +1,10 @@
+- import_role: secured_cluster_common_delete.yml
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: rhacs-namespace
+    autogitops_app_path: rhacs/namespace
+
+- import_tasks: operator_delete.yml

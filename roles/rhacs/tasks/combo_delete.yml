@@ -1,0 +1,31 @@
+- import_tasks: secured_cluster_common_delete.yml
+
+- import_tasks: webhook_receiver_delete.yml
+
+- import_tasks: mail_receiver_delete.yml
+
+- name: Delete Datadog Vector receiver
+  import_role:
+    name: openshift_datadog_vector
+    tasks_from: delete.yml
+  vars:
+    datadog_vector_namespace: '{{ rhacs_instance_namespace }}'
+    datadog_vector_manage_namespace: false
+
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ rhacs_instance_namespace }}'
+    minio_manage_namespace: false
+
+- import_tasks: central_delete.yml
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: rhacs-namespace
+    autogitops_app_path: rhacs/namespace
+
+- import_tasks: operator_delete.yml

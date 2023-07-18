@@ -1,9 +1,10 @@
-- name: Deploy custom webhook receiver
-  import_role:
-    name: openshift_webhook_receiver
+- import_role:
+    name: webhook_receiver
     tasks_from: deploy.yml
   vars:
-    openshift_webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+    webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+    webhook_receiver_manage_namespace: false
+    webhook_receiver_app_suffix: '-rhacs'
 
 - import_tasks: get_rhacs_central_host.yml
 

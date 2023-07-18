@@ -4,7 +4,7 @@
   vars:
     webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
     webhook_receiver_manage_namespace: false
-    webhook_receiver_app_suffix: '-rhacs'
+    webhook_receiver_app_prefix: rhacs-
 
 - import_tasks: get_rhacs_central_host.yml
 

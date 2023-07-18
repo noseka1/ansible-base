@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: smtp4dev{{ smtp4dev_app_suffix }}
+    autogitops_app_name: '{{ smtp4dev_app_prefix }}smtp4dev'
     autogitops_app_path: smtp4dev
     autogitops_app_namespace: '{{ smtp4dev_namespace }}'
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

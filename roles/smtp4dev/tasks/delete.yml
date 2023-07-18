@@ -11,5 +11,5 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: smtp4dev{{ smtp4dev_app_suffix }}
+    autogitops_app_name: '{{ smtp4dev_app_prefix }}smtp4dev'
     autogitops_app_path: smtp4dev

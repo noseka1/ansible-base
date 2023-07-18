@@ -56,6 +56,8 @@
 
 - import_tasks: image_prunning.yml
 
+- import_tasks: disable_self_provisioners.yml
+
 - import_tasks: monitoring.yml
 
 - import_tasks: alerting.yml

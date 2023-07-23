@@ -38,6 +38,7 @@ spec:
         repoURL: ""
         targetRevision: master
         helm:
+          ignoreMissingValueFiles: true
           valueFiles:
           - /{{ .path.path }}/values.yaml
       syncPolicy:

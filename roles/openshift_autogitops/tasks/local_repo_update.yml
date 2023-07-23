@@ -26,5 +26,12 @@
 
 - name: Create values.yaml
   copy:
-    content: '{{ autogitops_app_values | default("") }}'
+    content: '{{ autogitops_app_values }}'
     dest: '{{ autogitops_app_env_dir }}/values.yaml'
+  when: autogitops_app_values is defined
+
+- name: Delete values.yaml
+  file:
+    path: '{{ autogitops_app_env_dir }}/values.yaml'
+    state: absent
+  when: autogitops_app_values is not defined

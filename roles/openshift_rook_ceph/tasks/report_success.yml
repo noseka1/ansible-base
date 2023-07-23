@@ -10,6 +10,7 @@
   uri:
     url: 'https://{{ rook_ceph_dashboard_result.resources.0.spec.host }}'
     status_code: [ 200 ]
+    validate_certs: false
   register: rook_ceph_dashboard_http_result
   until: rook_ceph_dashboard_http_result is succeeded
   retries: 60

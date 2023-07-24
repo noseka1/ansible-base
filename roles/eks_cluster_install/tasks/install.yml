@@ -1,0 +1,43 @@
+- name: Sync Terraform templates to {{ eks_cluster_install.config_dir }}/terraform/
+  ansible.posix.synchronize:
+    src: '{{ role_path }}/files/terraform/'
+    dest: '{{ eks_cluster_install.config_dir }}/terraform'
+    recursive: true
+    links: true
+    perms: true
+    delete: true
+    checksum: true
+    times: false
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the EKS cluster installation to complete
+  community.general.terraform:
+    project_path: '{{ eks_cluster_install.config_dir }}/terraform'
+    force_init: true
+    state: present
+    variables:
+      region: '{{ eks_cluster_install.aws_region }}'
+      cluster_name: '{{ eks_cluster_install.cluster_name }}'
+  ignore_errors: true
+  register: eks_cluster_install_terraform_result
+
+- debug:
+    var: eks_cluster_install_terraform_result.stdout_lines
+  when: eks_cluster_install_terraform_result is failed
+
+- debug:
+    var: eks_cluster_install_terraform_result.stderr_lines
+  when: eks_cluster_install_terraform_result is failed
+
+- fail:
+    msg: EKS cluster failed to deploy.
+  when: eks_cluster_install_terraform_result is failed
+
+- set_fact:
+    eks_cluster_install_terraform_ca_data: '{{ eks_cluster_install_terraform_result.outputs.cluster_certificate_authority_data.value }}'
+    eks_cluster_install_terraform_server_url:  '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value }}'
+    eks_cluster_install_terraform_server_hostname: '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value | regex_replace("https://(.*)", "\1")}}'
+
+- name: Create kubeconfig file {{ eks_cluster_install.config_dir }}/kubeconfig
+  template:
+    src: kubeconfig
+    dest: '{{ eks_cluster_install.config_dir }}/kubeconfig'

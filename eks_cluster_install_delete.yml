@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: false
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ eks_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ eks_cluster_install.aws_secret_access_key }}'
+  tasks:
+    - import_role:
+        name: eks_cluster_install
+        tasks_from: delete.yml

@@ -1,0 +1,14 @@
+- name: Create cluster configuration directory {{ eks_cluster_install.config_dir }}
+  file:
+    path: '{{ eks_cluster_install.config_dir }}'
+    state: directory
+    mode: '0755'
+
+- name: Get Terraform info
+  command: terraform -version
+  changed_when: false
+  register: eks_cluster_install_installer_version
+
+- name: Show Terraform info
+  debug:
+    var: eks_cluster_install_installer_version.stdout_lines

@@ -1,0 +1,8 @@
+- name: Report success
+  set_fact:
+    msg: |
+      OpenShift installation complete.
+
+      You can check the cluster status using 'KUBECONFIG={{ openshift_cluster_install.config_dir }}/auth/kubeconfig oc get co'
+
+- debug: msg="{{ msg.split('\n') }}"

@@ -1,4 +1,4 @@
-- name: Allocate persistent volume
+- name: Allocate persistent volume for image registry
   kubernetes.core.k8s:
     template: registry-pvc.yaml
 -

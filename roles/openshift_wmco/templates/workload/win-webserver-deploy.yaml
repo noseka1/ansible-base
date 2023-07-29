@@ -14,6 +14,13 @@ spec:
         app: win-webserver
       name: win-webserver
     spec:
+      # It is recommended that you set the spec.os.name = windows in your workload pods.
+      # The WMCO uses this field to authoritatively identify the pod operating system
+      # for validation and is used to enforce Windows-specific pod security context
+      # constraints (SCCs).
+      # Link: https://docs.openshift.com/container-platform/4.13/windows_containers/windows-node-upgrades.html
+      os:
+        name: windows
       runtimeClassName: windows
 #      tolerations:
 #      - key: os

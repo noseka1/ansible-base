@@ -1,20 +1,3 @@
-- name: Delete Windows runtime class
-  kubernetes.core.k8s:
-    template: windows-runtimeclass.yaml
-    wait: true
-    state: absent
+- import_tasks: example_delete.yml
 
-- name: Delete Windows instances configmap
-  kubernetes.core.k8s:
-    template: windows-instances-cm.yaml
-    wait: true
-    state: absent
-
-- name: Delete Windows Machine Config Operator (WMCO)
-  kubernetes.core.k8s:
-    template:
-      - windows-machine-config-operator-sub.yaml
-      - windows-machine-config-operator-og.yaml
-      - windows-machine-config-operator-ns.yaml
-    wait: true
-    state: absent
+- import_tasks: operator_delete.yml

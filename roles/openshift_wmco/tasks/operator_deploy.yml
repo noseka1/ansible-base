@@ -1,0 +1,24 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: wmco-operator
+    autogitops_app_path: wmco/operator
+    autogitops_app_namespace: openshift-windows-machine-config-operator
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for openshift-machine-api/windows-user-data secret to appear
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    namespace: openshift-machine-api
+    name: windows-user-data
+  register: wmco_windows_user_data
+  until:
+    - wmco_windows_user_data.resources.0.data.userData is defined
+  retries: 60
+  delay: 10
+
+- name: If you are bringing your own host, you can use this script to enable SSH on it
+  debug:
+    var: wmco_windows_user_data.resources.0.data.userData | b64decode

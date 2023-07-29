@@ -1,8 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ wmco_subscription_name }}
-  namespace: {{ wmco_subscription_namespace }}
-spec:
-  targetNamespaces:
-  - {{ wmco_subscription_namespace }}

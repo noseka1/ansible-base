@@ -6,7 +6,9 @@
   chocolatey.chocolatey.win_chocolatey:
     name: '{{ item }}'
   loop:
+    - alacritty
     - 7zip
+    - copyq
     - curl
     - googlechrome
     - mobaxterm

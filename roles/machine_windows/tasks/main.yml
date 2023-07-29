@@ -1,5 +1,12 @@
+- import_role:
+    name: ruzickap.virtio-win
+  tags: virtio_win
+
 - import_tasks: configure_windows.yml
+  tags: configure_windows
 
 - import_tasks: install_tools.yml
+  tags: install_tools
 
 - import_tasks: install_updates.yml
+  tags: install_updates

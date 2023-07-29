@@ -1,0 +1,12 @@
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  defaultNetwork:
+    ovnKubernetesConfig:
+      hybridOverlayConfig:
+        hybridClusterNetwork:
+        - cidr: 10.132.0.0/14
+          hostPrefix: 23
+        hybridOverlayVXLANPort: 9898

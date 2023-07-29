@@ -1,3 +1,5 @@
+- import_tasks: hybrid_networking.yml
+
 - import_tasks: operator_deploy.yml
 
 - import_tasks: example_deploy.yml

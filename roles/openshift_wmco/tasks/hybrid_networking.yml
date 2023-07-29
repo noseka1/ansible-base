@@ -1,0 +1,12 @@
+- name: Retrieve cluster network configuration
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: Network
+    name: cluster
+  register: wmco_cluster_network_result
+
+- name: Enable hybrid networking
+  kubernetes.core.k8s:
+    template:
+      - hybrid-networking/cluster-network.yaml
+  when: wmco_cluster_network_result.resources.0.spec.defaultNetwork.ovnKubernetesConfig.hybridOverlayConfig is not defined

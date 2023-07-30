@@ -5,6 +5,3 @@ vault:
     kubernetes:
      role: cert-manager
      mountPath: /v1/auth/kubernetes
-
-certificate:
-  dnsName: mytest.apps.{{ openshift_common_cluster_domain }}

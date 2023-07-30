@@ -18,4 +18,4 @@
 
 - name: Fail if the certificate subject is not correct
   fail:
-  when: cert_manager_test_cert_subject.stdout != 'subject=CN = mytest.apps.' + openshift_common_cluster_domain
+  when: cert_manager_test_cert_subject.stdout != 'subject=CN = mytest.example.com'

@@ -2,6 +2,3 @@ issuerTlsCrt: |
   {{ cert_manager_certificate_authority_tls_crt | indent(2) }}
 issuerTlsKey: |
   {{ cert_manager_certificate_authority_tls_key | indent(2) }}
-
-certificate:
-  dnsName: mytest.apps.{{ openshift_common_cluster_domain }}

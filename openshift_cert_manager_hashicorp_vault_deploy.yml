@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_cert_manager
+        tasks_from: issuer_hashicorp_vault_deploy.yml

@@ -13,5 +13,3 @@
   vars:
     wait_for_deployment_name: '{{ cert_manager_instance_name }}-webhook'
     wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'
-
-- import_tasks: issuer_hashicorp_vault.yml

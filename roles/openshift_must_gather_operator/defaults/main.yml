@@ -1,7 +1,2 @@
-must_gather_operator_subscription_name: must-gather-operator
-must_gather_operator_subscription_namespace: must-gather-operator
-must_gather_operator_subscription_channel: alpha
-must_gather_operator_subscription_approval: Automatic
-
 must_gather_operator_case_management_username: ''
 must_gather_operator_case_management_password: ''

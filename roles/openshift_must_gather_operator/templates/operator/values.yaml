@@ -1,0 +1,4 @@
+subscriptionApproval: Automatic
+
+caseManagementUsername: '{{ must_gather_operator_case_management_username }}'
+caseManagementPassword: '{{ must_gather_operator_case_management_password }}'

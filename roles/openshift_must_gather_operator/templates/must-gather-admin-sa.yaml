@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: must-gather-admin
-  namespace: {{ must_gather_operator_subscription_namespace }}

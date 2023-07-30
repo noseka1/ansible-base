@@ -2,3 +2,6 @@ cert_manager_instance_name: cert-manager
 cert_manager_instance_namespace: cert-manager
 
 cert_manager_hashicorp_vault_ca_bundle: ''
+
+cert_manager_certificate_authority_tls_crt: ''
+cert_manager_certificate_authority_tls_key: ''

@@ -20,7 +20,7 @@
 - name: Install auto-approve-csr to master nodes (will cause nodes to restart)
   kubernetes.core.k8s:
     template: 64-auto-approve-csr-mc.yaml
-  register: machineconfig_result
+  register: openshift_auto_approve_result
 
 - import_role:
     name: openshift_common
@@ -28,4 +28,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: machineconfig_result is changed
+  when: openshift_auto_approve_result is changed

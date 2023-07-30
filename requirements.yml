@@ -2,7 +2,7 @@ roles:
 # Requires RPM package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
-  version: 4.7.0
+  version: 5.1.1
 
 # Requires EPEL enabled
 - name: mprahl.lets-encrypt-route-53

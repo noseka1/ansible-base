@@ -9,7 +9,7 @@ openshift_cluster_postinstall_oidc:
   client_id: 0oa8j5quabJj7xug05d7
   client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXX
 
-openshift_cluster_postinstall_kernel_arguments:
+openshift_cluster_postinstall_kernel_arguments: []
 #  - loglevel=7
 #  - udev.log_priority=debug
 

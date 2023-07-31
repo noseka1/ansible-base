@@ -5,6 +5,7 @@
     values_files:
       - '{{ autogitops_catalog_dir }}/cert-manager/certificate-authority/values.yaml'
     values: '{{ lookup("template", "certificate-authority/values.yaml") | from_yaml }}'
+  changed_when: false
   register: cert_manager_certifiate_authority_helm_result
 
 - name: Deploy certificate authority

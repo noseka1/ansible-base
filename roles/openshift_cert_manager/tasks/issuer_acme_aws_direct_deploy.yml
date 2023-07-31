@@ -5,6 +5,7 @@
     values_files:
       - '{{ autogitops_catalog_dir }}/cert-manager/acme-aws/values.yaml'
     values: '{{ lookup("template", "acme-aws/values.yaml") | from_yaml }}'
+  changed_when: false
   register: cert_manager_acme_aws_helm_result
 
 - name: Deploy acme-aws certificate authority

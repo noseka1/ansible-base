@@ -6,7 +6,7 @@
     name: openshift_cert_manager
     tasks_from: issuer_acme_aws_direct_deploy.yml
   vars:
-    cert_manager_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
+    cert_manager_acme_server: https://acme-v02.api.letsencrypt.org/directory
     cert_manager_acme_aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
     cert_manager_acme_aws_hosted_zone_id: '{{ openshift_cluster_postinstall_cluster_dns.resources.0.spec.publicZone.id }}'
     cert_manager_certificate_dns_name: 'mytest.{{ openshift_common_cluster_domain }}'

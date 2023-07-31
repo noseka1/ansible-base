@@ -9,6 +9,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the cluster operators to stabilize
   include_tasks: wait_for_stable_cluster_subtasks.yml
+  when: stable_cluster_wait_for_operators | default(true) | bool
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes APIs to become available
   command: >

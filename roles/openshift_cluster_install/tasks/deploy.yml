@@ -3,6 +3,15 @@
     path: '{{ openshift_cluster_install.config_dir }}/install_complete'
   register: openshift_cluster_install_complete
 
+- debug:
+    msg: >-
+      Found cluster installation timestamp in directory {{ openshift_cluster_install.config_dir }}, assuming that the
+      cluster already exists, skipping the installation. If you are trying to reinstall the cluster, delete the cluster
+      using an Ansible playbook before running this playbook.
+
+  when:
+    - openshift_cluster_install_complete.stat.exists
+
 - name: Set target OpenShift version
   set_fact:
     openshift_cluster_install_version_resolved: '{{ openshift_cluster_install.version }}'

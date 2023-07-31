@@ -1,0 +1,12 @@
+- name: Retrieve default ingresscontroller configuration
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: IngressController
+    name: default
+    namespace: openshift-ingress-operator
+  register: openshift_cluster_postinstall_default_ingresscontroller_result
+
+- name: If custom certificate has not been configured, go ahead and set up OpenShift certificates
+  import_tasks: endpoint_certs_gcp_subtasks.yml
+  when:
+    - openshift_cluster_postinstall_default_ingresscontroller_result.resources.0.spec.defaultCertificate.name is not defined

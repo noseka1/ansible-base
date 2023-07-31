@@ -2,8 +2,8 @@
   gather_facts: false
   environment:
     GCP_AUTH_KIND: serviceaccount
-    GCP_SERVICE_ACCOUNT_FILE: '{{ openshift_cluster_install.gcp_service_account_file }}'
-    GCP_PROJECT: '{{ openshift_cluster_install.gcp_projectid }}'
+    GCP_SERVICE_ACCOUNT_FILE: '{{ openshift_cluster_install_gcp.gcp_service_account_file }}'
+    GCP_PROJECT: '{{ openshift_cluster_install_gcp.gcp_projectid }}'
   tasks:
     # Enable GCP API services required for installing OpenShift.
     # See also https://docs.openshift.com/container-platform/4.12/installing/installing_gcp/installing-gcp-account.html#installation-gcp-enabling-api-services_installing-gcp-account

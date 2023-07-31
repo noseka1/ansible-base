@@ -1,0 +1,5 @@
+acmeServer: '{{ cert_manager_acme_server }}'
+
+gcpCloudDnsProjectId: '{{ cert_manager_acme_gcp_cloud_dns_projectid }}'
+
+certificateDnsName: '{{ cert_manager_certificate_dns_name }}'

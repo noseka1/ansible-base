@@ -13,4 +13,4 @@
 
 - import_tasks: certificate_verify.yml
   vars:
-    cert_manager_certificate_secret_name: certificate-authority-test
+    cert_manager_certificate_object_name: certificate-authority-test

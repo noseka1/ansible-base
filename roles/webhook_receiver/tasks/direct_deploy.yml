@@ -5,10 +5,16 @@
     values_files:
       - '{{ autogitops_catalog_dir }}/webhook-receiver/values.yaml'
     values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+  changed_when: false
   register: webhook_receiver_helm_result
 
-- name: Delete webhook receiver
+- name: Deploy webhook receiver
   kubernetes.core.k8s:
     definition: '{{ webhook_receiver_helm_result.stdout }}'
-    state: absent
-    wait: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ webhook_receiver_deployment_name }}'
+    wait_for_deployment_namespace: '{{ webhook_receiver_namespace }}'

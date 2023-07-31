@@ -1,3 +1,10 @@
+- name: Retrieve AWS DNS zone id
+  kubernetes.core.k8s_info:
+    api_version: config.openshift.io/v1
+    kind: DNS
+    name: cluster
+  register: openshift_cluster_postinstall_cluster_dns
+
 - import_role:
     name: openshift_cert_manager
     tasks_from: direct_deploy.yml

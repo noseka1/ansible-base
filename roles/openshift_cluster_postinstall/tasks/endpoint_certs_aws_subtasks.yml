@@ -1,18 +1,16 @@
-- name: Create certificates
-  include_tasks: endpoint_certs_aws_ler53.yml
-  loop:
-    - { cert_common_name:    'api.{{ openshift_common_cluster_domain }}', output_var_prefix: 'cert_api' }
-    - { cert_common_name: '*.apps.{{ openshift_common_cluster_domain }}', output_var_prefix: 'cert_wildcard' }
+- import_role:
+    name: openshift_cert_manager
+    tasks_from: direct_deploy.yml
 
-- set_fact:
-    openshift_cluster_postinstall_endpoint_certs_info:
-      api:
-        domain: 'api.{{ openshift_common_cluster_domain }}'
-        crt: '{{ cert_api_crt }}'
-        key: '{{ cert_api_key }}'
-      ingress:
-        crt: '{{ cert_wildcard_crt }}'
-        key: '{{ cert_wildcard_key }}'
+- import_role:
+    name: openshift_cert_manager
+    tasks_from: issuer_acme_aws_direct_deploy.yml
+  vars:
+    cert_manager_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
+    cert_manager_acme_aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
+    cert_manager_acme_aws_hosted_zone_id: '{{ openshift_cluster_postinstall_cluster_dns.resources.0.spec.publicZone.id }}'
+    cert_manager_certificate_dns_name: 'mytest.{{ openshift_common_cluster_domain }}'
 
-- name: Configure certificates on OpenShift
-  import_tasks: endpoint_certs_complete.yml
+- import_tasks: endpoint_certs_complete.yml
+  vars:
+    openshift_cluster_postinstall_cert_issuer_name: acme-aws

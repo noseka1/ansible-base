@@ -46,6 +46,8 @@
 - import_tasks: set_core_user_password.yml
   when: openshift_common_cluster_version_majorminor is version('4.13', '>=', strict=true)
 
+- import_tasks: kube_apiserver_audit.yml
+
 - import_tasks: user_groups.yml
 
 - import_tasks: oauth_provider.yml
@@ -62,8 +64,6 @@
 
 - import_tasks: alerting.yml
 
-- import_tasks: kube_apiserver_audit.yml
-
 - import_tasks: access_logging.yml
 
 - import_tasks: auto_approve_csr.yml
@@ -74,8 +74,13 @@
 - import_tasks: delete_succeeded_pods.yml
 
 - import_tasks: endpoint_certs_aws.yml
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when:
+    - openshift_cluster_postinstall_configure_endpoint_certs
+    - openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: endpoint_certs_private.yml
+  when:
+    - openshift_cluster_postinstall_configure_endpoint_certs
+    - openshift_common_infrastructure.status.platformStatus.type != 'AWS'
 
 - import_tasks: cluster_info.yml

@@ -1,0 +1,31 @@
+- name: Generate cert manager operator resources from Helm Chart
+  kubernetes.core.helm_template:
+    chart_ref: '{{ autogitops_catalog_dir }}/cert-manager/operator'
+    release_namespace: cert-manager-operator
+    values_files:
+      - '{{ autogitops_catalog_dir }}/cert-manager/operator/values.yaml'
+    values: '{{ lookup("template", "operator/values.yaml") | from_yaml }}'
+  register: cert_manager_helm_result
+
+- name: Deploy cert manager operator
+  kubernetes.core.k8s:
+    definition: '{{ cert_manager_helm_result.stdout }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: '{{ cert_manager_instance_name }}-webhook'
+    wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'
+
+- name: Generate cert manager instance resources from Helm Chart
+  kubernetes.core.helm_template:
+    chart_ref: '{{ autogitops_catalog_dir }}/cert-manager/instance'
+    release_namespace: cert-manager
+    values_files:
+      - '{{ autogitops_catalog_dir }}/cert-manager/instance/values.yaml'
+  register: cert_manager_helm_result
+
+- name: Deploy cert manager instance
+  kubernetes.core.k8s:
+    definition: '{{ cert_manager_helm_result.stdout }}'

@@ -1,26 +1,39 @@
-- name: Create the certificate secrets
+- name: Create certificates
   kubernetes.core.k8s:
-    template: cert-secret.yaml
-  no_log: true
+    template: endpoint-certs/certificate.yaml
   loop:
-    - name: api-cert
-      namespace: openshift-config
-      crt: '{{ openshift_cluster_postinstall_endpoint_certs_info.api.crt }}'
-      key: '{{ openshift_cluster_postinstall_endpoint_certs_info.api.key }}'
-    - name: wildcard-cert
-      namespace: openshift-ingress
-      crt: '{{ openshift_cluster_postinstall_endpoint_certs_info.ingress.crt }}'
-      key: '{{ openshift_cluster_postinstall_endpoint_certs_info.ingress.key }}'
+    - cert_name: api-cert
+      cert_namespace: openshift-config
+      cert_common_name: 'api.{{ openshift_common_cluster_domain }}'
+    - cert_name: wildcard-cert
+      cert_namespace: openshift-ingress
+      cert_common_name: '*.apps.{{ openshift_common_cluster_domain }}'
 
-- name: Configure API server certificate
-  kubernetes.core.k8s:
-    template: cluster-apiserver-2.yaml
-  register: openshift_cluster_postinstall_api_cert
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for certificates to become ready
+  kubernetes.core.k8s_info:
+    api_version: cert-manager.io/v1
+    kind: Certificate
+    namespace: '{{ item.cert_namespace }}'
+    name: '{{ item.cert_name }}'
+  loop:
+    - cert_name: api-cert
+      cert_namespace: openshift-config
+    - cert_name: wildcard-cert
+      cert_namespace: openshift-ingress
+  register: openshift_cluster_postinstall_endpoint_certs_result
+  until:
+    - openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions is defined
+    - openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
+    - (openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
+  retries: 24
+  delay: 5
 
-- name: Configure wildcard apps certificate
+- name: Configure cluster certificates
   kubernetes.core.k8s:
-    template: default-ingresscontroller-2.yaml
-  register: openshift_cluster_postinstall_apps_cert
+    template:
+      - endpoint-certs/cluster-apiserver.yaml
+      - endpoint-certs/default-ingresscontroller.yaml
+  register: openshift_cluster_postinstall_endpoint_certs_apply_result
 
 - import_role:
     name: openshift_common
@@ -29,6 +42,4 @@
     stable_cluster_delay: 120
     stable_cluster_retries: 10
     stable_cluster_validate_certs: false
-  when: >
-    (openshift_cluster_postinstall_api_cert is changed) or
-    (openshift_cluster_postinstall_apps_cert is changed)
+  when: openshift_cluster_postinstall_endpoint_certs_apply_result is changed

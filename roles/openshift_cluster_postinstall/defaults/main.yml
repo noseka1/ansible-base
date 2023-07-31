@@ -19,7 +19,7 @@ openshift_cluster_postinstall_clusterwide_proxy: {}
 
 openshift_cluster_postinstall_trusted_ca_bundle: {}
 
-openshift_cluster_postinstall_endpoint_certs: {}
+openshift_cluster_postinstall_configure_endpoint_certs: false
 
 openshift_send_alerts_to_slack_url: ''
 

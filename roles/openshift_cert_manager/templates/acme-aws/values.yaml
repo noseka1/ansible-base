@@ -1,0 +1,6 @@
+acmeServer: '{{ cert_manager_acme_server }}'
+
+awsRegion: {{ cert_manager_acme_aws_region }}
+awsHostedZoneID: {{ cert_manager_acme_aws_hosted_zone_id }}
+
+certificateDnsName: '{{ cert_manager_certificate_dns_name }}'

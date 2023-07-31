@@ -4,11 +4,6 @@ roles:
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
   version: 5.1.1
 
-# Requires EPEL enabled
-- name: mprahl.lets-encrypt-route-53
-  src: https://github.com/noseka1/ansible-role-lets-encrypt-route-53.git
-  version: master
-
 - name: ruzickap.virtio-win
   src: https://github.com/noseka1/ansible-role-virtio-win
   version: main

@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ item.cert_name }}
+  namespace: {{ item.cert_namespace }}
+spec:
+  secretName: {{ item.cert_name }}
+  issuerRef:
+    kind: ClusterIssuer
+    name: {{ openshift_cluster_postinstall_cert_issuer_name }}
+  commonName: '{{ item.cert_common_name }}'
+  dnsNames:
+  - '{{ item.cert_common_name }}'

@@ -1,0 +1,16 @@
+- name: Generate certificate authority resources from Helm Chart
+  kubernetes.core.helm_template:
+    chart_ref: '{{ autogitops_catalog_dir }}/cert-manager/certificate-authority'
+    release_namespace: '{{ cert_manager_instance_namespace }}'
+    values_files:
+      - '{{ autogitops_catalog_dir }}/cert-manager/certificate-authority/values.yaml'
+    values: '{{ lookup("template", "certificate-authority/values.yaml") | from_yaml }}'
+  register: cert_manager_certifiate_authority_helm_result
+
+- name: Deploy certificate authority
+  kubernetes.core.k8s:
+    definition: '{{ cert_manager_certifiate_authority_helm_result.stdout }}'
+
+- import_tasks: certificate_verify.yml
+  vars:
+    cert_manager_certificate_secret_name: certificate-authority-test

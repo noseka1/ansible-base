@@ -5,3 +5,5 @@ vault:
     kubernetes:
      role: cert-manager
      mountPath: /v1/auth/kubernetes
+
+certificateDnsName: '{{ cert_manager_certificate_dns_name }}'

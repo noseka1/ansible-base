@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: cert-manager
+    autogitops_app_name: cert-manager-operator
     autogitops_app_path: cert-manager/operator
     autogitops_app_namespace: cert-manager-operator
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
@@ -13,3 +13,11 @@
   vars:
     wait_for_deployment_name: '{{ cert_manager_instance_name }}-webhook'
     wait_for_deployment_namespace: '{{ cert_manager_instance_namespace }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: cert-manager
+    autogitops_app_path: cert-manager/instance
+    autogitops_app_namespace: cert-manager

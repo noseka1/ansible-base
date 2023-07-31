@@ -2,3 +2,5 @@ issuerTlsCrt: |
   {{ cert_manager_certificate_authority_tls_crt | indent(2) }}
 issuerTlsKey: |
   {{ cert_manager_certificate_authority_tls_key | indent(2) }}
+
+certificateDnsName: '{{ cert_manager_certificate_dns_name }}'

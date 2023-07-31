@@ -1,3 +1,11 @@
-- import_tasks: endpoint_certs_private_subtasks.yml
-  when:
-    - openshift_cluster_postinstall_endpoint_certs[openshift_common_cluster_domain] is defined
+- import_role:
+    name: openshift_cert_manager
+    tasks_from: direct_deploy.yml
+
+- import_role:
+    name: openshift_cert_manager
+    tasks_from: issuer_certificate_authority_direct_deploy.yml
+
+- import_tasks: endpoint_certs_complete.yml
+  vars:
+    openshift_cluster_postinstall_cert_issuer_name: certificate-authority

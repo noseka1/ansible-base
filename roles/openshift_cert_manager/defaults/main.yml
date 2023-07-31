@@ -5,3 +5,12 @@ cert_manager_hashicorp_vault_ca_bundle: ''
 
 cert_manager_certificate_authority_tls_crt: ''
 cert_manager_certificate_authority_tls_key: ''
+
+cert_manager_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
+
+cert_manager_acme_aws_region: ''
+cert_manager_acme_aws_hosted_zone_id: ''
+
+cert_manager_certificate_dns_name: mytest.example.com
+
+autogitops_catalog_dir: '{{ playbook_dir }}/../gitops-catalog-helm/apps'

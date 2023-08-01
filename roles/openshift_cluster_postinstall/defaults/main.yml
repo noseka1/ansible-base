@@ -17,7 +17,7 @@ openshift_cluster_postinstall_deploy_infra_nodes: false
 
 openshift_cluster_postinstall_clusterwide_proxy: {}
 
-openshift_cluster_postinstall_trusted_ca_bundle: {}
+openshift_cluster_postinstall_trusted_ca_bundle: ''
 
 openshift_cluster_postinstall_configure_endpoint_certs: false
 

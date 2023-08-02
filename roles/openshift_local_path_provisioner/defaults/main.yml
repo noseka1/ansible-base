@@ -3,3 +3,5 @@ local_path_provisioner_helm_chart_git_path: deploy/chart/local-path-provisioner
 
 local_path_provisioner_namespace: local-path-provisioner
 local_path_provisioner_name: local-path-provisioner
+
+local_path_provisioner_host_path: '/var/local/{{ local_path_provisioner_name }}'

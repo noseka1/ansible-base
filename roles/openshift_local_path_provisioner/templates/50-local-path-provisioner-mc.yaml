@@ -1,0 +1,27 @@
+# This file is based on:
+# https://github.com/RyanMillerC/sno-local-path-provisioner/blob/main/templates/machine-config.yaml
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 50-{{ item }}-local-path-provisioner
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    systemd:
+      units:
+      - name: local-path-provisioner.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Create and set SELinux context on local-path-provisioner directory
+          Before=kubelet.service
+
+          [Service]
+          ExecStartPre=/bin/mkdir -p {{ local_path_provisioner_host_path }}
+          ExecStart=/usr/bin/chcon -Rt container_file_t {{ local_path_provisioner_host_path }}
+
+          [Install]
+          WantedBy=multi-user.target

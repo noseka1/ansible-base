@@ -13,7 +13,3 @@ data:
         - name: helper-pod
           image: busybox:latest
           imagePullPolicy: IfNotPresent
-          securityContext:
-            # The helper-pod-create-pvc must run as a privileged pod or it fails with:
-            # mkdir: can't create directory '/var/local/local-path-provisioner/...': Permission denied
-            privileged: true

@@ -3,6 +3,8 @@ gitea_helm_repo: https://dl.gitea.io/charts/
 gitea_namespace: gitea
 gitea_name: gitea
 
+gitea_persistence_enabled: true
+
 gitea_username: gitadmin
 gitea_password: '{{ generic_user_password }}'
 gitea_cacert: ''

@@ -1,3 +1,6 @@
+persistence:
+  enabled: {{ gitea_persistence_enabled }}
+
 gitea:
   admin:
     existingSecret: gitea-admin
@@ -7,7 +10,6 @@ gitea:
       DISABLE_REGISTRATION: true
       SHOW_REGISTRATION_BUTTON: false
       REQUIRE_SIGNIN_VIEW: true
-
   # Enable Gitea metrics
   metrics:
     enabled: true
@@ -23,3 +25,6 @@ postgresql:
         username: gitea
         password: gitea
         database: gitea
+  primary:
+    persistence:
+      enabled: {{ gitea_persistence_enabled }}

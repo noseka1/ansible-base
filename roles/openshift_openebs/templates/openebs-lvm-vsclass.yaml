@@ -9,5 +9,6 @@ metadata:
     # Enable creating of openebs-lvm snapshots using Velero
     velero.io/csi-volumesnapshot-class: 'true'
   name: openebs-lvm
+driver: local.csi.openebs.io
 # Deletion policy must be set to Retain or Velero backup using data mover fails
 deletionPolicy: Retain

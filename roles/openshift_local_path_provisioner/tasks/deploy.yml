@@ -41,3 +41,13 @@
   vars:
     wait_for_deployment_name: '{{ local_path_provisioner_name }}'
     wait_for_deployment_namespace: '{{ local_path_provisioner_namespace }}'
+
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+
+- name: Update storage class and snapshot class
+  kubernetes.core.k8s:
+    template:
+      - local-path-sc.yaml

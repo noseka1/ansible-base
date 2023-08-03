@@ -10,6 +10,8 @@ spec:
       version: 3.2.0
     storage:
       files:
+      # CA certificate bundle includes a wilcard ingress certificate. If this certificate is updated in OpenShift, then
+      # the bundle is updated as well. This causes the machineconfig to change which results in cluster nodes rebooting.
       - contents:
           source: data:text/plain;charset=utf-8;base64,{{ auto_approve_csr_serviceaccount_secret.resources.0.data['ca.crt'] }}
         mode: 0644

@@ -4,6 +4,13 @@ metadata:
   name: {{ loki_instance_name }}
   namespace: {{ loki_instance_namespace }}
 spec:
+  limits:
+    tenants:
+      ingestion:
+        # Maximum byte rate per second per stream in MB
+        perStreamRateLimit: 50
+        # Maximum burst bytes per stream in MB
+        perStreamRateLimitBurst: 100
   size: 1x.extra-small
   storage:
     schemas:

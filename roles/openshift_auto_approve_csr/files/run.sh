@@ -1,11 +1,12 @@
 #!/bin/bash
 while true; do
-  oc login \
+  oc --insecure-skip-tls-verify=true login \
     --token $(cat /var/run/secrets/kubernetes.io/serviceaccount/token) \
-    --certificate-authority /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
     https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
-  oc get csr -o json | \
+  oc --insecure-skip-tls-verify=true get \
+    csr -o json | \
     jq -r '.items[] | select(.status == {} ) | .metadata.name' | \
-    xargs --no-run-if-empty oc adm certificate approve
+    xargs --no-run-if-empty \
+      oc --insecure-skip-tls-verify=true adm certificate approve
   sleep 30
 done

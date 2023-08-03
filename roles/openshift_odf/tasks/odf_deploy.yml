@@ -1,3 +1,11 @@
+- assert:
+    that:
+      - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template is defined
+      - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template | length > 0
+      - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets is defined
+      - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets | length > 0
+    fail_msg: "Cannot determine which storageclass to use for the underlying persistent volumes."
+
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml

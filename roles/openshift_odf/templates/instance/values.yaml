@@ -1,2 +1,7 @@
-storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type] }}
+monPVCTemplate:
+  storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template }}
+  storageCapacity: 10Gi
+storageDeviceSets:
+  storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
+  storageCapacity: 200Gi
 encryptionEnable: false

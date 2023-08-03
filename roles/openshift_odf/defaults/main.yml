@@ -4,6 +4,15 @@ odf_aws:
   nodes_per_zone: 1
 
 odf_platform_to_storageclass:
-  AWS: gp3-csi
-  VSphere: thin-csi
-  None: lvms-loop1-vg
+  AWS:
+    mon_pvc_template: gp3-csi
+    storage_device_sets: gp3-csi
+  VSphere:
+    mon_pvc_template: thin-csi
+    storage_device_sets: thin-csi
+  BareMetal:
+    mon_pvc_template: local-path
+    storage_device_sets: myvolumeset1
+  None:
+    mon_pvc_template: local-path
+    storage_device_sets: myvolumeset1

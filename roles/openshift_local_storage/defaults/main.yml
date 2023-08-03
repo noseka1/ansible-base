@@ -1,0 +1,2 @@
+local_storage_operator_subscription_namespace: openshift-local-storage
+local_storage_instance_namespace: openshift-local-storage

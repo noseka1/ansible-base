@@ -22,6 +22,15 @@ spec:
     log:
       level: debug
       mode: console
+  deployment:
+    env:
+      - name: GATEWAY_SERVICE_CA
+        valueFrom:
+          configMapKeyRef:
+            key: service-ca.crt
+            name: openshift-service-ca.crt
+      - name: GATEWAY_HOSTNAME
+        value: loki-gateway-http.openshift-logging.svc:8080
   containers:
     # Grafana oauth proxy configuration based on:
     # https://github.com/integr8ly/grafana-operator/blob/master/deploy/examples/oauth/README.md

@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: grafana-cluster-logging-view
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: grafana-cluster-logging-view
+subjects:
+- kind: ServiceAccount
+  name: grafana-serviceaccount
+  namespace: {{ grafana_instance_namespace }}

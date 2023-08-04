@@ -1,0 +1,9 @@
+- name: Delete RBAC for OpenShift monitoring metrics and logs
+  kubernetes.core.k8s:
+    template:
+      - openshift/grafana-cluster-monitoring-view-clusterrolebinding.yaml
+      - openshift/grafana-cluster-logging-view-clusterrole.yaml
+      - openshift/grafana-cluster-logging-view-clusterrolebinding.yaml
+    namespace: '{{ grafana_instance_namespace }}'
+    state: absent
+    wait: true

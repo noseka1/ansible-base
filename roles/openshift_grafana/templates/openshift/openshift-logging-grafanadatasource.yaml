@@ -1,0 +1,37 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDataSource
+metadata:
+  name: openshift-logging
+spec:
+  name: openshift-logging.yaml
+  datasources:
+  - name: Loki (Application)
+    type: loki
+    access: proxy
+    url: https://${GATEWAY_HOSTNAME}/api/logs/v1/application
+    jsonData:
+      #tlsAuthWithCACert: true
+      tlsSkipVerify: true
+      oauthPassThru: true
+    secureJsonData:
+      tlsCACert: ${GATEWAY_SERVICE_CA}
+  - name: Loki (Infrastructure)
+    type: loki
+    access: proxy
+    url: https://${GATEWAY_HOSTNAME}/api/logs/v1/infrastructure
+    jsonData:
+      #tlsAuthWithCACert: true
+      tlsSkipVerify: true
+      oauthPassThru: true
+    secureJsonData:
+      tlsCACert: ${GATEWAY_SERVICE_CA}
+  - name: Loki (Audit)
+    type: loki
+    access: proxy
+    url: https://${GATEWAY_HOSTNAME}/api/logs/v1/audit
+    jsonData:
+      #tlsAuthWithCACert: true
+      tlsSkipVerify: true
+      oauthPassThru: true
+    secureJsonData:
+      tlsCACert: ${GATEWAY_SERVICE_CA}

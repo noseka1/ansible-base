@@ -1,0 +1,12 @@
+machineSshAuthorizedKey: '{{ openshift_virtualization_machine_ssh_authorized_key }}'
+machineUserName: admin
+machineUserPassword: '{{ generic_user_password }}'
+
+machineEvictionStrategy: '{{ openshift_virtualization_machine_eviction_strategy }}'
+
+machineRootDiskAccessModes: {{ openshift_virtualization_machine_root_disk_access_modes }}
+machineRootDiskCapacity: '{{ openshift_virtualization_machine_root_disk_capacity }}'
+machineRootDiskStorageClassName: '{{ openshift_virtualization_machine_root_disk_storage_class_name }}'
+machineRootDiskVolumeMode: '{{ openshift_virtualization_machine_root_disk_volume_mode }}'
+
+machineImageUrl: https://download.fedoraproject.org/pub/fedora/linux/releases/37/Cloud/x86_64/images/Fedora-Cloud-Base-37-1.7.x86_64.qcow2

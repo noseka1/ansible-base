@@ -40,6 +40,10 @@ spec:
     resource.customizations.knownTypeFields.apps_StatefulSet: |
       - field: spec.volumeClaimTemplates
         type: core/v1/PersistentVolumeClaimTemplate
+    # This makes KubeVirt VirtualMachine objects sync
+    resource.customizations.ignoreDifferences.kubevirt.io_VirtualMachine: |
+      jqPathExpressions:
+        - .spec.template.spec.domain.devices.interfaces[].macAddress
     repositories: |
       - type: helm
         url: https://external-secrets.github.io/kubernetes-external-secrets

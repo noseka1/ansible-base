@@ -1,0 +1,12 @@
+- name: Report success
+  set_fact:
+    msg: |
+      OpenShift Logging installed successfully.
+
+      To enable a log view plugin for OpenShift console, issue the following command:
+
+      $ oc patch consoles.operator.openshift.io cluster --patch '{"spec":{"plugins":["logging-view-plugin"]}}' --type=merge
+
+      Go to OpenShift Web Console, refresh it, and navigate to Observe -> Logs to view the collected logs.
+
+- debug: msg="{{ msg.split('\n') }}"

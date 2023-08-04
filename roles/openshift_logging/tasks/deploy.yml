@@ -9,3 +9,5 @@
     loki_instance_tenants_mode: openshift-logging
 
 - import_tasks: deploy_openshift_logging.yml
+
+- import_tasks: report_success.yml

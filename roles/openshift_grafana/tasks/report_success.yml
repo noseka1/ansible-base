@@ -17,5 +17,11 @@
   retries: 60
   delay: 10
 
-- debug:
-    msg: Grafana installed successfully. Use your browser to access the Grafana Web UI at https://{{ grafana_instance_route.resources.0.spec.host }}
+- name: Report success
+  set_fact:
+    msg: |
+      Grafana installed successfully.
+
+      Use your browser to access the Grafana Web UI at https://{{ grafana_instance_route.resources.0.spec.host }}
+
+- debug: msg="{{ msg.split('\n') }}"

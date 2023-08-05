@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ grafana_instance_name }}-route'
+    name: '{{ grafana_instance_name }}'
     namespace: '{{ grafana_instance_namespace }}'
   register: grafana_instance_route
 

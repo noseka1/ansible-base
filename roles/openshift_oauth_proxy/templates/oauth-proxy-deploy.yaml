@@ -14,28 +14,44 @@ spec:
     spec:
       containers:
       - args:
-        # See also example:
+        # See also examples:
         # https://github.com/openshift/oauth-proxy/blob/master/contrib/sidecar.yaml
-          - '-https-address=:9091'
-          - '-provider=openshift'
-          - '-openshift-service-account={{ openshift_oauth_proxy_name }}-oauth-proxy'
-          - '-upstream={{ openshift_oauth_proxy_upstream }}'
-          - '-tls-cert=/etc/tls/private/tls.crt'
-          - '-tls-key=/etc/tls/private/tls.key'
-          - '-cookie-secret=mysecret'
-          - '-openshift-ca=/etc/pki/tls/cert.pem'
-          - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+        # https://github.com/integr8ly/grafana-operator/blob/master/deploy/examples/oauth/README.md
+        - '-provider=openshift'
+        - '-https-address=:9091'
+        - '-http-address='
+        - '-pass-basic-auth=false'
+        - '-openshift-service-account={{ openshift_oauth_proxy_name }}-oauth-proxy'
+        - '-upstream={{ openshift_oauth_proxy_upstream }}'
+        - '-tls-cert=/etc/tls/private/tls.crt'
+        - '-tls-key=/etc/tls/private/tls.key'
+        - '-cookie-secret-file=/etc/proxy/secrets/session_secret'
+        - '-openshift-ca=/etc/pki/tls/cert.pem'
+        - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+        - '-openshift-ca=/etc/proxy/configmaps/trusted-ca-bundle/ca-bundle.crt'
         image: {{ openshift_oauth_proxy_image }}
         name: oauth-proxy
         ports:
-          - containerPort: 9091
-            name: oauth-proxy
+        - containerPort: 9091
+          name: oauth-proxy
         volumeMounts:
-          - mountPath: /etc/tls/private
-            name: oauth-proxy-k8s-tls
-            readOnly: true
+        - name: oauth-proxy-k8s-tls
+          mountPath: /etc/tls/private
+          readOnly: true
+        - name: oauth-proxy
+          mountPath: /etc/proxy/secrets
+          readOnly: true
+        - name: trusted-ca-bundle
+          mountPath: /etc/proxy/configmaps/trusted-ca-bundle
+          readonly: true
       serviceAccountName: {{ openshift_oauth_proxy_name }}-oauth-proxy
       volumes:
       - name: oauth-proxy-k8s-tls
         secret:
           secretName: {{ openshift_oauth_proxy_name }}-oauth-proxy-k8s-tls
+      - name: oauth-proxy
+        secret:
+          secretName: {{ openshift_oauth_proxy_name }}-oauth-proxy
+      - name: trusted-ca-bundle
+        configMap:
+          name: {{ openshift_oauth_proxy_name }}-oauth-proxy-trusted-ca-bundle

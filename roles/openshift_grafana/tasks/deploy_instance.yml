@@ -2,10 +2,6 @@
   kubernetes.core.k8s:
     template:
       - instance/grafana-grafana.yaml
-      - instance/grafana-k8s-proxy-secret.yaml
-      - instance/grafana-proxy-clusterrolebinding.yaml
-      - instance/grafana-proxy-clusterrole.yaml
-      - instance/ocp-injected-certs-cm.yaml
     namespace: '{{ grafana_instance_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
@@ -22,3 +18,12 @@
     - grafana_instance.resources.0.status.message == 'success'
   retries: 240
   delay: 10
+
+- name: Deploy oauth-proxy
+  import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: grafana
+    openshift_oauth_proxy_namespace: '{{ grafana_instance_namespace }}'
+    openshift_oauth_proxy_upstream: http://grafana-service:3000

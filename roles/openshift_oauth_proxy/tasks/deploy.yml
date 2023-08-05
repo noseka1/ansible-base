@@ -3,10 +3,12 @@
     template:
       - oauth-proxy-clusterrolebinding.yaml
       - oauth-proxy-clusterrole.yaml
-      - oauth-proxy-sa.yaml
       - oauth-proxy-deploy.yaml
-      - oauth-proxy-svc.yaml
       - oauth-proxy-route.yaml
+      - oauth-proxy-sa.yaml
+      - oauth-proxy-secret.yaml
+      - oauth-proxy-svc.yaml
+      - oauth-proxy-trusted-ca-bundle-cm.yaml
     namespace: '{{ openshift_oauth_proxy_namespace }}'
 
 - import_role:

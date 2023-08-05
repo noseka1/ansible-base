@@ -29,8 +29,6 @@ spec:
           configMapKeyRef:
             key: service-ca.crt
             name: openshift-service-ca.crt
-      - name: LOKI_GATEWAY_HOSTNAME
-        value: loki-gateway-http.openshift-logging.svc:8080
   service:
     type: ClusterIP
   client:

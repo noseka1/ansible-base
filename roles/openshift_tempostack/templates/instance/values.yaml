@@ -1,0 +1,4 @@
+s3Endpoint: http://minio.{{ tempostack_instance_namespace }}-minio.svc:9000
+s3Bucket: mybucket1
+s3AccessKeyId: admin
+s3AccessKeySecret: '{{ generic_user_password }}'

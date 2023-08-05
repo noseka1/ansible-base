@@ -25,21 +25,26 @@ spec:
       name: vector-splunk-secret
 {% endif %}
   pipelines:
+  - name: audit_to_default
+    inputRefs:
+    - audit
+    outputRefs:
+    - default
 {% if openshift_logging_forward_to_syslog %}
-    - name: syslog
-      inputRefs:
-      - application
-      - infrastructure
-      - audit
-      outputRefs:
-      - syslog
+  - name: syslog
+    inputRefs:
+    - application
+    - infrastructure
+    - audit
+    outputRefs:
+    - syslog
 {% endif %}
 {% if openshift_logging_forward_to_splunk %}
-    - name: splunk
-      inputRefs:
-      - application
-      - infrastructure
-      - audit
-      outputRefs:
-      - splunk
+  - name: splunk
+    inputRefs:
+    - application
+    - infrastructure
+    - audit
+    outputRefs:
+    - splunk
 {% endif %}

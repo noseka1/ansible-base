@@ -24,12 +24,12 @@ spec:
       mode: console
   deployment:
     env:
-      - name: GATEWAY_SERVICE_CA
+      - name: OPENSHIFT_SERVICE_CA
         valueFrom:
           configMapKeyRef:
             key: service-ca.crt
             name: openshift-service-ca.crt
-      - name: GATEWAY_HOSTNAME
+      - name: LOKI_GATEWAY_HOSTNAME
         value: loki-gateway-http.openshift-logging.svc:8080
   containers:
     # Grafana oauth proxy configuration based on:

@@ -1,5 +1,5 @@
 eks_cluster_install:
-  config_dir: /home/anosek/lab/openshift/mycluster16
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster16'
   cluster_name: mycluster16
   aws_region: us-west-2
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX

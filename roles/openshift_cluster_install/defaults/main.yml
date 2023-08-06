@@ -1,5 +1,5 @@
 openshift_cluster_install_aws:
-  config_dir: /home/anosek/lab/openshift/mycluster10
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster10'
   cluster_name: mycluster10
   base_domain: sandbox1422.opentlc.com
   channel: stable-4.12
@@ -11,19 +11,19 @@ openshift_cluster_install_aws:
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 openshift_cluster_install_gcp:
-  config_dir: /home/anosek/lab/openshift/mycluster11
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster11'
   cluster_name: mycluster11
   base_domain: sandbox1422.opentlc.com
   channel: stable-4.12
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
-  gcp_service_account_file: '{{ lookup("env", "HOME") + "/.gcp/osServiceAccount.json" }}'
+  gcp_service_account_file: '{{ lookup("env", "HOME") }}/.gcp/osServiceAccount.json'
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt
 
 openshift_cluster_install_azure:
-  config_dir: /home/ccornejo/lab/openshift/ocp-azure
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/ocp-azure'
   cluster_name: ocp4-azure
   base_domain: XXXX.azure.redhatworkshops.io
   version: latest
@@ -39,7 +39,7 @@ openshift_cluster_install_azure:
   base_domain_resource_group_name: openenv-XXXX
   azure_dns_zone: az.ccornejo.com
   azure_region: eastus
-  azure_config_path: '{{ lookup("env", "HOME") + "/.azure/osServicePrincipal.json" }}'
+  azure_config_path: '{{ lookup("env", "HOME") }}/.azure/osServicePrincipal.json'
   create_azure_dns_zone: false
 
 openshift_cluster_install_installer_url: >-

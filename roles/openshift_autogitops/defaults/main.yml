@@ -1,4 +1,4 @@
-autogitops_workspace_dir: /tmp/auto-gitops-workspace
+autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/auto-gitops-workspace'
 autogitops_catalog_dir: '{{ playbook_dir }}/../gitops-catalog-helm/apps'
 
 autogitops_git_repo_name: auto-gitops

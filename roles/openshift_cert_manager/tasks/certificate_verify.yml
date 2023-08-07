@@ -27,7 +27,9 @@
     - cert_manager_certificate_object_result.resources.0.status.conditions is defined
     - cert_manager_certificate_object_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
     - (cert_manager_certificate_object_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
-  retries: 30
+  # If the cloud secret is created after the cluster issuer then it takes a long time
+  # for the cluster issuer to issue the certificate.
+  retries: 240
   delay: 10
 
 - name: Retrieve the secret '{{ cert_manager_certificate_object_result.resources.0.spec.secretName }}' created by cert-manager

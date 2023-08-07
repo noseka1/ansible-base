@@ -1,12 +1,12 @@
-- name: Check if openshift_cluster_upgrade_target_version is defined
-  fail:
-    msg: Upgrade target version not defined
-  when: openshift_cluster_upgrade_target_version is undefined
+- assert:
+    that:
+      - openshift_cluster_upgrade_target_channel | length > 0
+    fail_msg: "Upgrade target channel not defined. Example: stable-4.13"
 
-- name: Check if openshift_cluster_upgrade_target_channel is defined
-  fail:
-    msg: Upgrade target channel not defined
-  when: openshift_cluster_upgrade_target_channel is undefined
+- assert:
+    that:
+      - openshift_cluster_upgrade_target_version | length > 0
+    fail_msg: "Upgrade target version not defined. Examples: 4.13.4, latest"
 
 - name: Retrieve latest version on {{ openshift_cluster_upgrade_target_channel }} channel
   script: files/openshift_upgrade_path.py {{ openshift_cluster_upgrade_target_channel }}

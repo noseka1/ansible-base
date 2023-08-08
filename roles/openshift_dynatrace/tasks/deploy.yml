@@ -1,0 +1,17 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: dynatrace-operator
+    autogitops_app_path: dynatrace/operator
+    autogitops_app_namespace: dynatrace
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: dynatrace
+    autogitops_app_path: dynatrace/instance
+    autogitops_app_namespace: dynatrace
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'

@@ -1,0 +1,2 @@
+apiToken: '{{ dynatrace_api_token }}'
+dataIngestToken: '{{ dynatrace_data_ingest_token }}'

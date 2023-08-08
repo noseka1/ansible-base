@@ -1,0 +1,5 @@
+dynatrace_api_token: ''
+dynatrace_data_ingest_token: ''
+
+dynatrace_api_url_environmentid: ''
+dynatrace_api_url: https://{{ dynatrace_api_url_environmentid }}.live.dynatrace.com/api

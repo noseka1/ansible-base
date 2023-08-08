@@ -4,6 +4,12 @@
   vars:
     delete_kubernetes_objects:
       - api_version: argoproj.io/v1alpha1
+        kind: ApplicationSet
+      - api_version: argoproj.io/v1alpha1
+        kind: Application
+      - api_version: argoproj.io/v1alpha1
+        kind: AppProject
+      - api_version: argoproj.io/v1alpha1
         kind: ArgoCD
 
 - name: Delete cluster role
@@ -29,9 +35,3 @@
       - api_version: v1
         kind: Namespace
         name: openshift-gitops
-      - api_version: argoproj.io/v1alpha1
-        kind: ApplicationSet
-      - api_version: argoproj.io/v1alpha1
-        kind: Application
-      - api_version: argoproj.io/v1alpha1
-        kind: AppProject

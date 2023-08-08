@@ -1,0 +1,2 @@
+openshift_cluster_upgrade_target_version: ''
+openshift_cluster_upgrade_target_channel: ''

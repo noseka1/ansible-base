@@ -1,15 +1,3 @@
-- name: Obtain CSV name for operator subscription {{ delete_operator_subscription_namespace }}/{{ delete_operator_subscription_name }}
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ delete_operator_subscription_name }}'
-    namespace: '{{ delete_operator_subscription_namespace }}'
-  register: delete_operator_subscription
-
-- name: Set delete_operator_csv_name
-  set_fact:
-    delete_operator_csv_name: '{{ delete_operator_subscription.resources.0.status.installedCSV | default("") }}'
-
 - name: Delete operator subscription {{ delete_operator_subscription_namespace }}/{{ delete_operator_subscription_name }}
   kubernetes.core.k8s:
     api_version: operators.coreos.com/v1alpha1
@@ -19,21 +7,4 @@
     wait: true
     state: absent
 
-- name: Obtain all Kubernetes namespaces
-  kubernetes.core.k8s_info:
-    api_version: v1
-    kind: Namespace
-  register: delete_operator_existing_namespaces
-  when: delete_operator_csv_name | length > 0
-
-- name: Delete CSV {{ delete_operator_csv_name }} in namespace
-  kubernetes.core.k8s:
-    api_version: operators.coreos.com/v1alpha1
-    kind: ClusterServiceVersion
-    name: '{{ delete_operator_csv_name }}'
-    namespace: '{{ item.metadata.name }}'
-    state: absent
-  loop: '{{ delete_operator_existing_namespaces.resources }}'
-  loop_control:
-    label: '{{ item.metadata.name }}'
-  when: delete_operator_csv_name | length > 0
+- import_tasks: prune_csvs.yml

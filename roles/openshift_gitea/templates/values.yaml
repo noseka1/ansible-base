@@ -16,6 +16,9 @@ gitea:
     serviceMonitor:
       enabled: true
 
+postgresql-ha:
+  enabled: false
+
 postgresql:
   enabled: true
   global:

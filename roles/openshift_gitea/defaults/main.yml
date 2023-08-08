@@ -1,4 +1,5 @@
 gitea_helm_repo: https://dl.gitea.io/charts/
+gitea_helm_version: 9.1.0
 
 gitea_namespace: gitea
 gitea_name: gitea

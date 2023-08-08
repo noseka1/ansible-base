@@ -15,7 +15,7 @@
   kubernetes.core.helm:
     name: '{{ gitea_name }}'
     chart_ref: gitea/gitea
-    chart_version: '{{ gitea_version | default(omit) }}'
+    chart_version: '{{ gitea_helm_version | default(omit) }}'
     release_namespace: '{{ gitea_namespace }}'
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     wait: true

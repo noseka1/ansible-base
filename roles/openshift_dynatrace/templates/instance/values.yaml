@@ -1,1 +1,2 @@
 apiUrl: {{ dynatrace_api_url }}
+clusterName: {{ openshift_common_cluster_domain }}

@@ -2,6 +2,9 @@
   community.general.terraform:
     project_path: '{{ eks_cluster_install.config_dir }}/terraform/'
     state: absent
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ eks_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ eks_cluster_install.aws_secret_access_key }}'
   register: eks_cluster_install_terraform_result
 
 - debug:

@@ -1,0 +1,50 @@
+- import_role:
+    name: common_tasks
+    tasks_from: rosa_check.yml
+
+- import_role:
+    name: common_tasks
+    tasks_from: terraform_check.yml
+
+- name: Create cluster configuration directory {{ rosa_cluster_install.config_dir }}
+  file:
+    path: '{{ rosa_cluster_install.config_dir }}'
+    state: directory
+    mode: '0755'
+
+- name: Clone Terraform templates repo {{ rosa_cluster_install_terraform_templates_repo_url }}
+  ansible.builtin.git:
+    repo: '{{ rosa_cluster_install_terraform_templates_repo_url }}'
+    dest: '{{ rosa_cluster_install.config_dir }}/terraform-provider-rhcs'
+    version: '{{ rosa_cluster_install.terraform_templates_version }}'
+    force: false
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS account roles to create
+  community.general.terraform:
+    project_path: '{{ rosa_cluster_install.config_dir }}/terraform-provider-rhcs/examples/create_account_roles'
+    force_init: true
+    state: present
+    variables:
+      token: '{{ redhat_ocm_api_token }}'
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
+  register: rosa_cluster_install_account_roles_result
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for ROSA cluster to deploy
+  community.general.terraform:
+    project_path: '{{ rosa_cluster_install.config_dir }}/terraform-provider-rhcs/examples/create_rosa_sts_cluster/oidc_configuration/cluster_with_managed_oidc_config'
+    force_init: true
+    state: present
+    variables:
+      cloud_region: '{{ rosa_cluster_install.aws_region }}'
+      availability_zones: '{{ [ rosa_cluster_install.aws_region ] | product(rosa_cluster_install.aws_availability_zones) | map("join") | to_json }}'
+      cluster_name: '{{ rosa_cluster_install.cluster_name }}'
+      openshift_version: '{{ rosa_cluster_install.cluster_version }}'
+      account_role_prefix: '{{ rosa_cluster_install_account_roles_result.outputs.account_role_prefix.value }}'
+      operator_role_prefix: '{{ rosa_cluster_install_account_roles_result.outputs.account_role_prefix.value }}'
+      token: '{{ redhat_ocm_api_token }}'
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
+  register: rosa_cluster_install_cluster_result

@@ -1,0 +1,24 @@
+- name: Describe ROSA cluster
+  command: rosa describe cluster --output json --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
+  environment:
+    OCM_CONFIG: '{{ rosa_cluster_install.config_dir }}/.ocm.json'
+    AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
+  changed_when: false
+  register: rosa_cluster_install_describe_result
+
+- set_fact:
+    rosa_cluster_install_describe_json: '{{ rosa_cluster_install_describe_result.stdout | from_json }}'
+
+- name: Report success
+  set_fact:
+    msg: |
+      ROSA installation complete.
+
+      You can describe the ROSA cluster using (you need to have your AWS credentials set in ~/.aws/credentials):
+      $ OCM_CONFIG={{ rosa_cluster_install.config_dir }}/.ocm.json rosa describe cluster --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
+
+      The cluster admin user may still be provisioning. After several minutes you can log in with:
+      $ oc login --username cluster-admin {{ rosa_cluster_install_describe_json.api.url }}
+
+- debug: msg="{{ msg.split('\n') }}"

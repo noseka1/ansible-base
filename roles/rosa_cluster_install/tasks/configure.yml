@@ -1,0 +1,22 @@
+- name: Log into ROSA
+  command: rosa login
+  environment:
+    OCM_CONFIG: '{{ rosa_cluster_install.config_dir }}/.ocm.json'
+    ROSA_TOKEN: '{{ redhat_ocm_api_token }}'
+
+- name: Describe admin user
+  command: rosa describe admin --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
+  environment:
+    OCM_CONFIG: '{{ rosa_cluster_install.config_dir }}/.ocm.json'
+    AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
+  changed_when: false
+  register: rosa_cluster_install_describe_admin_result
+
+- name: Create admin user
+  command: rosa create admin --output json --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }} --password '{{ generic_user_password }}'
+  environment:
+    OCM_CONFIG: '{{ rosa_cluster_install.config_dir }}/.ocm.json'
+    AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
+  when: rosa_cluster_install_describe_admin_result.stderr is search('There is no admin on cluster')

@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: mtv
+        name: openshift_mtv
         tasks_from: deploy.yml

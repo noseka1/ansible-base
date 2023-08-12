@@ -1,35 +1,8 @@
 - hosts: localhost
   gather_facts: false
-  environment:
-    AZURE_SUBSCRIPTION_ID: '{{ openshift_cluster_install_azure.subscription_id }}'
-    AZURE_TENANT: '{{ openshift_cluster_install_azure.azure_tenant_id }}'
-    AZURE_CLIENT_ID: '{{ openshift_cluster_install_azure.azure_client_id }}'
-    AZURE_SECRET: '{{ openshift_cluster_install_azure.azure_secret }}'
   tasks:
-    - name: Display OCP Azure Quota requirements message
-      debug:
-        msg:
-          - "Azure account limits: https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-account.html#installation-azure-limits_installing-azure-account"
-          - "Manage Azure Quotas: https://portal.azure.com/#view/Microsoft_Azure_Capacity/QuotaMenuBlade/~/myQuotas"
-    - import_role:
-        name: openshift_cluster_install
-        tasks_from: azure_setup.yml
     - import_role:
         name: openshift_cluster_install
         tasks_from: deploy.yml
       vars:
-        openshift_cluster_install: '{{ openshift_cluster_install_azure }}'
         openshift_cluster_install_platform: AZURE
-
-- hosts: localhost
-  environment:
-    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install_azure.config_dir }}/auth/kubeconfig'
-    KUBECONFIG: '{{ openshift_cluster_install_azure.config_dir }}/auth/kubeconfig'
-    AZURE_SUBSCRIPTION_ID: '{{ openshift_cluster_install_azure.subscription_id }}'
-    AZURE_TENANT: '{{ openshift_cluster_install_azure.azure_tenant_id }}'
-    AZURE_CLIENT_ID: '{{ openshift_cluster_install_azure.azure_client_id }}'
-    AZURE_SECRET: '{{ openshift_cluster_install_azure.azure_secret }}'
-  tasks:
-    - import_role:
-        name: openshift_cluster_postinstall
-        tasks_from: postinstall.yml

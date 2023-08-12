@@ -1,3 +1,9 @@
+- name: Display OCP Azure Quota requirements message
+  debug:
+    msg:
+      - "Azure account limits: https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-account.html#installation-azure-limits_installing-azure-account"
+      - "Manage Azure Quotas: https://portal.azure.com/#view/Microsoft_Azure_Capacity/QuotaMenuBlade/~/myQuotas"
+
 - name: Create the root DNS zone
   azure_rm_dnszone:
     name: '{{ openshift_cluster_install_azure.azure_dns_zone }}'

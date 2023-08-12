@@ -1,8 +1,8 @@
-- import_tasks: aws_deploy.yml
+- import_tasks: aws_delete.yml
   when: openshift_cluster_install_platform == 'AWS'
 
-- import_tasks: azure_deploy.yml
+- import_tasks: azure_delete.yml
   when: openshift_cluster_install_platform == 'AZURE'
 
-- import_tasks: gcp_deploy.yml
+- import_tasks: gcp_delete.yml
   when: openshift_cluster_install_platform == 'GCP'

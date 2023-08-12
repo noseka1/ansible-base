@@ -1,46 +1,8 @@
 - hosts: localhost
   gather_facts: false
-  environment:
-    GCP_AUTH_KIND: serviceaccount
-    GCP_SERVICE_ACCOUNT_FILE: '{{ openshift_cluster_install_gcp.gcp_service_account_file }}'
-    GCP_PROJECT: '{{ openshift_cluster_install_gcp.gcp_projectid }}'
   tasks:
-    # Enable GCP API services required for installing OpenShift.
-    # See also https://docs.openshift.com/container-platform/4.12/installing/installing_gcp/installing-gcp-account.html#installation-gcp-enabling-api-services_installing-gcp-account
-    - name: Enable GCP API services required for installing OpenShift
-      google.cloud.gcp_serviceusage_service:
-        name: '{{ item }}'
-        state: present
-      loop:
-        - compute.googleapis.com
-        - cloudresourcemanager.googleapis.com
-        - dns.googleapis.com
-        - iamcredentials.googleapis.com
-        - iam.googleapis.com
-        - serviceusage.googleapis.com
-
-    - name: Enable GCP API services that are optional for installing OpenShift
-      google.cloud.gcp_serviceusage_service:
-        name: '{{ item }}'
-        state: present
-      loop:
-        - cloudapis.googleapis.com
-        - servicemanagement.googleapis.com
-        - storage-api.googleapis.com
-        - storage-component.googleapis.com
-
     - import_role:
         name: openshift_cluster_install
         tasks_from: deploy.yml
       vars:
-        openshift_cluster_install: '{{ openshift_cluster_install_gcp }}'
         openshift_cluster_install_platform: GCP
-
-- hosts: localhost
-  environment:
-    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install_gcp.config_dir }}/auth/kubeconfig'
-    KUBECONFIG: '{{ openshift_cluster_install_gcp.config_dir }}/auth/kubeconfig'
-  tasks:
-    - import_role:
-        name: openshift_cluster_postinstall
-        tasks_from: postinstall.yml

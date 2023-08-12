@@ -1,0 +1,50 @@
+- name: Check the install_complete timestamp
+  stat:
+    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+  register: openshift_cluster_install_complete
+
+- debug:
+    msg: >-
+      Found cluster installation timestamp in directory {{ openshift_cluster_install.config_dir }}, assuming that the
+      cluster already exists, skipping the installation. If you are trying to reinstall the cluster, delete the cluster
+      using an Ansible playbook before running this playbook.
+
+  when:
+    - openshift_cluster_install_complete.stat.exists
+
+- name: Set target OpenShift version
+  set_fact:
+    openshift_cluster_install_version_resolved: '{{ openshift_cluster_install.version }}'
+  when:
+    - openshift_cluster_install.version != 'latest'
+    - not openshift_cluster_install_complete.stat.exists
+
+- import_tasks: cluster_version.yml
+  when:
+    - openshift_cluster_install.version == 'latest'
+    - not openshift_cluster_install_complete.stat.exists
+
+- import_tasks: cluster_installer.yml
+  when:
+    - not openshift_cluster_install_complete.stat.exists
+
+- import_tasks: cluster_install.yml
+  when:
+    - not openshift_cluster_install_complete.stat.exists
+
+- name: Create the timestamp
+  file:
+    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    state: touch
+    mode: '0644'
+  when:
+    - not openshift_cluster_install_complete.stat.exists
+
+- import_tasks: report_success.yml
+
+- import_role:
+    name: openshift_cluster_postinstall
+    tasks_from: postinstall.yml
+  environment:
+    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
+    KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'

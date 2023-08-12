@@ -23,7 +23,7 @@ openshift_cluster_install_gcp:
   gcp_projectid: openenv-pvdbt
 
 openshift_cluster_install_azure:
-  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/ocp-azure'
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster14'
   cluster_name: ocp4-azure
   base_domain: XXXX.azure.redhatworkshops.io
   version: latest

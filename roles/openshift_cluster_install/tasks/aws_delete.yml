@@ -1,0 +1,7 @@
+- set_fact:
+    openshift_cluster_install: '{{ openshift_cluster_install_aws }}'
+
+- import_tasks: common_delete.yml
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ openshift_cluster_install_aws.aws_access_key_id }}'
+    AWS_SECRET_ACCESS_KEY: '{{ openshift_cluster_install_aws.aws_secret_access_key }}'

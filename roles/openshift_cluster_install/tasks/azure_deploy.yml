@@ -1,0 +1,16 @@
+- set_fact:
+    openshift_cluster_install: '{{ openshift_cluster_install_azure }}'
+
+- import_tasks: azure_setup.yml
+  environment:
+    AZURE_SUBSCRIPTION_ID: '{{ openshift_cluster_install_azure.subscription_id }}'
+    AZURE_TENANT: '{{ openshift_cluster_install_azure.azure_tenant_id }}'
+    AZURE_CLIENT_ID: '{{ openshift_cluster_install_azure.azure_client_id }}'
+    AZURE_SECRET: '{{ openshift_cluster_install_azure.azure_secret }}'
+
+- import_tasks: common_deploy.yml
+  environment:
+    AZURE_SUBSCRIPTION_ID: '{{ openshift_cluster_install_azure.subscription_id }}'
+    AZURE_TENANT: '{{ openshift_cluster_install_azure.azure_tenant_id }}'
+    AZURE_CLIENT_ID: '{{ openshift_cluster_install_azure.azure_client_id }}'
+    AZURE_SECRET: '{{ openshift_cluster_install_azure.azure_secret }}'

@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: custom_metrics_autoscaler
+        name: openshift_hashicorp_vault
         tasks_from: delete.yml

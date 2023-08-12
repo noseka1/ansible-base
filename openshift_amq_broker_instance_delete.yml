@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_amq_broker
+        tasks_from: instance_delete.yml

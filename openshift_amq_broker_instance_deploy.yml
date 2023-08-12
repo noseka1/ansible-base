@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: amq_broker
+        name: openshift_amq_broker
         tasks_from: instance_deploy.yml

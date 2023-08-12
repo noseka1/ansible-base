@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: amq_broker
-        tasks_from: console_deploy.yml
+        name: openshift_jaeger
+        tasks_from: deploy.yml

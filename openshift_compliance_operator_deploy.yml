@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: artifactory_oss
+        name: openshift_compliance_operator
         tasks_from: deploy.yml

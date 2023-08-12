@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: cert_utils
-        tasks_from: deploy.yml

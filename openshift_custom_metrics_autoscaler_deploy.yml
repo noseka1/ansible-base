@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: jaeger
+        name: openshift_custom_metrics_autoscaler
         tasks_from: deploy.yml

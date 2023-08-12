@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: amq_broker
-        tasks_from: instance_delete.yml
+        name: openshift_external_dns
+        tasks_from: delete.yml

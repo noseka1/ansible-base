@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: efs_csi
-        tasks_from: deploy.yml

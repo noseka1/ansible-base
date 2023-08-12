@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: external_dns
-        tasks_from: deploy.yml
+        name: openshift_cert_utils
+        tasks_from: delete.yml

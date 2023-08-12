@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: backstage
-        tasks_from: delete.yml
+        name: openshift_external_dns
+        tasks_from: deploy.yml

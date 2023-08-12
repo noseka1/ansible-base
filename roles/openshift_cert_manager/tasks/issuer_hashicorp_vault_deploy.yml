@@ -1,5 +1,5 @@
 - import_role:
-    name: hashicorp_vault
+    name: openshift_hashicorp_vault
     tasks_from: get_vault_route.yml
 
 - import_role:

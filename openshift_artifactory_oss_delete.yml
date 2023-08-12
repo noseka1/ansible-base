@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: hashicorp_vault
+        name: openshift_artifactory_oss
         tasks_from: delete.yml

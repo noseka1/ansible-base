@@ -1,5 +1,5 @@
 - import_role:
-    name: volsync
+    name: openshift_volsync
     tasks_from: deploy.yml
   when: oadp_instance_datamover_enabled
 

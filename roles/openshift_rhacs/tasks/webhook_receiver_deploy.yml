@@ -1,0 +1,31 @@
+- import_role:
+    name: openshift_webhook_receiver
+    tasks_from: deploy.yml
+  vars:
+    webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+    webhook_receiver_manage_namespace: false
+    webhook_receiver_app_prefix: rhacs-
+
+- import_tasks: get_rhacs_central_host.yml
+
+- name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
+  uri:
+    url: 'https://{{ rhacs_central_host }}/v1/notifiers'
+    method: POST
+    body_format: json
+    body:
+      generic:
+        auditLoggingEnabled: true
+        endpoint: http://webhook-receiver.{{ rhacs_instance_namespace }}.svc:8080
+      name: My Webhook Receiver
+      type: generic
+      uiEndpoint: https://{{ rhacs_central_host }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 500, 503 ]
+  register: rhacs_notifier_result
+  until: rhacs_notifier_result.status in [ 200, 500 ]
+  retries: 12
+  delay: 10

@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: rhsso
-        tasks_from: delete.yml

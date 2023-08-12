@@ -1,0 +1,7 @@
+- import_role:
+    name: openshift_webhook_receiver
+    tasks_from: delete.yml
+  vars:
+    webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+    webhook_receiver_manage_namespace: false
+    webhook_receiver_app_prefix: rhacs-

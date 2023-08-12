@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: quay
-        tasks_from: delete.yml

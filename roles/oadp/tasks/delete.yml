@@ -24,6 +24,6 @@
   when: oadp_instance_minio_enabled
 
 - import_role:
-    name: volsync
+    name: openshift_volsync
     tasks_from: delete.yml
   when: oadp_instance_datamover_enabled

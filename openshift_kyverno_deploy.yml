@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: nexus_repository_manager
+        name: openshift_kyverno
         tasks_from: deploy.yml

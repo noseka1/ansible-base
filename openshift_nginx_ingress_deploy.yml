@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: nginx_ingress
+        name: openshift_nginx_ingress
         tasks_from: deploy.yml

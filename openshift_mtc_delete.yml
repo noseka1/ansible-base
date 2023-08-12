@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: nginx_ingress
+        name: openshift_mtc
         tasks_from: delete.yml

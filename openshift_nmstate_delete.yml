@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: metallb
+        name: openshift_nmstate
         tasks_from: delete.yml

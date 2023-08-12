@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: oadp
-        tasks_from: deploy.yml
+        name: openshift_kyverno
+        tasks_from: delete.yml

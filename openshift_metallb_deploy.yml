@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: oadp
-        tasks_from: delete.yml
+        name: openshift_metallb
+        tasks_from: deploy.yml

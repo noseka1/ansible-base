@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: nmstate
+        name: openshift_nexus_repository_manager
         tasks_from: deploy.yml

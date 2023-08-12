@@ -14,4 +14,3 @@
     autogitops_app_name: fuse-console
     autogitops_app_path: fuse-console/instance
     autogitops_app_namespace: '{{ fuse_console_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "console/instance/values.yaml") }}'

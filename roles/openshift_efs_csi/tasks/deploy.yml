@@ -27,4 +27,3 @@
     autogitops_app_name: efs-csi-volume
     autogitops_app_path: efs-csi/volume
     autogitops_app_namespace: openshift-cluster-csi-drivers
-    autogitops_app_values: '{{ lookup("template", "volume/values.yaml") }}'

@@ -27,7 +27,6 @@
     autogitops_app_name: openshift-virtualization
     autogitops_app_path: openshift-virtualization/instance
     autogitops_app_namespace: openshift-cnv
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_tasks: example_deploy.yml
   tags: openshift_virtualization_example_workload

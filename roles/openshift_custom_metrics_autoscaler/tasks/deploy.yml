@@ -14,4 +14,3 @@
     autogitops_app_name: custom-metrics-autoscaler
     autogitops_app_path: custom-metrics-autoscaler/instance
     autogitops_app_namespace: openshift-keda
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'

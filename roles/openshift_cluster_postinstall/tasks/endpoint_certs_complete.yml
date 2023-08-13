@@ -1,4 +1,4 @@
-- name: Create certificates
+- name: Create certificate resources
   kubernetes.core.k8s:
     template: endpoint-certs/certificate.yaml
   loop:

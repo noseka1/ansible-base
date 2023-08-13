@@ -1,18 +1,16 @@
-- name: Deploy VPA operator
-  kubernetes.core.k8s:
-    template:
-      - operator/openshift-vertical-pod-autoscaler-ns.yaml
-      - operator/openshift-vertical-pod-autoscaler-og.yaml
-      - operator/vertical-pod-autoscaler-sub.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: vertical-pod-autoscaler-operator
+    autogitops_app_path: vertical-pod-autoscaler/operator
+    autogitops_app_namespace: openshift-vertical-pod-autoscaler
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ vertical_pod_autoscaler_subscription_name }}'
-    subscription_namespace: '{{ vertical_pod_autoscaler_subscription_namespace }}'
-
-- name: Create VPA instance
-  kubernetes.core.k8s:
-    template:
-      - instance/default-verticalpodautoscalercontroller.yaml
+    autogitops_app_name: vertical-pod-autoscaler
+    autogitops_app_path: vertical-pod-autoscaler/instance
+    autogitops_app_namespace: openshift-vertical-pod-autoscaler

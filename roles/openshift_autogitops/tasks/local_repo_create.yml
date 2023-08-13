@@ -23,6 +23,7 @@
   file:
     path: '{{ autogitops_git_dir }}'
     state: directory
+    mode: '0700'
 
 - name: Pull GitOps state from cluster
   git:

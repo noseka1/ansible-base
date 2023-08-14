@@ -1,15 +1,15 @@
-- import_tasks: deploy_operator.yml
+- import_tasks: operator_deploy.yml
 
-- import_tasks: deploy_instance.yml
+- import_tasks: instance_deploy.yml
 
-- import_tasks: create_openshift_datasource.yml
+- import_tasks: openshift_datasource_deploy.yml
 
-- import_tasks: import_custom_dashboards.yml
+- import_tasks: dashboards_custom_import.yml
 
-- import_tasks: import_openshift_dashboards.yml
+- import_tasks: dashboards_openshift_import.yml
 
-- import_tasks: import_kubernetes_dashboards.yml
+- import_tasks: dashboards_kubernetes_import.yml
 
-- import_tasks: import_kubevirt_dashboards.yml
+- import_tasks: dashboards_kubevirt_import.yml
 
 - import_tasks: report_success.yml

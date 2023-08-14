@@ -1,5 +1,5 @@
-- import_tasks: delete_openshift_datasource.yml
+- import_tasks: openshift_datasource_delete.yml
 
-- import_tasks: delete_instance.yml
+- import_tasks: instance_delete.yml
 
-- import_tasks: delete_operator.yml
+- import_tasks: operator_delete.yml

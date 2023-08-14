@@ -6,6 +6,14 @@ gitea:
     existingSecret: gitea-admin
     email: gitea@local.domain
   config:
+    database:
+      DB_TYPE: postgres
+    session:
+      PROVIDER: memory
+    cache:
+      ADAPTER: memory
+    queue:
+      TYPE: level
     service:
       DISABLE_REGISTRATION: true
       SHOW_REGISTRATION_BUTTON: false
@@ -15,9 +23,6 @@ gitea:
     enabled: true
     serviceMonitor:
       enabled: true
-
-postgresql-ha:
-  enabled: false
 
 postgresql:
   enabled: true
@@ -31,3 +36,9 @@ postgresql:
   primary:
     persistence:
       enabled: {{ gitea_persistence_enabled }}
+
+postgresql-ha:
+  enabled: false
+
+redis-cluster:
+  enabled: false

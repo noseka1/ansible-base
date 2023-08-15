@@ -7,7 +7,7 @@ gitea:
     email: gitea@local.domain
   config:
     database:
-      DB_TYPE: postgres
+      DB_TYPE: {{ gitea_database_type }}
     session:
       PROVIDER: memory
     cache:
@@ -25,7 +25,7 @@ gitea:
       enabled: true
 
 postgresql:
-  enabled: true
+  enabled: {{ gitea_database_type == 'postgres' }}
   global:
     postgresql:
       auth:

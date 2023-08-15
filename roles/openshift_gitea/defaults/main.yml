@@ -6,6 +6,9 @@ gitea_name: gitea
 
 gitea_persistence_enabled: true
 
+# Database type is postgres or sqlite3
+gitea_database_type: sqlite3
+
 gitea_username: gitadmin
 gitea_password: '{{ generic_user_password }}'
 gitea_cacert: ''

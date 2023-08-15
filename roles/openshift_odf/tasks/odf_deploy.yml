@@ -1,3 +1,7 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
 - assert:
     that:
       - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template is defined

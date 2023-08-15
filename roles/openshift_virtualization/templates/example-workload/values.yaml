@@ -10,3 +10,6 @@ machineRootDiskStorageClassName: '{{ openshift_virtualization_machine_root_disk_
 machineRootDiskVolumeMode: '{{ openshift_virtualization_machine_root_disk_volume_mode }}'
 
 machineImageUrl: https://download.fedoraproject.org/pub/fedora/linux/releases/37/Cloud/x86_64/images/Fedora-Cloud-Base-37-1.7.x86_64.qcow2
+
+machineServiceType: {{ openshift_virtualization_machine_service_type }}
+machineServicePort: {{ openshift_virtualization_machine_service_port }}

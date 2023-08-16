@@ -8,6 +8,3 @@
 - name: Set openshift_common_infrastructure
   set_fact:
     openshift_common_infrastructure: '{{ openshift_common_infrastructure_result.resources.0 }}'
-
-- debug:
-    var: openshift_common_infrastructure.status

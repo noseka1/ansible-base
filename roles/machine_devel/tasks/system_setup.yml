@@ -17,6 +17,7 @@
       - github_readonly_token is defined
       - github_readonly_token | length > 0
     fail_msg: "Variable 'github_readonly_token' must not be empty"
+    quiet: true
 
 - name: Run installation scripts
   command: '{{ item }}'

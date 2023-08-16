@@ -7,3 +7,4 @@
 - assert:
     that: common_tasks_rosa_result is succeeded
     fail_msg: You must install rosa executable and add it to your $PATH
+    quiet: true

@@ -1,10 +1,12 @@
 - assert:
     that: openshift_rhel_entitlement_cert | length > 0
     fail_msg: Variable 'openshift_rhel_entitlement_cert' must not be empty
+    quiet: true
 
 - assert:
     that: openshift_rhel_entitlement_key | length > 0
     fail_msg: Variable 'openshift_rhel_entitlement_key' must not be empty
+    quiet: true
 
 - import_role:
     name: openshift_common

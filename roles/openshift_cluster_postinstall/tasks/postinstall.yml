@@ -46,6 +46,9 @@
 - import_tasks: set_core_user_password.yml
   when: openshift_common_cluster_version_majorminor is version('4.13', '>=', strict=true)
 
+- import_tasks: set_root_user_password.yml
+  when: openshift_common_set_root_user_password
+
 - import_tasks: kube_apiserver_audit.yml
 
 - import_tasks: user_groups.yml

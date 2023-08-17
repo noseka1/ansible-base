@@ -32,3 +32,6 @@ openshift_cluster_postinstall_cluster_banner:
   #background_color: '#9fc5e8' # light blue (test)
   #background_color: '#ddaa11' # yellow (stage)
   #background_color: '#dd0000' # red (prod)
+
+# Set root user password. Use this on development systems only!
+openshift_common_set_root_user_password: false

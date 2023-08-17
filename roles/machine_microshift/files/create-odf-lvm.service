@@ -3,7 +3,7 @@ Description=Create LVM group for ODF LVM volumes
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
+RemainAfterExit=no
 
 ExecStart=/usr/local/bin/create-odf-lvm.sh
 

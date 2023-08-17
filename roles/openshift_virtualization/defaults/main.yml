@@ -12,7 +12,7 @@ openshift_virtualization_machine_ssh_authorized_key: ''
 openshift_virtualization_machine_eviction_strategy: 'None'
 openshift_virtualization_machine_root_disk_access_modes:
   - ReadWriteOnce
-openshift_virtualization_machine_root_disk_capacity: 30Gi
+openshift_virtualization_machine_root_disk_capacity: 10Gi
 openshift_virtualization_machine_root_disk_storage_class_name: ''
 openshift_virtualization_machine_root_disk_volume_mode: Filesystem
 

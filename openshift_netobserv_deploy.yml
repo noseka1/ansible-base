@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_network_observability
+        name: openshift_netobserv
         tasks_from: deploy.yml

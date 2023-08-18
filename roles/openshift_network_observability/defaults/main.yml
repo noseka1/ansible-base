@@ -1,6 +1,0 @@
-network_observability_subscription_namespace: netobserv
-network_observability_subscription_name: netobserv-operator
-network_observability_subscription_channel: stable
-network_observability_subscription_approval: Automatic
-
-network_observability_instance_name: cluster

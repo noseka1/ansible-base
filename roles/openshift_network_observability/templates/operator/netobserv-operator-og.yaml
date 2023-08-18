@@ -1,5 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ network_observability_subscription_name }}
-  namespace: {{ network_observability_subscription_namespace }}

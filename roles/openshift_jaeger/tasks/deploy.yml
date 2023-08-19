@@ -5,5 +5,6 @@
     autogitops_app_name: jaeger
     autogitops_app_path: openshift-service-mesh/jaeger/instance
     autogitops_app_namespace: jaeger
+    autogitops_app_values: ''
 
 - import_tasks: report_success.yml

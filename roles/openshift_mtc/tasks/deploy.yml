@@ -14,5 +14,6 @@
     autogitops_app_name: mtc
     autogitops_app_path: mtc/instance
     autogitops_app_namespace: openshift-migration
+    autogitops_app_values: ''
 
 - import_tasks: report_success.yml

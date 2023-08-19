@@ -21,3 +21,4 @@
     autogitops_app_name: cert-manager
     autogitops_app_path: cert-manager/instance
     autogitops_app_namespace: cert-manager
+    autogitops_app_values: ''

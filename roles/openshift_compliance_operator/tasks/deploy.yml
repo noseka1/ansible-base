@@ -4,6 +4,8 @@
   vars:
     autogitops_app_name: compliance-operator
     autogitops_app_path: compliance-operator/operator
+    autogitops_app_namespace: openshift-compliance
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -11,6 +13,8 @@
   vars:
     autogitops_app_name: compliance-scan
     autogitops_app_path: compliance-operator/scan
+    autogitops_app_namespace: openshift-compliance
+    autogitops_app_values: ''
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
   kubernetes.core.k8s_info:

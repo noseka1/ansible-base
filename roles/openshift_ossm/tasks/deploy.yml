@@ -5,6 +5,7 @@
     autogitops_app_name: elasticsearch-operator
     autogitops_app_path: ossm/elasticsearch/operator
     autogitops_app_namespace: openshift-operators-redhat
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -13,6 +14,7 @@
     autogitops_app_name: jaeger-operator
     autogitops_app_path: ossm/jaeger/operator
     autogitops_app_namespace: openshift-distributed-tracing
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -21,6 +23,7 @@
     autogitops_app_name: kiali-operator
     autogitops_app_path: ossm/kiali/operator
     autogitops_app_namespace: openshift-operators
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops

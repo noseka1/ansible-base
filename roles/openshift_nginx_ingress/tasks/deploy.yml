@@ -4,6 +4,8 @@
   vars:
     autogitops_app_name: nginx-ingress-operator
     autogitops_app_path: nginx-ingress/operator
+    autogitops_app_namespace: nginx-ingress-operator
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -12,3 +14,4 @@
     autogitops_app_name: '{{ nginx_ingress_app_name }}'
     autogitops_app_path: nginx-ingress/instance
     autogitops_app_namespace: '{{ nginx_ingress_app_namespace }}'
+    autogitops_app_values: ''

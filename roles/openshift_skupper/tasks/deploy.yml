@@ -5,6 +5,7 @@
     autogitops_app_name: skupper-operator
     autogitops_app_path: skupper/operator
     autogitops_app_namespace: openshift-operators
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -13,3 +14,4 @@
     autogitops_app_name: skupper
     autogitops_app_path: skupper/instance
     autogitops_app_namespace: skupper
+    autogitops_app_values: ''

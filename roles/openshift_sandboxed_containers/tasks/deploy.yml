@@ -13,6 +13,8 @@
   vars:
     autogitops_app_name: openshift-sandboxed-containers
     autogitops_app_path: openshift-sandboxed-containers/instance
+    autogitops_app_namespace: ''
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_common
@@ -40,3 +42,4 @@
     autogitops_app_name: openshift-sandboxed-containers-example
     autogitops_app_path: openshift-sandboxed-containers/example-workload
     autogitops_app_namespace: openshift-sandboxed-containers-operator
+    autogitops_app_values: ''

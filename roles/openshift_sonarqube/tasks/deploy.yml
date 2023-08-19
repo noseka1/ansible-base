@@ -5,3 +5,4 @@
     autogitops_app_name: sonarqube
     autogitops_app_path: sonarqube
     autogitops_app_namespace: sonarqube
+    autogitops_app_values: ''

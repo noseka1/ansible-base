@@ -5,6 +5,7 @@
     autogitops_app_name: hashicorp-vault
     autogitops_app_path: hashicorp-vault
     autogitops_app_namespace: '{{ hashicorp_vault_namespace }}'
+    autogitops_app_values: ''
 
 - name: Obtain vault route
   import_tasks: get_vault_route.yml

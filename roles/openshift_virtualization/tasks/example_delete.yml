@@ -4,5 +4,3 @@
   vars:
     autogitops_app_name: openshift-virtualization-example
     autogitops_app_path: openshift-virtualization/example-workload
-    autogitops_app_namespace: openshift-cnv
-    autogitops_app_values: '{{ lookup("template", "example-workload/values.yaml") }}'

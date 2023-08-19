@@ -23,5 +23,6 @@
     autogitops_app_name: netobserv
     autogitops_app_path: netobserv/instance
     autogitops_app_namespace: netobserv
+    autogitops_app_values: ''
 
 - import_tasks: report_success.yml

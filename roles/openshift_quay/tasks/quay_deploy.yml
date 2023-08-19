@@ -32,6 +32,7 @@
     autogitops_app_name: quay
     autogitops_app_path: quay/quay/instance
     autogitops_app_namespace: quay-enterprise
+    autogitops_app_values: ''
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete
   kubernetes.core.k8s_info:

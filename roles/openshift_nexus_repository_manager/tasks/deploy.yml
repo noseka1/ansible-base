@@ -9,6 +9,7 @@
     autogitops_app_name: nexus-repository-manager
     autogitops_app_path: nexus-repository-manager
     autogitops_app_namespace: nexus-repository-manager
+    autogitops_app_values: ''
 
 - name: Retrieve Nexus repository manager pod
   kubernetes.core.k8s_info:

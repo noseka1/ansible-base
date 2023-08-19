@@ -29,3 +29,4 @@
     autogitops_app_name: tempostack-tracegen
     autogitops_app_path: tempostack/tracegen
     autogitops_app_namespace: '{{ tempostack_instance_namespace }}'
+    autogitops_app_values: ''

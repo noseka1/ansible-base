@@ -5,6 +5,7 @@
     autogitops_app_name: wmco-example
     autogitops_app_path: wmco/example-workload
     autogitops_app_namespace: openshift-windows-machine-config-operator
+    autogitops_app_values: ''
 
 - name: Obtain sample workload route
   kubernetes.core.k8s_info:

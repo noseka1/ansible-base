@@ -14,3 +14,4 @@
     autogitops_app_name: vertical-pod-autoscaler
     autogitops_app_path: vertical-pod-autoscaler/instance
     autogitops_app_namespace: openshift-vertical-pod-autoscaler
+    autogitops_app_values: ''

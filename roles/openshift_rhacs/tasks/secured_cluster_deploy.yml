@@ -6,5 +6,7 @@
   vars:
     autogitops_app_name: rhacs-namespace
     autogitops_app_path: rhacs/namespace
+    autogitops_app_namespace: stackrox
+    autogitops_app_values: ''
 
 - import_tasks: secured_cluster_common_deploy.yml

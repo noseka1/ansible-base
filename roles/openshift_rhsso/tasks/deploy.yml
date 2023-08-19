@@ -5,6 +5,7 @@
     autogitops_app_name: rhsso-operator
     autogitops_app_path: rhsso/operator
     autogitops_app_namespace: '{{ rhsso_operator_subscription_namespace }}'
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -13,6 +14,7 @@
     autogitops_app_name: rhsso
     autogitops_app_path: rhsso/instance
     autogitops_app_namespace: '{{ rhsso_instance_namespace }}'
+    autogitops_app_values: ''
 
 - import_tasks: get_connection.yml
 

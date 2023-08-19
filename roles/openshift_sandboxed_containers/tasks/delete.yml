@@ -18,8 +18,6 @@
   vars:
     autogitops_app_name: openshift-sandboxed-containers-operator
     autogitops_app_path: openshift-sandboxed-containers/operator
-    autogitops_app_namespace: openshift-sandboxed-containers-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
     name: openshift_common

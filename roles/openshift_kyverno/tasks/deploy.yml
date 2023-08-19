@@ -5,6 +5,7 @@
     autogitops_app_name: kyverno
     autogitops_app_path: kyverno/operator
     autogitops_app_namespace: kyverno
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -13,3 +14,4 @@
     autogitops_app_name: kyverno-policies
     autogitops_app_path: kyverno/policies
     autogitops_app_namespace: kyverno
+    autogitops_app_values: ''

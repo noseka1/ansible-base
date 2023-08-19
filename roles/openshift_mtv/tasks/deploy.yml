@@ -5,6 +5,7 @@
     autogitops_app_name: mtv-operator
     autogitops_app_path: mtv/operator
     autogitops_app_namespace: openshift-mtv
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -13,3 +14,4 @@
     autogitops_app_name: mtv
     autogitops_app_path: mtv/instance
     autogitops_app_namespace: openshift-mtv
+    autogitops_app_values: ''

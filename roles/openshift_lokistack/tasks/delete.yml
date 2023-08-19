@@ -12,8 +12,6 @@
   vars:
     autogitops_app_name: '{{ loki_app_prefix }}lokistack'
     autogitops_app_path: lokistack/instance
-    autogitops_app_namespace: '{{ loki_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_role:
     name: openshift_minio
@@ -39,8 +37,6 @@
   vars:
     autogitops_app_name: lokistack-operator
     autogitops_app_path: lokistack/operator
-    autogitops_app_namespace: openshift-operators-redhat
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
   when:
     - lokistack_result.resources is not defined or
       lokistack_result.resources | length == 0

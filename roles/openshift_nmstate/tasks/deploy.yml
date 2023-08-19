@@ -5,6 +5,7 @@
     autogitops_app_name: nmstate-operator
     autogitops_app_path: nmstate/operator
     autogitops_app_namespace: openshift-nmstate
+    autogitops_app_values: ''
 
 - import_role:
     name: openshift_autogitops
@@ -12,3 +13,4 @@
   vars:
     autogitops_app_name: nmstate
     autogitops_app_path: nmstate/instance
+    autogitops_app_values: ''

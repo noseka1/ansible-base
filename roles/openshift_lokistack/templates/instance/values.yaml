@@ -1,0 +1,9 @@
+manageNamespace: {{ loki_manage_namespace }}
+storageClassName: {{ openshift_common_default_storage_class }}
+tenantsMode: '{{ loki_instance_tenants_mode }}'
+
+s3AccessKeyId: admin
+s3SecretAccessKey: '{{ generic_user_password }}'
+s3BucketNames: mybucket1
+s3Endpoint: http://minio.{{ loki_instance_namespace }}-minio.svc:9000
+s3Region: minio

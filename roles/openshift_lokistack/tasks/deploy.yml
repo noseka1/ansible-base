@@ -1,17 +1,17 @@
-- name: Deploy Loki operator
-  kubernetes.core.k8s:
-    template:
-      - operator/openshift-operators-redhat-ns.yaml
-      - operator/loki-operator-og.yaml
-      - operator/loki-operator-sub.yaml
-      - operator/loki-alerts-prometheusrule.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: lokistack-operator
+    autogitops_app_path: lokistack/operator
+    autogitops_app_namespace: openshift-operators-redhat
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_minio
+    tasks_from: deploy.yml
   vars:
-    subscription_name: '{{ loki_subscription_name }}'
-    subscription_namespace: '{{ loki_subscription_namespace }}'
+    minio_namespace: '{{ loki_instance_namespace }}-minio'
 
 - import_role:
     name: openshift_common
@@ -21,24 +21,21 @@
     msg: No default storage class found on the cluster.
   when: openshift_common_default_storage_class | length == 0
 
-- name: Create Loki instance namespace {{ loki_instance_namespace }}
-  kubernetes.core.k8s:
-    template: instance/loki-ns.yaml
-  when: loki_manage_namespace
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: lokistack
+    autogitops_app_path: lokistack/instance
+    autogitops_app_namespace: '{{ loki_instance_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
-- import_tasks: deploy_minio.yml
-
-- name: Deploy Loki instance
-  kubernetes.core.k8s:
-    template:
-      - instance/loki-lokistack.yaml
-      - instance/loki-s3-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Loki instance to deploy
   kubernetes.core.k8s_info:
     api_version: loki.grafana.com/v1
     kind: LokiStack
-    name: '{{ loki_instance_name }}'
+    name: loki
     namespace: '{{ loki_instance_namespace }}'
   register: lokistack_result
   until:

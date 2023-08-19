@@ -1,7 +1,7 @@
 - import_tasks: delete_openshift_logging.yml
 
 - import_role:
-    name: openshift_loki
+    name: openshift_lokistack
     tasks_from: delete.yml
   vars:
     loki_instance_namespace: '{{ openshift_logging_namespace }}'

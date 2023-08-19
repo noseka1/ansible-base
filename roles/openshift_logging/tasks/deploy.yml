@@ -1,7 +1,7 @@
 - import_tasks: deploy_namespace.yml
 
 - import_role:
-    name: openshift_loki
+    name: openshift_lokistack
     tasks_from: deploy.yml
   vars:
     loki_instance_namespace: '{{ openshift_logging_namespace }}'

@@ -8,7 +8,7 @@
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
-    name: openshift_loki
+    name: openshift_lokistack
     tasks_from: deploy.yml
   vars:
     loki_instance_namespace: netobserv

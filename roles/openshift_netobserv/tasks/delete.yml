@@ -6,7 +6,7 @@
     autogitops_app_path: netobserv/instance
 
 - import_role:
-    name: openshift_loki
+    name: openshift_lokistack
     tasks_from: delete.yml
   vars:
     loki_instance_namespace: netobserv

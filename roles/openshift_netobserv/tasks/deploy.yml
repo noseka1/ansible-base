@@ -14,6 +14,7 @@
     loki_instance_namespace: netobserv
     loki_manage_namespace: false
     loki_instance_tenants_mode: openshift-network
+    loki_app_prefix: netobserv-
 
 - import_role:
     name: openshift_autogitops

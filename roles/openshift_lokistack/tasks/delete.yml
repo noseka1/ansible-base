@@ -10,10 +10,16 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: lokistack
+    autogitops_app_name: '{{ loki_app_prefix }}lokistack'
     autogitops_app_path: lokistack/instance
     autogitops_app_namespace: '{{ loki_instance_namespace }}'
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
+
+- import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ loki_instance_namespace }}-minio'
 
 - name: Retrieve LokiStack resources
   kubernetes.core.k8s_info:
@@ -38,9 +44,3 @@
   when:
     - lokistack_result.resources is not defined or
       lokistack_result.resources | length == 0
-
-- import_role:
-    name: openshift_minio
-    tasks_from: delete.yml
-  vars:
-    minio_namespace: '{{ loki_instance_namespace }}-minio'

@@ -7,5 +7,6 @@
     loki_instance_namespace: '{{ openshift_logging_namespace }}'
     loki_manage_namespace: false
     loki_instance_tenants_mode: openshift-logging
+    loki_app_prefix: openshift-logging-
 
 - import_tasks: delete_namespace.yml

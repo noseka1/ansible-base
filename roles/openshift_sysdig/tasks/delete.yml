@@ -1,4 +1,8 @@
-- name: Delete sysdig daemonset
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + sysdig_kustomization) }}"
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: sysdig-oss
+    autogitops_app_path: sysdig-oss/instance
+    autogitops_app_namespace: sysdig-oss
+    autogitops_app_values: ''

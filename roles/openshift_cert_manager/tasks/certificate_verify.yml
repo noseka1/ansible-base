@@ -1,7 +1,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for certificate issuer {{ cert_manager_certificate_issuer_name }} to become ready
   kubernetes.core.k8s_info:
     api_version: cert-manager.io/v1
-    kind:  ClusterIssuer
+    kind: ClusterIssuer
     name: '{{ cert_manager_certificate_issuer_name }}'
   register: cert_manager_cluster_issuer_result
   until:

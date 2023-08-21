@@ -1,0 +1,35 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: node-observability-operator
+    autogitops_app_path: node-observability/operator
+    autogitops_app_namespace: node-observability-operator
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: node-observability
+    autogitops_app_path: node-observability/instance
+    autogitops_app_namespace: ''
+    autogitops_app_values: ''
+
+- name: Deploy nodeobservabilityrun example
+  kubernetes.core.k8s:
+    template: example/example-nodeobservabilityrun.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for profiling query to complete
+  kubernetes.core.k8s_info:
+    api_version: nodeobservability.olm.openshift.io/v1alpha2
+    kind: NodeObservabilityRun
+    name: example
+    namespace: node-observability-operator
+  register: node_observability_example_result
+  until:
+    - node_observability_example_result.resources.0.status.conditions.conditions is defined
+    - node_observability_example_result.resources.0.status.conditions.conditions | selectattr('type', 'equalto', 'Finished') | list | length > 0
+    - (node_observability_example_result.resources.0.status.conditions.conditions | selectattr('type', 'equalto', 'Finished') | first).status == "True"
+  retries: 30
+  delay: 10

@@ -4,6 +4,9 @@
 
 - import_tasks: configure_argocd_notifications.yml
 
+- import_tasks: argo_rollouts_deploy.yml
+  when: gitops_instance_argo_rollouts_enabled
+
 - import_tasks: create_cloudflare_tunnel.yml
   when: gitops_create_cloudflare_tunnel
 

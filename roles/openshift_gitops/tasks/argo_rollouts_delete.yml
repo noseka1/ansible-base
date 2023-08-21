@@ -1,0 +1,5 @@
+- name: Deploy Argo Rollouts controller
+  kubernetes.core.k8s:
+    template: rollouts/argo-rollout-rolloutmanager.yaml
+    wait: true
+    state: absent

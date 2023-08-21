@@ -1,3 +1,6 @@
+- import_tasks: argo_rollouts_delete.yml
+  when: gitops_instance_argo_rollouts_enabled
+
 - import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml

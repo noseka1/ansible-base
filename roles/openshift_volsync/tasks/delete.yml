@@ -4,7 +4,6 @@
   vars:
     autogitops_app_name: volsync
     autogitops_app_path: volsync
-    autogitops_app_namespace: openshift-operators
 
 - import_role:
     name: openshift_common

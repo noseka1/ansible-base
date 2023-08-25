@@ -29,7 +29,7 @@
       - docker-ce-cli
   become: true
 
-- name: Encure required directory exists
+- name: Ensure required directory exists
   file:
     dest: /etc/docker
     state: directory

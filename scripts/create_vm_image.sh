@@ -30,7 +30,11 @@ function mount_image {
   if [ "$table_type" = dos ]; then
     partition_offset=$(sudo fdisk --list --units $nbd_device | grep '83 Linux' | awk '{ print $3 }')
   else
-    partition_offset=$(sudo fdisk --list --units $nbd_device 2>/dev/null | grep 'Linux filesystem' | awk '{ print $2 }')
+    # Find the offset of the largest partition
+    partition_offset=$(
+      sudo fdisk --list-details $nbd_device 2>/dev/null |
+        grep "^$nbd_device" | sort -n -k 4 | tail -1 | awk '{ print $2 }'
+    )
   fi
 
   local partition_offset_bytes=$((partition_offset * 512))
@@ -73,26 +77,32 @@ playbook_name=image_vm.yml
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ansible_root="$script_dir/.."
-mount_point=$(mktemp -d -t mount_XXXXXX)
 
+# Mount the image
+mount_point=$(mktemp -d -t mount_XXXXXX)
 mount_image $image_path $mount_point
-prepare_chroot $mount_point
+
+# Determine the chroot directory
+chroot_point=$mount_point
+if [ -d "$mount_point/root/proc" ]; then
+  chroot_point=$mount_point/root
+fi
+
+prepare_chroot $chroot_point
 
 function cleanup_mount {
-  tear_down_chroot $mount_point
+  tear_down_chroot $chroot_point
   umount_image $mount_point
 }
 
 trap cleanup_mount EXIT
-
-ls $mount_point/etc/cloud
 
 pushd $ansible_root
 sudo \
   --preserve-env \
   ansible-playbook \
     --inventory inventory/localhost.yml \
-    --extra-vars "chroot_location=$mount_point" \
+    --extra-vars "chroot_location=$chroot_point" \
     $playbook_name \
 || exit 1
 popd

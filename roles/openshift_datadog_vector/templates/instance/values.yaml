@@ -1,0 +1,1 @@
+manageNamespace: {{ datadog_vector_manage_namespace }}

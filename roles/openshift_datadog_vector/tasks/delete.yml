@@ -1,17 +1,6 @@
-- name: Delete Datadog Vector
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    kustomize_name: vector
-    kustomize_files:
-      - instance/kustomization.yaml
-    kustomize_op: absent
-
-- name: Delete namespace {{ datadog_vector_namespace }}
-  kubernetes.core.k8s:
-    template:
-      - namespace/vector-ns.yaml
-    wait: true
-    state: absent
-  when: datadog_vector_manage_namespace
+    autogitops_app_name: datadog-vector
+    autogitops_app_path: datadog-vector/instance

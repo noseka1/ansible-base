@@ -1,22 +1,8 @@
-- name: Create namespace {{ datadog_vector_namespace }}
-  kubernetes.core.k8s:
-    template:
-      - namespace/vector-ns.yaml
-  when: datadog_vector_manage_namespace
-
-- name: Deploy Datadog Vector
-  import_role:
-    name: openshift_common
-    tasks_from: kustomize.yml
-  vars:
-    kustomize_name: vector
-    kustomize_files:
-      - instance/kustomization.yaml
-    kustomize_op: present
-
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    wait_for_deployment_name: '{{ datadog_vector_deployment_name }}'
-    wait_for_deployment_namespace: '{{ datadog_vector_namespace }}'
+    autogitops_app_name: datadog-vector
+    autogitops_app_path: datadog-vector/instance
+    autogitops_app_namespace: '{{ datadog_vector_namespace }}'
+    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'

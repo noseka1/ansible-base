@@ -1,6 +1,2 @@
-datadog_vector_namespace: vector
-datadog_vector_deployment_name: vector
-
+datadog_vector_namespace: datadog-vector
 datadog_vector_manage_namespace: true
-
-datadog_vector_kustomization_base: github.com/vectordotdev/vector/distribution/kubernetes/vector-stateless-aggregator?ref=master

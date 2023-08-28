@@ -42,5 +42,26 @@ openshift_cluster_install_azure:
   azure_config_path: '{{ lookup("env", "HOME") }}/.azure/osServicePrincipal.json'
   create_azure_dns_zone: false
 
+openshift_cluster_install_vsphere:
+  config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster18'
+  cluster_name: 8bcng
+  base_domain: dynamic.opentlc.com
+  channel: stable-4.12
+  version: latest
+  data_plane_replicas: 0
+  control_plane_replicas: 3
+  api_vip: 192.168.123.201
+  ingress_vip: 192.168.123.202
+  network_type: OVNKubernetes
+  machine_network_cidr: 192.168.123.0/24
+  vsphere_vcenter: portal.vc.opentlc.com
+  vsphere_username: sandbox-8bcng@vc.opentlc.com
+  vsphere_password: XXXXXXXXXXXXXXXX
+  vsphere_datacenter: SDDC-Datacenter
+  vsphere_default_datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+  vsphere_folder: /SDDC-Datacenter/vm/Workloads/sandbox-8bcng
+  vsphere_network: segment-sandbox-8bcng
+  vsphere_cluster: /SDDC-Datacenter/host/Cluster-1
+
 openshift_cluster_install_installer_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_cluster_install_version_resolved }}/openshift-install-linux-{{ openshift_cluster_install_version_resolved }}.tar.gz

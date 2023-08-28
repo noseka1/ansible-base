@@ -1,0 +1,35 @@
+apiVersion: v1
+metadata:
+  name: {{ openshift_cluster_install.cluster_name }}
+baseDomain: {{ openshift_cluster_install.base_domain }}
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: {{ openshift_cluster_install.control_plane_replicas }}
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: {{ openshift_cluster_install.data_plane_replicas }}
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: {{ openshift_cluster_install.machine_network_cidr }}
+  networkType: {{ openshift_cluster_install.network_type }}
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  vsphere:
+    vCenter: '{{ openshift_cluster_install.vsphere_vcenter }}'
+    username: '{{ openshift_cluster_install.vsphere_username }}'
+    password: '{{ openshift_cluster_install.vsphere_password }}'
+    datacenter: '{{ openshift_cluster_install.vsphere_datacenter }}'
+    defaultDatastore: '{{ openshift_cluster_install.vsphere_default_datastore }}'
+    folder: '{{ openshift_cluster_install.vsphere_folder }}'
+    network: '{{ openshift_cluster_install.vsphere_network }}'
+    cluster: '{{ openshift_cluster_install.vsphere_cluster }}'
+    apiVIPs: [ '{{ openshift_cluster_install.api_vip }}' ]
+    ingressVIPs: [ '{{ openshift_cluster_install.ingress_vip }}' ]
+pullSecret: '{{ redhat_cloud_pull_secret }}'
+sshKey: '{{ generic_ssh_key_pair.public_key }}'

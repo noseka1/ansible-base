@@ -6,3 +6,6 @@
 
 - import_tasks: gcp_deploy.yml
   when: openshift_cluster_install_platform == 'GCP'
+
+- import_tasks: vsphere_deploy.yml
+  when: openshift_cluster_install_platform == 'VSPHERE'

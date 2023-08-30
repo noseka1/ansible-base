@@ -3,3 +3,4 @@
   tasks:
     - import_role:
         name: openshift_cluster_logging
+        tasks_from: delete.yml

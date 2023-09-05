@@ -1,16 +1,16 @@
 - name: Retrieve vCenter virtual machine
-  import_tasks: retrieve_vcenter_vm.yml
+  import_tasks: vcenter_appliance_retrieve.yml
 
 - name: Deploy vCenter Server Appliance
-  import_tasks: deploy_vcenter_tasks.yml
+  import_tasks: vcenter_appliance_deploy_tasks.yml
   when: vcenter_vm is failed
 
 - name: Retrieve vCenter virtual machine
-  import_tasks: retrieve_vcenter_vm.yml
+  import_tasks: vcenter_appliance_retrieve.yml
   when: vcenter_vm
 
 - name: Reconfigure vCenter instance if needed
-  import_tasks: configure_vcenter_vm.yml
+  import_tasks: vcenter_appliance_configure.yml
   when: >
     vcenter_vm.instance.hw_memtotal_mb != vmware_lab.vcenter_vm.memory
     or vcenter_vm.instance.hw_eth0.macaddress != vmware_lab.vcenter_vm.macaddr

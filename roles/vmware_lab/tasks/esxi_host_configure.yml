@@ -1,4 +1,4 @@
-- import_tasks: configure_esxi_cert.yml
+- import_tasks: esxi_host_configure_cert.yml
   when: vmware_lab_certs[esxi_hostname] is defined
 
 - name: Mount NFS datastore to ESXi

@@ -3,28 +3,28 @@
   tasks:
     - import_role:
         name: vmware_lab
-        tasks_from: configure_esxi_host.yml
+        tasks_from: esxi_host_configure.yml
 
 - hosts: esxi1
   gather_facts: false
   tasks:
     - import_role:
         name: vmware_lab
-        tasks_from: deploy_vcenter.yml
+        tasks_from: vcenter_appliance_deploy.yml
 
 - hosts: vcenter
   gather_facts: false
   tasks:
     - import_role:
         name: vmware_lab
-        tasks_from: configure_vcenter_host.yml
+        tasks_from: vcenter_host_configure.yml
 
 - hosts: localhost
   gather_facts: false
   tasks:
     - import_role:
         name: vmware_lab
-        tasks_from: configure_vcenter_cert.yml
+        tasks_from: vcenter_cert_configure.yml
       when: vmware_lab_certs.vcenter is defined
 
 - hosts: esxi
@@ -32,5 +32,5 @@
   tasks:
     - import_role:
         name: vmware_lab
-        tasks_from: create_vcenter_objects.yml
-      tags: create_vcenter_objects
+        tasks_from: vcenter_objects_create.yml
+      tags: vcenter_objects_create

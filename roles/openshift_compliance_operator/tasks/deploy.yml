@@ -5,7 +5,7 @@
     autogitops_app_name: compliance-operator
     autogitops_app_path: compliance-operator/operator
     autogitops_app_namespace: openshift-compliance
-    autogitops_app_values: ''
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
     name: openshift_autogitops

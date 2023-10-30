@@ -8,7 +8,7 @@
 
 - import_tasks: get_rhacs_central_host.yml
 
-- name: Create notifier in RHACS (returns HTTP 500 if the notifier already exists)
+- name: Create mail notifier in RHACS (returns HTTP 409 if the notifier already exists)
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/notifiers'
     method: POST
@@ -30,8 +30,8 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ -1, 200, 500, 503 ]
+    status_code: [ -1, 200, 409, 500, 503 ]
   register: rhacs_notifier_result
-  until: rhacs_notifier_result.status in [ 200, 500 ]
+  until: rhacs_notifier_result.status in [ 200, 409 ]
   retries: 12
   delay: 10

@@ -9,3 +9,5 @@ clusterName: '{{ openshift_common_cluster_domain }}'
 centralHost: '{{ rhacs_central_host }}'
 
 logLevel: '{{ rhacs_loglevel }}'
+
+admissionControlReplicas: 1

@@ -13,8 +13,5 @@
     add_machineset_nodes_per_zone: '{{ openshift_virtualization_aws.nodes_per_zone }}'
     add_machineset_labels:
       node-role.kubernetes.io/baremetal: ""
-    add_machineset_taints:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/baremetal
     add_machineset_retries: 300
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'

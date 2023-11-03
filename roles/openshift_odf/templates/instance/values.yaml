@@ -4,4 +4,4 @@ monPVCTemplate:
 storageDeviceSets:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
   storageCapacity: 200Gi
-encryptionEnable: false
+encryptionKmsEnable: false

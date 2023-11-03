@@ -2,7 +2,7 @@
 
 This role deploys LVM Storage to OpenShift. It works for OpenShift clusters with one or more nodes. Note that only single-node clusters are supported by Red Hat at this time.
 
-LVM Storage deployment documentation can be found here: [Persistent storage using logical volume manager storage](https://docs.openshift.com/container-platform/4.13/storage/persistent_storage/persistent_storage_local/persistent-storage-using-lvms.html)
+LVM Storage deployment documentation can be found here: [Persistent storage using logical volume manager storage](https://docs.openshift.com/container-platform/4.14/storage/persistent_storage/persistent_storage_local/persistent-storage-using-lvms.html)
 
 This Ansible role:
 

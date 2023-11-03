@@ -9,4 +9,4 @@ grafana_instance_name: grafana
 # Override this default Grafana version with a more recent version:
 grafana_base_image: docker.io/grafana/grafana-oss:9.5.7
 
-grafana_oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.13.0
+grafana_oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.14.0

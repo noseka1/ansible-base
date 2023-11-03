@@ -4,7 +4,7 @@ metadata:
   name: cluster
 spec:
   audit:
-    # See also "Configuring the audit log policy" at https://docs.openshift.com/container-platform/4.13/security/audit-log-policy-config.html
+    # See also "Configuring the audit log policy" at https://docs.openshift.com/container-platform/4.14/security/audit-log-policy-config.html
     #
     # Available profiles:
     #

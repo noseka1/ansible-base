@@ -1,13 +1,13 @@
 - assert:
     that:
       - openshift_cluster_upgrade_target_channel | length > 0
-    fail_msg: "Upgrade target channel not defined. Example: stable-4.13"
+    fail_msg: "Upgrade target channel not defined. Example: stable-4.14"
     quiet: true
 
 - assert:
     that:
       - openshift_cluster_upgrade_target_version | length > 0
-    fail_msg: "Upgrade target version not defined. Examples: 4.13.4, latest"
+    fail_msg: "Upgrade target version not defined. Examples: 4.14.1, latest"
     quiet: true
 
 - name: Retrieve latest version on {{ openshift_cluster_upgrade_target_channel }} channel

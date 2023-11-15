@@ -1,4 +1,4 @@
-- name: Check if storageclass ocs-storagecluster-ceph-rbd exists
+- name: Check if storageclass ocs-storagecluster-ceph-rbd-virtualization exists
   kubernetes.core.k8s_info:
     api_version: storage.k8s.io/v1
     kind: StorageClass
@@ -8,7 +8,7 @@
 - set_fact:
     openshift_virtualization_machine_eviction_strategy: LiveMigrate
     openshift_virtualization_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
-    openshift_virtualization_machine_root_disk_storage_class_name: ocs-storagecluster-ceph-rbd
+    openshift_virtualization_machine_root_disk_storage_class_name: ocs-storagecluster-ceph-rbd-virtualization
     openshift_virtualization_machine_root_disk_volume_mode: Block
   when: openshift_virtualization_ceph_storageclass_result.resources | length > 0
 

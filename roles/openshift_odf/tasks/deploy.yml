@@ -1,4 +1,5 @@
 - import_tasks: cluster_nodes_deploy.yml
+  tags: openshift_odf_cluster_nodes
 
 - import_tasks: cluster_nodes_check.yml
 

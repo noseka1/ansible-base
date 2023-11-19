@@ -1,3 +1,4 @@
 - import_tasks: odf_delete.yml
+  tags: openshift_odf_cluster_nodes
 
 - import_tasks: cluster_nodes_delete.yml

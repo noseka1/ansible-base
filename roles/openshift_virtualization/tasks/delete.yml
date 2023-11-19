@@ -26,3 +26,4 @@
     autogitops_app_path: openshift-virtualization/operator
 
 - import_tasks: cluster_nodes_delete.yml
+  tags: openshift_virtualization_cluster_nodes

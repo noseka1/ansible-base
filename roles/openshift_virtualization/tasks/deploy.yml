@@ -1,4 +1,5 @@
 - import_tasks: cluster_nodes_deploy.yml
+  tags: openshift_virtualization_cluster_nodes
 
 - import_role:
     name: openshift_autogitops

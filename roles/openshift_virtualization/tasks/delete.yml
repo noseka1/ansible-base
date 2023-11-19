@@ -10,6 +10,7 @@
         kind: VirtualMachine
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
+  tags: openshift_virtualization_instance
 
 - import_role:
     name: openshift_autogitops
@@ -17,6 +18,7 @@
   vars:
     autogitops_app_name: openshift-virtualization
     autogitops_app_path: openshift-virtualization/instance
+  tags: openshift_virtualization_instance
 
 - import_role:
     name: openshift_autogitops
@@ -24,6 +26,7 @@
   vars:
     autogitops_app_name: openshift-virtualization-operator
     autogitops_app_path: openshift-virtualization/operator
+  tags: openshift_virtualization_operator
 
 - import_tasks: cluster_nodes_delete.yml
   tags: openshift_virtualization_cluster_nodes

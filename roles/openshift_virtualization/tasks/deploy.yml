@@ -9,6 +9,7 @@
     autogitops_app_path: openshift-virtualization/operator
     autogitops_app_namespace: openshift-cnv
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+  tags: openshift_virtualization_operator
 
 - import_role:
     name: openshift_common
@@ -16,6 +17,7 @@
   vars:
     subscription_name: kubevirt-hyperconverged
     subscription_namespace: openshift-cnv
+  tags: openshift_virtualization_operator
 
 - import_role:
     name: openshift_autogitops
@@ -25,6 +27,7 @@
     autogitops_app_path: openshift-virtualization/instance
     autogitops_app_namespace: openshift-cnv
     autogitops_app_values: ''
+  tags: openshift_virtualization_instance
 
 - import_tasks: example_deploy.yml
   tags: openshift_virtualization_example_workload

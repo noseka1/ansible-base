@@ -43,7 +43,7 @@
 - name: Set msg
   set_fact:
     msg: |
-      Cluster {{ multicluster_engine_managed_cluster.cluster_name }} deployd successfully.
+      Cluster {{ multicluster_engine_managed_cluster.cluster_name }} deployed successfully.
       You can download the admin kubeconfig by issuing 'oc extract -n {{ multicluster_engine_managed_cluster.cluster_name }} secret/{{ clusterdeployment_result.resources.0.spec.clusterMetadata.adminKubeconfigSecretRef.name }} --keys kubeconfig'
 
 - debug:

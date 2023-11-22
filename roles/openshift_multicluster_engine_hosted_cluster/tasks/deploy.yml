@@ -25,5 +25,5 @@
 
 - debug:
     msg: |
-      Cluster {{ multicluster_engine_hosted_cluster.cluster_name }} deployd successfully.
+      Cluster {{ multicluster_engine_hosted_cluster.cluster_name }} deployed successfully.
       You can download the admin kubeconfig by issuing 'oc extract -n hosted-clusters secret/{{ multicluster_engine_hosted_cluster.cluster_name }}-admin-kubeconfig'

@@ -1,4 +1,4 @@
 subscriptionApproval: Automatic
-subscriptionChannel: stable-1.2
+subscriptionChannel: ''
 
 manageNamespace: {{ oadp_operator_manage_namespace }}

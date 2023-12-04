@@ -1,5 +1,6 @@
 openshift_virtualization_kvm_emulation_enabled: false
 
+# Instance type c5n.metal = 72 vCPUs, 192 GiB RAM
 openshift_virtualization_aws:
   instance_type: c5n.metal
   availability_zones: [ a ]

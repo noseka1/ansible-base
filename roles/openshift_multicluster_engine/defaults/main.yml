@@ -1,6 +1,6 @@
 multicluster_engine_subscription_namespace: multicluster-engine
 multicluster_engine_subscription_name: multicluster-engine
-multicluster_engine_subscription_channel: stable-2.2
+multicluster_engine_subscription_channel: ''
 multicluster_engine_subscription_approval: Automatic
 multicluster_engine_instance_namespace: multicluster-engine
 multicluster_engine_instance_name: engine

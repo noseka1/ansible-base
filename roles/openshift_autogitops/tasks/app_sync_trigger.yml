@@ -5,7 +5,7 @@
 - debug:
     msg: Application URL is {{ argocd_api_url }}/applications/{{ autogitops_argocd_namespace }}/in-cluster-{{ autogitops_app_name }}
 
-- name: Trigger application sync
+- name: Trigger application sync to commit {{ autogitops_git_last_commit }}
   uri:
     url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}/sync
     method: POST

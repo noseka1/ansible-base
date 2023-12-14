@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: auto-gitops
+  name: {{ autogitops_appset_name }}
   namespace: {{ autogitops_argocd_namespace }}
 spec:
   goTemplate: true
@@ -10,7 +10,6 @@ spec:
       files:
       - path: envs/in-cluster/infra/**/argocd_config_manual.yaml
       repoURL: {{ gitea_repo_url_plain }}
-      requeueAfterSeconds: 10
       revision: master
       template:
         metadata: {}

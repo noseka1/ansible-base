@@ -50,7 +50,9 @@
 
 - import_tasks: local_repo_push.yml
 
-- name: Wait for application {{ autogitops_app_name }} to disappear
+- import_tasks: appset_sync.yml
+
+- name: Wait for application {{ autogitops_app_name }} to disappear from Argo CD
   kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1
     kind: Application

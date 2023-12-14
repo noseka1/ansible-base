@@ -1,0 +1,4 @@
+- import_tasks: get_connection.yml
+
+- include_tasks: create_webhooks_subtasks.yml
+  loop: '{{ gitea_create_webhooks }}'

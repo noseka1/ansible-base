@@ -5,3 +5,16 @@
     gitea_create_repos:
       - name: '{{ autogitops_git_repo_name }}'
         description: Auto GitOps content
+
+- import_role:
+    name: openshift_gitops
+    tasks_from: get_argocd_api_connection.yml
+
+- import_role:
+    name: openshift_gitea
+    tasks_from: create_webhooks.yml
+  vars:
+    gitea_create_webhooks:
+      - name: '{{ autogitops_git_repo_name }}'
+        description: Auto GitOps webhook
+        url: '{{ argocd_api_url }}/api/webhook'

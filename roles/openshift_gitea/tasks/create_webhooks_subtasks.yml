@@ -1,0 +1,35 @@
+- name: Get existing webhooks for repo {{ gitea_username }}/{{ item.name }}
+  uri:
+    url: 'https://{{ gitea_hostname }}/api/v1/repos/{{ gitea_username }}/{{ item.name }}/hooks'
+    method: GET
+    url_username: '{{ gitea_username }}'
+    url_password: '{{ gitea_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ 200 ]
+  register: gitea_repo_webhooks
+
+- set_fact:
+    gitea_repo_webhook_urls: '{{ gitea_repo_webhooks.json | json_query("[*].config.url") }}'
+
+- name: Create git webhook for {{ item.url }}
+  uri:
+    url: 'https://{{ gitea_hostname }}/api/v1/repos/{{ gitea_username }}/{{ item.name }}/hooks'
+    method: POST
+    body_format: json
+    body:
+      active: true
+      authorization_header: ''
+      branch_filter: '*'
+      config:
+        content_type: json
+        url: '{{ item.url }}'
+      description: '{{ item.description }}'
+      events: [ push ]
+      type: gogs
+    url_username: '{{ gitea_username }}'
+    url_password: '{{ gitea_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ 201, 409 ]
+  when: item.url not in gitea_repo_webhook_urls

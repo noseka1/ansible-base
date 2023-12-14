@@ -18,6 +18,9 @@ gitea:
       DISABLE_REGISTRATION: true
       SHOW_REGISTRATION_BUTTON: false
       REQUIRE_SIGNIN_VIEW: true
+    webhook:
+      # Allow sending a webhook to any destination host
+      ALLOWED_HOST_LIST: '*'
   # Enable Gitea metrics
   metrics:
     enabled: true

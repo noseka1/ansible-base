@@ -14,6 +14,8 @@ gitea:
       ADAPTER: memory
     queue:
       TYPE: level
+    server:
+      ROOT_URL: https://{{ gitea_route.resources.0.spec.host }}/
     service:
       DISABLE_REGISTRATION: true
       SHOW_REGISTRATION_BUTTON: false

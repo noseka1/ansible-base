@@ -6,6 +6,14 @@
       - gitea-route.yaml
       - gitea-scc-rolebinding.yaml
 
+- name: Obtain Gitea route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: gitea
+    namespace: '{{ gitea_namespace }}'
+  register: gitea_route
+
 - name: Add Gitea chart repo
   kubernetes.core.helm_repository:
     name: gitea

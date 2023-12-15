@@ -1,9 +1,0 @@
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  annotations:
-    # This is an annotation that is added when an ApplicationSet is requested to be refreshed by a webhook.
-    # The ApplicationSet controller will remove this annotation at the end of reconciliation.
-    argocd.argoproj.io/application-set-refresh: "true"
-  name: {{ autogitops_appset_name }}
-  namespace: {{ autogitops_argocd_namespace }}

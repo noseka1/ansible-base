@@ -1,4 +1,0 @@
-- name: Refresh {{ autogitops_appset_name }} application set
-  kubernetes.core.k8s:
-    template:
-      - auto-gitops-refresh-appset.yaml

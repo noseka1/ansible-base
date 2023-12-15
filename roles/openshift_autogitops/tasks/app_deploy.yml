@@ -4,8 +4,6 @@
 
 - import_tasks: local_repo_push.yml
 
-- import_tasks: appset_sync.yml
-
 - name: Wait for application {{ autogitops_app_name }} to show up in Argo CD
   kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1

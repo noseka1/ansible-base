@@ -2,7 +2,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ autogitops_app_name }} to reconcile
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}?refresh=normal
+    url: '{{ argocd_api_url }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}?refresh=normal'
     method: GET
     headers:
       Authorization: Bearer {{ argocd_api_token }}

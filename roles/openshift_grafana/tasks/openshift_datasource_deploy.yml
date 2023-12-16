@@ -7,23 +7,6 @@
     template: openshift/grafana-sa-token-static-secret.yaml
     wait: true
 
-- name: Grab grafana service account token secret
-  kubernetes.core.k8s_info:
-    api_version: v1
-    kind: Secret
-    name: '{{ grafana_instance_name }}-sa-token-static'
-    namespace: '{{ grafana_instance_namespace }}'
-  register: grafana_serviceaccount_secret
-
-- name: Set grafana_serviceaccount_token
-  set_fact:
-    grafana_serviceaccount_token: >-
-      {{ grafana_serviceaccount_secret.resources.0.data.token | b64decode | default('') }}
-
-- fail:
-    msg: Failed to retrieve token for the grafana service account.
-  when: grafana_serviceaccount_token | length == 0
-
 - name: Allow Grafana to retrieve OpenShift monitoring metrics and logs
   kubernetes.core.k8s:
     template:

@@ -18,10 +18,15 @@ spec:
       tlsAuthWithCACert: true
       tlsSkipVerify: false
     secureJsonData:
-      httpHeaderValue1: Bearer {{ grafana_serviceaccount_token }}
+      httpHeaderValue1: Bearer ${token}
       tlsCACert: ${service-ca.crt}
     url: https://loki-gateway-http.openshift-logging.svc:8080/api/logs/v1/infrastructure
   valuesFrom:
+  - targetPath: secureJsonData.httpHeaderValue1
+    valueFrom:
+      secretKeyRef:
+        name: {{ grafana_instance_name }}-sa-token-static
+        key: token
   - targetPath: secureJsonData.tlsCACert
     valueFrom:
       configMapKeyRef:

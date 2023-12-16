@@ -1,12 +1,24 @@
 grafana_subscription_namespace: grafana
 grafana_subscription_name: grafana
 grafana_subscription_approval: Automatic
+grafana_subscription_channel: v5
 grafana_instance_namespace: grafana
 grafana_instance_name: grafana
 
 # The default Grafana image version that was tested to work with the operator can be found here:
-# https://github.com/grafana-operator/grafana-operator/blob/master/controllers/constants/constants.go#L5
+# https://github.com/grafana/grafana-operator/blob/24e34f6b2a55ec6c6bc4dbe0d1420d2db137ce19/controllers/config/operator_constants.go#L6
 # Override this default Grafana version with a more recent version:
-grafana_base_image: docker.io/grafana/grafana-oss:9.5.7
+grafana_base_image: docker.io/grafana/grafana-oss:9.5.14
 
 grafana_oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.14.0
+
+# Create dashboard folders in Grafana
+grafana_dashboard_folders:
+- name: custom
+  title: Custom
+- name: kubernetes
+  title: Kubernetes
+- name: kubevirt
+  title: KubeVirt
+- name: openshift-monitoring
+  title: OpenShift Monitoring

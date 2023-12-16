@@ -1,40 +1,45 @@
-apiVersion: integreatly.org/v1alpha1
+apiVersion: grafana.integreatly.org/v1beta1
 kind: Grafana
 metadata:
+  labels:
+    dashboards: grafana
   name: grafana
 spec:
-  baseImage: {{ grafana_base_image }}
   config:
     auth:
-      disable_login_form: true
-      disable_signout_menu: true
+      disable_login_form: 'true'
+      disable_signout_menu: 'true'
     auth.basic:
       # Must be enabled. Operator uses basic auth when connecting to Grafana APIs.
-      enabled: true
+      enabled: 'true'
     auth.proxy:
-      auto_sign_up: true
-      enabled: true
+      auto_sign_up: 'true'
+      enabled: 'true'
       header_name: X-Forwarded-User
     auth.anonymous:
-      enable: false
+      enable: 'false'
     users:
       auto_assign_org_role: Admin
     log:
       level: debug
       mode: console
   deployment:
-    env:
-      - name: OPENSHIFT_SERVICE_CA
-        valueFrom:
-          configMapKeyRef:
-            key: service-ca.crt
-            name: openshift-service-ca.crt
+    spec:
+      template:
+        spec:
+          containers:
+          - name: grafana
+            image: {{ grafana_base_image }}
   service:
-    type: ClusterIP
+    spec:
+      type: ClusterIP
   client:
-    preferService: true
-  serviceAccount:
-    skip: false
+    preferIngress: false
+  # An empty route spec is enough to signal the creation of a default
+  # route to the operator. This can also be used to override defaults
+  # in the route spec.
+  route:
+    spec: {}
   dashboardLabelSelector:
   - matchExpressions:
     - key: app

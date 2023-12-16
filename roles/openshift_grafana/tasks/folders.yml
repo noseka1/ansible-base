@@ -1,0 +1,4 @@
+- name: Create dashboard folders in Grafana
+  kubernetes.core.k8s:
+    template:
+      - templates/folders/grafana-grafanafolder.yml

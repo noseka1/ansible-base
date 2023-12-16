@@ -6,16 +6,16 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
   kubernetes.core.k8s_info:
-    api_version: integreatly.org/v1alpha1
+    api_version: grafana.integreatly.org/v1beta1
     kind: Grafana
     name: '{{ grafana_instance_name }}'
     namespace: '{{ grafana_instance_namespace }}'
   register: grafana_instance
   until:
-    - grafana_instance.resources.0.status.phase is defined
-    - grafana_instance.resources.0.status.phase == 'reconciling'
-    - grafana_instance.resources.0.status.message is defined
-    - grafana_instance.resources.0.status.message == 'success'
+    - grafana_instance.resources.0.status.stage is defined
+    - grafana_instance.resources.0.status.stage == 'complete'
+    - grafana_instance.resources.0.status.stageStatus is defined
+    - grafana_instance.resources.0.status.stageStatus == 'success'
   retries: 240
   delay: 10
 

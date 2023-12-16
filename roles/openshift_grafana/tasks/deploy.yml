@@ -4,6 +4,8 @@
 
 - import_tasks: openshift_datasource_deploy.yml
 
+- import_tasks: folders.yml
+
 - import_tasks: dashboards_custom_import.yml
 
 - import_tasks: dashboards_openshift_import.yml

@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
   name: grafana
 spec:
-  channel: v4
+  channel: {{ grafana_subscription_channel }}
   installPlanApproval: {{ grafana_subscription_approval }}
   name: grafana-operator
   source: community-operators

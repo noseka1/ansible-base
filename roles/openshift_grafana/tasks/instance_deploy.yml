@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - instance/grafana-grafana.yaml
-    namespace: '{{ grafana_instance_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
   kubernetes.core.k8s_info:

@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   loop:
     - { folder: Kubernetes, name: k8s-system-api-server, id: 15761 }
     - { folder: Kubernetes, name: k8s-system-coredns, id: 15762 }
@@ -15,7 +14,6 @@
   kubernetes.core.k8s:
     template:
       - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   loop:
     - { folder: Kubernetes, name: k8s-storage-volumes-cluster, id: 11454 }
     - { folder: Kubernetes, name: k8s-storage-volumes-namespace, id: 11455 }

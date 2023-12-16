@@ -2,7 +2,6 @@
   kubernetes.core.k8s:
     template:
       - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   loop:
     - { folder: KubeVirt, name: kubevirt-rev1, id: 11748 }
 
@@ -10,7 +9,6 @@
   kubernetes.core.k8s:
     template:
       - dashboards/url/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   loop:
     - folder: KubeVirt
       name: kubevirt-control-plane

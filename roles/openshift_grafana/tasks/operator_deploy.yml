@@ -4,7 +4,6 @@
       - operator/grafana-ns.yaml
       - operator/grafana-og.yaml
       - operator/grafana-sub.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
 
 - import_role:
     name: openshift_common

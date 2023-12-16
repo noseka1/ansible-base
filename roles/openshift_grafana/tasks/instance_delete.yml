@@ -11,6 +11,5 @@
   kubernetes.core.k8s:
     template:
       - instance/grafana-grafana.yaml
-    namespace: '{{ grafana_instance_namespace }}'
     wait: true
     state: absent

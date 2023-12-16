@@ -5,7 +5,6 @@
 - name: Create a static service account token
   kubernetes.core.k8s:
     template: openshift/grafana-sa-token-static-secret.yaml
-    namespace: '{{ grafana_instance_namespace }}'
     wait: true
 
 - name: Grab grafana service account token secret
@@ -35,4 +34,3 @@
       - openshift/openshift-logging-audit-grafanadatasource.yaml
       - openshift/grafana-cluster-logging-view-clusterrole.yaml
       - openshift/grafana-cluster-logging-view-clusterrolebinding.yaml
-    namespace: '{{ grafana_instance_namespace }}'

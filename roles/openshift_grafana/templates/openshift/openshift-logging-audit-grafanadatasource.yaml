@@ -2,6 +2,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
   name: openshift-logging-audit
+  namespace: {{ grafana_instance_namespace }}
 spec:
   instanceSelector:
     matchLabels:

@@ -3,5 +3,4 @@
     template:
       - dashboards/custom/grafana-dashboard-cm.yaml
       - dashboards/custom/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   loop: '{{ lookup("fileglob", "files/dashboards/custom/*.json", wantlist=True) }}'

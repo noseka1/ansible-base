@@ -4,6 +4,7 @@ metadata:
   labels:
     dashboards: grafana
   name: grafana
+  namespace: {{ grafana_instance_namespace }}
 spec:
   config:
     auth:

@@ -10,7 +10,6 @@
     template:
       - dashboards/openshift/grafana-dashboard-cm.yaml
       - dashboards/openshift/grafana-dashboard-grafanadashboard.yaml
-    namespace: '{{ grafana_subscription_namespace }}'
   when: item.metadata.name.startswith("grafana-dashboard-")
   loop: '{{ grafana_openshift_configmaps_result.resources }}'
   loop_control:

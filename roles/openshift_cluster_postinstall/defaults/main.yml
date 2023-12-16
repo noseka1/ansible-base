@@ -23,7 +23,7 @@ openshift_cluster_postinstall_configure_endpoint_certs: false
 
 openshift_send_alerts_to_slack_url: ''
 
-# # Use custom trusted CA certificate instead of the default redhat-uep.pem
+# Use custom trusted CA certificate instead of the default redhat-uep.pem
 openshift_cluster_postinstall_custom_yum_sslcacert: {}
 
 openshift_cluster_postinstall_cluster_banner:
@@ -35,3 +35,6 @@ openshift_cluster_postinstall_cluster_banner:
 
 # Set root user password. Use this on development systems only!
 openshift_cluster_postinstall_set_root_user_password: false
+
+# Enable etcd encryption for the cluster to provide an additional layer of data security
+openshift_cluster_postinstall_etcd_encryption: false

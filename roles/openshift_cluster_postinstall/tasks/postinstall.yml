@@ -49,6 +49,9 @@
 - import_tasks: set_root_user_password.yml
   when: openshift_cluster_postinstall_set_root_user_password
 
+- import_tasks: etcd_encryption.yml
+  when: openshift_cluster_postinstall_etcd_encryption
+
 - import_tasks: kube_apiserver_audit.yml
 
 - import_tasks: user_groups.yml

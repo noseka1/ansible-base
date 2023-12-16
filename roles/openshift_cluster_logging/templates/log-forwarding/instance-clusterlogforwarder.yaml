@@ -25,8 +25,12 @@ spec:
       name: vector-splunk-secret
 {% endif %}
   pipelines:
-  - name: audit_to_default
+  - name: default
     inputRefs:
+    - infrastructure
+    - application
+    #  By default cluster logging does NOT send audit logs to the internal store
+    #  because it does not provide secure storage
     - audit
     outputRefs:
     - default

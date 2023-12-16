@@ -1,6 +1,6 @@
 openshift_logging_namespace: openshift-logging
 openshift_logging_subscription_name: cluster-logging
-openshift_logging_subscription_channel: stable
+openshift_logging_subscription_channel: ''
 openshift_logging_subscription_approval: Automatic
 
 openshift_logging_instance_name: instance

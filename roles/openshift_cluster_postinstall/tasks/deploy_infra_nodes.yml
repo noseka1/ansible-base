@@ -6,4 +6,7 @@
     add_machineset_role: infra
     add_machineset_labels:
       node-role.kubernetes.io/infra: ""
+    add_machineset_taints:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
   when: openshift_cluster_postinstall_deploy_infra_nodes

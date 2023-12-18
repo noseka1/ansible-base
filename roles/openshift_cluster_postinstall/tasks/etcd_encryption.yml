@@ -16,7 +16,7 @@
     - openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions is defined
     - openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
     - (openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 60
+  retries: 120
   delay: 10
   when: openshift_cluster_postinstall_etcd_encryption_result is changed
 
@@ -30,7 +30,7 @@
     - openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions is defined
     - openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
     - (openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 60
+  retries: 120
   delay: 10
   when: openshift_cluster_postinstall_etcd_encryption_result is changed
 
@@ -44,6 +44,6 @@
     - openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions is defined
     - openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
     - (openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 60
+  retries: 120
   delay: 10
   when: openshift_cluster_postinstall_etcd_encryption_result is changed

@@ -1,7 +1,0 @@
-- name: Allocate persistent volume for image registry
-  kubernetes.core.k8s:
-    template: registry-pvc.yaml
--
-- name: Attach persistent volume to image registry
-  kubernetes.core.k8s:
-    template: cluster-config.yaml

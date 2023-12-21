@@ -1,15 +1,17 @@
-- name: Expose the registry via an external route
-  kubernetes.core.k8s:
-    template: cluster-registry.yaml
-
 - name: Retrieve status of the integrated image registry
   kubernetes.core.k8s_info:
     api_version: imageregistry.operator.openshift.io/v1
     kind: Config
     name: cluster
-  register: image_registry_config
+  register: openshift_cluster_postinstall_image_registry_config
 
-- import_tasks: image_registry_volume.yml
+- name: Allocate persistent volume for image registry
+  kubernetes.core.k8s:
+    template: image-registry/registry-pvc.yaml
   when:
-    - image_registry_config.resources.0.spec.managementState is defined
-    - image_registry_config.resources.0.spec.managementState == 'Removed'
+    - openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState is defined
+    - openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState == 'Removed'
+
+- name: Configure the integrated image registry
+  kubernetes.core.k8s:
+    template: image-registry/cluster-config.yaml

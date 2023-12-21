@@ -1,0 +1,28 @@
+apiVersion: imageregistry.operator.openshift.io/v1
+kind: Config
+metadata:
+  name: cluster
+spec:
+  defaultRoute: true
+  # Operator will update the registry as configuration resources are updated
+  managementState: Managed
+  # Number of desired image registry pods
+  replicas: 1
+  # Default RollingUpdate rollout strategy cannot be used with ReadWriteOnce access mode volume
+  rolloutStrategy: Recreate
+{% if openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState is defined and
+      openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState == 'Removed' %}
+  # Configure persistent storage for the image registry.
+  storage:
+    pvc:
+      claim: registry
+{% endif %}
+{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+  # Place image registry on infra nodes. See also:
+  # https://docs.openshift.com/container-platform/4.14/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-registry_creating-infrastructure-machinesets
+  nodeSelector:
+    node-role.kubernetes.io/infra: ""
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/infra
+{% endif %}

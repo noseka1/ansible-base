@@ -26,8 +26,7 @@
 - import_tasks: configure_machine_healthcheck.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
-- import_tasks: configure_ingress_nlb.yml
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+- import_tasks: configure_ingresscontroller.yml
 
 - import_tasks: ensure_storage.yml
 
@@ -69,8 +68,6 @@
 - import_tasks: monitoring.yml
 
 - import_tasks: alerting.yml
-
-- import_tasks: access_logging.yml
 
 - import_tasks: auto_approve_csr.yml
 

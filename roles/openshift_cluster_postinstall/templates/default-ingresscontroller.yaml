@@ -4,7 +4,33 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
+{% if openshift_common_infrastructure.status.platformStatus.type == 'AWS' %}
+  # The rootfs image download in RHACM assisted installer won't work unless the ingress controller uses NLB.
+  # See also the section "Enabling Central Infrastructure Management on Amazon Web Services" in
+  # https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.7/html-single/clusters/index
+  # Use Network Load Balancer for OpenShift ingress
+  endpointPublishingStrategy:
+    type: LoadBalancerService
+    loadBalancer:
+      scope: External
+      providerParameters:
+        type: AWS
+        aws:
+          type: NLB
+{% endif %}
   logging:
     access:
       destination:
+        # Send ingress access logs to a side-car container
         type: Container
+{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+  # Deploy ingress router on infra nodes
+  # See also https://docs.openshift.com/container-platform/4.14/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/infra: ""
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+{% endif %}

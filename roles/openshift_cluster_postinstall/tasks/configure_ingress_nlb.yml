@@ -1,6 +1,0 @@
-# The rootfs image download in RHACM assisted installer won't work unless the ingress controller uses NLB.
-# See also the section "Enabling Central Infrastructure Management on Amazon Web Services" in
-# https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.7/html-single/clusters/index
-- name: Use Network Load Balancer for OpenShift ingress
-  kubernetes.core.k8s:
-    template: default-ingresscontroller-3.yaml

@@ -30,7 +30,7 @@ spec:
     - infrastructure
     - application
     #  By default cluster logging does NOT send audit logs to the internal store
-    #  because it does not provide secure storage
+    #  because the internal store does not provide a secure storage
     - audit
     outputRefs:
     - default

@@ -11,4 +11,13 @@
 
 - import_tasks: deploy_openshift_logging.yml
 
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: event-router
+    autogitops_app_path: cluster-logging/event-router
+    autogitops_app_namespace: '{{ openshift_logging_namespace }}'
+    autogitops_app_values: ''
+
 - import_tasks: report_success.yml

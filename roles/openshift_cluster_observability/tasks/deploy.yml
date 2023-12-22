@@ -1,0 +1,26 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: cluster-observability-operator
+    autogitops_app_path: cluster-observability/operator
+    autogitops_app_namespace: openshift-operators
+    autogitops_app_values: ''
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: cluster-observability
+    autogitops_app_path: cluster-observability/instance
+    autogitops_app_namespace: cluster-observability
+    autogitops_app_values: ''
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: cluster-observability-example
+    autogitops_app_path: cluster-observability/example-workload
+    autogitops_app_namespace: cluster-observability-example
+    autogitops_app_values: ''

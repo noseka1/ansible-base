@@ -4,7 +4,6 @@ metadata:
   name: {{ amq_streams_subscription_name }}
   namespace: {{ amq_streams_subscription_namespace }}
 spec:
-  channel: stable
   installPlanApproval: {{ amq_streams_subscription_approval }}
   name: amq-streams
   source: redhat-operators

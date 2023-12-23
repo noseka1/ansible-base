@@ -1,4 +1,4 @@
-- name: Create namespace
+- name: Create namespace {{ amq_streams_kafka_single_namespace }}
   kubernetes.core.k8s:
     template: kafka-single-ns.yaml
 

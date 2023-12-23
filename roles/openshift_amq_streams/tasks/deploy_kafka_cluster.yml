@@ -1,4 +1,4 @@
-- name: Create namespace
+- name: Create namespace {{ amq_streams_kafka_cluster_namespace }}
   kubernetes.core.k8s:
     template: kafka-cluster-ns.yaml
 

@@ -1,0 +1,13 @@
+- name: Delete Mimir
+  kubernetes.core.helm:
+    name: '{{ mimir_name }}'
+    release_namespace: '{{ mimir_namespace }}'
+    wait: true
+    state: absent
+
+- name: Delete Mimir namespace
+  kubernetes.core.k8s:
+    template:
+      - mimir-ns.yaml
+    wait: true
+    state: absent

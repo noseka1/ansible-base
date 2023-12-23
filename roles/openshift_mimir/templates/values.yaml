@@ -1,0 +1,16 @@
+global:
+  dnsService: dns-default
+  dnsNamespace: openshift-dns
+
+rbac:
+  create: false
+  type: scc
+  podSecurityContext:
+    fsGroup: null
+    runAsGroup: null
+    runAsUser: null
+rollout_operator:
+  podSecurityContext:
+    fsGroup: null
+    runAsGroup: null
+    runAsUser: null

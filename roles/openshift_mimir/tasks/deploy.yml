@@ -1,0 +1,19 @@
+- name: Create Mimir namespace
+  kubernetes.core.k8s:
+    template:
+      - mimir-ns.yaml
+      - mimir-scc-rolebinding.yaml
+
+- name: Add Grafana chart repo
+  kubernetes.core.helm_repository:
+    name: grafana
+    repo_url: '{{ mimir_helm_repo }}'
+
+- name: Deploy Mimir
+  kubernetes.core.helm:
+    name: '{{ mimir_name }}'
+    chart_ref: grafana/mimir-distributed
+    chart_version: '{{ mimir_helm_version | default(omit) }}'
+    release_namespace: '{{ mimir_namespace }}'
+    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    wait: true

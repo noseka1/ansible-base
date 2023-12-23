@@ -1,0 +1,5 @@
+mimir_helm_repo: https://grafana.github.io/helm-charts
+mimir_helm_version: 5.1.4
+
+mimir_namespace: mimir
+mimir_name: mimir

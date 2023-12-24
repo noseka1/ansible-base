@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: kyverno
+    autogitops_app_name: kyverno-operator
     autogitops_app_path: kyverno/operator
     autogitops_app_namespace: kyverno
     autogitops_app_values: ''

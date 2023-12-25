@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: storage.k8s.io/v1
     kind: StorageClass
-    name: ocs-storagecluster-ceph-rbd
+    name: ocs-storagecluster-ceph-rbd-virtualization
   register: openshift_virtualization_ocs_storageclass_result
 
 - set_fact:
@@ -16,13 +16,13 @@
   kubernetes.core.k8s_info:
     api_version: storage.k8s.io/v1
     kind: StorageClass
-    name: rook-ceph-block
+    name: rook-ceph-block-virtualization
   register: openshift_virtualization_rook_storageclass_result
 
 - set_fact:
     openshift_virtualization_machine_eviction_strategy: LiveMigrate
     openshift_virtualization_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
-    openshift_virtualization_machine_root_disk_storage_class_name: rook-ceph-block
+    openshift_virtualization_machine_root_disk_storage_class_name: rook-ceph-block-virtualization
     openshift_virtualization_machine_root_disk_volume_mode: Block
   when: openshift_virtualization_rook_storageclass_result.resources | length > 0
 

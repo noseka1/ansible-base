@@ -13,3 +13,8 @@
       - prometheus-k8s-sa.yaml
       - alertmanager-main-sa.yaml
       - thanos-querier-sa.yaml
+
+- name: Enabled cluster monitoring for openshift-operators namespace
+  kubernetes.core.k8s:
+    template:
+      - openshift-operators-ns.yaml

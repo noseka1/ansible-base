@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    # Enable cluster monitoring in this namespace. OpenShift GitOps operator and potentially
+    # other operators create ServiceMonitor objects in this namespace. We want to collect
+    # the metrics in this namespace using the cluster monitoring as opposed to the user-defined
+    # workload monitoring.
+    openshift.io/cluster-monitoring: "true"
+  name: openshift-operators

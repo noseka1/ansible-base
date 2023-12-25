@@ -16,3 +16,30 @@
 - import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: admissionregistration.k8s.io/v1
+        kind: MutatingWebhookConfiguration
+        name: annotation.operator.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: MutatingWebhookConfiguration
+        name: proxy.operator.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: MutatingWebhookConfiguration
+        name: webhook.operator.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: config.webhook.operator.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: namespace.operator.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: validation.pipelinesascode.tekton.dev
+      - api_version: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        name: validation.webhook.operator.tekton.dev

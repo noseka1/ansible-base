@@ -32,7 +32,7 @@
 
 - name: Delete CVSs that don't belong to an existing Subscription
   kubernetes.core.k8s:
-    definition: '{{ lookup("template", "prune_csvs.yml") | from_yaml }}'
+    template: prune_csvs.yml
     state: absent
   register: prune_csvs_delete_result
   failed_when: prune_csvs_delete_result is failed and prune_csvs_delete_result.status != 404

@@ -15,12 +15,3 @@
     autogitops_app_path: descheduler/operator
     autogitops_app_namespace: openshift-kube-descheduler-operator
     autogitops_app_values: ''
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
-  vars:
-    autogitops_app_name: descheduler-namespace
-    autogitops_app_path: descheduler/namespace
-    autogitops_app_namespace: openshift-kube-descheduler-operator
-    autogitops_app_values: ''

@@ -1,7 +1,12 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
 - name: Deploy Grafana instance
   kubernetes.core.k8s:
     template:
       - instance/grafana-grafana.yaml
+      - instance/grafana-consolelink.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana instance to deploy
   kubernetes.core.k8s_info:

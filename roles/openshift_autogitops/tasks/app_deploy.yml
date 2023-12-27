@@ -14,7 +14,10 @@
   when: autogitops_git_updated
   until:
     - autogitops_app_resource_result.resources | length == 1
-  retries: 60
+  # Argo CD ApplicationSet controller may need up to 3 minutes to notice a commit in Git
+  # when there were no Applications deployed yet. After at least one Application has been
+  # deployed, for the following applications, the Argo CD is notified through a webhook.
+  retries: '{{ 3 * 60 + 60 | int }}'
   delay: 1
 
 - import_tasks: app_sync_deploy.yml

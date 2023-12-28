@@ -1,3 +1,6 @@
+- import_tasks: prereqs_deploy.yml
+  tags: autogitops_prereqs
+
 - import_tasks: remote_repo_create.yml
 
 - import_tasks: local_repo_create.yml

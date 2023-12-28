@@ -1,0 +1,7 @@
+- import_role:
+    name: openshift_gitea
+    tasks_from: deploy.yml
+
+- import_role:
+    name: openshift_gitops
+    tasks_from: deploy.yml

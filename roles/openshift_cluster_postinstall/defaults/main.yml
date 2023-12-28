@@ -38,3 +38,6 @@ openshift_cluster_postinstall_set_root_user_password: false
 
 # Enable etcd encryption for the cluster to provide an additional layer of data security
 openshift_cluster_postinstall_etcd_encryption: false
+
+# Deploy auto-gitops as part of the cluster post-installation process
+openshift_cluster_postinstall_deploy_autogitops: false

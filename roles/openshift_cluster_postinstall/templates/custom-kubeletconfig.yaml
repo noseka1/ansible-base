@@ -1,12 +1,16 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: KubeletConfig
 metadata:
-  name: registry-pull
+  name: custom
 spec:
   # Match all cluster nodes
   machineConfigPoolSelector:
     matchLabels:
       machineconfiguration.openshift.io/mco-built-in: ""
+  # Automatically determine the optimal system-reserved CPU and memory resources
+  # $ee also https://docs.openshift.com/container-platform/latest/nodes/nodes/nodes-nodes-resources-configuring.html
+  # This should prevent Prometheus alerts like SystemMemoryExceedsReservation
+  autoSizingReserved: true
   kubeletConfig:
     # Registry image pull Queries Per Second. Set to no limit to avoid pull QPS exceeded on cluster reboot.
     # See also:

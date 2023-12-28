@@ -1,6 +1,6 @@
 - name: Apply Kubelet configuration
   kubernetes.core.k8s:
-    template: registry-pull-kubeletconfig.yaml
+    template: custom-kubeletconfig.yaml
   register: openshift_cluster_postinstall_kubelet_config_result
 
 - import_role:

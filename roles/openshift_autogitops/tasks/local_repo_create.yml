@@ -4,16 +4,12 @@
   vars:
     gitea_repo_name: '{{ autogitops_git_repo_name }}'
 
-- name: Retrieve cluster URL
-  command: oc whoami --show-server
-  changed_when: false
-  register: oc_whoami_result
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
 
 - set_fact:
-    autogitops_cluster_name: '{{ oc_whoami_result.stdout | regex_replace("https://api\.(.*):6443", "\1") }}'
-
-- set_fact:
-    autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ autogitops_cluster_name }}'
+    autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ openshift_common_cluster_domain }}'
 
 - name: Cluster local git directory
   debug:

@@ -17,6 +17,9 @@
     name: openshift_common
     tasks_from: get_cluster_version.yml
 
+- import_tasks: etcd_encryption.yml
+  when: openshift_cluster_postinstall_etcd_encryption
+
 - import_tasks: deploy_infra_nodes.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
@@ -47,9 +50,6 @@
 
 - import_tasks: set_root_user_password.yml
   when: openshift_cluster_postinstall_set_root_user_password
-
-- import_tasks: etcd_encryption.yml
-  when: openshift_cluster_postinstall_etcd_encryption
 
 - import_tasks: kube_apiserver_audit.yml
 

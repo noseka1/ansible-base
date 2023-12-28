@@ -2,4 +2,4 @@
   tasks:
     - import_role:
         name: openshift_cluster_postinstall
-        tasks_from: postinstall.yml
+        tasks_from: deploy.yml

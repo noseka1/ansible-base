@@ -9,27 +9,35 @@
 - name: Retrieve cluster status
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
-    kind: ClusterVersion
-    name: version
+    kind: ClusterOperator
     validate_certs: '{{ stable_cluster_validate_certs | default(omit) }}'
   ignore_errors: true
-  register: clusterversion_result
+  register: clusteroperator_result
+
+- name: Create unavailable, progressing, and degraded operator groups
+  set_fact:
+    clusteroperator_unavailable: >-
+      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Available' && status=='False']].metadata.name") }}
+    clusteroperator_progressing: >-
+      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Progressing' && status=='True']].metadata.name") }}
+    clusteroperator_degraded: >-
+      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']].metadata.name") }}
 
 - name: Set job complete to true
   set_fact:
     stable_cluster_job_complete: true
   when:
-    - clusterversion_result.resources.0.status.conditions is defined
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failing') | first).status == "False"
-    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
+    - clusteroperator_unavailable | length == 0
+    - clusteroperator_progressing | length == 0
+    - clusteroperator_degraded | length == 0
 
-- name: >
+- name: |
     {{ stable_cluster_retries - (stable_cluster_retry_count | int) }} retries remaining.
-    {{ (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).message }}
+    Cluster operator status:
+      Unavailable: {{ clusteroperator_unavailable }}
+      Progressing: {{ clusteroperator_progressing }}
+      Degraded: {{ clusteroperator_degraded }}
+    ''
   pause:
     seconds: 120
   when: not stable_cluster_job_complete

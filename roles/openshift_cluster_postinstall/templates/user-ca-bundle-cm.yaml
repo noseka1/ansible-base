@@ -1,3 +1,4 @@
+{% if openshift_cluster_postinstall_trusted_ca_bundle | length > 0 %}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,3 +7,4 @@ metadata:
 data:
   ca-bundle.crt: |
     {{ openshift_cluster_postinstall_trusted_ca_bundle | indent(4) }}
+{% endif %}

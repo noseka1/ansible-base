@@ -4,4 +4,16 @@ metadata:
   name: cluster
 spec:
   trustedCA:
+{% if openshift_cluster_postinstall_trusted_ca_bundle | length > 0 %}
     name: user-ca-bundle
+{% else %}
+    name: ''
+{% endif %}
+{% if openshift_cluster_postinstall_clusterwide_proxy[openshift_common_cluster_domain] is defined %}
+  httpProxy: {{ openshift_cluster_postinstall_clusterwide_proxy[openshift_common_cluster_domain].http_proxy }}
+  httpsProxy: {{ openshift_cluster_postinstall_clusterwide_proxy[openshift_common_cluster_domain].https_proxy }}
+  noProxy: {{ openshift_cluster_postinstall_clusterwide_proxy[openshift_common_cluster_domain].no_proxy }}
+  readinessEndpoints:
+    - http://www.google.com
+    - https://www.google.com
+{% endif %}

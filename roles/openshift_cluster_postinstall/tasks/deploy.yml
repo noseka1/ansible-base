@@ -33,8 +33,6 @@
 
 - import_tasks: ensure_storage.yml
 
-- import_tasks: trusted_ca.yml
-
 - import_tasks: clusterwide_proxy.yml
 
 - import_tasks: rhel_entitlement.yml

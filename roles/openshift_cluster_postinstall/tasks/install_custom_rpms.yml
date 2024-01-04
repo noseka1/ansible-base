@@ -11,5 +11,5 @@
     tasks_from: wait_for_stable_cluster.yml
   vars:
     stable_cluster_delay: 120
-    stable_cluster_retries: 10
+    stable_cluster_retries: 20
   when: openshift_cluster_postinstall_machineconfig_result is changed

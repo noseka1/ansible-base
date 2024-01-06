@@ -22,3 +22,5 @@ grafana_dashboard_folders:
   title: KubeVirt
 - name: openshift-monitoring
   title: OpenShift Monitoring
+- name: kyverno
+  title: Kyverno

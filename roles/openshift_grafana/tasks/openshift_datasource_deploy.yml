@@ -17,3 +17,4 @@
       - openshift/openshift-logging-audit-grafanadatasource.yaml
       - openshift/grafana-cluster-logging-view-clusterrole.yaml
       - openshift/grafana-cluster-logging-view-clusterrolebinding.yaml
+      - openshift/openshift-tempo-grafanadatasource.yaml

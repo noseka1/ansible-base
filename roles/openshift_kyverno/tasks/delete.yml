@@ -1,9 +1,27 @@
 - import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
+  vars:
+    openshift_oauth_proxy_name: kyverno-policy-reporter
+    openshift_oauth_proxy_namespace: kyverno-policy-reporter
+    openshift_oauth_proxy_upstream: http://in-cluster-kyverno-policy-reporter-ui.kyverno-policy-reporter.svc:8080
+  tags: kyverno_policy_reporter
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: kyverno-policy-reporter
+    autogitops_app_path: kyverno/policy-reporter
+  tags: kyverno_policy_reporter
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: kyverno-policies
     autogitops_app_path: kyverno/policies
+  tags: kyverno_policies
 
 - import_role:
     name: openshift_autogitops
@@ -11,3 +29,4 @@
   vars:
     autogitops_app_name: kyverno-operator
     autogitops_app_path: kyverno/operator
+  tags: kyverno_operator

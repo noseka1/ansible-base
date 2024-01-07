@@ -6,6 +6,7 @@
     autogitops_app_path: kyverno/operator
     autogitops_app_namespace: kyverno
     autogitops_app_values: ''
+  tags: kyverno_operator
 
 - import_role:
     name: openshift_autogitops
@@ -15,6 +16,7 @@
     autogitops_app_path: kyverno/policies
     autogitops_app_namespace: kyverno
     autogitops_app_values: ''
+  tags: kyverno_policies
 
 - name: Check that Kyverno started generating internal admission reports
   kubernetes.core.k8s_info:
@@ -24,3 +26,23 @@
   until: kyverno_admission_reports_result.resources | length > 0
   retries: 12
   delay: 10
+  tags: kyverno_policies
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: kyverno-policy-reporter
+    autogitops_app_path: kyverno/policy-reporter
+    autogitops_app_namespace: kyverno-policy-reporter
+    autogitops_app_values: ''
+  tags: kyverno_policy_reporter
+
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: deploy.yml
+  vars:
+    openshift_oauth_proxy_name: kyverno-policy-reporter
+    openshift_oauth_proxy_namespace: kyverno-policy-reporter
+    openshift_oauth_proxy_upstream: http://in-cluster-kyverno-policy-reporter-ui.kyverno-policy-reporter.svc:8080
+  tags: kyverno_policy_reporter

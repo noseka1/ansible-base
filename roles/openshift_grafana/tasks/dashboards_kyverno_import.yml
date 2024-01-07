@@ -9,3 +9,12 @@
     - folder: Kyverno
       name: kyverno
       url: 'https://raw.githubusercontent.com/kyverno/kyverno/main/charts/kyverno/charts/grafana/dashboard/kyverno-dashboard.json'
+
+- name: Import Policy Reporter dashboards from Grafana.com
+  kubernetes.core.k8s:
+    template:
+      - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
+  loop:
+    - { folder: Kyverno, name: clusterpolicyreport , id: 13996 }
+    - { folder: Kyverno, name: policyreport , id: 13995 }
+    - { folder: Kyverno, name: policyreports , id: 13968 }

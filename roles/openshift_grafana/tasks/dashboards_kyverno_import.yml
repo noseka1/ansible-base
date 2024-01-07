@@ -1,3 +1,6 @@
+# Install official Kyverno Grafana dashboard
+# See also https://kyverno.io/docs/monitoring/bonus-grafana-dashboard/
+
 - name: Import Kyverno dashboard from URL
   kubernetes.core.k8s:
     template:

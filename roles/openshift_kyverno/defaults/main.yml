@@ -1,0 +1,8 @@
+# You can enable distributed tracing for Kyverno and send traces to Tempo.
+# Use the openshift_tempostack playbook to install the Tempo instance.
+# Tracing is disabled by default and depending on the backend the associated
+# cost can be significant.
+# See also https://kyverno.io/docs/tracing/
+kyverno_tracing_enabled: false
+kyverno_tracing_address: tempo-tempostack-distributor.tempostack.svc
+kyverno_tracing_port: 4317

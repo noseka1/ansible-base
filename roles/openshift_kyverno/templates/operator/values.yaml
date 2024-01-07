@@ -1,0 +1,21 @@
+kyverno:
+  admissionController:
+    tracing:
+      enabled: {{ kyverno_tracing_enabled }}
+      address: {{ kyverno_tracing_address }}
+      port: {{ kyverno_tracing_port }}
+  backgroundController:
+    tracing:
+      enabled: {{ kyverno_tracing_enabled }}
+      address: {{ kyverno_tracing_address }}
+      port: {{ kyverno_tracing_port }}
+  cleanupController:
+    tracing:
+      enabled: {{ kyverno_tracing_enabled }}
+      address: {{ kyverno_tracing_address }}
+      port: {{ kyverno_tracing_port }}
+  reportsController:
+    tracing:
+      enabled: {{ kyverno_tracing_enabled }}
+      address: {{ kyverno_tracing_address }}
+      port: {{ kyverno_tracing_port }}

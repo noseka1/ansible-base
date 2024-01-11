@@ -24,6 +24,7 @@
     loki_manage_namespace: false
     loki_instance_tenants_mode: openshift-logging
     loki_app_prefix: openshift-logging-
+  when: openshift_logging_forward_to_loki
 
 - import_role:
     name: openshift_datadog_vector

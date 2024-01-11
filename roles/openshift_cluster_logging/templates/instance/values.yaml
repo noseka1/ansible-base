@@ -1,3 +1,5 @@
+forwardToLoki: {{ openshift_logging_forward_to_loki }}
+
 {% if openshift_logging_forward_to_syslog %}
 forwardToSyslogEnabled: true
 syslogUrl: tcp://{{ datadog_vector_hostname }}:{{ datadog_vector_port }}

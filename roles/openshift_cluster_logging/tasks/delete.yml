@@ -28,6 +28,7 @@
   vars:
     loki_instance_namespace: '{{ openshift_logging_namespace }}'
     loki_manage_namespace: false
+  when: openshift_logging_forward_to_loki
 
 - import_role:
     name: openshift_autogitops

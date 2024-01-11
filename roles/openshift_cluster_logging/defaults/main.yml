@@ -4,6 +4,10 @@ openshift_logging_subscription_name: cluster-logging
 openshift_logging_instance_name: instance
 openshift_logging_instance_namespace: openshift-logging
 
+# Send the logs to the default Loki instance. This will deploy a LokiStack instance and send
+# the logs there. You can disable this and forward the logs to other destinations instead.
+openshift_logging_forward_to_loki: true
+
 # Forward logs via syslog protocol. Use the openshift_datadog_vector_deploy.yml playbook to install
 # the Datadog Vector instance that will receive the logs.
 openshift_logging_forward_to_syslog: false

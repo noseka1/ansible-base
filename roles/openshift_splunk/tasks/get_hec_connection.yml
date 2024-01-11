@@ -25,6 +25,7 @@
 
 - name: Set Splunk HEC connection info
   set_fact:
+    splunk_url: https://{{ splunk_hec_route.resources.0.spec.host }}
     splunk_hec_json_endpoint: https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event
     splunk_hec_raw_endpoint:  https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/raw
     splunk_hec_token: '{{ splunk_secret_result.resources.0.data.hec_token | b64decode }}'

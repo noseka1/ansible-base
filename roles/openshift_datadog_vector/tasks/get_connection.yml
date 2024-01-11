@@ -1,0 +1,3 @@
+- set_fact:
+    datadog_vector_hostname: in-cluster-datadog-vector.{{ datadog_vector_namespace }}.svc
+    datadog_vector_port: 9000

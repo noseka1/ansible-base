@@ -1,7 +1,0 @@
-- name: Deploy Datadog Vector receiver
-  import_role:
-    name: openshift_datadog_vector
-    tasks_from: deploy.yml
-  vars:
-    datadog_vector_namespace: '{{ openshift_logging_instance_namespace }}'
-    datadog_vector_manage_namespace: false

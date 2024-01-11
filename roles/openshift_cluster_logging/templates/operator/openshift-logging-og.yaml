@@ -1,9 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: {{ openshift_logging_subscription_name }}
-  namespace: {{ openshift_logging_namespace }}
-spec:
-  targetNamespaces:
-  - {{ openshift_logging_namespace }}
-  upgradeStrategy: Default

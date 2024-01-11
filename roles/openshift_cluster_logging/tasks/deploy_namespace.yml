@@ -1,4 +1,0 @@
-- name: Create namespace {{ openshift_logging_namespace }}
-  kubernetes.core.k8s:
-    template:
-      - namespace/openshift-logging-ns.yaml

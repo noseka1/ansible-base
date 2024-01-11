@@ -1,0 +1,10 @@
+{% if openshift_logging_forward_to_syslog %}
+forwardToSyslogEnabled: true
+syslogUrl: tcp://{{ datadog_vector_hostname }}:{{ datadog_vector_port }}
+{% endif %}
+
+{% if openshift_logging_forward_to_splunk %}
+forwardToSplunkEnabled: true
+splunkHecEndpoint: {{ splunk_url }}
+splunkHecToken: '{{ splunk_hec_token }}'
+{% endif %}

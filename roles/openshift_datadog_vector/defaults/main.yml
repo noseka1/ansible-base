@@ -1,2 +1,3 @@
+datadog_vector_name: in-cluster-datadog-vector
 datadog_vector_namespace: datadog-vector
 datadog_vector_manage_namespace: true

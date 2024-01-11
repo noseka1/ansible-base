@@ -1,3 +1,16 @@
+- name: Obtain Datadog Vector service
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: '{{ datadog_vector_name }}'
+    namespace: '{{ datadog_vector_namespace }}'
+  register: datadog_vector_service_result
+
+- name: Fail if Datadog Vector service doesn't exist
+  fail:
+    msg: Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
+  when: datadog_vector_service_result.resources | length == 0
+
 - set_fact:
-    datadog_vector_hostname: in-cluster-datadog-vector.{{ datadog_vector_namespace }}.svc
+    datadog_vector_hostname: '{{ datadog_vector_name }}.{{ datadog_vector_namespace }}.svc'
     datadog_vector_port: 9000

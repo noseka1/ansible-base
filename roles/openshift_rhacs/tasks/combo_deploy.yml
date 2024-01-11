@@ -15,7 +15,8 @@
 
 - import_tasks: mail_receiver_deploy.yml
 
-- import_tasks: install_syslog_receiver.yml
+- import_tasks: configure_syslog_receiver.yml
+  when: rhacs_syslog_receiver_enabled
 
 - import_tasks: install_minio.yml
 

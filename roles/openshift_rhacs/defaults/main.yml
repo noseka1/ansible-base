@@ -13,10 +13,15 @@ rhacs_central_default_tls_cert: {}
 # CA certificates that will be added to the RHACS trusted certificates
 rhacs_additional_trusted_ca: ''
 
+# Optionally, create a Syslog notifier in Central to send audit messages and alert notifications to Datadog Vector
+# Use the openshift_datadog_vector_deploy.yml playbook to install the Datadog Vector instance that will receive the data.
+rhacs_syslog_receiver_enabled: false
+
 # Optionally, create a Slack notifier in Central to send alert notifications to this Slack URL
 rhacs_notifications_slack_url: ''
 
 # Optionally, create a Splunk notifier in Central to send alert notifications to Splunk
+# Use the openshift_splunk_deploy.yml playbook to install the Splunk instance that will receive the data.
 rhacs_notifications_splunk_enabled: false
 
 # Expose RHACS Central to the public Internet using a Cloudflare tunnel

@@ -8,7 +8,9 @@
 
 - name: Fail if Keycloak route doesn't exist
   fail:
-    msg: Keycloak route doesn't exist. Is Keycloak (RHSSO) installed on the cluster?
+    msg: |
+      Keycloak route doesn't exist. Is Keycloak (RHSSO) installed on the cluster?
+      Use the openshift_rhsso_deploy.yml playbook to install a Keycloak (RHSSO) instance.
   when: rhsso_route.resources | length == 0
 
 - name: Obtain credential-keycloak secret

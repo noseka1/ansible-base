@@ -8,7 +8,9 @@
 
 - name: Fail if Splunk route doesn't exist
   fail:
-    msg: Splunk route doesn't exist. Is Splunk installed on the cluster?
+    msg: |
+      Splunk route doesn't exist. Is Splunk installed on the cluster?
+      Use the openshift_splunk_deploy.yml playbook to install a Splunk instance.
   when: splunk_hec_route.resources | length == 0
 
 - name: Obtain Splunk credentials

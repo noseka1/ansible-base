@@ -8,7 +8,9 @@
 
 - name: Fail if Datadog Vector service doesn't exist
   fail:
-    msg: Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
+    msg: |
+      Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
+      Use the openshift_datadog_vector_deploy.yml playbook to install a Datadog Vector instance.
   when: datadog_vector_service_result.resources | length == 0
 
 - set_fact:

@@ -10,7 +10,7 @@
   fail:
     msg: |
       The smtp4dev service doesn't exist. Is smtp4dev installed on the cluster?
-      Use the openshift_smtp4dev_deploy.yml playbook to install the smtp4dev instance.
+      Use the openshift_smtp4dev_deploy.yml playbook to install an smtp4dev instance.
   when: smtp4dev_service_result.resources | length == 0
 
 - set_fact:

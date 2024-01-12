@@ -1,21 +1,17 @@
-- import_role:
-    name: openshift_smtp4dev
-    tasks_from: deploy.yml
-  vars:
-    smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
-    smtp4dev_manage_namespace: false
-    smtp4dev_app_prefix: rhacs-
-
 - import_tasks: get_rhacs_central_host.yml
 
-- name: Create mail notifier in RHACS (returns HTTP 409 if the notifier already exists)
+- import_role:
+    name: openshift_smtp4dev
+    tasks_from: get_connection.yml
+
+- name: Create email notifier in RHACS (returns HTTP 409 if the notifier already exists)
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/notifiers'
     method: POST
     body_format: json
     body:
       email:
-        server: smtp4dev:25
+        server: '{{ smtp4dev_hostname }}:{{ smtp4dev_port }}'
         username: dummy
         password: dummy
         disableTLS: true

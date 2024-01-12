@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: '{{ smtp4dev_app_prefix }}smtp4dev'
+    autogitops_app_name: smtp4dev
     autogitops_app_path: smtp4dev
     autogitops_app_namespace: '{{ smtp4dev_namespace }}'
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'
@@ -12,6 +12,8 @@
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
-    openshift_oauth_proxy_name: stmp4dev
+    openshift_oauth_proxy_name: '{{ smtp4dev_name }}'
     openshift_oauth_proxy_namespace: '{{ smtp4dev_namespace }}'
     openshift_oauth_proxy_upstream: http://smtp4dev
+
+- import_tasks: report_success.yml

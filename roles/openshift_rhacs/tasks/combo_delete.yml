@@ -2,8 +2,6 @@
 
 - import_tasks: webhook_receiver_delete.yml
 
-- import_tasks: mail_receiver_delete.yml
-
 - import_role:
     name: openshift_minio
     tasks_from: delete.yml

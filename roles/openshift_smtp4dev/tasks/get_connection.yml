@@ -1,0 +1,18 @@
+- name: Obtain service
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: '{{ smtp4dev_name }}'
+    namespace: '{{ smtp4dev_namespace }}'
+  register: smtp4dev_service_result
+
+- name: Fail if smtp4dev service doesn't exist
+  fail:
+    msg: |
+      The smtp4dev service doesn't exist. Is smtp4dev installed on the cluster?
+      Use the openshift_smtp4dev_deploy.yml playbook to install the smtp4dev instance.
+  when: smtp4dev_service_result.resources | length == 0
+
+- set_fact:
+    smtp4dev_hostname: '{{ smtp4dev_name }}.{{ smtp4dev_namespace }}.svc'
+    smtp4dev_port: 25

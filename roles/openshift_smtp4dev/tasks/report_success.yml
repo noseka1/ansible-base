@@ -1,0 +1,16 @@
+- name: Obtain smtp4dev web route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ smtp4dev_name }}'
+    namespace: '{{ smtp4dev_namespace }}'
+  register: smtp4dev_route_result
+
+- set_fact:
+    msg: |
+      Smtp4dev installed successfully.
+
+      You can browse to Smtp4dev web UI and log in as user 'admin':
+      https://{{ smtp4dev_route_result.resources.0.spec.host }}
+
+- debug: msg="{{ msg.split('\n') }}"

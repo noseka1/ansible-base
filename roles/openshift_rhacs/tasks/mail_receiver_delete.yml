@@ -1,7 +1,0 @@
-- import_role:
-    name: openshift_smtp4dev
-    tasks_from: delete.yml
-  vars:
-    smtp4dev_namespace: '{{ rhacs_instance_namespace }}'
-    smtp4dev_manage_namespace: false
-    smtp4dev_app_prefix: rhacs-

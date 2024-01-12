@@ -13,6 +13,9 @@ rhacs_central_default_tls_cert: {}
 # CA certificates that will be added to the RHACS trusted certificates
 rhacs_additional_trusted_ca: ''
 
+# Optionally, deploy a webhook receiver and configure notifier in Central to send alert notifications to this receiver
+rhacs_webhook_receiver_enabled: true
+
 # Optionally, create an email notifier in Central to send alert notifications to smtp4dev
 # Use the openshift_smtp4dev_deploy.yml playbook to install the smtp4dev instance that will receive the emails.
 rhacs_email_receiver_enabled: false
@@ -22,14 +25,17 @@ rhacs_email_receiver_enabled: false
 rhacs_syslog_receiver_enabled: false
 
 # Optionally, create a Slack notifier in Central to send alert notifications to this Slack URL
-rhacs_notifications_slack_url: ''
+rhacs_slack_receiver_url: ''
 
 # Optionally, create a Splunk notifier in Central to send alert notifications to Splunk
 # Use the openshift_splunk_deploy.yml playbook to install the Splunk instance that will receive the data.
-rhacs_notifications_splunk_enabled: false
+rhacs_splunk_receiver_enabled: false
+
+# Optionally, deploy minio and create RHACS backups in minio
+rhacs_minio_backup_enabled: true
 
 # Expose RHACS Central to the public Internet using a Cloudflare tunnel
-rhacs_create_cloudflare_tunnel: false
+rhacs_cloudflare_tunnel_create: false
 
 # Deployment mode is either 'dev' or 'prod'. Prod enables Scanner autoscaling and higher resource requests.
 rhacs_deployment_mode: dev

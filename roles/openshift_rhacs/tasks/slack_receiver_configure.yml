@@ -22,7 +22,7 @@
     body:
       name: My Slack Receiver
       type: slack
-      labelDefault: '{{ rhacs_notifications_slack_url }}'
+      labelDefault: '{{ rhacs_slack_receiver_url }}'
       labelKey: ''
       uiEndpoint: https://{{ rhacs_central_host }}
     url_username: admin

@@ -1,13 +1,10 @@
 - import_tasks: secured_cluster_common_delete.yml
 
 - import_tasks: webhook_receiver_delete.yml
+  when: rhacs_webhook_receiver_enabled
 
-- import_role:
-    name: openshift_minio
-    tasks_from: delete.yml
-  vars:
-    minio_namespace: '{{ rhacs_instance_namespace }}'
-    minio_manage_namespace: false
+- import_tasks: minio_backup_delete.yml
+  when: rhacs_minio_backup_enabled
 
 - import_tasks: central_delete.yml
 

@@ -12,25 +12,27 @@
 - import_tasks: central_deploy.yml
 
 - import_tasks: webhook_receiver_deploy.yml
+  when: rhacs_webhook_receiver_enabled
 
 - import_tasks: email_receiver_configure.yml
   when: rhacs_email_receiver_enabled
 
-- import_tasks: configure_syslog_receiver.yml
+- import_tasks: syslog_receiver_configure.yml
   when: rhacs_syslog_receiver_enabled
 
-- import_tasks: install_minio.yml
+- import_tasks: slack_receiver_configure.yml
+  when: rhacs_slack_receiver_url | length > 0
 
-- import_tasks: configure_slack_notifier.yml
-  when: rhacs_notifications_slack_url | length > 0
+- import_tasks: splunk_receiver_configure.yml
+  when: rhacs_splunk_receiver_enabled
 
-- import_tasks: configure_splunk_notifier.yml
-  when: rhacs_notifications_splunk_enabled
+- import_tasks: minio_backup_deploy.yml
+  when: rhacs_minio_backup_enabled
 
-- import_tasks: create_cloudflare_tunnel.yml
-  when: rhacs_create_cloudflare_tunnel
+- import_tasks: cloudflare_tunnel_create.yml
+  when: rhacs_cloudflare_tunnel_create
 
-- import_tasks: enable_openshift_sso.yml
+- import_tasks: openshift_sso_configure.yml
 
 - import_tasks: secured_cluster_common_deploy.yml
 

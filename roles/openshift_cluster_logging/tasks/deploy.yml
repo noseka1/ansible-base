@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cluster-logging-namespace
-    autogitops_app_path: cluster-logging/namespace
+    autogitops_app_src_path: cluster-logging/namespace
+    autogitops_app_dst_path: cluster-logging/namespace
     autogitops_app_namespace: '{{ openshift_logging_namespace }}'
     autogitops_app_values: ''
 
@@ -12,7 +13,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cluster-logging-operator
-    autogitops_app_path: cluster-logging/operator
+    autogitops_app_src_path: cluster-logging/operator
+    autogitops_app_dst_path: cluster-logging/operator
     autogitops_app_namespace: '{{ openshift_logging_namespace }}'
     autogitops_app_values: ''
 
@@ -41,7 +43,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cluster-logging
-    autogitops_app_path: cluster-logging/instance
+    autogitops_app_src_path: cluster-logging/instance
+    autogitops_app_dst_path: cluster-logging/instance
     autogitops_app_namespace: '{{ openshift_logging_namespace }}'
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
@@ -50,7 +53,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: event-router
-    autogitops_app_path: cluster-logging/event-router
+    autogitops_app_src_path: cluster-logging/event-router
+    autogitops_app_dst_path: cluster-logging/event-router
     autogitops_app_namespace: '{{ openshift_logging_namespace }}'
     autogitops_app_values: ''
 

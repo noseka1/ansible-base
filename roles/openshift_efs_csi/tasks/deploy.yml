@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: efs-csi-operator
-    autogitops_app_path: efs-csi/operator
+    autogitops_app_src_path: efs-csi/operator
+    autogitops_app_dst_path: efs-csi/operator
     autogitops_app_namespace: openshift-cluster-csi-drivers
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -17,7 +18,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: efs-csi
-    autogitops_app_path: efs-csi/instance
+    autogitops_app_src_path: efs-csi/instance
+    autogitops_app_dst_path: efs-csi/instance
     autogitops_app_namespace: ''
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
@@ -26,6 +28,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: efs-csi-volume
-    autogitops_app_path: efs-csi/volume
+    autogitops_app_src_path: efs-csi/volume
+    autogitops_app_dst_path: efs-csi/volume
     autogitops_app_namespace: openshift-cluster-csi-drivers
     autogitops_app_values: ''

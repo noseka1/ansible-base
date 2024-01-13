@@ -6,7 +6,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-virtualization-operator
-    autogitops_app_path: openshift-virtualization/operator
+    autogitops_app_src_path: openshift-virtualization/operator
+    autogitops_app_dst_path: openshift-virtualization/operator
     autogitops_app_namespace: openshift-cnv
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
   tags: openshift_virtualization_operator
@@ -24,7 +25,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-virtualization
-    autogitops_app_path: openshift-virtualization/instance
+    autogitops_app_src_path: openshift-virtualization/instance
+    autogitops_app_dst_path: openshift-virtualization/instance
     autogitops_app_namespace: openshift-cnv
     autogitops_app_values: ''
   tags: openshift_virtualization_instance

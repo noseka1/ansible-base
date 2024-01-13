@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: mtc-operator
-    autogitops_app_path: mtc/operator
+    autogitops_app_src_path: mtc/operator
+    autogitops_app_dst_path: mtc/operator
     autogitops_app_namespace: openshift-migration
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,7 +13,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: mtc
-    autogitops_app_path: mtc/instance
+    autogitops_app_src_path: mtc/instance
+    autogitops_app_dst_path: mtc/instance
     autogitops_app_namespace: openshift-migration
     autogitops_app_values: ''
 

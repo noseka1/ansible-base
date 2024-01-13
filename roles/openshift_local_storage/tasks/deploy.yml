@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: local-storage-operator
-    autogitops_app_path: local-storage/operator
+    autogitops_app_src_path: local-storage/operator
+    autogitops_app_dst_path: local-storage/operator
     autogitops_app_namespace: '{{ local_storage_operator_subscription_namespace }}'
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 

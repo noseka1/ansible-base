@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: nmstate-operator
-    autogitops_app_path: nmstate/operator
+    autogitops_app_src_path: nmstate/operator
+    autogitops_app_dst_path: nmstate/operator
     autogitops_app_namespace: openshift-nmstate
     autogitops_app_values: ''
 
@@ -12,5 +13,6 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: nmstate
-    autogitops_app_path: nmstate/instance
+    autogitops_app_src_path: nmstate/instance
+    autogitops_app_dst_path: nmstate/instance
     autogitops_app_values: ''

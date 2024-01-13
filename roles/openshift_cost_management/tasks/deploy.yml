@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cost-management-operator
-    autogitops_app_path: cost-management/operator
+    autogitops_app_src_path: cost-management/operator
+    autogitops_app_dst_path: cost-management/operator
     autogitops_app_namespace: costmanagement-metrics-operator
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,6 +13,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cost-management
-    autogitops_app_path: cost-management/instance
+    autogitops_app_src_path: cost-management/instance
+    autogitops_app_dst_path: cost-management/instance
     autogitops_app_namespace: costmanagement-metrics-operator
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'

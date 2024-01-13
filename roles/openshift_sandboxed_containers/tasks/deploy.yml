@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-sandboxed-containers-operator
-    autogitops_app_path: openshift-sandboxed-containers/operator
+    autogitops_app_src_path: openshift-sandboxed-containers/operator
+    autogitops_app_dst_path: openshift-sandboxed-containers/operator
     autogitops_app_namespace: openshift-sandboxed-containers-operator
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,7 +13,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-sandboxed-containers
-    autogitops_app_path: openshift-sandboxed-containers/instance
+    autogitops_app_src_path: openshift-sandboxed-containers/instance
+    autogitops_app_dst_path: openshift-sandboxed-containers/instance
     autogitops_app_namespace: ''
     autogitops_app_values: ''
 
@@ -40,6 +42,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-sandboxed-containers-example
-    autogitops_app_path: openshift-sandboxed-containers/example-workload
+    autogitops_app_src_path: openshift-sandboxed-containers/example-workload
+    autogitops_app_dst_path: openshift-sandboxed-containers/example-workload
     autogitops_app_namespace: openshift-sandboxed-containers-operator
     autogitops_app_values: ''

@@ -3,6 +3,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: artifactory-oss
-    autogitops_app_path: artifactory-oss
+    autogitops_app_src_path: artifactory-oss
+    autogitops_app_dst_path: artifactory-oss
     autogitops_app_namespace: artifactory-oss
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

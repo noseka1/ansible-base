@@ -31,6 +31,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: openshift-virtualization-example
-    autogitops_app_path: openshift-virtualization/example-workload
+    autogitops_app_src_path: openshift-virtualization/example-workload
+    autogitops_app_dst_path: openshift-virtualization/example-workload
     autogitops_app_namespace: kubevirt-example
     autogitops_app_values: '{{ lookup("template", "example-workload/values.yaml") }}'

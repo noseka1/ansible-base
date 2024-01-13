@@ -16,7 +16,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: odf-operator
-    autogitops_app_path: odf/operator
+    autogitops_app_src_path: odf/operator
+    autogitops_app_dst_path: odf/operator
     autogitops_app_namespace: openshift-storage
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -25,7 +26,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: odf
-    autogitops_app_path: odf/instance
+    autogitops_app_src_path: odf/instance
+    autogitops_app_dst_path: odf/instance
     autogitops_app_namespace: openshift-storage
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
     autogitops_app_sync_retries: 240

@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: vertical-pod-autoscaler-operator
-    autogitops_app_path: vertical-pod-autoscaler/operator
+    autogitops_app_src_path: vertical-pod-autoscaler/operator
+    autogitops_app_dst_path: vertical-pod-autoscaler/operator
     autogitops_app_namespace: openshift-vertical-pod-autoscaler
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,6 +13,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: vertical-pod-autoscaler
-    autogitops_app_path: vertical-pod-autoscaler/instance
+    autogitops_app_src_path: vertical-pod-autoscaler/instance
+    autogitops_app_dst_path: vertical-pod-autoscaler/instance
     autogitops_app_namespace: openshift-vertical-pod-autoscaler
     autogitops_app_values: ''

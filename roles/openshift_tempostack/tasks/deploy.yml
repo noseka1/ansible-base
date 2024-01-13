@@ -9,7 +9,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: tempostack-operator
-    autogitops_app_path: tempostack/operator
+    autogitops_app_src_path: tempostack/operator
+    autogitops_app_dst_path: tempostack/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -18,7 +19,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: tempostack
-    autogitops_app_path: tempostack/instance
+    autogitops_app_src_path: tempostack/instance
+    autogitops_app_dst_path: tempostack/instance
     autogitops_app_namespace: '{{ tempostack_instance_namespace }}'
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
@@ -27,6 +29,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: tempostack-tracegen
-    autogitops_app_path: tempostack/tracegen
+    autogitops_app_src_path: tempostack/tracegen
+    autogitops_app_dst_path: tempostack/tracegen
     autogitops_app_namespace: '{{ tempostack_instance_namespace }}'
     autogitops_app_values: ''

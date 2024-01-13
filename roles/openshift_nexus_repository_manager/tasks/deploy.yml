@@ -7,7 +7,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: nexus-repository-manager
-    autogitops_app_path: nexus-repository-manager
+    autogitops_app_src_path: nexus-repository-manager
+    autogitops_app_dst_path: nexus-repository-manager
     autogitops_app_namespace: nexus-repository-manager
     autogitops_app_values: ''
 

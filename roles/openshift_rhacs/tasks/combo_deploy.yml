@@ -5,7 +5,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: rhacs-namespace
-    autogitops_app_path: rhacs/namespace
+    autogitops_app_src_path: rhacs/namespace
+    autogitops_app_dst_path: rhacs/namespace
     autogitops_app_namespace: stackrox
     autogitops_app_values: ''
 

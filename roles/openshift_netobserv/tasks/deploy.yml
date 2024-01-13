@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: netobserv-operator
-    autogitops_app_path: netobserv/operator
+    autogitops_app_src_path: netobserv/operator
+    autogitops_app_dst_path: netobserv/operator
     autogitops_app_namespace: netobserv
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -21,7 +22,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: netobserv
-    autogitops_app_path: netobserv/instance
+    autogitops_app_src_path: netobserv/instance
+    autogitops_app_dst_path: netobserv/instance
     autogitops_app_namespace: netobserv
     autogitops_app_values: ''
 

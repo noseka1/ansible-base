@@ -3,6 +3,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: stakater-reloader
-    autogitops_app_path: stakater-reloader
+    autogitops_app_src_path: stakater-reloader
+    autogitops_app_dst_path: stakater-reloader
     autogitops_app_namespace: stakater-reloader
     autogitops_app_values: ''

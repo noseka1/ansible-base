@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: jaeger
-    autogitops_app_path: openshift-service-mesh/jaeger/instance
+    autogitops_app_src_path: openshift-service-mesh/jaeger/instance
+    autogitops_app_dst_path: openshift-service-mesh/jaeger/instance
     autogitops_app_namespace: jaeger
     autogitops_app_values: ''
 

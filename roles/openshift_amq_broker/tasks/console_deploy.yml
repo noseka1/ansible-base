@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: fuse-console-operator
-    autogitops_app_path: fuse-console/operator
+    autogitops_app_src_path: fuse-console/operator
+    autogitops_app_dst_path: fuse-console/operator
     autogitops_app_namespace: '{{ fuse_console_subscription_namespace }}'
     autogitops_app_values: '{{ lookup("template", "console/operator/values.yaml") }}'
 
@@ -12,6 +13,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: fuse-console
-    autogitops_app_path: fuse-console/instance
+    autogitops_app_src_path: fuse-console/instance
+    autogitops_app_dst_path: fuse-console/instance
     autogitops_app_namespace: '{{ fuse_console_instance_namespace }}'
     autogitops_app_values: ''

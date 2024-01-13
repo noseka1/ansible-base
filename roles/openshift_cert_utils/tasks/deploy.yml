@@ -3,6 +3,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: cert-utils
-    autogitops_app_path: cert-utils
+    autogitops_app_src_path: cert-utils
+    autogitops_app_dst_path: cert-utils
     autogitops_app_namespace: cert-utils-operator
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

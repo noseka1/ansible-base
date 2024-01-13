@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: skupper-operator
-    autogitops_app_path: skupper/operator
+    autogitops_app_src_path: skupper/operator
+    autogitops_app_dst_path: skupper/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: ''
 
@@ -12,6 +13,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: skupper
-    autogitops_app_path: skupper/instance
+    autogitops_app_src_path: skupper/instance
+    autogitops_app_dst_path: skupper/instance
     autogitops_app_namespace: skupper
     autogitops_app_values: ''

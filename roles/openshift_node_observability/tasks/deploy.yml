@@ -3,7 +3,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: node-observability-operator
-    autogitops_app_path: node-observability/operator
+    autogitops_app_src_path: node-observability/operator
+    autogitops_app_dst_path: node-observability/operator
     autogitops_app_namespace: node-observability-operator
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
@@ -12,7 +13,8 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_name: node-observability
-    autogitops_app_path: node-observability/instance
+    autogitops_app_src_path: node-observability/instance
+    autogitops_app_dst_path: node-observability/instance
     autogitops_app_namespace: ''
     autogitops_app_values: ''
 

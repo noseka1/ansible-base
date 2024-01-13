@@ -3,4 +3,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: rhacs-secured-cluster
-    autogitops_app_path: rhacs/secured-cluster

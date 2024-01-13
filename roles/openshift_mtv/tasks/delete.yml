@@ -3,11 +3,9 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: mtv
-    autogitops_app_path: mtv/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: mtv-operator
-    autogitops_app_path: mtv/operator

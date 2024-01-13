@@ -3,11 +3,9 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: vertical-pod-autoscaler
-    autogitops_app_path: vertical-pod-autoscaler/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: vertical-pod-autoscaler-operator
-    autogitops_app_path: vertical-pod-autoscaler/operator

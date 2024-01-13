@@ -13,7 +13,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: '{{ loki_app_prefix }}lokistack'
-    autogitops_app_path: lokistack/instance
   tags: openshift_lokistack_instance
 
 - import_role:
@@ -42,7 +41,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: lokistack-operator
-    autogitops_app_path: lokistack/operator
   when:
     - lokistack_result.resources is not defined or
       lokistack_result.resources | length == 0

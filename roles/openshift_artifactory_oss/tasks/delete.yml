@@ -3,4 +3,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: artifactory-oss
-    autogitops_app_path: artifactory-oss

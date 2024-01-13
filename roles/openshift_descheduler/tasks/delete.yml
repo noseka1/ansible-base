@@ -3,7 +3,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: descheduler
-    autogitops_app_path: descheduler/instance
     autogitops_app_namespace: openshift-kube-descheduler-operator
     autogitops_app_values: ''
 
@@ -12,6 +11,5 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: descheduler-operator
-    autogitops_app_path: descheduler/operator
     autogitops_app_namespace: openshift-kube-descheduler-operator
     autogitops_app_values: ''

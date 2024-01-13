@@ -17,7 +17,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: openshift-virtualization
-    autogitops_app_path: openshift-virtualization/instance
   tags: openshift_virtualization_instance
 
 - import_role:
@@ -25,7 +24,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: openshift-virtualization-operator
-    autogitops_app_path: openshift-virtualization/operator
   tags: openshift_virtualization_operator
 
 - import_tasks: cluster_nodes_delete.yml

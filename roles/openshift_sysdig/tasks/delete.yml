@@ -3,6 +3,5 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: sysdig-oss
-    autogitops_app_path: sysdig-oss/instance
     autogitops_app_namespace: sysdig-oss
     autogitops_app_values: ''

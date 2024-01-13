@@ -3,7 +3,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: event-router
-    autogitops_app_path: cluster-logging/event-router
 
 - import_role:
     name: openshift_datadog_vector
@@ -20,7 +19,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: cluster-logging
-    autogitops_app_path: cluster-logging/instance
 
 - import_role:
     name: openshift_lokistack
@@ -37,11 +35,9 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: cluster-logging-operator
-    autogitops_app_path: cluster-logging/operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: cluster-logging-namespace
-    autogitops_app_path: cluster-logging/namespace

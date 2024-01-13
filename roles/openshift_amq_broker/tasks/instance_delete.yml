@@ -3,4 +3,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: amq-broker
-    autogitops_app_path: amq-broker/instance

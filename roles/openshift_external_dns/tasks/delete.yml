@@ -3,11 +3,9 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: external-dns
-    autogitops_app_path: external-dns/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: external-dns-operator
-    autogitops_app_path: external-dns/operator

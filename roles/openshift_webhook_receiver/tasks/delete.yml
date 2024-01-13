@@ -3,4 +3,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: '{{ webhook_receiver_app_prefix }}webhook-receiver'
-    autogitops_app_path: webhook-receiver

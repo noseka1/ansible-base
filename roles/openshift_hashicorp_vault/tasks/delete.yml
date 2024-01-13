@@ -3,4 +3,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: hashicorp-vault
-    autogitops_app_path: hashicorp-vault

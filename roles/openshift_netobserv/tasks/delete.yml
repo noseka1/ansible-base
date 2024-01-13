@@ -3,7 +3,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: netobserv
-    autogitops_app_path: netobserv/instance
 
 - import_role:
     name: openshift_lokistack
@@ -19,4 +18,3 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: netobserv-operator
-    autogitops_app_path: netobserv/operator

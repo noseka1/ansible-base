@@ -3,7 +3,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_name: node-maintenance-operator
-    autogitops_app_path: node-maintenance/operator
 
 - import_role:
     name: openshift_common

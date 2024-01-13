@@ -1,5 +1,5 @@
 - set_fact:
-    autogitops_app_helm_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_path }}'
+    autogitops_app_helm_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_dst_path }}'
     autogitops_app_env_dir:  '{{ autogitops_git_dir}}/envs/in-cluster/infra/{{ autogitops_app_name }}'
 
 - name: Ensure application directories exist
@@ -12,7 +12,7 @@
 
 - name: Sync application helm directory
   ansible.posix.synchronize:
-    src: '{{ autogitops_catalog_dir }}/{{ autogitops_app_path }}/'
+    src: '{{ autogitops_catalog_dir }}/{{ autogitops_app_src_path }}/'
     dest: '{{ autogitops_app_helm_dir }}/'
     recursive: true
     links: true

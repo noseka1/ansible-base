@@ -32,7 +32,7 @@
   vars:
     autogitops_app_name: '{{ loki_app_prefix }}lokistack'
     autogitops_app_src_path: lokistack/instance
-    autogitops_app_dst_path: lokistack/instance
+    autogitops_app_dst_path: '{{ loki_app_prefix }}lokistack/instance'
     autogitops_app_namespace: '{{ loki_instance_namespace }}'
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
   tags: openshift_lokistack_instance

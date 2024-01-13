@@ -4,6 +4,6 @@
   vars:
     autogitops_app_name: '{{ webhook_receiver_app_prefix }}webhook-receiver'
     autogitops_app_src_path: webhook-receiver
-    autogitops_app_dst_path: webhook-receiver
+    autogitops_app_dst_path: '{{ webhook_receiver_app_prefix }}webhook-receiver'
     autogitops_app_namespace: '{{ webhook_receiver_namespace }}'
     autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

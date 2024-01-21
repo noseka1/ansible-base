@@ -69,7 +69,7 @@ function tear_down_chroot {
 if [ "$#" -gt 0 ]; then
 	image_path=$1
 else
-  echo Missing parameter <image_path>. <image_path> is not set. It should point to the image file to configure. Exiting ...
+  echo "Missing parameter <image_path>. <image_path> is not set. It should point to the image file to configure. Exiting ..."
 	exit 1
 fi
 

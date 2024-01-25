@@ -1,3 +1,5 @@
+# This route allows access to Prometheus web UI at:
+# https://prometheus-k8s-custom-openshift-monitoring.apps.<cluster_domain>/graph
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:

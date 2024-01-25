@@ -65,8 +65,6 @@
 
 - import_tasks: monitoring.yml
 
-- import_tasks: alerting.yml
-
 - import_tasks: auto_approve_csr.yml
 
 - import_tasks: cluster_banner.yml

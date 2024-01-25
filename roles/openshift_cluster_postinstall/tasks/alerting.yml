@@ -1,4 +1,0 @@
-- name: Configure OpenShift to send alerts to Slack
-  kubernetes.core.k8s:
-    template: alertmanager-main-secret.yaml
-  when: openshift_send_alerts_to_slack_url | length > 0

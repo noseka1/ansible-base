@@ -20,6 +20,11 @@
     subscription_namespace: openshift-cnv
   tags: openshift_virtualization_operator
 
+- name: Create custom storageprofiles
+  kubernetes.core.k8s:
+    template:
+      - storageprofiles/local-path-storageprofile.yaml
+
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml

@@ -41,3 +41,7 @@ openshift_cluster_postinstall_etcd_encryption: false
 
 # Deploy auto-gitops as part of the cluster post-installation process
 openshift_cluster_postinstall_deploy_autogitops: false
+
+# Overlay custom rpm packages on OpenShift nodes filesystem
+# (requires RHEL entitlements configured on nodes)
+openshift_common_install_custom_rpms: false

@@ -3,12 +3,12 @@
     api_version: config.openshift.io/v1
     kind: Infrastructure
     name: cluster
-  register: openshift_common_infrastructure
+  register: openshift_common_infrastructure_result
 
 - name: Set openshift_common_cluster_domain
   set_fact:
     openshift_common_cluster_domain: >-
-      {{ openshift_common_infrastructure.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}
+      {{ openshift_common_infrastructure_result.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}
 
 - debug:
     var: openshift_common_cluster_domain

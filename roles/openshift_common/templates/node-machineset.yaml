@@ -26,11 +26,13 @@ spec:
         value:
           ami:
             id: {{ add_machineset_ami_id }}
-          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          apiVersion: machine.openshift.io/v1beta1
           blockDevices:
           - ebs:
+              encrypted: true
               iops: 0
-              kmsKey: {}
+              kmsKey:
+                arn: ""
               volumeSize: 120
               volumeType: gp3
           credentialsSecret:

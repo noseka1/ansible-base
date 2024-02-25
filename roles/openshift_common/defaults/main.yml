@@ -1,5 +1,5 @@
 add_machineset_role: worker
-add_machineset_instance_type: m4.large
+add_machineset_instance_type: m6i.large
 add_machineset_taints: []
 add_machineset_labels: {}
 add_machineset_nodes_per_zone: 1

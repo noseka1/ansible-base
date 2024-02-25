@@ -1,5 +1,5 @@
 odf_aws:
-  instance_type: m4.4xlarge
+  instance_type: m6i.4xlarge
   availability_zones: [ a, b, c ]
   nodes_per_zone: 1
 

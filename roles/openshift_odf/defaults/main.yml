@@ -1,5 +1,7 @@
 odf_aws:
+  # ODF cluster requires at least 4xlarge to fully deploy
   instance_type: m6i.4xlarge
+  # ODF requires at least three storage nodes to deploy
   availability_zones: [ a, b, c ]
   nodes_per_zone: 1
 

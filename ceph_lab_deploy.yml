@@ -3,11 +3,6 @@
   tasks:
     - import_role:
         name: ceph_lab
-        tasks_from: block_device_create.yml
-      tags: cephlab_block_device_create
-
-    - import_role:
-        name: ceph_lab
         tasks_from: ssh_auth_setup.yml
       tags: cephlab_ssh_auth_setup
 

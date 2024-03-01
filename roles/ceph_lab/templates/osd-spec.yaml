@@ -7,4 +7,4 @@ placement:
 {% endfor %}
 data_devices:
   paths:
-    - /dev/loop0
+    - /dev/vdb

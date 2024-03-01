@@ -1,0 +1,15 @@
+- name: Delete Ceph cluster
+  command: |
+    ceph fsid
+  ignore_errors: true
+  register: cephlab_cluster_fsid
+  become: true
+
+- name: Delete Ceph cluster
+  command: |
+    cephadm rm-cluster \
+      --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
+      --zap-osds \
+      --force
+  when: cephlab_cluster_fsid is succeeded
+  become: true

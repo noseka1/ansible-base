@@ -1,0 +1,11 @@
+ceph_lab:
+  hosts:
+    ceph1:
+      ansible_host: ceph1.lab.example.com
+      ansible_user: ansible
+    ceph2:
+      ansible_host: ceph2.lab.example.com
+      ansible_user: ansible
+    ceph3:
+      ansible_host: ceph3.lab.example.com
+      ansible_user: ansible

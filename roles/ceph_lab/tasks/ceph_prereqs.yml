@@ -1,0 +1,15 @@
+- name: Enable required RHEL repositories
+  community.general.rhsm_repository:
+    name:
+      - rhceph-7-tools-for-rhel-9-{{ ansible_architecture }}-rpms
+    state: enabled
+  become: true
+
+- name: Install Ceph RPM packages
+  yum:
+    name:
+      - chrony
+      - cephadm
+      - podman
+      - ceph-common
+  become: true

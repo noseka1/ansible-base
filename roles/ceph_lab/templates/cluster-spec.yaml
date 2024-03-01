@@ -1,0 +1,27 @@
+{% for host in groups.ceph_lab %}
+---
+service_type: host
+hostname: {{ hostvars[host]['ansible_host'] }}
+{% endfor %}
+---
+service_type: mon
+placement:
+  hosts:
+{% for host in groups.ceph_lab %}
+    - {{ hostvars[host]['ansible_host'] }}
+{% endfor %}
+---
+service_type: rgw
+service_id: realm.zone
+placement:
+  hosts:
+{% for host in groups.ceph_lab %}
+    - {{ hostvars[host]['ansible_host'] }}
+{% endfor %}
+---
+service_type: mgr
+placement:
+  hosts:
+{% for host in groups.ceph_lab %}
+    - {{ hostvars[host]['ansible_host'] }}
+{% endfor %}

@@ -1,0 +1,5 @@
+{
+ "url": "registry.redhat.io",
+ "username": "{{ ((redhat_cloud_pull_secret | from_json)['auths']['registry.redhat.io']['auth'] | b64decode).split(':').0 }}",
+ "password": "{{ ((redhat_cloud_pull_secret | from_json)['auths']['registry.redhat.io']['auth'] | b64decode).split(':').1 }}"
+}

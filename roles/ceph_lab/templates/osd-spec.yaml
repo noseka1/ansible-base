@@ -1,0 +1,10 @@
+---
+service_type: osd
+placement:
+  hosts:
+{% for host in groups.ceph_lab %}
+    - {{ hostvars[host]['ansible_host'] }}
+{% endfor %}
+data_devices:
+  paths:
+    - /dev/loop0

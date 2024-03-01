@@ -1,0 +1,64 @@
+- name: Install cephadm-ansible on first node
+  yum:
+    name:
+      - cephadm-ansible
+  become: true
+
+- name: Create Ansible hosts file
+  template:
+    src: hosts
+    dest: /usr/share/cephadm-ansible/hosts
+  become: true
+
+- name: Create Ceph cluster spec file
+  template:
+    src: cluster-spec.yaml
+    dest: cluster-spec.yaml
+
+- name: Create registry credentials file
+  template:
+    src: registry-creds.json
+    dest: registry-creds.json
+    mode: '0600'
+
+- name: Create dashboard certificate file
+  copy:
+    content: '{{ cephlab_ceph_dashboard_crt }}'
+    dest: dashboard.crt
+  when: cephlab_ceph_dashboard_crt | length > 0
+
+- name: Create dashboard key file
+  copy:
+    content: '{{ cephlab_ceph_dashboard_key }}'
+    dest: dashboard.key
+    mode: '0600'
+  when: cephlab_ceph_dashboard_key | length > 0
+
+- name: Deploy Ceph cluster
+  command: |
+    cephadm bootstrap \
+      --apply-spec cluster-spec.yaml \
+      --allow-fqdn-hostname \
+      --mon-ip '{{ ansible_default_ipv4.address }}' \
+      --registry-json registry-creds.json \
+      --initial-dashboard-password '{{ generic_user_password }}' \
+    {% if (cephlab_ceph_dashboard_crt | length > 0) and (cephlab_ceph_dashboard_key | length > 0) %}
+      --dashboard-crt dashboard.crt \
+      --dashboard-key dashboard.key \
+    {% endif %}
+      --dashboard-password-noupdate
+  args:
+    creates: /etc/ceph/ceph.conf
+  become: true
+
+- name: Create OSD spec file
+  template:
+    src: osd-spec.yaml
+    dest: osd-spec.yaml
+
+- name: Deploy OSDs
+  command: |
+    cephadm shell \
+      --mount . \
+      -- ceph orch apply -i /mnt/osd-spec.yaml
+  become: true

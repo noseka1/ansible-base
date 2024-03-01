@@ -1,0 +1,3 @@
+{% for host in groups.ceph_lab %}
+{{ hostvars[host]['ansible_host'] }}
+{% endfor %}

@@ -1,0 +1,7 @@
+- hosts:
+    - ceph1
+  tasks:
+    - import_role:
+        name: ceph_lab
+        tasks_from: ceph_delete.yml
+      tags: cephlab_delete

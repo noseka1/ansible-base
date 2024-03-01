@@ -1,0 +1,25 @@
+- hosts:
+    - ceph_lab
+  tasks:
+    - import_role:
+        name: ceph_lab
+        tasks_from: block_device_create.yml
+      tags: cephlab_block_device_create
+
+    - import_role:
+        name: ceph_lab
+        tasks_from: ssh_auth_setup.yml
+      tags: cephlab_ssh_auth_setup
+
+    - import_role:
+        name: ceph_lab
+        tasks_from: ceph_prereqs.yml
+      tags: cephlab_prereqs
+
+- hosts:
+    - ceph1
+  tasks:
+    - import_role:
+        name: ceph_lab
+        tasks_from: ceph_deploy.yml
+      tags: cephlab_deploy

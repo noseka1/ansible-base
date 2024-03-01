@@ -1,0 +1,11 @@
+- name: Report success
+  set_fact:
+    msg: |
+      Red Hat Ceph Storage installed successfully.
+
+      You can log in to Ceph Dashboard as user admin at:
+      https://{{ ansible_host }}:8443
+
+      Note that OSDs and other cluster components may still be deploying ...
+
+- debug: msg="{{ msg.split('\n') }}"

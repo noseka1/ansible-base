@@ -62,3 +62,5 @@
       --mount . \
       -- ceph orch apply -i /mnt/osd-spec.yaml
   become: true
+
+- import_tasks: report_success.yml

@@ -45,7 +45,9 @@
 - import_tasks: configure_kubelet.yml
 
 - import_tasks: set_core_user_password.yml
-  when: openshift_common_cluster_version_majorminor is version('4.13', '>=', strict=true)
+  when:
+    - openshift_cluster_postinstall_set_core_user_password
+    - openshift_cluster_postinstall_cluster_version_majorminor is version('4.13', '>=', strict=true)
 
 - import_tasks: set_root_user_password.yml
   when: openshift_cluster_postinstall_set_root_user_password

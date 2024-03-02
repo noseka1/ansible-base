@@ -33,6 +33,9 @@ openshift_cluster_postinstall_cluster_banner:
   #background_color: '#ddaa11' # yellow (stage)
   #background_color: '#dd0000' # red (prod)
 
+# Set core user password. The password of user core can be set on OCP >= 4.13
+openshift_cluster_postinstall_set_core_user_password: false
+
 # Set root user password. Use this on development systems only!
 openshift_cluster_postinstall_set_root_user_password: false
 

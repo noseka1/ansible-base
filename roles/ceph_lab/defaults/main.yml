@@ -1,2 +1,5 @@
+cephlab_osd_data_devices_paths:
+  - /dev/vdb
+
 cephlab_ceph_dashboard_crt: ''
 cephlab_ceph_dashboard_key: ''

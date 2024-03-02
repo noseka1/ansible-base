@@ -6,5 +6,4 @@ placement:
     - {{ hostvars[host]['ansible_host'] }}
 {% endfor %}
 data_devices:
-  paths:
-    - /dev/vdb
+  paths: {{ cephlab_osd_data_devices_paths | to_yaml }}

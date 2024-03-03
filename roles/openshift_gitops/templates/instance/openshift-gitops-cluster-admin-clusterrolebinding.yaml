@@ -7,7 +7,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-# Grant Argo CD cluster-admin privileges
+# Grant Argo CD controller cluster-admin privileges
 - kind: ServiceAccount
   name: {{ gitops_instance_name }}-argocd-application-controller
   namespace: {{ gitops_instance_namespace }}

@@ -12,3 +12,5 @@
       - instance/openshift-gitops-cluster-secret.yaml
       - instance/openshift-gitops-argocd.yaml
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/openshift-gitops-appset-fix-clusterrole.yaml
+      - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml

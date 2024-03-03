@@ -19,6 +19,8 @@
   kubernetes.core.k8s:
     template:
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/openshift-gitops-appset-fix-clusterrole.yaml
+      - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
     wait: true
     state: absent
 

@@ -1,6 +1,9 @@
 - name: Deploy GitOps operator
   kubernetes.core.k8s:
-    template: operator/openshift-gitops-sub.yaml
+    template:
+      - operator/openshift-gitops-operator-ns.yaml
+      - operator/openshift-gitops-operator-og.yaml
+      - operator/openshift-gitops-operator-sub.yaml
 
 - import_role:
     name: openshift_common
@@ -11,7 +14,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ gitops_instance_name }} deployment to complete
   kubernetes.core.k8s_info:
-    api_version: argoproj.io/v1alpha1
+    api_version: argoproj.io/v1beta1
     kind: ArgoCD
     namespace: '{{ gitops_instance_namespace }}'
     name: '{{ gitops_instance_name }}'

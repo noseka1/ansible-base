@@ -12,7 +12,7 @@
         kind: Application
       - api_version: argoproj.io/v1alpha1
         kind: AppProject
-      - api_version: argoproj.io/v1alpha1
+      - api_version: argoproj.io/v1beta1
         kind: ArgoCD
 
 - name: Delete cluster role
@@ -22,14 +22,6 @@
     wait: true
     state: absent
 
-- name: Delete GitOps operator
-  import_role:
-    name: openshift_common
-    tasks_from: delete_operator.yml
-  vars:
-    delete_operator_subscription_name: '{{ gitops_subscription_name }}'
-    delete_operator_subscription_namespace: '{{ gitops_subscription_namespace }}'
-
 - import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
@@ -38,3 +30,14 @@
       - api_version: v1
         kind: Namespace
         name: openshift-gitops
+
+- name: Delete GitOps operator
+  kubernetes.core.k8s:
+    template:
+      - operator/openshift-gitops-operator-ns.yaml
+    state: absent
+    wait: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

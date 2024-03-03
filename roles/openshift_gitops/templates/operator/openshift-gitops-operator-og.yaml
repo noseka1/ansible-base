@@ -1,0 +1,5 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ gitops_subscription_name }}
+  namespace: {{ gitops_subscription_namespace }}

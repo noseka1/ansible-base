@@ -1,5 +1,5 @@
-gitops_subscription_namespace: openshift-operators
-gitops_subscription_name: openshift-gitops
+gitops_subscription_namespace: openshift-gitops-operator
+gitops_subscription_name: openshift-gitops-operator
 gitops_subscription_channel: latest
 gitops_subscription_approval: Automatic
 

@@ -93,10 +93,10 @@ spec:
         enabled: false
     ingress:
       enabled: false
-    insecure: true
-    replicas: 1
     # Configure TLS edge-terminated route instead of passthrough
     # so that the route utilizes OpenShift wildcard certificate
+    insecure: true
+    replicas: 1
     resources:
       limits:
         cpu: 500m

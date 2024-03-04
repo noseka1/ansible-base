@@ -24,8 +24,11 @@
     name: '{{ gitops_instance_name }}'
   register: argocd_instance
   until:
-    - argocd_instance.resources.0.status.phase is defined
-    - argocd_instance.resources.0.status.phase == 'Available'
+    - argocd_instance.resources.0.status.phase | default('') == 'Available'
+    - argocd_instance.resources.0.status.applicationController | default('') == 'Running'
+    - argocd_instance.resources.0.status.applicationSetController | default('') == 'Running'
+    - argocd_instance.resources.0.status.notificationsController | default('') == 'Running'
+    - argocd_instance.resources.0.status.repo | default('') == 'Running'
+    - argocd_instance.resources.0.status.server | default('') == 'Running'
   retries: 30
   delay: 10
-

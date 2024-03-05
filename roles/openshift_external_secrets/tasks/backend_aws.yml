@@ -1,23 +1,23 @@
 - name: Create AWS keys for user account which talks to AWS SM
   kubernetes.core.k8s:
-    template: aws-sm-secret.yaml
+    template: backend-aws/aws-sm-secret.yaml
   when: not external_secrets_oidc_enabled
 
 - name: Create AWS Secrets Manager backend - will use AWS keys
   kubernetes.core.k8s:
-    template: aws-sm-secretstore-key.yaml
+    template: backend-aws/aws-sm-secretstore-key.yaml
   when: not external_secrets_oidc_enabled
 
 - name: Create AWS service account
   kubernetes.core.k8s:
-    template: aws-service-account-sa.yaml
+    template: backend-aws/aws-service-account-sa.yaml
   when: external_secrets_oidc_enabled
 
 - name: Create AWS Secrets Manager backend - will use SA and OIDC
   kubernetes.core.k8s:
-    template: aws-sm-secretstore-jwt.yaml
+    template: backend-aws/aws-sm-secretstore-jwt.yaml
   when: external_secrets_oidc_enabled
 
 - name: Create an external secret for testing
   kubernetes.core.k8s:
-    template: external-secrets-test-secret-aws.yml
+    template: backend-aws/external-secrets-test-secret-aws.yml

@@ -1,6 +1,6 @@
 - name: Create a static service account token
   kubernetes.core.k8s:
-    template: external-secrets-token-static-secret.yaml
+    template: bootstrap-token/external-secrets-token-static-secret.yaml
     namespace: '{{ external_secrets_instance_namespace }}'
     wait: true
 
@@ -15,5 +15,5 @@
 - name: Create external-secrets-deployable namespace and the bootstrap token deployable
   kubernetes.core.k8s:
     template:
-      - external-secrets-deployable-ns.yml
-      - custom-kubernetes-token-deployable.yml
+      - bootstrap-token/external-secrets-deployable-ns.yml
+      - bootstrap-token/custom-kubernetes-token-deployable.yml

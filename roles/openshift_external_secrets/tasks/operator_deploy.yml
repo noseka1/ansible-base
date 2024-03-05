@@ -1,6 +1,6 @@
 - name: Deploy External Secrets operator
   kubernetes.core.k8s:
-    template: external-secrets-operator-sub.yaml
+    template: operator/external-secrets-operator-sub.yaml
 
 - import_role:
     name: openshift_common

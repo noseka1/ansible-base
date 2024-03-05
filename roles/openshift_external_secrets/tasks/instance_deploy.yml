@@ -1,8 +1,8 @@
 - name: Deploy external-secrets instance
   kubernetes.core.k8s:
     template:
-      - external-secrets-ns.yaml
-      - external-secrets-operatorconfig.yaml
+      - instance/external-secrets-ns.yaml
+      - instance/external-secrets-operatorconfig.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for External Secrets instance deployment to complete
   kubernetes.core.k8s_info:

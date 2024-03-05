@@ -4,8 +4,8 @@
 
 - name: Create HashiCorp Vault backend
   kubernetes.core.k8s:
-    template: vault-secretstore.yaml
+    template: backend-vault/vault-secretstore.yaml
 
 - name: Create an external secret for testing
   kubernetes.core.k8s:
-    template: external-secrets-test-secret-vault.yml
+    template: backend-vault/external-secrets-test-secret-vault.yml

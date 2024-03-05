@@ -6,5 +6,5 @@
   register: multiclusterhubs_crd
 
 - name: Create external-secrets bootstrap token
-  import_tasks: create_bootstrap_token.yml
+  import_tasks: bootstrap_token_create.yml
   when: multiclusterhubs_crd.resources | length > 0

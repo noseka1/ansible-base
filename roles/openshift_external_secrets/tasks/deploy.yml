@@ -1,13 +1,13 @@
-- import_tasks: deploy_operator.yml
+- import_tasks: operator_deploy.yml
 
-- import_tasks: deploy_instance.yml
+- import_tasks: instance_deploy.yml
 
-- import_tasks: vault_backend.yml
+- import_tasks: backend_vault.yml
   when: external_secrets_secrets_manager_type == 'vault'
 
-- import_tasks: aws_backend.yaml
+- import_tasks: backend_aws.yml
   when: external_secrets_secrets_manager_type == 'aws'
 
 - import_tasks: check_secret.yml
 
-- import_tasks: deploy_bootstrap_token.yml
+- import_tasks: bootstrap_token_deploy.yml

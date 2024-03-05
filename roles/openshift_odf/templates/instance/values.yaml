@@ -4,5 +4,9 @@ monPVCTemplate:
 storageDeviceSets:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
   storageCapacity: 200Gi
+multiCloudGateway:
+  storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
 encryptionClusterWide: false
 encryptionKmsEnable: false
+uninstallCleanUpPolicy: delete
+uninstallMode: forced

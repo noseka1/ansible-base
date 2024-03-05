@@ -9,12 +9,16 @@ odf_platform_to_storageclass:
   AWS:
     mon_pvc_template: gp3-csi
     storage_device_sets: gp3-csi
+    mcg_db: gp3-csi
   VSphere:
     mon_pvc_template: thin-csi
     storage_device_sets: thin-csi
+    mcg_db: thin-csi
   BareMetal:
     mon_pvc_template: local-path
     storage_device_sets: myvolumeset1
+    mcg_db: local-path
   None:
     mon_pvc_template: local-path
     storage_device_sets: myvolumeset1
+    mcg_db: local-path

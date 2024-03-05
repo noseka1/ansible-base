@@ -1,13 +1,13 @@
-- import_tasks: install_gitops_operator.yml
+- import_tasks: gitops_operator_deploy.yml
 
-- import_tasks: configure_argocd.yml
+- import_tasks: gitops_instance_deploy.yml
 
-- import_tasks: configure_argocd_notifications.yml
+- import_tasks: gitops_notifications_deploy.yml
 
 - import_tasks: argo_rollouts_deploy.yml
-  when: gitops_instance_argo_rollouts_enabled
+  when: gitops_argo_rollouts_enabled
 
-- import_tasks: create_cloudflare_tunnel.yml
+- import_tasks: cloudflare_tunnel_create.yml
   when: gitops_create_cloudflare_tunnel
 
 - import_tasks: report_success.yml

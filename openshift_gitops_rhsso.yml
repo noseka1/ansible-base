@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_gitops
-        tasks_from: configure_rhsso.yml
+        tasks_from: rhsso_configure.yml

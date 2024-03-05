@@ -1,0 +1,10 @@
+- name: Delete GitOps operator
+  kubernetes.core.k8s:
+    template:
+      - operator/openshift-gitops-operator-ns.yaml
+    state: absent
+    wait: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

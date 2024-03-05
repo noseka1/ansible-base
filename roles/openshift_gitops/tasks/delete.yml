@@ -1,45 +1,6 @@
 - import_tasks: argo_rollouts_delete.yml
-  when: gitops_instance_argo_rollouts_enabled
+  when: gitops_argo_rollouts_enabled
 
-- import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
-  vars:
-    delete_kubernetes_objects:
-      - api_version: argoproj.io/v1alpha1
-        kind: ApplicationSet
-      - api_version: argoproj.io/v1alpha1
-        kind: Application
-      - api_version: argoproj.io/v1alpha1
-        kind: AppProject
-      - api_version: argoproj.io/v1beta1
-        kind: ArgoCD
+- import_tasks: gitops_instance_delete.yml
 
-- name: Delete cluster role
-  kubernetes.core.k8s:
-    template:
-      - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
-      - instance/openshift-gitops-appset-fix-clusterrole.yaml
-      - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
-    wait: true
-    state: absent
-
-- import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
-  vars:
-    delete_kubernetes_objects:
-      - api_version: v1
-        kind: Namespace
-        name: openshift-gitops
-
-- name: Delete GitOps operator
-  kubernetes.core.k8s:
-    template:
-      - operator/openshift-gitops-operator-ns.yaml
-    state: absent
-    wait: true
-
-- import_role:
-    name: openshift_common
-    tasks_from: prune_csvs.yml
+- import_tasks: gitops_operator_delete.yml

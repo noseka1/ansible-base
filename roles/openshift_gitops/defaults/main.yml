@@ -9,7 +9,7 @@ gitops_instance_name: openshift-gitops
 gitops_instance_high_availability: false
 
 # Deploy Argo Rollouts
-gitops_instance_argo_rollouts_enabled: false
+gitops_argo_rollouts_enabled: false
 
 # If your OIDC provider is set up with a certificate which is not signed by one of the well known
 # certificate authorities you can provide a custom certificate which will be used in verifying

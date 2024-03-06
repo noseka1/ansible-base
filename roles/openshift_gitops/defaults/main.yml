@@ -1,4 +1,6 @@
 gitops_subscription_namespace: openshift-gitops-operator
+# The subscription must be named openshift-gitops-operator or RHACM won't be
+# able to detect that OpenShift GitOps operator is installed on the cluster
 gitops_subscription_name: openshift-gitops-operator
 gitops_subscription_channel: latest
 gitops_subscription_approval: Automatic

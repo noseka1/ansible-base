@@ -5,6 +5,8 @@ metadata:
   name: multiclusterhub
 spec:
   availabilityConfig: {{ rhacm_instance_availability }}
+  enableClusterBackup: false
+  ingress: {}
   overrides:
     components:
     - enabled: true
@@ -33,6 +35,12 @@ spec:
       name: search
     - enabled: true
       name: volsync
+    - enabled: true
+      name: cluster-permission
+    - enabled: true
+      name: multicluster-observability
+    - enabled: true
+      name: submariner-addon
   imagePullSecret: openshift-pull-secret
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:
@@ -42,3 +50,4 @@ spec:
     effect: NoSchedule
     operator: Exists
 {% endif %}
+  separateCertificateManagement: false

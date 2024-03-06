@@ -12,7 +12,7 @@
       tags: cephlab_prereqs
 
 - hosts:
-    - ceph1
+    - ceph_lab[0]
   tasks:
     - import_role:
         name: ceph_lab

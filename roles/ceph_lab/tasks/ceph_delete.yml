@@ -3,6 +3,19 @@
     ceph fsid
   ignore_errors: true
   register: cephlab_cluster_fsid
+  delegate_to: '{{ groups.ceph_lab.0 }}'
+  run_once: true
+  become: true
+
+- name: Disable cephadm operations
+  command: |
+    cephadm shell \
+      --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
+      -- \
+      ceph mgr module disable cephadm
+  delegate_to: '{{ groups.ceph_lab.0 }}'
+  run_once: true
+  when: cephlab_cluster_fsid is succeeded
   become: true
 
 - name: Delete Ceph cluster

@@ -15,13 +15,18 @@ service_type: rgw
 service_id: realm.zone
 placement:
   hosts:
-{% for host in groups.ceph_lab %}
-    - {{ hostvars[host]['ansible_host'] }}
-{% endfor %}
+    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
 ---
 service_type: mgr
+placement:
+  hosts:
+    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
+---
+service_type: osd
 placement:
   hosts:
 {% for host in groups.ceph_lab %}
     - {{ hostvars[host]['ansible_host'] }}
 {% endfor %}
+data_devices:
+  paths: {{ cephlab_osd_data_devices_paths | to_yaml }}

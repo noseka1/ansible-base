@@ -10,11 +10,6 @@
     dest: /usr/share/cephadm-ansible/hosts
   become: true
 
-- name: Create Ceph cluster spec file
-  template:
-    src: cluster-spec.yaml
-    dest: cluster-spec.yaml
-
 - name: Create registry credentials file
   template:
     src: registry-creds.json
@@ -34,10 +29,9 @@
     mode: '0600'
   when: cephlab_ceph_dashboard_key | length > 0
 
-- name: Deploy Ceph cluster
+- name: Bootstrap Ceph cluster
   command: |
     cephadm bootstrap \
-      --apply-spec cluster-spec.yaml \
       --allow-fqdn-hostname \
       --mon-ip '{{ ansible_default_ipv4.address }}' \
       --registry-json registry-creds.json \
@@ -46,21 +40,21 @@
       --dashboard-crt dashboard.crt \
       --dashboard-key dashboard.key \
     {% endif %}
-      --dashboard-password-noupdate
+      --dashboard-password-noupdate \
+      --ssh-public-key  /root/.ssh/id_rsa.pub \
+      --ssh-private-key /root/.ssh/id_rsa
   args:
     creates: /etc/ceph/ceph.conf
   become: true
 
-- name: Create OSD spec file
+- name: Create Ceph cluster spec file
   template:
-    src: osd-spec.yaml
-    dest: osd-spec.yaml
+    src: cluster-spec.yaml
+    dest: cluster-spec.yaml
 
-- name: Deploy OSDs
+- name: Deploy complete Ceph cluster
   command: |
-    cephadm shell \
-      --mount . \
-      -- ceph orch apply -i /mnt/osd-spec.yaml
+    ceph orch apply -i cluster-spec.yaml
   become: true
 
 - import_tasks: report_success.yml

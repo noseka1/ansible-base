@@ -1,5 +1,5 @@
 - hosts:
-    - ceph1
+    - ceph_lab
   tasks:
     - import_role:
         name: ceph_lab

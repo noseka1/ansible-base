@@ -13,7 +13,10 @@ spec:
     env:
     # Create the default instance in the openshift-gitops namespace
     - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
-      value: "true"
+      value: "false"
+    # Create link to Argo CD in OpenShift Web Console
+    - name: DISABLE_DEFAULT_ARGOCD_CONSOLELINK
+      value: "false"
     # By default, Argo CD instances can only read cluster-scoped resources. To allow Argo
     # CD to create/update cluster-scoped resources, additional priviliges are required.
     #

@@ -5,6 +5,11 @@ odf_aws:
   availability_zones: [ a, b, c ]
   nodes_per_zone: 1
 
+# Set this to number of availability (failure) zones
+odf_storage_device_set_replica: 3
+# Set this to number of disks across all storage nodes in a single zone
+odf_storage_device_set_count: 1
+
 odf_platform_to_storageclass:
   AWS:
     mon_pvc_template: gp3-csi

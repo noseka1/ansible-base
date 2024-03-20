@@ -4,6 +4,8 @@ monPVCTemplate:
 storageDeviceSets:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
   storageCapacity: 200Gi
+  count: {{ odf_storage_device_set_count }}
+  replica: {{ odf_storage_device_set_replica }}
 multiCloudGateway:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
 encryptionClusterWide: false

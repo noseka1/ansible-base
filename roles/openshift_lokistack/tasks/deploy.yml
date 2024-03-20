@@ -7,24 +7,24 @@
     autogitops_app_dst_path: lokistack/operator
     autogitops_app_namespace: openshift-operators-redhat
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
-  tags: openshift_lokistack_operator
+  tags: lokistack_operator
 
 - import_role:
     name: openshift_minio
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ loki_instance_namespace }}-minio'
-  tags: openshift_lokistack_instance
+  tags: lokistack_instance
 
 - import_role:
     name: openshift_common
     tasks_from: get_default_storage_class.yml
-  tags: openshift_lokistack_instance
+  tags: lokistack_instance
 
 - fail:
     msg: No default storage class found on the cluster.
   when: openshift_common_default_storage_class | length == 0
-  tags: openshift_lokistack_instance
+  tags: lokistack_instance
 
 - import_role:
     name: openshift_autogitops
@@ -35,4 +35,4 @@
     autogitops_app_dst_path: '{{ loki_app_prefix }}lokistack/instance'
     autogitops_app_namespace: '{{ loki_instance_namespace }}'
     autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
-  tags: openshift_lokistack_instance
+  tags: lokistack_instance

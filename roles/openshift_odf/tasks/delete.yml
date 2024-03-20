@@ -1,8 +1,8 @@
 - import_tasks: instance_delete.yml
-  tags: openshift_odf_instance
+  tags: odf_instance
 
 - import_tasks: operator_delete.yml
-  tags: openshift_odf_operator
+  tags: odf_operator
 
 - import_tasks: cluster_nodes_delete.yml
-  tags: openshift_odf_cluster_nodes
+  tags: odf_cluster_nodes

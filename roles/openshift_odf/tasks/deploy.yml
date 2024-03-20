@@ -1,10 +1,10 @@
 - import_tasks: cluster_nodes_deploy.yml
-  tags: openshift_odf_cluster_nodes
+  tags: odf_cluster_nodes
 
 - import_tasks: cluster_nodes_check.yml
 
 - import_tasks: operator_deploy.yml
-  tags: openshift_odf_operator
+  tags: odf_operator
 
 - import_tasks: instance_deploy.yml
-  tags: openshift_odf_instance
+  tags: odf_instance

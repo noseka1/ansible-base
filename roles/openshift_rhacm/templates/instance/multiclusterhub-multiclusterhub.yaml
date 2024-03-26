@@ -22,8 +22,6 @@ spec:
     - enabled: true
       name: insights
     - enabled: true
-      name: managedserviceaccount-preview
-    - enabled: true
       name: multicluster-engine
     - enabled: true
       name: search

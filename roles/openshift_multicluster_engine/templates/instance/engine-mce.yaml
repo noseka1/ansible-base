@@ -21,8 +21,6 @@ spec:
     - enabled: true
       name: local-cluster
     - enabled: true
-      name: managedserviceaccount-preview
-    - enabled: true
       name: server-foundation
   targetNamespace: {{ multicluster_engine_instance_namespace }}
   imagePullSecret: openshift-pull-secret

@@ -11,8 +11,6 @@ spec:
     - enabled: true
       name: cluster-lifecycle
     - enabled: true
-      name: cluster-proxy-addon
-    - enabled: true
       name: cluster-manager
     - enabled: true
       name: console-mce

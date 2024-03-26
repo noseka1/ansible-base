@@ -16,8 +16,6 @@ spec:
     - enabled: true
       name: cluster-lifecycle
     - enabled: true
-      name: cluster-proxy-addon
-    - enabled: true
       name: console
     - enabled: true
       name: grc

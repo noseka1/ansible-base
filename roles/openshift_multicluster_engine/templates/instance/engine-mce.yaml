@@ -19,8 +19,6 @@ spec:
     - enabled: true
       name: hive
     - enabled: true
-      name: hypershift-preview
-    - enabled: true
       name: local-cluster
     - enabled: true
       name: managedserviceaccount-preview

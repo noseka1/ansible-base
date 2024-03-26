@@ -20,8 +20,6 @@ spec:
     - enabled: true
       name: grc
     - enabled: true
-      name: hypershift-preview
-    - enabled: true
       name: insights
     - enabled: true
       name: managedserviceaccount-preview

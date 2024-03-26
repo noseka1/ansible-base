@@ -16,12 +16,12 @@ compute:
     azure: {}
 networking:
   clusterNetwork:
-  - cidr: 10.128.0.0/14
+  - cidr: {{ openshift_cluster_install.cluster_network_cidr }}
     hostPrefix: 23
   machineCIDR: 10.0.0.0/16
   networkType: {{ openshift_cluster_install.network_type }}
   serviceNetwork:
-  - 172.30.0.0/16
+  - {{ openshift_cluster_install.service_network_cidr }}
 platform:
   azure:
     region: {{ openshift_cluster_install.azure_region }}

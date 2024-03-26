@@ -6,6 +6,8 @@ openshift_cluster_install_aws:
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
+  cluster_network_cidr: 10.128.0.0/14
+  service_network_cidr: 172.30.0.0/16
   aws_region: us-west-2
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -18,6 +20,8 @@ openshift_cluster_install_gcp:
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
+  cluster_network_cidr: 10.128.0.0/14
+  service_network_cidr: 172.30.0.0/16
   gcp_service_account_file: '{{ lookup("env", "HOME") }}/.gcp/osServiceAccount.json'
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt
@@ -29,6 +33,8 @@ openshift_cluster_install_azure:
   version: latest
   channel: stable-4.14
   network_type: OVNKubernetes
+  cluster_network_cidr: 10.128.0.0/14
+  service_network_cidr: 172.30.0.0/16
   data_plane_replicas: 2
   control_plane_replicas: 3
   azure_client_id: XXXX-XXXX-XXXX-XXXX-XXXX
@@ -54,6 +60,8 @@ openshift_cluster_install_vsphere:
   ingress_vip: 192.168.123.202
   network_type: OVNKubernetes
   machine_network_cidr: 192.168.123.0/24
+  cluster_network_cidr: 10.128.0.0/14
+  service_network_cidr: 172.30.0.0/16
   vsphere_vcenter: portal.vc.opentlc.com
   vsphere_username: sandbox-8bcng@vc.opentlc.com
   vsphere_password: XXXXXXXXXXXXXXXX

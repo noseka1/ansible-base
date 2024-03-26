@@ -12,13 +12,13 @@ compute:
   replicas: {{ openshift_cluster_install.data_plane_replicas }}
 networking:
   clusterNetwork:
-  - cidr: 10.128.0.0/14
+  - cidr: {{ openshift_cluster_install.cluster_network_cidr }}
     hostPrefix: 23
   machineNetwork:
   - cidr: {{ openshift_cluster_install.machine_network_cidr }}
   networkType: {{ openshift_cluster_install.network_type }}
   serviceNetwork:
-  - 172.30.0.0/16
+  - {{ openshift_cluster_install.service_network_cidr }}
 platform:
   vsphere:
     vCenter: '{{ openshift_cluster_install.vsphere_vcenter }}'

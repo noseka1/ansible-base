@@ -1,0 +1,17 @@
+- name: Import Ceph dashboards from Grafana.com
+  kubernetes.core.k8s:
+    template:
+      - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
+  loop:
+    - { folder: OpenShift Data Foundation, name: ceph-cluster, id: 2842 }
+    - { folder: OpenShift Data Foundation, name: ceph-pools,   id: 5342 }
+    - { folder: OpenShift Data Foundation, name: ceph-osd,     id: 5336 }
+
+- name: Import ODF dashboards from URL
+  kubernetes.core.k8s:
+    template:
+      - dashboards/url/grafana-dashboard-grafanadashboard.yaml
+  loop:
+    - folder: OpenShift Data Foundation
+      name: odf-performance-analysis
+      url: https://raw.githubusercontent.com/pcuzner/odf-grafana/e1a96187d4866f45c230ba2c4c00f840d7593b2b/roles/dashboard/files/odf-performance-analysis.json

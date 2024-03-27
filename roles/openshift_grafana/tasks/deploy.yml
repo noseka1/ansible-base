@@ -16,4 +16,6 @@
 
 - import_tasks: dashboards_kyverno_import.yml
 
+- import_tasks: dashboards_odf_import.yml
+
 - import_tasks: report_success.yml

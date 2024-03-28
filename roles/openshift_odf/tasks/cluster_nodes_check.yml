@@ -7,6 +7,9 @@
   register: odf_nodes_result
 
 - fail:
-    msg: >
+    msg: |
       Need at least 3 ODF nodes. You can label cluster nodes using: 'oc label nodes <node> cluster.ocs.openshift.io/openshift-storage='
+
+      Optionally, you can define cluster topology by adding OSD topology labels as defined at:
+      https://www.rook.io/docs/rook/latest/CRDs/Cluster/ceph-cluster-crd/#osd-topology
   when: (odf_nodes_result.resources | list | length) < 3

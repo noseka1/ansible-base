@@ -21,9 +21,9 @@ odf_platform_to_storageclass:
     mcg_db: thin-csi
   BareMetal:
     mon_pvc_template: local-path
-    storage_device_sets: myvolumeset1
+    storage_device_sets: lvms-loop1-vg
     mcg_db: local-path
   None:
     mon_pvc_template: local-path
-    storage_device_sets: myvolumeset1
+    storage_device_sets: lvms-loop1-vg
     mcg_db: local-path

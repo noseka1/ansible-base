@@ -1,5 +1,3 @@
-- import_tasks: block_device_create.yml
-
 - import_tasks: operator_deploy.yml
 
 - import_tasks: instance_deploy.yml

@@ -1,4 +1,6 @@
-# This file is based on https://github.com/rook/rook/blob/v1.11.9/deploy/examples/cluster-test.yaml
+# This file is based on:
+# https://github.com/rook/rook/blob/v1.12.2/deploy/examples/cluster-test.yaml
+# https://github.com/rook/rook/blob/v1.12.2/deploy/examples/cluster-on-pvc.yaml
 #
 #################################################################################################################
 # Define the settings for the rook-ceph cluster with common settings for a small test cluster.
@@ -31,11 +33,23 @@ metadata:
 spec:
   dataDirHostPath: /var/lib/rook
   cephVersion:
-    image: quay.io/ceph/ceph:v17
+    image: quay.io/ceph/ceph:v18
     allowUnsupported: true
   mon:
     count: 1
     allowMultiplePerNode: true
+    # A volume claim template can be specified in which case new monitors (and
+    # monitors created during fail over) will construct a PVC based on the
+    # template for the monitor's primary storage. Changes to the template do not
+    # affect existing monitors. Log data is stored on the HostPath under
+    # dataDirHostPath. If no storage requirement is specified, a default storage
+    # size appropriate for monitor data will be used.
+    volumeClaimTemplate:
+      spec:
+        storageClassName: {{ rook_ceph_mon_pvc_template }}
+        resources:
+          requests:
+            storage: 10Gi
   mgr:
     count: 1
     allowMultiplePerNode: true
@@ -44,11 +58,26 @@ spec:
   crashCollector:
     disable: true
   storage:
-    useAllNodes: true
-    useAllDevices: false
-    #deviceFilter:
-    devices:
-      - name: /dev/loop2
+    storageClassDeviceSets:
+      - name: set1
+        # The number of OSDs to create from this device set
+        count: 3
+        # IMPORTANT: If volumes specified by the storageClassName are not portable across nodes
+        # this needs to be set to false. For example, if using the local storage provisioner
+        # this should be false.
+        portable: false
+        volumeClaimTemplates:
+          - metadata:
+              name: data
+            spec:
+              resources:
+                requests:
+                  storage: 100Gi
+              # IMPORTANT: Change the storage class depending on your environment
+              storageClassName: {{ rook_ceph_storage_device_sets }}
+              volumeMode: Block
+              accessModes:
+                - ReadWriteOnce
   monitoring:
     enabled: false
   healthCheck:

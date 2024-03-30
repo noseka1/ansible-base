@@ -1,6 +1,12 @@
 [Unit]
 Description=Create block device for LVM Storage
 
+# Run after the systemd-udevd.service to ensure that udev is running.
+# We need udev for auto-activating the LVM volumes, see also:
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_lvm-activation-configuring-and-managing-logical-volumes
+Wants=systemd-udevd.service
+After=systemd-udevd.service
+
 [Service]
 Type=oneshot
 RemainAfterExit=no

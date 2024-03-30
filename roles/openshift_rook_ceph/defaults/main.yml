@@ -8,5 +8,5 @@ rook_ceph_namespace: rook-ceph
 rook_ceph_mon_pvc_template: local-path
 
 # Storage class for OSD volumes
-# Example storage classes: lvms-loop1-vg, openebs-lvm, myvolumeset1
+# Example storage classes: lvms-loop1-vg, openebs-lvm, lso-myvolumeset1
 rook_ceph_storage_device_sets: lvms-loop1-vg

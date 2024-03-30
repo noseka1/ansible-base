@@ -17,5 +17,5 @@ spec:
     - matchExpressions:
       - key: node-role.kubernetes.io/worker
         operator: Exists
-  storageClassName: myvolumeset1
+  storageClassName: lso-myvolumeset1
   volumeMode: Block

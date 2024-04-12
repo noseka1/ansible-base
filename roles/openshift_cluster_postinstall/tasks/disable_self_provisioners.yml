@@ -1,6 +1,6 @@
 # See also: https://docs.openshift.com/container-platform/4.14/applications/projects/configuring-project-creation.html
 
-- name: Don't allow users to self-provision their projects
+- name: Prohibit users from self-provision their projects
   kubernetes.core.k8s:
     template:
       - self-provisioners/self-provisioners-clusterrolebinding.yaml

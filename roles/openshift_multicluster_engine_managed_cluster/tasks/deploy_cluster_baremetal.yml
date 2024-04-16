@@ -62,7 +62,7 @@
       Click on the {{ multicluster_engine_managed_cluster.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.
 
       Alternatively, you can download the bootable installer ISO image using the command:
-      $ curl -L '{{ infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/images/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
+      $ curl -L '{{ infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
 
       Alternatively, if you are PXE booting your machines, you can find the boot artifacts here:
       {{ infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}

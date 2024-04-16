@@ -43,7 +43,8 @@ multicluster_engine_managed_cluster_baremetal:
   cpu_architecture: x86_64
   # Must be set to true when deploying SNO
   user_managed_networking: false
-  network_type: static
+  # Network type options are 'static' or 'dhcp'
+  network_type: dhcp
   # List of network configuration files that will be applied before cluster installation.
   # For example: '{{ role_path }}/templates/assisted-installer/network-config/static/*.yaml'
   network_config_fileglob: ''

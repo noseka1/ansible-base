@@ -9,6 +9,3 @@ s3Storage:
   s3ForcePathStyle: {{ oadp_instance_s3_storage.s3_force_path_style }}
   insecureSkipTlsVerify: {{ oadp_instance_s3_storage.insecure_skip_tls_verify }}
   caCert: '{{ oadp_instance_s3_storage.ca_cert }}'
-
-dataMoverEnabled: {{ oadp_instance_datamover_enabled }}
-dataMoverResticPassword: {{ generic_user_password }}

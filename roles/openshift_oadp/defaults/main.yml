@@ -29,6 +29,3 @@ oadp_instance_s3_storage:
   s3_force_path_style: true
   insecure_skip_tls_verify: false
   ca_cert: ''
-
-# Install and configure VolSync data mover
-oadp_instance_datamover_enabled: true

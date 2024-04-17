@@ -20,8 +20,3 @@
   vars:
     minio_namespace: '{{ oadp_instance_minio_namespace }}'
   when: oadp_instance_minio_enabled
-
-- import_role:
-    name: openshift_volsync
-    tasks_from: delete.yml
-  when: oadp_instance_datamover_enabled

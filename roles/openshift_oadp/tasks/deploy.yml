@@ -1,9 +1,4 @@
 - import_role:
-    name: openshift_volsync
-    tasks_from: deploy.yml
-  when: oadp_instance_datamover_enabled
-
-- import_role:
     name: openshift_minio
     tasks_from: deploy.yml
   vars:

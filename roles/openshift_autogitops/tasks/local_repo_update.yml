@@ -28,13 +28,12 @@
   copy:
     content: '{{ autogitops_app_values }}'
     dest: '{{ autogitops_app_env_dir }}/values.yaml'
-  register: autogitops_app_values_result
   when:
-    - autogitops_app_values is defined
     - autogitops_app_values | length > 0
 
 - name: Delete values.yaml
   file:
     path: '{{ autogitops_app_env_dir }}/values.yaml'
     state: absent
-  when: autogitops_app_values_result is skipped
+  when:
+    - autogitops_app_values | length == 0

@@ -1,11 +1,3 @@
-- name: Check if Provisioning provisioning-configuration resource exists
-  kubernetes.core.k8s_info:
-    api_version: metal3.io/v1alpha1
-    kind: Provisioning
-    namespace: openshift-machine-api
-    name: provisioning-configuration
-  register: openshift_cluster_postinstall_provisioning_result
-
 # Deploy csr-auto-approver if the platform is none. If the platform is baremetal,
 # deploy csr-auto-approver only if there is no provisioning configuration.
 # Provisioning automates the cluster scaling and signs the CSR for new cluster
@@ -16,4 +8,4 @@
   when: >-
     openshift_common_infrastructure.status.platformStatus.type == 'None' or
     (openshift_common_infrastructure.status.platformStatus.type == 'BareMetal' and
-      openshift_cluster_postinstall_provisioning_result.resources | length == 0)
+      not openshift_common_provisioning_exists)

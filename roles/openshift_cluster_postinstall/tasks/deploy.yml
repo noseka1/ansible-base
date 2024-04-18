@@ -17,6 +17,10 @@
     name: openshift_common
     tasks_from: get_cluster_version.yml
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_provisioning.yml
+
 - import_tasks: etcd_encryption.yml
   when: openshift_cluster_postinstall_etcd_encryption
 
@@ -28,6 +32,11 @@
 
 - import_tasks: configure_machine_healthcheck.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+
+- import_tasks: autoscale_to_host.yml
+  when:
+    - openshift_common_infrastructure.status.platformStatus.type == 'BareMetal'
+    - openshift_common_provisioning_exists
 
 - import_tasks: configure_ingresscontroller.yml
 

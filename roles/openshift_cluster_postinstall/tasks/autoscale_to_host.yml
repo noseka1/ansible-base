@@ -1,0 +1,26 @@
+- name: Set cluster_id
+  set_fact:
+    cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+
+- name: Retrieve existing machinesets
+  kubernetes.core.k8s_info:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    namespace: openshift-machine-api
+  register: openshift_cluster_postinstall_machinesets_result
+
+- name: Add autoscale-to-host annotation
+  kubernetes.core.k8s:
+    api_version: machine.openshift.io/v1beta1
+    kind: MachineSet
+    name: '{{ item.metadata.name }}'
+    namespace: openshift-machine-api
+    definition:
+      metadata:
+        annotations:
+          metal3.io/autoscale-to-hosts: ''
+    state: patched
+  when: item.metadata.name.startswith(cluster_id)
+  loop: '{{ openshift_cluster_postinstall_machinesets_result.resources }}'
+  loop_control:
+    label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'

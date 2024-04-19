@@ -9,5 +9,3 @@ grafana_instance_name: grafana
 # https://github.com/grafana/grafana-operator/blob/24e34f6b2a55ec6c6bc4dbe0d1420d2db137ce19/controllers/config/operator_constants.go#L6
 # Override this default Grafana version with a more recent version:
 grafana_base_image: docker.io/grafana/grafana-oss:10.2.2
-
-grafana_oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.14.0

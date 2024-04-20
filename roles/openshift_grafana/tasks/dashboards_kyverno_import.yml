@@ -15,6 +15,6 @@
     template:
       - dashboards/grafana-com/grafana-dashboard-grafanadashboard.yaml
   loop:
-    - { folder: Kyverno, name: clusterpolicyreport , id: 13996 }
-    - { folder: Kyverno, name: policyreport , id: 13995 }
-    - { folder: Kyverno, name: policyreports , id: 13968 }
+    - { folder: Kyverno, name: clusterpolicyreport, id: 13996 }
+    - { folder: Kyverno, name: policyreport, id: 13995 }
+    - { folder: Kyverno, name: policyreports, id: 13968 }

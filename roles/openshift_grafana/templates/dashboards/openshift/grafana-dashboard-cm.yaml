@@ -1,6 +1,6 @@
 kind: ConfigMap
 metadata:
   name: {{ item.metadata.name }}
-  namespace: {{ grafana_instance_namespace }}
+  namespace: grafana
 data:
   {{ item.data | to_yaml }}

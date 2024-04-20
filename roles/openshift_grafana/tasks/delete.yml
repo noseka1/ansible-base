@@ -1,5 +1,11 @@
-- import_tasks: openshift_datasource_delete.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: grafana
 
-- import_tasks: instance_delete.yml
-
-- import_tasks: operator_delete.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: grafana-operator

@@ -1,6 +1,0 @@
-- name: Import custom dashboard
-  kubernetes.core.k8s:
-    template:
-      - dashboards/custom/grafana-dashboard-cm.yaml
-      - dashboards/custom/grafana-dashboard-grafanadashboard.yaml
-  loop: '{{ lookup("fileglob", "files/dashboards/custom/*.json", wantlist=True) }}'

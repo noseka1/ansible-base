@@ -1,7 +1,0 @@
-kind: ConfigMap
-metadata:
-  name: {{ item | basename | regex_replace('\.json$', '') | regex_replace('_', '-') }}
-  namespace: {{ grafana_instance_namespace }}
-data:
-  '{{ item | basename }}': |
-    {{ lookup('file', item, rstrip=false) | indent(4) }}

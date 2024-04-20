@@ -1,0 +1,1 @@
+consoleLinkHref: https://grafana-grafana.apps.{{ openshift_common_cluster_domain }}

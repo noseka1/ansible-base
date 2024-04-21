@@ -1,3 +1,0 @@
-- name: Deploy hypershift addon to local cluster
-  kubernetes.core.k8s:
-    template: hypershift/hypershift-addon-managedclusteraddon.yaml

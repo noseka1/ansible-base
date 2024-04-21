@@ -1,5 +1,3 @@
-- import_tasks: deploy_managed_serviceaccount.yml
-
 - import_tasks: deploy_manifestwork.yml
 
 - import_tasks: deploy_assisted_installer.yml

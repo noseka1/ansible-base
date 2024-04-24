@@ -7,16 +7,6 @@
 
 - import_role:
     name: openshift_gitops
-    tasks_from: create_repo_cert.yml
-  vars:
-    gitops_repo_cert_cert_data: '{{ gitea_cacert | b64encode }}'
-    gitops_repo_cert_cert_info: '{{ gitea_hostname }}'
-    gitops_repo_cert_cert_type: https
-    gitops_repo_cert_server_name: '{{ gitea_hostname }}'
-  when: gitea_cacert | length > 0
-
-- import_role:
-    name: openshift_gitops
     tasks_from: create_repo.yml
   vars:
     gitops_repo_name: '{{ gitea_repo_name }}'

@@ -17,3 +17,7 @@ spec:
     # Why pod fails to start with the message " ErrImagePull: "pull QPS exceeded"" in OpenShift Container Platform ?
     # https://access.redhat.com/solutions/4767061
     registryPullQPS: 0
+    # Increase the maximum number of pods that can be placed on a single node. The default maximum is 250.
+    # When using a single-node cluster, this default maximum can be easily exceeded.
+    # See also: https://docs.openshift.com/container-platform/4.15/nodes/nodes/nodes-nodes-managing-max-pods.html
+    maxPods: 500

@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_rhsso
-        tasks_from: delete.yml
+        name: openshift_rhbk
+        tasks_from: deploy.yml

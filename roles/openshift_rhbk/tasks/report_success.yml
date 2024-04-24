@@ -1,9 +1,9 @@
 - name: Report success
   set_fact:
     msg: |
-      RHSSO installed successfully.
+      Red Hat build of Keycloak installed successfully.
 
       You can browse to:
-      https://{{ rhsso_hostname }}
+      https://{{ rhbk_hostname }}
 
 - debug: msg="{{ msg.split('\n') }}"

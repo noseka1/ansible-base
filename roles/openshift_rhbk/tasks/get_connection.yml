@@ -1,0 +1,22 @@
+- name: Obtain keycloak-initial-admin secret
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: keycloak-initial-admin
+    namespace: '{{ rhbk_instance_namespace }}'
+  register: rhbk_secret
+
+- name: Fail if Keycloak route doesn't exist
+  fail:
+    msg: |
+      Keycloak route doesn't exist. Is Keycloak installed on the cluster?
+      Use the openshift_rhbk_deploy.yml playbook to install a Keycloak instance.
+  when: rhbk_secret.resources | length == 0
+
+- import_tasks: get_instance_hostname.yml
+
+- name: Set Keycloak admin credentials
+  set_fact:
+    rhbk_username: '{{ rhbk_secret.resources.0.data.username | b64decode }}'
+    rhbk_password: '{{ rhbk_secret.resources.0.data.password | b64decode }}'
+    rhbk_hostname: '{{ rhbk_instance_hostname }}'

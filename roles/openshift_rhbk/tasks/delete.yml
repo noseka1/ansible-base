@@ -3,19 +3,17 @@
     tasks_from: delete_kubernetes_objects.yml
   vars:
     delete_kubernetes_objects:
-      - api_version: v1alpha1
-        kind: KeycloakRealm
-      - api_version: v1alpha1
-        kind: KeycloakClient
+      - api_version: k8s.keycloak.org/v2alpha1
+        kind: KeycloakRealmImport
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: rhsso
+    autogitops_app_name: rhbk
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: rhsso-operator
+    autogitops_app_name: rhbk-operator

@@ -1,0 +1,4 @@
+hostname: {{ rhbk_instance_hostname }}
+databaseUsername: admin
+databasePassword: '{{ generic_user_password }}'
+databaseAdminPassword: '{{ generic_user_password }}'

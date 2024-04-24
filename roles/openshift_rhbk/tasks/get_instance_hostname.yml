@@ -1,0 +1,6 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- set_fact:
+    rhbk_instance_hostname: keycloak-{{ rhbk_instance_namespace }}.apps.{{ openshift_common_cluster_domain }}

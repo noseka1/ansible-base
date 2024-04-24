@@ -1,3 +1,3 @@
 - name: Enable keycloak oauth client in OpenShift
   kubernetes.core.k8s:
-    template: rhsso/keycloak-broker-oauthclient.yaml
+    template: rhbk/keycloak-broker-oauthclient.yaml

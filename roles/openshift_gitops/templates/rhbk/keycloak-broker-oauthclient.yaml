@@ -4,5 +4,5 @@ metadata:
   name: keycloak-broker
 secret: keycloak
 redirectURIs:
-- https://{{ rhsso_hostname }}/auth/realms/argocd/broker/openshift-v4/endpoint
+- https://{{ rhbk_hostname }}/realms/argocd/broker/openshift-v4/endpoint
 grantMethod: prompt

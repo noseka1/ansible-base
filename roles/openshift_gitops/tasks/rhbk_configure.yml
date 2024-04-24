@@ -3,8 +3,8 @@
 # See also Integrating Keycloak and ArgoCD
 # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/#configuring-argocd-oidc
 
-- import_tasks: rhsso_configure_keycloak.yml
+- import_tasks: rhbk_configure_keycloak.yml
 
-- import_tasks: rhsso_configure_openshift.yml
+- import_tasks: rhbk_configure_openshift.yml
 
-- import_tasks: rhsso_configure_argocd.yml
+- import_tasks: rhbk_configure_argocd.yml

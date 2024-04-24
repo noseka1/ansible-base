@@ -23,6 +23,3 @@ gitops_instance_oidc_config_root_ca: ''
 gitops_instance_oidc_tls_insecure_skip_verify: false
 
 gitops_create_cloudflare_tunnel: false
-
-rhsso_instance_namespace: rhsso
-rhsso_instance_name: keycloak

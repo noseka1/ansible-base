@@ -1,28 +1,28 @@
 - import_tasks: get_argocd_route.yml
 
 - import_role:
-    name: openshift_rhsso
+    name: openshift_rhbk
     tasks_from: get_connection.yml
 
 - import_role:
-    name: openshift_rhsso
+    name: openshift_rhbk
     tasks_from: get_access_token.yml
 
 - name: Obtain list of realms
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms
+    url: https://{{ rhbk_hostname }}/admin/realms
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: realms_list_result
 
 - name: Create realm "argocd" if it doesn't exist
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms
+    url: https://{{ rhbk_hostname }}/admin/realms
     method: POST
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       id: argocd
@@ -35,19 +35,19 @@
 
 - name: Obtain list of client scopes
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/client-scopes
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/client-scopes
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: client_scopes_list_result
 
 - name: Create client scope "groups" if it doesn't exist
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/client-scopes
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/client-scopes
     method: POST
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       attributes:
@@ -72,19 +72,19 @@
 
 - name: Obtain list of clients
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/clients
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: clients_list_result
 
 - name: Create client "argocd" if it doesn't exist
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/clients
     method: POST
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       baseUrl: /applications
@@ -110,9 +110,9 @@
 
 - name: Obtain list of clients
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/clients
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: clients_list_result
@@ -122,28 +122,28 @@
 
 - name: Retrieve client secret
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/clients/{{ client_id }}/client-secret
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/clients/{{ client_id }}/client-secret
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: client_secret_result
 
 - name: Obtain list of groups
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/groups
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/groups
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: groups_list_result
 
 - name: Create group "ArgoCDAdmins" if it doesn't exist
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/groups
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/groups
     method: POST
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       name: ArgoCDAdmins
@@ -160,19 +160,19 @@
 
 - name: Obtain list of identity providers
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/identity-provider/instances
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/identity-provider/instances
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: identity_providers_list_result
 
 - name: Create identity provider "openshift-v4" if it doesn't exist
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/identity-provider/instances
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/identity-provider/instances
     method: POST
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       alias: openshift-v4
@@ -188,9 +188,9 @@
 
 - name: Obtain list of flow executions for authentication flow "first broker login"
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     validate_certs: false
     status_code: [ 200 ]
   register: authentication_flow_executions_list_result
@@ -200,10 +200,10 @@
 
 - name: Disable review profile config execution (removes Update Account Information dialog)
   uri:
-    url: https://{{ rhsso_hostname }}/auth/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
+    url: https://{{ rhbk_hostname }}/admin/realms/argocd/authentication/flows/first%20broker%20login/executions
     method: PUT
     headers:
-      Authorization: bearer {{ rhsso_access_token }}
+      Authorization: bearer {{ rhbk_access_token }}
     body_format: json
     body:
       id: '{{ review_profile_config_execution.id }}'

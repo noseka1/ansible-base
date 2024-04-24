@@ -7,7 +7,7 @@ spec:
   # Enable OIDC backend
   oidcConfig: |
     name: OpenShift Single Sign-On
-    issuer: https://{{ rhsso_hostname }}/auth/realms/argocd
+    issuer: https://{{ rhbk_hostname }}/realms/argocd
     clientID: argocd
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]
@@ -20,6 +20,9 @@ spec:
       g, /ArgoCDAdmins, role:admin
     scopes: '[groups]'
   sso:
-    # Make sure Dex is disabled as it seems to clash with the RH SSO login
+    # Make sure Dex is disabled as it seems to clash with the Keycloak login
     dex:
-    provider: ''
+    # The following instructs OpenShift GitOps operator to deploy its own
+    # Keycloak instance. Disable this and use our external instance instead.
+    #provider: keycloak
+    #keycloak:

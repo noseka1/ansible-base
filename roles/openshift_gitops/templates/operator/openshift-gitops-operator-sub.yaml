@@ -35,6 +35,10 @@ spec:
     # https://github.com/redhat-developer/gitops-operator/blob/9f7698583cce8a22931951e57aab0ea9b36ff98f/docs/OpenShift%20GitOps%20Usage%20Guide.md#default-permissions-provided-to-argo-cd-instance
     - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
       value: "openshift-gitops"
+    # You can configure log levels, such as debug, info, warn, error, panic and fatal.
+    # The default log level set for the output is info.
+    - name: LOG_LEVEL
+      value: info
     # HTTP proxy settings
     - name: HTTP_PROXY
       value: ""

@@ -15,6 +15,7 @@
       - instance/openshift-gitops-appset-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
       - instance/trusted-ca-bundle-cm.yaml
+      - instance/argocd-secret-secret.yaml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ gitops_instance_name }} deployment to complete
   kubernetes.core.k8s_info:

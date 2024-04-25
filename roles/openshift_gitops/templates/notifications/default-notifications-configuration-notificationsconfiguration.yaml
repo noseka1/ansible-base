@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: NotificationsConfiguration
+metadata:
+  name: default-notifications-configuration
+  namespace: {{ gitops_instance_namespace }}
+spec:
+  services:
+    service.webhook.mywebhook: |
+      url: http://webhook-receiver.{{ gitops_instance_namespace }}.svc.cluster.local:8080
+  # Contains centrally managed global application subscriptions
+  subscriptions:
+    subscriptions: |
+      - recipients:
+        - mywebhook
+        # Include all triggers listed in https://argocd-notifications.readthedocs.io/en/stable/catalog/
+        triggers:
+        - on-created
+        - on-deleted
+        - on-deployed
+        - on-health-degraded
+        - on-sync-failed
+        - on-sync-running
+        - on-sync-status-unknown
+        - on-sync-succeeded

@@ -6,7 +6,7 @@
     autogitops_app_src_path: openshift-pipelines
     autogitops_app_dst_path: openshift-pipelines
     autogitops_app_namespace: openshift-operators
-    autogitops_app_values: '{{ lookup("template", "values.yaml") }}'
+    autogitops_app_values: ''
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
   kubernetes.core.k8s_info:

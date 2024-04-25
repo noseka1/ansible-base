@@ -3,7 +3,7 @@
     name: openshift_common
     tasks_from: delete_operator.yml
   vars:
-    delete_operator_subscription_name: '{{ openshift_pipelines_subscription_name }}'
+    delete_operator_subscription_name: openshift-pipelines-operator
     delete_operator_subscription_namespace: openshift-operators
 
 - import_role:

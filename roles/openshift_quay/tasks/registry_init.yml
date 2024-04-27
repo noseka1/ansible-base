@@ -1,10 +1,4 @@
-- name: Obtain Quay registry route
-  kubernetes.core.k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: '{{ quay_instance_name }}-quay'
-    namespace: '{{ quay_instance_namespace }}'
-  register: quay_instance_route
+- import_tasks: get_hostname.yml
 
 - name: Creating admin user at endpoint https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize
   uri:
@@ -24,8 +18,10 @@
     msg: Failed to create the admin user
   when: quay_admin_initialize.status == 400 and quay_admin_initialize.json.message != 'Cannot initialize user in a non-empty database'
 
-- name: Save admin access token
-  kubernetes.core.k8s:
-    template:
-      - quay/instance/quay-registry-admin-token-secret.yaml
+# This is a one-time initialization. It won't possible to perform this initialization
+# in the future as the access token expires.
+
+- import_tasks: organization_init.yml
+  vars:
+    quay_access_token: '{{ quay_admin_initialize.json.access_token }}'
   when: quay_admin_initialize.status == 200

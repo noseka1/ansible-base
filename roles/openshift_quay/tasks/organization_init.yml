@@ -1,5 +1,3 @@
-- import_tasks: get_admin_connection.yml
-
 - set_fact:
     quay_team_name: creators
     quay_robot_name: creator

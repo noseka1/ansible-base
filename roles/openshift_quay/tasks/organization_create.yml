@@ -70,6 +70,13 @@
       description: Robot {{ quay_robot_name }}
       unstructured_metadata: {}
     status_code: [ 201 ]
+  register: quay_robot_create_result
+  when: quay_robot_result.status in [ 400, 404 ]
+
+- name: Save robot access token
+  kubernetes.core.k8s:
+    template:
+      - quay/instance/quay-registry-robot-token-secret.yaml
   when: quay_robot_result.status in [ 400, 404 ]
 
 - name: Add robot account {{ quay_robot_name }} to team {{ quay_team_name }}
@@ -82,3 +89,4 @@
     body_format: json
     status_code: [ 200, 201 ]
   when: (quay_team_result.status == 404) or (quay_robot_result.status in [ 400, 404 ])
+

@@ -42,10 +42,7 @@
     autogitops_app_values: ''
   tags: quay_instance
 
-- import_tasks: admin_init.yml
-  tags: quay_instance
-
-- import_tasks: organization_init.yml
+- import_tasks: registry_init.yml
   tags: quay_instance
 
 - import_tasks: report_success.yml

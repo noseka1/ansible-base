@@ -1,15 +1,13 @@
-- import_tasks: get_admin_connection.yml
+- import_tasks: get_hostname.yml
 
-- name: Retrieve robot account {{ quay_robot_name }}
-  uri:
-    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/robots/{{ quay_robot_name }}
-    method: GET
-    headers:
-      Authorization: Bearer {{ quay_access_token }}
-    validate_certs: true
-    status_code: [ 200 ]
-  register: quay_robot_result
+- name: Obtain Quay registry robot access token
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ quay_instance_name }}-{{ quay_organization_name }}-{{ quay_robot_name }}-token'
+    namespace: '{{ quay_instance_namespace }}'
+  register: quay_robot_token_result
 
 - set_fact:
     quay_robot_username: '{{ quay_organization_name }}+{{ quay_robot_name }}'
-    quay_robot_password: '{{ quay_robot_result.json.token }}'
+    quay_robot_password: '{{ quay_robot_token_result.resources.0.data.access_token | b64decode }}'

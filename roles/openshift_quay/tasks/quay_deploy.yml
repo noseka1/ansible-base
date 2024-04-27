@@ -37,19 +37,3 @@
     autogitops_app_dst_path: quay/quay/instance
     autogitops_app_namespace: quay-enterprise
     autogitops_app_values: ''
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay deployment to complete
-  kubernetes.core.k8s_info:
-    api_version: quay.redhat.com/v1
-    kind: QuayRegistry
-    namespace: '{{ quay_instance_namespace }}'
-    name: '{{ quay_instance_name }}'
-  register: quayregistry_result
-  until:
-    - quayregistry_result.resources.0.status.conditions is defined
-    - quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == 'True'
-    - quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RolloutBlocked') | list | length > 0
-    - (quayregistry_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RolloutBlocked') | first).status == 'False'
-  retries: 60
-  delay: 10

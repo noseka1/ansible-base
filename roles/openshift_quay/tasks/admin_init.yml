@@ -10,8 +10,7 @@
   uri:
     url: "https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize"
     method: POST
-    validate_certs: no
-    return_content: yes
+    validate_certs: true
     body_format: json
     body:
       username: admin
@@ -19,8 +18,14 @@
       email: admin@example.com
       access_token: true
     status_code: [ 200, 400 ]
-  register: quay_user_initialize
+  register: quay_admin_initialize
 
 - fail:
     msg: Failed to create the admin user
-  when: quay_user_initialize.status == 400 and quay_user_initialize.json.message != 'Cannot initialize user in a non-empty database'
+  when: quay_admin_initialize.status == 400 and quay_admin_initialize.json.message != 'Cannot initialize user in a non-empty database'
+
+- name: Save admin access token
+  kubernetes.core.k8s:
+    template:
+      - quay/instance/quay-registry-admin-token-secret.yaml
+  when: quay_admin_initialize.status == 200

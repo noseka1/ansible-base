@@ -1,0 +1,84 @@
+- set_fact:
+    quay_robot_qualified_name: '{{ quay_organization_name }}+{{ quay_robot_name }}'
+
+- name: Check if organization {{ quay_organization_name }} already exists
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}
+    method: GET
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    status_code: [ 200, 404 ]
+  register: quay_organization_result
+
+- name: Create organization {{ quay_organization_name }}
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/
+    method: POST
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    body_format: json
+    body:
+      name: '{{ quay_organization_name }}'
+    status_code: [ 201 ]
+  when: quay_organization_result.status == 404
+
+- name: Check if team {{ quay_team_name }} already exists
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/team/{{ quay_team_name }}/members
+    method: GET
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    status_code: [ 200, 404 ]
+  register: quay_team_result
+
+- name: Create team {{ quay_team_name }}
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/team/{{ quay_team_name }}
+    method: PUT
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    body_format: json
+    body:
+      role: creator
+      description: Creator team
+    status_code: [ 200, 201 ]
+  when: quay_team_result.status == 404
+
+- name: Check if robot account {{ quay_robot_name }} exists
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/robots/{{ quay_robot_name }}
+    method: GET
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    status_code: [ 200, 400, 404 ]
+  register: quay_robot_result
+
+- name: Create robot account {{ quay_robot_name }}
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/robots/{{ quay_robot_name }}
+    method: PUT
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    body_format: json
+    body:
+      description: Robot {{ quay_robot_name }}
+      unstructured_metadata: {}
+    status_code: [ 201 ]
+  when: quay_robot_result.status in [ 400, 404 ]
+
+- name: Add robot account {{ quay_robot_name }} to team {{ quay_team_name }}
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/team/{{ quay_team_name }}/members/{{ quay_robot_qualified_name }}
+    method: PUT
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    body_format: json
+    status_code: [ 200, 201 ]
+  when: (quay_team_result.status == 404) or (quay_robot_result.status in [ 400, 404 ])

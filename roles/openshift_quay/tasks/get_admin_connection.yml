@@ -1,0 +1,26 @@
+- name: Obtain Quay registry route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ quay_instance_name }}-quay'
+    namespace: '{{ quay_instance_namespace }}'
+  register: quay_instance_route
+
+- name: Fail if Quay route doesn't exist
+  fail:
+    msg: |
+      Quay route doesn't exist. Is Quay installed on the cluster?
+      Use the openshift_quay_deploy.yml playbook to install a Quay instance.
+  when: quay_instance_route.resources | length == 0
+
+- name: Obtain Quay registry admin access token
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ quay_instance_name }}-admin-token'
+    namespace: '{{ quay_instance_namespace }}'
+  register: quay_admin_token_result
+
+- set_fact:
+    quay_hostname: '{{ quay_instance_route.resources.0.spec.host }}'
+    quay_access_token: '{{ quay_admin_token_result.resources.0.data.access_token | b64decode }}'

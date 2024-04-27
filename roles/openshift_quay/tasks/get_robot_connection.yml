@@ -1,0 +1,15 @@
+- import_tasks: get_admin_connection.yml
+
+- name: Retrieve robot account {{ quay_robot_name }}
+  uri:
+    url: https://{{ quay_hostname }}/api/v1/organization/{{ quay_organization_name }}/robots/{{ quay_robot_name }}
+    method: GET
+    headers:
+      Authorization: Bearer {{ quay_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: quay_robot_result
+
+- set_fact:
+    quay_robot_username: '{{ quay_organization_name }}+{{ quay_robot_name }}'
+    quay_robot_password: '{{ quay_robot_result.json.token }}'

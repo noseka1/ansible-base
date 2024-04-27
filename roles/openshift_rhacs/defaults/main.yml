@@ -13,6 +13,9 @@ rhacs_central_default_tls_cert: {}
 # CA certificates that will be added to the RHACS trusted certificates
 rhacs_additional_trusted_ca: ''
 
+# Optionally, configure image integration for Quay registry on the same OpenShift cluster
+rhacs_quay_image_integration_enabled: false
+
 # Optionally, deploy a webhook receiver and configure notifier in Central to send alert notifications to this receiver
 rhacs_webhook_receiver_enabled: true
 

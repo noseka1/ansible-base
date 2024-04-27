@@ -1,0 +1,9 @@
+- import_tasks: get_rhacs_central_host.yml
+
+- include_tasks: quay_image_integration_configure_subtasks.yml
+  loop:
+    - myorg1
+    - myorg2
+    - myorg3
+  loop_control:
+    loop_var: rhacs_quay_organization_name

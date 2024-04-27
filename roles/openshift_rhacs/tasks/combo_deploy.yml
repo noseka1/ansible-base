@@ -12,6 +12,9 @@
 
 - import_tasks: central_deploy.yml
 
+- import_tasks: quay_image_integration_configure.yml
+  when: rhacs_quay_image_integration_enabled
+
 - import_tasks: webhook_receiver_deploy.yml
   when: rhacs_webhook_receiver_enabled
 

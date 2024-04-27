@@ -1,0 +1,48 @@
+- import_role:
+    name: openshift_quay
+    tasks_from: get_robot_connection.yml
+  vars:
+    quay_organization_name: '{{ rhacs_quay_organization_name }}'
+    quay_robot_name: creator
+
+- name: Retrive existing image integrations in RHACS
+  uri:
+    url: https://{{ rhacs_central_host }}/v1/imageintegrations
+    method: GET
+    body_format: json
+    body:
+      name: Quay {{ quay_organization_name }}
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 500, 503 ]
+  register: rhacs_existing_imageintegration_result
+  until: rhacs_existing_imageintegration_result.status in [ 200 ]
+  retries: 12
+  delay: 10
+
+- name: Create image integration in RHACS
+  uri:
+    url: https://{{ rhacs_central_host }}/v1/imageintegrations
+    method: POST
+    body_format: json
+    body:
+      name: Quay {{ quay_organization_name }}
+      type: docker
+      categories:
+        - REGISTRY
+      docker:
+        endpoint: https://{{ quay_hostname }}
+        username: '{{ quay_robot_username }}'
+        password: '{{ quay_robot_password }}'
+    url_username: admin
+    url_password: '{{ generic_user_password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ -1, 200, 503 ]
+  when: rhacs_existing_imageintegration_result.json.integrations | selectattr('name', 'equalto', 'Quay ' + quay_organization_name ) | list | length == 0
+  register: rhacs_imageintegration_result
+  until: rhacs_imageintegration_result.status in [ 200 ]
+  retries: 12
+  delay: 10

@@ -7,6 +7,7 @@
     autogitops_app_dst_path: quay/container-security/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: '{{ lookup("template", "container-security/operator/values.yaml") }}'
+  tags: quay_security_operator
 
 - import_role:
     name: openshift_autogitops
@@ -17,6 +18,7 @@
     autogitops_app_dst_path: quay/quay-bridge/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: '{{ lookup("template", "quay-bridge/operator/values.yaml") }}'
+  tags: quay_bridge_operator
 
 - import_role:
     name: openshift_autogitops
@@ -27,6 +29,7 @@
     autogitops_app_dst_path: quay/quay/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: '{{ lookup("template", "quay/operator/values.yaml") }}'
+  tags: quay_operator
 
 - import_role:
     name: openshift_autogitops
@@ -37,7 +40,9 @@
     autogitops_app_dst_path: quay/quay/instance
     autogitops_app_namespace: quay-enterprise
     autogitops_app_values: ''
+  tags: quay_instance
 
 - import_tasks: create_user.yml
+  tags: quay_instance
 
 - import_tasks: report_success.yml

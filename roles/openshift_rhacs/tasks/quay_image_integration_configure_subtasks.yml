@@ -5,13 +5,16 @@
     quay_organization_name: '{{ rhacs_quay_organization_name }}'
     quay_robot_name: creator
 
+- set_fact:
+    rhacs_quay_imageintegration_name: Quay {{ quay_organization_name }}
+
 - name: Retrive existing image integrations in RHACS
   uri:
     url: https://{{ rhacs_central_host }}/v1/imageintegrations
     method: GET
     body_format: json
     body:
-      name: Quay {{ quay_organization_name }}
+      name: '{{ rhacs_quay_imageintegration_name }}'
     url_username: admin
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
@@ -22,13 +25,13 @@
   retries: 12
   delay: 10
 
-- name: Create image integration in RHACS
+- name: Create image integration {{ rhacs_quay_imageintegration_name }} in RHACS
   uri:
     url: https://{{ rhacs_central_host }}/v1/imageintegrations
     method: POST
     body_format: json
     body:
-      name: Quay {{ quay_organization_name }}
+      name: '{{ rhacs_quay_imageintegration_name }}'
       type: docker
       categories:
         - REGISTRY
@@ -41,7 +44,7 @@
     force_basic_auth: true
     validate_certs: false
     status_code: [ -1, 200, 503 ]
-  when: rhacs_existing_imageintegration_result.json.integrations | selectattr('name', 'equalto', 'Quay ' + quay_organization_name ) | list | length == 0
+  when: rhacs_existing_imageintegration_result.json.integrations | selectattr('name', 'equalto', rhacs_quay_imageintegration_name ) | list | length == 0
   register: rhacs_imageintegration_result
   until: rhacs_imageintegration_result.status in [ 200 ]
   retries: 12

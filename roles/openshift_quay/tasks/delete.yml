@@ -6,6 +6,13 @@
   tags: quay_instance
 
 - import_role:
+    name: openshift_minio
+    tasks_from: delete.yml
+  vars:
+    minio_namespace: '{{ quay_instance_namespace }}-minio'
+  tags: quay_instance
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

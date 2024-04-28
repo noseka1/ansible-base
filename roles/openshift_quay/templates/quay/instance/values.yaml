@@ -1,0 +1,8 @@
+storageHostname: minio.{{ quay_instance_namespace }}-minio.svc
+storagePort: '9000'
+storageIsSecure: false
+storageAccessKey: admin
+storageSecretKey: '{{ generic_user_password }}'
+storageBucketName: mybucket1
+
+quayReplicas: 1

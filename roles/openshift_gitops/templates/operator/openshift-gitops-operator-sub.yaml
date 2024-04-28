@@ -4,11 +4,16 @@ metadata:
   name: {{ gitops_subscription_name }}
   namespace: {{ gitops_subscription_namespace }}
 spec:
+{% if gitops_subscription_channel | length > 0 %}
   channel: {{ gitops_subscription_channel }}
+{% endif %}
   installPlanApproval: {{ gitops_subscription_approval }}
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+{% if gitops_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ gitops_subscription_starting_csv }}
+{% endif %}
   config:
     env:
     # Create the default instance in the openshift-gitops namespace

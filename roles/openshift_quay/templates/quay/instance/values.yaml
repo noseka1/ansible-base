@@ -1,6 +1,6 @@
-storageHostname: minio.{{ quay_instance_namespace }}-minio.svc
-storagePort: '9000'
-storageIsSecure: false
+storageHostname: minio-api-{{ quay_instance_namespace }}-minio.apps.{{ openshift_common_cluster_domain }}
+storagePort: '443'
+storageIsSecure: true
 storageAccessKey: admin
 storageSecretKey: '{{ generic_user_password }}'
 storageBucketName: mybucket1

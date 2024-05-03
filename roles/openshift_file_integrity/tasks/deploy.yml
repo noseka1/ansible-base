@@ -1,36 +1,28 @@
-- name: Deploy File Integrity operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.operator) }}"
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: file-integrity-operator
+    autogitops_app_src_path: file-integrity/operator
+    autogitops_app_dst_path: file-integrity/operator
+    autogitops_app_namespace: openshift-file-integrity
+    autogitops_app_values: ''
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ file_integrity_operator_subscription_name }}'
-    subscription_namespace: '{{ file_integrity_operator_subscription_namespace }}'
-
-- name: Deploy File Integrity instance
-  kubernetes.core.k8s:
-    definition: "{{ lookup('pipe', 'oc kustomize ' + file_integrity_kustomizations.instance) }}"
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the File Integrity instance to become active
-  kubernetes.core.k8s_info:
-    api_version: fileintegrity.openshift.io/v1alpha1
-    kind: FileIntegrity
-    namespace: '{{ file_integrity_instance_namespace }}'
-    name: '{{ file_integrity_instance_name }}'
-  register: fileintegrity_result
-  until:
-    - fileintegrity_result.resources.0.status.phase is defined
-    - fileintegrity_result.resources.0.status.phase == 'Active'
-  retries: 60
-  delay: 10
+    autogitops_app_name: file-integrity
+    autogitops_app_src_path: file-integrity/instance
+    autogitops_app_dst_path: file-integrity/instance
+    autogitops_app_namespace: openshift-file-integrity
+    autogitops_app_values: ''
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for FileIntegrityNodeStatus to show up
   kubernetes.core.k8s_info:
     api_version: fileintegrity.openshift.io/v1alpha1
     kind: FileIntegrityNodeStatus
-    namespace: '{{ file_integrity_instance_namespace }}'
+    namespace: openshift-file-integrity
   register: fileintegritynodestatus_result
   until:
     - fileintegritynodestatus_result.resources | length > 0

@@ -1,0 +1,8 @@
+- set_fact:
+    msg: |
+      GitLab installed successfully.
+
+      You can go to GitLab Web UI and log in as user 'root':
+      https://gitlab.apps.{{ openshift_common_cluster_domain }}
+
+- debug: msg="{{ msg.split('\n') }}"

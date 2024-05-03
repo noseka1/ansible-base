@@ -1,0 +1,16 @@
+- name: Obtain API oauth token
+  uri:
+    url: https://{{ gitlab_hostname }}/oauth/token?grant_type=password&username=root&password={{ generic_user_password | string | urlencode }}
+    method: POST
+    status_code: 200
+    validate_certs: true
+  register: gitlab_access_token
+
+- name: Disable sign-up and set default project visibility to internal
+  uri:
+    url: https://{{ gitlab_hostname }}/api/v4/application/settings?signup_enabled=false&default_project_visibility=internal
+    method: PUT
+    headers:
+      Authorization: Bearer {{ gitlab_access_token.json.access_token }}
+    status_code: 200
+    validate_certs: true

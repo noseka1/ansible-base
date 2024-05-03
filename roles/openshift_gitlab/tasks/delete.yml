@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: gitlab
+  tags: gitlab_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_name: gitlab-operator
+  tags: gitlab_operator

@@ -1,2 +1,4 @@
 rhbk_operator_subscription_namespace: keycloak
 rhbk_instance_namespace: keycloak
+
+rhbk_trusted_ca_cert: ''

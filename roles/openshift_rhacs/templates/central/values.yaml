@@ -10,7 +10,8 @@ centralDefaultTlsKey: '{{ rhacs_central_default_tls_cert[openshift_common_cluste
 {% endif %}
 
 # CA certificates that will be added to the RHACS trusted certificates
-additionalTrustedCa: '{{ rhacs_additional_trusted_ca }}'
+additionalTrustedCa: |
+  {{ rhacs_additional_trusted_ca | indent(2) }}
 
 centralAdminPasswordPlain: '{{ generic_user_password }}'
 centralAdminPasswordHash: '{{ generic_user_password | string | password_hash("bcrypt", "constant1234567890123.") }}'

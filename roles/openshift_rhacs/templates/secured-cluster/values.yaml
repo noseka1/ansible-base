@@ -1,7 +1,8 @@
 deploymentMode: '{{ rhacs_deployment_mode }}'
 
 # CA certificates that will be added to the RHACS trusted certificates
-additionalTrustedCa: '{{ rhacs_additional_trusted_ca }}'
+additionalTrustedCa: |
+  {{ rhacs_additional_trusted_ca | indent(2) }}
 
 clusterName: '{{ openshift_common_cluster_domain }}'
 

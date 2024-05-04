@@ -6,10 +6,10 @@
     namespace: '{{ rhbk_instance_namespace }}'
   register: rhbk_secret
 
-- name: Fail if Keycloak route doesn't exist
+- name: Fail if Keycloak secret doesn't exist
   fail:
     msg: |
-      Keycloak route doesn't exist. Is Keycloak installed on the cluster?
+      Keycloak secret doesn't exist. Is Keycloak installed on the cluster?
       Use the openshift_rhbk_deploy.yml playbook to install a Keycloak instance.
   when: rhbk_secret.resources | length == 0
 

@@ -1,0 +1,165 @@
+- import_role:
+    name: openshift_rhbk
+    tasks_from: get_connection.yml
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: get_access_token.yml
+
+- name: Obtain list of realms
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_realms_list_result
+
+- name: Create realm {{ rhbk_realm_name }} if it doesn't exist
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms
+    method: POST
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      id: '{{ rhbk_realm_name }}'
+      realm: '{{ rhbk_realm_name }}'
+      displayName: '{{ rhbk_realm_display_name }}'
+      enabled: true
+    validate_certs: true
+    status_code: [ 201 ]
+  when: (rhbk_realms_list_result.json | selectattr('id', 'equalto', rhbk_realm_name) | list| length) == 0
+
+- name: Obtain list of client scopes
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/client-scopes
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_client_scopes_list_result
+
+- name: Create client scope "groups" if it doesn't exist
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/client-scopes
+    method: POST
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      attributes:
+        display.on.consent.screen: 'true'
+        include.in.token.scope: 'true'
+      name: groups
+      protocol: openid-connect
+      protocolMappers:
+        - config:
+            access.token.claim: 'true'
+            claim.name: groups
+            full.path: 'true'
+            id.token.claim: 'true'
+            userinfo.token.claim: 'true'
+          consentRequired: false
+          name: groups
+          protocol: openid-connect
+          protocolMapper: oidc-group-membership-mapper
+    validate_certs: true
+    status_code: [ 201 ]
+  when: (rhbk_client_scopes_list_result.json | selectattr('name', 'equalto', 'groups') | list | length) == 0
+
+- name: Obtain list of clients
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_clients_list_result
+
+- name: Create client {{ rhbk_client_name }} if it doesn't exist
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients
+    method: POST
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      baseUrl: /applications
+      clientAuthenticatorType: client-secret
+      clientId: '{{ rhbk_client_name }}'
+      defaultClientScopes:
+        - web-origins
+        - role_list
+        - profile
+        - roles
+        - email
+        - groups
+      description: ''
+      name: '{{ rhbk_client_display_name }}'
+      protocol: openid-connect
+      publicClient: false
+      rootUrl: '{{ rhbk_client_root_url }}'
+      redirectUris: '{{ rhbk_client_redirect_uris }}'
+    validate_certs: true
+    status_code: [ 201 ]
+  when: (rhbk_clients_list_result.json | selectattr('clientId', 'equalto', rhbk_client_name) | list | length) == 0
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
+- name: Obtain list of identity providers
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/identity-provider/instances
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_identity_providers_list_result
+
+- name: Create identity provider "openshift-v4" if it doesn't exist
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/identity-provider/instances
+    method: POST
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      alias: openshift-v4
+      config:
+        baseUrl: '{{ openshift_common_infrastructure.status.apiServerURL }}'
+        clientId: keycloak-{{ rhbk_realm_name }}-broker
+        clientSecret: keycloak-{{ rhbk_realm_name }}-broker
+      enabled: true
+      providerId: openshift-v4
+    validate_certs: true
+    status_code: [ 201 ]
+  when: (rhbk_identity_providers_list_result.json | selectattr('providerId', 'equalto', 'openshift-v4') | list | length) == 0
+
+- name: Obtain list of flow executions for authentication flow "first broker login"
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/authentication/flows/first%20broker%20login/executions
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_authentication_flow_executions_list_result
+
+- set_fact:
+    rhbk_review_profile_config_execution: >-
+      {{ rhbk_authentication_flow_executions_list_result.json | selectattr("alias", "defined") | selectattr("alias", "equalto", "review profile config") | first }}
+
+- name: Disable review profile config execution (removes Update Account Information dialog)
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/authentication/flows/first%20broker%20login/executions
+    method: PUT
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      id: '{{ rhbk_review_profile_config_execution.id }}'
+      requirement: DISABLED
+    validate_certs: true
+    status_code: [ 202, 204 ]
+  when: rhbk_review_profile_config_execution.requirement != "DISABLED"

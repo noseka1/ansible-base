@@ -1,0 +1,8 @@
+kind: OAuthClient
+apiVersion: oauth.openshift.io/v1
+metadata:
+  name: keycloak-{{ rhbk_realm_name }}-broker
+secret: keycloak-{{ rhbk_realm_name }}-broker
+redirectURIs:
+- https://{{ rhbk_hostname }}/realms/{{ rhbk_realm_name }}/broker/openshift-v4/endpoint
+grantMethod: prompt

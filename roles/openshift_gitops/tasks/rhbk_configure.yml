@@ -1,10 +1,34 @@
-# See also Configuring SSO for Argo CD on OpenShift
-# https://docs.openshift.com/container-platform/4.8/cicd/gitops/configuring-sso-for-argo-cd-on-openshift.html
-# See also Integrating Keycloak and ArgoCD
-# https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/#configuring-argocd-oidc
+- import_tasks: get_argocd_route.yml
 
-- import_tasks: rhbk_configure_keycloak.yml
+- set_fact:
+    rhbk_realm_name: argocd
+    rhbk_realm_display_name: Argo CD Realm
+    rhbk_client_name: argocd
+    rhbk_client_display_name: Argo CD Client
+    rhbk_client_root_url: 'https://{{ argocd_route.resources.0.spec.host }}'
+    rhbk_client_redirect_uris:
+      - https://{{ argocd_route.resources.0.spec.host }}/auth/callback
 
-- import_tasks: rhbk_configure_openshift.yml
+- import_role:
+    name: openshift_rhbk
+    tasks_from: realm_create.yml
 
-- import_tasks: rhbk_configure_argocd.yml
+- import_role:
+    name: openshift_rhbk
+    tasks_from: group_create.yml
+  vars:
+    rhbk_group_name: ArgoCDAdmins
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: openshift_oauthclient_create.yml
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: client_secret_get.yml
+
+- name: Configure OIDC authentication in Argo CD
+  kubernetes.core.k8s:
+    template:
+      - rhbk/argocd-secret-secret.yaml
+      - rhbk/openshift-gitops-argocd.yaml

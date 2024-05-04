@@ -1,5 +1,0 @@
-- name: Configure OIDC authentication in Argo CD
-  kubernetes.core.k8s:
-    template:
-      - rhbk/argocd-secret-secret.yaml
-      - rhbk/openshift-gitops-argocd.yaml

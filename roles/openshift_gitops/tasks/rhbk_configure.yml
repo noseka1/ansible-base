@@ -5,7 +5,7 @@
     rhbk_realm_display_name: Argo CD Realm
     rhbk_client_name: argocd
     rhbk_client_display_name: Argo CD Client
-    rhbk_client_root_url: 'https://{{ argocd_route.resources.0.spec.host }}'
+    rhbk_client_root_url: https://{{ argocd_route.resources.0.spec.host }}
     rhbk_client_redirect_uris:
       - https://{{ argocd_route.resources.0.spec.host }}/auth/callback
 
@@ -17,7 +17,7 @@
     name: openshift_rhbk
     tasks_from: group_create.yml
   vars:
-    rhbk_group_name: ArgoCDAdmins
+    rhbk_group_name: keycloak-admins
 
 - import_role:
     name: openshift_rhbk

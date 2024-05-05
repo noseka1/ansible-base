@@ -1,0 +1,20 @@
+- set_fact:
+    rhbk_realm_name: rhdh
+    rhbk_realm_display_name: Red Hat Developer Hub Realm
+    rhbk_client_name: rhdh
+    rhbk_client_display_name: Red Hat Developer Hub Client
+    rhbk_client_root_url: https://{{ rhdh_instance_hostname }}
+    rhbk_client_redirect_uris:
+      - https://{{ rhdh_instance_hostname }}/api/auth/oidc/handler/frame
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: realm_create.yml
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: openshift_oauthclient_create.yml
+
+- import_role:
+    name: openshift_rhbk
+    tasks_from: client_secret_get.yml

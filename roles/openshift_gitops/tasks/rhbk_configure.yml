@@ -15,12 +15,6 @@
 
 - import_role:
     name: openshift_rhbk
-    tasks_from: group_create.yml
-  vars:
-    rhbk_group_name: keycloak-admins
-
-- import_role:
-    name: openshift_rhbk
     tasks_from: openshift_oauthclient_create.yml
 
 - import_role:

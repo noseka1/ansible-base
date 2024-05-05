@@ -118,7 +118,7 @@
     status_code: [ 200 ]
   register: rhbk_identity_providers_list_result
 
-- name: Create identity provider "openshift-v4" if it doesn't exist
+- name: Create identity provider openshift-v4 if it doesn't exist
   uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/identity-provider/instances
     method: POST
@@ -137,29 +137,21 @@
     status_code: [ 201 ]
   when: (rhbk_identity_providers_list_result.json | selectattr('providerId', 'equalto', 'openshift-v4') | list | length) == 0
 
-- name: Obtain list of flow executions for authentication flow "first broker login"
-  uri:
-    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/authentication/flows/first%20broker%20login/executions
-    headers:
-      Authorization: Bearer {{ rhbk_access_token }}
-    validate_certs: true
-    status_code: [ 200 ]
-  register: rhbk_authentication_flow_executions_list_result
+- import_tasks: group_create.yml
+  vars:
+    rhbk_group_name: keycloak-admins
 
-- set_fact:
-    rhbk_review_profile_config_execution: >-
-      {{ rhbk_authentication_flow_executions_list_result.json | selectattr("alias", "defined") | selectattr("alias", "equalto", "review profile config") | first }}
-
-- name: Disable review profile config execution (removes Update Account Information dialog)
-  uri:
-    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/authentication/flows/first%20broker%20login/executions
-    method: PUT
-    headers:
-      Authorization: Bearer {{ rhbk_access_token }}
-    body_format: json
-    body:
-      id: '{{ rhbk_review_profile_config_execution.id }}'
-      requirement: DISABLED
-    validate_certs: true
-    status_code: [ 202, 204 ]
-  when: rhbk_review_profile_config_execution.requirement != "DISABLED"
+- include_tasks: user_create.yml
+  loop:
+    - name: admin
+      firstname: Some
+      lastname: Admin
+      email: admin@example.com
+      groups: [ keycloak-admins ]
+    - name: developer
+      firstname: Some
+      lastname: Developer
+      email: developer@example.com
+      groups: []
+  loop_control:
+    loop_var: rhbk_user

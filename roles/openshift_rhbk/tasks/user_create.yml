@@ -1,0 +1,62 @@
+- name: Check if user {{ rhbk_user.name }} in realm {{ rhbk_realm_name }} exists
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/users?username={{ rhbk_user.name | urlencode }}&exact=true
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    validate_certs: true
+    status_code: [ 200 ]
+  register: rhbk_list_user_result
+
+- name: Retrieve user {{ rhbk_user.name }} in OpenShift
+  kubernetes.core.k8s_info:
+    api_version: user.openshift.io/v1
+    kind: User
+    name: '{{ rhbk_user.name }}'
+  register: rhbk_openshift_user_result
+
+- assert:
+    that:
+      - rhbk_openshift_user_result.resources | length == 1
+    fail_msg: 'User "{{ rhbk_user.name }}" does not exist in OpenShift.'
+    quiet: true
+
+- name: Create user {{ rhbk_user.name }} if it doesn't exist
+  uri:
+    url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/users
+    method: POST
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      id: '{{ rhbk_user.name }}'
+      username: '{{ rhbk_user.name }}'
+      firstName: '{{ rhbk_user.firstname }}'
+      lastName: '{{ rhbk_user.lastname }}'
+      email: '{{ rhbk_user.email }}'
+      emailVerified: true
+      groups: '{{ rhbk_user.groups }}'
+      # Create an identity provider link to OpenShift authentication
+      federatedIdentities:
+        - identityProvider: openshift-v4
+          userId: '{{ rhbk_openshift_user_result.resources.0.metadata.uid }}'
+          userName: '{{ rhbk_user.name }}'
+      enabled: true
+    validate_certs: true
+    status_code: [ 201 ]
+  register: rhbk_create_user_result
+  when: rhbk_list_user_result.json | length == 0
+
+- name: Set Keycloak password for user {{ rhbk_user.name }} in realm {{ rhbk_realm_name }}
+  uri:
+    url: '{{ rhbk_create_user_result.location }}/reset-password'
+    method: PUT
+    headers:
+      Authorization: Bearer {{ rhbk_access_token }}
+    body_format: json
+    body:
+      type: password
+      value: '{{ generic_user_password }}'
+      temporary: false
+    validate_certs: true
+    status_code: [ 204 ]
+  when: rhbk_create_user_result is not skipped

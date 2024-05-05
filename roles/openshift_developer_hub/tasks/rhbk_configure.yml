@@ -6,6 +6,11 @@
     rhbk_client_root_url: https://{{ rhdh_instance_hostname }}
     rhbk_client_redirect_uris:
       - https://{{ rhdh_instance_hostname }}/api/auth/oidc/handler/frame
+    rhbk_client_service_accounts_enabled: true
+    rhbk_client_assign_roles:
+      - query-groups
+      - query-users
+      - view-users
 
 - import_role:
     name: openshift_rhbk

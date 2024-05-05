@@ -141,6 +141,10 @@
   vars:
     rhbk_group_name: keycloak-admins
 
+- import_tasks: group_create.yml
+  vars:
+    rhbk_group_name: keycloak-developers
+
 - include_tasks: user_create.yml
   loop:
     - name: admin
@@ -152,6 +156,6 @@
       firstname: Some
       lastname: Developer
       email: developer@example.com
-      groups: []
+      groups: [ keycloak-developers ]
   loop_control:
     loop_var: rhbk_user

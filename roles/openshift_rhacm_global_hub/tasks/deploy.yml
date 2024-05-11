@@ -1,0 +1,19 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhacm-global-hub-operator
+    autogitops_app_src_path: rhacm-global-hub/operator
+    autogitops_app_dst_path: rhacm-global-hub/operator
+    autogitops_app_namespace: multicluster-global-hub
+    autogitops_app_values: ''
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: rhacm-global-hub
+    autogitops_app_src_path: rhacm-global-hub/instance
+    autogitops_app_dst_path: rhacm-global-hub/instance
+    autogitops_app_namespace: multicluster-global-hub
+    autogitops_app_values: ''

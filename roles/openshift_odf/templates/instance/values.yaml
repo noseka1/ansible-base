@@ -1,3 +1,4 @@
+useHostPathForMonDataDir: false
 monPVCTemplate:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template }}
   storageCapacity: 10Gi

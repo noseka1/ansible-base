@@ -1,8 +1,6 @@
 apiVersion: extensions.hive.openshift.io/v1beta1
 kind: AgentClusterInstall
 metadata:
-  annotations:
-    agent-install.openshift.io/install-config-overrides: '{{ lookup("template", "assisted-installer/install-config.yaml") | from_yaml | to_json }}'
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:

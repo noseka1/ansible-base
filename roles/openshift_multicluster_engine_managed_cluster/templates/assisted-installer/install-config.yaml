@@ -1,7 +1,0 @@
-{% if multicluster_engine_managed_cluster.trusted_ca_bundle is defined and
-      multicluster_engine_managed_cluster.trusted_ca_bundle %}
-additionalTrustBundle: |
-  {{ multicluster_engine_managed_cluster.trusted_ca_bundle | indent(2) }}
-{% endif %}
-networking:
-  networkType: OVNKubernetes

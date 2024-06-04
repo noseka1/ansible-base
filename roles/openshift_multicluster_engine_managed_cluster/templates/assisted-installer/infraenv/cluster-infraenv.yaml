@@ -7,6 +7,11 @@ metadata:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
     networkType: {{ multicluster_engine_managed_cluster.network_type }}
 spec:
+{% if multicluster_engine_managed_cluster.trusted_ca_bundle is defined and
+      multicluster_engine_managed_cluster.trusted_ca_bundle %}
+  additionalTrustBundle: |
+    {{ multicluster_engine_managed_cluster.trusted_ca_bundle | indent(4) }}
+{% endif %}
   agentLabels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
   pullSecretRef:
@@ -23,9 +28,5 @@ spec:
     noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
 {% else %}
   proxy: {}
-{% endif %}
-{% if multicluster_engine_managed_cluster.trusted_ca_bundle is defined and
-      multicluster_engine_managed_cluster.trusted_ca_bundle %}
-  ignitionConfigOverride: '{{ lookup("template", "assisted-installer/infraenv/ignition-trusted-ca-bundle.yaml") | from_yaml | to_json }}'
 {% endif %}
   cpuArchitecture: {{ multicluster_engine_managed_cluster.cpu_architecture }}

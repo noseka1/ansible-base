@@ -9,6 +9,8 @@ odf_aws:
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone
 odf_storage_device_set_count: 1
+# Storage capacity per OSD
+odf_storage_device_set_storage_capacity: 100Gi
 
 odf_platform_to_storageclass:
   AWS:

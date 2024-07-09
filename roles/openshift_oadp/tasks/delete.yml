@@ -1,11 +1,7 @@
 # Backup objects get automatically recreated in Kubernetes based on
 # their state in S3 bucket. Delete S3 bucket prior to deleting
 # the backup objects in Kubernetes so they are not recreated.
-- import_role:
-    name: openshift_minio
-    tasks_from: delete.yml
-  vars:
-    minio_namespace: '{{ oadp_instance_minio_namespace }}'
+- import_tasks: minio_delete.yml
   when: oadp_instance_minio_enabled
 
 - import_role:

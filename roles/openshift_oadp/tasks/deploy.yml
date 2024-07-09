@@ -1,8 +1,4 @@
-- import_role:
-    name: openshift_minio
-    tasks_from: deploy.yml
-  vars:
-    minio_namespace: '{{ oadp_instance_minio_namespace }}'
+- import_tasks: minio_deploy.yml
   when: oadp_instance_minio_enabled
 
 - import_role:

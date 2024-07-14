@@ -7,6 +7,7 @@ storageDeviceSets:
   storageCapacity: '{{ odf_storage_device_set_storage_capacity }}'
   count: {{ odf_storage_device_set_count }}
   replica: {{ odf_storage_device_set_replica }}
+  portable: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses }}
 multiCloudGateway:
   storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
 encryptionClusterWide: false

@@ -31,3 +31,7 @@ odf_platform_to_storageclass:
     # Example storage classes: lvms-loop1-vg, openebs-lvm, lso-myvolumeset1
     storage_device_sets: lvms-loop1-vg
     mcg_db: local-path
+
+portable_storageclasses:
+  - gp3-csi
+  - thin-csi

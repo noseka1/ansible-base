@@ -4,3 +4,16 @@ multicluster_engine_hosted_cluster:
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_region: us-west-1
+
+multicluster_engine_hosted_cluster_kubevirt:
+  cluster_name: mycluster20
+  ocp_release_image: 4.15.6-x86_64
+  control_plane_replicas: 1
+  data_plane_replicas: 2
+  ssh_authorized_key: ''
+  nodepool_rootvolume_accessmodes:
+    - ReadWriteOnce
+  nodepool_rootvolume_size: 32Gi
+  nodepool_rootvolume_storageclass: ''
+  # Allowed volume mode values are Filesystem or Block
+  nodepool_rootvolume_volumemode: Filesystem

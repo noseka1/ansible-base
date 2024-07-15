@@ -1,0 +1,55 @@
+- name: Enable wildcard DNS routes
+  kubernetes.core.k8s:
+    template:
+      - kubevirt/default-ingresscontroller.yaml
+
+- name: Create namespace for hosted cluster configuration
+  kubernetes.core.k8s:
+    template:
+      - kubevirt/hosted-clusters-ns.yaml
+
+- name: Deploy cluster {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }} to KubeVirt
+  kubernetes.core.k8s:
+    template:
+      - kubevirt/cluster-pull-secret.yaml
+      - kubevirt/cluster-etcd-encryption-key-secret.yaml
+      - kubevirt/cluster-ssh-key-secret.yaml
+      - kubevirt/cluster-hostedcluster.yaml
+      - kubevirt/cluster-nodepool.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for hosted control plane to become ready
+  kubernetes.core.k8s_info:
+    api_version: hypershift.openshift.io/v1beta1
+    kind: HostedControlPlane
+    name: '{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+    namespace: 'hosted-clusters-{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+  register: hostedcluster_hcp_result
+  until:
+    - hostedcluster_hcp_result.resources.0.status.ready is defined
+    - hostedcluster_hcp_result.resources.0.status.ready
+  retries: 24
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_hosted_cluster.cluster_name }} to become available
+  kubernetes.core.k8s_info:
+    api_version: hypershift.openshift.io/v1beta1
+    kind: HostedCluster
+    name: '{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+    namespace: hosted-clusters
+  register: hostedcluster_result
+  until:
+    - hostedcluster_result.resources.0.status.conditions is defined
+    - hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+    - hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ClusterVersionProgressing') | list | length > 0
+    - (hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ClusterVersionProgressing') | first).status == "False"
+    - hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ClusterVersionSucceeding') | list | length > 0
+    - (hostedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ClusterVersionSucceeding') | first).status == "True"
+  retries: 240
+  delay: 10
+
+- debug:
+    msg: |
+      Cluster {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }} deployed successfully.
+      You can download the admin kubeconfig by issuing 'oc extract -n hosted-clusters secret/{{ hostedcluster_result.resources.0.status.kubeconfig.name }}'
+      You can display the kubeadmin password by issuing 'oc extract -n hosted-clusters secret/{{ hostedcluster_result.resources.0.status.kubeadminPassword.name }} --to -'

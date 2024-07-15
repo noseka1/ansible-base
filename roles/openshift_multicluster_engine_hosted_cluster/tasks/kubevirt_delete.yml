@@ -1,0 +1,11 @@
+- name: Delete cluster {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }} to KubeVirt
+  kubernetes.core.k8s:
+    template:
+      - kubevirt/cluster-pull-secret.yaml
+      - kubevirt/cluster-etcd-encryption-key-secret.yaml
+      - kubevirt/cluster-ssh-key-secret.yaml
+      - kubevirt/cluster-hostedcluster.yaml
+      - kubevirt/cluster-nodepool.yaml
+    state: absent
+    wait: true
+    wait_timeout: 1800

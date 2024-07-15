@@ -1,0 +1,62 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}
+  namespace: hosted-clusters
+spec:
+  autoscaling: {}
+  configuration: {}
+{% if multicluster_engine_hosted_cluster_kubevirt.control_plane_replicas == 1 %}
+  controllerAvailabilityPolicy: SingleReplica
+{% else %}
+  controllerAvailabilityPolicy: HighlyAvailable
+{% endif %}
+  dns:
+    baseDomain: ""
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 8Gi
+          storageClassName: null
+        type: PersistentVolume
+    managementType: Managed
+  fips: false
+  networking:
+    clusterNetwork:
+    - cidr: 10.132.0.0/14
+    networkType: OVNKubernetes
+    serviceNetwork:
+    - cidr: 172.31.0.0/16
+  olmCatalogPlacement: management
+  platform:
+    kubevirt:
+      baseDomainPassthrough: true
+    type: KubeVirt
+  pullSecret:
+    name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-pull-secret
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:{{ multicluster_engine_hosted_cluster_kubevirt.ocp_release_image }}
+  secretEncryption:
+    aescbc:
+      activeKey:
+        name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-etcd-encryption-key
+    type: aescbc
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      type: LoadBalancer
+  - service: OAuthServer
+    servicePublishingStrategy:
+      type: Route
+  - service: Konnectivity
+    servicePublishingStrategy:
+      type: Route
+  - service: Ignition
+    servicePublishingStrategy:
+      type: Route
+  - service: OVNSbDb
+    servicePublishingStrategy:
+      type: Route
+  sshKey:
+    name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-ssh-key

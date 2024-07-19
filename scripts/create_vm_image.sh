@@ -53,16 +53,31 @@ function umount_image {
 
 function prepare_chroot {
   local mount_point=$1
-  sudo mount -t proc none $mount_point/proc
-  sudo mount -t sysfs none $mount_point/sys
-  sudo mount -o bind /dev $mount_point/dev
+  local chroot_point=$2
+
+  sudo mount -t proc none $chroot_point/proc
+  sudo mount -t sysfs none $chroot_point/sys
+  sudo mount -o bind /dev $chroot_point/dev
+
+  if [ $mount_point != $chroot_point ]; then
+    # Bind mount separate /home and /var for Fedora image
+    sudo mount --bind $mount_point/home $chroot_point/home
+    sudo mount --bind $mount_point/var $chroot_point/var
+  fi
 }
 
 function tear_down_chroot {
   local mount_point=$1
-  sudo umount $mount_point/proc
-  sudo umount $mount_point/sys
-  sudo umount $mount_point/dev
+  local chroot_point=$2
+
+  if [ $mount_point != $chroot_point ]; then
+    sudo umount $chroot_point/home
+    sudo umount $chroot_point/var
+  fi
+
+  sudo umount $chroot_point/proc
+  sudo umount $chroot_point/sys
+  sudo umount $chroot_point/dev
 }
 
 
@@ -88,10 +103,10 @@ if [ -d "$mount_point/root/proc" ]; then
   chroot_point=$mount_point/root
 fi
 
-prepare_chroot $chroot_point
+prepare_chroot $mount_point $chroot_point
 
 function cleanup_mount {
-  tear_down_chroot $chroot_point
+  tear_down_chroot $mount_point $chroot_point
   umount_image $mount_point
 }
 

@@ -19,6 +19,12 @@
     fail_msg: "Variable 'github_readonly_token' must not be empty"
     quiet: true
 
+- name: Check that GitHub token is not expired
+  uri:
+    url: https://api.github.com
+    headers:
+      Authorization: token {{ github_readonly_token }}
+
 - name: Run installation scripts
   command: '{{ item }}'
   loop:

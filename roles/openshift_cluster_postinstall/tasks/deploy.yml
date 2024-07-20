@@ -62,6 +62,9 @@
 - import_tasks: set_root_user_password.yml
   when: openshift_cluster_postinstall_set_root_user_password
 
+- import_tasks: enable_fstrim.yml
+  when: openshift_cluster_postinstall_enable_fstrim
+
 - import_tasks: kube_apiserver_audit.yml
 
 - import_tasks: user_groups.yml

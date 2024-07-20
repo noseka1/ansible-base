@@ -52,3 +52,6 @@ openshift_cluster_postinstall_rhel_entitlement: false
 # Overlay custom rpm packages on OpenShift nodes filesystem
 # (requires RHEL entitlements configured on nodes)
 openshift_cluster_postinstall_install_custom_rpms: false
+
+# Enable periodic trimming of filesystems on OpenShift nodes
+openshift_cluster_postinstall_enable_fstrim: false

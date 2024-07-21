@@ -1,7 +1,7 @@
-- name: Enable required RHEL repositories
+- name: Enable required RHEL repositories for Red Hat Ceph {{ cephlab_rhceph_version }}
   community.general.rhsm_repository:
     name:
-      - rhceph-7-tools-for-rhel-9-{{ ansible_architecture }}-rpms
+      - rhceph-{{ cephlab_rhceph_version }}-tools-for-rhel-9-{{ ansible_architecture }}-rpms
     state: enabled
   become: true
 

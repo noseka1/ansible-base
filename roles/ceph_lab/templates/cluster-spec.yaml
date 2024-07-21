@@ -39,6 +39,7 @@ placement:
 {% for host in groups.ceph_lab %}
     - {{ hostvars[host]['ansible_host'] }}
 {% endfor %}
+{% if cephlab_rhceph_version | int >= 7 %}
 ---
 service_type: nfs
 service_id: mynfs
@@ -47,6 +48,7 @@ placement:
     - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
 {% if groups.ceph_lab | length > 1 %}
     - {{ hostvars[groups.ceph_lab.1]['ansible_host'] }}
+{% endif %}
 {% endif %}
 ---
 service_type: osd

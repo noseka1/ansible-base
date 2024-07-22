@@ -8,6 +8,7 @@
     template:
       - minio-api-route.yaml
       - minio-bucket-deploy.yaml
+      - minio-trace-deploy.yaml
       - minio-config-pvc.yaml
       - minio-console-route.yaml
       - minio-deploy.yaml

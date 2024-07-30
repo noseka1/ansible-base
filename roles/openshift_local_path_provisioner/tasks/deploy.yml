@@ -32,6 +32,7 @@
   git:
     repo: '{{ local_path_provisioner_helm_chart_git_repo }}'
     dest: '{{ local_path_provisioner_tmpdir.path }}'
+    version: '{{ local_path_provisioner_helm_chart_git_version }}'
 
 - name: Deploy Local path provisioner
   kubernetes.core.helm:

@@ -7,6 +7,7 @@
     autogitops_app_dst_path: local-storage/operator
     autogitops_app_namespace: openshift-local-storage
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+  tags: local_storage_operator
 
 - import_role:
     name: openshift_autogitops
@@ -17,3 +18,4 @@
     autogitops_app_dst_path: local-storage/instance
     autogitops_app_namespace: openshift-local-storage
     autogitops_app_values: ''
+  tags: local_storage_instance

@@ -1,2 +1,3 @@
 lvms_operator_subscription_channel: ''
 lvms_operator_subscription_approval: Automatic
+lvms_manage_namespace: true

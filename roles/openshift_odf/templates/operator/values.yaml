@@ -1,2 +1,4 @@
+manageNamespace: false
 subscriptionApproval: Automatic
 subscriptionChannel: ''
+subscriptionStartingCsv: ''

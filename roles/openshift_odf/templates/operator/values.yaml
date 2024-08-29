@@ -1,4 +1,4 @@
-manageNamespace: true
+manageNamespaceAndOperatorGroup: true
 subscriptionApproval: Automatic
 subscriptionChannel: ''
 subscriptionStartingCsv: ''

@@ -5,13 +5,15 @@
     autogitops_app_name: local-storage-operator
     autogitops_app_src_path: local-storage/operator
     autogitops_app_dst_path: local-storage/operator
-    autogitops_app_namespace: '{{ local_storage_operator_subscription_namespace }}'
+    autogitops_app_namespace: openshift-local-storage
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
-- name: Auto-discover all block devices on all nodes
-  kubernetes.core.k8s:
-    template: templates/instance/auto-discover-devices-localvolumediscovery.yaml
-
-- name: Add all devices to volumeset
-  kubernetes.core.k8s:
-    template: templates/instance/myvolumeset1-localvolumeset.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: local-storage
+    autogitops_app_src_path: local-storage/instance
+    autogitops_app_dst_path: local-storage/instance
+    autogitops_app_namespace: openshift-local-storage
+    autogitops_app_values: ''

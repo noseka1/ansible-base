@@ -1,12 +1,8 @@
 - import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
   vars:
-    delete_kubernetes_objects:
-      - api_version: local.storage.openshift.io/v1alpha1
-        kind: LocalVolumeDiscovery
-      - api_version: local.storage.openshift.io/v1alpha1
-        kind: LocalVolumeSet
+    autogitops_app_name: local-storage
 
 - import_role:
     name: openshift_autogitops

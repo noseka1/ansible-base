@@ -4,5 +4,10 @@
 - import_tasks: operator_delete.yml
   tags: odf_operator
 
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml
+  tags: odf_operator
+
 - import_tasks: cluster_nodes_delete.yml
   tags: odf_cluster_nodes

@@ -39,6 +39,7 @@
   template:
     src: cluster-spec.yaml
     dest: cluster-spec.yaml
+    backup: true
 
 - name: Deploy complete Ceph cluster
   command: |

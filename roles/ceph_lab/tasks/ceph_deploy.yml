@@ -1,15 +1,3 @@
-- name: Install cephadm-ansible on first node
-  yum:
-    name:
-      - cephadm-ansible
-  become: true
-
-- name: Create Ansible hosts file
-  template:
-    src: hosts
-    dest: /usr/share/cephadm-ansible/hosts
-  become: true
-
 - name: Create registry credentials file
   template:
     src: registry-creds.json

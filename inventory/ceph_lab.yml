@@ -3,9 +3,26 @@ ceph_lab:
     ceph1:
       ansible_host: ceph1.lab.example.com
       ansible_user: ansible
+      cephadm_labels:
+        - mon
+        - rgw
+        - mds
+        - mgr
+        - nfs
+        - osd
     ceph2:
       ansible_host: ceph2.lab.example.com
       ansible_user: ansible
+      cephadm_labels:
+        - mon
+        - rgw
+        - mds
+        - mgr
+        - nfs
+        - osd
     ceph3:
       ansible_host: ceph3.lab.example.com
       ansible_user: ansible
+      cephadm_labels:
+        - mon
+        - osd

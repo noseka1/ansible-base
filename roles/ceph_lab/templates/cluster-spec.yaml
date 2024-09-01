@@ -2,60 +2,36 @@
 ---
 service_type: host
 hostname: {{ hostvars[host]['ansible_host'] }}
+labels: {{ hostvars[host]['cephadm_labels'] | to_yaml }}
 {% endfor %}
 ---
 service_type: mon
 placement:
-  hosts:
-{% if groups.ceph_lab | length < 3 %}
-    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
-{% else %}
-    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
-    - {{ hostvars[groups.ceph_lab.1]['ansible_host'] }}
-    - {{ hostvars[groups.ceph_lab.2]['ansible_host'] }}
-{% endif %}
+  label: mon
 ---
 service_type: rgw
 service_id: myrealm.myzone
 placement:
-  hosts:
-    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
-{% if groups.ceph_lab | length > 1 %}
-    - {{ hostvars[groups.ceph_lab.1]['ansible_host'] }}
-{% endif %}
+  label: rgw
 ---
 service_type: mds
 service_id: myfs
 placement:
-  hosts:
-    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
-{% if groups.ceph_lab | length > 1 %}
-    - {{ hostvars[groups.ceph_lab.1]['ansible_host'] }}
-{% endif %}
+  label: mds
 ---
 service_type: mgr
 placement:
-  hosts:
-{% for host in groups.ceph_lab %}
-    - {{ hostvars[host]['ansible_host'] }}
-{% endfor %}
+  label: mgr
 {% if cephlab_rhceph_version | int >= 7 %}
 ---
 service_type: nfs
 service_id: mynfs
 placement:
-  hosts:
-    - {{ hostvars[groups.ceph_lab.0]['ansible_host'] }}
-{% if groups.ceph_lab | length > 1 %}
-    - {{ hostvars[groups.ceph_lab.1]['ansible_host'] }}
-{% endif %}
+  label: nfs
 {% endif %}
 ---
 service_type: osd
 placement:
-  hosts:
-{% for host in groups.ceph_lab %}
-    - {{ hostvars[host]['ansible_host'] }}
-{% endfor %}
+  label: osd
 data_devices:
   paths: {{ cephlab_osd_data_devices_paths | to_yaml }}

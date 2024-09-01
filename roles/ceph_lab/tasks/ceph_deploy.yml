@@ -40,10 +40,12 @@
     src: cluster-spec.yaml
     dest: cluster-spec.yaml
     backup: true
+  register: cephlab_cluster_spec
 
 - name: Deploy complete Ceph cluster
   command: |
     ceph orch apply -i cluster-spec.yaml
+  when: cephlab_cluster_spec is changed
   become: true
 
 - import_tasks: report_success.yml

@@ -10,6 +10,7 @@ ceph_lab:
         - mgr
         - nfs
         - osd
+        - grafana
     ceph2:
       ansible_host: ceph2.lab.example.com
       ansible_user: ansible

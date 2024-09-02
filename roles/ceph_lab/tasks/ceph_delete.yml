@@ -27,7 +27,7 @@
   when: cephlab_cluster_fsid is succeeded
   become: true
 
-- name: Delete Ceph cluster spec file
+- name: Delete cluster configuration files
   file:
-    path: cluster-spec.yaml
+    path: '{{ cephlab_conf_dir }}'
     state: absent

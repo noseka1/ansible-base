@@ -6,3 +6,8 @@ cephlab_rhceph_version: 7
 
 cephlab_ceph_dashboard_crt: ''
 cephlab_ceph_dashboard_key: ''
+
+cephlab_ceph_grafana_crt: ''
+cephlab_ceph_grafana_key: ''
+
+cephlab_conf_dir: cephconf

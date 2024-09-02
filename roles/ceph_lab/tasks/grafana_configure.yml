@@ -1,0 +1,44 @@
+- name: Create Grafana certificate file
+  copy:
+    content: '{{ cephlab_ceph_grafana_crt }}'
+    dest: '{{ cephlab_conf_dir }}/grafana.crt'
+  register: cephlab_ceph_grafana_crt_result
+  when: cephlab_ceph_grafana_crt | length > 0
+
+- name: Create Grafana key file
+  copy:
+    content: '{{ cephlab_ceph_grafana_key }}'
+    dest: '{{ cephlab_conf_dir }}/grafana.key'
+    mode: '0600'
+  register: cephlab_ceph_grafana_key_result
+  when: cephlab_ceph_grafana_key | length > 0
+
+- name: Update Grafana certificate
+  command: >-
+    ceph config-key set mgr/cephadm/{{ ansible_host }}/grafana_crt --in-file {{ cephlab_conf_dir }}/grafana.crt
+  when: cephlab_ceph_grafana_crt_result is changed
+  become: true
+
+- name: Update Grafana key
+  command: >-
+    ceph config-key set mgr/cephadm/{{ ansible_host }}/grafana_key --in-file {{ cephlab_conf_dir }}/grafana.key
+  when: cephlab_ceph_grafana_key_result is changed
+  become: true
+
+- name: Restart mgr service
+  command: >-
+    ceph orch restart mgr
+  when: >-
+    (cephlab_ceph_grafana_crt_result is changed) or (cephlab_ceph_grafana_key_result is changed)
+  register: cephlab_ceph_mgr_result
+  until: cephlab_ceph_mgr_result is succeeded
+  retries: 60
+  delay: 10
+  become: true
+
+- name: Redeploy Grafana
+  command: >-
+    ceph orch redeploy grafana
+  when: >-
+    (cephlab_ceph_grafana_crt_result is changed) or (cephlab_ceph_grafana_key_result is changed)
+  become: true

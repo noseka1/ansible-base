@@ -1,19 +1,24 @@
+- name: Create configuration directory {{ cephlab_conf_dir }}
+  file:
+    path: '{{ cephlab_conf_dir }}'
+    state: directory
+
 - name: Create registry credentials file
   template:
     src: registry-creds.json
-    dest: registry-creds.json
+    dest: '{{ cephlab_conf_dir }}/registry-creds.json'
     mode: '0600'
 
 - name: Create dashboard certificate file
   copy:
     content: '{{ cephlab_ceph_dashboard_crt }}'
-    dest: dashboard.crt
+    dest: '{{ cephlab_conf_dir }}/dashboard.crt'
   when: cephlab_ceph_dashboard_crt | length > 0
 
 - name: Create dashboard key file
   copy:
     content: '{{ cephlab_ceph_dashboard_key }}'
-    dest: dashboard.key
+    dest: '{{ cephlab_conf_dir }}/dashboard.key'
     mode: '0600'
   when: cephlab_ceph_dashboard_key | length > 0
 
@@ -22,11 +27,11 @@
     cephadm bootstrap
       --allow-fqdn-hostname
       --mon-ip '{{ ansible_default_ipv4.address }}'
-      --registry-json registry-creds.json
+      --registry-json {{ cephlab_conf_dir }}/registry-creds.json
       --initial-dashboard-password '{{ generic_user_password }}'
     {% if (cephlab_ceph_dashboard_crt | length > 0) and (cephlab_ceph_dashboard_key | length > 0) %}
-      --dashboard-crt dashboard.crt
-      --dashboard-key dashboard.key
+      --dashboard-crt {{ cephlab_conf_dir }}/dashboard.crt
+      --dashboard-key {{ cephlab_conf_dir }}/dashboard.key
     {% endif %}
       --dashboard-password-noupdate
       --ssh-public-key  /root/.ssh/id_rsa.pub
@@ -38,15 +43,17 @@
 - name: Create Ceph cluster spec file
   template:
     src: cluster-spec.yaml
-    dest: cluster-spec.yaml
+    dest: '{{ cephlab_conf_dir }}/cluster-spec.yaml'
     backup: true
   register: cephlab_cluster_spec
 
 - name: Deploy complete Ceph cluster
   command: >-
-    ceph orch apply -i cluster-spec.yaml
+    ceph orch apply -i {{ cephlab_conf_dir }}/cluster-spec.yaml
   when: cephlab_cluster_spec is changed
   become: true
+
+- import_tasks: grafana_configure.yml
 
 - import_tasks: rbd_create.yml
 

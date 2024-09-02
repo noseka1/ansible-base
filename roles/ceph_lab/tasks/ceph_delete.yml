@@ -26,3 +26,8 @@
       --force
   when: cephlab_cluster_fsid is succeeded
   become: true
+
+- name: Delete Ceph cluster spec file
+  file:
+    path: cluster-spec.yaml
+    state: absent

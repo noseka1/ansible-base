@@ -1,6 +1,6 @@
-- name: Retrieve rbd pool
+- name: Retrieve rbd pool {{ cephlab_rbd_pool_name }}
   command: >-
-    ceph osd pool stats ocs-storagecluster-cephblockpool
+    ceph osd pool stats {{ cephlab_rbd_pool_name }}
   changed_when: false
   ignore_errors: true
   register: cephlab_rbd_stats

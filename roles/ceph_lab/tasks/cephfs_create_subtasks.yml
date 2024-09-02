@@ -1,14 +1,14 @@
 - name: Create metadata pool for CephFS
   command: >-
-    ceph osd pool create ocs-storagecluster-cephfilesystem-metadata 16
+    ceph osd pool create {{ cephlab_cephfs_volume_name }}-metadata 16
   become: true
 
 - name: Create data pool for CephFS
   command: >-
-    ceph osd pool create ocs-storagecluster-cephfilesystem-data0 32
+    ceph osd pool create {{ cephlab_cephfs_volume_name }}-data0 32
   become: true
 
 - name: Create CephFS volume
   command: >-
-    ceph fs new ocs-storagecluster-cephfilesystem ocs-storagecluster-cephfilesystem-metadata ocs-storagecluster-cephfilesystem-data0
+    ceph fs new {{ cephlab_cephfs_volume_name }} {{ cephlab_cephfs_volume_name }}-metadata {{ cephlab_cephfs_volume_name }}-data0
   become: true

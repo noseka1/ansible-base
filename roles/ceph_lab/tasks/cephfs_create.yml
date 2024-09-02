@@ -1,6 +1,6 @@
-- name: Retrieve CephFS volume
+- name: Retrieve CephFS volume {{ cephlab_cephfs_volume_name }}
   command: >-
-    ceph fs volume info ocs-storagecluster-cephfilesystem
+    ceph fs volume info {{ cephlab_cephfs_volume_name }}
   changed_when: false
   ignore_errors: true
   register: cephlab_cephfs_volume_info

@@ -1,0 +1,14 @@
+- name: Create realm {{ cephlab_rgw_store_realm }}
+  command: >-
+    radosgw-admin realm create --rgw-realm={{ cephlab_rgw_store_realm }}
+  become: true
+
+- name: Create zonegroup {{ cephlab_rgw_store_zonegroup }}
+  command: >-
+    radosgw-admin zonegroup create --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }} --master
+  become: true
+
+- name: Create zone {{ cephlab_rgw_store_zone }}
+  command: >-
+    radosgw-admin zone create --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }} --rgw-zone={{ cephlab_rgw_store_zone }} --master
+  become: true

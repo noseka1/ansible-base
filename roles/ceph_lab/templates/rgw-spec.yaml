@@ -1,0 +1,9 @@
+service_type: rgw
+service_id: {{ cephlab_rgw_store_realm }}.{{ cephlab_rgw_store_zone }}
+placement:
+  label: rgw
+spec:
+  rgw_realm: {{ cephlab_rgw_store_realm }}
+  rgw_zone: {{ cephlab_rgw_store_zone }}
+  rgw_zonegroup: {{ cephlab_rgw_store_zonegroup }}
+  rgw_frontend_port: 80

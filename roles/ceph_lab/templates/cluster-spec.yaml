@@ -9,11 +9,6 @@ service_type: mon
 placement:
   label: mon
 ---
-service_type: rgw
-service_id: myrealm.myzone
-placement:
-  label: rgw
----
 service_type: mds
 service_id: myfs
 placement:

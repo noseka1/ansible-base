@@ -1,0 +1,23 @@
+- name: Retrieve zone {{ cephlab_rgw_store_zone }}
+  command: >-
+    radosgw-admin zone get --rgw-zone {{ cephlab_rgw_store_zone }}
+  changed_when: false
+  ignore_errors: true
+  register: cephlab_rgw_zone_result
+  become: true
+
+- import_tasks: rgw_create_subtasks.yml
+  when: cephlab_rgw_zone_result is failed
+
+- name: Create rgw spec file
+  template:
+    src: rgw-spec.yaml
+    dest: '{{ cephlab_conf_dir }}/rgw-{{ cephlab_rgw_store_zone }}-spec.yaml'
+    backup: true
+  register: cephlab_rgw_spec_result
+
+- name: Apply rgw spec
+  command: >-
+    ceph orch apply -i {{ cephlab_conf_dir }}/rgw-{{ cephlab_rgw_store_zone }}-spec.yaml
+  when: cephlab_rgw_spec_result is changed
+  become: true

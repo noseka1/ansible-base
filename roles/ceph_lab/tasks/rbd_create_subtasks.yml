@@ -1,14 +1,14 @@
-- name: Create pool ocs-storagecluster-cephblockpool
+- name: Create pool {{ cephlab_rbd_pool_name }}
   command: >-
-    ceph osd pool create ocs-storagecluster-cephblockpool 32
+    ceph osd pool create {{ cephlab_rbd_pool_name }} 32
   become: true
 
-- name: Enable application rbd
+- name: Enable application rbd {{ cephlab_rbd_pool_name }}
   command: >-
-    ceph osd pool application enable ocs-storagecluster-cephblockpool rbd
+    ceph osd pool application enable {{ cephlab_rbd_pool_name }} rbd
   become: true
 
-- name: Initialize rbd pool
+- name: Initialize rbd pool {{ cephlab_rbd_pool_name }}
   command: >-
-    rbd pool init --pool ocs-storagecluster-cephblockpool
+    rbd pool init --pool {{ cephlab_rbd_pool_name }}
   become: true

@@ -56,7 +56,17 @@
 - import_tasks: grafana_configure.yml
 
 - import_tasks: rbd_create.yml
+  vars:
+    cephlab_rbd_pool_name: ocs-storagecluster-cephblockpool
 
 - import_tasks: cephfs_create.yml
+  vars:
+    cephlab_cephfs_volume_name: ocs-storagecluster-cephfilesystem
+
+- import_tasks: rgw_create.yml
+  vars:
+    cephlab_rgw_store_realm: ocs-storagecluster-cephobjectstore
+    cephlab_rgw_store_zonegroup: ocs-storagecluster-cephobjectstore
+    cephlab_rgw_store_zone: ocs-storagecluster-cephobjectstore
 
 - import_tasks: report_success.yml

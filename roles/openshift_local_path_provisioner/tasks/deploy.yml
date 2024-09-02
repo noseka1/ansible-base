@@ -1,4 +1,4 @@
-- name: Create create a directory for volumes on each cluster node (will cause nodes to restart)
+- name: Create a directory for volumes on each cluster node (will cause nodes to restart)
   kubernetes.core.k8s:
     template:
       - 50-local-path-provisioner-mc.yaml

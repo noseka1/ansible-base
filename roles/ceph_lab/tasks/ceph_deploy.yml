@@ -18,18 +18,18 @@
   when: cephlab_ceph_dashboard_key | length > 0
 
 - name: Bootstrap Ceph cluster
-  command: |
-    cephadm bootstrap \
-      --allow-fqdn-hostname \
-      --mon-ip '{{ ansible_default_ipv4.address }}' \
-      --registry-json registry-creds.json \
-      --initial-dashboard-password '{{ generic_user_password }}' \
+  command: >-
+    cephadm bootstrap
+      --allow-fqdn-hostname
+      --mon-ip '{{ ansible_default_ipv4.address }}'
+      --registry-json registry-creds.json
+      --initial-dashboard-password '{{ generic_user_password }}'
     {% if (cephlab_ceph_dashboard_crt | length > 0) and (cephlab_ceph_dashboard_key | length > 0) %}
-      --dashboard-crt dashboard.crt \
-      --dashboard-key dashboard.key \
+      --dashboard-crt dashboard.crt
+      --dashboard-key dashboard.key
     {% endif %}
-      --dashboard-password-noupdate \
-      --ssh-public-key  /root/.ssh/id_rsa.pub \
+      --dashboard-password-noupdate
+      --ssh-public-key  /root/.ssh/id_rsa.pub
       --ssh-private-key /root/.ssh/id_rsa
   args:
     creates: /etc/ceph/ceph.conf

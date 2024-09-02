@@ -48,6 +48,8 @@
   when: cephlab_cluster_spec is changed
   become: true
 
+- import_tasks: rbd_create.yml
+
 - import_tasks: cephfs_create.yml
 
 - import_tasks: report_success.yml

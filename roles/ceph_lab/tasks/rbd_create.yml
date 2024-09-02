@@ -1,0 +1,10 @@
+- name: Retrieve rbd pool
+  command: >-
+    ceph osd pool stats ocs-storagecluster-cephblockpool
+  changed_when: false
+  ignore_errors: true
+  register: cephlab_rbd_stats
+  become: true
+
+- import_tasks: rbd_create_subtasks.yml
+  when: cephlab_rbd_stats is failed

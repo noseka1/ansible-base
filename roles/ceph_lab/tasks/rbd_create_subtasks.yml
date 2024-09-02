@@ -1,0 +1,14 @@
+- name: Create pool ocs-storagecluster-cephblockpool
+  command: >-
+    ceph osd pool create ocs-storagecluster-cephblockpool 32
+  become: true
+
+- name: Enable application rbd
+  command: >-
+    ceph osd pool application enable ocs-storagecluster-cephblockpool rbd
+  become: true
+
+- name: Initialize rbd pool
+  command: >-
+    rbd pool init --pool ocs-storagecluster-cephblockpool
+  become: true

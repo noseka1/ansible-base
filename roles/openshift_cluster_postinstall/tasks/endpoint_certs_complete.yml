@@ -35,11 +35,16 @@
       - endpoint-certs/default-ingresscontroller.yaml
   register: openshift_cluster_postinstall_endpoint_certs_apply_result
 
+- import_tasks: kubeconfig_remove_ca.yml
+  when:
+    - openshift_cluster_postinstall_endpoint_certs_apply_result is changed
+    - openshift_cluster_postinstall_configure_kubeconfig
+
 - import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-    stable_cluster_validate_certs: false
+    stable_cluster_validate_certs: '{{ openshift_cluster_postinstall_configure_kubeconfig }}'
   when: openshift_cluster_postinstall_endpoint_certs_apply_result is changed

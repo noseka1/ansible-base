@@ -43,9 +43,11 @@
   register: cephlab_cluster_spec
 
 - name: Deploy complete Ceph cluster
-  command: |
+  command: >-
     ceph orch apply -i cluster-spec.yaml
   when: cephlab_cluster_spec is changed
   become: true
+
+- import_tasks: cephfs_create.yml
 
 - import_tasks: report_success.yml

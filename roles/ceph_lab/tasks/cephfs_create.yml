@@ -1,0 +1,10 @@
+- name: Retrieve CephFS volume
+  command: >-
+    ceph fs volume info ocs-storagecluster-cephfilesystem
+  changed_when: false
+  ignore_errors: true
+  register: cephlab_cephfs_volume_info
+  become: true
+
+- import_tasks: cephfs_create_subtasks.yml
+  when: cephlab_cephfs_volume_info is failed

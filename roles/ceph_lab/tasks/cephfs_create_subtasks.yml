@@ -1,0 +1,14 @@
+- name: Create metadata pool for CephFS
+  command: >-
+    ceph osd pool create ocs-storagecluster-cephfilesystem-metadata 16
+  become: true
+
+- name: Create data pool for CephFS
+  command: >-
+    ceph osd pool create ocs-storagecluster-cephfilesystem-data0 32
+  become: true
+
+- name: Create CephFS volume
+  command: >-
+    ceph fs new ocs-storagecluster-cephfilesystem ocs-storagecluster-cephfilesystem-metadata ocs-storagecluster-cephfilesystem-data0
+  become: true

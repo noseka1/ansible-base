@@ -10,4 +10,7 @@ cephlab_ceph_dashboard_key: ''
 cephlab_ceph_grafana_crt: ''
 cephlab_ceph_grafana_key: ''
 
+cephlab_ceph_rgw_crt: ''
+cephlab_ceph_rgw_key: ''
+
 cephlab_conf_dir: cephconf

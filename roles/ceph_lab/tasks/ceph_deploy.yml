@@ -68,5 +68,6 @@
     cephlab_rgw_store_realm: ocs-storagecluster-cephobjectstore
     cephlab_rgw_store_zonegroup: ocs-storagecluster-cephobjectstore
     cephlab_rgw_store_zone: ocs-storagecluster-cephobjectstore
+    cephlab_rgw_store_default: true
 
 - import_tasks: report_success.yml

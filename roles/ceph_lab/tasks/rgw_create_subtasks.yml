@@ -1,14 +1,30 @@
 - name: Create realm {{ cephlab_rgw_store_realm }}
   command: >-
-    radosgw-admin realm create --rgw-realm={{ cephlab_rgw_store_realm }}
+    radosgw-admin realm create
+      --rgw-realm={{ cephlab_rgw_store_realm }}
+      {% if cephlab_rgw_store_default %}--default{% endif %}
   become: true
 
 - name: Create zonegroup {{ cephlab_rgw_store_zonegroup }}
   command: >-
-    radosgw-admin zonegroup create --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }} --master
+    radosgw-admin zonegroup create
+      --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }}
+      --master
+      {% if cephlab_rgw_store_default %}--default{% endif %}
   become: true
 
 - name: Create zone {{ cephlab_rgw_store_zone }}
   command: >-
-    radosgw-admin zone create --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }} --rgw-zone={{ cephlab_rgw_store_zone }} --master
+    radosgw-admin zone create
+      --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }}
+      --rgw-zone={{ cephlab_rgw_store_zone }}
+      --master
+      {% if cephlab_rgw_store_default %}--default{% endif %}
+  become: true
+
+- name: Commit the changes
+  command: >-
+    radosgw-admin period update
+      --rgw-realm={{ cephlab_rgw_store_realm }}
+      --commit
   become: true

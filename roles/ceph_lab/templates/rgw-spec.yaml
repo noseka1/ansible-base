@@ -3,7 +3,11 @@ service_id: {{ cephlab_rgw_store_realm }}.{{ cephlab_rgw_store_zone }}
 placement:
   label: rgw
 spec:
+  ssl: true
+  rgw_frontend_ssl_certificate: |
+    {{ cephlab_ceph_rgw_crt | indent(4) }}
+    {{ cephlab_ceph_rgw_key | indent(4) }}
+  rgw_frontend_port: 443
   rgw_realm: {{ cephlab_rgw_store_realm }}
   rgw_zone: {{ cephlab_rgw_store_zone }}
   rgw_zonegroup: {{ cephlab_rgw_store_zonegroup }}
-  rgw_frontend_port: 80

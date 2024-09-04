@@ -1,6 +1,9 @@
 - import_tasks: argo_rollouts_delete.yml
   when: gitops_argo_rollouts_enabled
+  tags: gitops_argo_rollouts
 
 - import_tasks: gitops_instance_delete.yml
+  tags: gitops_instance
 
 - import_tasks: gitops_operator_delete.yml
+  tags: gitops_operator

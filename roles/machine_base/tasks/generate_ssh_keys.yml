@@ -5,19 +5,19 @@
     owner: root
     group: root
     mode: '0700'
-  become: yes
+  become: true
 
 - name: Generate SSH keys for root
   openssh_keypair: path=/root/.ssh/id_rsa
   register: result
-  become: yes
+  become: true
 
 - name: Set as authorized key
   authorized_key:
     user: root
     key: '{{ result.public_key }}'
     state: present
-  become: yes
+  become: true
 
 - name: Ensure /{{ ansible_user_id }}/.ssh directory exists
   file:
@@ -26,7 +26,7 @@
     owner: '{{ ansible_user_id }}'
     group: '{{ ansible_user_id }}'
     mode: '0700'
-  become: yes
+  become: true
 
 - name: Generate SSH keys for {{ ansible_user_id }}
   openssh_keypair:

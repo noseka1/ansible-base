@@ -4,9 +4,9 @@
     regexp: 'rhgb quiet'
     replace: ''
   register: grub_config
-  become: yes
+  become: true
 
 - name: Update Grub generated configuration
   command: grub2-mkconfig -o /boot/grub2/grub.cfg
   when: grub_config is changed
-  become: yes
+  become: true

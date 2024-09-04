@@ -1,13 +1,13 @@
 - name: Set hostname if it was not set properly
   command: hostnamectl set-hostname {{ ansible_host }}
   when: ansible_nodename != ansible_host
-  become: yes
+  become: true
 
 - name: Set transient hostname if it was not set properly
   command: hostnamectl set-hostname --transient {{ ansible_host }}
   when: ansible_nodename != ansible_host
   register: hostname
-  become: yes
+  become: true
 
 - name: Run setup after the hostname changed
   setup:

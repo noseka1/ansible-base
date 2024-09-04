@@ -2,11 +2,11 @@
   package: name={{ item }} state=installed
   loop:
     - chrony
-  become: yes
+  become: true
 
 - name: Enable chronyd service and start it
   service: name=chronyd state=started enabled=yes
-  become: yes
+  become: true
 
 - name: Refresh Ansible's ansible_date_time fact
   setup: filter=ansible_date_time

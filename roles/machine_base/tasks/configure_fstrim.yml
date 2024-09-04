@@ -3,4 +3,4 @@
     name: fstrim.timer
     state: started
     enabled: true
-  become: yes
+  become: true

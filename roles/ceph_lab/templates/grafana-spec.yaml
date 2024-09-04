@@ -1,0 +1,7 @@
+service_type: grafana
+placement:
+  label: grafana
+spec:
+
+  anonymous_access: false
+  initial_admin_password: '{{ generic_user_password }}'

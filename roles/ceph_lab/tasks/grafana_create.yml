@@ -25,15 +25,23 @@
   when: cephlab_ceph_grafana_key_result is changed
   become: true
 
-- name: Restart mgr service
+- name: Create Grafana spec file
+  template:
+    src: grafana-spec.yaml
+    dest: '{{ cephlab_conf_dir }}/grafana-spec.yaml'
+    backup: true
+  register: cephlab_grafana_spec_result
+
+- name: Apply rgw spec
   command: >-
-    ceph orch restart mgr
-  when: >-
-    (cephlab_ceph_grafana_crt_result is changed) or (cephlab_ceph_grafana_key_result is changed)
-  register: cephlab_ceph_mgr_result
-  until: cephlab_ceph_mgr_result is succeeded
-  retries: 60
-  delay: 10
+    ceph orch apply -i {{ cephlab_conf_dir }}/grafana-spec.yaml
+  when: cephlab_grafana_spec_result is changed
+  become: true
+
+- name: Disable Grafana certificate verification in dashboard
+  command: >-
+    ceph dashboard set-grafana-api-ssl-verify false
+  when: cephlab_grafana_spec_result is changed
   become: true
 
 - name: Redeploy Grafana

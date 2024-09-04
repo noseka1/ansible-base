@@ -30,10 +30,3 @@ placement:
   label: osd
 data_devices:
   paths: {{ cephlab_osd_data_devices_paths | to_yaml }}
----
-service_type: grafana
-placement:
-  label: grafana
-spec:
-  #anonymous_access: false
-  initial_admin_password: '{{ generic_user_password }}'

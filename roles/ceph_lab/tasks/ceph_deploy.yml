@@ -53,7 +53,7 @@
   when: cephlab_cluster_spec is changed
   become: true
 
-- import_tasks: grafana_configure.yml
+- import_tasks: grafana_create.yml
 
 - import_tasks: rbd_create.yml
 

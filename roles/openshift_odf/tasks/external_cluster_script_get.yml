@@ -1,0 +1,10 @@
+- name: Get installed CSVs
+  kubernetes.core.k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: ClusterServiceVersion
+  register: odf_installed_csvs
+
+- name: Extract the Python script from the annotation in rook-ceph-operator CSV
+  set_fact:
+    odf_external_cluster_script: >-
+      {{ odf_installed_csvs.resources | json_query("[].metadata.annotations.externalClusterScript") | first | b64decode }}

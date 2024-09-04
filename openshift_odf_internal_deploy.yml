@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_odf
-        tasks_from: deploy.yml
+        tasks_from: internal_deploy.yml

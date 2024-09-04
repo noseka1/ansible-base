@@ -1,0 +1,30 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_name: odf-external
+    autogitops_app_src_path: odf/instance/external
+    autogitops_app_dst_path: odf/instance/external
+    autogitops_app_namespace: openshift-storage
+    autogitops_app_values: '{{ lookup("template", "instance/external/values.yaml") }}'
+    autogitops_app_sync_retries: 120
+
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+
+- name: Update storage class and snapshot class
+  kubernetes.core.k8s:
+    template:
+      - instance/external/ocs-external-storagecluster-ceph-rbd-sc.yaml
+      - instance/external/ocs-external-storagecluster-rbdplugin-snapclass-vsclass.yaml

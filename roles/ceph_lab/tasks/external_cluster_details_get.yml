@@ -1,0 +1,24 @@
+- name: Upload ceph-external-cluster-details-exporter.py script
+  copy:
+    content: '{{ cephlab_external_cluster_script }}'
+    dest: '{{ cephlab_conf_dir }}/ceph-external-cluster-details-exporter.py'
+
+- name: Upload RGW CA certificate
+  copy:
+    content: '{{ cephlab_ceph_rgw_ca_crt }}'
+    dest: '{{ cephlab_conf_dir }}/rgw-ca.crt'
+
+- name: Collect external cluster connection details
+  command:
+    python {{ cephlab_conf_dir }}/ceph-external-cluster-details-exporter.py
+      --rbd-data-pool-name {{ cephlab_rbd_pool_name }}
+      --cephfs-filesystem-name {{ cephlab_cephfs_volume_name }}
+      --cephfs-metadata-pool-name {{ cephlab_cephfs_volume_name }}-metadata
+      --cephfs-data-pool-name {{ cephlab_cephfs_volume_name }}-data0
+      --rgw-endpoint {{ hostvars[groups.ceph_lab.0].ansible_host }}:443
+      --rgw-tls-cert-path {{ cephlab_conf_dir }}/rgw-ca.crt
+      --rgw-realm-name {{ cephlab_rgw_store_realm }}
+      --rgw-zonegroup-name {{ cephlab_rgw_store_zonegroup }}
+      --rgw-zone-name {{ cephlab_rgw_store_zone }}
+  register: cephlab_external_cluster_script_result
+  become: true

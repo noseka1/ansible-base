@@ -1,5 +1,4 @@
-- hosts:
-    - ceph_lab
+- hosts: ceph_lab
   tasks:
     - import_role:
         name: ceph_lab
@@ -11,8 +10,7 @@
         tasks_from: ceph_prereqs.yml
       tags: cephlab_prereqs
 
-- hosts:
-    - ceph_lab[0]
+- hosts: ceph_lab[0]
   tasks:
     - import_role:
         name: ceph_lab

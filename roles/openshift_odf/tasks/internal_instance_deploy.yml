@@ -8,18 +8,18 @@
       - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template | length > 0
       - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets is defined
       - odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets | length > 0
-    fail_msg: "Cannot determine which storageclass to use for the underlying persistent volumes."
+    fail_msg: 'Cannot determine which storageclass to use for the underlying persistent volumes.'
     quiet: true
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: odf
-    autogitops_app_src_path: odf/instance
-    autogitops_app_dst_path: odf/instance
+    autogitops_app_name: odf-internal
+    autogitops_app_src_path: odf/instance/internal
+    autogitops_app_dst_path: odf/instance/internal
     autogitops_app_namespace: openshift-storage
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
+    autogitops_app_values: '{{ lookup("template", "instance/internal/values.yaml") }}'
     autogitops_app_sync_retries: 240
 
 - name: Check if default storage class exists
@@ -35,5 +35,5 @@
 - name: Update storage class and snapshot class
   kubernetes.core.k8s:
     template:
-      - instance/ocs-storagecluster-ceph-rbd-sc.yaml
-      - instance/ocs-storagecluster-rbdplugin-snapclass-vsclass.yaml
+      - instance/internal/ocs-storagecluster-ceph-rbd-sc.yaml
+      - instance/internal/ocs-storagecluster-rbdplugin-snapclass-vsclass.yaml

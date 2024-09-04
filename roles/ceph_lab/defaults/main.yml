@@ -4,13 +4,29 @@ cephlab_osd_data_devices_paths:
 # Available versions are 6 and 7
 cephlab_rhceph_version: 7
 
+# Ceph dashboard server certificate
 cephlab_ceph_dashboard_crt: ''
 cephlab_ceph_dashboard_key: ''
 
+# Ceph Grafana server certificate
 cephlab_ceph_grafana_crt: ''
 cephlab_ceph_grafana_key: ''
 
+# Ceph RGW server certificate
 cephlab_ceph_rgw_crt: ''
 cephlab_ceph_rgw_key: ''
 
+# CA certificate used by the client
+# to verify the RGW server certificate
+cephlab_ceph_rgw_ca_crt: ''
+
 cephlab_conf_dir: cephconf
+
+cephlab_rbd_pool_name: ocs-storagecluster-cephblockpool
+
+cephlab_cephfs_volume_name: ocs-storagecluster-cephfilesystem
+
+cephlab_rgw_store_realm: ocs-storagecluster-cephobjectstore
+cephlab_rgw_store_zonegroup: ocs-storagecluster-cephobjectstore
+cephlab_rgw_store_zone: ocs-storagecluster-cephobjectstore
+cephlab_rgw_store_default: true

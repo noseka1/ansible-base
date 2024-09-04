@@ -1,0 +1,32 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_odf
+        tasks_from: operator_deploy.yml
+      tags: odf_operator
+
+    - import_role:
+        name: openshift_odf
+        tasks_from: external_cluster_script_get.yml
+      tags: odf_instance
+
+- hosts: ceph_lab[0]
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: ceph_lab
+        tasks_from: external_cluster_details_get.yml
+      vars:
+        cephlab_external_cluster_script: '{{ hostvars.localhost.odf_external_cluster_script }}'
+      tags: odf_instance
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_odf
+        tasks_from: external_instance_deploy.yml
+      vars:
+        odf_external_cluster_details: '{{ hostvars[groups.ceph_lab.0].cephlab_external_cluster_script_result.stdout }}'
+      tags: odf_instance

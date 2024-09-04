@@ -1,0 +1,12 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_odf
+        tasks_from: external_instance_delete.yml
+      tags: odf_instance
+
+    - import_role:
+        name: openshift_odf
+        tasks_from: operator_delete.yml
+      tags: odf_operator

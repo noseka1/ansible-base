@@ -9,6 +9,12 @@
       Grafana monitoring dashboard is available at:
       https://{{ ansible_host }}:3000
 
+      Prometheus dashboard is available at:
+      http://{{ ansible_host }}:9095
+
+      Alertmanager dashboard is available at:
+      http://{{ ansible_host }}:9093
+
       Note that OSDs and other cluster components may still be deploying ...
 
 - debug: msg="{{ msg.split('\n') }}"

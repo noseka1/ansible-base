@@ -11,3 +11,9 @@
   vars:
     subscription_name: '{{ gitops_subscription_name }}'
     subscription_namespace: '{{ gitops_subscription_namespace }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_enable.yml
+  vars:
+    openshift_common_enable_console_plugin: gitops-plugin

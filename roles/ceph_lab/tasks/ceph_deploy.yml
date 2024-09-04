@@ -24,7 +24,11 @@
 
 - name: Bootstrap Ceph cluster
   command: >-
-    cephadm bootstrap
+    cephadm
+    {% if cephlab_rhceph_container_image | length > 0 %}
+      --image {{ cephlab_rhceph_container_image }}
+    {% endif %}
+      bootstrap
       --allow-fqdn-hostname
       --mon-ip '{{ ansible_default_ipv4.address }}'
       --registry-json {{ cephlab_conf_dir }}/registry-creds.json

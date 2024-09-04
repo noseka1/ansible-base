@@ -4,6 +4,16 @@ cephlab_osd_data_devices_paths:
 # Available versions are 6 and 7
 cephlab_rhceph_version: 7
 
+# Install Ceph using a specific image version. Example images:
+# registry.redhat.io/rhceph/rhceph-7-rhel9:latest
+# registry.redhat.io/rhceph/rhceph-7-rhel9:7-385
+# registry.redhat.io/rhceph/rhceph-6-rhel9:latest
+# registry.redhat.io/rhceph/rhceph-6-rhel9:6-334
+#
+# Further image version can be found at:
+# https://catalog.redhat.com
+cephlab_rhceph_container_image: ''
+
 # Ceph dashboard server certificate
 cephlab_ceph_dashboard_crt: ''
 cephlab_ceph_dashboard_key: ''

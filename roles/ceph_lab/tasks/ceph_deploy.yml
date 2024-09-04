@@ -55,6 +55,9 @@
 
 - import_tasks: grafana_create.yml
 
+- import_tasks: alertmanager_configure.yml
+  when: cephlab_send_alerts_to_slack_url | length > 0
+
 - import_tasks: rbd_create.yml
 
 - import_tasks: cephfs_create.yml

@@ -1,0 +1,17 @@
+- name: Get the currently enabled console plugins
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: Console
+    name: cluster
+  register: openshift_common_console_result
+
+- name: Enabling console plugin {{ openshift_common_enable_console_plugin }}
+  kubernetes.core.k8s_json_patch:
+    api_version: operator.openshift.io/v1
+    kind: Console
+    name: cluster
+    patch:
+      - op: add
+        path: /spec/plugins/-
+        value: '{{ openshift_common_enable_console_plugin }}'
+  when: openshift_common_enable_console_plugin not in openshift_common_console_result.resources.0.spec.plugins

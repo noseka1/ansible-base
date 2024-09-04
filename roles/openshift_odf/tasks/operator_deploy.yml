@@ -7,3 +7,15 @@
     autogitops_app_dst_path: odf/operator
     autogitops_app_namespace: openshift-storage
     autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_enable.yml
+  vars:
+    openshift_common_enable_console_plugin: odf-console
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_enable.yml
+  vars:
+    openshift_common_enable_console_plugin: odf-client-console

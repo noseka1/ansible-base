@@ -21,3 +21,9 @@
     ceph orch apply -i {{ cephlab_conf_dir }}/rgw-{{ cephlab_rgw_store_zone }}-spec.yaml
   when: cephlab_rgw_spec_result is changed
   become: true
+
+- name: Disable RGW certificate verification in dashboard
+  command: >-
+    ceph dashboard set-rgw-api-ssl-verify false
+  when: cephlab_rgw_spec_result is changed
+  become: true

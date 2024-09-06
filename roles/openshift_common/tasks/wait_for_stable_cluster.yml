@@ -17,7 +17,7 @@
   changed_when: false
   register: oc_version_result
   until:
-    - oc_version_result is not failed
+    - oc_version_result is success
   retries: 60
   delay: 10
 
@@ -31,6 +31,6 @@
   changed_when: false
   register: api_resources_result
   until:
-    - api_resources_result is not failed
+    - api_resources_result is success
   retries: 60
   delay: 10

@@ -1,8 +1,0 @@
-- name: Retrieve all provisioned services for user {{ otlc_username }}
-  uri:
-    url: 'https://{{ rhlab_api_host }}/api/services?expand=resources'
-    user: '{{ otlc_username }}'
-    password: '{{ otlc_password }}'
-    method: GET
-    status_code: 200
-  register: otlc_services_provisioned

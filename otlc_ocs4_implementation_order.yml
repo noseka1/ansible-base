@@ -1,8 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: rhlab_specific_order
-        tasks_from: otlc_ocs4_implementation.yml
-      vars:
-        otlc_service_desc: '{{ otlc_labs.ocs4_implementation }}'

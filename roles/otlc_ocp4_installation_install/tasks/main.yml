@@ -1,6 +1,0 @@
-- import_tasks: get_latest_version.yml
-  when: otlc_ocp4_installation_openshift_version == 'latest'
-
-- import_tasks: preinstall.yml
-
-- import_tasks: install.yml

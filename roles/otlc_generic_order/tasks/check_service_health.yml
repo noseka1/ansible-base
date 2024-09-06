@@ -1,7 +1,0 @@
-- name: Check if lab provisioning succeeded
-  fail:
-    msg: >
-      Lab failed to provision. Check you e-mail to find out the cause. If the lab haven't finished provisioning yet, you can wait some more and
-      re-run this script while appending --extra-vars service_id={{ otlc_service_id }}. If the lab failed to provision, delete the lab and
-      start over.
-  when: (otlc_service_attributes.json.custom_attributes | selectattr("name", "equalto", "service_status") | first).value  != 'complete'

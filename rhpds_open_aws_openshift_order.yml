@@ -1,8 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: rhlab_specific_order
-        tasks_from: rhpds_open_aws_openshift.yml
-      vars:
-        otlc_service_desc: '{{ rhpds_labs.open_aws_openshift }}'

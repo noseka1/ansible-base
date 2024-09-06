@@ -49,12 +49,24 @@ spec:
           - filters:
             - name: tag:Name
               values:
+{% if openshift_common_cluster_version_majorminor is version('4.16', '<', strict=true) %}
               - {{ cluster_id }}-worker-sg
+{% else %}
+              - {{ cluster_id }}-node
+          - filters:
+            - name: tag:Name
+              values:
+              - {{ cluster_id }}-lb
+{% endif %}
           subnet:
             filters:
             - name: tag:Name
               values:
+{% if openshift_common_cluster_version_majorminor is version('4.16', '<', strict=true) %}
               - {{ cluster_id }}-private-{{ aws_region }}{{ item }}
+{% else %}
+              - {{ cluster_id }}-subnet-private-{{ aws_region }}{{ item }}
+{% endif %}
           tags:
           - name: kubernetes.io/cluster/{{ cluster_id }}
             value: owned

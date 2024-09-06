@@ -19,6 +19,10 @@
   set_fact:
     add_machineset_ami_id: '{{ existing_machinesets_result.resources.0.spec.template.spec.providerSpec.value.ami.id }}'
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_version.yml
+
 - name: Add {{ add_machineset_role }} machinesets to the cluster
   kubernetes.core.k8s:
     template: node-machineset.yaml

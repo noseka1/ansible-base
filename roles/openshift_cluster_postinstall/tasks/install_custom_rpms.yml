@@ -1,4 +1,4 @@
-- name: Install custom RPMS on OpenShift nodes (will cause nodes to restart)
+- name: Install custom RPMs on OpenShift nodes (will cause nodes to restart)
   kubernetes.core.k8s:
     template: 60-install-custom-rpms-mc.yaml
   register: openshift_cluster_postinstall_machineconfig_result

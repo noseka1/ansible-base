@@ -10,12 +10,13 @@
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterOperator
-    validate_certs: '{{ stable_cluster_validate_certs | default(omit) }}'
   ignore_errors: true
   register: clusteroperator_result
 
 - name: Create unavailable, progressing, and degraded operator groups
   set_fact:
+    clusteroperator_count: >-
+      {{ clusteroperator_result.resources | length }}
     clusteroperator_unavailable: >-
       {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Available' && status=='False']].metadata.name") }}
     clusteroperator_progressing: >-
@@ -27,6 +28,7 @@
   set_fact:
     stable_cluster_job_complete: true
   when:
+    - clusteroperator_count | int > 0
     - clusteroperator_unavailable | length == 0
     - clusteroperator_progressing | length == 0
     - clusteroperator_degraded | length == 0
@@ -34,6 +36,7 @@
 - name: |
     {{ stable_cluster_retries - (stable_cluster_retry_count | int) }} retries remaining.
     Cluster operator status:
+      Count: {{ clusteroperator_count }}
       Unavailable: {{ clusteroperator_unavailable }}
       Progressing: {{ clusteroperator_progressing }}
       Degraded: {{ clusteroperator_degraded }}

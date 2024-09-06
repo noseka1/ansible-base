@@ -46,5 +46,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-    stable_cluster_validate_certs: '{{ openshift_cluster_postinstall_configure_kubeconfig }}'
   when: openshift_cluster_postinstall_endpoint_certs_apply_result is changed

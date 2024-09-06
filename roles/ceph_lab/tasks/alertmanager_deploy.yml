@@ -31,6 +31,6 @@
   when: cephlab_alertmanager_result is changed
   until:
     - cephlab_alertmanager_reconfig_result is success
-  retries: 60
+  retries: 12
   delay: 10
   become: true

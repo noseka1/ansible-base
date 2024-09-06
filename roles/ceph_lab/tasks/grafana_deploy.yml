@@ -52,6 +52,6 @@
   register: cephlab_grafana_reconfig_result
   until:
     - cephlab_grafana_reconfig_result is success
-  retries: 60
+  retries: 12
   delay: 10
   become: true

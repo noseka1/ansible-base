@@ -10,6 +10,8 @@ ceph_lab:
         - mgr
         - nfs
         - osd
+        - prometheus
+        - alertmanager
         - grafana
     ceph2:
       ansible_host: ceph2.lab.example.com

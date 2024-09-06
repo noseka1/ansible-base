@@ -1,0 +1,12 @@
+- name: Create node-exporter spec file
+  template:
+    src: node-exporter-spec.yaml
+    dest: '{{ cephlab_conf_dir }}/node-exporter-spec.yaml'
+    backup: true
+  register: cephlab_nodeexporter_spec_result
+
+- name: Apply node-exporter spec
+  command: >-
+    ceph orch apply -i {{ cephlab_conf_dir }}/node-exporter-spec.yaml
+  when: cephlab_nodeexporter_spec_result is changed
+  become: true

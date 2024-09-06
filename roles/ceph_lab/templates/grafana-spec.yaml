@@ -4,3 +4,4 @@ placement:
 spec:
   anonymous_access: false
   initial_admin_password: '{{ generic_user_password }}'
+  protocol: https

@@ -44,9 +44,14 @@
   when: cephlab_grafana_spec_result is changed
   become: true
 
-- name: Redeploy Grafana
+- name: Reconfigure Grafana
   command: >-
-    ceph orch redeploy grafana
+    ceph orch reconfig grafana
   when: >-
     (cephlab_ceph_grafana_crt_result is changed) or (cephlab_ceph_grafana_key_result is changed)
+  register: cephlab_grafana_reconfig_result
+  until:
+    - cephlab_grafana_reconfig_result is success
+  retries: 60
+  delay: 10
   become: true

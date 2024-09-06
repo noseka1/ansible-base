@@ -1,0 +1,36 @@
+- name: Create Alertmanager spec file
+  template:
+    src: alertmanager-spec.yaml
+    dest: '{{ cephlab_conf_dir }}/alertmanager-spec.yaml'
+    backup: true
+  register: cephlab_alertmanager_spec_result
+
+- name: Apply Alertmanager spec
+  command: >-
+    ceph orch apply -i {{ cephlab_conf_dir }}/alertmanager-spec.yaml
+  when: cephlab_alertmanager_spec_result is changed
+  become: true
+
+- name: Create alertmanager.yml file
+  template:
+    src: alertmanager.yml
+    dest: '{{ cephlab_conf_dir }}/alertmanager.yml'
+  register: cephlab_alertmanager_result
+  when: cephlab_send_alerts_to_slack_url | length > 0
+
+- name: Update Alertmanager configuration in ceph-mgr
+  command: >-
+    ceph config-key set mgr/cephadm/services/alertmanager/alertmanager.yml --in-file {{ cephlab_conf_dir }}/alertmanager.yml
+  when: cephlab_alertmanager_result is changed
+  become: true
+
+- name: Restart Alertmanager
+  command: >-
+    ceph orch reconfig alertmanager
+  register: cephlab_alertmanager_reconfig_result
+  when: cephlab_alertmanager_result is changed
+  until:
+    - cephlab_alertmanager_reconfig_result is success
+  retries: 60
+  delay: 10
+  become: true

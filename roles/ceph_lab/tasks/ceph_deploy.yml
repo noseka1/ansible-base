@@ -38,6 +38,7 @@
       --dashboard-key {{ cephlab_conf_dir }}/dashboard.key
     {% endif %}
       --dashboard-password-noupdate
+      --skip-monitoring-stack
       --ssh-public-key  /root/.ssh/id_rsa.pub
       --ssh-private-key /root/.ssh/id_rsa
   args:
@@ -57,15 +58,18 @@
   when: cephlab_cluster_spec is changed
   become: true
 
-- import_tasks: grafana_create.yml
+- import_tasks: node_exporter_deploy.yml
 
-- import_tasks: alertmanager_configure.yml
-  when: cephlab_send_alerts_to_slack_url | length > 0
+- import_tasks: prometheus_deploy.yml
+
+- import_tasks: alertmanager_deploy.yml
+
+- import_tasks: grafana_deploy.yml
 
 - import_tasks: rbd_create.yml
 
 - import_tasks: cephfs_create.yml
 
-- import_tasks: rgw_create.yml
+- import_tasks: rgw_deploy.yml
 
 - import_tasks: report_success.yml

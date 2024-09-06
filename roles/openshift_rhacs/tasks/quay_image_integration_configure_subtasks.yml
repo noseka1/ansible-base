@@ -8,7 +8,7 @@
 - set_fact:
     rhacs_quay_imageintegration_name: Quay {{ quay_organization_name }}
 
-- name: Retrive existing image integrations in RHACS
+- name: Retrieve existing image integrations in RHACS
   uri:
     url: https://{{ rhacs_central_host }}/v1/imageintegrations
     method: GET

@@ -1,5 +1,3 @@
-wmco_operator_subscription_namespace: openshift-windows-machine-config-operator
-
 wmco_byoh_instances: {}
 #  win1.lab.example.com: |-
 #    username=Administrator

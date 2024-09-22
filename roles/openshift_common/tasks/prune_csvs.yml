@@ -35,5 +35,7 @@
     template: prune_csvs.yml
     state: absent
   register: prune_csvs_delete_result
-  failed_when: prune_csvs_delete_result is failed and prune_csvs_delete_result.status != 404
+  failed_when:
+    - prune_csvs_delete_result is failed
+    - prune_csvs_delete_result.status != 404
   when: prune_csvs_delete | length > 0

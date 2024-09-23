@@ -1,5 +1,5 @@
 - set_fact:
-    github_dir: '{{ ansible_env.HOME + "/git/github.com/noseka1" }}'
+    github_dir: '{{ ansible_facts.env.HOME + "/git/github.com/noseka1" }}'
 
 - name: Create github directory
   file:

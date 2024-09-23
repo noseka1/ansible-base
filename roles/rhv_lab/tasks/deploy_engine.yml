@@ -35,7 +35,7 @@
 - name: Copy over the installation answer file
   template:
     src: '{{ item }}'
-    dest: '{{ ansible_env["HOME"] }}/{{ item }}'
+    dest: '{{ ansible_facts.env.HOME }}/{{ item }}'
     mode: '0644'
   loop:
     - hosted-engine-deploy-answers-file.conf

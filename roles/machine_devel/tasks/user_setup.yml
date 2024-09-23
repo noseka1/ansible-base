@@ -2,7 +2,7 @@
     msg: Setting up user {{ ansible_user }}
 
 - set_fact:
-    github_dir: '{{ ansible_env.HOME + "/git/github.com/noseka1" }}'
+    github_dir: '{{ ansible_facts.env.HOME + "/git/github.com/noseka1" }}'
 
 - name: Git checkout rcfiles
   git:

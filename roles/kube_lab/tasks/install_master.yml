@@ -29,11 +29,15 @@
   register: kubeadm
   become: true
 
-- debug: var=kubeadm.stdout_lines
+- debug:
+    var: kubeadm.stdout_lines
   when: kubeadm is changed
 
 - name: Ensure that the /root/.kube directory exists
-  file: dest=/root/.kube state=directory mode=0755
+  file:
+    dest: /root/.kube
+    state: directory
+    mode: '0755'
   become: true
 
 - name: Copy Kubernetes admin credentials

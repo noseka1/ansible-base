@@ -8,7 +8,10 @@
   become: true
 
 - name: Setup required sysctl params
-  sysctl: name={{ item.key }} value={{ item.value }} reload=yes
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    reload: true
   loop:
     - { key: net.bridge.bridge-nf-call-iptables,  value: 1 }
     - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }

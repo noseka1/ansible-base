@@ -9,7 +9,7 @@ bootstrapTokens:
   - signing
   - authentication
 localAPIEndpoint:
-  advertiseAddress: '{{ hostvars[groups.kube_master.0].ansible_default_ipv4.address }}'
+  advertiseAddress: '{{ hostvars[groups.kube_master.0].ansible_facts.default_ipv4.address }}'
   bindPort: 6443
 nodeRegistration:
   criSocket: '{{ kubeadm_config_crisocket }}'

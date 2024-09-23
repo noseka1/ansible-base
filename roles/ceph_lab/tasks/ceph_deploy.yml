@@ -30,7 +30,7 @@
     {% endif %}
       bootstrap
       --allow-fqdn-hostname
-      --mon-ip '{{ ansible_default_ipv4.address }}'
+      --mon-ip '{{ ansible_facts.default_ipv4.address }}'
       --registry-json {{ cephlab_conf_dir }}/registry-creds.json
       --initial-dashboard-password '{{ generic_user_password }}'
     {% if (cephlab_ceph_dashboard_crt | length > 0) and (cephlab_ceph_dashboard_key | length > 0) %}

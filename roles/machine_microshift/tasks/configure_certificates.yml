@@ -1,13 +1,13 @@
 - name: Install custom trusted CA
   copy:
-    content: '{{ machine_microshift_trusted_ca_bundle[ansible_domain] }}'
+    content: '{{ machine_microshift_trusted_ca_bundle[ansible_facts.domain] }}'
     dest: /etc/pki/ca-trust/source/anchors/custom-ca-bundle.pem
   register:
     machine_microshift_trusted_ca_bundle_result
   notify:
     - Restart crio
   when:
-    - machine_microshift_trusted_ca_bundle[ansible_domain] is defined
+    - machine_microshift_trusted_ca_bundle[ansible_facts.domain] is defined
   become: true
 
 - name: Update CA trust
@@ -20,18 +20,18 @@
   loop:
     - dir: /var/lib/microshift/certs/kube-apiserver-external-signer/kube-external-serving
       files:
-        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].api.crt }}'
+        - content: '{{ machine_microshift_endpoint_certs[ansible_facts.domain].api.crt }}'
           name: server.crt
-        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].api.key }}'
+        - content: '{{ machine_microshift_endpoint_certs[ansible_facts.domain].api.key }}'
           name: server.key
     - dir: /var/lib/microshift/certs/ingress-ca/router-default-serving
       files:
-        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].ingress.crt }}'
+        - content: '{{ machine_microshift_endpoint_certs[ansible_facts.domain].ingress.crt }}'
           name: server.crt
-        - content: '{{ machine_microshift_endpoint_certs[ansible_domain].ingress.key }}'
+        - content: '{{ machine_microshift_endpoint_certs[ansible_facts.domain].ingress.key }}'
           name: server.key
   loop_control:
     loop_var: outer_item
     label: '{{ outer_item.dir }}'
   when:
-    - machine_microshift_endpoint_certs[ansible_domain] is defined
+    - machine_microshift_endpoint_certs[ansible_facts.domain] is defined

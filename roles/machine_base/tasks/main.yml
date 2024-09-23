@@ -13,7 +13,7 @@
 - import_tasks: configure_proxy.yml
   when:
     - ansible_facts.distribution == "RedHat"
-    - machine_base_http_proxy[ansible_domain] is defined
+    - machine_base_http_proxy[ansible_facts.domain] is defined
 
 - import_tasks: disable_password_expiration.yml
 

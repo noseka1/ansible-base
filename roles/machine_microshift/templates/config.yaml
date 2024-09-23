@@ -1,6 +1,6 @@
 # See also https://access.redhat.com/documentation/en-us/red_hat_build_of_microshift/4.12/html/configuring/microshift-using-config-tools
 dns:
-  baseDomain: '{{ ansible_domain }}'
+  baseDomain: '{{ ansible_facts.domain }}'
 debugging:
   # Available options are Normal, Debug, Trace, or TraceAll
   logLevel: Normal

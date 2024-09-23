@@ -21,7 +21,7 @@
 
 - name: Ensure {{ ansible_facts.user_dir }}/.ssh directory exists
   file:
-    path: '{{ ansible_user_dir }}/.ssh'
+    path: '{{ ansible_facts.user_dir }}/.ssh'
     state: directory
     owner: '{{ ansible_facts.user_id }}'
     group: '{{ ansible_facts.user_id }}'
@@ -30,7 +30,7 @@
 
 - name: Generate SSH keys for {{ ansible_facts.user_id }}
   openssh_keypair:
-    path: '{{ ansible_user_dir }}/.ssh/id_rsa'
+    path: '{{ ansible_facts.user_dir }}/.ssh/id_rsa'
   register: result
 
 - name: Set as authorized key

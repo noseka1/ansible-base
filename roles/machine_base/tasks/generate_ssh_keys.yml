@@ -9,13 +9,13 @@
 
 - name: Generate SSH keys for root
   openssh_keypair: path=/root/.ssh/id_rsa
-  register: result
+  register: machine_base_root_keypair_result
   become: true
 
 - name: Set as authorized key
   authorized_key:
     user: root
-    key: '{{ result.public_key }}'
+    key: '{{ machine_base_root_keypair_result.public_key }}'
     state: present
   become: true
 
@@ -31,10 +31,10 @@
 - name: Generate SSH keys for {{ ansible_facts.user_id }}
   openssh_keypair:
     path: '{{ ansible_facts.user_dir }}/.ssh/id_rsa'
-  register: result
+  register: machine_base_user_keypair_result
 
 - name: Set as authorized key
   authorized_key:
     user: '{{ ansible_facts.user_id }}'
-    key: '{{ result.public_key }}'
+    key: '{{ machine_base_user_keypair_result.public_key }}'
     state: present

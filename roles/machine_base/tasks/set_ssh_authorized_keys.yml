@@ -4,7 +4,7 @@
     key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
   become: true
 
-- name: Set authorized key for user {{ ansible_user_id }}
+- name: Set authorized key for user {{ ansible_facts.user_id }}
   authorized_key:
-    user: '{{ ansible_user_id }}'
+    user: '{{ ansible_facts.user_id }}'
     key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'

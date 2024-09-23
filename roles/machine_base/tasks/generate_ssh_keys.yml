@@ -19,22 +19,22 @@
     state: present
   become: true
 
-- name: Ensure /{{ ansible_user_id }}/.ssh directory exists
+- name: Ensure {{ ansible_facts.user_dir }}/.ssh directory exists
   file:
     path: '{{ ansible_user_dir }}/.ssh'
     state: directory
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_id }}'
+    owner: '{{ ansible_facts.user_id }}'
+    group: '{{ ansible_facts.user_id }}'
     mode: '0700'
   become: true
 
-- name: Generate SSH keys for {{ ansible_user_id }}
+- name: Generate SSH keys for {{ ansible_facts.user_id }}
   openssh_keypair:
     path: '{{ ansible_user_dir }}/.ssh/id_rsa'
   register: result
 
 - name: Set as authorized key
   authorized_key:
-    user: '{{ ansible_user_id }}'
+    user: '{{ ansible_facts.user_id }}'
     key: '{{ result.public_key }}'
     state: present

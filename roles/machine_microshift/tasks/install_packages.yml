@@ -1,8 +1,8 @@
 - name: Enable required RHEL repositories
   community.general.rhsm_repository:
     name:
-      - rhocp-4.12-for-rhel-8-{{ ansible_architecture }}-rpms
-      - fast-datapath-for-rhel-8-{{ ansible_architecture }}-rpms
+      - rhocp-4.12-for-rhel-8-{{ ansible_facts.architecture }}-rpms
+      - fast-datapath-for-rhel-8-{{ ansible_facts.architecture }}-rpms
     state: enabled
   become: true
 

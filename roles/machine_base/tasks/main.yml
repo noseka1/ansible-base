@@ -8,11 +8,11 @@
     name: common_tasks
     tasks_from: subscribe_rhel.yml
   when:
-    - ansible_distribution == "RedHat"
+    - ansible_facts.distribution == "RedHat"
 
 - import_tasks: configure_proxy.yml
   when:
-    - ansible_distribution == "RedHat"
+    - ansible_facts.distribution == "RedHat"
     - machine_base_http_proxy[ansible_domain] is defined
 
 - import_tasks: disable_password_expiration.yml
@@ -33,8 +33,8 @@
 
 - import_tasks: display_boot.yml
   when:
-    - ansible_distribution == "RedHat"
-    - ansible_distribution_major_version | int <= 8
+    - ansible_facts.distribution == "RedHat"
+    - ansible_facts.distribution_major_version | int <= 8
 
 - import_tasks: fix_hostname.yml
 

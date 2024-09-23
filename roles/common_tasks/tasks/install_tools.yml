@@ -20,7 +20,7 @@
       - setools-console # sesearch
       - zsh
     state: present
-  when: ansible_distribution in [ "RedHat", "Fedora" ]
+  when: ansible_facts.distribution in [ "RedHat", "Fedora" ]
   become: true
 
 - name: Install tools RHEL7
@@ -29,8 +29,8 @@
       - policycoreutils-python # semanage
     state: present
   when:
-    - ansible_distribution == "RedHat"
-    - ansible_distribution_major_version | int <= 7
+    - ansible_facts.distribution == "RedHat"
+    - ansible_facts.distribution_major_version | int <= 7
   become: true
 
 - name: Install tools RHEL8
@@ -44,8 +44,8 @@
       - wireshark-cli
     state: present
   when:
-    - ansible_distribution == "RedHat"
-    - ansible_distribution_major_version | int == 8
+    - ansible_facts.distribution == "RedHat"
+    - ansible_facts.distribution_major_version | int == 8
   become: true
 
 - name: Install tools RHEL9
@@ -58,8 +58,8 @@
       - wireshark-cli
     state: present
   when:
-    - ansible_distribution == "RedHat"
-    - ansible_distribution_major_version | int >= 9
+    - ansible_facts.distribution == "RedHat"
+    - ansible_facts.distribution_major_version | int >= 9
   become: true
 
 - name: Install tools Fedora
@@ -77,7 +77,7 @@
       - tmux
       - wireshark-cli
     state: present
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts.distribution == "Fedora"
   become: true
 
 - name: Install tools used by ranger
@@ -87,5 +87,5 @@
       - python3-pygments
       - unoconv
       - mediainfo
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts.distribution == "Fedora"
   become: true

@@ -11,7 +11,7 @@
     - import_role:
         name: machine_devel
         tasks_from: system_setup.yml
-      when: ansible_distribution == "Fedora"
+      when: ansible_facts.distribution == "Fedora"
       tags: machine_devel
 
     # Switch to user developer

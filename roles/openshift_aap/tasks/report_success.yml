@@ -12,7 +12,7 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Automation Controller to come up
   uri:
     url: 'https://{{ auto_controller_route.resources.0.spec.host }}'
-    validate_certs: false
+    validate_certs: true
   register: result
   until: result.status == 200
   retries: 30

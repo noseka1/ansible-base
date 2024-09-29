@@ -101,7 +101,7 @@
   retries: 60
   delay: 10
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster instalallation to stop
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster instalallation to finish
   kubernetes.core.k8s_info:
     api_version: extensions.hive.openshift.io/v1beta1
     kind: AgentClusterInstall

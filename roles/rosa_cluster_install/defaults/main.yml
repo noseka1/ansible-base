@@ -1,7 +1,7 @@
 rosa_cluster_install:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster17'
   cluster_name: mycluster17
-  cluster_version: 4.13.6
+  cluster_version: 4.16.13
   aws_region: us-west-2
   # Only single AZ is supported at the moment
   aws_availability_zones: [ a ]

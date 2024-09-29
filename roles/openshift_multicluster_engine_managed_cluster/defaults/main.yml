@@ -1,7 +1,7 @@
 multicluster_engine_managed_cluster_aws:
   cluster_name: mycluster12
   base_domain: sandbox2727.opentlc.com
-  ocp_release_image: 4.15.6-x86_64
+  ocp_release_image: 4.16.13-x86_64
   control_plane_replicas: 3
   data_plane_replicas: 1
   clusterwide_proxy: {}
@@ -13,7 +13,7 @@ multicluster_engine_managed_cluster_aws:
 multicluster_engine_managed_cluster_azure:
   cluster_name: mycluster15
   base_domain: 7xdft.azure.redhatworkshops.io
-  ocp_release_image: 4.15.6-x86_64
+  ocp_release_image: 4.16.13-x86_64
   clusterwide_proxy: {}
   os_service_ppal:
     clientId: XXXXX
@@ -33,7 +33,7 @@ multicluster_engine_managed_cluster_azure:
 multicluster_engine_managed_cluster_baremetal:
   cluster_name: mycluster8
   base_domain: example.com
-  ocp_release_image: 4.15.6-x86_64
+  ocp_release_image: 4.16.13-x86_64
   clusterwide_proxy: {}
   trusted_ca_bundle: ''
   api_vip: 192.168.80.10

@@ -2,7 +2,7 @@ openshift_cluster_install_aws:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster10'
   cluster_name: mycluster10
   base_domain: sandbox1422.opentlc.com
-  channel: stable-4.14
+  channel: stable-4.16
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
@@ -16,7 +16,7 @@ openshift_cluster_install_gcp:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster11'
   cluster_name: mycluster11
   base_domain: sandbox1422.opentlc.com
-  channel: stable-4.14
+  channel: stable-4.16
   version: latest
   control_plane_replicas: 1
   network_type: OVNKubernetes
@@ -31,7 +31,7 @@ openshift_cluster_install_azure:
   cluster_name: ocp4-azure
   base_domain: XXXX.azure.redhatworkshops.io
   version: latest
-  channel: stable-4.14
+  channel: stable-4.16
   network_type: OVNKubernetes
   cluster_network_cidr: 10.128.0.0/14
   service_network_cidr: 172.30.0.0/16
@@ -52,7 +52,7 @@ openshift_cluster_install_vsphere:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster18'
   cluster_name: 8bcng
   base_domain: dynamic.opentlc.com
-  channel: stable-4.14
+  channel: stable-4.16
   version: latest
   data_plane_replicas: 0
   control_plane_replicas: 3

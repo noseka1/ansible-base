@@ -22,7 +22,7 @@ openshift_cluster_postinstall_trusted_ca_bundle: ''
 openshift_cluster_postinstall_configure_endpoint_certs: false
 
 # Modify kubeconfig file to work with the updated Kubernetes API endpoint certificate
-openshift_cluster_postinstall_configure_kubeconfig: false
+openshift_cluster_postinstall_configure_kubeconfig: true
 
 openshift_send_alerts_to_slack_url: ''
 

@@ -7,3 +7,9 @@
     autogitops_app_dst_path: odf-multicluster-orchestrator/operator
     autogitops_app_namespace: openshift-operators
     autogitops_app_values: ''
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_enable.yml
+  vars:
+    openshift_common_enable_console_plugin: odf-multicluster-console

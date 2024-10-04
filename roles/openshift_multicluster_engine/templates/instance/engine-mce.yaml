@@ -22,6 +22,16 @@ spec:
       name: local-cluster
     - enabled: true
       name: server-foundation
+    - enabled: true
+      name: cluster-proxy-addon
+    - enabled: true
+      name: hypershift-local-hosting
+    - enabled: true
+      name: hypershift
+    - enabled: true
+      name: managedserviceaccount
+    - enabled: false
+      name: image-based-install-operator-preview
   targetNamespace: {{ multicluster_engine_instance_namespace }}
   imagePullSecret: openshift-pull-secret
 {% if multicluster_engine_place_on_infra_nodes %}

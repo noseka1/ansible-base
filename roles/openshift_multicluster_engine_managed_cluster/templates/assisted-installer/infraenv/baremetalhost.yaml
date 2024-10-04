@@ -1,0 +1,22 @@
+{% for key, value in multicluster_engine_managed_cluster_baremetal.cluster_nodes.items() %}
+{% if value.bmh is defined %}
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: {{ key | regex_replace(':', '-',) }}
+  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+  annotations:
+    inspect.metal3.io: disabled
+  labels:
+    infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
+spec:
+  online: true
+  automatedCleaningMode: disabled
+  bootMACAddress: '{{ key }}'
+  bmc:
+    address: '{{ value.bmh.bmc.address }}'
+    credentialsName: bmc-{{ key | regex_replace(':', '-',) }}
+  bootMode: '{{ value.bmh.boot_mode }}'
+  rootDeviceHints: {{ value.bmh.root_device_hints | to_json }}
+{% endif %}
+{% endfor %}

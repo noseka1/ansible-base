@@ -51,6 +51,15 @@ multicluster_engine_managed_cluster_baremetal:
   cluster_nodes:
     '52:54:00:2c:0e:01':
       role: master
+      # Optionally, boot the node using BMC:
+      bmh:
+        bmc:
+          address: redfish-virtualmedia+http://sushy.lab.example.com:8000/redfish/v1/Systems/019f4d03-aaa3-4db7-b934-e614ce6db22e
+          username: dummy
+          password: dummy
+        boot_mode: legacy
+        root_device_hints:
+          deviceName: /dev/vda
     '52:54:00:2c:0e:02':
       role: master
     '52:54:00:2c:0e:03':

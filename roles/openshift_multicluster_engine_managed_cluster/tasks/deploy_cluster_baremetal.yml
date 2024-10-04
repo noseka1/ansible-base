@@ -29,6 +29,8 @@
       - assisted-installer/infraenv/capi-provider-role-role.yaml
       - assisted-installer/infraenv/pullsecret-cluster-secret.yaml
       - assisted-installer/infraenv/cluster-infraenv.yaml
+      - assisted-installer/infraenv/baremetalhost.yaml
+      - assisted-installer/infraenv/bmc-secret.yaml
 
 - name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
   kubernetes.core.k8s:
@@ -57,6 +59,8 @@
 - set_fact:
     msg: |
       Cluster installation cannot proceed until the required cluster hosts are added to the inventory.
+
+      Hosts managed using BMC will be added automatically. All other hosts require performing manual steps described below.
 
       Browse to the Multi-cluster Engine (or RHACM) Dashboard. From the left-side menu click on Infrastructure and select Host inventory.
       Click on the {{ multicluster_engine_managed_cluster.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.

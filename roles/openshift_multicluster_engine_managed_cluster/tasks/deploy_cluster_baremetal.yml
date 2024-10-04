@@ -46,11 +46,11 @@
     kind: InfraEnv
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}-infraenv'
-  register: infraenv_result
+  register: multicluster_engine_managed_cluster_infraenv_result
   until:
-    - infraenv_result.resources.0.status.conditions is defined
-    - infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | list | length > 0
-    - (infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | first).status == "True"
+    - multicluster_engine_managed_cluster_infraenv_result.resources.0.status.conditions is defined
+    - multicluster_engine_managed_cluster_infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | list | length > 0
+    - (multicluster_engine_managed_cluster_infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | first).status == "True"
   retries: 12
   delay: 5
 
@@ -62,10 +62,10 @@
       Click on the {{ multicluster_engine_managed_cluster.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.
 
       Alternatively, you can download the bootable installer ISO image using the command:
-      $ curl -L '{{ infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
+      $ curl -L '{{ multicluster_engine_managed_cluster_infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ multicluster_engine_managed_cluster_infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
 
       Alternatively, if you are PXE booting your machines, you can find the boot artifacts here:
-      {{ infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
+      {{ multicluster_engine_managed_cluster_infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
 
 - debug: msg="{{ msg.split('\n') }}"
 
@@ -74,15 +74,15 @@
     api_version: agent-install.openshift.io/v1beta1
     kind: Agent
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}-infraenv'
-  register: agent_result
+  register: multicluster_engine_managed_cluster_agent_result
   until: >-
     multicluster_engine_managed_cluster.cluster_nodes.keys() is
-      subset(agent_result.resources | json_query("[*].status.inventory.interfaces[*].macAddress") | flatten)
+      subset(multicluster_engine_managed_cluster_agent_result.resources | json_query("[*].status.inventory.interfaces[*].macAddress") | flatten)
   retries: 180
   delay: 10
 
 - include_tasks: deploy_cluster_baremetal_bind_host.yml
-  loop: '{{ agent_result.resources }}'
+  loop: '{{ multicluster_engine_managed_cluster_agent_result.resources }}'
   loop_control:
     loop_var: outer_item
     label: '{{ outer_item.metadata.name }}'
@@ -93,11 +93,11 @@
     kind: AgentClusterInstall
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
-  register: agentclusterinstall_result
+  register: multicluster_engine_managed_cluster_agentclusterinstall_result
   until:
-    - agentclusterinstall_result.resources.0.status.conditions is defined
-    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | list | length > 0
-    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | first).status == "True"
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions is defined
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | list | length > 0
+    - (multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'RequirementsMet') | first).status == "True"
   retries: 60
   delay: 10
 
@@ -107,17 +107,17 @@
     kind: AgentClusterInstall
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
-  register: agentclusterinstall_result
+  register: multicluster_engine_managed_cluster_agentclusterinstall_result
   until:
-    - agentclusterinstall_result.resources.0.status.conditions is defined
-    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | list | length > 0
-    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | first).status == "True"
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions is defined
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | list | length > 0
+    - (multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Stopped') | first).status == "True"
   retries: 540
   delay: 10
 
 - fail:
     msg: Cluster installation failed.
   when:
-    - agentclusterinstall_result.resources.0.status.conditions is defined
-    - agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
-    - (agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True"
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions is defined
+    - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
+    - (multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True"

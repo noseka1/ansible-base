@@ -4,7 +4,6 @@
   kubernetes.core.k8s:
     template:
       - clusterimageset/clusterimageset.yaml
-  when: not rhacm_detected
 
 - import_tasks: deploy_cluster_cloud.yml
   when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]

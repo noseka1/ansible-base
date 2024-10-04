@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assisted-image-service-trusted-ca
+  namespace: multicluster-engine
+data:
+  tls.crt: |
+    {{ multicluster_engine_os_image_trusted_ca | indent(4) }}

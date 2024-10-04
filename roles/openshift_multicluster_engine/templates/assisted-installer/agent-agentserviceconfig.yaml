@@ -23,3 +23,6 @@ spec:
     resources:
       requests:
         storage: 50Gi
+  OSImageCACertRef:
+    name: assisted-image-service-trusted-ca
+  osImages: {{ multicluster_engine_os_images | to_json }}

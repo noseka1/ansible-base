@@ -24,6 +24,8 @@ gitea:
       # Allow sending a webhook to any destination host
       ALLOWED_HOST_LIST: '*'
       SKIP_TLS_VERIFY: 'true'
+  image:
+    pullPolicy: IfNotPresent
   # Enable Gitea metrics
   metrics:
     enabled: true

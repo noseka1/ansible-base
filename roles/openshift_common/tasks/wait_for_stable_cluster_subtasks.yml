@@ -16,13 +16,13 @@
 - name: Create unavailable, progressing, and degraded operator groups
   set_fact:
     clusteroperator_count: >-
-      {{ clusteroperator_result.resources | length }}
+      {{ clusteroperator_result.resources | default([]) | length }}
     clusteroperator_unavailable: >-
-      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Available' && status=='False']].metadata.name") }}
+      {{ clusteroperator_result.resources | default([]) | json_query("[?status.conditions[?type=='Available' && status=='False']].metadata.name") }}
     clusteroperator_progressing: >-
-      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Progressing' && status=='True']].metadata.name") }}
+      {{ clusteroperator_result.resources | default([]) | json_query("[?status.conditions[?type=='Progressing' && status=='True']].metadata.name") }}
     clusteroperator_degraded: >-
-      {{ clusteroperator_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']].metadata.name") }}
+      {{ clusteroperator_result.resources | default([]) | json_query("[?status.conditions[?type=='Degraded' && status=='True']].metadata.name") }}
 
 - name: Set job complete to true
   set_fact:

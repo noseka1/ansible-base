@@ -19,6 +19,7 @@
 
 - name: Compute upgrade path
   script: files/openshift_upgrade_path.py {{ clusterversion_result.resources.0.status.desired.version }} {{ openshift_cluster_upgrade_target_version }}
+  changed_when: false
   register: upgrade_path
 
 - debug:

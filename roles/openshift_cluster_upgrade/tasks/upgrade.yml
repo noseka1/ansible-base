@@ -32,7 +32,7 @@
           version: '{{ item.version }}'
   register: upgrade_started
 
-- name: Wait for the upgrade to start
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to start
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
@@ -42,7 +42,7 @@
     - clusterversion_result.resources.0.status.conditions is defined
     - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
     - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"
-  retries: 10
+  retries: 60
   delay: 1
 
 - import_role:

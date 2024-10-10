@@ -45,10 +45,25 @@
   retries: 60
   delay: 1
 
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to version {{ item.version }} to complete
+  kubernetes.core.k8s_info:
+    api_version: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+  register: clusterversion_result
+  until:
+    - clusterversion_result.resources.0.status.conditions is defined
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
+    - clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+  retries: 360
+  delay: 20
+
 - import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
-    stable_cluster_delay: 120
+    stable_cluster_delay: 0
     stable_cluster_retries: 60
   when: upgrade_started is changed

@@ -27,7 +27,7 @@ Many of the Ansible roles in this repo require that autogitops is deployed on th
 $ ansible-playbook -i inventory/localhost.yml openshift_autogitops_deploy.yml
 ```
 
-Ansible roles utilizing autogitops need access to Kubernetes manifests located in the [GitOps Catalog Helm repository](https://github.com/noseka1/gitops-catalog-helm). These roles expect to find a clone of this repository on the local machine at {{ playbook_dir }}/../gitops-catalog-helm by default. You can clone the repository by changing to the parent directory:
+Ansible roles utilizing autogitops need access to Kubernetes manifests located in the [GitOps Catalog Helm repository](https://github.com/noseka1/gitops-catalog-helm). These roles expect to find a clone of this repository on the local machine at *{{ playbook_dir }}/../gitops-catalog-helm* by default. You can clone the repository by changing to the parent directory:
 
 ```
 $ pushd ..

@@ -39,7 +39,7 @@
 
 - name: Retrieve the upgrade history
   kubernetes.core.k8s_info:
-    api_version: v1
+    api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
   register: ocu_clusterversion_result

@@ -10,7 +10,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} target version to become available
   kubernetes.core.k8s_info:
-    api_version: v1
+    api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
   register: ocu_clusterversion_result
@@ -23,7 +23,7 @@
 - name: Trigger upgrade to version {{ item.version }}
   kubernetes.core.k8s:
     definition:
-      apiVersion: v1
+      apiVersion: config.openshift.io/v1
       kind: ClusterVersion
       metadata:
         name: version

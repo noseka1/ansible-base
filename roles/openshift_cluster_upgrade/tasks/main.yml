@@ -17,7 +17,7 @@
 - debug:
     msg: Current cluster version is {{ ocu_clusterversion_result.resources.0.status.desired.version }}
 
-- name: Compute upgrade path
+- name: Compute upgrade path {{ ocu_clusterversion_result.resources.0.status.desired.version }} -> {{ ocu_target_version }}
   script: |-
     files/openshift_upgrade_path.py \
       {{ ocu_clusterversion_result.resources.0.status.desired.version }} \

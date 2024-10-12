@@ -34,8 +34,23 @@ class Graph(object):
         to_node = self.nodes[to_version]
         from_node.outgoing_edges.add(to_node)
 
+    @staticmethod
+    def __create_sort_key(version):
+        # Sort correctly OpenShift release versions like:
+        # 4.16.0-ec.1, 4.16.0-rc.6, 4.16.0
+        version_split = version.split("-")
+        key = version_split[0].split(".")
+        if len(version_split) == 1:
+            key += [ "zz", '0' ]
+        elif len(version_split) == 2:
+            key += version_split[1].split(".")
+        else:
+            raise ValueError("Cannot parse version string '%s'" % version)
+        key_result = list( map(lambda x: int(x) if x.isdigit() else x, key))
+        return key_result
+
     def sort_versions(self, versions):
-        versions.sort(key = lambda x: [int(y) for y in x.split('.')])
+        versions.sort(key = Graph.__create_sort_key)
 
     def process_channel_reponse(self, channel, channel_response):
         node_list = []
@@ -98,7 +113,7 @@ class Main(object):
     def main(self):
         logging.basicConfig(level=logging.INFO)
 
-        from_version_arg, to_version_arg, channel_arg = self.read_program_arguments()
+        from_version_arg, to_channel_arg, to_version_arg, channel_arg = self.read_program_arguments()
 
         if channel_arg:
             graph = Graph()
@@ -110,10 +125,11 @@ class Main(object):
 
         from_version = from_version_arg.split(".")
         from_minor = int(from_version[1])
+        to_channel = to_channel_arg.split("-")[0]
         to_version = to_version_arg.split(".")
         to_minor = int(to_version[1])
 
-        graph = self.build_graph(from_minor, to_minor)
+        graph = self.build_graph(from_minor, to_minor, to_channel)
 
         found, path = graph.find_upgrade_path(from_version_arg, to_version_arg)
         logging.debug("Upgrade path {} {}".format(found, path))
@@ -124,10 +140,10 @@ class Main(object):
             logging.error("Upgrade path not found.")
             sys.exit(-1)
 
-    def build_graph(self, from_minor, to_minor):
+    def build_graph(self, from_minor, to_minor, to_channel):
         graph = Graph()
         for i in range(from_minor, to_minor + 1):
-            channel = "%s-%i.%i" % (STABLE, MAJOR, i)
+            channel = "%s-%i.%i" % (to_channel, MAJOR, i)
             self.add_channel_to_graph(channel, graph)
         graph.show_graph()
         return graph
@@ -147,14 +163,14 @@ class Main(object):
                 (self.url, pp.pformat(response_json)))
 
     def read_program_arguments(self):
-        if len(sys.argv) <= 1:
+        if len(sys.argv) == 2:
+            return None, None, None, sys.argv[1]
+        elif len(sys.argv) == 4:
+            return sys.argv[1], sys.argv[2], sys.argv[3], None
+        else:
             print("Usage:")
             print("{} CHANNEL".format(sys.argv[0]))
-            print("{} FROM_VERSION TO_VERSION".format(sys.argv[0]))
+            print("{} FROM_VERSION TO_CHANNEL TO_VERSION ".format(sys.argv[0]))
             sys.exit(-1)
-        if len(sys.argv) == 2:
-            return None, None, sys.argv[1]
-        else:
-            return sys.argv[1], sys.argv[2], None
 
 Main().main()

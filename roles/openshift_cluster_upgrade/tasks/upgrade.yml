@@ -30,7 +30,6 @@
       spec:
         desiredUpdate:
           version: '{{ item.version }}'
-  register: ocu_upgrade_started
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to start
   kubernetes.core.k8s_info:
@@ -66,4 +65,3 @@
   vars:
     stable_cluster_delay: 0
     stable_cluster_retries: 60
-  when: ocu_upgrade_started is changed

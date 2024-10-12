@@ -1,14 +1,14 @@
 - name: Switch channel to {{ item.channel }}
   kubernetes.core.k8s:
     definition:
-      apiVersion: v1
+      apiVersion: config.openshift.io/v1
       kind: ClusterVersion
       metadata:
         name: version
       spec:
         channel: '{{ item.channel }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} update to become available
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} target version to become available
   kubernetes.core.k8s_info:
     api_version: v1
     kind: ClusterVersion

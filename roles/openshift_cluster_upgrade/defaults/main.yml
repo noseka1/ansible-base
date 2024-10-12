@@ -1,2 +1,2 @@
-openshift_cluster_upgrade_target_version: ''
-openshift_cluster_upgrade_target_channel: ''
+ocu_target_version: ''
+ocu_target_channel: ''

@@ -1,25 +1,25 @@
 - assert:
     that:
-      - openshift_cluster_upgrade_target_channel | length > 0
+      - ocu_target_channel | length > 0
     fail_msg: "Upgrade target channel not defined. Example: stable-4.16"
     quiet: true
 
 - assert:
     that:
-      - openshift_cluster_upgrade_target_version | length > 0
+      - ocu_target_version | length > 0
     fail_msg: "Upgrade target version not defined. Examples: 4.16.13, latest"
     quiet: true
 
-- name: Retrieve latest version on {{ openshift_cluster_upgrade_target_channel }} channel
-  script: files/openshift_upgrade_path.py {{ openshift_cluster_upgrade_target_channel }}
+- name: Retrieve latest version on {{ ocu_target_channel }} channel
+  script: files/openshift_upgrade_path.py {{ ocu_target_channel }}
   changed_when: false
-  register: upgrade_path
-  when: openshift_cluster_upgrade_target_version == 'latest'
+  register: ocu_target_version
+  when: ocu_target_version == 'latest'
 
 - name: Set target OpenShift version
   set_fact:
-    openshift_cluster_upgrade_target_version: '{{ upgrade_path.stdout_lines[0] }}'
-  when: openshift_cluster_upgrade_target_version == 'latest'
+    ocu_target_version: '{{ ocu_target_version.stdout_lines[0] }}'
+  when: ocu_target_version == 'latest'
 
 - debug:
-    msg: Upgrading OpenShift to version {{ openshift_cluster_upgrade_target_version }}
+    msg: Upgrading OpenShift to version {{ ocu_target_version }}

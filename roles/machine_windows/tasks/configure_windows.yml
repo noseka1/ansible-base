@@ -1,11 +1,11 @@
-- name: Show hidden files
+- name: Show hidden files in Windows Explorer
   ansible.windows.win_regedit:
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
     name: Hidden
     type: dword
     data: 1
 
-- name: Show file extensions
+- name: Show file extensions in Windows Explorer
   ansible.windows.win_regedit:
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
     name: HideFileExt

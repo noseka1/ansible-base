@@ -1,0 +1,2 @@
+# Install latest Windows updates and reboot the machine
+mw_install_updates: false

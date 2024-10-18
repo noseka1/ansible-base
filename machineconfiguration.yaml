@@ -1,0 +1,23 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    files:
+    - actions:
+      - type: None
+      path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod/run.sh
+    - actions:
+      - type: None
+      path: /etc/kubernetes/manifests/auto-approve-csr-pod.yaml
+    units:
+    - actions:
+      - type: DaemonReload
+      - restart:
+          serviceName: local-path-provisioner.service
+        type: Restart
+      name: local-path-provisioner.service
+    - actions:
+      - type: None
+      name: fstrim.timer

@@ -1,0 +1,17 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    files:
+    - actions:
+      - type: None
+      path: /var/usrlocal/bin/create-lvm-block.sh
+    units:
+    - actions:
+      - type: DaemonReload
+      - restart:
+          serviceName: create-lvm-block.service
+        type: Restart
+      name: create-lvm-block.service

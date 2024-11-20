@@ -17,6 +17,17 @@
     namespace: '{{ auto_approve_csr_namespace }}'
   register: auto_approve_csr_serviceaccount_secret
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_machineconfiguration.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: update_machineconfiguration.yml
+  vars:
+    openshift_common_mc_update_yaml: '{{ lookup("template", "cluster-machineconfiguration.yaml") | from_yaml }}'
+  when: openshift_common_machineconfiguration_exists
+
 - name: Install auto-approve-csr to master nodes (will cause nodes to restart)
   kubernetes.core.k8s:
     template: 64-auto-approve-csr-mc.yaml
@@ -28,4 +39,6 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_auto_approve_result is changed
+  when:
+    - not openshift_common_machineconfiguration_exists
+    - openshift_auto_approve_result is changed

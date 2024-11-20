@@ -1,0 +1,10 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    units:
+    - actions:
+      - type: None
+      name: fstrim.timer

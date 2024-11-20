@@ -1,0 +1,11 @@
+- name: Check if MachineConfiguration resource exists
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: MachineConfiguration
+    name: cluster
+  register: openshift_common_machineconfiguration_result
+
+- name: Set openshift_common_machineconfiguration_exists
+  set_fact:
+    openshift_common_machineconfiguration_exists: >-
+      {{ openshift_common_machineconfiguration_result.resources | length > 0 }}

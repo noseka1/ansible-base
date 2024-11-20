@@ -1,0 +1,73 @@
+- name: Retrieve update for MachineConfiguration files
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
+        jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
+  changed_when: false
+  register: openshift_common_mc_update_files
+
+- name: Retrieve update for MachineConfiguration units
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
+        jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
+  changed_when: false
+  register: openshift_common_mc_update_units
+
+- name: Retrieve current MachineConfiguration resource
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: MachineConfiguration
+    name: cluster
+  register: openshift_common_mc_result
+
+- set_fact:
+    openshift_common_mc_orig_yaml: '{{ openshift_common_mc_result.resources.0 }}'
+
+- name: Retrieve current MachineConfiguration files
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
+        jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
+  changed_when: false
+  register: openshift_common_mc_orig_files
+
+- name: Retrieve current MachineConfiguration units
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
+        jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
+  changed_when: false
+  register: openshift_common_mc_orig_units
+
+- name: Merge MachineConfiguration files
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_orig_files.stdout }} {{ openshift_common_mc_update_files.stdout }}' |
+        jq --slurp add |
+        jq --compact-output 'to_entries|[.[].value]'
+  changed_when: false
+  register: openshift_common_mc_apply_files
+
+- name: Merge MachineConfiguration units
+  shell:
+    cmd: |-
+      echo '{{ openshift_common_mc_orig_units.stdout }} {{ openshift_common_mc_update_units.stdout }}' |
+        jq --slurp add |
+        jq --compact-output 'to_entries|[.[].value]'
+  changed_when: false
+  register: openshift_common_mc_apply_units
+
+- set_fact:
+    openshift_common_mc_apply_spec:
+      spec:
+        nodeDisruptionPolicy:
+          files: '{{ openshift_common_mc_apply_files.stdout }}'
+          units: '{{ openshift_common_mc_apply_units.stdout }}'
+
+- set_fact:
+    openshift_common_mc_apply_yaml: '{{ openshift_common_mc_update_yaml | combine(openshift_common_mc_apply_spec, recursive=true) }}'
+
+- name: Update MachineConfiguration on cluster
+  kubernetes.core.k8s:
+    definition: '{{ openshift_common_mc_apply_yaml }}'

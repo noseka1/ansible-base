@@ -1,0 +1,17 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    files:
+    - actions:
+      - type: None
+      path: /var/usrlocal/bin/create-openebs-lvm.sh
+    units:
+    - actions:
+      - type: DaemonReload
+      - restart:
+          serviceName: create-openebs-lvm.service
+        type: Restart
+      name: create-openebs-lvm.service

@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    units:
+    - actions:
+      - type: DaemonReload
+      - restart:
+          serviceName: set-root-user-password.service
+        type: Restart
+      name: set-root-user-password.service

@@ -28,7 +28,7 @@
     openshift_common_mc_update_yaml: '{{ lookup("template", "cluster-machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
-- name: Install auto-approve-csr to master nodes (will cause nodes to restart)
+- name: Install auto-approve-csr to master nodes (may cause nodes to restart)
   kubernetes.core.k8s:
     template: 64-auto-approve-csr-mc.yaml
   register: openshift_auto_approve_result

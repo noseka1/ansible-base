@@ -9,7 +9,7 @@
     openshift_common_mc_update_yaml: '{{ lookup("template", "instance/cluster-machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
-- name: Create loop block device for LVM Storage volumes on each cluster node (will cause nodes to restart)
+- name: Create loop block device for LVM Storage volumes on each cluster node (may cause nodes to restart)
   kubernetes.core.k8s:
     template:
       - instance/99-lvm-block-mc.yaml

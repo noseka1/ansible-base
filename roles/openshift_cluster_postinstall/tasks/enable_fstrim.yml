@@ -9,7 +9,7 @@
     openshift_common_mc_update_yaml: '{{ lookup("template", "fstrim/cluster-machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
-- name: Enable periodic trimming of filesystems on OpenShift nodes
+- name: Enable periodic trimming of filesystems on OpenShift nodes (may cause nodes to restart)
   kubernetes.core.k8s:
     template: fstrim/72-fstrim-mc.yaml
   register: openshift_cluster_postinstall_machineconfig_result

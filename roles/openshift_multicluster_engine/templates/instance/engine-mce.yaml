@@ -31,7 +31,7 @@ spec:
     - enabled: true
       name: managedserviceaccount
     - enabled: false
-      name: image-based-install-operator-preview
+      name: image-based-install-operator
   targetNamespace: {{ multicluster_engine_instance_namespace }}
   imagePullSecret: openshift-pull-secret
 {% if multicluster_engine_place_on_infra_nodes %}

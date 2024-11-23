@@ -29,7 +29,8 @@ multicluster_engine_ssh_authorized_key: ''
 multicluster_engine_os_image_trusted_ca: ''
 
 # List of OpenShift installation ISOs to download. You can retrieve the ISO information using:
-# openshift-install coreos print-stream-json | jq .architectures.x86_64.artifacts.metal.formats.iso
+# $ openshift-install coreos print-stream-json | jq .architectures.x86_64.artifacts.metal.formats.iso
+# If the list is left empty, images for several recent OpenShift versions will be downloaded by default
 multicluster_engine_os_images:
   - openshiftVersion: '4.16'
     version: '416.94.202410172137-0'

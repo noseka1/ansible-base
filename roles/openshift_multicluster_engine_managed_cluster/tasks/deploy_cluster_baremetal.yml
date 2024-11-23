@@ -11,10 +11,6 @@
     - multicluster_engine_managed_cluster_worker_agents | int == 0
     - multicluster_engine_managed_cluster.user_managed_networking == false
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_openshift_pull_secret.yml
-
 - name: Create infrastructure environment namespace for deploying OpenShift cluster {{ multicluster_engine_managed_cluster.cluster_name }}
   kubernetes.core.k8s:
     template:

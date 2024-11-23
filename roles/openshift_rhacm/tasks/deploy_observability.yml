@@ -7,10 +7,6 @@
     minio_manage_namespace: false
   when: rhacm_observability_minio_enabled
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_openshift_pull_secret.yml
-
 - name: Deploy Observability component
   kubernetes.core.k8s:
     template:

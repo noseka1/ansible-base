@@ -12,10 +12,6 @@
     subscription_name: '{{ rhacm_subscription_name }}'
     subscription_namespace: '{{ rhacm_subscription_namespace }}'
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_openshift_pull_secret.yml
-
 - name: Deploy RHACM instance
   kubernetes.core.k8s:
     template:

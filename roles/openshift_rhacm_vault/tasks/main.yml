@@ -12,7 +12,7 @@
   vars:
     secret_name: mycluster
     secret_data:
-      pull_secret: '{{ redhat_cloud_pull_secret | string }}'
+      pull_secret: '{{ redhat_cloud_pull_secret }}'
       install-config.yaml: |
         apiVersion: v1
         metadata:

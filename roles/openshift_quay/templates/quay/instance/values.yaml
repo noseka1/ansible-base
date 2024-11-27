@@ -6,3 +6,5 @@ storageSecretKey: '{{ generic_user_password }}'
 storageBucketName: mybucket1
 
 quayReplicas: 1
+
+clairManaged: {{ quay_clair_managed }}

@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio
+spec:
+  endpoints:
+  - path: /minio/metrics/v3
+    port: api
+  selector:
+    matchLabels:
+      app: minio

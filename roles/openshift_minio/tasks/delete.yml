@@ -8,6 +8,7 @@
       - minio-deploy.yaml
       - minio-server-credentials-secret.yaml
       - minio-svc.yaml
+      - minio-servicemonitor.yaml
       - minio-storage-pvc.yaml
       - minio-config-pvc.yaml
     namespace: '{{ minio_namespace }}'

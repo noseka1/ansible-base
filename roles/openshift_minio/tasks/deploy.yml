@@ -15,6 +15,7 @@
       - minio-server-credentials-secret.yaml
       - minio-storage-pvc.yaml
       - minio-svc.yaml
+      - minio-servicemonitor.yaml
     namespace: '{{ minio_namespace }}'
 
 - name: Obtain Minio route

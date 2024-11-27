@@ -30,6 +30,10 @@ spec:
             secretKeyRef:
               name: minio-server-credentials
               key: minio_secret_key
+        # Disable metrics endpoint authentication
+        # See also https://min.io/docs/minio/linux/reference/minio-server/settings/metrics-and-logging.html#envvar.MINIO_PROMETHEUS_AUTH_TYPE
+        - name: MINIO_PROMETHEUS_AUTH_TYPE
+          value: public
         ports:
         - containerPort: 9000
         - containerPort: 8080

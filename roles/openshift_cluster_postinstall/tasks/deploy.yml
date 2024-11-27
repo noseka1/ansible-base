@@ -21,6 +21,9 @@
     name: openshift_common
     tasks_from: get_provisioning.yml
 
+- import_tasks: configure_images_mirrors.yml
+  when: openshift_cluster_postinstall_image_mirrors[openshift_common_cluster_domain] is defined
+
 - import_tasks: etcd_encryption.yml
   when: openshift_cluster_postinstall_etcd_encryption
 

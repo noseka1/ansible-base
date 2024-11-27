@@ -15,6 +15,9 @@ openshift_cluster_postinstall_kernel_arguments: []
 
 openshift_cluster_postinstall_deploy_infra_nodes: false
 
+# Configure container image mirrors by digest and tag
+openshift_cluster_postinstall_image_mirrors: {}
+
 openshift_cluster_postinstall_clusterwide_proxy: {}
 
 openshift_cluster_postinstall_trusted_ca_bundle: ''

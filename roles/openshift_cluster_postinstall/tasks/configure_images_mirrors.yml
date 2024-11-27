@@ -1,0 +1,5 @@
+- name: Configure image mirrors
+  kubernetes.core.k8s:
+    template:
+      - image-mirrors/custom-image-mirrors-idms.yaml
+      - image-mirrors/custom-image-mirrors-itms.yaml

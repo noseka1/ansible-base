@@ -31,10 +31,15 @@
 - name: Configure cloud-init
   import_tasks: configure_cloud_init.yml
 
-- name: Fix SELinux label on first boot
-  copy:
-    dest: /.autorelabel
-    content: ''
-    force: false
-    mode: '0644'
+
+- name: Check if SELinux configuration is present
+  stat:
+    path: /etc/selinux/config
+  register: image_vm_selinux_config_result
+
+- name: Fix SELinux file type
+  shell: |
+    touch /.autorelabel
+    chcon system_u:object_r:etc_runtime_t:s0 /.autorelabel
+  when: image_vm_selinux_config_result.stat.exists
   become: true

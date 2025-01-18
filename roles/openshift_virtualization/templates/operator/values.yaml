@@ -1,4 +1,4 @@
 subscriptionApproval: Automatic
-subscriptionChannel: ''
+subscriptionChannel: stable
 subscriptionStartingCsv: ''
 kvmEmulationEnabled: {{ openshift_virtualization_kvm_emulation_enabled }}

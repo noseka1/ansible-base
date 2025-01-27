@@ -1,4 +1,4 @@
-manageNamespaceAndOperatorGroup: true
+manageNamespaceAndOperatorGroup: {{ odf_openshift_storage_namespace_result.resources | length == 0 }}
 subscriptionApproval: Automatic
 subscriptionChannel: ''
 subscriptionStartingCsv: ''

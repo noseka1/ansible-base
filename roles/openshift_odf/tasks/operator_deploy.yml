@@ -1,3 +1,10 @@
+- name: Check if openshift-storage namespace already exists
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Namespace
+    name: openshift-storage
+  register: odf_openshift_storage_namespace_result
+
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml

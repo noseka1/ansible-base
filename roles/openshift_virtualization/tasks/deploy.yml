@@ -35,6 +35,7 @@
   kubernetes.core.k8s:
     template:
       - storageprofiles/local-path-storageprofile.yaml
+      - storageprofiles/local-hostpath-storageprofile.yaml
       - storageprofiles/nfs-csi-storageprofile.yaml
 
 - import_tasks: example_deploy.yml

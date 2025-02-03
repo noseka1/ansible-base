@@ -2,6 +2,13 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
+    autogitops_app_name: mtv-provider
+  tags: mtv_provider
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
     autogitops_app_name: mtv
   tags: mtv_instance
 

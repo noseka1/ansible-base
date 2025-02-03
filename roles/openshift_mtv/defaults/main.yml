@@ -1,0 +1,11 @@
+# Create MTV migration source
+mtv_providers: []
+#  - name: photon-machine.lab.example.com
+#    type: vsphere
+#    url: https://photon-machine.lab.example.com/sdk
+#    vddkInitImage: registry.lab.example.com:5002/noseka1/vddk/vddk:latest
+#    user: administrator@mysso.com
+#    password: ''
+#    thumbprint: 35:BA:E3:56:E2:AA:4D:8F:6D:62:33:A7:46:A6:37:76:6B:B3:82:22
+#    insecureSkipVerify: true
+#    caCert: ''

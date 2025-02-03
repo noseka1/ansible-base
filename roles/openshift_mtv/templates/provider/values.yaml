@@ -1,0 +1,17 @@
+{% if mtv_providers | length == 0 %}
+providers: []
+{% else %}
+providers:
+{% for item in mtv_providers %}
+  - name: {{ item.name }}
+    type: {{ item.type }}
+    url: {{ item.url }}
+    vddkInitImage: {{ item.vddkInitImage }}
+    user: {{ item.user }}
+    password: '{{ item.password }}'
+    thumbprint: {{ item.thumbprint }}
+    insecureSkipVerify: {{ item.insecureSkipVerify }}
+    caCert: |
+      {{ item.caCert | indent(6) }}
+{% endfor %}
+{% endif %}

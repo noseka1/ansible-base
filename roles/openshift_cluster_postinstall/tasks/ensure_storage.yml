@@ -4,6 +4,6 @@
     tasks_from: get_default_storage_class.yml
 
 - import_role:
-    name: openshift_local_path_provisioner
+    name: openshift_local_hostpath
     tasks_from: deploy.yml
   when: not openshift_common_default_storage_class_exists

@@ -1,0 +1,77 @@
+csiDriver:
+  # Should be globally unique for a given cluster
+  name: org.democratic-csi.local-hostpath
+  attachRequired: false
+  # Disable storage capacity reporting to allow overprovisioning
+  storageCapacity: false
+  fsGroupPolicy: File
+
+controller:
+  enabled: true
+  strategy: node
+  externalProvisioner:
+    extraArgs:
+      - --leader-election=false
+      - --node-deployment=true
+      - --node-deployment-immediate-binding=false
+      - --feature-gates=Topology=true
+      - --strict-topology=true
+      - --enable-capacity=true
+      - --capacity-ownerref-level=1
+
+  externalAttacher:
+    enabled: false
+
+  externalResizer:
+    enabled: false
+
+  externalSnapshotter:
+    enabled: true
+    extraArgs:
+      - --leader-election=false
+      - --node-deployment=true
+
+  driver:
+    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_image_tag }}
+    securityContext:
+      privileged: true
+  rbac:
+    openshift:
+      # Set to true if running on OpenShift
+      privileged: true
+
+node:
+  driver:
+    extraVolumeMounts:
+      - name: local-storage
+        mountPath: {{ local_hostpath_host_path }}
+        mountPropagation: Bidirectional
+    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_image_tag }}
+  extraVolumes:
+    - name: local-storage
+      hostPath:
+        path: {{ local_hostpath_host_path }}
+        type: DirectoryOrCreate
+  rbac:
+    openshift:
+      # Set to true if running on OpenShift
+      privileged: true
+
+storageClasses:
+  - name: local-hostpath
+    defaultClass: {{ not openshift_common_default_storage_class_exists or openshift_common_default_storage_class == 'local-hostpath' }}
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: false
+
+driver:
+  config:
+    driver: local-hostpath
+    local-hostpath:
+      shareBasePath: {{ local_hostpath_host_path }}
+      controllerBasePath: {{ local_hostpath_host_path }}
+      dirPermissionsMode: "0777"
+      dirPermissionsUser: 0
+      dirPermissionsGroup: 0
+      snapshots:
+        default_driver: filecopy

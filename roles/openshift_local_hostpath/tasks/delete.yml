@@ -1,0 +1,13 @@
+- name: Delete democratic csi Helm chart
+  kubernetes.core.helm:
+    name: '{{ local_hostpath_name }}'
+    release_namespace: '{{ local_hostpath_namespace }}'
+    release_state: absent
+    wait: true
+
+- name: Delete {{ local_hostpath_namespace }} namespace
+  kubernetes.core.k8s:
+    template:
+      - local-hostpath-ns.yaml
+    state: absent
+    wait: true

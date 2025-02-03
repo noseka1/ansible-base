@@ -1,0 +1,13 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ wait_for_daemonset_namespace }}/{{ wait_for_daemonset_name }} daemonset to deploy
+  kubernetes.core.k8s_info:
+    api_version: apps/v1
+    kind: DaemonSet
+    name: '{{ wait_for_daemonset_name }}'
+    namespace: '{{ wait_for_daemonset_namespace }}'
+  register: wait_for_daemonset_result
+  until:
+    - wait_for_daemonset_result.resources.0.status.desiredNumberScheduled is defined
+    - wait_for_daemonset_result.resources.0.status.numberAvailable is defined
+    - wait_for_daemonset_result.resources.0.status.desiredNumberScheduled == wait_for_daemonset_result.resources.0.status.numberAvailable
+  retries: '{{ wait_for_daemonset_retries | default(60) }}'
+  delay: 10

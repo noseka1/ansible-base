@@ -6,7 +6,7 @@
     autogitops_app_src_path: mtv/operator
     autogitops_app_dst_path: mtv/operator
     autogitops_app_namespace: openshift-mtv
-    autogitops_app_values: ''
+    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
   tags: mtv_operator
 
 - import_role:

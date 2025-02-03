@@ -22,15 +22,15 @@ odf_platform_to_storageclass:
     storage_device_sets: thin-csi
     mcg_db: thin-csi
   BareMetal:
-    mon_pvc_template: local-path
+    mon_pvc_template: local-hostpath
     # Example storage classes: lvms-loop1-vg, openebs-lvm, lso-myvolumeset1
     storage_device_sets: lvms-loop1-vg
-    mcg_db: local-path
+    mcg_db: local-hostpath
   None:
-    mon_pvc_template: local-path
+    mon_pvc_template: local-hostpath
     # Example storage classes: lvms-loop1-vg, openebs-lvm, lso-myvolumeset1
     storage_device_sets: lvms-loop1-vg
-    mcg_db: local-path
+    mcg_db: local-hostpath
 
 portable_storageclasses:
   - gp3-csi

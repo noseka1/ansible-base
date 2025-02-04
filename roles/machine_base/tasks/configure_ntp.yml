@@ -1,7 +1,7 @@
 - name: Install chrony package
   package:
     name: '{{ item }}'
-    state: installed
+    state: present
   loop:
     - chrony
   become: true

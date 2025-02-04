@@ -15,7 +15,7 @@
   loop:
     - root
     - ansible
-    - developer
+    - devel
   become: true
 
 - name: Set UseDNS to no in sshd config
@@ -30,7 +30,6 @@
 
 - name: Configure cloud-init
   import_tasks: configure_cloud_init.yml
-
 
 - name: Check if SELinux configuration is present
   stat:

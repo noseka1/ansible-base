@@ -12,7 +12,7 @@
       - '{{ "sudo" if ansible_facts.os_family == "Debian" else "wheel" }}'
   loop:
     - ansible
-    - developer
+    - devel
   become: true
 
 - name: Set authorized key for users
@@ -22,5 +22,5 @@
   loop:
     - root
     - ansible
-    - developer
+    - devel
   become: true

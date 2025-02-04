@@ -13,7 +13,7 @@
     template: oauth/user.yaml
   loop:
     - admin
-    - developer
+    - devel
   when: openshift_cluster_postinstall_htpasswd.enabled
 
 - name: Configure authentication using htpasswd and OIDC and set token expiration to 31 days

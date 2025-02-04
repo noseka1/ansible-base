@@ -14,9 +14,9 @@
       when: ansible_facts.distribution == "Fedora"
       tags: machine_devel
 
-    # Switch to user developer
+    # Switch to user devel
     - set_fact:
-        ansible_user: developer
+        ansible_user: devel
       tags: machine_devel
 
 - hosts: all

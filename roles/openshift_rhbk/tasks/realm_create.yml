@@ -185,10 +185,10 @@
       lastname: Admin
       email: admin@example.com
       groups: [ keycloak-admins ]
-    - name: developer
+    - name: devel
       firstname: Some
       lastname: Developer
-      email: developer@example.com
+      email: devel@example.com
       groups: [ keycloak-developers ]
   loop_control:
     loop_var: rhbk_user

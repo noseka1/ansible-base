@@ -9,6 +9,5 @@
 
 - hosts: '{{ chroot_location }}'
   connection: chroot
-  gather_facts: false
   roles:
     - image_vm

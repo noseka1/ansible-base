@@ -9,7 +9,7 @@
     name: '{{ item }}'
     password: '{{ generic_user_password | string | password_hash("sha512", "constant") }}'
     groups:
-      - wheel
+      - '{{ "sudo" if ansible_facts.os_family == "Debian" else "wheel" }}'
   loop:
     - ansible
     - developer

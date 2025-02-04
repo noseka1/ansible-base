@@ -10,6 +10,7 @@
       - abrt-libs
       - abrt-tui
     state: absent
+  when: ansible_facts.os_family == "RedHat"
   become: true
 
 - name: Set the core file pattern

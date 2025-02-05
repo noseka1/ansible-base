@@ -32,7 +32,7 @@ controller:
       - --node-deployment=true
 
   driver:
-    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_image_tag }}
+    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_democratic_csi_image_tag }}
     securityContext:
       privileged: true
   rbac:
@@ -46,7 +46,7 @@ node:
       - name: local-storage
         mountPath: {{ local_hostpath_host_path }}
         mountPropagation: Bidirectional
-    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_image_tag }}
+    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_democratic_csi_image_tag }}
   extraVolumes:
     - name: local-storage
       hostPath:

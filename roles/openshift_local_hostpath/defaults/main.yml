@@ -1,5 +1,5 @@
-local_hostpath_helm_chart_version: 0.14.7
-local_hostpath_image_tag: v1.9.3
+local_hostpath_democratic_csi_helm_chart_version: 0.14.7
+local_hostpath_democratic_csi_image_tag: v1.9.3
 
 local_hostpath_namespace: local-hostpath
 local_hostpath_name: local-hostpath

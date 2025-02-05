@@ -47,7 +47,7 @@
   kubernetes.core.helm:
     name: '{{ local_hostpath_name }}'
     chart_ref: democratic-csi/democratic-csi
-    chart_version: '{{ local_hostpath_helm_chart_version  }}'
+    chart_version: '{{ local_hostpath_democratic_csi_helm_chart_version  }}'
     release_namespace: '{{ local_hostpath_namespace }}'
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     wait: true

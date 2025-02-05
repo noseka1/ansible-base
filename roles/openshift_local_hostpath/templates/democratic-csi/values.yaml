@@ -64,6 +64,9 @@ storageClasses:
     volumeBindingMode: WaitForFirstConsumer
     allowVolumeExpansion: false
 
+volumeSnapshotClasses:
+  - name: local-hostpath
+
 driver:
   config:
     driver: local-hostpath

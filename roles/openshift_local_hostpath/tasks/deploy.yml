@@ -49,7 +49,16 @@
     chart_ref: democratic-csi/democratic-csi
     chart_version: '{{ local_hostpath_democratic_csi_helm_chart_version  }}'
     release_namespace: '{{ local_hostpath_namespace }}'
-    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    release_values: '{{ lookup("template", "democratic-csi/values.yaml") | from_yaml }}'
+    wait: true
+
+- name: Deploy snapshot controller Helm chart
+  kubernetes.core.helm:
+    name: '{{ local_hostpath_name }}-snapshot'
+    chart_ref: democratic-csi/snapshot-controller
+    chart_version: '{{ local_hostpath_snapshot_controller_helm_chart_version  }}'
+    release_namespace: '{{ local_hostpath_namespace }}'
+    release_values: '{{ lookup("template", "snapshot-controller/values.yaml") | from_yaml }}'
     wait: true
 
 - import_role:

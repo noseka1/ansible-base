@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: iscsi-target
+ # Indicates that this StorageClass does not support dynamic provisioning
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate

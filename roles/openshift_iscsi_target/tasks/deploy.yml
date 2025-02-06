@@ -43,4 +43,5 @@
 - name: Create iscsi-target persistent volumes
   kubernetes.core.k8s:
     template:
+      - iscsi-target-sc.yaml
       - iscsi-target-pv.yaml

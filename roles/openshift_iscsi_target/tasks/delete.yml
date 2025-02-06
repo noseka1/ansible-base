@@ -1,10 +1,3 @@
-- name: Delete iscsi-target namespace
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-ns.yaml
-    state: absent
-    wait: true
-
 - set_fact:
     iscsi_target_service_ip: ''
 
@@ -12,5 +5,13 @@
   kubernetes.core.k8s:
     template:
       - iscsi-target-pv.yaml
+      - iscsi-target-sc.yaml
+    state: absent
+    wait: true
+
+- name: Delete iscsi-target namespace
+  kubernetes.core.k8s:
+    template:
+      - iscsi-target-ns.yaml
     state: absent
     wait: true

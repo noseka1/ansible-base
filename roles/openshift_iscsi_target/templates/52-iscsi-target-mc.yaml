@@ -1,0 +1,16 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 52-{{ item }}-iscsi-target
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    systemd:
+      units:
+      - name: create-pr-dir.service
+        enabled: true
+        contents: |
+          {{ lookup('file', 'create-pr-dir.service', rstrip=false) | indent(10) }}

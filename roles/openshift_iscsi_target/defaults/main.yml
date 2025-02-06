@@ -1,0 +1,2 @@
+iscsi_target_namespace: iscsi-target
+iscsi_target_volume_size_gb: 50

@@ -1,0 +1,29 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_machineconfiguration.yml
+
+- import_role:
+    name: openshift_common
+    tasks_from: update_machineconfiguration.yml
+  vars:
+    openshift_common_mc_update_yaml: '{{ lookup("template", "cluster-machineconfiguration.yaml") | from_yaml }}'
+  when: openshift_common_machineconfiguration_exists
+
+- name: Create /etc/target/pr directory on cluster nodes (may cause nodes to restart)
+  kubernetes.core.k8s:
+    template:
+      - 52-iscsi-target-mc.yaml
+  register: iscsi_target_machineconfig_result
+  loop:
+    - worker
+    - master
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_stable_cluster.yml
+  vars:
+    stable_cluster_delay: 120
+    stable_cluster_retries: 10
+  when:
+    - not openshift_common_machineconfiguration_exists
+    - iscsi_target_machineconfig_result is changed

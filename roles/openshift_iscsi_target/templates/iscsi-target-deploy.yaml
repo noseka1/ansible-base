@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iscsi-target
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iscsi-target
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: iscsi-target
+    spec:
+      containers:
+      - image: quay.io/noseka1/toolbox-container:basic
+        imagePullPolicy: Always
+        name: iscsi-target
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: lib-modules
+          readonly: true
+        - mountPath: /run/dbus
+          name: run-dbus
+        - mountPath: /storage
+          name: storage
+        - mountPath: /toolbox
+          name: init
+      serviceAccountName: iscsi-target
+      volumes:
+      - hostPath:
+          path: /lib/modules
+        name: lib-modules
+      - hostPath:
+          path: /run/dbus
+        name: run-dbus
+      - name: storage
+        persistentVolumeClaim:
+          claimName: iscsi-target-storage
+      - configMap:
+          name: iscsi-target-init
+        name: init

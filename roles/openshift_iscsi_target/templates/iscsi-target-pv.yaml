@@ -1,0 +1,23 @@
+{% for i in range(0, 10) %}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: iscsi-target-{{ i }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: {{ iscsi_target_volume_size_gb }}Gi
+  iscsi:
+    initiatorName: iqn.2025-01.com.example.initiator:0
+    iqn: iqn.2025-01.com.example.target:0
+    iscsiInterface: default
+    lun: {{ i }}
+    portals:
+    - {{ iscsi_target_service_ip }}:3260
+    targetPortal: {{ iscsi_target_service_ip }}:3260
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: iscsi-target
+  volumeMode: Block
+{% endfor %}

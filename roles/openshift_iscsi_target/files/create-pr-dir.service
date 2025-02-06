@@ -1,0 +1,14 @@
+[Unit]
+Description=Ensure /etc/target/pr directory exists
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+
+# Create directory for APTPL (Active Persist Through Power Loss) SCSI-3 reservations
+# This fixes the dmesg error message:
+# filp_open(/etc/target/pr/aptpl_b614402d-7f00-4554-bb5c-5738b1df1cbe) for APTPL metadata failed
+ExecStart=mkdir -p /etc/target/pr
+
+[Install]
+WantedBy=multi-user.target

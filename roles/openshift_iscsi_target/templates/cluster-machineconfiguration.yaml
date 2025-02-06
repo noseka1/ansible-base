@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    units:
+    - actions:
+      - type: DaemonReload
+      - restart:
+          serviceName: create-pr-dir.service
+        type: Restart
+      name: create-pr-dir.service

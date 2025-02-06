@@ -37,6 +37,8 @@
       - storageprofiles/local-path-storageprofile.yaml
       - storageprofiles/local-hostpath-storageprofile.yaml
       - storageprofiles/nfs-csi-storageprofile.yaml
+      - storageprofiles/iscsi-target-storageprofile.yaml
+  tags: openshift_virtualization_instance
 
 - import_tasks: example_deploy.yml
   tags: openshift_virtualization_example_workload

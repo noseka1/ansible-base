@@ -6,6 +6,7 @@
       - minio-trace-deploy.yaml
       - minio-console-route.yaml
       - minio-deploy.yaml
+      - minio-ns.yaml
       - minio-server-credentials-secret.yaml
       - minio-svc.yaml
       - minio-servicemonitor.yaml
@@ -14,10 +15,3 @@
     namespace: '{{ minio_namespace }}'
     wait: true
     state: absent
-
-- name: Delete namespace {{ minio_namespace }}
-  kubernetes.core.k8s:
-    template: minio-ns.yaml
-    wait: true
-    state: absent
-  when: minio_manage_namespace

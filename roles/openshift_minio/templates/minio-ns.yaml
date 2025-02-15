@@ -1,6 +1,8 @@
+{% if minio_manage_namespace %}
 apiVersion: v1
 kind: Namespace
 metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
   name: {{ minio_namespace }}
+{% endif %}

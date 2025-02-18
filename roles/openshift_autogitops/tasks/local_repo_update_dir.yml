@@ -3,6 +3,18 @@
     autogitops_app_src_items: >-
       {{ lookup('community.general.filetree', '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}') }}
 
+- name: Convert from dict to list
+  set_fact:
+    autogitops_app_src_items: >-
+      {{ [ autogitops_app_src_items ] }}
+  when: autogitops_app_src_items | type_debug == 'dict'
+
+- assert:
+    that:
+      - autogitops_app_src_items | length > 0
+    fail_msg: 'There are no application manifests to deploy. The manifest source directory is empty.'
+    quiet: true
+
 - name: Obtain application destination tree
   set_fact:
     autogitops_app_dst_items: >-

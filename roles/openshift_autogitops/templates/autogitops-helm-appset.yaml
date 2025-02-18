@@ -43,8 +43,6 @@ spec:
         targetRevision: ag-{{ openshift_common_cluster_domain }}
         helm:
           ignoreMissingValueFiles: true
-          valueFiles:
-          - /{{ .path.path }}/values.yaml
       syncPolicy:
         syncOptions:
         - ApplyOutOfSyncOnly=true

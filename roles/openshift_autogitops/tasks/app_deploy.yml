@@ -2,13 +2,17 @@
     name: openshift_common
     tasks_from: get_cluster_domain.yml
 
+- name: Set application name
+  set_fact:
+    autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
+
 - import_tasks: local_repo_create.yml
 
 - import_tasks: local_repo_update.yml
 
 - import_tasks: local_repo_push.yml
 
-- name: Set name for Kubernetes namespace
+- name: Set application namespace
   set_fact:
     autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
 

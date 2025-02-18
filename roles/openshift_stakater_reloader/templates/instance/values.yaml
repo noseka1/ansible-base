@@ -1,0 +1,4 @@
+reloader:
+  isOpenshift: true
+  podMonitor:
+    enabled: true

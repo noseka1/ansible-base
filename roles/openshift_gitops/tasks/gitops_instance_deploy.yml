@@ -20,6 +20,8 @@
       - instance/openshift-gitops-appproject-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-event-fix-clusterrole.yaml
+      - instance/openshift-gitops-event-fix-clusterrolebinding.yaml
       - instance/trusted-ca-bundle-cm.yaml
       - instance/argocd-secret-secret.yaml
 

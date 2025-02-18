@@ -2,10 +2,10 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: metallb-instance
+    autogitops_app_dst_path: metallb/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: metallb-operator
+    autogitops_app_dst_path: metallb/operator

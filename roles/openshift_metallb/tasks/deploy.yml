@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: metallb-operator
     autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: metallb/operator
@@ -19,7 +18,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: metallb-instance
+    autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: metallb/instance
     autogitops_app_namespace: metallb-system

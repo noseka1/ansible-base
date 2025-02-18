@@ -1,0 +1,12 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- name: Detach local cluster
+  kubernetes.core.k8s:
+    template:
+      - cluster-import/argocd-mgmt-clusterrolebinding.yaml
+      - cluster-import/argocd-mgmt-sa.yaml
+      - cluster-import/managed-cluster-secret.yaml
+      - cluster-import/cluster-appproject.yaml
+    state: absent

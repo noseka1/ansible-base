@@ -2,6 +2,9 @@
   when: gitops_argo_rollouts_enabled
   tags: gitops_argo_rollouts
 
+- import_tasks: gitops_cluster_detach.yml
+  tags: gitops_cluster_import
+
 - import_tasks: gitops_instance_delete.yml
   tags: gitops_instance
 

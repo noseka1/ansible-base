@@ -12,6 +12,8 @@ spec:
       requests:
         cpu: 250m
         memory: 512Mi
+    sourceNamespaces:
+      - ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
     webhookServer:
       ingress:
         enabled: false
@@ -94,7 +96,7 @@ spec:
     ingress:
       enabled: false
     # Configure TLS edge-terminated route instead of passthrough
-    # so that the route utilizes OpenShift wildcard certificate
+    # so that the route utilizes the OpenShift wildcard certificate
     insecure: true
     replicas: 1
     resources:
@@ -119,6 +121,8 @@ spec:
           cpu: 250m
           memory: 128Mi
     provider: dex
+  sourceNamespaces:
+    - ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
   tls:
     ca: {}
   # Enable Helm templating in Kustomize

@@ -20,30 +20,27 @@ spec:
             repoURL: {{ gitea_repo_url_plain }}
   syncPolicy:
     preserveResourcesOnDeletion: true
-{% raw %}
   template:
     metadata:
       labels:
+{% raw %}
         app.kubernetes.io/name: '{{ .path.basename }}'
       name: '{{ .path.basename }}'
 {% endraw %}
       namespace: {{ autogitops_argocd_namespace }}
-{% raw %}
     spec:
       destination:
-{% endraw %}
         name: {{ openshift_common_cluster_domain }}
 {% raw %}
         namespace: '{{ .destNamespace }}'
 {% endraw %}
       project: {{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
-{% raw %}
       source:
-        path: '{{ .sourcePath }}'
-        repoURL: ""
-{% endraw %}
-        targetRevision: ag-{{ openshift_common_cluster_domain }}
 {% raw %}
+        path: '{{ .sourcePath }}'
+{% endraw %}
+        repoURL: ""
+        targetRevision: ag-{{ openshift_common_cluster_domain }}
         directory:
           recurse: true
       syncPolicy:
@@ -51,4 +48,3 @@ spec:
         - ApplyOutOfSyncOnly=true
         - FailOnSharedResource=true
         - ServerSideApply=true
-{% endraw %}

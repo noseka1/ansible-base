@@ -1,3 +1,7 @@
+openshift_virtualization_operator_subscription_channel: stable
+openshift_virtualization_operator_subscription_approval: Automatic
+openshift_virtualization_operator_subscription_starting_csv: ''
+
 openshift_virtualization_kvm_emulation_enabled: false
 
 # Instance type c5n.metal = 72 vCPUs, 192 GiB RAM
@@ -9,13 +13,33 @@ openshift_virtualization_aws:
 openshift_virtualization_aws_nodes_total: >-
   {{ (openshift_virtualization_aws.availability_zones | length) * openshift_virtualization_aws.nodes_per_zone }}
 
+openshift_virtualization_machine_namespace: kubevirt-example
+openshift_virtualization_machine_manage_namespace: true
+openshift_virtualization_machine_name: example
 openshift_virtualization_machine_ssh_authorized_key: ''
 openshift_virtualization_machine_eviction_strategy: 'None'
+openshift_virtualization_machine_node_selector: {}
+#  node-role.kubernetes.io/baremetal: ""
+#
 openshift_virtualization_machine_root_disk_access_modes:
   - ReadWriteOnce
 openshift_virtualization_machine_root_disk_capacity: 10Gi
 openshift_virtualization_machine_root_disk_storage_class_name: ''
 openshift_virtualization_machine_root_disk_volume_mode: Filesystem
 
+openshift_virtualization_machine_pod_network: true
+openshift_virtualization_machine_multus_network_name: ''
+
+# Download the machine image from URL. Example machine image URLs:
+# https://download.fedoraproject.org/pub/fedora/linux/releases/40/Server/x86_64/images/Fedora-Server-KVM-40-1.14.x86_64.qcow2
+openshift_virtualization_machine_image_http_url: ''
+
+# Pull the machine image from a container registry. Example image registry URLs:
+# docker://quay.io/containerdisks/fedora:40
+# docker://registry.redhat.io/rhel8/rhel-guest-image:8.10.0
+# docker://registry.redhat.io/rhel9/rhel-guest-image:9.4
+openshift_virtualization_machine_image_registry_url: 'docker://quay.io/containerdisks/fedora:40'
+
 openshift_virtualization_machine_service_type: NodePort
 openshift_virtualization_machine_service_port: 27017
+

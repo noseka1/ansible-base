@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ openshift_virtualization_machine_name }}-rootdisk
+  namespace: {{ openshift_virtualization_machine_namespace }}
+spec:
+  dataSourceRef:
+    apiGroup: cdi.kubevirt.io
+    kind: VolumeImportSource
+    name: {{ openshift_virtualization_machine_name }}-rootdisk
+  accessModes: {{ openshift_virtualization_machine_root_disk_access_modes | to_json }}
+  resources:
+    requests:
+      storage: '{{ openshift_virtualization_machine_root_disk_capacity }}'
+{% if openshift_virtualization_machine_root_disk_storage_class_name | length > 0 %}
+  storageClassName: {{ openshift_virtualization_machine_root_disk_storage_class_name }}
+{% endif %}
+  volumeMode: {{ openshift_virtualization_machine_root_disk_volume_mode }}

@@ -1,0 +1,6 @@
+{% if openshift_virtualization_machine_manage_namespace %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ openshift_virtualization_machine_namespace }}
+{% endif %}

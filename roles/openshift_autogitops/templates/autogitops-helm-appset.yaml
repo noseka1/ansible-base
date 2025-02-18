@@ -34,6 +34,9 @@ spec:
 {% raw %}
         namespace: '{{ .destNamespace }}'
 {% endraw %}
+      info:
+      - name: creator
+        value: 'AutoGitOps - Ansible-driven Argo CD automation'
       project: {{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
       source:
 {% raw %}

@@ -1,6 +1,2 @@
-autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/auto-gitops-workspace'
-autogitops_catalog_dir: '{{ playbook_dir }}/../gitops-catalog-helm/apps'
-
-autogitops_git_repo_name: auto-gitops
-autogitops_appset_name: auto-gitops
-autogitops_argocd_namespace: openshift-gitops
+autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/autogitops-workspace'
+autogitops_git_repo_name: autogitops

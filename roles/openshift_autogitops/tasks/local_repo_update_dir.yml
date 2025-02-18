@@ -1,0 +1,42 @@
+- name: Obtain application source tree
+  set_fact:
+    autogitops_app_src_items: >-
+      {{ lookup('community.general.filetree', '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}') }}
+
+- name: Obtain application destination tree
+  set_fact:
+    autogitops_app_dst_items: >-
+      {{ lookup('community.general.filetree', '{{ autogitops_app_dst_dir }}') }}
+
+- name: Ensure directory structure exists
+  file:
+    path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
+    state: directory
+  loop: >-
+    {{ autogitops_app_src_items | selectattr('state', 'equalto', 'directory') }}
+  loop_control:
+    label: '{{ item.path }}'
+
+- name: Ensure files are populated from templates
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
+  loop: >-
+    {{ autogitops_app_src_items | selectattr('state', 'equalto', 'file') }}
+  loop_control:
+    label: '{{ item.path }}'
+
+- name: Convert source tree to dictionary
+  set_fact:
+    autogitops_app_src_items_dict: >-
+      {{ autogitops_app_src_items | items2dict(key_name='path',value_name='path') }}
+
+- name: Ensure deleted files are removed
+  file:
+    path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
+    state: absent
+  when: not item.path in autogitops_app_src_items_dict
+  loop: >-
+    {{ autogitops_app_dst_items }}
+  loop_control:
+    label: '{{ item.path }}'

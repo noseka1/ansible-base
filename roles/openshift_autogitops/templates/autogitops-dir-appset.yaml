@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ autogitops_appset_name }}
+  name: autogitops-dir
   namespace: {{ autogitops_argocd_namespace }}
 spec:
   goTemplate: true
   generators:
   - git:
       files:
-      - path: envs/in-cluster/infra/**/argocd_config_manual.yaml
+      - path: apps/**/argocd_config_dir.yaml
       repoURL: {{ gitea_repo_url_plain }}
-      revision: master
+      revision: ag-{{ openshift_common_cluster_domain }}
       template:
         metadata: {}
         spec:
@@ -25,21 +25,27 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: '{{ .path.basename }}'
-      name: '{{ index .path.segments 1 }}-{{ .path.basename }}'
-      namespace: openshift-gitops
+      name: '{{ .path.basename }}'
+{% endraw %}
+      namespace: {{ autogitops_argocd_namespace }}
+{% raw %}
     spec:
       destination:
-        name: '{{ index .path.segments 1 }}'
+{% endraw %}
+        name: {{ openshift_common_cluster_domain }}
+{% raw %}
         namespace: '{{ .destNamespace }}'
-      project: default
+{% endraw %}
+      project: {{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+{% raw %}
       source:
         path: '{{ .sourcePath }}'
         repoURL: ""
-        targetRevision: master
-        helm:
-          ignoreMissingValueFiles: true
-          valueFiles:
-          - /{{ .path.path }}/values.yaml
+{% endraw %}
+        targetRevision: ag-{{ openshift_common_cluster_domain }}
+{% raw %}
+        directory:
+          recurse: true
       syncPolicy:
         syncOptions:
         - ApplyOutOfSyncOnly=true

@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: autogitops-helm
+  namespace: {{ autogitops_argocd_namespace }}
+spec:
+  goTemplate: true
+  generators:
+  - git:
+      files:
+      - path: apps/**/argocd_config_helm.yaml
+      repoURL: {{ gitea_repo_url_plain }}
+      revision: ag-{{ openshift_common_cluster_domain }}
+      template:
+        metadata: {}
+        spec:
+          destination: {}
+          project: ""
+          source:
+            repoURL: {{ gitea_repo_url_plain }}
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+{% raw %}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{ .path.basename }}'
+      name: '{{ .path.basename }}'
+{% endraw %}
+      namespace: {{ autogitops_argocd_namespace }}
+{% raw %}
+    spec:
+      destination:
+{% endraw %}
+        name: {{ openshift_common_cluster_domain }}
+{% raw %}
+        namespace: '{{ .destNamespace }}'
+{% endraw %}
+      project: {{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+{% raw %}
+      source:
+        path: '{{ .sourcePath }}'
+        repoURL: ""
+{% endraw %}
+        targetRevision: ag-{{ openshift_common_cluster_domain }}
+{% raw %}
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+          - /{{ .path.path }}/values.yaml
+      syncPolicy:
+        syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - FailOnSharedResource=true
+        - ServerSideApply=true
+{% endraw %}

@@ -1,79 +1,85 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
 - import_tasks: local_repo_create.yml
 
 - set_fact:
-    autogitops_app_env_dir:  '{{ autogitops_git_dir }}/envs/in-cluster/infra/{{ autogitops_app_name }}'
+    autogitops_app_cfg_dir:  '{{ autogitops_git_dir }}/apps/{{ autogitops_app_name }}'
 
-- name: Check if argocd_config_manual.yaml exists
+- name: Check if argocd_config_dir.yaml exists
   stat:
-    path: '{{ autogitops_app_env_dir }}/argocd_config_manual.yaml'
-  register: autogitops_app_argocd_config_stat_result
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+  register: autogitops_app_dir_stat_result
 
-- name: Retrieve argocd_config_manual.yaml
+- name: Retrieve argocd_config_dir.yaml
   slurp:
-    path: '{{ autogitops_app_env_dir }}/argocd_config_manual.yaml'
-  register: autogitops_app_argocd_config_result
-  when: autogitops_app_argocd_config_stat_result.stat.exists
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+  register: autogitops_app_dir_slurp_result
+  when: autogitops_app_dir_stat_result.stat.exists
+
+- name: Check if argocd_config_helm.yaml exists
+  stat:
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
+  register: autogitops_app_helm_stat_result
+
+- name: Retrieve argocd_config_helm.yaml
+  slurp:
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
+  register: autogitops_app_helm_slurp_result
+  when: autogitops_app_helm_stat_result.stat.exists
 
 - set_fact:
-    autogitops_app_helm_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_argocd_config_result.content | b64decode | from_yaml).sourcePath }}'
-  when: autogitops_app_argocd_config_stat_result.stat.exists
+    autogitops_app_dst_dir: ''
+  when:
+    - not autogitops_app_dir_stat_result.stat.exists
+    - not autogitops_app_helm_stat_result.stat.exists
 
 - set_fact:
-    autogitops_app_helm_dir: ''
-  when: not autogitops_app_argocd_config_stat_result.stat.exists
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_dir_slurp_result.content | b64decode | from_yaml).sourcePath }}'
+  when: autogitops_app_dir_stat_result.stat.exists
 
-- name: Delete application helm template directory {{ autogitops_app_helm_dir }}/templates
-  file:
-    path: '{{ autogitops_app_helm_dir }}/templates'
-    state: absent
-  when: autogitops_app_helm_dir | length > 0
+- set_fact:
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_helm_slurp_result.content | b64decode | from_yaml).sourcePath }}'
+  when: autogitops_app_helm_stat_result.stat.exists
 
-- name: Check if Chart.yaml exists
-  stat:
-    path: '{{ autogitops_app_helm_dir }}/Chart.yaml'
-  register: autogitops_app_chart_stat_result
-  when: autogitops_app_helm_dir | length > 0
-
-- name: Retrieve application Chart.yaml
-  slurp:
-    path: '{{ autogitops_app_helm_dir }}/Chart.yaml'
-  register: autogitops_app_chart_result
+- import_tasks: app_delete_dir.yml
   when:
-    - autogitops_app_helm_dir | length > 0
-    - autogitops_app_chart_stat_result.stat.exists
+    - autogitops_app_dst_dir | length > 0
+    - autogitops_app_dir_stat_result.stat.exists
 
-- name: Remove dependencies from Chart.yaml
-  copy:
-    content: >-
-      {{ autogitops_app_chart_result.content | b64decode | from_yaml | combine({"dependencies":[]}) | to_nice_yaml }}
-    dest: '{{ autogitops_app_helm_dir }}/Chart.yaml'
+- import_tasks: app_delete_helm.yml
   when:
-    - autogitops_app_helm_dir | length > 0
-    - autogitops_app_chart_stat_result.stat.exists
+    - autogitops_app_dst_dir | length > 0
+    - autogitops_app_helm_stat_result.stat.exists
 
 - import_tasks: local_repo_push.yml
-  when: autogitops_app_helm_dir | length > 0
+  when: autogitops_app_dst_dir | length > 0
+
+- name: Set name for Kubernetes namespace
+  set_fact:
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
 
 - name: Check if application {{ autogitops_app_name }} exists
   kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1
     kind: Application
-    name: 'in-cluster-{{ autogitops_app_name }}'
+    name: '{{ autogitops_app_name }}'
     namespace: '{{ autogitops_argocd_namespace }}'
   register: autogitops_app_resource_result
 
 - import_tasks: app_sync_delete.yml
   when: autogitops_app_resource_result.resources | length == 1
 
-- name: Delete application directory {{ autogitops_app_helm_dir }}
+- name: Delete application directory {{ autogitops_app_dst_dir }}
   file:
-    path: '{{ autogitops_app_helm_dir }}'
+    path: '{{ autogitops_app_dst_dir }}'
     state: absent
-  when: autogitops_app_helm_dir | length > 0
+  when: autogitops_app_dst_dir | length > 0
 
-- name: Delete application directory {{ autogitops_app_env_dir }}
+- name: Delete application directory {{ autogitops_app_cfg_dir }}
   file:
-    path: '{{ autogitops_app_env_dir }}'
+    path: '{{ autogitops_app_cfg_dir }}'
     state: absent
 
 - import_tasks: local_repo_push.yml
@@ -82,7 +88,7 @@
   kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1
     kind: Application
-    name: 'in-cluster-{{ autogitops_app_name }}'
+    name: '{{ autogitops_app_name }}'
     namespace: '{{ autogitops_argocd_namespace }}'
   register: autogitops_app_resource_result
   when: autogitops_git_updated

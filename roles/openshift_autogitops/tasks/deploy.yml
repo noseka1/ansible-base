@@ -1,3 +1,7 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
 - import_tasks: prereqs_deploy.yml
   tags: autogitops_prereqs
 
@@ -16,7 +20,13 @@
     gitops_repo_force_http_basic_auth: true
     gitops_repo_type: git
 
-- name: Create auto-gitops application set
+- name: Set name for Kubernetes namespace
+  set_fact:
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+
+- name: Create cluster namespace and autogitops application set
   kubernetes.core.k8s:
     template:
-      - auto-gitops-appset.yaml
+      - autogitops-ns.yaml
+      - autogitops-dir-appset.yaml
+      - autogitops-helm-appset.yaml

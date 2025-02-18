@@ -3,14 +3,15 @@
     tasks_from: get_argocd_api_connection.yml
 
 - debug:
-    msg: Application URL is {{ argocd_api_url }}/applications/{{ autogitops_argocd_namespace }}/in-cluster-{{ autogitops_app_name }}
+    msg: Application URL is {{ argocd_api_url }}/applications/{{ autogitops_argocd_namespace }}/{{ autogitops_app_name }}
 
 - name: Trigger application sync to commit {{ autogitops_git_last_commit }}
   uri:
-    url: '{{ argocd_api_url }}/api/v1/applications/in-cluster-{{ autogitops_app_name }}/sync'
+    url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}/sync'
     method: POST
     body_format: json
     body:
+      appNamespace: '{{ autogitops_argocd_namespace }}'
       prune: true
       revision: '{{ autogitops_git_last_commit }}'
     headers:

@@ -1,2 +1,2 @@
-sourcePath: apps/{{ autogitops_app_dst_path }}
+sourcePath: manifests/{{ autogitops_app_dst_path }}
 destNamespace: {{ autogitops_app_namespace | default('') }}

@@ -1,0 +1,48 @@
+- name: Check if templates directory exists
+  stat:
+    path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/templates'
+  register: autogitops_app_templates_stat_result
+
+- name: Ensure templates directory exists
+  file:
+    path: '{{ autogitops_app_dst_dir }}/templates'
+    state: directory
+  when: autogitops_app_templates_stat_result.stat.exists
+
+- name: Sync application templates directory
+  ansible.posix.synchronize:
+    src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/templates/'
+    dest: '{{ autogitops_app_dst_dir }}/templates'
+    recursive: true
+    links: true
+    perms: true
+    delete: true
+  when: autogitops_app_templates_stat_result.stat.exists
+
+- name: Rmove templates directory
+  file:
+    path: '{{ autogitops_app_dst_dir }}/templates'
+    state: absent
+  when: not autogitops_app_templates_stat_result.stat.exists
+
+- name: Check if values file exists
+  stat:
+    path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
+  register: autogitops_app_values_stat_result
+
+- name: Create values.yaml
+  template:
+    src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
+    dest: '{{ autogitops_app_dst_dir }}/values.yaml'
+  when: autogitops_app_values_stat_result.stat.exists
+
+- name: Remove values.yaml
+  file:
+    path: '{{ autogitops_app_dst_dir }}/values.yaml'
+    state: absent
+  when: not autogitops_app_values_stat_result.stat.exists
+
+- name: Copy Chart.yaml
+  template:
+    src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/Chart.yaml'
+    dest: '{{ autogitops_app_dst_dir }}/Chart.yaml'

@@ -4,7 +4,8 @@
   vars:
     gitea_create_repos:
       - name: '{{ autogitops_git_repo_name }}'
-        description: Auto GitOps content
+        description: AutoGitOps content
+        default_branch: 'ag-{{ openshift_common_cluster_domain }}'
 
 - import_role:
     name: openshift_gitops
@@ -16,5 +17,5 @@
   vars:
     gitea_create_webhooks:
       - name: '{{ autogitops_git_repo_name }}'
-        description: Auto GitOps webhook
+        description: AutoGitOps webhook
         url: '{{ argocd_api_url }}/api/webhook'

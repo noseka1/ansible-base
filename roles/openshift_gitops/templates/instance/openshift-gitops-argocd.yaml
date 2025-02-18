@@ -128,6 +128,10 @@ spec:
   # Enable Helm templating in Kustomize
   kustomizeBuildOptions: --enable-helm
   extraConfig:
+    # The default label-based tracking fails due to the label value must be no more than 63 characters long.
+    # Switch to resource tracking using annotations.
+    # See also https://argo-cd.readthedocs.io/en/stable/user-guide/resource_tracking/
+    application.resourceTrackingMethod: annotation
     # See also Known Kubernetes types in CRDs (Resource limits, Volume mounts etc)
     # https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/#known-kubernetes-types-in-crds-resource-limits-volume-mounts-etc
     # This makes the sonarqube-postgresql StatefulSet sync
@@ -151,6 +155,15 @@ spec:
       kinds:
       - Backup
       - Restore
+      clusters:
+      - "*"
+    # The Argo CD resource tracking annotation is propagated from Namespace to the Project object. Argo CD should ignore
+    # the Project managed by OpenShift. We prefer using Kubernetes-native Namespaces and no Projects. Argo CD must ignore
+    # the Project to delete a Namespace successfully. Note that this was not needed for label-based resource tracking.
+    - apiGroups:
+      - project.openshift.io
+      kinds:
+      - Project
       clusters:
       - "*"
   resourceHealthChecks:

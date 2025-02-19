@@ -1,0 +1,68 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vm-bridge
+spec:
+  desiredState:
+    interfaces:
+    - name: ens7
+      type: ethernet
+      ipv4:
+        enabled: false
+      state: up
+    - name: ens8
+      type: ethernet
+      ipv4:
+        enabled: false
+      state: up
+    - name: bond1
+      type: bond
+      link-aggregation:
+        mode: balance-alb
+        options:
+          miimon: "140"
+        port:
+        - ens7
+        - ens8
+      state: up
+    - name: vm-bridge
+      type: linux-bridge
+      bridge:
+        options:
+          stp:
+            enabled: false
+        port:
+        - name: bond1
+      state: up
+    # Create a vm-bridge.131 VLAN port for testing network connectivity.
+    # This port won't work right away. To make this bridge port work,
+    # it is required to issue the following command on the OpenShift node:
+    # $ bridge vlan add vid 131 dev vm-bridge self
+    # After running the command, check that the VLAN 131 filter was added to the bridge:
+    # $ bridge vlan
+    # port              vlan-id
+    # vm-bridge         1 PVID Egress Untagged
+    #                   131
+    # ...
+    # Now it is possible to ping another host on VLAN 131:
+    # $ ping 10.85.0.99
+    # PING 10.85.0.99 (10.85.0.99) 56(84) bytes of data.
+    # 64 bytes from 10.85.0.99: icmp_seq=1 ttl=64 time=0.253 ms
+    # ...
+    - name: vm-bridge.131
+      type: vlan
+      state: up
+      vlan:
+        base-iface: vm-bridge
+        id: 131
+      ipv4:
+        address:
+          - ip: 10.85.0.50
+            prefix-length: 24
+        dhcp: false
+        enabled: true
+  interfaces:
+  - name: ens7
+    macAddress: 52:54:00:d5:e9:da
+  - name: ens8
+    macAddress: 52:54:00:d5:e9:db

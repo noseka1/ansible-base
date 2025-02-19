@@ -2,19 +2,19 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: mtv-provider
+    autogitops_app_dst_path: mtv/provider
   tags: mtv_provider
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: mtv
+    autogitops_app_dst_path: mtv/instance
   tags: mtv_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: mtv-operator
+    autogitops_app_dst_path: templates/operator
   tags: mtv_operator

@@ -1,0 +1,16 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: vlan131
+  namespace: openshift-cnv
+spec:
+  config: |
+    {
+      "name": "vlan131",
+      "type": "cnv-bridge",
+      "cniVersion": "0.3.1",
+      "bridge": "vm-bridge",
+      "vlan": 131,
+      "macspoofchk": true,
+      "ipam": {}
+    }

@@ -20,6 +20,12 @@
     autogitops_app_dst_items: >-
       {{ lookup('community.general.filetree', '{{ autogitops_app_dst_dir }}') }}
 
+- name: Convert from dict to list
+  set_fact:
+    autogitops_app_dst_items: >-
+      {{ [ autogitops_app_dst_items ] }}
+  when: autogitops_app_dst_items | type_debug == 'dict'
+
 - name: Ensure directory structure exists
   file:
     path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'

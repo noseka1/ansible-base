@@ -1,3 +1,7 @@
+loki_operator_subscription_channel: ''
+loki_operator_subscription_approval: Automatic
+loki_operator_subscription_starting_csv: ''
+
 loki_instance_namespace: loki
 loki_manage_namespace: true
 loki_app_prefix: ''

@@ -1,0 +1,31 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: loki
+  namespace: {{ loki_instance_namespace }}
+spec:
+  limits:
+    global:
+      ingestion:
+        # Maximum byte rate per second per stream in MB
+        perStreamRateLimit: 50
+        # Maximum burst bytes per stream in MB
+        perStreamRateLimitBurst: 100
+    tenants:
+      additionalProperties:
+        ingestion:
+          # Maximum byte rate per second per stream in MB
+          perStreamRateLimit: 50
+          # Maximum burst bytes per stream in MB
+          perStreamRateLimitBurst: 100
+  size: 1x.extra-small
+  storage:
+    schemas:
+    - version: v12
+      effectiveDate: 2022-06-01
+    secret:
+      name: loki-s3
+      type: s3
+  storageClassName: {{ openshift_common_default_storage_class }}
+  tenants:
+    mode: {{ loki_instance_tenants_mode }}

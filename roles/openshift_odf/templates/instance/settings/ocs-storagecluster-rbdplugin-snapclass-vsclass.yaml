@@ -6,7 +6,7 @@ metadata:
     snapshot.storage.kubernetes.io/is-default-class: 'true'
 {% endif %}
   labels:
-    # Enable creating of openebs-lvm snapshots using Velero
+    # Enable creating of snapshots using Velero
     velero.io/csi-volumesnapshot-class: 'true'
   name: ocs-storagecluster-rbdplugin-snapclass
 # Deletion policy must be set to Retain or Velero backup using data mover fails

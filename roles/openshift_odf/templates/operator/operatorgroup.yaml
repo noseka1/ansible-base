@@ -1,0 +1,10 @@
+{% if odf_openshift_storage_namespace_result.resources | length == 0 %}
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-storage
+  namespace: openshift-storage
+spec:
+  targetNamespaces:
+  - openshift-storage
+{% endif %}

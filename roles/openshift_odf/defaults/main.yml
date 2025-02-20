@@ -1,3 +1,7 @@
+odf_operator_subscription_channel: ''
+odf_operator_subscription_approval: Automatic
+odf_operator_subscription_starting_csv: ''
+
 odf_aws:
   # ODF cluster requires at least 4xlarge to fully deploy
   instance_type: m6i.4xlarge
@@ -35,3 +39,24 @@ odf_platform_to_storageclass:
 portable_storageclasses:
   - gp3-csi
   - thin-csi
+
+odf_user_hostpath_for_mon_data_dir: false
+
+# If the uninstall.ocs.openshift.io/cleanup-policy is set to "delete",
+# the Rook-Ceph storage operator cleans up the physical drives and the DataDirHostPath.
+# If the uninstall.ocs.openshift.io/cleanup-policy is set to "retain",
+# it keeps the physical drives and DataDirHostPath.
+# For production deployments, set uninstallCleanUpPolicy to "retain".
+odf_uninstall_cleanup_policy: delete
+
+# If the uninstall.ocs.openshift.io/mode is set to "graceful",
+# the Rook-Ceph and NooBaa operators pause the uninstall process
+# until the PVCs and OBCs are removed manually.
+# If the uninstall.ocs.openshift.io/mode is set to "forced",
+# the Rook-Ceph and NooBaa operators proceed with the uninstall process,
+# even if the PVCs and the OBCs still exist.
+# For production deployments, set uninstallMode to "graceful".
+odf_uninstall_mode: forced
+
+odf_encryption_clusterwide: false
+odf_encryption_kms_enable: false

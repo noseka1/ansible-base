@@ -20,3 +20,4 @@
     openshift_oauth_proxy_name: kafdrop
     openshift_oauth_proxy_namespace: '{{ amq_streams_kafdrop_namespace }}'
     openshift_oauth_proxy_upstream: http://kafdrop:9000
+    openshift_oauth_proxy_app_prefix: kafdrop-

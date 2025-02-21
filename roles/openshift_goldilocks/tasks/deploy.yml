@@ -27,3 +27,4 @@
     openshift_oauth_proxy_name: '{{ goldilocks_name }}'
     openshift_oauth_proxy_namespace: '{{ goldilocks_namespace }}'
     openshift_oauth_proxy_upstream: http://{{ goldilocks_name }}-dashboard
+    openshift_oauth_proxy_app_prefix: goldilocks-

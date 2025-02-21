@@ -26,5 +26,6 @@
     openshift_oauth_proxy_name: '{{ argo_rollouts_name }}'
     openshift_oauth_proxy_namespace: '{{ argo_rollouts_namespace }}'
     openshift_oauth_proxy_upstream: http://{{ argo_rollouts_name }}-dashboard:3100
+    openshift_oauth_proxy_app_prefix: argo-rollouts-
 
 - import_tasks: report_success.yml

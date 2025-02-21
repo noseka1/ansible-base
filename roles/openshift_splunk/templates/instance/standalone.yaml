@@ -1,6 +1,8 @@
 apiVersion: enterprise.splunk.com/v3
 kind: Standalone
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   name: {{ splunk_instance_name }}
   namespace: {{ splunk_instance_namespace }}
 spec:

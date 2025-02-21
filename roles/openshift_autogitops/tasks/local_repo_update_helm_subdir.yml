@@ -1,9 +1,9 @@
-- name: Check if subdirectory {{ item }} exists
+- name: Check if subdirectory "{{ item }}" exists
   stat:
     path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/{{ item }}'
   register: autogitops_app_subdir_stat_result
 
-- name: Sync application subdirectory {{ item }}
+- name: Sync application subdirectory "{{ item }}"
   ansible.posix.synchronize:
     src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/{{ item }}/'
     dest: '{{ autogitops_app_dst_dir }}/{{ item }}'
@@ -13,7 +13,7 @@
     delete: true
   when: autogitops_app_subdir_stat_result.stat.exists
 
-- name: Remove subdirectory {{ item }}
+- name: Remove subdirectory "{{ item }}"
   file:
     path: '{{ autogitops_app_dst_dir }}/{{ item }}'
     state: absent

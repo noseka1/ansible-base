@@ -37,13 +37,10 @@ spec:
         volumeMounts:
         - name: oauth-proxy-k8s-tls
           mountPath: /etc/tls/private
-          readOnly: true
         - name: oauth-proxy
           mountPath: /etc/proxy/secrets
-          readOnly: true
         - name: trusted-ca-bundle
           mountPath: /etc/proxy/configmaps/trusted-ca-bundle
-          readonly: true
       serviceAccountName: {{ openshift_oauth_proxy_name }}-oauth-proxy
       volumes:
       - name: oauth-proxy-k8s-tls

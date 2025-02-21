@@ -2,13 +2,13 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: splunk
+    autogitops_app_dst_path: splunk/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: splunk-operator
+    autogitops_app_dst_path: splunk/operator
 
 - import_role:
     name: openshift_common

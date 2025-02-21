@@ -1,5 +1,7 @@
-splunk_operator_subscription_channel: stable
+splunk_operator_subscription_channel: ''
 splunk_operator_subscription_approval: Automatic
+splunk_operator_subscription_starting_csv: ''
+splunk_operator_subscription_namespace: splunk
 
-splunk_instance_name: in-cluster-splunk
+splunk_instance_name: splunk
 splunk_instance_namespace: splunk

@@ -28,5 +28,4 @@
   kubernetes.core.k8s:
     template:
       - autogitops-ns.yaml
-      - autogitops-dir-appset.yaml
-      - autogitops-helm-appset.yaml
+      - autogitops-appset.yaml

@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: grafana
+  namespace: {{ .Release.Namespace }}
+spec:
+  targetNamespaces:
+  - {{ .Release.Namespace }}

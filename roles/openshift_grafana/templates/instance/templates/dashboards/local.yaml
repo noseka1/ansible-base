@@ -1,0 +1,25 @@
+{{- range $path, $_ := .Files.Glob "files/dashboards/local/*" }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ regexReplaceAllLiteral "\\.json$" (base $path) "" | replace "_" "-" }}
+  namespace: {{ $.Release.Namespace }}
+data:
+  {{ base $path }}: |-
+{{ $.Files.Get $path | indent 4}}
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: {{ regexReplaceAllLiteral "\\.json$" (base $path) "" | replace "_" "-" }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  folder: Custom
+  configMapRef:
+    name: {{ regexReplaceAllLiteral "\\.json$" (base $path) "" | replace "_" "-" }}
+    key: '{{ base $path }}'
+{{- end }}

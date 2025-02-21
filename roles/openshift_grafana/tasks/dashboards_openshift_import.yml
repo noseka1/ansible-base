@@ -3,6 +3,7 @@
     api_version: v1
     kind: ConfigMap
     namespace: openshift-config-managed
+    label_selectors: console.openshift.io/dashboard=true
   register: grafana_openshift_configmaps_result
 
 - name: Copy dashboard from namespace openshift-config-managed
@@ -10,7 +11,6 @@
     template:
       - dashboards/openshift/grafana-dashboard-cm.yaml
       - dashboards/openshift/grafana-dashboard-grafanadashboard.yaml
-  when: item.metadata.name.startswith("grafana-dashboard-")
   loop: '{{ grafana_openshift_configmaps_result.resources }}'
   loop_control:
     label: '{{ item.metadata.name }}'

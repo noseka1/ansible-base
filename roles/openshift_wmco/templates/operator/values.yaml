@@ -1,8 +1,0 @@
-subscriptionApproval: Automatic
-
-# SSH private key to allow the WMCO to communicate with the Windows virtual machine (VM)
-cloudPrivateKey: |
-  {{ generic_ssh_key_pair.private_key | indent(2) }}
-
-# Bring-Your-Own-Host (BYOH) Windows instances
-byohInstances: {{ wmco_byoh_instances | from_yaml }}

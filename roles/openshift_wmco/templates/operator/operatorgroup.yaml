@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: windows-machine-config-operator
+  namespace: {{ wmco_operator_subscription_namespace }}
+spec:
+  targetNamespaces:
+  - {{ wmco_operator_subscription_namespace }}

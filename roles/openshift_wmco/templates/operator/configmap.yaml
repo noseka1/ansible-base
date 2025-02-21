@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: windows-instances
+  namespace: {{ wmco_operator_subscription_namespace }}
+{% if wmco_byoh_instances %}
+data:
+  {{ wmco_byoh_instances | to_yaml | indent(2) }}
+{% endif %}

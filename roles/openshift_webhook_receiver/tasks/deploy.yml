@@ -2,8 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: '{{ webhook_receiver_app_prefix }}webhook-receiver'
-    autogitops_app_src_path: webhook-receiver
+    autogitops_app_type: dir
+    autogitops_app_src_path: templates
     autogitops_app_dst_path: '{{ webhook_receiver_app_prefix }}webhook-receiver'
     autogitops_app_namespace: '{{ webhook_receiver_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "values.yaml") }}'

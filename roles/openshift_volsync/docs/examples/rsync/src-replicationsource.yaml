@@ -1,0 +1,14 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: src
+  namespace: volsync-rsync-test
+spec:
+  sourcePVC: REPLACEME
+  trigger:
+    schedule: '*/1 * * * *'
+  rsyncTLS:
+    keySecret: psk
+    address: REPLACEME
+    port: 443
+    copyMethod: Clone

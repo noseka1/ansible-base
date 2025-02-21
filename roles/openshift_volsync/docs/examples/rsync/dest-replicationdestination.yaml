@@ -1,0 +1,14 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: dest
+  namespace: volsync-rsync-test
+spec:
+  rsyncTLS:
+    copyMethod: Snapshot
+    capacity: 10Gi
+    accessModes:
+    - ReadWriteOnce
+    storageClassName: lvms-loop1-vg
+    volumeSnapshotClassName: lvms-loop1-vg
+    keySecret: psk

@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: dest
+  namespace: volsync-rsync-test
+spec:
+  port:
+    targetPort: rsync-tls
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: volsync-rsync-tls-dst-dest

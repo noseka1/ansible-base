@@ -1,0 +1,6 @@
+vpa_operator_subscription_channel: ''
+vpa_operator_subscription_approval: Automatic
+vpa_operator_subscription_starting_csv: ''
+vpa_operator_subscription_namespace: openshift-vertical-pod-autoscaler
+
+vpa_instance_namespace: openshift-vertical-pod-autoscaler

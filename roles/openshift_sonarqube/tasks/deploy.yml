@@ -2,8 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: sonarqube
-    autogitops_app_src_path: sonarqube
+    autogitops_app_type: helm
+    autogitops_app_src_path: templates/sonarqube
     autogitops_app_dst_path: sonarqube
     autogitops_app_namespace: sonarqube
-    autogitops_app_values: ''
+
+- import_tasks: report_success.yml

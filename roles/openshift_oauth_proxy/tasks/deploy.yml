@@ -4,5 +4,5 @@
   vars:
     autogitops_app_type: dir
     autogitops_app_src_path: templates
-    autogitops_app_dst_path: '{{ openshift_oauth_proxy_app_prefix }}oauth-proxy'
-    autogitops_app_namespace: '{{ openshift_oauth_proxy_namespace }}'
+    autogitops_app_dst_path: '{{ oauth_proxy_app_prefix }}oauth-proxy'
+    autogitops_app_namespace: '{{ oauth_proxy_namespace }}'

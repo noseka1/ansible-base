@@ -3,7 +3,7 @@
     name: openshift_oauth_proxy
     tasks_from: delete.yml
   vars:
-    openshift_oauth_proxy_app_prefix: smtp4dev-
+    oauth_proxy_app_prefix: smtp4dev-
 
 - import_role:
     name: openshift_autogitops

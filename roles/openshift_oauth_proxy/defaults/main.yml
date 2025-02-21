@@ -1,6 +1,6 @@
-openshift_oauth_proxy_name: oauth-proxy
-openshift_oauth_proxy_namespace: oauth-proxy
-openshift_oauth_proxy_upstream: https://google.com
-openshift_oauth_proxy_app_prefix: ''
+oauth_proxy_name: oauth-proxy
+oauth_proxy_namespace: oauth-proxy
+oauth_proxy_upstream: https://google.com
+oauth_proxy_app_prefix: ''
 
-openshift_oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.14.0
+oauth_proxy_image: quay.io/openshift/origin-oauth-proxy:4.14.0

@@ -24,7 +24,7 @@
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
-    openshift_oauth_proxy_name: '{{ goldilocks_name }}'
-    openshift_oauth_proxy_namespace: '{{ goldilocks_namespace }}'
-    openshift_oauth_proxy_upstream: http://{{ goldilocks_name }}-dashboard
-    openshift_oauth_proxy_app_prefix: goldilocks-
+    oauth_proxy_name: '{{ goldilocks_name }}'
+    oauth_proxy_namespace: '{{ goldilocks_namespace }}'
+    oauth_proxy_upstream: http://{{ goldilocks_name }}-dashboard
+    oauth_proxy_app_prefix: goldilocks-

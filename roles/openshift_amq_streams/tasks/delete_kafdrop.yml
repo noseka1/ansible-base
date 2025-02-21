@@ -3,7 +3,7 @@
     name: openshift_oauth_proxy
     tasks_from: delete.yml
   vars:
-    openshift_oauth_proxy_app_prefix: kafdrop-
+    oauth_proxy_app_prefix: kafdrop-
 
 - name: Delete Kafdrop
   kubernetes.core.helm:

@@ -1,3 +1,9 @@
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
+  vars:
+    oauth_proxy_app_prefix: argo-rollouts-
+
 - name: Delete Argo Rollouts dashboard
   kubernetes.core.k8s:
     definition: '{{ lookup("url", argo_rollouts_dashboard_url, split_lines=false) }}'

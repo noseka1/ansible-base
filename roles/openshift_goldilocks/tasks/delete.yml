@@ -1,3 +1,9 @@
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
+  vars:
+    oauth_proxy_app_prefix: goldilocks-
+
 - name: Delete Goldilocks
   kubernetes.core.helm:
     name: '{{ goldilocks_name }}'

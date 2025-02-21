@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ goldilocks_name }}-controller-fix
+  name: {{ .Release.Name }}-controller-fix
 rules:
 - apiGroups:
   - batch

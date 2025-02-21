@@ -1,0 +1,4 @@
+goldilocks:
+  dashboard:
+    # Number of dashboard pods to run (default is 2)
+    replicaCount: 1

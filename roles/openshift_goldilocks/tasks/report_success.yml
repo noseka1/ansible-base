@@ -1,0 +1,20 @@
+- name: Obtain Goldilocks web route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ goldilocks_name }}'
+    namespace: '{{ goldilocks_namespace }}'
+  register: goldilocks_web_route
+
+- set_fact:
+    msg: |
+      Goldilocks installed successfully.
+
+      You can browse to the Goldilocks dashboard and log in as user 'admin':
+      https://{{ goldilocks_web_route.resources.0.spec.host }}
+
+      Note that Vertical Pod Autoscaler must be deployed for Goldilocks to function.
+      If you deployed VPA after installing Goldilocks, restart Goldilocks pods to
+      reread the VPA objects.
+
+- debug: msg="{{ msg.split('\n') }}"

@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     goldilocks.fairwinds.com/enabled: 'true'
-  name: {{ goldilocks_namespace }}
+  name: {{ .Release.Namespace }}

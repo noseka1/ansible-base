@@ -1,4 +1,2 @@
-goldilocks_helm_repo: https://charts.fairwinds.com/stable
-
 goldilocks_namespace: goldilocks
 goldilocks_name: goldilocks

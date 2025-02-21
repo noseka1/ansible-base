@@ -51,3 +51,4 @@ spec:
         - ApplyOutOfSyncOnly=true
         - FailOnSharedResource=true
         - ServerSideApply=true
+        - PrunePropagationPolicy=background

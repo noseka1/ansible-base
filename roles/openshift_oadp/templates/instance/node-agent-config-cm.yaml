@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: node-agent-config
+  namespace: {{ oadp_instance_namespace }}
+data:
+  # Configure the concurrent number of node-agent loads per node.
+  # The default is 1 which means that the node agent will be uploading
+  # CSI volume snapshots sequentially. This is rather slow.
+  # See also https://velero.io/docs/v1.14/node-agent-concurrency/
+  node-agent-config.json: |
+    {
+      "loadConcurrency": {
+        "globalConfig": 4,
+        "perNodeConfig": []
+      }
+    }

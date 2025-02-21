@@ -1,3 +1,7 @@
+oadp_operator_subscription_channel: ''
+oadp_operator_subscription_approval: Automatic
+oadp_operator_subscription_starting_csv: ''
+
 oadp_operator_subscription_name: oadp-operator
 oadp_operator_subscription_namespace: openshift-adp
 

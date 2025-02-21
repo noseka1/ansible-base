@@ -1,0 +1,8 @@
+{% if oadp_operator_manage_namespace %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    openshift.io/cluster-monitoring: "true"
+  name: {{ oadp_operator_subscription_namespace }}
+{% endif %}

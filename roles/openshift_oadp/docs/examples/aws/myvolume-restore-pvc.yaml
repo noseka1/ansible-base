@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myvolume-restore
+spec:
+  storageClassName: gp3-csi
+  dataSource:
+    name: myvolume
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # The restore size of the volume is 1G, see also:
+      # oc get vs myvolume
+      storage: 1Gi

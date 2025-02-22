@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     template:
       - configmap.yaml
-      - deployment.yaml
       - namespace.yaml
       - service.yaml
+      - deployment.yaml
     wait: true

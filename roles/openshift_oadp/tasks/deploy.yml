@@ -19,13 +19,6 @@
     autogitops_app_dst_path: oadp/instance
     autogitops_app_namespace: '{{ oadp_instance_namespace }}'
 
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: '{{ oadp_instance_name }}'
-    wait_for_deployment_namespace: '{{ oadp_instance_namespace }}'
-
 - name: Check if default volume snapshot class exists
   import_role:
     name: openshift_common

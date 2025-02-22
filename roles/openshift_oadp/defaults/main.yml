@@ -8,7 +8,6 @@ oadp_operator_subscription_namespace: openshift-adp
 oadp_operator_manage_namespace: true
 
 oadp_instance_namespace: openshift-adp
-oadp_instance_name: velero
 
 # If OpenShift is deployed on top of AWS then enable this
 oadp_instance_aws_enabled: false

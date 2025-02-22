@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-registry
+  namespace: {{ docker_registry_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-registry
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+    spec:
+      containers:
+      - name: docker-registry
+        image: docker.io/library/registry:2.8.3
+        ports:
+        - name: https
+          containerPort: 5000
+          protocol: TCP
+        volumeMounts:
+        - name: config
+          mountPath: /etc/docker/registry
+          readOnly: true
+        - name: htpasswd
+          mountPath: /auth
+          readOnly: true
+        - name: tls
+          mountPath: /certs
+          readOnly: true
+        - name: storage
+          mountPath: /var/lib/registry
+      volumes:
+      - name: config
+        configMap:
+          name: docker-registry
+      - name: htpasswd
+        secret:
+          secretName: docker-registry-htpasswd
+      - name: tls
+        secret:
+          secretName: docker-registry-tls
+      - name: storage
+        persistentVolumeClaim:
+          claimName: docker-registry

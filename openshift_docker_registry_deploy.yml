@@ -3,3 +3,4 @@
   tasks:
     - import_role:
         name: openshift_docker_registry
+        tasks_from: deploy.yml

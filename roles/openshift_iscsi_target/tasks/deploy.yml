@@ -27,9 +27,9 @@
 - name: Deploy iscsi-target
   kubernetes.core.k8s:
     template:
-      - iscsi-target-deploy.yaml
       - iscsi-target-init-cm.yaml
       - iscsi-target-pvc.yaml
+      - iscsi-target-deploy.yaml
     wait: true
 
 - name: Create iscsi-target persistent volumes

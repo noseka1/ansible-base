@@ -1,0 +1,5 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-cluster-observability-operator
+  namespace: {{ cluster_observ_operator_subscription_namespace }}

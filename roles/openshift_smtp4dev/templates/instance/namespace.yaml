@@ -1,0 +1,6 @@
+{% if smtp4dev_manage_namespace %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ smtp4dev_namespace }}
+{% endif %}

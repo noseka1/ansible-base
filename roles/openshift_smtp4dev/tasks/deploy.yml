@@ -2,11 +2,10 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: smtp4dev
-    autogitops_app_src_path: smtp4dev
-    autogitops_app_dst_path: smtp4dev
+    autogitops_app_type: dir
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: smtp4dev/instance
     autogitops_app_namespace: '{{ smtp4dev_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "values.yaml") }}'
 
 - name: Deploy oauth-proxy
   import_role:

@@ -9,4 +9,4 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: smtp4dev
+    autogitops_app_dst_path: smtp4dev/instance

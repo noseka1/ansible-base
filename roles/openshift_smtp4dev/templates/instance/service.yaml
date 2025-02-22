@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: smtp4dev
+  namespace: {{ smtp4dev_namespace }}
+spec:
+  selector:
+    app: smtp4dev
+  ports:
+  - name: http-80
+    port: 80
+    protocol: TCP
+  - name: smtp-25
+    port: 25
+    protocol: TCP

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smtp4dev
+  namespace: {{ smtp4dev_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smtp4dev
+  template:
+    metadata:
+      labels:
+        app: smtp4dev
+    spec:
+      containers:
+      - image: docker.io/rnwood/smtp4dev:latest
+        name: smtp4dev
+        # Allow colorful output
+        tty: true
+        stdin: true
+      serviceAccountName: smtp4dev

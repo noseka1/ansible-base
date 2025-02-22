@@ -5,10 +5,4 @@
       - deployment.yaml
       - namespace.yaml
       - service.yaml
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: '{{ webhook_receiver_deployment_name }}'
-    wait_for_deployment_namespace: '{{ webhook_receiver_namespace }}'
+    wait: true

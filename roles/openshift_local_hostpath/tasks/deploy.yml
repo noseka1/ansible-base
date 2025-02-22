@@ -60,10 +60,3 @@
     release_namespace: '{{ local_hostpath_namespace }}'
     release_values: '{{ lookup("template", "snapshot-controller/values.yaml") | from_yaml }}'
     wait: true
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_daemonset.yml
-  vars:
-    wait_for_daemonset_name: '{{ local_hostpath_name }}-democratic-csi-node'
-    wait_for_daemonset_namespace: '{{ local_hostpath_namespace }}'

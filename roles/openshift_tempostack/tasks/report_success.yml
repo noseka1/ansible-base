@@ -1,0 +1,10 @@
+- name: Set msg
+  set_fact:
+    msg: |
+      Tempo installed successfully.
+
+      You can install Grafana using the openshift_grafana role. In Grafana, go to
+      Explore and choose Tempo as a data source. You will see the traces created
+      by the trace generator job.
+
+- debug: msg="{{ msg.split('\n') }}"

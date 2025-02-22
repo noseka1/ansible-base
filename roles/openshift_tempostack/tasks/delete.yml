@@ -2,19 +2,19 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: tempostack-tracegen
+    autogitops_app_dst_path: tempostack/tracegen
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: tempostack
+    autogitops_app_dst_path: tempostack/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: tempostack-operator
+    autogitops_app_dst_path: tempostack/operator
 
 - import_role:
     name: openshift_minio

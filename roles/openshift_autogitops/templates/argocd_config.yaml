@@ -1,2 +1,6 @@
 sourcePath: manifests/{{ autogitops_app_dst_path }}
-destNamespace: {{ autogitops_app_namespace | default('') }}
+{% if autogitops_app_namespace | length == 0 %}
+destNamespace: ''
+{% else %}
+destNamespace: {{ autogitops_app_namespace }}
+{% endif %}

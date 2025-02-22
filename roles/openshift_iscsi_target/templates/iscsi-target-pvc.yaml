@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: iscsi-target-storage
+  namespace: {{ iscsi_target_namespace }}
 spec:
   accessModes:
   - ReadWriteOnce

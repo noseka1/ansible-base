@@ -2,6 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: iscsi-target-scc
+  namespace: {{ iscsi_target_namespace }}
 rules:
 - apiGroups:
   - security.openshift.io

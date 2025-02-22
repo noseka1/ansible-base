@@ -8,7 +8,6 @@
       - iscsi-target-scc-role.yaml
       - iscsi-target-scc-rolebinding.yaml
       - iscsi-target-svc.yaml
-    namespace: '{{ iscsi_target_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for service IP
   kubernetes.core.k8s_info:
@@ -31,7 +30,6 @@
       - iscsi-target-deploy.yaml
       - iscsi-target-init-cm.yaml
       - iscsi-target-pvc.yaml
-    namespace: '{{ iscsi_target_namespace }}'
     wait: true
 
 - name: Create iscsi-target persistent volumes

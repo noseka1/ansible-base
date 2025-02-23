@@ -13,7 +13,7 @@
     autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: netobserv/operator
-    autogitops_app_namespace: netobserv
+    autogitops_app_namespace: '{{ netobserv_operator_subscription_namespace }}'
   tags: netobserv_operator
 
 - import_role:
@@ -23,7 +23,7 @@
     autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: netobserv/instance
-    autogitops_app_namespace: netobserv
+    autogitops_app_namespace: '{{ netobserv_instance_namespace }}'
   tags: netobserv_instance
 
 - import_tasks: report_success.yml

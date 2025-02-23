@@ -11,9 +11,16 @@ spec:
   agent:
     type: eBPF
     ebpf:
+      features:
+      - DNSTracking
+      - FlowRTT
+      - PacketDrop
       sampling: 50
       logLevel: info
-      privileged: false
+      # Privileged mode is required for features:
+      # DNSTracking
+      # PacketDrop
+      privileged: true
       resources:
         requests:
           memory: 50Mi

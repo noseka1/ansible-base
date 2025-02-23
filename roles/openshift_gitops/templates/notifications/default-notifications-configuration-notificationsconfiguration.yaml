@@ -4,6 +4,9 @@ metadata:
   name: default-notifications-configuration
   namespace: {{ gitops_instance_namespace }}
 spec:
+  context:
+    argocdUrl: https://{{ argocd_route.resources.0.spec.host }}
+
   services:
     service.webhook.mywebhook: |
       url: http://webhook-receiver.{{ gitops_instance_namespace }}.svc.cluster.local:8080

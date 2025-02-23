@@ -12,7 +12,8 @@ spec:
     subscriptions: |
       - recipients:
         - mywebhook
-        # Include all triggers listed in https://argocd-notifications.readthedocs.io/en/stable/catalog/
+        # Include all triggers listed in:
+        # https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/catalog/
         triggers:
         - on-created
         - on-deleted

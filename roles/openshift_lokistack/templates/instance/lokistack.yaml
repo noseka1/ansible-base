@@ -6,18 +6,23 @@ metadata:
 spec:
   limits:
     global:
+      # Tuning Loki parameters as per:
+      # https://docs.openshift.com/container-platform/4.17/observability/network_observability/installing-operators.html#network-observability-lokistack-configuring-ingestionnetwork_observability
       ingestion:
-        # Maximum byte rate per second per stream in MB
-        perStreamRateLimit: 50
-        # Maximum burst bytes per stream in MB
-        perStreamRateLimitBurst: 100
-    tenants:
-      additionalProperties:
-        ingestion:
-          # Maximum byte rate per second per stream in MB
-          perStreamRateLimit: 50
-          # Maximum burst bytes per stream in MB
-          perStreamRateLimitBurst: 100
+        # IngestionBurstSize defines the rate-limited sample size per distributor replica.
+        # It should be set to at least to the maximum logs size expected in a single push request.
+        ingestionBurstSize: 40
+        # IngestionRate defines the sample size per second. Units MB.
+        ingestionRate: 20
+        # MaxGlobalStreamsPerTenant defines the maximum number of active streams per tenant, across the cluster.
+        maxGlobalStreamsPerTenant: 25000
+      queries:
+        # MaxChunksPerQuery defines the maximum number of chunks that can be fetched by a single query
+        maxChunksPerQuery: 2000000
+        # MaxEntriesLimitsPerQuery defines the maximum number of log entries that will be returned for a query.
+        maxEntriesLimitPerQuery: 10000
+        # MaxQuerySeries defines the maximum of unique series that is returned by a metric query.
+        maxQuerySeries: 3000
   size: 1x.extra-small
   storage:
     schemas:

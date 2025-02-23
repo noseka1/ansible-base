@@ -1,4 +1,12 @@
 - import_role:
+    name: openshift_lokistack
+    tasks_from: deploy.yml
+  vars:
+    loki_instance_namespace: '{{ netobserv_instance_namespace }}-loki'
+    loki_instance_tenants_mode: openshift-network
+    loki_app_prefix: netobserv-
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -7,15 +15,6 @@
     autogitops_app_dst_path: netobserv/operator
     autogitops_app_namespace: netobserv
   tags: netobserv_operator
-
-- import_role:
-    name: openshift_lokistack
-    tasks_from: deploy.yml
-  vars:
-    loki_instance_namespace: netobserv
-    loki_manage_namespace: false
-    loki_instance_tenants_mode: openshift-network
-    loki_app_prefix: netobserv-
 
 - import_role:
     name: openshift_autogitops

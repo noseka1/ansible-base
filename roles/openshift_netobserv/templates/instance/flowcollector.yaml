@@ -34,6 +34,9 @@ spec:
       conversationHeartbeatInterval: 30s
   loki:
     mode: LokiStack
+    lokiStack:
+      namespace: {{ netobserv_instance_namespace }}-loki
+      name: loki
   consolePlugin:
     enable: true
     logLevel: info

@@ -1,0 +1,6 @@
+netobserv_operator_subscription_channel: ''
+netobserv_operator_subscription_approval: Automatic
+netobserv_operator_subscription_starting_csv: ''
+netobserv_operator_subscription_namespace: netobserv
+
+netobserv_instance_namespace: netobserv

@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ gitops_instance_namespace }}-{{ gitops_instance_name }}-notifications-clusterapps-fix
+rules:
+- apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch

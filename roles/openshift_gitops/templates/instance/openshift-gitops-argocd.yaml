@@ -46,6 +46,11 @@ spec:
     disableMetrics: false
   notifications:
     enabled: true
+    env:
+    - name: ARGOCD_APPLICATION_NAMESPACES
+      value: '*'
+    - name: ARGOCD_NOTIFICATION_CONTROLLER_SELF_SERVICE_NOTIFICATION_ENABLED
+      value: 'true'
   prometheus:
     enabled: false
   rbac:

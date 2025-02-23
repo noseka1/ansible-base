@@ -25,6 +25,8 @@
       - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
       - instance/openshift-gitops-event-fix-clusterrole.yaml
       - instance/openshift-gitops-event-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrole.yaml
     wait: true
     state: absent
 

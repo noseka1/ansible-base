@@ -28,6 +28,9 @@ spec:
         limits:
           memory: 800Mi
   processor:
+    # Enrich network flow data with the topology.kubernetes.io/zone
+    # label value applied to the nodes
+    addZone: true
     logLevel: info
     resources:
       requests:
@@ -35,7 +38,13 @@ spec:
         cpu: 100m
       limits:
         memory: 800Mi
-    logTypes: Flows
+    # logTypes defines the desired record types to generate. Possible values are:
+    # * Flows (default) to export regular network flows
+    # * Conversations to generate events for started conversations, ended conversations
+    #   as well as periodic "tick" updates
+    # * EndedConversations to generate only ended conversations events
+    # * All to generate both network flows and all conversations events
+    logTypes: All
     advanced:
       conversationEndTimeout: 10s
       conversationHeartbeatInterval: 30s

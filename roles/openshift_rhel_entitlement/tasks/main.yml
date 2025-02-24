@@ -1,6 +1,6 @@
 - assert:
-    that: openshift_rhel_entitlement_cert | length > 0
-    fail_msg: Variable 'openshift_rhel_entitlement_cert' must not be empty
+    that: openshift_rhel_entitlement_crt | length > 0
+    fail_msg: Variable 'openshift_rhel_entitlement_crt' must not be empty
     quiet: true
 
 - assert:

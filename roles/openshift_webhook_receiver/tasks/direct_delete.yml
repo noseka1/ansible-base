@@ -1,9 +1,9 @@
 - name: Deploy webhook receiver
   kubernetes.core.k8s:
     templates:
-      - configmap.yaml
-      - deployment.yaml
-      - namespace.yaml
-      - service.yaml
+      - instance/configmap.yaml
+      - instance/deployment.yaml
+      - instance/namespace.yaml
+      - instance/service.yaml
     state: absent
     wait: true

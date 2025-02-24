@@ -1,4 +1,3 @@
 webhook_receiver_namespace: webhook-receiver
 webhook_receiver_manage_namespace: true
-
 webhook_receiver_app_prefix: ''

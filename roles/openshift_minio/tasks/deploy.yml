@@ -4,7 +4,7 @@
   vars:
     autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
-    autogitops_app_dst_path: minio/instance
+    autogitops_app_dst_path: '{{ minio_app_prefix }}minio/instance'
     autogitops_app_namespace: '{{ minio_namespace }}'
 
 - name: Obtain Minio route

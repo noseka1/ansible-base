@@ -1,2 +1,3 @@
 minio_namespace: minio
 minio_manage_namespace: true
+minio_app_prefix: ''

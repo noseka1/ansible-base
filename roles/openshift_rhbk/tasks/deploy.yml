@@ -2,11 +2,10 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: rhbk-operator
-    autogitops_app_src_path: rhbk/operator
+    autogitops_app_type: dir
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhbk/operator
     autogitops_app_namespace: '{{ rhbk_operator_subscription_namespace }}'
-    autogitops_app_values: ''
 
 - import_tasks: get_instance_hostname.yml
 
@@ -14,11 +13,10 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: rhbk
-    autogitops_app_src_path: rhbk/instance
+    autogitops_app_type: dir
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: rhbk/instance
     autogitops_app_namespace: '{{ rhbk_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_tasks: get_connection.yml
 

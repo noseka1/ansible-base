@@ -1,0 +1,34 @@
+kind: GitLab
+apiVersion: apps.gitlab.com/v1beta1
+metadata:
+  name: gitlab
+  namespace: {{ gitlab_instance_namespace }}
+spec:
+  chart:
+    values:
+      # Using Routes for Ingress instead of the NGINX Ingress Controller
+      # means that Git over SSH is not supported.
+      # See also https://docs.gitlab.com/operator/openshift_ingress.html#openshift-routes
+      nginx-ingress:
+        enabled: false
+      certmanager:
+        install: false
+      global:
+        hosts:
+          domain: apps.{{ openshift_common_cluster_domain }}
+          hostSuffix: null
+        ingress:
+          # Use OpenShift default ingress class
+          class: openshift-default
+          annotations:
+            # The OpenShift documentation says "edge" is the default, but
+            # the TLS configuration is only passed to the Route if this annotation
+            # is manually set.
+            route.openshift.io/termination: edge
+          configureCertmanager: false
+          tls:
+            enabled: false
+            secretName: null
+      prometheus:
+        install: false
+    version: 7.11.1

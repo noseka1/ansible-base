@@ -12,7 +12,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: '{{ loki_app_prefix }}lokistack/instance'
+    autogitops_app_dst_path: '{{ loki_instance_app_prefix }}lokistack/instance'
   tags: lokistack_instance
 
 - import_role:

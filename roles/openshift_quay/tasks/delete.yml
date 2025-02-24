@@ -10,6 +10,8 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ quay_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: quay-
   tags: quay_instance
 
 - import_role:

@@ -3,6 +3,8 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ tempostack_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: tempostack-
 
 - import_role:
     name: openshift_autogitops

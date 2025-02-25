@@ -1,31 +1,3 @@
-# Backup objects get automatically recreated in Kubernetes based on
-# their state in S3 bucket. Delete S3 bucket prior to deleting
-# the backup objects in Kubernetes so they are not recreated.
-- import_tasks: minio_delete.yml
-  when: oadp_instance_minio_enabled
+- import_tasks: operator_delete.yml
 
-- import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
-  vars:
-    delete_kubernetes_objects:
-      - api_version: velero.io/v1
-        kind: Backup
-      - api_version: velero.io/v1
-        kind: Restore
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
-  vars:
-    autogitops_app_dst_path: oadp/instance
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
-  vars:
-    autogitops_app_dst_path: oadp/operator
-
-- import_role:
-    name: openshift_common
-    tasks_from: prune_csvs.yml
+- import_tasks: instance_delete.yml

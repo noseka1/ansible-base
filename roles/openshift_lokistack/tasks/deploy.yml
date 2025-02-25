@@ -14,7 +14,7 @@
   vars:
     minio_namespace: '{{ loki_instance_namespace }}-minio'
     minio_manage_namespace: true
-    minio_app_prefix: lokistack-
+    minio_app_prefix: '{{ loki_instance_app_prefix }}lokistack-'
   tags: lokistack_instance
 
 - import_role:

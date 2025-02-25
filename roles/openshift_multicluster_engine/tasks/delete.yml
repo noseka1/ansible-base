@@ -1,23 +1,5 @@
 - import_tasks: common_delete.yml
 
-- name: Detach local-cluster
-  kubernetes.core.k8s:
-    api_version: cluster.open-cluster-management.io/v1
-    kind: ManagedCluster
-    name: local-cluster
-    wait: true
-    wait_timeout: 600
-    state: absent
-
-- name: Delete local-cluster namespace
-  kubernetes.core.k8s:
-    api_version: v1
-    kind: Namespace
-    name: local-cluster
-    wait: true
-    wait_timeout: 600
-    state: absent
-
 - import_tasks: mce_delete.yml
 
 - import_role:

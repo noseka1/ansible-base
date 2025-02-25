@@ -2,8 +2,8 @@ multicluster_engine_operator_subscription_channel: ''
 multicluster_engine_operator_subscription_approval: Automatic
 multicluster_engine_operator_subscription_starting_csv: ''
 
-multicluster_engine_operator_subscription_namespace: multicluster-engine
-multicluster_engine_operator_subscription_name: multicluster-engine
+multicluster_engine_operator_namespace: multicluster-engine
+multicluster_engine_operator_name: multicluster-engine
 
 multicluster_engine_instance_namespace: multicluster-engine
 multicluster_engine_instance_name: engine

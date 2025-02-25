@@ -1,0 +1,19 @@
+- import_role:
+    name: openshift_minio
+    tasks_from: deploy.yml
+  vars:
+    minio_namespace: '{{ rhacm_observability_minio_namespace }}'
+    minio_manage_namespace: true
+    minio_app_prefix: rhacm-
+  when: rhacm_observability_minio_enabled
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_type: dir
+    autogitops_app_src_path: templates/observability
+    autogitops_app_dst_path: rhacm/observability
+    autogitops_app_namespace: '{{ rhacm_observability_namespace }}'
+
+- import_tasks: observability_report_success.yml

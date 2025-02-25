@@ -6,14 +6,9 @@
 
 - import_role:
     name: openshift_oadp
-    tasks_from: delete.yml
+    tasks_from: instance_delete.yml
   vars:
     oadp_operator_subscription_namespace: '{{ rhacm_backup_namespace }}'
     oadp_operator_manage_namespace: false
     oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
-
-- name: Delete namespace {{ rhacm_backup_namespace }}
-  kubernetes.core.k8s:
-    template: backup/open-cluster-management-backup-ns.yaml
-    wait: true
-    state: absent
+    oadp_app_prefix: rhacm-

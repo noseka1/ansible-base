@@ -1,17 +1,15 @@
-- name: Delete Observability component
-  kubernetes.core.k8s:
-    template:
-      - observability/observability-mco.yaml
-      - observability/open-cluster-management-observability-ns.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: rhacm/observability
 
 - import_role:
     name: openshift_minio
     tasks_from: delete.yml
   vars:
-    minio_namespace: '{{ rhacm_minio_namespace }}'
-    minio_manage_namespace: false
+    minio_namespace: '{{ rhacm_observability_minio_namespace }}'
+    minio_manage_namespace: true
     minio_app_prefix: rhacm-
   when: rhacm_observability_minio_enabled
 

@@ -9,30 +9,45 @@ spec:
   ingress: {}
   overrides:
     components:
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: app-lifecycle
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: cluster-backup
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: cluster-lifecycle
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: console
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: grc
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: insights
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: multicluster-engine
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: search
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: volsync
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: cluster-permission
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: multicluster-observability
-    - enabled: true
+    - configOverrides: {}
+      enabled: true
       name: submariner-addon
+    - configOverrides: {}
+      enabled: false
+      name: siteconfig
   imagePullSecret: openshift-pull-secret
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:

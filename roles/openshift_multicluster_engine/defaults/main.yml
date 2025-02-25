@@ -1,9 +1,14 @@
-multicluster_engine_subscription_namespace: multicluster-engine
-multicluster_engine_subscription_name: multicluster-engine
-multicluster_engine_subscription_channel: ''
-multicluster_engine_subscription_approval: Automatic
+multicluster_engine_operator_subscription_channel: ''
+multicluster_engine_operator_subscription_approval: Automatic
+multicluster_engine_operator_subscription_starting_csv: ''
+
+multicluster_engine_operator_subscription_namespace: multicluster-engine
+multicluster_engine_operator_subscription_name: multicluster-engine
+
 multicluster_engine_instance_namespace: multicluster-engine
 multicluster_engine_instance_name: engine
+
+multicluster_engine_discovery_namespace: discovered-clusters
 
 # Should the multi-cluster engine components be installed on infra nodes?
 multicluster_engine_place_on_infra_nodes: false
@@ -33,6 +38,7 @@ multicluster_engine_os_image_trusted_ca: ''
 # If the list is left empty, images for several recent OpenShift versions will be downloaded by default
 multicluster_engine_os_images:
   - openshiftVersion: '4.16'
-    version: '416.94.202410172137-0'
-    url: 'https://rhcos.mirror.openshift.com/art/storage/prod/streams/4.16-9.4/builds/416.94.202410172137-0/x86_64/rhcos-416.94.202410172137-0-live.x86_64.iso'
+    version: 416.94.202410172137-0
+    url: https://rhcos.mirror.openshift.com/art/storage/prod/streams/4.16-9.4/builds/416.94.202410172137-0/x86_64/rhcos-416.94.202410172137-0-live.x86_64.iso
     cpuArchitecture: x86_64
+    rootFSUrl: ''

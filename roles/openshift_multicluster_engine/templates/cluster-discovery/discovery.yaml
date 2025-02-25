@@ -2,7 +2,7 @@ apiVersion: discovery.open-cluster-management.io/v1
 kind: DiscoveryConfig
 metadata:
   name: discovery
-  namespace: discovered-clusters
+  namespace: {{ multicluster_engine_discovery_namespace }}
 spec:
   credential: ocm-api-token
   filters:

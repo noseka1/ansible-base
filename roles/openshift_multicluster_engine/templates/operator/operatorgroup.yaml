@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ multicluster_engine_operator_subscription_name }}
+  namespace: {{ multicluster_engine_operator_subscription_namespace }}
+spec:
+  targetNamespaces:
+  - {{ multicluster_engine_operator_subscription_namespace }}

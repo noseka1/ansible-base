@@ -1,0 +1,16 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: v1
+        kind: Namespace
+        name: hosted-clusters
+
+- import_tasks: hypershift_aws_delete.yml
+
+- import_tasks: cluster_discovery_delete.yml
+
+- import_tasks: assisted_installer_delete.yml
+
+- import_tasks: manifestwork_delete.yml

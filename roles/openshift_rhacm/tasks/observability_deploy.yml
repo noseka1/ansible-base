@@ -6,6 +6,7 @@
     minio_manage_namespace: true
     minio_app_prefix: rhacm-
   when: rhacm_observability_minio_enabled
+  tags: rhacm_observability_minio
 
 - import_role:
     name: openshift_autogitops
@@ -15,5 +16,7 @@
     autogitops_app_src_path: templates/observability
     autogitops_app_dst_path: rhacm/observability
     autogitops_app_namespace: '{{ rhacm_observability_namespace }}'
+  tags: rhacm_observability
 
 - import_tasks: observability_report_success.yml
+  tags: rhacm_observability

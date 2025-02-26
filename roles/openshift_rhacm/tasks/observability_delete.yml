@@ -3,6 +3,7 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: rhacm/observability
+  tags: rhacm_observability
 
 - import_role:
     name: openshift_minio
@@ -12,6 +13,7 @@
     minio_manage_namespace: true
     minio_app_prefix: rhacm-
   when: rhacm_observability_minio_enabled
+  tags: rhacm_observability_minio
 
 - import_role:
     name: openshift_common
@@ -21,3 +23,4 @@
       - api_version: admissionregistration.k8s.io/v1
         kind: ValidatingWebhookConfiguration
         name: multicluster-observability-operator
+  tags: rhacm_observability

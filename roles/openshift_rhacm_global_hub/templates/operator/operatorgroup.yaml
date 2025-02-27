@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: multicluster-global-hub
+  namespace: {{ rhacm_global_hub_namespace }}
+spec:
+  targetNamespaces:
+  - {{ rhacm_global_hub_namespace }}

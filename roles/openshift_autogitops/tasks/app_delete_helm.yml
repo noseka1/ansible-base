@@ -6,6 +6,7 @@
 - name: Check if Chart.yaml exists
   stat:
     path: '{{ autogitops_app_dst_dir }}/Chart.yaml'
+    get_checksum: false
   register: autogitops_app_chart_stat_result
 
 - name: Retrieve application Chart.yaml

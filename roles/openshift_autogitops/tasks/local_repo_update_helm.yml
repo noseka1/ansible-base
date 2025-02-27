@@ -6,6 +6,7 @@
 - name: Check if values file exists
   stat:
     path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
+    get_checksum: false
   register: autogitops_app_values_stat_result
 
 - name: Create values.yaml

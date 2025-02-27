@@ -1,7 +1,8 @@
 cluster_observ_operator_subscription_channel: ''
 cluster_observ_operator_subscription_approval: Automatic
 cluster_observ_operator_subscription_starting_csv: ''
-cluster_observ_operator_subscription_namespace: openshift-cluster-observability-operator
+
+cluster_observ_operator_namespace: openshift-cluster-observability-operator
 
 cluster_observ_instance_namespace: cluster-observability
 cluster_observ_instance_name: cluster-observability

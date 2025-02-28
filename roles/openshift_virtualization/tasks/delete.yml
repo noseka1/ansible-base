@@ -20,7 +20,13 @@
         kind: VirtualMachine
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
-  tags: openshift_virtualization_instance
+
+ - import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
+  tags: openshift_virtualization_hostpathprov
 
 - import_role:
     name: openshift_autogitops

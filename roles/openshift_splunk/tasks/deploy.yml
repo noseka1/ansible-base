@@ -28,8 +28,9 @@
     body:
       event: Hello from Ansible at {{ lookup("pipe", "date +%r") }}
     validate_certs: false
-  register: result
-  until: result.status == 200
+    status_code: [ 200, 503 ]
+  register: splunk_uri_result
+  until: splunk_uri_result.status == 200
   retries: 12
   delay: 10
 

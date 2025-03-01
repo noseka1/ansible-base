@@ -1,3 +1,3 @@
-datadog_vector_name: datadog-vector-instance
-datadog_vector_namespace: datadog-vector
-datadog_vector_manage_namespace: true
+ddvector_name: datadog-vector-instance
+ddvector_namespace: datadog-vector
+ddvector_manage_namespace: true

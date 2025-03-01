@@ -5,4 +5,4 @@
     autogitops_app_type: helm
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: datadog-vector/instance
-    autogitops_app_namespace: '{{ datadog_vector_namespace }}'
+    autogitops_app_namespace: '{{ ddvector_namespace }}'

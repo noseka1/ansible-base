@@ -29,7 +29,7 @@ spec:
   - name: syslog
     type: syslog
     syslog:
-      url: tcp://{{ datadog_vector_hostname }}:{{ datadog_vector_port }}
+      url: tcp://{{ ddvector_hostname }}:{{ ddvector_port }}
       enrichment: KubernetesMinimal
       facility: local0
       payloadKey: '{.message}'

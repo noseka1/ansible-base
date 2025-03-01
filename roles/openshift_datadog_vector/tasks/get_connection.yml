@@ -2,17 +2,17 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    name: '{{ datadog_vector_name }}'
-    namespace: '{{ datadog_vector_namespace }}'
-  register: datadog_vector_service_result
+    name: '{{ ddvector_name }}'
+    namespace: '{{ ddvector_namespace }}'
+  register: ddvector_service_result
 
 - name: Fail if Datadog Vector service doesn't exist
   fail:
     msg: |
       Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
-      Use the openshift_datadog_vector_deploy.yml playbook to install a Datadog Vector instance.
-  when: datadog_vector_service_result.resources | length == 0
+      Use the openshift_ddvector_deploy.yml playbook to install a Datadog Vector instance.
+  when: ddvector_service_result.resources | length == 0
 
 - set_fact:
-    datadog_vector_hostname: '{{ datadog_vector_name }}.{{ datadog_vector_namespace }}.svc'
-    datadog_vector_port: 9000
+    ddvector_hostname: '{{ ddvector_name }}.{{ ddvector_namespace }}.svc'
+    ddvector_port: 9000

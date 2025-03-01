@@ -9,6 +9,11 @@ metadata:
 spec:
   serviceAccount:
     name: collector
+  collector:
+    resources:
+      limits:
+        cpu: "6"
+        memory: 4Gi
   outputs:
 {% if clusterlog_forward_to_loki %}
   - name: loki

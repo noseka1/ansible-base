@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay
+    autogitops_app_dst_path: quay/quay/instance
   tags: quay_instance
 
 - import_role:
@@ -18,21 +18,21 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay-operator
+    autogitops_app_dst_path: quay/quay/operator
   tags: quay_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay-bridge-operator
+    autogitops_app_dst_path: quay/quay-bridge/operator
   tags: quay_bridge_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: container-security-operator
+    autogitops_app_dst_path: quay/container-security/operator
   tags: quay_security_operator
 
 - import_role:

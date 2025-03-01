@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: rhacs-operator
+  namespace: {{ rhacs_operator_namespace }}
+spec:
+{% if rhacs_operator_subscription_channel | length > 0 %}
+  channel: {{ rhacs_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ rhacs_operator_subscription_approval }}
+  name: rhacs-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if rhacs_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ rhacs_operator_subscription_starting_csv }}
+{% endif %}

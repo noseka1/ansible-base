@@ -1,0 +1,49 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: SecuredCluster
+metadata:
+  name: stackrox-secured-cluster-services
+  namespace: {{ rhacs_instance_namespace }}
+spec:
+  admissionControl:
+    # Enable preventive policy enforcement for object creations.
+    # The default value is false.
+    listenOnCreates: true
+    # Enable monitoring and enforcement for Kubernetes events, such as port-forward and exec events.
+    # The default value is true.
+    listenOnEvents: true
+    # Enable preventive policy enforcement for object updates.
+    # It will not have any effect unless Listen On Creates is set to true as well.
+    # The default value is false.
+    listenOnUpdates: true
+    # The number of replicas of the admission control pod. Default is 3.
+    replicas: {{ 1 if rhacs_deployment_mode == 'dev' else 3 }}
+  sensor:
+{% if rhacs_deployment_mode == 'dev' %}
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 500Mi
+{% endif %}
+  centralEndpoint: {{ rhacs_central_host }}:443
+  clusterName: {{ openshift_common_cluster_domain }}
+  perNode:
+    collector:
+      # Collection method is either EBPF, CORE_BPF, or NO_COLLECTION.
+      collection: CORE_BPF
+      imageFlavor: Regular
+    taintToleration: TolerateTaints
+  customize:
+    envVars:
+      # Set log level for Sensor, Admission Controller, Collector. Allowed values are debug, info, ...
+      - name: LOGLEVEL
+        value: {{ rhacs_loglevel }}
+{% if rhacs_additional_trusted_ca | length > 0 %}
+  tls:
+    additionalCAs:
+      - name: custom_trusted_ca
+        content: |
+          {{ rhacs_additional_trusted_ca | indent(10) }}
+{% endif %}

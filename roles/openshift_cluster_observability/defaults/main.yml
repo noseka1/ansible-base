@@ -1,11 +1,11 @@
-cluster_observ_operator_subscription_channel: ''
-cluster_observ_operator_subscription_approval: Automatic
-cluster_observ_operator_subscription_starting_csv: ''
+clusterobserv_operator_subscription_channel: ''
+clusterobserv_operator_subscription_approval: Automatic
+clusterobserv_operator_subscription_starting_csv: ''
 
-cluster_observ_operator_namespace: openshift-cluster-observability-operator
+clusterobserv_operator_namespace: openshift-cluster-observability-operator
 
-cluster_observ_instance_namespace: cluster-observability
-cluster_observ_instance_name: cluster-observability
+clusterobserv_instance_namespace: cluster-observability
+clusterobserv_instance_name: cluster-observability
 
-cluster_observ_example_namespace: cluster-observability-example
-cluster_observ_example_name: cluster-observability-example
+clusterobserv_example_namespace: cluster-observability-example
+clusterobserv_example_name: cluster-observability-example

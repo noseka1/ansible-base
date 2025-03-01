@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ cluster_observ_example_namespace }}
+  name: {{ clusterobserv_example_namespace }}

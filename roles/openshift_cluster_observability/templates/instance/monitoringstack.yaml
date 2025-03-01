@@ -1,8 +1,8 @@
 apiVersion: monitoring.rhobs/v1alpha1
 kind: MonitoringStack
 metadata:
-  name: {{ cluster_observ_instance_name }}
-  namespace: {{ cluster_observ_instance_namespace }}
+  name: {{ clusterobserv_instance_name }}
+  namespace: {{ clusterobserv_instance_namespace }}
 spec:
   logLevel: debug
   # Time duration to retain data for. Default is '120h', and must match the

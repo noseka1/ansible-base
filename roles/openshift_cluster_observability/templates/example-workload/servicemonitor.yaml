@@ -1,8 +1,8 @@
 apiVersion: monitoring.rhobs/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ cluster_observ_example_name }}
-  namespace: {{ cluster_observ_example_namespace }}
+  name: {{ clusterobserv_example_name }}
+  namespace: {{ clusterobserv_example_namespace }}
 spec:
   endpoints:
   - interval: 30s
@@ -10,4 +10,4 @@ spec:
     scheme: http
   selector:
     matchLabels:
-      app: {{ cluster_observ_example_name }}
+      app: {{ clusterobserv_example_name }}

@@ -25,7 +25,7 @@
     autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: cluster-observability/instance
-    autogitops_app_namespace: '{{ cluster_observ_instance_namespace }}'
+    autogitops_app_namespace: '{{ clusterobserv_instance_namespace }}'
   tags: cluster_observability_instance
 
 - import_role:
@@ -35,5 +35,5 @@
     autogitops_app_type: dir
     autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: cluster-observability/example-workload
-    autogitops_app_namespace: '{{ cluster_observ_example_namespace }}'
+    autogitops_app_namespace: '{{ clusterobserv_example_namespace }}'
   tags: cluster_observability_example

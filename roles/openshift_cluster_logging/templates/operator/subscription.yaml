@@ -2,15 +2,15 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: cluster-logging
-  namespace: {{ openshift_logging_namespace }}
+  namespace: {{ clusterlog_namespace }}
 spec:
-{% if openshift_logging_operator_subscription_channel | length > 0 %}
-  channel: {{ openshift_logging_operator_subscription_channel }}
+{% if clusterlog_operator_subscription_channel | length > 0 %}
+  channel: {{ clusterlog_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ openshift_logging_operator_subscription_approval }}
+  installPlanApproval: {{ clusterlog_operator_subscription_approval }}
   name: cluster-logging
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if openshift_logging_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ openshift_logging_operator_subscription_starting_csv }}
+{% if clusterlog_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ clusterlog_operator_subscription_starting_csv }}
 {% endif %}

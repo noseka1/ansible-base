@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: eventrouter
-  namespace: {{ openshift_logging_namespace }}
+  namespace: {{ clusterlog_namespace }}
 data:
   config.json: |-
     {

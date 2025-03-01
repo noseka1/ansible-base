@@ -1,17 +1,17 @@
-openshift_logging_operator_subscription_channel: ''
-openshift_logging_operator_subscription_approval: Automatic
-openshift_logging_operator_subscription_starting_csv: ''
+clusterlog_operator_subscription_channel: ''
+clusterlog_operator_subscription_approval: Automatic
+clusterlog_operator_subscription_starting_csv: ''
 
-openshift_logging_namespace: openshift-logging
+clusterlog_namespace: openshift-logging
 
 # Send the logs to the default Loki instance. This will deploy a LokiStack instance and send
 # the logs there. You can disable this and forward the logs to other destinations instead.
-openshift_logging_forward_to_loki: true
+clusterlog_forward_to_loki: true
 
 # Forward logs via syslog protocol. Use the openshift_datadog_vector_deploy.yml playbook to install
 # the Datadog Vector instance that will receive the logs.
-openshift_logging_forward_to_syslog: false
+clusterlog_forward_to_syslog: false
 
 # Forward logs to Splunk. Use the openshift_splunk_deploy.yml playbook to install
 # the Splunk instance that will receive the logs.
-openshift_logging_forward_to_splunk: false
+clusterlog_forward_to_splunk: false

@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: eventrouter
-  namespace: {{ openshift_logging_namespace }}
+  namespace: {{ clusterlog_namespace }}
   labels:
     component: eventrouter
     logging-infra: eventrouter

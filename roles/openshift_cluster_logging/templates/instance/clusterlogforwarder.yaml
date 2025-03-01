@@ -1,16 +1,16 @@
-{% if openshift_logging_forward_to_loki or
-      openshift_logging_forward_to_syslog or
-      openshift_logging_forward_to_splunk %}
+{% if clusterlog_forward_to_loki or
+      clusterlog_forward_to_syslog or
+      clusterlog_forward_to_splunk %}
 apiVersion: observability.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
   name: collector
-  namespace: {{ openshift_logging_namespace }}
+  namespace: {{ clusterlog_namespace }}
 spec:
   serviceAccount:
     name: collector
   outputs:
-{% if openshift_logging_forward_to_loki %}
+{% if clusterlog_forward_to_loki %}
   - name: loki
     type: lokiStack
     lokiStack:
@@ -25,7 +25,7 @@ spec:
         key: service-ca.crt
         configMapName: openshift-service-ca.crt
 {% endif %}
-{% if openshift_logging_forward_to_syslog %}
+{% if clusterlog_forward_to_syslog %}
   - name: syslog
     type: syslog
     syslog:
@@ -36,7 +36,7 @@ spec:
       rfc: RFC3164
       severity: Informational
 {% endif %}
-{% if openshift_logging_forward_to_splunk %}
+{% if clusterlog_forward_to_splunk %}
   - name: splunk
     type: splunk
     splunk:
@@ -47,7 +47,7 @@ spec:
           secretName: splunk-secret
 {% endif %}
   pipelines:
-{% if openshift_logging_forward_to_loki %}
+{% if clusterlog_forward_to_loki %}
   - name: loki-pipeline
     inputRefs:
     - infrastructure
@@ -58,7 +58,7 @@ spec:
     outputRefs:
     - loki
 {% endif %}
-{% if openshift_logging_forward_to_syslog %}
+{% if clusterlog_forward_to_syslog %}
   - name: syslog-pipeline
     inputRefs:
     - application
@@ -67,7 +67,7 @@ spec:
     outputRefs:
     - syslog
 {% endif %}
-{% if openshift_logging_forward_to_splunk %}
+{% if clusterlog_forward_to_splunk %}
   - name: splunk-pipeline
     inputRefs:
     - application

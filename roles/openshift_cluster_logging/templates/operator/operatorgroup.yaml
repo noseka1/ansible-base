@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: cluster-logging
-  namespace: {{ openshift_logging_namespace }}
+  namespace: {{ clusterlog_namespace }}
 spec:
   targetNamespaces:
-  - {{ openshift_logging_namespace }}
+  - {{ clusterlog_namespace }}

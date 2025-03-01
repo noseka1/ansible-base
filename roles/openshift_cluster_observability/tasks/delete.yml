@@ -3,15 +3,25 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: cluster-observability/example-workload
+  tags: cluster_observability_example
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: cluster-observability/instance
+  tags: cluster_observability_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_dst_path: cluster-observability/plugins
+  tags: cluster_observability_plugins
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: cluster-observability/operator
+  tags: cluster_observability_operator

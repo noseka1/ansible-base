@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: testapp-https
+spec:
+  selector:
+    # Use custom ingress gateway
+    istio: ingressgateway-custom
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - testapp-https.example.com
+    tls:
+      mode: SIMPLE
+      credentialName: testapp-tls

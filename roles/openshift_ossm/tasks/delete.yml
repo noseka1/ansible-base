@@ -2,31 +2,25 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: ossm
+    autogitops_app_dst_path: ossm/service-mesh/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: ossm-operator
+    autogitops_app_dst_path: ossm/service-mesh/operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: kiali-operator
+    autogitops_app_dst_path: ossm/kiali/operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: jaeger-operator
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
-  vars:
-    autogitops_app_name: elasticsearch-operator
+    autogitops_app_dst_path: ossm/elasticsearch/operator
 
 - import_role:
     name: openshift_common

@@ -1,0 +1,118 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: control-plane
+  namespace: {{ ossm_instance_namespace }}
+spec:
+  version: v2.4
+  # A complete example of maistra.io/v2 ServiceMeshControlPlane can be found at:
+  # https://github.com/maistra/istio-operator/blob/maistra-2.0/pkg/apis/maistra/v2/smcp_new.yaml
+  general:
+    # Configures the control plane to add validationMessages to the status fields
+    # of istio.io resource
+    validationMessages: true
+    logging:
+      componentLevels:
+        default: info
+  proxy:
+    networking:
+      trafficControl:
+        inbound: {}
+        outbound:
+          policy: ALLOW_ANY
+{% if ossm_access_logging_enabled %}
+    accessLogging:
+      file:
+        # Set accessLogFile to empty string to disable access log.
+        name: /dev/stdout
+
+        # Set accessLogEncoding to JSON or TEXT to configure sidecar access log
+        encoding: TEXT
+
+        # If accessLogEncoding is TEXT, value will be used directly as the log format
+        # example: "[%START_TIME%] %REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%\n"
+        # If AccessLogEncoding is JSON, value will be parsed as map[string]string
+        # example: '{"start_time": "%START_TIME%", "req_method": "%REQ(:METHOD)%"}'
+        # Leave empty to use default log format
+        format: ''
+{% endif %}
+    runtime:
+      container:
+        resources:
+          requests:
+            cpu: 600m
+            memory: 50Mi
+          limits: {}
+  gateways:
+    ingress:
+      runtime:
+        deployment:
+          autoScaling: {{ ossm_autoscaling | to_json }}
+      service: {}
+    egress:
+      runtime:
+        deployment:
+          autoScaling: {{ ossm_autoscaling | to_json }}
+      service: {}
+    openshiftRoute:
+      enabled: true
+  policy:
+    type: Istiod
+  telemetry:
+    type: Istiod
+  tracing:
+    type: Jaeger
+  addons:
+    grafana:
+      enabled: true
+{% if ossm_grafana_persistence_enabled %}
+      install:
+        persistence:
+          enabled: true
+          accessMode: ReadWriteOnce
+{% endif %}
+    jaeger:
+      install:
+        storage:
+{% if ossm_jaeger_persistent_enabled %}
+          type: Elasticsearch
+          elasticsearch:
+            nodeCount: 3
+            storage: {}
+            redundancyPolicy: SingleRedundancy
+            indexCleaner: {}
+            resources:
+              requests:
+                cpu: "1"
+                memory: "16Gi"
+              limits:
+                cpu: "1"
+                memory: "16Gi"
+{% else %}
+          type: Memory
+{% endif %}
+        ingress: {}
+    kiali:
+      enabled: true
+      install:
+        dashboard:
+          viewOnly: false
+        service:
+          ingress:
+            enabled: true
+  security:
+    dataPlane:
+      mtls: true
+  runtime:
+    components:
+      pilot:
+        container:
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1.6Gi
+            limits: {}
+        deployment:
+          autoScaling: {{ ossm_autoscaling | to_json }}
+  profiles:
+  - default

@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: testapp-tls-mutual
+spec:
+  selector:
+    # Use istio default ingress gateway
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - testapp-tls-mutual.@@ROUTER_DOMAIN@@
+    tls:
+      mode: MUTUAL
+      credentialName: testapp-tls

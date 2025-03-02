@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testapp-https
+spec:
+  hosts:
+  - testapp-https.example.com
+  gateways:
+  - testapp-https
+  http:
+  - route:
+    - destination:
+        host: testapp
+        port:
+          number: 8080

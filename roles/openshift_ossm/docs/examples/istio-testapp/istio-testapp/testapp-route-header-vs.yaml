@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testapp-route-header
+spec:
+  hosts:
+  - testapp-route-header.@@ROUTER_DOMAIN@@
+  gateways:
+  - testapp-route-header
+  http:
+  - route:
+    - destination:
+        host: testapp-route
+        subset: subset-v2
+    match:
+    - headers:
+        x-version:
+          exact: v2
+  - route:
+    - destination:
+        host: testapp-route
+        subset: subset-v1

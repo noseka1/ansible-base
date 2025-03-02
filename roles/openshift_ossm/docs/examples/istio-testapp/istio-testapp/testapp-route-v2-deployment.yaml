@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp-route-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appver: testapp-route-v2
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: testapp-route
+        ver: v2
+        appver: testapp-route-v2
+    spec:
+      containers:
+      - name: http
+        image: quay.io/noseka1/toolbox-container:full
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - 'echo testapp-route-v2 > index.html &&
+           python3 -m http.server 8080'
+        # The container port must be declared, otherwise Istio won't
+        # forward the traffic to the container correctly!
+        ports:
+        - containerPort: 8080

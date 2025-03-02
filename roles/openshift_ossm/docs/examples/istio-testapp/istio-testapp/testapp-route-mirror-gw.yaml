@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: testapp-route-mirror
+spec:
+  selector:
+    # Use istio default ingress gateway
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - testapp-route-mirror.@@ROUTER_DOMAIN@@

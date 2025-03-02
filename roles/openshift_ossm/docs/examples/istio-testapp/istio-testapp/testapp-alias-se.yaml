@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: testapp-alias
+spec:
+  hosts:
+  - testapp-alias
+  location: MESH_INTERNAL
+  ports:
+  - number: 8080
+    name: http
+    protocol: HTTP
+  - number: 8443
+    name: https
+    protocol: TLS
+  resolution: DNS
+  endpoints:
+  - address: testapp.istio-testapp.svc.cluster.local
+    ports:
+      http: 8080

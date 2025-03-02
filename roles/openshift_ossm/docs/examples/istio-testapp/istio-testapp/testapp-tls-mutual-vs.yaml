@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testapp-tls-mutual
+spec:
+  hosts:
+  - testapp-tls-mutual.@@ROUTER_DOMAIN@@
+  gateways:
+  - testapp-tls-mutual
+  http:
+  - route:
+    - destination:
+        host: testapp
+        port:
+          number: 8080

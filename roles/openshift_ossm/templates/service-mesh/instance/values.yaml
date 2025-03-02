@@ -1,5 +1,0 @@
-autoScaling:
-  enabled: false
-
-grafanaPersistenceEnabled: false
-jaegerPersistenceEnabled: false

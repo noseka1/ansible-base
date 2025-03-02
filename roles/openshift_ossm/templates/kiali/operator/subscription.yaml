@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: kiali-ossm
+  namespace: {{ ossm_kiali_operator_namespace }}
+spec:
+{% if ossm_kiali_operator_subscription_channel | length > 0 %}
+  channel: {{ ossm_kiali_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ ossm_kiali_operator_subscription_approval }}
+  name: kiali-ossm
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if ossm_kiali_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ ossm_kiali_operator_subscription_starting_csv }}
+{% endif %}

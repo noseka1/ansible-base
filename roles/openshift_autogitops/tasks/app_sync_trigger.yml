@@ -12,7 +12,7 @@
       revision: '{{ autogitops_git_last_commit }}'
     headers:
       Authorization: Bearer {{ argocd_api_token }}
-    validate_certs: false
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
     status_code: [ 200 ]
   register: autogitops_app_sync_result
   until:

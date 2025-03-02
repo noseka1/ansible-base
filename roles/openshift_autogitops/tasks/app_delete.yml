@@ -78,7 +78,7 @@
     method: GET
     headers:
       Authorization: Bearer {{ argocd_api_token }}
-    validate_certs: false
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
     status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
 
@@ -104,7 +104,7 @@
     method: GET
     headers:
       Authorization: Bearer {{ argocd_api_token }}
-    validate_certs: false
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
     status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
   when: autogitops_git_updated

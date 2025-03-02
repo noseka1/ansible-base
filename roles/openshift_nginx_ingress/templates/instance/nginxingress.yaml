@@ -52,7 +52,7 @@ spec:
     image:
       pullPolicy: IfNotPresent
       repository: nginx/nginx-ingress
-      tag: 3.1.0-ubi
+      tag: {{ nginx_instance_image_tag }}
     includeYear: false
     ingressClass:
       name: nginx

@@ -2,12 +2,12 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: local-storage
+    autogitops_app_dst_path: local-storage/instance
   tags: local_storage_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: local-storage-operator
+    autogitops_app_dst_path: local-storage/operator
   tags: local_storage_operator

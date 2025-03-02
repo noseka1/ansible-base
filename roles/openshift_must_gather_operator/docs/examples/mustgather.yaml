@@ -1,0 +1,48 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: MustGather
+metadata:
+  name: example
+  namespace: must-gather-operator
+spec:
+  # Red Hat support case ID, for example '03576820'. The case ID appears in the URL, for example:
+  # https://access.redhat.com/support/cases/#/case/03576820
+  caseID: '03576820'
+  caseManagementAccountSecretRef:
+    name: case-management-creds
+  serviceAccountRef:
+    name: must-gather-admin
+  # The list of must-gather images to use.
+  #
+  # You can find available must gather images at:
+  # https://docs.openshift.com/container-platform/4.13/support/gathering-cluster-data.html#gathering-data-specific-features_gathering-cluster-data
+  #
+  # For a specific image, you can list the available image tags using skopeo. For example:
+  # $ skopeo list-tags docker://registry.redhat.io/container-native-virtualization/cnv-must-gather-rhel9
+  # {
+  #     "Repository": "registry.redhat.io/container-native-virtualization/cnv-must-gather-rhel9",
+  #     "Tags": [
+  #         "v4.13.0--2022-101182",
+  #         "v4.13.0-66",
+  #         "v4.13.0",
+  #         "v4.13.0-66-source",
+  #         "v4.13.1",
+  #         "v4.13.1-11",
+  #
+  #   ...
+  # }
+  #
+  mustGatherImages:
+  - quay.io/openshift/origin-must-gather:latest
+#  - registry.redhat.io/openshift/must-gather:v4.13
+#  - registry.redhat.io/container-native-virtualization/cnv-must-gather-rhel9:v4.13
+#  - registry.redhat.io/openshift-serverless-1/svls-must-gather-rhel8:1.29.1
+#  - registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8:2.4
+#  - registry.redhat.io/rhmtc/openshift-migration-must-gather-rhel8:v1.7.11
+#  - registry.redhat.io/odf4/odf-must-gather-rhel9:v4.13
+#  - registry.redhat.io/openshift-logging/cluster-logging-rhel8-operator:v5.7.4
+#  - registry.redhat.io/openshift4/ose-csi-driver-shared-resource-mustgather-rhel8:v4.13
+#  - registry.redhat.io/openshift4/ose-local-storage-mustgather-rhel8:v4.13
+#  - registry.redhat.io/openshift-sandboxed-containers/osc-must-gather-rhel9:1.4.1
+#  - registry.redhat.io/workload-availability/self-node-remediation-must-gather-rhel8:v0.5.0
+#  - registry.redhat.io/workload-availability/node-maintenance-must-gather-rhel8:v5.0.0
+#  - registry.redhat.io/openshift-gitops-1/gitops-must-gather-rhel8:v1.9.0

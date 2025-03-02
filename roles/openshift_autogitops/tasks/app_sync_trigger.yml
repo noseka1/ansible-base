@@ -1,7 +1,3 @@
-- import_role:
-    name: openshift_gitops
-    tasks_from: get_argocd_api_connection.yml
-
 - debug:
     msg: Application URL is {{ argocd_api_url }}/applications/{{ autogitops_argocd_namespace }}/{{ autogitops_app_name }}
 

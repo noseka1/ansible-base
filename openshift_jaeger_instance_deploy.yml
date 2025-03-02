@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_jaeger
-        tasks_from: delete.yml
+        tasks_from: instance_deploy.yml

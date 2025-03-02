@@ -2,6 +2,8 @@ loki_operator_subscription_channel: ''
 loki_operator_subscription_approval: Automatic
 loki_operator_subscription_starting_csv: ''
 
+loki_operator_namespace: openshift-operators-redhat
+
 loki_instance_namespace: loki
 loki_instance_manage_namespace: true
 loki_instance_app_prefix: ''

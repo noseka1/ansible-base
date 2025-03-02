@@ -1,0 +1,143 @@
+# For available settings refer to:
+# https://github.com/nginxinc/nginx-ingress-helm-operator/blob/main/docs/nginx-ingress-controller.md
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: nginxingress
+  namespace: {{ nginx_instance_namespace }}
+spec:
+  controller:
+    affinity: {}
+    annotations: {}
+    appprotect:
+      enable: false
+    appprotectdos:
+      debug: false
+      enable: false
+      maxDaemons: 0
+      maxWorkers: 0
+      memory: 0
+    autoscaling:
+      annotations: {}
+      enabled: false
+      maxReplicas: 3
+      minReplicas: 1
+      targetCPUUtilizationPercentage: 50
+      targetMemoryUtilizationPercentage: 50
+    config:
+      annotations: {}
+      entries: {}
+    customConfigMap: ""
+    customPorts: []
+    defaultTLS:
+      secret: ""
+    disableIPV6: false
+    dnsPolicy: ClusterFirst
+    enableCertManager: false
+    enableCustomResources: true
+    enableExternalDNS: false
+    enableLatencyMetrics: false
+    enableOIDC: false
+    enablePreviewPolicies: false
+    enableSnippets: false
+    enableTLSPassthrough: false
+    env: []
+    extraContainers: []
+    globalConfiguration:
+      create: false
+      spec: {}
+    healthStatus: false
+    healthStatusURI: /nginx-health
+    hostNetwork: false
+    image:
+      pullPolicy: IfNotPresent
+      repository: nginx/nginx-ingress
+      tag: 3.1.0-ubi
+    includeYear: false
+    ingressClass:
+      name: nginx
+      create: true
+      setAsDefaultIngress: false
+    initContainers: []
+    kind: deployment
+    lifecycle: {}
+    logLevel: info
+    minReadySeconds: 0
+    nginxDebug: false
+    nginxReloadTimeout: 60000
+    nginxStatus:
+      allowCidrs: 127.0.0.1
+      enable: true
+      port: 8080
+    nginxplus: false
+    pod:
+      annotations: {}
+      extraLabels: {}
+    podDisruptionBudget:
+      annotations: {}
+      enabled: false
+    readyStatus:
+      enable: true
+      initialDelaySeconds: 0
+      port: 8081
+    replicaCount: 1
+    reportIngressStatus:
+      annotations: {}
+      enable: true
+      enableLeaderElection: true
+      ingressLink: ""
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    service:
+      annotations: {}
+      create: true
+      customPorts: []
+      externalIPs: []
+      externalTrafficPolicy: Local
+      extraLabels: {}
+      httpPort:
+        enable: true
+        port: 80
+        targetPort: 80
+      httpsPort:
+        enable: true
+        port: 443
+        targetPort: 443
+      loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      type: LoadBalancer
+    serviceAccount:
+      annotations: {}
+      imagePullSecretName: ""
+    serviceMonitor:
+      create: false
+      endpoints: []
+      labels: {}
+      selectorMatchLabels: {}
+    setAsDefaultIngress: false
+    strategy: {}
+    terminationGracePeriodSeconds: 30
+    tolerations: []
+    volumeMounts: []
+    volumes: []
+    watchNamespace: ""
+    watchNamespaceLabel: ""
+    watchSecretNamespace: ""
+  nginxServiceMesh:
+    enable: false
+    enableEgress: false
+  prometheus:
+    create: true
+    port: 9113
+    scheme: http
+    secret: ""
+  rbac:
+    create: true
+  readOnlyRootFilesystem: false
+  serviceInsight:
+    create: false
+    port: 9114
+    scheme: http
+    secret: ""

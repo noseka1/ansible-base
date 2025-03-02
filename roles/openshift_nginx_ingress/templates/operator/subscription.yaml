@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: nginx-ingress-operator
+  namespace: {{ nginx_operator_namespace }}
+spec:
+{% if nginx_operator_subscription_channel | length > 0 %}
+  channel: {{ nginx_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ nginx_operator_subscription_approval }}
+  name: nginx-ingress-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+{% if nginx_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ nginx_operator_subscription_starting_csv }}
+{% endif %}

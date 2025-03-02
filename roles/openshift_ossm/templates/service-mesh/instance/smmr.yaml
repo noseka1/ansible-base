@@ -3,5 +3,4 @@ kind: ServiceMeshMemberRoll
 metadata:
   name: default
   namespace: {{ ossm_instance_namespace }}
-spec:
-  members: []
+spec: {}

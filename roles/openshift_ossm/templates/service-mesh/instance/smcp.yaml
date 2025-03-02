@@ -42,7 +42,6 @@ spec:
           requests:
             cpu: 600m
             memory: 50Mi
-          limits: {}
   gateways:
     ingress:
       runtime:
@@ -109,9 +108,8 @@ spec:
         container:
           resources:
             requests:
-              cpu: 1000m
-              memory: 1.6Gi
-            limits: {}
+              cpu: '1'
+              memory: 1717986918400m
         deployment:
           autoScaling: {{ ossm_autoscaling | to_json }}
   profiles:

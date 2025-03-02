@@ -11,9 +11,18 @@
     - '{{ autogitops_app_dst_dir }}'
     - '{{ autogitops_app_cfg_dir }}'
 
+- name: Check if Chart.yaml file exists
+  stat:
+    path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/Chart.yaml'
+    get_checksum: false
+  register: autogitops_app_chart_stat_result
+
+- set_fact:
+    autogitops_app_type: '{{ "helm" if autogitops_app_chart_stat_result.stat.exists else "dir" }}'
+
 - name: Create argocd_config_{{ autogitops_app_type }}.yaml
   template:
     src: argocd_config.yaml
     dest: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ autogitops_app_type }}.yaml'
 
-- import_tasks: local_repo_update_{{ autogitops_app_type }}.yml
+- include_tasks: local_repo_update_{{ autogitops_app_type }}.yml

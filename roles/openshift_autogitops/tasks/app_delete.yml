@@ -51,17 +51,17 @@
     autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_helm_slurp_result.content | b64decode | from_yaml).sourcePath }}'
   when: autogitops_app_helm_stat_result.stat.exists
 
-- import_tasks: app_delete_dir.yml
+- include_tasks: app_delete_dir.yml
   when:
     - autogitops_app_dst_dir | length > 0
     - autogitops_app_dir_stat_result.stat.exists
 
-- import_tasks: app_delete_helm.yml
+- include_tasks: app_delete_helm.yml
   when:
     - autogitops_app_dst_dir | length > 0
     - autogitops_app_helm_stat_result.stat.exists
 
-- import_tasks: local_repo_push.yml
+- include_tasks: local_repo_push.yml
   when: autogitops_app_dst_dir | length > 0
 
 - name: Set application namespace
@@ -76,7 +76,7 @@
     namespace: '{{ autogitops_argocd_namespace }}'
   register: autogitops_app_resource_result
 
-- import_tasks: app_sync_delete.yml
+- include_tasks: app_sync_delete.yml
   when: autogitops_app_resource_result.resources | length == 1
 
 - name: Delete application directory {{ autogitops_app_dst_dir }}

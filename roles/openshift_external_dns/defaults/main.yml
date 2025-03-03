@@ -1,4 +1,12 @@
-external_dns_domain_name: myzonedomain.example.com
+externaldns_operator_subscription_channel: ''
+externaldns_operator_subscription_approval: Automatic
+externaldns_operator_subscription_starting_csv: ''
 
-external_dns_aws_access_key_id: ''
-external_dns_aws_secret_access_key: ''
+externaldns_operator_namespace: external-dns-operator
+
+externaldns_instance_namespace: external-dns
+
+externaldns_domain_name: myzonedomain.example.com
+
+externaldns_aws_access_key_id: ''
+externaldns_aws_secret_access_key: ''

@@ -2,28 +2,24 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: external-dns-operator
-    autogitops_app_src_path: external-dns/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: external-dns/operator
-    autogitops_app_namespace: external-dns-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ externaldns_operator_namespace }}'
 
 - assert:
     that: external_dns_aws_access_key_id | length > 0
-    fail_msg: "Variable 'external_dns_aws_access_key_id' must not be empty"
+    fail_msg: "Variable 'externaldns_aws_access_key_id' must not be empty"
     quiet: true
 
 - assert:
     that: external_dns_aws_secret_access_key | length > 0
-    fail_msg: "Variable 'external_dns_aws_secret_access_key' must not be empty"
+    fail_msg: "Variable 'externaldns_aws_secret_access_key' must not be empty"
     quiet: true
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: external-dns
-    autogitops_app_src_path: external-dns/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: external-dns/instance
-    autogitops_app_namespace: external-dns
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
+    autogitops_app_namespace: '{{ externaldns_instance_namespace }}'

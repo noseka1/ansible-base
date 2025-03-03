@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: external-dns-operator
+  namespace: {{ externaldns_operator_namespace }}
+spec:
+{% if externaldns_operator_subscription_channel | length > 0 %}
+  channel: {{ externaldns_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ externaldns_operator_subscription_approval }}
+  name: external-dns-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if externaldns_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ externaldns_operator_subscription_starting_csv }}
+{% endif %}

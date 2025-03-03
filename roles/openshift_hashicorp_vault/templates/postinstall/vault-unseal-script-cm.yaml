@@ -5,4 +5,4 @@ metadata:
   namespace: {{ hashicorp_vault_namespace }}
 data:
   run.sh: |
-    {{ lookup('template', 'run.sh') | indent(4) }}
+    {{ lookup('template', 'postinstall/run.sh') | indent(4) }}

@@ -1,5 +1,5 @@
 hashicorp_vault_namespace: vault
-hashicorp_vault_name: in-cluster-hashicorp-vault
+hashicorp_vault_name: hashicorp-vault-instance
 hashicorp_vault_skip_verify: true
 
 # Custom PKI CA certificate bundle

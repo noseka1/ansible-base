@@ -1,0 +1,14 @@
+vault:
+  global:
+    openshift: true
+  server:
+    auditStorage:
+      enabled: true
+    extraEnvironmentVars:
+      VAULT_LOG_LEVEL: debug
+    readinessProbe:
+      # This readiness probe succeeds even when HashiCorp Vault is uninitialized. This allows Argo CD
+      # to fully sync the application the first time it is deployed.
+      path: /v1/sys/health?standbyok=true&uninitcode=200
+  ui:
+    enabled: true

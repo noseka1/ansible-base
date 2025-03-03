@@ -1,21 +1,48 @@
 kyverno:
   admissionController:
+    # Create serviceMonitor object so that OpenShift can auto-discover
+    # metric endpoints and start collecting metrics automatically
+    # See also https://kyverno.io/docs/monitoring/
+    serviceMonitor:
+      enabled: true
+    # Tracing is disabled by default and depending on the backend the associated
+    # cost can be significant.
+    # See also https://kyverno.io/docs/tracing/
     tracing:
       enabled: {{ kyverno_tracing_enabled }}
       address: {{ kyverno_tracing_address }}
       port: {{ kyverno_tracing_port }}
   backgroundController:
+    serviceMonitor:
+      enabled: true
     tracing:
       enabled: {{ kyverno_tracing_enabled }}
       address: {{ kyverno_tracing_address }}
       port: {{ kyverno_tracing_port }}
   cleanupController:
+    serviceMonitor:
+      enabled: true
     tracing:
       enabled: {{ kyverno_tracing_enabled }}
       address: {{ kyverno_tracing_address }}
       port: {{ kyverno_tracing_port }}
   reportsController:
+    serviceMonitor:
+      enabled: true
     tracing:
       enabled: {{ kyverno_tracing_enabled }}
       address: {{ kyverno_tracing_address }}
       port: {{ kyverno_tracing_port }}
+  policyReportsCleanup:
+    securityContext:
+      runAsUser: null
+      runAsGroup: null
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: RuntimeDefault

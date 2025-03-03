@@ -9,19 +9,19 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: kyverno-policy-reporter
+    autogitops_app_dst_path: kyverno/policy-reporter
   tags: kyverno_policy_reporter
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: kyverno-policies
+    autogitops_app_dst_path: kyverno/policies
   tags: kyverno_policies
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: kyverno-operator
+    autogitops_app_dst_path: kyverno/operator
   tags: kyverno_operator

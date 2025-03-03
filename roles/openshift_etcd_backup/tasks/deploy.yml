@@ -1,21 +1,7 @@
-- name: Create etcd-backup namespace
-  kubernetes.core.k8s:
-    template:
-      - etcd-backup-ns.yaml
-
-- name: Add adfinis chart repo
-  kubernetes.core.helm_repository:
-    name: adfinis
-    repo_url: '{{ etcd_backup_helm_repo }}'
-
-- name: Deploy etcd-backup Helm chart
-  kubernetes.core.helm:
-    name: '{{ etcd_backup_name }}'
-    chart_ref: adfinis/openshift-etcd-backup
-    chart_version: '{{ etcd_backup_version }}'
-    release_namespace: '{{ etcd_backup_namespace }}'
-    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
-    # Prevent blocking forever if using a WaitForFirstConsumer storageclass
-    wait: false
-
-- import_tasks: test_backup.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: etcd-backup/instance
+    autogitops_app_namespace: '{{ etcdbackup_namespace }}'

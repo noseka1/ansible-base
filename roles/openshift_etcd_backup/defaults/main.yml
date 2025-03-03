@@ -1,5 +1,1 @@
-etcd_backup_helm_repo: https://charts.adfinis.com
-
-etcd_backup_namespace: etcd-backup
-etcd_backup_name: etcd-backup
-etcd_backup_version: 1.6.11
+etcdbackup_namespace: openshift-etcd

@@ -1,13 +1,5 @@
-- name: Delete etcd-backup Helm chart
-  kubernetes.core.helm:
-    name: '{{ etcd_backup_name }}'
-    release_namespace: '{{ etcd_backup_namespace }}'
-    wait: true
-    state: absent
-
-- name: Delete etcd-backup namespace
-  kubernetes.core.k8s:
-    template:
-      - etcd-backup-ns.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: etcd-backup/instance

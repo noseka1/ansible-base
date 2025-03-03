@@ -3,3 +3,7 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: amq-broker/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

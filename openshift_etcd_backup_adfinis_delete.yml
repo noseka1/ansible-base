@@ -2,5 +2,5 @@
   gather_facts: false
   tasks:
     - import_role:
-        name: openshift_etcd_backup
+        name: openshift_etcd_backup_adfinis
         tasks_from: delete.yml

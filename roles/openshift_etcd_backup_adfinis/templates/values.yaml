@@ -1,0 +1,27 @@
+backup:
+  expiretype: days
+  keepdays: 30
+  schedule: '0 0 * * *'
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/adfinis/openshift-etcd-backup
+  tag: v{{ etcd_backup_version }}
+persistence:
+  hostPath:
+    enabled: false
+  provisioning:
+    enabled: true
+  capacity: 100G
+monitoring:
+  enabled: true
+  rules:
+    cronjobMonitor: true
+  additionalRules:
+  - groups:
+    - name: cronjob-monitor
+      rules:
+      - alert: EtcdBackupCronJobStatusFailedJobExists
+        expr: |
+          kube_job_status_failed{namespace="{{ etcd_backup_namespace }}"} > 0
+        labels:
+          severity: critical

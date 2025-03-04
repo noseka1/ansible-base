@@ -1,9 +1,0 @@
-vault:
-  server: {{ hashicorp_vault_addr }}
-  caBundle: {{ cert_manager_hashicorp_vault_ca_bundle | b64encode }}
-  auth:
-    kubernetes:
-     role: cert-manager
-     mountPath: /v1/auth/kubernetes
-
-certificateDnsName: '{{ cert_manager_certificate_dns_name }}'

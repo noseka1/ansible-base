@@ -2,13 +2,13 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: cert-manager
+    autogitops_app_dst_path: cert-manager/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: cert-manager-operator
+    autogitops_app_dst_path: cert-manager/operator
 
 # Cert manager operator may have recreated the cert-manager namespace
 # after it was deleted by Argo CD. Make sure the namespace is really deleted.

@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ cert_manager_certificate_issuer_name }}-test
-  namespace: {{ cert_manager_instance_namespace }}
+  name: {{ certman_certificate_issuer_name }}-test
+  namespace: {{ certman_instance_namespace }}
 spec:
-  secretName: {{ cert_manager_certificate_issuer_name }}-test
+  secretName: {{ certman_certificate_issuer_name }}-test
   issuerRef:
     kind: ClusterIssuer
-    name: {{ cert_manager_certificate_issuer_name }}
-  commonName: {{ cert_manager_certificate_dns_name }}
+    name: {{ certman_certificate_issuer_name }}
+  commonName: {{ certman_certificate_dns_name }}
   dnsNames:
-  - {{ cert_manager_certificate_dns_name }}
+  - {{ certman_certificate_dns_name }}

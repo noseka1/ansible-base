@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: costmanagement-metrics-operator
+  namespace: {{ costman_namespace }}
+spec:
+  targetNamespaces:
+  - {{ costman_namespace }}

@@ -2,18 +2,14 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: cost-management-operator
-    autogitops_app_src_path: cost-management/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: cost-management/operator
-    autogitops_app_namespace: costmanagement-metrics-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ costman_namespace }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: cost-management
-    autogitops_app_src_path: cost-management/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: cost-management/instance
-    autogitops_app_namespace: costmanagement-metrics-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ costman_namespace }}'

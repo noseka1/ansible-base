@@ -3,9 +3,11 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: developer-hub/instance
+  tags: rhdh_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: developer-hub/operator
+  tags: rhdh_operator

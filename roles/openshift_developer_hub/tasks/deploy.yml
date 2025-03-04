@@ -1,11 +1,14 @@
 - import_role:
     name: openshift_common
     tasks_from: get_cluster_domain.yml
+  tags: rhdh_instance
 
 - set_fact:
     rhdh_instance_hostname: backstage-developer-hub-{{ rhdh_instance_namespace }}.apps.{{ openshift_common_cluster_domain }}
+  tags: rhdh_instance
 
 - import_tasks: rhbk_configure.yml
+  tags: rhdh_instance
 
 - import_role:
     name: openshift_autogitops
@@ -14,6 +17,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: developer-hub/operator
     autogitops_app_namespace: '{{ rhdh_operator_namespace }}'
+  tags: rhdh_operator
 
 - import_role:
     name: openshift_autogitops
@@ -22,3 +26,4 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: developer-hub/instance
     autogitops_app_namespace: '{{ rhdh_instance_namespace }}'
+  tags: rhdh_instance

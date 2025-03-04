@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: deployment-validation
+    autogitops_app_dst_path: deployment-validation/operator
 
 - import_role:
     name: openshift_common

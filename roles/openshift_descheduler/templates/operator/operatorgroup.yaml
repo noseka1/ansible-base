@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: cluster-kube-descheduler-operator
+  namespace: {{ descheduler_namespace }}
+spec:
+  targetNamespaces:
+  - {{ descheduler_namespace }}

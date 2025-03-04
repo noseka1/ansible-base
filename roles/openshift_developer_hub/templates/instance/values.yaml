@@ -1,8 +1,0 @@
-backstageBaseUrl: https://{{ rhdh_instance_hostname }}
-backstageSessionSecret: change me 123456
-backstageBackendSecret: change me 123456
-
-keycloakBaseUrl: https://{{ rhbk_hostname }}
-keycloakRealm: rhdh
-keycloakClientId: rhdh
-keycloakClientSecret: '{{ rhbk_client_secret_result.json.value }}'

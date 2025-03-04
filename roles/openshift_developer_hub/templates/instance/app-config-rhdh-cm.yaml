@@ -1,0 +1,43 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-rhdh
+  namespace: {{ rhdh_instance_namespace }}
+data:
+  app-config-rhdh.yaml: |
+    app:
+      title: Red Hat Developer Hub
+      baseUrl: https://{{ rhdh_instance_hostname }}
+    auth:
+      environment: default
+      session:
+        secret: ${SESSION_SECRET}
+      providers:
+        oidc:
+          default:
+            metadataUrl: https://{{ rhbk_hostname }}/realms/rhdh
+            clientId: rhdh
+            clientSecret: ${KEYCLOAK_CLIENT_SECRET}
+            prompt: auto
+            callbackUrl: https://{{ rhdh_instance_hostname }}/api/auth/oidc/handler/frame
+    signInPage: oidc
+    backend:
+      auth:
+        keys:
+        - secret: ${BACKEND_SECRET}
+      baseUrl: https://{{ rhdh_instance_hostname }}
+      cors:
+        origin: https://{{ rhdh_instance_hostname }}
+    catalog:
+      providers:
+        keycloakOrg:
+          default:
+            baseUrl: https://{{ rhbk_hostname }}
+            loginRealm: rhdh
+            realm: rhdh
+            clientId: rhdh
+            clientSecret: ${KEYCLOAK_CLIENT_SECRET}
+            schedule:
+              frequency: { minutes: 1 }
+              timeout: { seconds: 30 }
+              initialDelay: { seconds: 15 }

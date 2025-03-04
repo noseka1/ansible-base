@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: compliance-scan
+    autogitops_app_dst_path: compliance-operator/scan
 
 - import_role:
     name: openshift_common
@@ -16,4 +16,4 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: compliance-operator
+    autogitops_app_dst_path: compliance-operator/operator

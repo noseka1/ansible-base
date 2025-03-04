@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-compliance
+  namespace: {{ compliance_operator_namespace }}
+spec:
+  targetNamespaces:
+  - {{ compliance_operator_namespace }}

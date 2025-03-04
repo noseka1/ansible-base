@@ -1,0 +1,5 @@
+ebpfman_operator_subscription_channel: ''
+ebpfman_operator_subscription_approval: Automatic
+ebpfman_operator_subscription_starting_csv: ''
+
+ebpfman_operator_namespace: bpfman

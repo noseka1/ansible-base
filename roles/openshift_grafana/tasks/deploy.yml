@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: helm
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: grafana/operator
     autogitops_app_namespace: grafana
@@ -15,7 +14,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: helm
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: grafana/instance
     autogitops_app_namespace: grafana

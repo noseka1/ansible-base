@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: gitlab/operator
     autogitops_app_namespace: gitlab-system
@@ -21,7 +20,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: gitlab/instance
     autogitops_app_namespace: gitlab-system

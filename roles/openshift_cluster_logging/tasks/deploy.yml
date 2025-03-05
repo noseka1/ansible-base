@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/namespace
     autogitops_app_dst_path: cluster-logging/namespace
     autogitops_app_namespace: '{{ clusterlog_namespace }}'
@@ -12,7 +11,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: cluster-logging/operator
     autogitops_app_namespace: '{{ clusterlog_namespace }}'
@@ -45,7 +43,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: cluster-logging/instance
     autogitops_app_namespace: '{{ clusterlog_namespace }}'
@@ -55,7 +52,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/event-router
     autogitops_app_dst_path: cluster-logging/event-router
     autogitops_app_namespace: '{{ clusterlog_namespace }}'

@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhbk/operator
     autogitops_app_namespace: '{{ rhbk_operator_subscription_namespace }}'
@@ -13,7 +12,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: rhbk/instance
     autogitops_app_namespace: '{{ rhbk_instance_namespace }}'

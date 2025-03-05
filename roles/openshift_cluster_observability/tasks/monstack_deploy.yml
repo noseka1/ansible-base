@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/monstack
     autogitops_app_dst_path: cluster-observability/monstack
     autogitops_app_namespace: '{{ clusterobserv_monstack_namespace }}'
@@ -12,7 +11,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: cluster-observability/example-workload
     autogitops_app_namespace: '{{ clusterobserv_example_namespace }}'

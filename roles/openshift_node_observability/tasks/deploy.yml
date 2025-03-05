@@ -2,7 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-observability/operator
     autogitops_app_namespace: '{{ node_observ_operator_subscription_namespace }}'
@@ -11,7 +10,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: node-observability/instance
     autogitops_app_namespace: ''
@@ -20,7 +18,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_type: dir
     autogitops_app_src_path: templates/example
     autogitops_app_dst_path: node-observability/example
     autogitops_app_namespace: '{{ node_observ_example_namespace }}'

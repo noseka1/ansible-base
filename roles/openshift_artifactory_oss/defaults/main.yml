@@ -1,0 +1,5 @@
+artifactory_operator_subscription_channel: ''
+artifactory_operator_subscription_approval: Automatic
+artifactory_operator_subscription_starting_csv: ''
+
+artifactory_operator_namespace: artifactory-oss

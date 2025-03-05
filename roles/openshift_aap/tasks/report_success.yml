@@ -24,7 +24,7 @@
       Ansible Automation Platform installed successfully.
 
       You can browse to:
-      https://{{ auto_controller_route.resources.0.spec.host }}
+      https://{{ aap_auto_controller_route.resources.0.spec.host }}
 
 - debug:
     msg: "{{ msg.split('\n') }}"

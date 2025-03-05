@@ -3,3 +3,5 @@ aap_operator_subscription_approval: Automatic
 aap_operator_subscription_starting_csv: ''
 
 aap_namespace: aap
+
+aap_instance_name: aap

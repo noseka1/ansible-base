@@ -1,22 +1,60 @@
-- name: Obtain Automation Controller route
+- name: Obtain gateway route
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: auto-controller
+    name: '{{ aap_instance_name }}'
     namespace: '{{ aap_namespace }}'
-  register: aap_auto_controller_route
-  until: aap_auto_controller_route.resources | length > 0
+  register: aap_gateway_route_result
+  until: aap_gateway_route_result.resources | length > 0
   retries: 12
   delay: 10
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Automation Controller to come up
+- name: Obtain eda route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ aap_instance_name }}-eda'
+    namespace: '{{ aap_namespace }}'
+  register: aap_eda_route_result
+  until: aap_eda_route_result.resources | length > 0
+  retries: 60
+  delay: 5
+
+- name: Obtain hub route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ aap_instance_name }}-hub'
+    namespace: '{{ aap_namespace }}'
+  register: aap_hub_route_result
+  until: aap_hub_route_result.resources | length > 0
+  retries: 60
+  delay: 5
+
+- name: Obtain controller route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: '{{ aap_instance_name }}-controller'
+    namespace: '{{ aap_namespace }}'
+  register: aap_controller_route_result
+  until: aap_controller_route_result.resources | length > 0
+  retries: 60
+  delay: 5
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ansible Automation Platform to come up
   uri:
-    url: 'https://{{ aap_auto_controller_route.resources.0.spec.host }}'
+    url: '{{ item }}'
     validate_certs: true
-  register: result
-  until: result.status == 200
-  retries: 30
-  delay: 10
+  register: aap_instance_uri_result
+  loop:
+    - https://{{ aap_gateway_route_result.resources.0.spec.host }}
+    - https://{{ aap_eda_route_result.resources.0.spec.host }}
+    - https://{{ aap_hub_route_result.resources.0.spec.host }}/ui/
+    - https://{{ aap_controller_route_result.resources.0.spec.host }}
+  until: aap_instance_uri_result.status == 200
+  retries: 60
+  delay: 5
 
 - name: Set msg
   set_fact:
@@ -24,7 +62,7 @@
       Ansible Automation Platform installed successfully.
 
       You can browse to:
-      https://{{ aap_auto_controller_route.resources.0.spec.host }}
+      https://{{ aap_gateway_route_result.resources.0.spec.host }}
 
 - debug:
     msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,17 @@
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: {{ aap_instance_name }}
+  namespace: {{ aap_namespace }}
+spec:
+  admin_password_secret: {{ aap_instance_name }}-admin-password
+  no_log: false
+  controller:
+    disabled: false
+  eda:
+    disabled: false
+  hub:
+    disabled: false
+    storage_type: file
+  lightspeed:
+    disabled: true

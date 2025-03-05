@@ -10,4 +10,4 @@
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: '{{ gitwebhook_operator_subscription_name }}'
-    subscription_namespace: '{{ gitwebhook_operator_subscription_namespace }}'
+    subscription_namespace: '{{ gitwebhook_operator_namespace }}'

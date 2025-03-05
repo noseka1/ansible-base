@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: skupper/operator
-    autogitops_app_namespace: '{{ skupper_operator_subscription_namespace }}'
+    autogitops_app_namespace: '{{ skupper_operator_namespace }}'
 
 - import_role:
     name: openshift_autogitops

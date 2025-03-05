@@ -1,7 +1,8 @@
 rhbk_operator_subscription_channel: ''
 rhbk_operator_subscription_approval: Automatic
 rhbk_operator_subscription_starting_csv: ''
-rhbk_operator_subscription_namespace: keycloak
+
+rhbk_operator_namespace: keycloak
 
 rhbk_instance_namespace: keycloak
 

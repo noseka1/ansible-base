@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: '{{ oadp_app_prefix }}oadp/operator'
-    autogitops_app_namespace: '{{ oadp_operator_subscription_namespace }}'
+    autogitops_app_namespace: '{{ oadp_operator_namespace }}'

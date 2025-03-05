@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: vertical-pod-autoscaler
-  namespace: {{ vpa_operator_subscription_namespace }}
+  namespace: {{ vpa_operator_namespace }}
 spec:
   targetNamespaces:
-  - {{ vpa_operator_subscription_namespace }}
+  - {{ vpa_operator_namespace }}

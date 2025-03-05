@@ -2,4 +2,4 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: node-observability-operator
-  namespace: {{ node_observ_operator_subscription_namespace }}
+  namespace: {{ node_observ_operator_namespace }}

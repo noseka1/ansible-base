@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: wmco/operator
-    autogitops_app_namespace: '{{ wmco_operator_subscription_namespace }}'
+    autogitops_app_namespace: '{{ wmco_operator_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for openshift-machine-api/windows-user-data secret to appear
   kubernetes.core.k8s_info:

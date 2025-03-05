@@ -2,20 +2,16 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: aap-operator
-    autogitops_app_src_path: aap/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: aap/operator
-    autogitops_app_namespace: aap
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ aap_namespace }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: aap-auto-controller
-    autogitops_app_src_path: aap/auto-controller
+    autogitops_app_src_path: templates/auto-controller
     autogitops_app_dst_path: aap/auto-controller
-    autogitops_app_namespace: aap
-    autogitops_app_values: '{{ lookup("template", "auto-controller/values.yaml") }}'
+    autogitops_app_namespace: '{{ aap_namespace }}'
 
 - import_tasks: report_success.yml

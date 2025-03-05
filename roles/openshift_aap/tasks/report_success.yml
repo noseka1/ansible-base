@@ -3,15 +3,15 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: auto-controller
-    namespace: aap
-  register: auto_controller_route
-  until: auto_controller_route.resources | length > 0
+    namespace: '{{ aap_namespace }}'
+  register: aap_auto_controller_route
+  until: aap_auto_controller_route.resources | length > 0
   retries: 12
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Automation Controller to come up
   uri:
-    url: 'https://{{ auto_controller_route.resources.0.spec.host }}'
+    url: 'https://{{ aap_auto_controller_route.resources.0.spec.host }}'
     validate_certs: true
   register: result
   until: result.status == 200

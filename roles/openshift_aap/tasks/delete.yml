@@ -2,10 +2,10 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: aap-auto-controller
+    autogitops_app_dst_path: aap/auto-controller
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: aap-operator
+    autogitops_app_dst_path: aap/operator

@@ -15,9 +15,6 @@
 - name: Delete cluster roles
   kubernetes.core.k8s:
     template:
-      - instance/argocd-admin-clusterrolebinding.yaml
-      - instance/argocd-admin-sa-token-static-secret.yaml
-      - instance/argocd-admin-sa.yaml
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
       - instance/openshift-gitops-appproject-fix-clusterrolebinding.yaml
       - instance/openshift-gitops-appproject-fix-clusterrole.yaml

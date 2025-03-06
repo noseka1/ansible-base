@@ -9,7 +9,7 @@ spec:
 
   services:
     service.webhook.mywebhook: |
-      url: http://webhook-receiver.{{ gitops_instance_namespace }}.svc.cluster.local:8080
+      url: http://webhook-receiver.{{ gitops_instance_namespace }}.svc:8080
   # Contains centrally managed global application subscriptions
   subscriptions:
     subscriptions: |

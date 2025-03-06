@@ -15,6 +15,6 @@ spec:
     protocol: TLS
   resolution: DNS
   endpoints:
-  - address: testapp.istio-testapp.svc.cluster.local
+  - address: testapp.istio-testapp.svc
     ports:
       http: 8080

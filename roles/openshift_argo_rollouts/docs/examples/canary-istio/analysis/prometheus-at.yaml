@@ -18,11 +18,11 @@ spec:
         query: >+
           sum(irate(istio_requests_total{
             reporter="source",
-            destination_service=~"{{ args.service }}.{{ args.namespace }}.svc.cluster.local",
+            destination_service=~"{{ args.service }}.{{ args.namespace }}.svc",
             response_code!~"5.*"}[40s])
           )
           /
           sum(irate(istio_requests_total{
             reporter="source",
-            destination_service=~"{{ args.service }}.{{ args.namespace }}.svc.cluster.local"}[40s])
+            destination_service=~"{{ args.service }}.{{ args.namespace }}.svc"}[40s])
           )

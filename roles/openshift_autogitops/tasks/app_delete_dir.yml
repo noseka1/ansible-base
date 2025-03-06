@@ -1,0 +1,12 @@
+- name: Delete and recreate application directory {{ autogitops_app_dst_dir }}
+  file:
+    path: '{{ autogitops_app_dst_dir }}'
+    state: '{{ item }}'
+  loop:
+    - absent
+    - directory
+
+- name: Create a .gitkeep file to allow checking the empty directory into git
+  copy:
+    dest: '{{ autogitops_app_dst_dir }}/.gitkeep'
+    content: ''

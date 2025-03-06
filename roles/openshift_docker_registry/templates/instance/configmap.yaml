@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: docker-registry
+  namespace: {{ docker_registry_namespace }}
+data:
+  config.yml: |
+    # List of available configuration options can be found at
+    # https://docs.docker.com/registry/configuration/
+    version: 0.1
+    log:
+      accesslog:
+        disabled: false
+      formatter: json
+      level: info
+    auth:
+      htpasswd:
+        realm: Registry Realm
+        path: /auth/htpasswd
+    http:
+      addr: :5000
+      tls:
+        certificate: /certs/tls.crt
+        key: /certs/tls.key
+    storage:
+      filesystem:
+        rootdirectory: /var/lib/registry

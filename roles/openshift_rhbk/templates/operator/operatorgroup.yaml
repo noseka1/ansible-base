@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: rhbk-operator
+  namespace: {{ rhbk_operator_namespace }}
+spec:
+  targetNamespaces:
+  - {{ rhbk_operator_namespace }}

@@ -1,0 +1,5 @@
+- hosts: localhost
+  tasks:
+    - import_role:
+        name: openshift_rhel_entitlement
+        tasks_from: deploy.yml

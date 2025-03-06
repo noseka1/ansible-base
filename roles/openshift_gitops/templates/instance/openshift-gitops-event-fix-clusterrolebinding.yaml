@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ gitops_instance_namespace }}-{{ gitops_instance_name }}-event-fix
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ gitops_instance_namespace }}-{{ gitops_instance_name }}-event-fix
+subjects:
+# Fix msg="Unable to create audit event: events is forbidden: User \"system:serviceaccount:openshift-gitops:openshift-gitops-argocd-server\" cannot create resource \"events\" in API group \"\" in the namespace \"ag-mycluster4-example-com\"" application=stakater-reloader-instance dest-namespace=stakater-reloader dest-server= reason=OperationStarted type=Normal user=admin
+- kind: ServiceAccount
+  name: {{ gitops_instance_name }}-argocd-server
+  namespace: {{ gitops_instance_namespace }}

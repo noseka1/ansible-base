@@ -2,18 +2,16 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: wmco-example
-    autogitops_app_src_path: wmco/example-workload
+    autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: wmco/example-workload
-    autogitops_app_namespace: openshift-windows-machine-config-operator
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ wmco_example_workload_namespace }}'
 
 - name: Obtain sample workload route
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: win-webserver
-    namespace: '{{ wmco_operator_subscription_namespace }}'
+    namespace: '{{ wmco_example_workload_namespace }}'
   register: wmco_workload_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for https://{{ wmco_workload_route.resources.0.spec.host }} to become available

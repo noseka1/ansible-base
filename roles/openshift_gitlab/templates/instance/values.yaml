@@ -1,2 +1,0 @@
-globalHostsDomain: apps.{{ openshift_common_cluster_domain }}
-initialRootPassword: '{{ generic_user_password }}'

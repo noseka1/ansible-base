@@ -8,7 +8,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: odf-multicluster-orchestrator-operator
+    autogitops_app_dst_path: odf-multicluster-orchestrator/operator
 
 - import_role:
     name: openshift_common

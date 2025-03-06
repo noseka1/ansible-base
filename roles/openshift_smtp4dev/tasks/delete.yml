@@ -3,12 +3,10 @@
     name: openshift_oauth_proxy
     tasks_from: delete.yml
   vars:
-    openshift_oauth_proxy_name: '{{ smtp4dev_name }}'
-    openshift_oauth_proxy_namespace: '{{ smtp4dev_namespace }}'
-    openshift_oauth_proxy_upstream: http://smtp4dev
+    oauth_proxy_app_prefix: smtp4dev-
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: smtp4dev
+    autogitops_app_dst_path: smtp4dev/instance

@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: compliance-operator
+  namespace: {{ compliance_operator_namespace }}
+spec:
+{% if compliance_operator_subscription_channel | length > 0 %}
+  channel: {{ compliance_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ compliance_operator_subscription_approval }}
+  name: compliance-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if compliance_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ compliance_operator_subscription_starting_csv }}
+{% endif %}

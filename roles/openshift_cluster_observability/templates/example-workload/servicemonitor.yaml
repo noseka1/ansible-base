@@ -1,0 +1,13 @@
+apiVersion: monitoring.rhobs/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ clusterobserv_example_name }}
+  namespace: {{ clusterobserv_example_namespace }}
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+    scheme: http
+  selector:
+    matchLabels:
+      app: {{ clusterobserv_example_name }}

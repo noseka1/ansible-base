@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: testapp
+    spec:
+      containers:
+      - name: http
+        image: quay.io/noseka1/toolbox-container:full
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - 'gunicorn-3
+             --bind 0.0.0.0:8080
+             --access-logfile -
+             httpbin:app'
+        # The container port must be declared, otherwise Istio won't
+        # forward the traffic to the container correctly!
+        ports:
+        - containerPort: 8080

@@ -1,1 +1,5 @@
-mtc_instance_namespace: openshift-migration
+mtc_operator_subscription_channel: ''
+mtc_operator_subscription_approval: Automatic
+mtc_operator_subscription_starting_csv: ''
+
+mtc_namespace: openshift-migration

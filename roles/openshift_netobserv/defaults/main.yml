@@ -1,0 +1,7 @@
+netobserv_operator_subscription_channel: ''
+netobserv_operator_subscription_approval: Automatic
+netobserv_operator_subscription_starting_csv: ''
+
+netobserv_operator_namespace: openshift-netobserv-operator
+
+netobserv_instance_namespace: netobserv

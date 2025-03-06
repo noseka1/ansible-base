@@ -1,0 +1,16 @@
+kind: AppProject
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: {{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+  namespace: openshift-gitops
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: {{ openshift_common_cluster_domain }}
+    namespace: '*'
+  sourceNamespaces:
+  - ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+  sourceRepos:
+  - '*'

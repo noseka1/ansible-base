@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ clusterobserv_example_name }}
+  namespace: {{ clusterobserv_example_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ clusterobserv_example_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ clusterobserv_example_name }}
+    spec:
+      containers:
+      - image: ghcr.io/rhobs/prometheus-example-app:0.4.1
+        imagePullPolicy: IfNotPresent
+        name: prometheus-example-app

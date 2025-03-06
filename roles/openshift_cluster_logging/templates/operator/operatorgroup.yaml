@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: cluster-logging
+  namespace: {{ clusterlog_namespace }}
+spec:
+  targetNamespaces:
+  - {{ clusterlog_namespace }}

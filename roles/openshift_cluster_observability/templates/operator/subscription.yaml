@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: cluster-observability-operator
+  namespace: {{ clusterobserv_operator_namespace }}
+spec:
+{% if clusterobserv_operator_subscription_channel | length > 0 %}
+  channel: {{ clusterobserv_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ clusterobserv_operator_subscription_approval }}
+  name: cluster-observability-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if clusterobserv_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ clusterobserv_operator_subscription_starting_csv }}
+{% endif %}

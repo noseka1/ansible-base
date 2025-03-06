@@ -1,18 +1,31 @@
-cert_manager_instance_name: cert-manager
-cert_manager_instance_namespace: cert-manager
+certman_operator_subscription_channel: ''
+certman_operator_subscription_approval: Automatic
+certman_operator_subscription_starting_csv: ''
 
-cert_manager_hashicorp_vault_ca_bundle: ''
+certman_operator_namespace: cert-manager-operator
 
-cert_manager_certificate_authority_tls_crt: ''
-cert_manager_certificate_authority_tls_key: ''
+certman_instance_namespace: cert-manager
 
-cert_manager_acme_aws_region: ''
-cert_manager_acme_aws_hosted_zone_id: ''
+# An intent based logging for an overall component. Allowed values
+# are Normal, Debug, Trace, TraceAll
+certman_log_level: Normal
 
-cert_manager_acme_gcp_cloud_dns_projectid: ''
+# An intent based logging for the operator itself. Allowed values
+# are Normal, Debug, Trace, TraceAll
+certman_operator_log_level: Normal
 
-cert_manager_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
+certman_hashicorp_vault_ca_bundle: ''
 
-cert_manager_certificate_dns_name: mytest.example.com
+certman_certificate_authority_tls_crt: ''
+certman_certificate_authority_tls_key: ''
 
-autogitops_catalog_dir: '{{ playbook_dir }}/../gitops-catalog-helm/apps'
+certman_acme_aws_region: ''
+certman_acme_aws_hosted_zone_id: ''
+certman_acme_aws_acme_email: ''
+
+certman_acme_gcp_cloud_dns_projectid: ''
+certman_acme_gcp_acme_email: ''
+
+certman_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
+
+certman_certificate_dns_name: mytest.example.com

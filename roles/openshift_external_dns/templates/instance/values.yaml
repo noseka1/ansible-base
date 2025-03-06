@@ -1,3 +1,0 @@
-domainName: '{{ external_dns_domain_name }}'
-awsAccessKeyId: '{{ external_dns_aws_access_key_id }}'
-awsSecretAccessKey: '{{ external_dns_aws_secret_access_key }}'

@@ -2,11 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: hashicorp-vault
-    autogitops_app_src_path: hashicorp-vault
-    autogitops_app_dst_path: hashicorp-vault
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: hashicorp-vault/instance
     autogitops_app_namespace: '{{ hashicorp_vault_namespace }}'
-    autogitops_app_values: ''
 
 - name: Obtain vault route
   import_tasks: get_vault_route.yml

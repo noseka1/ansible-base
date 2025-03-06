@@ -1,23 +1,5 @@
-- name: Delete minio
-  kubernetes.core.k8s:
-    template:
-      - minio-api-route.yaml
-      - minio-bucket-deploy.yaml
-      - minio-trace-deploy.yaml
-      - minio-console-route.yaml
-      - minio-deploy.yaml
-      - minio-server-credentials-secret.yaml
-      - minio-svc.yaml
-      - minio-servicemonitor.yaml
-      - minio-storage-pvc.yaml
-      - minio-config-pvc.yaml
-    namespace: '{{ minio_namespace }}'
-    wait: true
-    state: absent
-
-- name: Delete namespace {{ minio_namespace }}
-  kubernetes.core.k8s:
-    template: minio-ns.yaml
-    wait: true
-    state: absent
-  when: minio_manage_namespace
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: '{{ minio_app_prefix }}minio/instance'

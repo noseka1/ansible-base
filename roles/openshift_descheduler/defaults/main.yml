@@ -1,0 +1,5 @@
+descheduler_operator_subscription_channel: ''
+descheduler_operator_subscription_approval: Automatic
+descheduler_operator_subscription_starting_csv: ''
+
+descheduler_namespace: openshift-kube-descheduler-operator

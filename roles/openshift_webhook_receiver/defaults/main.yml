@@ -1,6 +1,3 @@
 webhook_receiver_namespace: webhook-receiver
 webhook_receiver_manage_namespace: true
 webhook_receiver_app_prefix: ''
-webhook_receiver_deployment_name: webhook-receiver
-
-autogitops_catalog_dir: '{{ playbook_dir }}/../gitops-catalog-helm/apps'

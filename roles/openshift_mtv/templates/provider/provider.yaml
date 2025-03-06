@@ -1,0 +1,16 @@
+{% for item in mtv_providers %}
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provider
+metadata:
+  name: {{ item.name }}
+  namespace: openshift-mtv
+spec:
+  secret:
+    name: {{ item.name }}-creds
+    namespace: openshift-mtv
+  settings:
+    vddkInitImage: {{ item.vddk_init_image }}
+  type: {{ item.type }}
+  url: {{ item.url }}
+{% endfor %}

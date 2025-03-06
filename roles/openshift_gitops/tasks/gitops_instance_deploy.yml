@@ -5,6 +5,10 @@
     recurse: true
   register: gitops_instance_health_check_files
 
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
 - name: Deploy Argo CD
   kubernetes.core.k8s:
     template:
@@ -12,8 +16,14 @@
       - instance/openshift-gitops-argocd.yaml
       - instance/openshift-gitops-cluster-secret.yaml
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/openshift-gitops-appproject-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-appproject-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-event-fix-clusterrole.yaml
+      - instance/openshift-gitops-event-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrole.yaml
       - instance/trusted-ca-bundle-cm.yaml
       - instance/argocd-secret-secret.yaml
 

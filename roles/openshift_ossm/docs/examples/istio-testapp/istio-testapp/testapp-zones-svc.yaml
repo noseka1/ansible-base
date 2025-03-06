@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: testapp-zones
+spec:
+  ports:
+  - name: http
+    port: 8080
+  - name: https
+    port: 8443
+  selector:
+    app: testapp-zones

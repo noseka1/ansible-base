@@ -2,32 +2,32 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: node-observability-operator
-    autogitops_app_src_path: node-observability/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-observability/operator
-    autogitops_app_namespace: node-observability-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ node_observ_operator_namespace }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: node-observability
-    autogitops_app_src_path: node-observability/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: node-observability/instance
     autogitops_app_namespace: ''
-    autogitops_app_values: ''
 
-- name: Deploy nodeobservabilityrun example
-  kubernetes.core.k8s:
-    template: example/example-nodeobservabilityrun.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/example
+    autogitops_app_dst_path: node-observability/example
+    autogitops_app_namespace: '{{ node_observ_example_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for profiling query to complete
   kubernetes.core.k8s_info:
     api_version: nodeobservability.olm.openshift.io/v1alpha2
     kind: NodeObservabilityRun
     name: example
-    namespace: node-observability-operator
+    namespace: '{{ node_observ_example_namespace }}'
   register: node_observability_example_result
   until:
     - node_observability_example_result.resources.0.status.conditions.conditions is defined

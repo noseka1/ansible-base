@@ -6,12 +6,10 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: cert-manager-hashicorp-vault
-    autogitops_app_src_path: cert-manager/hashicorp-vault
+    autogitops_app_src_path: templates/hashicorp-vault
     autogitops_app_dst_path: cert-manager/hashicorp-vault
-    autogitops_app_namespace: '{{ cert_manager_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "hashicorp-vault/values.yaml") }}'
+    autogitops_app_namespace: '{{ certman_instance_namespace }}'
 
 - import_tasks: certificate_verify.yml
   vars:
-    cert_manager_certificate_issuer_name: hashicorp-vault
+    certman_certificate_issuer_name: hashicorp-vault

@@ -12,12 +12,21 @@
       - api_version: argoproj.io/v1beta1
         kind: ArgoCD
 
-- name: Delete cluster role
+- name: Delete cluster roles
   kubernetes.core.k8s:
     template:
+      - instance/argocd-admin-clusterrolebinding.yaml
+      - instance/argocd-admin-sa-token-static-secret.yaml
+      - instance/argocd-admin-sa.yaml
       - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/openshift-gitops-appproject-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-appproject-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrole.yaml
       - instance/openshift-gitops-appset-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-event-fix-clusterrole.yaml
+      - instance/openshift-gitops-event-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrolebinding.yaml
+      - instance/openshift-gitops-notifications-clusterapps-fix-clusterrole.yaml
     wait: true
     state: absent
 

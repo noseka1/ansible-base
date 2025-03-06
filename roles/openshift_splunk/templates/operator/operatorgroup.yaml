@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: splunk
+  namespace: {{ splunk_operator_namespace }}
+spec:
+  targetNamespaces:
+  - {{ splunk_operator_namespace }}

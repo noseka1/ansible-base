@@ -1,16 +1,8 @@
-- name: Delete OpenShift Pipelines operator
-  import_role:
-    name: openshift_common
-    tasks_from: delete_operator.yml
-  vars:
-    delete_operator_subscription_name: openshift-pipelines-operator
-    delete_operator_subscription_namespace: openshift-operators
-
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: openshift-pipelines
+    autogitops_app_dst_path: openshift-pipelines/operator
 
 - import_role:
     name: openshift_common
@@ -42,3 +34,9 @@
       - api_version: admissionregistration.k8s.io/v1
         kind: ValidatingWebhookConfiguration
         name: validation.webhook.operator.tekton.dev
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: openshift-pipelines/namespace

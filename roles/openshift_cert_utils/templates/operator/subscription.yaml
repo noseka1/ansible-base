@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: cert-utils-operator
+  namespace: {{ certutils_operator_namespace }}
+spec:
+{% if certutils_operator_subscription_channel | length > 0 %}
+  channel: {{ certutils_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ certutils_operator_subscription_approval }}
+  name: cert-utils-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+{% if certutils_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ certutils_operator_subscription_starting_csv }}
+{% endif %}

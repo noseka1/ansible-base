@@ -1,4 +1,0 @@
-subscriptionApproval: Automatic
-subscriptionChannel: ''
-
-manageNamespace: {{ oadp_operator_manage_namespace }}

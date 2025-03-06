@@ -1,0 +1,22 @@
+apiVersion: enterprise.splunk.com/v3
+kind: Standalone
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: {{ splunk_instance_name }}
+  namespace: {{ splunk_instance_namespace }}
+spec:
+  etcVolumeStorageConfig:
+    storageCapacity: 10Gi
+  varVolumeStorageConfig:
+    storageCapacity: 100Gi
+  serviceAccount: {{ splunk_instance_name }}
+  # See the available options at:
+  # https://github.com/splunk/splunk-ansible/blob/develop/docs/advanced/default.yml.spec.md
+  defaults: |
+    splunk:
+      hec:
+        ssl: false
+  extraEnv:
+  - name: ANSIBLE_EXTRA_FLAGS
+    value: '-vvv'

@@ -1,0 +1,25 @@
+- name: Delete application helm template directory {{ autogitops_app_dst_dir }}/templates
+  file:
+    path: '{{ autogitops_app_dst_dir }}/templates'
+    state: absent
+
+- name: Check if Chart.yaml exists
+  stat:
+    path: '{{ autogitops_app_dst_dir }}/Chart.yaml'
+    get_checksum: false
+  register: autogitops_app_chart_stat_result
+
+- name: Retrieve application Chart.yaml
+  slurp:
+    path: '{{ autogitops_app_dst_dir }}/Chart.yaml'
+  register: autogitops_app_chart_result
+  when:
+    - autogitops_app_chart_stat_result.stat.exists
+
+- name: Remove dependencies from Chart.yaml
+  copy:
+    content: >-
+      {{ autogitops_app_chart_result.content | b64decode | from_yaml | combine({"dependencies":[]}) | to_nice_yaml }}
+    dest: '{{ autogitops_app_dst_dir }}/Chart.yaml'
+  when:
+    - autogitops_app_chart_stat_result.stat.exists

@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay
+    autogitops_app_dst_path: quay/quay/instance
   tags: quay_instance
 
 - import_role:
@@ -10,28 +10,38 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ quay_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: quay-
   tags: quay_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay-operator
+    autogitops_app_dst_path: quay/quay/operator
   tags: quay_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: quay-bridge-operator
+    autogitops_app_dst_path: quay/quay-bridge/operator
   tags: quay_bridge_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: container-security-operator
+    autogitops_app_dst_path: quay/container-security/operator
   tags: quay_security_operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: secscan.quay.redhat.com/v1alpha1
+        kind: ImageManifestVuln
 
 - import_role:
     name: openshift_common

@@ -2,11 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: gitlab-operator
-    autogitops_app_src_path: gitlab/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: gitlab/operator
     autogitops_app_namespace: gitlab-system
-    autogitops_app_values: ''
   tags: gitlab_operator
 
 - import_role:
@@ -22,11 +20,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: gitlab
-    autogitops_app_src_path: gitlab/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: gitlab/instance
     autogitops_app_namespace: gitlab-system
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
   tags: gitlab_instance
 
 - import_tasks: configure.yml

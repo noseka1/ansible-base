@@ -1,0 +1,12 @@
+apiVersion: daemons.redhat.com/v1alpha1
+kind: TangServer
+metadata:
+  name: tangserver
+  namespace: {{ tang_instance_namespace }}
+spec:
+  healthScript: /usr/bin/tangd-health-check
+  image: registry.redhat.io/rhel9/tang
+  keyPath: /var/db/tang
+  persistentVolumeClaim: tangserver
+  replicas: 1
+  version: latest

@@ -1,0 +1,17 @@
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+spec:
+  # An intent based logging for an overall component. Allowed values
+  # are Normal, Debug, Trace, TraceAll
+  logLevel: {{ certman_log_level }}
+  # An intent based logging for the operator itself. Allowed values
+  # are Normal, Debug, Trace, TraceAll
+  operatorLogLevel: {{ certman_operator_log_level }}
+  controllerConfig:
+    overrideArgs:
+      # These overrides are required for ACME on AWS to function
+      - '--acme-http01-solver-nameservers=8.8.8.8:53,1.1.1.1:53'
+      - '--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53'
+      - '--dns01-recursive-nameservers-only'

@@ -1,6 +1,6 @@
 - name: Create a static service account token
   kubernetes.core.k8s:
-    template: vault-token-static-secret.yaml
+    template: postinstall/vault-token-static-secret.yaml
     namespace: '{{ hashicorp_vault_namespace }}'
     wait: true
 

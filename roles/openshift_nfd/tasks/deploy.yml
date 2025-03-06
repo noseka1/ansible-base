@@ -2,18 +2,14 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: node-feature-discovery-operator
-    autogitops_app_src_path: node-feature-discovery/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-feature-discovery/operator
-    autogitops_app_namespace: openshift-nfd
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ nfd_namespace }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: node-feature-discovery
-    autogitops_app_src_path: node-feature-discovery/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: node-feature-discovery/instance
-    autogitops_app_namespace: openshift-nfd
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ nfd_namespace }}'

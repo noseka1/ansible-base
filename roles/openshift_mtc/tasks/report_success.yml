@@ -3,7 +3,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: migration
-    namespace: '{{ mtc_instance_namespace }}'
+    namespace: '{{ mtc_namespace }}'
   register: mtc_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Migration Toolkit for Containers UI to come up

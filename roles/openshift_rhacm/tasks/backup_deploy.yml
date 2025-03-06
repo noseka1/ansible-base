@@ -1,0 +1,57 @@
+- import_role:
+    name: openshift_oadp
+    tasks_from: instance_deploy.yml
+  vars:
+    # Note that OADP (Velero) must be deployed to the open-cluster-management-backup namespace
+    oadp_operator_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_operator_manage_namespace: false
+    oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_app_prefix: rhacm-
+
+- name: Schedule periodic RHACM backup (note that this requires OADP operator to be installed)
+  kubernetes.core.k8s:
+    template: backup/schedule-acm-backupschedule.yaml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup schedule to be enabled
+  kubernetes.core.k8s_info:
+    api_version: cluster.open-cluster-management.io/v1beta1
+    kind: BackupSchedule
+    name: schedule-acm
+    namespace: '{{ rhacm_backup_namespace }}'
+  register: backupschedule_result
+  until:
+    - backupschedule_result.resources.0.status.phase is defined
+    - backupschedule_result.resources.0.status.phase == 'Enabled'
+  retries: 30
+  delay: 10
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete successfully
+  kubernetes.core.k8s_info:
+    api_version: velero.io/v1
+    kind: Backup
+    namespace: '{{ rhacm_backup_namespace }}'
+  register: backup_result
+  until:
+    - backup_result.resources is defined
+    - backup_result.resources | length > 0
+    - backup_result.resources | json_query("[?status.phase=='Completed']") | list | length > 0
+  retries: 30
+  delay: 10
+
+- debug:
+    msg: >-
+      Found {{ backup_result.resources | json_query("[?status.phase=='Completed']") | list | length }} completed backup(s)
+      in namespace '{{ rhacm_backup_namespace }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup-restore-enabled policy to change status to Compliant
+  kubernetes.core.k8s_info:
+    api_version: policy.open-cluster-management.io/v1
+    kind: Policy
+    name: backup-restore-enabled
+    namespace: '{{ rhacm_backup_namespace }}'
+  register: policy_result
+  until:
+    - policy_result.resources.0.status.compliant is defined
+    - policy_result.resources.0.status.compliant == 'Compliant'
+  retries: 60
+  delay: 10

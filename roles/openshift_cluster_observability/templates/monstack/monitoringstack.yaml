@@ -1,0 +1,23 @@
+apiVersion: monitoring.rhobs/v1alpha1
+kind: MonitoringStack
+metadata:
+  name: {{ clusterobserv_monstack_name }}
+  namespace: {{ clusterobserv_monstack_namespace }}
+spec:
+  logLevel: debug
+  # Time duration to retain data for. Default is '120h', and must match the
+  # regular expression `[0-9]+(ms|s|m|h|d|w|y)` (milliseconds seconds minutes
+  # hours days weeks years).
+  retention: 1d
+  # Namespace selector for Monitoring Stack Resources. To monitor everything,
+  # set to empty map selector. E.g. namespaceSelector: {}. To monitor resources
+  # in the namespace where Monitoring Stack was created in, set to null. E.g.
+  # namespaceSelector:.
+  namespaceSelector: {}
+  prometheusConfig:
+    # Default is 2 replicas for high availability
+    replicas: 1
+  # Label selector for Monitoring Stack Resources. To monitor everything, set to
+  # empty map selector. E.g. resourceSelector: {}. To disable service discovery,
+  # set to null. E.g. resourceSelector:.
+  resourceSelector: {}

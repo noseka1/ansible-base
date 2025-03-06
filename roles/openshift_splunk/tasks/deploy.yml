@@ -2,21 +2,17 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: splunk-operator
-    autogitops_app_src_path: splunk/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: splunk/operator
     autogitops_app_namespace: openshift-operators
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: splunk
-    autogitops_app_src_path: splunk/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: splunk/instance
     autogitops_app_namespace: '{{ splunk_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_tasks: get_hec_connection.yml
 
@@ -30,8 +26,9 @@
     body:
       event: Hello from Ansible at {{ lookup("pipe", "date +%r") }}
     validate_certs: false
-  register: result
-  until: result.status == 200
+    status_code: [ 200, 503 ]
+  register: splunk_uri_result
+  until: splunk_uri_result.status == 200
   retries: 12
   delay: 10
 

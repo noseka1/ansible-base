@@ -6,11 +6,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: nexus-repository-manager
-    autogitops_app_src_path: nexus-repository-manager
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: nexus-repository-manager
-    autogitops_app_namespace: nexus-repository-manager
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ nexus_repository_manager_namespace }}'
 
 - name: Retrieve Nexus repository manager pod
   kubernetes.core.k8s_info:
@@ -63,6 +61,6 @@
     validate_certs: false
     status_code: 200
 
-- import_tasks: create_repo.yml
+- import_tasks: repo_create.yml
 
 - import_tasks: report_success.yml

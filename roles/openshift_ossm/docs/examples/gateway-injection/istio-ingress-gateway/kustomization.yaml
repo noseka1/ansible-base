@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: istio-ingress
+
+secretGenerator:
+- name: testapp-tls
+  type: Opaque
+  files:
+  - key=testapp-tls.key
+  - cert=testapp-tls.crt
+  options:
+    disableNameSuffixHash: True
+
+resources:
+- istio-ingressgateway-deploy.yaml
+- istio-ingressgateway-hpa.yaml
+- istio-ingressgateway-netpol.yaml
+- istio-ingressgateway-pdb.yaml
+- istio-ingressgateway-sds-rolebinding.yaml
+- istio-ingressgateway-sds-role.yaml
+- istio-ingressgateway-svc.yaml

@@ -10,6 +10,8 @@ controller:
   enabled: true
   strategy: node
   externalProvisioner:
+    # For available options refer to:
+    # https://github.com/kubernetes-csi/external-provisioner?tab=readme-ov-file#command-line-options
     extraArgs:
       - --leader-election=false
       - --node-deployment=true
@@ -47,6 +49,8 @@ node:
         mountPath: {{ local_hostpath_host_path }}
         mountPropagation: Bidirectional
     image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_democratic_csi_image_tag }}
+    # Allowed values are info, debug
+    logLevel: info
   extraVolumes:
     - name: local-storage
       hostPath:
@@ -70,6 +74,16 @@ volumeSnapshotClasses:
 driver:
   config:
     driver: local-hostpath
+    service:
+      controller:
+        capabilities:
+          rpc:
+            - CREATE_DELETE_VOLUME
+            - CREATE_DELETE_SNAPSHOT
+            - CLONE_VOLUME
+            - SINGLE_NODE_MULTI_WRITER
+            # Disable storage capacity reporting to allow overprovisioning
+            #- GET_CAPACITY
     local-hostpath:
       shareBasePath: {{ local_hostpath_host_path }}
       controllerBasePath: {{ local_hostpath_host_path }}

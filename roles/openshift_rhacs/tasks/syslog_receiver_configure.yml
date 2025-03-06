@@ -13,8 +13,8 @@
       syslog:
         localFacility: LOCAL0
         tcpConfig:
-          hostname: '{{ datadog_vector_hostname }}'
-          port: '{{ datadog_vector_port }}'
+          hostname: '{{ ddvector_hostname }}'
+          port: '{{ ddvector_port }}'
           skipTlsVerify: false
           useTls": false
       name: My Syslog Receiver

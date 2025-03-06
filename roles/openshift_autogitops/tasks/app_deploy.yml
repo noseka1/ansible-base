@@ -1,19 +1,37 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- name: Set application name
+  set_fact:
+    autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
+
 - import_tasks: local_repo_create.yml
 
 - import_tasks: local_repo_update.yml
 
 - import_tasks: local_repo_push.yml
 
+- name: Set application namespace
+  set_fact:
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+
+- import_role:
+    name: openshift_gitops
+    tasks_from: get_argocd_api_connection.yml
+
 - name: Wait for application {{ autogitops_app_name }} to show up in Argo CD
-  kubernetes.core.k8s_info:
-    api_version: argoproj.io/v1alpha1
-    kind: Application
-    name: 'in-cluster-{{ autogitops_app_name }}'
-    namespace: '{{ autogitops_argocd_namespace }}'
+  uri:
+    url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
+    method: GET
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
+    status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
   when: autogitops_git_updated
   until:
-    - autogitops_app_resource_result.resources | length == 1
+    - autogitops_app_resource_result.status == 200
   # Argo CD ApplicationSet controller may need up to 3 minutes to notice a commit in Git
   # when there were no Applications deployed yet. After at least one Application has been
   # deployed, for the following applications, the Argo CD is notified through a webhook.

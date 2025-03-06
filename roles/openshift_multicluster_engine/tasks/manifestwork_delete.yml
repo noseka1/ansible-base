@@ -1,0 +1,5 @@
+- name: Delete test-hello-work manifestwork
+  kubernetes.core.k8s:
+    template: manifestwork/test-hello-work-manifestwork.yaml
+    wait: true
+    state: absent

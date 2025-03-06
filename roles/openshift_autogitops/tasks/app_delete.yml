@@ -1,92 +1,114 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
 - import_tasks: local_repo_create.yml
 
-- set_fact:
-    autogitops_app_env_dir:  '{{ autogitops_git_dir }}/envs/in-cluster/infra/{{ autogitops_app_name }}'
+- name: Set application name
+  set_fact:
+    autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
 
-- name: Check if argocd_config_manual.yaml exists
+- name: Set application config directory
+  set_fact:
+    autogitops_app_cfg_dir:  '{{ autogitops_git_dir }}/apps/{{ autogitops_app_name }}'
+
+- name: Check if argocd_config_dir.yaml exists
   stat:
-    path: '{{ autogitops_app_env_dir }}/argocd_config_manual.yaml'
-  register: autogitops_app_argocd_config_stat_result
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+  register: autogitops_app_dir_stat_result
 
-- name: Retrieve argocd_config_manual.yaml
+- name: Retrieve argocd_config_dir.yaml
   slurp:
-    path: '{{ autogitops_app_env_dir }}/argocd_config_manual.yaml'
-  register: autogitops_app_argocd_config_result
-  when: autogitops_app_argocd_config_stat_result.stat.exists
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+  register: autogitops_app_dir_slurp_result
+  when: autogitops_app_dir_stat_result.stat.exists
 
-- set_fact:
-    autogitops_app_helm_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_argocd_config_result.content | b64decode | from_yaml).sourcePath }}'
-  when: autogitops_app_argocd_config_stat_result.stat.exists
-
-- set_fact:
-    autogitops_app_helm_dir: ''
-  when: not autogitops_app_argocd_config_stat_result.stat.exists
-
-- name: Delete application helm template directory {{ autogitops_app_helm_dir }}/templates
-  file:
-    path: '{{ autogitops_app_helm_dir }}/templates'
-    state: absent
-  when: autogitops_app_helm_dir | length > 0
-
-- name: Check if Chart.yaml exists
+- name: Check if argocd_config_helm.yaml exists
   stat:
-    path: '{{ autogitops_app_helm_dir }}/Chart.yaml'
-  register: autogitops_app_chart_stat_result
-  when: autogitops_app_helm_dir | length > 0
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
+  register: autogitops_app_helm_stat_result
 
-- name: Retrieve application Chart.yaml
+- name: Retrieve argocd_config_helm.yaml
   slurp:
-    path: '{{ autogitops_app_helm_dir }}/Chart.yaml'
-  register: autogitops_app_chart_result
-  when:
-    - autogitops_app_helm_dir | length > 0
-    - autogitops_app_chart_stat_result.stat.exists
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
+  register: autogitops_app_helm_slurp_result
+  when: autogitops_app_helm_stat_result.stat.exists
 
-- name: Remove dependencies from Chart.yaml
-  copy:
-    content: >-
-      {{ autogitops_app_chart_result.content | b64decode | from_yaml | combine({"dependencies":[]}) | to_nice_yaml }}
-    dest: '{{ autogitops_app_helm_dir }}/Chart.yaml'
+- name: Application git directory does not exist
+  set_fact:
+    autogitops_app_dst_dir: ''
   when:
-    - autogitops_app_helm_dir | length > 0
-    - autogitops_app_chart_stat_result.stat.exists
+    - not autogitops_app_dir_stat_result.stat.exists
+    - not autogitops_app_helm_stat_result.stat.exists
 
-- import_tasks: local_repo_push.yml
-  when: autogitops_app_helm_dir | length > 0
+- name: Set application git directory
+  set_fact:
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_dir_slurp_result.content | b64decode | from_yaml).sourcePath }}'
+  when: autogitops_app_dir_stat_result.stat.exists
+
+- name: Set application git directory
+  set_fact:
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_helm_slurp_result.content | b64decode | from_yaml).sourcePath }}'
+  when: autogitops_app_helm_stat_result.stat.exists
+
+- include_tasks: app_delete_dir.yml
+  when:
+    - autogitops_app_dst_dir | length > 0
+    - autogitops_app_dir_stat_result.stat.exists
+
+- include_tasks: app_delete_helm.yml
+  when:
+    - autogitops_app_dst_dir | length > 0
+    - autogitops_app_helm_stat_result.stat.exists
+
+- include_tasks: local_repo_push.yml
+  when: autogitops_app_dst_dir | length > 0
+
+- name: Set application namespace
+  set_fact:
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+
+- import_role:
+    name: openshift_gitops
+    tasks_from: get_argocd_api_connection.yml
 
 - name: Check if application {{ autogitops_app_name }} exists
-  kubernetes.core.k8s_info:
-    api_version: argoproj.io/v1alpha1
-    kind: Application
-    name: 'in-cluster-{{ autogitops_app_name }}'
-    namespace: '{{ autogitops_argocd_namespace }}'
+  uri:
+    url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
+    method: GET
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
+    status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
 
-- import_tasks: app_sync_delete.yml
-  when: autogitops_app_resource_result.resources | length == 1
+- include_tasks: app_sync_delete.yml
+  when: autogitops_app_resource_result.status == 200
 
-- name: Delete application directory {{ autogitops_app_helm_dir }}
+- name: Delete application directory {{ autogitops_app_dst_dir }}
   file:
-    path: '{{ autogitops_app_helm_dir }}'
+    path: '{{ autogitops_app_dst_dir }}'
     state: absent
-  when: autogitops_app_helm_dir | length > 0
+  when: autogitops_app_dst_dir | length > 0
 
-- name: Delete application directory {{ autogitops_app_env_dir }}
+- name: Delete application directory {{ autogitops_app_cfg_dir }}
   file:
-    path: '{{ autogitops_app_env_dir }}'
+    path: '{{ autogitops_app_cfg_dir }}'
     state: absent
 
 - import_tasks: local_repo_push.yml
 
 - name: Wait for application {{ autogitops_app_name }} to disappear from Argo CD
-  kubernetes.core.k8s_info:
-    api_version: argoproj.io/v1alpha1
-    kind: Application
-    name: 'in-cluster-{{ autogitops_app_name }}'
-    namespace: '{{ autogitops_argocd_namespace }}'
+  uri:
+    url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
+    method: GET
+    headers:
+      Authorization: Bearer {{ argocd_api_token }}
+    validate_certs: '{{ autogitops_argocd_validate_certs }}'
+    status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
   when: autogitops_git_updated
   until:
-    - autogitops_app_resource_result.resources | length == 0
+    - autogitops_app_resource_result.status != 200
   retries: 60
   delay: 1

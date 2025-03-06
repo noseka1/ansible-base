@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: quay-operator
+  namespace: openshift-operators
+spec:
+{% if quay_operator_subscription_channel | length > 0 %}
+  channel: {{ quay_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ quay_operator_subscription_approval }}
+  name: quay-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if quay_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ quay_operator_subscription_starting_csv }}
+{% endif %}

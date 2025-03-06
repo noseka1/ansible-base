@@ -8,7 +8,6 @@
       - iscsi-target-scc-role.yaml
       - iscsi-target-scc-rolebinding.yaml
       - iscsi-target-svc.yaml
-    namespace: '{{ iscsi_target_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for service IP
   kubernetes.core.k8s_info:
@@ -28,17 +27,10 @@
 - name: Deploy iscsi-target
   kubernetes.core.k8s:
     template:
-      - iscsi-target-deploy.yaml
       - iscsi-target-init-cm.yaml
       - iscsi-target-pvc.yaml
-    namespace: '{{ iscsi_target_namespace }}'
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: iscsi-target
-    wait_for_deployment_namespace: '{{ iscsi_target_namespace }}'
+      - iscsi-target-deploy.yaml
+    wait: true
 
 - name: Create iscsi-target persistent volumes
   kubernetes.core.k8s:

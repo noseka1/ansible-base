@@ -1,13 +1,5 @@
-- name: Delete oauth-proxy {{ openshift_oauth_proxy_name }}
-  kubernetes.core.k8s:
-    template:
-      - oauth-proxy-clusterrolebinding.yaml
-      - oauth-proxy-clusterrole.yaml
-      - oauth-proxy-deploy.yaml
-      - oauth-proxy-route.yaml
-      - oauth-proxy-sa.yaml
-      - oauth-proxy-secret.yaml
-      - oauth-proxy-svc.yaml
-      - oauth-proxy-trusted-ca-bundle-cm.yaml
-    namespace: '{{ openshift_oauth_proxy_namespace }}'
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: '{{ oauth_proxy_app_prefix }}oauth-proxy/instance'

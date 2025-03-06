@@ -1,17 +1,6 @@
 - import_tasks: example_delete.yml
   tags: openshift_virtualization_example_workload
 
-- import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
-  vars:
-    delete_kubernetes_objects:
-      - api_version: kubevirt.io/v1
-        kind: VirtualMachine
-      - api_version: kubevirt.io/v1
-        kind: VirtualMachineInstance
-  tags: openshift_virtualization_instance
-
 - name: Delete custom storageprofiles
   kubernetes.core.k8s:
     template:
@@ -23,17 +12,34 @@
   tags: openshift_virtualization_instance
 
 - import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: kubevirt.io/v1
+        kind: VirtualMachine
+      - api_version: kubevirt.io/v1
+        kind: VirtualMachineInstance
+
+ - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: openshift-virtualization
+    autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
+  tags: openshift_virtualization_hostpathprov
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: openshift-virtualization/instance
   tags: openshift_virtualization_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: openshift-virtualization-operator
+    autogitops_app_dst_path: openshift-virtualization/operator
   tags: openshift_virtualization_operator
 
 - import_tasks: cluster_nodes_delete.yml

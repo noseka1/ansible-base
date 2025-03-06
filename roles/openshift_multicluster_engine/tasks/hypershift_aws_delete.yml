@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_version.yml
+
+- name: Delete S3 bucket with public access to host OIDC discovery documents
+  amazon.aws.s3_bucket:
+    name: openshift-oidc-bucket-{{ openshift_common_cluster_uuid }}
+    access_key: '{{ multicluster_engine_hypershift_aws.aws_access_key_id }}'
+    secret_key: '{{ multicluster_engine_hypershift_aws.aws_secret_access_key }}'
+    region: '{{ multicluster_engine_hypershift_aws.aws_region }}'
+    force: true
+    state: absent
+  when: multicluster_engine_hypershift_aws.enabled

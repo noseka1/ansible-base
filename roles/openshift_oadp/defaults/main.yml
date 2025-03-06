@@ -1,10 +1,15 @@
+oadp_operator_subscription_channel: ''
+oadp_operator_subscription_approval: Automatic
+oadp_operator_subscription_starting_csv: ''
 oadp_operator_subscription_name: oadp-operator
-oadp_operator_subscription_namespace: openshift-adp
+
+oadp_operator_namespace: openshift-adp
 
 oadp_operator_manage_namespace: true
 
 oadp_instance_namespace: openshift-adp
-oadp_instance_name: velero
+
+oadp_app_prefix: ''
 
 # If OpenShift is deployed on top of AWS then enable this
 oadp_instance_aws_enabled: false
@@ -17,7 +22,7 @@ oadp_instance_vsphere_enabled: false
 oadp_instance_minio_enabled: true
 
 # Namespace where minio S3-compatible storage is deployed
-oadp_instance_minio_namespace: openshift-adp-minio
+oadp_instance_minio_namespace: '{{ oadp_instance_namespace }}-minio'
 
 # Configure Velero connection to an S3 or S3-compatible storage
 oadp_instance_s3_storage:

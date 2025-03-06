@@ -1,0 +1,7 @@
+skupper_operator_subscription_channel: ''
+skupper_operator_subscription_approval: Automatic
+skupper_operator_subscription_starting_csv: ''
+
+skupper_operator_namespace: openshift-operators
+
+skupper_instance_namespace: skupper

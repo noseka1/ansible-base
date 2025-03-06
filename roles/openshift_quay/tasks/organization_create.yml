@@ -76,7 +76,7 @@
 - name: Save robot access token
   kubernetes.core.k8s:
     template:
-      - quay/instance/quay-registry-robot-token-secret.yaml
+      - quay/organization/quay-registry-robot-token-secret.yaml
   when: quay_robot_result.status in [ 400, 404 ]
 
 - name: Add robot account {{ quay_robot_name }} to team {{ quay_team_name }}

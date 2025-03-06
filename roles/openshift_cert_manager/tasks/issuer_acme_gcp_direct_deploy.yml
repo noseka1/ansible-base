@@ -1,17 +1,9 @@
-- name: Generate acme-gcp resources from Helm Chart
-  kubernetes.core.helm_template:
-    chart_ref: '{{ autogitops_catalog_dir }}/cert-manager/acme-gcp'
-    release_namespace: '{{ cert_manager_instance_namespace }}'
-    values_files:
-      - '{{ autogitops_catalog_dir }}/cert-manager/acme-gcp/values.yaml'
-    values: '{{ lookup("template", "acme-gcp/values.yaml") | from_yaml }}'
-  changed_when: false
-  register: cert_manager_acme_gcp_helm_result
-
 - name: Deploy acme-gcp certificate authority
   kubernetes.core.k8s:
-    definition: '{{ cert_manager_acme_gcp_helm_result.stdout }}'
+    template:
+      - acme-gcp/credentialsrequest.yaml
+      - acme-gcp/clusterissuer.yaml
 
 - import_tasks: certificate_verify.yml
   vars:
-    cert_manager_certificate_issuer_name: acme-gcp
+    certman_certificate_issuer_name: acme-gcp

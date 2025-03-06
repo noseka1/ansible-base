@@ -1,0 +1,23 @@
+kind: CostManagementMetricsConfig
+apiVersion: costmanagement-metrics-cfg.openshift.io/v1beta1
+metadata:
+  name: costmanagementmetricscfg
+  namespace: {{ costman_namespace }}
+spec:
+  authentication:
+    type: token
+  packaging:
+    max_reports_to_store: 30
+    max_size_MB: 100
+  prometheus_config:
+    collect_previous_data: true
+    context_timeout: 120
+    disable_metrics_collection_cost_management: false
+    disable_metrics_collection_resource_optimization: false
+  source:
+    check_cycle: 1440
+    create_source: false
+    name: {{ costman_instance_source_name }}
+  upload:
+    upload_cycle: 360
+    upload_toggle: true

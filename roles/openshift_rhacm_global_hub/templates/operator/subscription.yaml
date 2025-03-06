@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: multicluster-global-hub-operator-rh
+  namespace: {{ rhacm_global_hub_namespace }}
+spec:
+{% if rhacm_global_hub_operator_subscription_channel | length > 0 %}
+  channel: {{ rhacm_global_hub_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ rhacm_global_hub_operator_subscription_approval }}
+  name: multicluster-global-hub-operator-rh
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if rhacm_global_hub_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ rhacm_global_hub_operator_subscription_starting_csv }}
+{% endif %}

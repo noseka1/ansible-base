@@ -1,2 +1,5 @@
-local_storage_operator_subscription_namespace: openshift-local-storage
-local_storage_instance_namespace: openshift-local-storage
+localstorage_operator_subscription_channel: ''
+localstorage_operator_subscription_approval: Automatic
+localstorage_operator_subscription_starting_csv: ''
+
+localstorage_namespace: openshift-local-storage

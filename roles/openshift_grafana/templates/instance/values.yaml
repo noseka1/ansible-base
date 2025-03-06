@@ -1,1 +1,44 @@
+# The default Grafana image version that was tested to work with the operator can be found here:
+# https://github.com/grafana/grafana-operator/blob/24e34f6b2a55ec6c6bc4dbe0d1420d2db137ce19/controllers/config/operator_constants.go#L6
+# Override this default Grafana version with a more recent version:
+baseImage: docker.io/grafana/grafana-oss:11.3.1
+
 consoleLinkHref: https://grafana-grafana.apps.{{ openshift_common_cluster_domain }}
+
+dashboards:
+  # Import modern Kubernetes dashboards from https://github.com/dotdc/grafana-dashboards-kubernetes
+  - { folder: Kubernetes, name: k8s-system-api-server, id: 15761 }
+  - { folder: Kubernetes, name: k8s-system-coredns, id: 15762 }
+  - { folder: Kubernetes, name: k8s-views-global, id: 15757 }
+  - { folder: Kubernetes, name: k8s-views-namespaces, id: 15758 }
+  - { folder: Kubernetes, name: k8s-views-nodes, id: 15759 }
+  - { folder: Kubernetes, name: k8s-views-pods, id: 15760 }
+  # Import further Kubernetes dashboards
+  - { folder: Kubernetes, name: k8s-storage-volumes-cluster, id: 11454 }
+  - { folder: Kubernetes, name: k8s-storage-volumes-namespace, id: 11455 }
+  # Import KubeVirt dashboard from Grafana.com
+  - { folder: KubeVirt, name: kubevirt-rev1, id: 11748 }
+  # Import KubeVirt dashboards from URL
+  - folder: KubeVirt
+    name: kubevirt-control-plane
+    url: https://raw.githubusercontent.com/kubevirt/monitoring/main/dashboards/grafana/kubevirt-control-plane.json
+  - folder: KubeVirt
+    name: kubevirt-top-consumers
+    url: https://raw.githubusercontent.com/kubevirt/monitoring/main/dashboards/openshift/kubevirt-top-consumers.json
+  # Install official Kyverno Grafana dashboard
+  # See also https://kyverno.io/docs/monitoring/bonus-grafana-dashboard/
+  - folder: Kyverno
+    name: kyverno
+    url: https://raw.githubusercontent.com/kyverno/kyverno/main/charts/kyverno/charts/grafana/dashboard/kyverno-dashboard.json
+  # Import Policy Reporter dashboards from Grafana.com
+  - { folder: Kyverno, name: clusterpolicyreport, id: 13996 }
+  - { folder: Kyverno, name: policyreport, id: 13995 }
+  - { folder: Kyverno, name: policyreports, id: 13968 }
+  # Import Ceph dashboards from Grafana.com
+  - { folder: OpenShift Data Foundation, name: ceph-cluster, id: 2842 }
+  - { folder: OpenShift Data Foundation, name: ceph-pools,   id: 5342 }
+  - { folder: OpenShift Data Foundation, name: ceph-osd,     id: 5336 }
+  # Import ODF dashboards from URL
+  - folder: OpenShift Data Foundation
+    name: odf-performance-analysis
+    url: https://raw.githubusercontent.com/pcuzner/odf-grafana/e1a96187d4866f45c230ba2c4c00f840d7593b2b/roles/dashboard/files/odf-performance-analysis.json

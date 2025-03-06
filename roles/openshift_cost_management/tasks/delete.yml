@@ -2,10 +2,10 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: cost-management
+    autogitops_app_dst_path: cost-management/instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: cost-management-operator
+    autogitops_app_dst_path: cost-management/operator

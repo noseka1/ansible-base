@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testapp-tls-passthrough
+spec:
+  hosts:
+  - testapp-tls-passthrough.@@ROUTER_DOMAIN@@
+  gateways:
+  - testapp-tls-passthrough
+  tls:
+  - match:
+    - port: 443
+      sniHosts:
+      - testapp-tls-passthrough.@@ROUTER_DOMAIN@@
+    route:
+    - destination:
+        host: testapp
+        port:
+          number: 8443

@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: fuse-console
+  namespace: {{ fuseconsole_operator_namespace }}
+spec:
+{% if fuseconsole_operator_subscription_channel | length > 0 %}
+  channel: {{ fuseconsole_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ fuseconsole_operator_subscription_approval }}
+  name: fuse-console
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if fuseconsole_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ fuseconsole_operator_subscription_starting_csv }}
+{% endif %}

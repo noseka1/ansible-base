@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: istio-ingressgateway
+spec:
+  podSelector:
+    matchLabels:
+      istio: ingressgateway-custom
+  ingress:
+    - {}
+  policyTypes:
+  - Ingress

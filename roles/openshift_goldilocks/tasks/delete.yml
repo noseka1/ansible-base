@@ -1,13 +1,11 @@
-- name: Delete Goldilocks
-  kubernetes.core.helm:
-    name: '{{ goldilocks_name }}'
-    release_namespace: '{{ goldilocks_namespace }}'
-    state: absent
-    wait: true
+- import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
+  vars:
+    oauth_proxy_app_prefix: goldilocks-
 
-- name: Delete goldilocks namespace
-  kubernetes.core.k8s:
-    template:
-      - goldilocks-controller-fix-clusterrolebinding.yaml
-      - goldilocks-controller-fix-clusterrole.yaml
-      - goldilocks-ns.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: goldilocks

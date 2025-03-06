@@ -12,6 +12,8 @@ spec:
       requests:
         cpu: 250m
         memory: 512Mi
+    sourceNamespaces:
+      - ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
     webhookServer:
       ingress:
         enabled: false
@@ -41,8 +43,14 @@ spec:
   initialSSHKnownHosts: {}
   monitoring:
     enabled: true
+    disableMetrics: false
   notifications:
     enabled: true
+    env:
+    - name: ARGOCD_APPLICATION_NAMESPACES
+      value: '*'
+    - name: ARGOCD_NOTIFICATION_CONTROLLER_SELF_SERVICE_NOTIFICATION_ENABLED
+      value: 'true'
   prometheus:
     enabled: false
   rbac:
@@ -94,7 +102,7 @@ spec:
     ingress:
       enabled: false
     # Configure TLS edge-terminated route instead of passthrough
-    # so that the route utilizes OpenShift wildcard certificate
+    # so that the route utilizes the OpenShift wildcard certificate
     insecure: true
     replicas: 1
     resources:
@@ -119,11 +127,17 @@ spec:
           cpu: 250m
           memory: 128Mi
     provider: dex
+  sourceNamespaces:
+    - ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
   tls:
     ca: {}
   # Enable Helm templating in Kustomize
   kustomizeBuildOptions: --enable-helm
   extraConfig:
+    # The default label-based tracking fails due to the label value must be no more than 63 characters long.
+    # Switch to resource tracking using annotations.
+    # See also https://argo-cd.readthedocs.io/en/stable/user-guide/resource_tracking/
+    application.resourceTrackingMethod: annotation
     # See also Known Kubernetes types in CRDs (Resource limits, Volume mounts etc)
     # https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/#known-kubernetes-types-in-crds-resource-limits-volume-mounts-etc
     # This makes the sonarqube-postgresql StatefulSet sync
@@ -147,6 +161,15 @@ spec:
       kinds:
       - Backup
       - Restore
+      clusters:
+      - "*"
+    # The Argo CD resource tracking annotation is propagated from Namespace to the Project object. Argo CD should ignore
+    # the Project managed by OpenShift. We prefer using Kubernetes-native Namespaces and no Projects. Argo CD must ignore
+    # the Project to delete a Namespace successfully. Note that this was not needed for label-based resource tracking.
+    - apiGroups:
+      - project.openshift.io
+      kinds:
+      - Project
       clusters:
       - "*"
   resourceHealthChecks:

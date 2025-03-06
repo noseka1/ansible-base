@@ -1,0 +1,80 @@
+# See the following links for configuration options:
+# https://docs.openshift.com/container-platform/4.17/observability/network_observability/configuring-operator.html
+# https://github.com/netobserv/network-observability-operator/blob/release-1.7/config/samples/flows_v1beta2_flowcollector.yaml
+apiVersion: flows.netobserv.io/v1beta2
+kind: FlowCollector
+metadata:
+  name: cluster
+spec:
+  namespace: {{ netobserv_instance_namespace }}
+  deploymentModel: Direct
+  agent:
+    type: eBPF
+    ebpf:
+      features:
+      - DNSTracking
+      - FlowRTT
+      - PacketDrop
+      sampling: 50
+      logLevel: info
+      # Privileged mode is required for features:
+      # DNSTracking
+      # PacketDrop
+      privileged: true
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 100m
+        limits:
+          memory: 800Mi
+  processor:
+    # Enrich network flow data with the topology.kubernetes.io/zone
+    # label value applied to the nodes
+    addZone: true
+    logLevel: info
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 800Mi
+    # logTypes defines the desired record types to generate. Possible values are:
+    # * Flows (default) to export regular network flows
+    # * Conversations to generate events for started conversations, ended conversations
+    #   as well as periodic "tick" updates
+    # * EndedConversations to generate only ended conversations events
+    # * All to generate both network flows and all conversations events
+    logTypes: All
+    advanced:
+      conversationEndTimeout: 10s
+      conversationHeartbeatInterval: 30s
+  loki:
+    mode: LokiStack
+    lokiStack:
+      namespace: {{ netobserv_instance_namespace }}-loki
+      name: loki
+  consolePlugin:
+    enable: true
+    logLevel: info
+    portNaming:
+      enable: true
+      portNames:
+        "3100": loki
+    quickFilters:
+    - name: Applications
+      filter:
+        src_namespace!: 'openshift-,netobserv'
+        dst_namespace!: 'openshift-,netobserv'
+      default: true
+    - name: Infrastructure
+      filter:
+        src_namespace: 'openshift-,netobserv'
+        dst_namespace: 'openshift-,netobserv'
+    - name: Pods network
+      filter:
+        src_kind: 'Pod'
+        dst_kind: 'Pod'
+      default: true
+    - name: Services network
+      filter:
+        dst_kind: 'Service'

@@ -5,11 +5,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: openshift-virtualization-operator
-    autogitops_app_src_path: openshift-virtualization/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-virtualization/operator
     autogitops_app_namespace: openshift-cnv
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
   tags: openshift_virtualization_operator
 
 - import_role:
@@ -24,13 +22,24 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: openshift-virtualization
-    autogitops_app_src_path: openshift-virtualization/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: openshift-virtualization/instance
     autogitops_app_namespace: openshift-cnv
-    autogitops_app_values: ''
   tags: openshift_virtualization_instance
 
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/hostpath-provisioner
+    autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
+    autogitops_app_namespace: ''
+  tags: openshift_virtualization_hostpathprov
+
+# CNV operator removes a storageprofile if the corresponding
+# storageclass doesn't exist on the cluster. Use Ansible to deploy
+# the storageprofiles for now. Argo CD fails to sync after the
+# storageprofile is removed by the CNV operator.
 - name: Create custom storageprofiles
   kubernetes.core.k8s:
     template:

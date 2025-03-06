@@ -1,6 +1,7 @@
 - name: Check that the vCenter Server Appliance ISO is mounted
   stat:
     path: '{{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
+    get_checksum: false
   delegate_to: localhost
   register: vcsa_deploy
 

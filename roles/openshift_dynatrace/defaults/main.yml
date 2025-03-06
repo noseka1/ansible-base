@@ -1,3 +1,5 @@
+dynatrace_namespace: dynatrace
+
 dynatrace_api_token: ''
 dynatrace_data_ingest_token: ''
 

@@ -1,6 +1,7 @@
 - name: Check if /bin/bash is installed
   stat:
     path: /bin/bash
+    get_checksum: false
   register: common_tasks_binbash_result
 
 - set_fact:

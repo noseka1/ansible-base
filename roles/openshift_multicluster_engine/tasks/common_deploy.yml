@@ -1,0 +1,9 @@
+- import_tasks: manifestwork_deploy.yml
+
+- import_tasks: assisted_installer_deploy.yml
+
+- import_tasks: cluster_discovery_config.yml
+  when: redhat_ocm_api_token | length > 0
+
+- import_tasks: hypershift_aws_config.yml
+  when: multicluster_engine_hypershift_aws.enabled

@@ -1,12 +1,17 @@
-amq_broker_subscription_channel: 7.10.x
-amq_broker_subscription_approval: Automatic
+amqbroker_operator_subscription_channel: 7.10.x
+amqbroker_operator_subscription_approval: Automatic
+amqbroker_operator_subscription_starting_csv: ''
 
-amq_broker_instance_namespace: amq-broker
+amqbroker_operator_namespace: openshift-operators
 
-amq_broker_replicas: 3
+amqbroker_instance_namespace: amq-broker
 
-fuse_console_subscription_channel: 7.10.x
-fuse_console_subscription_approval: Automatic
-fuse_console_subscription_namespace: amq-broker
+amqbroker_replicas: 3
 
-fuse_console_instance_namespace: amq-broker
+fuseconsole_operator_subscription_channel: 7.10.x
+fuseconsole_operator_subscription_approval: Automatic
+fuseconsole_operator_subscription_starting_csv: ''
+
+fuseconsole_operator_namespace: amq-broker
+
+fuseconsole_instance_namespace: amq-broker

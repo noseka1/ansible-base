@@ -1,3 +1,0 @@
-deploymentPlanSize: {{ amq_broker_replicas }}
-amqClusterPassword: '{{ generic_user_password }}'
-amqPassword: '{{ generic_user_password }}'

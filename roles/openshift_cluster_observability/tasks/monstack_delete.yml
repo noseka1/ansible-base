@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: cluster-observability/example-workload
+  tags: cluster_observability_example
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: cluster-observability/monstack
+  tags: cluster_observability_monstack

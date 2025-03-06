@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: testapp-route-weight
+spec:
+  hosts:
+  - testapp-route-weight.apps.cluster-7bdd.sandbox45.opentlc.com
+  gateways:
+  - testapp-route-weight
+  http:
+  - route:
+    - destination:
+        host: testapp-route
+        subset: subset-v2
+      weight: 20
+    - destination:
+        host: testapp-route
+        subset: subset-v1
+      weight: 80

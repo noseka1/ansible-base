@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: node-maintenance-operator
+  namespace: {{ nodemaintenance_operator_namespace }}
+spec:
+{% if nodemaintenance_operator_subscription_channel | length > 0 %}
+  channel: {{ nodemaintenance_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ nodemaintenance_operator_subscription_approval }}
+  name: node-maintenance-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if nodemaintenance_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ nodemaintenance_operator_subscription_starting_csv }}
+{% endif %}

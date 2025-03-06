@@ -1,0 +1,71 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: velero
+  namespace: {{ oadp_instance_namespace }}
+spec:
+  configuration:
+    nodeAgent:
+      enable: true
+      uploaderType: kopia
+    velero:
+      defaultPlugins:
+        # The openshift plug-in is mandatory.
+        - openshift
+        - aws
+        - kubevirt
+{% if not oadp_instance_vsphere_enabled %}
+        - csi
+      featureFlags:
+        - EnableCSI
+{% endif %}
+{% if oadp_instance_vsphere_enabled %}
+      customPlugins:
+        # OADP operator doesn't support vsphere on the default Velero plugin list.
+        # Need to enable vsphere plugin as a custom Velero plugin.
+        - name: vsphere
+          image: vsphereveleroplugin/velero-plugin-for-vsphere:v1.3.0-rc2
+      featureFlags:
+        # If local mode is enabled, Velero vSphere plugin will skip the upload of volume
+        # snapshots to S3. The datamgr-for-vsphere-plugin pod won't be deployed at all.
+        #- EnableLocalMode
+{% endif %}
+      # Specify whether CSI snapshot data should be moved to backup storage by default
+      defaultSnapshotMoveData: true
+      # Use pod volume file system backup by default for volumes
+      defaultVolumesToFSBackup: false
+      # If you need to install Velero without a default backup storage location
+      # NoDefaultBackupLocation flag is required for confirmation
+      noDefaultBackupLocation: false
+  backupLocations:
+    - velero:
+        provider: aws
+        # Default indicates this location is the default backup storage location
+        default: true
+        objectStorage:
+          # Name of an existing bucket
+          bucket: {{ oadp_instance_s3_storage.bucket_name }}
+          # In the bucket, a prefix subdirectory will be created
+          prefix: velero
+        config:
+{% if oadp_instance_s3_storage.s3_url | length > 0 %}
+          s3Url: {{ oadp_instance_s3_storage.s3_url }}
+{% endif %}
+          s3ForcePathStyle: '{{ oadp_instance_s3_storage.s3_force_path_style | string }}'
+          insecureSkipTLSVerify: '{{ oadp_instance_s3_storage.insecure_skip_tls_verify | string }}'
+{% if oadp_instance_s3_storage.ca_cert | length > 0 %}
+          caCert: |
+            {{ oadp_instance_s3_storage.ca_cert | indent(12) }}
+{% endif %}
+          region: {{ oadp_instance_s3_storage.aws_region }}
+          # Choose a profile from the AWS config file
+          profile: default
+        accessMode: ReadWrite
+        credential:
+          name: cloud-credentials
+          key: data
+{% if oadp_instance_vsphere_enabled %}
+  snapshotLocations:
+    - velero:
+        provider: velero.io/vsphere
+{% endif %}

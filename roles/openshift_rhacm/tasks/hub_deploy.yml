@@ -1,0 +1,11 @@
+- import_tasks: hub_deploy_subtasks.yml
+
+- import_tasks: gitops_config.yml
+
+- import_tasks: users_config.yml
+
+- import_role:
+    name: openshift_multicluster_engine
+    tasks_from: common_deploy.yml
+
+- import_tasks: hub_report_success.yml

@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: oadp-operator
+  namespace: {{ oadp_operator_namespace }}
+spec:
+  targetNamespaces:
+  - {{ oadp_operator_namespace }}

@@ -12,7 +12,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: '{{ loki_app_prefix }}lokistack'
+    autogitops_app_dst_path: '{{ loki_instance_app_prefix }}lokistack/instance'
   tags: lokistack_instance
 
 - import_role:
@@ -20,6 +20,8 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ loki_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: '{{ loki_instance_app_prefix }}lokistack-'
   tags: lokistack_instance
 
 - name: Retrieve LokiStack resources
@@ -32,16 +34,14 @@
 - debug:
     msg: There are existing lokistack resources. Skipping Loki operator deletion.
   when:
-    - lokistack_result.resources is defined
-    - lokistack_result.resources | length > 0
+    - lokistack_result.resources | default([]) | length > 0
   tags: lokistack_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: lokistack-operator
+    autogitops_app_dst_path: lokistack/operator
   when:
-    - lokistack_result.resources is not defined or
-      lokistack_result.resources | length == 0
+    - lokistack_result.resources | default([]) | length == 0
   tags: lokistack_operator

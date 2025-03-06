@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ hashicorp_vault_name }}-unseal-script
-  namespace: {{ hashicorp_vault_namespace }}
-data:
-  run.sh: |
-    {{ lookup('template', 'run.sh') | indent(4) }}

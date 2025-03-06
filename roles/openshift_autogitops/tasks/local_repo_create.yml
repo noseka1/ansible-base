@@ -4,10 +4,6 @@
   vars:
     gitea_repo_name: '{{ autogitops_git_repo_name }}'
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_cluster_domain.yml
-
 - set_fact:
     autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ openshift_common_cluster_domain }}'
 
@@ -25,4 +21,6 @@
   git:
     repo: '{{ gitea_repo_url_creds }}'
     dest: '{{ autogitops_git_dir }}'
+    version: 'ag-{{ openshift_common_cluster_domain }}'
+    single_branch: true
     force: true

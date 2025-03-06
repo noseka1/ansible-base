@@ -1,6 +1,7 @@
 - name: Check the install_complete timestamp
   stat:
     path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    get_checksum: false
   register: openshift_cluster_install_complete
 
 - debug:

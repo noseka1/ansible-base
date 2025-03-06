@@ -1,9 +1,19 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Keycloak Web UI to come up
+  uri:
+    url: https://{{ rhbk_hostname }}
+    validate_certs: false
+    status_code: [ 200, 503 ]
+  register: rhbk_ping_result
+  until: rhbk_ping_result.status == 200
+  retries: 30
+  delay: 10
+
 - name: Report success
   set_fact:
     msg: |
       Red Hat build of Keycloak installed successfully.
 
-      You can browse to:
+      You can browse to the Keycloak Web UI and log in as user "{{ rhbk_username }}":
       https://{{ rhbk_hostname }}
 
 - debug: msg="{{ msg.split('\n') }}"

@@ -29,9 +29,6 @@ openshift_cluster_postinstall_configure_kubeconfig: true
 
 openshift_send_alerts_to_slack_url: ''
 
-# Use custom trusted CA certificate instead of the default redhat-uep.pem
-openshift_cluster_postinstall_custom_yum_sslcacert: {}
-
 openshift_cluster_postinstall_cluster_banner:
   enabled: false
   background_color: '#008000' # green (dev)
@@ -52,8 +49,11 @@ openshift_cluster_postinstall_etcd_encryption: false
 openshift_cluster_postinstall_deploy_autogitops: false
 
 # Install RHEL entitlement on OpenShift nodes. This allows the OpenShift nodes and container
-# workloads running on OpenShift nodes pull RPM packages from restricted Red Hat repos
+# workloads running on OpenShift nodes to pull RPM packages from restricted Red Hat repos
 openshift_cluster_postinstall_rhel_entitlement: false
+
+# Use custom trusted CA certificate instead of the default redhat-uep.pem
+openshift_cluster_postinstall_custom_yum_sslcacert: {}
 
 # Overlay custom rpm packages on OpenShift nodes filesystem
 # (requires RHEL entitlements configured on nodes)

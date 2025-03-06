@@ -1,0 +1,5 @@
+certutils_operator_subscription_channel: ''
+certutils_operator_subscription_approval: Automatic
+certutils_operator_subscription_starting_csv: ''
+
+certutils_operator_namespace: cert-utils-operator

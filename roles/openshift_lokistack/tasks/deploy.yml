@@ -2,11 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: lokistack-operator
-    autogitops_app_src_path: lokistack/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: lokistack/operator
-    autogitops_app_namespace: openshift-operators-redhat
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ loki_operator_namespace }}'
   tags: lokistack_operator
 
 - import_role:
@@ -14,6 +12,8 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ loki_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: '{{ loki_instance_app_prefix }}lokistack-'
   tags: lokistack_instance
 
 - import_role:
@@ -30,9 +30,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: '{{ loki_app_prefix }}lokistack'
-    autogitops_app_src_path: lokistack/instance
-    autogitops_app_dst_path: '{{ loki_app_prefix }}lokistack/instance'
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: '{{ loki_instance_app_prefix }}lokistack/instance'
     autogitops_app_namespace: '{{ loki_instance_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
   tags: lokistack_instance

@@ -1,2 +1,7 @@
+# Dynatrace apiUrl including the `/api` path at the end.
+# For SaaS, set `ENVIRONMENTID` to your environment ID.
+# For Managed, change the apiUrl address.
+# For instructions on how to determine the environment ID and how to configure the apiUrl address, see https://www.dynatrace.com/support/help/reference/dynatrace-concepts/environment-id/.
 apiUrl: {{ dynatrace_api_url }}
+
 clusterName: {{ openshift_common_cluster_domain }}

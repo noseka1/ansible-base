@@ -1,0 +1,28 @@
+apiVersion: forklift.konveyor.io/v1beta1
+kind: StorageMap
+metadata:
+  annotations:
+    forklift.konveyor.io/shared: 'true'
+  name: lvms-loop1-vg
+  namespace: openshift-mtv
+spec:
+  map:
+  - destination:
+      storageClass: lvms-loop1-vg
+    source:
+      id: datastore-33019
+  - destination:
+      storageClass: lvms-loop1-vg
+    source:
+      id: datastore-33020
+  - destination:
+      storageClass: lvms-loop1-vg
+    source:
+      id: datastore-33017
+  provider:
+    destination:
+      name: host
+      namespace: openshift-mtv
+    source:
+      name: vmware
+      namespace: openshift-mtv

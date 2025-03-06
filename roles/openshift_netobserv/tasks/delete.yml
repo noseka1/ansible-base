@@ -2,19 +2,21 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: netobserv
-
-- import_role:
-    name: openshift_lokistack
-    tasks_from: delete.yml
-  vars:
-    loki_instance_namespace: netobserv
-    loki_manage_namespace: false
-    loki_instance_tenants_mode: openshift-network
-    loki_app_prefix: netobserv-
+    autogitops_app_dst_path: netobserv/instance
+  tags: netobserv_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: netobserv-operator
+    autogitops_app_dst_path: netobserv/operator
+  tags: netobserv_operator
+
+- import_role:
+    name: openshift_lokistack
+    tasks_from: delete.yml
+  vars:
+    loki_instance_namespace: '{{ netobserv_instance_namespace }}-loki'
+    loki_instance_manage_namespace: true
+    loki_instance_app_prefix: netobserv-
+    loki_instance_tenants_mode: openshift-network

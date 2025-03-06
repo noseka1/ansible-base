@@ -2,25 +2,24 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: openshift-pipelines
-    autogitops_app_src_path: openshift-pipelines
-    autogitops_app_dst_path: openshift-pipelines
-    autogitops_app_namespace: openshift-operators
-    autogitops_app_values: ''
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the ClusterTasks to be created
-  kubernetes.core.k8s_info:
-    api_version: tekton.dev/v1beta1
-    kind: ClusterTask
-  register: clustertasks
-  until:
-    - clustertasks.resources | length > 0
-  retries: 60
-  delay: 10
+    autogitops_app_src_path: templates/namespace
+    autogitops_app_dst_path: openshift-pipelines/namespace
+    autogitops_app_namespace: '{{ pipelines_instance_namespace }}'
 
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    wait_for_deployment_name: tekton-pipelines-controller
-    wait_for_deployment_namespace: openshift-pipelines
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: openshift-pipelines/operator
+    autogitops_app_namespace: '{{ pipelines_operator_namespace }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the Tasks to be created
+  kubernetes.core.k8s_info:
+    api_version: tekton.dev/v1
+    kind: Task
+  register: pipelines_tasks_result
+  until:
+    - pipelines_tasks_result.resources | length > 0
+  retries: 60
+  delay: 10

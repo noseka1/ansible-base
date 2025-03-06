@@ -3,3 +3,5 @@
     tasks_from: delete.yml
   vars:
     minio_namespace: '{{ oadp_instance_minio_namespace }}'
+    minio_manage_namespace: true
+    minio_app_prefix: '{{ oadp_app_prefix }}oadp-'

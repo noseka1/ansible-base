@@ -1,0 +1,29 @@
+apiVersion: hco.kubevirt.io/v1beta1
+kind: HyperConverged
+metadata:
+  annotations:
+    kubevirt.kubevirt.io/jsonpatch: |-
+      [
+        {
+          "op":"add",
+          "path":"/spec/configuration/developerConfiguration/featureGates/-",
+          "value":"VMLiveUpdateFeatures"
+        }
+      ]
+  name: kubevirt-hyperconverged
+  namespace: openshift-cnv
+spec:
+  # Migrate the VM on eviction if live migration is possible, otherwise directly evict
+  evictionStrategy: LiveMigrateIfPossible
+  featureGates:
+    # Enable SCSI persistent reservations
+    persistentReservation: true
+  infra: {}
+  workloads:
+    nodePlacement:
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/baremetal
+  workloadUpdateStrategy:
+    workloadUpdateMethods:
+    - LiveMigrate

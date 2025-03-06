@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ openshift_virtualization_machine_name }}
+  namespace: {{ openshift_virtualization_machine_namespace }}
+spec:
+  ports:
+  - name: ssh
+    port: {{ openshift_virtualization_machine_service_port }}
+    protocol: TCP
+    targetPort: 22
+  selector:
+    vm.kubevirt.io/name: {{ openshift_virtualization_machine_name }}
+  type: {{ openshift_virtualization_machine_service_type }}

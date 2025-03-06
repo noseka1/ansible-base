@@ -1,4 +1,7 @@
-efs_operator_subscription_channel: stable
+efs_operator_subscription_channel: ''
 efs_operator_subscription_approval: Automatic
+efs_operator_subscription_starting_csv: ''
+
+efs_namespace: openshift-cluster-csi-drivers
 
 efs_aws_file_system_id: ''

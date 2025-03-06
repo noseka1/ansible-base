@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: istio-testapp
+
+resources:
+- access-external-services.yaml
+- allow-external-access-netpol.yaml
+- allow-external-access-peerauthentication.yaml
+- default-servicemeshmember.yaml
+- istio-testapp-ns.yaml
+- testapp-deployment.yaml
+- testapp-http-gw.yaml
+- testapp-http-vs.yaml
+- testapp-route-dr.yaml
+- testapp-route-header-gw.yaml
+- testapp-route-header-vs.yaml
+- testapp-route-mirror-gw.yaml
+- testapp-route-mirror-vs.yaml
+- testapp-route-svc.yaml
+- testapp-route-v1-deployment.yaml
+- testapp-route-v2-deployment.yaml
+- testapp-route-weight-gw.yaml
+- testapp-route-weight-vs.yaml
+- testapp-svc.yaml
+- testapp-tls-edge-gw.yaml
+- testapp-tls-edge-vs.yaml
+- testapp-tls-mutual-gw.yaml
+- testapp-tls-mutual-vs.yaml
+- testapp-tls-passthrough-gw.yaml
+- testapp-tls-passthrough-vs.yaml
+- testapp-zones-deployment.yaml
+- testapp-zones-dr.yaml
+- testapp-zones-gw.yaml
+- testapp-zones-svc.yaml
+- testapp-zones-vs.yaml

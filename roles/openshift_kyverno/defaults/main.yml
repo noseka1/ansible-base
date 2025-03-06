@@ -1,3 +1,7 @@
+kyverno_namespace: kyverno
+
+kyverno_policy_reporter_namespace: kyverno-policy-reporter
+
 # You can enable distributed tracing for Kyverno and send traces to Tempo.
 # Use the openshift_tempostack_deploy.yml playbook to install the Tempo instance.
 # Tracing is disabled by default and depending on the backend the associated

@@ -1,7 +1,8 @@
 cryostat_operator_subscription_name: cryostat-operator
-cryostat_operator_subscription_namespace: cryostat
 cryostat_operator_subscription_channel: stable
 cryostat_operator_subscription_approval: Automatic
+
+cryostat_operator_namespace: cryostat
 
 cryostat_instance_name: cryostat
 cryostat_instance_namespace: cryostat

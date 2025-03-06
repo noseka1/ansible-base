@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ clusterobserv_example_name }}
+  name: {{ clusterobserv_example_name }}
+  namespace: {{ clusterobserv_example_namespace }}
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: web
+  selector:
+    app: {{ clusterobserv_example_name }}

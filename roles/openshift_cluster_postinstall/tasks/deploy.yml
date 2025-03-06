@@ -48,7 +48,6 @@
 - import_tasks: clusterwide_proxy.yml
 
 - import_tasks: rhel_entitlement.yml
-  when: openshift_cluster_postinstall_rhel_entitlement
 
 - import_tasks: install_custom_rpms.yml
   when: openshift_cluster_postinstall_install_custom_rpms

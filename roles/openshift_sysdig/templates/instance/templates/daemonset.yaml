@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sysdig-oss
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: sysdig-oss
+  template:
+    metadata:
+      labels:
+        app: sysdig-oss
+    spec:
+      containers:
+      - image: quay.io/noseka1/sysdig-custom:rhel9
+        command:
+        - /sysdig-oss/run.sh
+        imagePullPolicy: Always
+        name: sysdig-oss
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: host
+          mountPath: /host
+          mountPropagation: Bidirectional
+        - name: init
+          mountPath: /sysdig-oss/run.sh
+          subPath: run.sh
+      serviceAccountName: sysdig-oss
+      volumes:
+      - name: init
+        configMap:
+          name: sysdig-init
+          defaultMode: 0755
+      - name: host
+        hostPath:
+          path: /
+      tolerations:
+      - operator: Exists

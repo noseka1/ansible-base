@@ -2,11 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: grafana-operator
-    autogitops_app_src_path: grafana/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: grafana/operator
     autogitops_app_namespace: grafana
-    autogitops_app_values: ''
 
 - import_role:
     name: openshift_common
@@ -16,11 +14,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: grafana
-    autogitops_app_src_path: grafana/instance
+    autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: grafana/instance
     autogitops_app_namespace: grafana
-    autogitops_app_values: '{{ lookup("template", "instance/values.yaml") }}'
 
 - import_tasks: dashboards_openshift_import.yml
 
@@ -29,8 +25,9 @@
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
-    openshift_oauth_proxy_name: grafana
-    openshift_oauth_proxy_namespace: grafana
-    openshift_oauth_proxy_upstream: http://grafana-service:3000
+    oauth_proxy_name: grafana
+    oauth_proxy_namespace: grafana
+    oauth_proxy_upstream: http://grafana-service:3000
+    oauth_proxy_app_prefix: grafana-
 
 - import_tasks: report_success.yml

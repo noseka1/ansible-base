@@ -1,11 +1,18 @@
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
+- name: Deploy oauth-proxy
+  import_role:
+    name: openshift_oauth_proxy
+    tasks_from: delete.yml
   vars:
-    autogitops_app_name: grafana
+    oauth_proxy_app_prefix: grafana-
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_name: grafana-operator
+    autogitops_app_dst_path: grafana/instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: grafana/operator

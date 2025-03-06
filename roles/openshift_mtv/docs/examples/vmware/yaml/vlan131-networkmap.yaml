@@ -1,0 +1,22 @@
+apiVersion: forklift.konveyor.io/v1beta1
+kind: NetworkMap
+metadata:
+  annotations:
+    forklift.konveyor.io/shared: 'true'
+  name: vlan131
+  namespace: openshift-mtv
+spec:
+  map:
+  - destination:
+      name: vlan131
+      namespace: openshift-cnv
+      type: multus
+    source:
+      id: network-66001
+  provider:
+    destination:
+      name: host
+      namespace: openshift-mtv
+    source:
+      name: vmware
+      namespace: openshift-mtv

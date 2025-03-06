@@ -1,0 +1,8 @@
+apiVersion: nodeobservability.olm.openshift.io/v1alpha2
+kind: NodeObservability
+metadata:
+  name: cluster
+spec:
+  nodeSelector:
+    kubernetes.io/os: linux
+  type: crio-kubelet

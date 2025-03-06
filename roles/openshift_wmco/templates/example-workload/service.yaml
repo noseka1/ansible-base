@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: win-webserver
+  namespace: {{ wmco_example_workload_namespace }}
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: win-webserver

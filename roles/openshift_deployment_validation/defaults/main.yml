@@ -1,0 +1,5 @@
+dvo_operator_subscription_channel: ''
+dvo_operator_subscription_approval: Automatic
+dvo_operator_subscription_starting_csv: ''
+
+dvo_operator_namespace: openshift-operators

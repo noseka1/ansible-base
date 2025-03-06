@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: file-integrity-operator
+  namespace: {{ fileintegrity_namespace }}
+spec:
+{% if fileintegrity_operator_subscription_channel | length > 0 %}
+  channel: {{ fileintegrity_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ fileintegrity_operator_subscription_approval }}
+  name: file-integrity-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if fileintegrity_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ fileintegrity_operator_subscription_starting_csv }}
+{% endif %}

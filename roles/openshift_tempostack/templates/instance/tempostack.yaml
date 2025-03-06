@@ -1,0 +1,20 @@
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoStack
+metadata:
+  name: tempostack
+  namespace: {{ tempostack_instance_namespace }}
+spec:
+  storage:
+    secret:
+      name: s3-creds
+      type: s3
+  storageSize: 1Gi
+  resources:
+    total:
+      limits:
+        memory: 2Gi
+        cpu: '2'
+  template:
+    queryFrontend:
+      jaegerQuery:
+        enabled: true

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-receiver
+  namespace: {{ webhook_receiver_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-receiver
+  template:
+    metadata:
+      labels:
+        app: webhook-receiver
+    spec:
+      containers:
+      - image: quay.io/noseka1/toolbox-container:basic
+        imagePullPolicy: Always
+        name: webhook-receiver
+        volumeMounts:
+        - name: run
+          mountPath: /toolbox
+        # Allow colorful output
+        tty: true
+        stdin: true
+      volumes:
+      - name: run
+        configMap:
+          name: webhook-receiver-script

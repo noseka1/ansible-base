@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: kubernetes-nmstate-operator
+  namespace: openshift-nmstate
+spec:
+{% if nmstate_operator_subscription_channel | length > 0 %}
+  channel: {{ nmstate_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ nmstate_operator_subscription_approval }}
+  name: kubernetes-nmstate-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if nmstate_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ nmstate_operator_subscription_starting_csv }}
+{% endif %}

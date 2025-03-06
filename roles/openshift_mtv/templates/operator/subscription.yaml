@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: mtv-operator
+  namespace: openshift-mtv
+spec:
+{% if mtv_operator_subscription_channel | length > 0 %}
+  channel: {{ mtv_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ mtv_operator_subscription_approval }}
+  name: mtv-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if mtv_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ mtv_operator_subscription_starting_csv }}
+{% endif %}

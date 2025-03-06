@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: odf-operator
+  namespace: openshift-storage
+spec:
+{% if odf_operator_subscription_channel | length > 0 %}
+  channel: {{ odf_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ odf_operator_subscription_approval }}
+  name: odf-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if odf_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ odf_operator_subscription_starting_csv }}
+{% endif %}

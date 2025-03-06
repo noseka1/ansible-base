@@ -1,0 +1,14 @@
+{% if odf_openshift_storage_namespace_result.resources | length == 0 %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    # The cluster-wide defaultNodeSelector could have been set by the user to select only a subset
+    # of the OpenShift nodes. To ensure that the csi-cephfsplugin and csi-rbdplugin pods are
+    # placed on all OpenShift nodes, override the defaultNodeSelector configuration and select all
+    # nodes.
+    openshift.io/node-selector: ""
+  labels:
+    openshift.io/cluster-monitoring: "true"
+  name: openshift-storage
+{% endif %}

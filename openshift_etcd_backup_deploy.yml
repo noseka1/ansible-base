@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - import_role:
-        name: openshift_etcd_backup
-        tasks_from: deploy.yml

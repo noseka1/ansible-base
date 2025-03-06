@@ -1,0 +1,64 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  annotations:
+    ocs.openshift.io/clusterIsDisasterRecoveryTarget: "true"
+    uninstall.ocs.openshift.io/cleanup-policy: '{{ odf_uninstall_cleanup_policy }}'
+    uninstall.ocs.openshift.io/mode: '{{ odf_uninstall_mode }}'
+  name: ocs-storagecluster
+  namespace: openshift-storage
+spec:
+  enableCephTools: true
+{% if odf_encryption_clusterwide or odf_encryption_kms_enable %}
+  encryption:
+{% if odf_encryption_clusterwide %}
+    clusterWide: true
+{% endif %}
+{% if odf_encryption_kms_enable %}
+    kms:
+      enable: true
+{% endif %}
+{% endif %}
+{% if odf_user_hostpath_for_mon_data_dir %}
+  monDataDirHostPath: /var/lib/rook
+{% else %}
+  monPVCTemplate:
+    metadata: {}
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template }}
+      volumeMode: Filesystem
+    status: {}
+{% endif %}
+{% if  odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db is defined %}
+  multiCloudGateway:
+    dbStorageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
+{% endif %}
+  nfs:
+    enable: true
+  storageDeviceSets:
+  - config: {}
+    count: {{ odf_storage_device_set_count }}
+    dataPVCTemplate:
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: '{{ odf_storage_device_set_storage_capacity }}'
+        storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
+        volumeMode: Block
+      status: {}
+    name: ocs-deviceset
+    placement: {}
+{% if odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses %}
+    portable: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses }}
+{% endif %}
+    preparePlacement: {}
+    replica: {{ odf_storage_device_set_replica }}
+    resources: {}

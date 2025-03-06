@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: servicemeshoperator
+  namespace: {{ ossm_operator_namespace }}
+spec:
+{% if ossm_operator_subscription_channel | length > 0 %}
+  channel: {{ ossm_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ ossm_operator_subscription_approval }}
+  name: servicemeshoperator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if ossm_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ ossm_operator_subscription_starting_csv }}
+{% endif %}

@@ -1,0 +1,11 @@
+clusterobserv_operator_subscription_channel: ''
+clusterobserv_operator_subscription_approval: Automatic
+clusterobserv_operator_subscription_starting_csv: ''
+
+clusterobserv_operator_namespace: openshift-cluster-observability-operator
+
+clusterobserv_monstack_namespace: cluster-observability
+clusterobserv_monstack_name: cluster-observability
+
+clusterobserv_example_namespace: cluster-observability-example
+clusterobserv_example_name: cluster-observability-example

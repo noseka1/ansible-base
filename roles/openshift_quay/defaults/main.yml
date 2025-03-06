@@ -1,4 +1,17 @@
+quay_bridge_operator_subscription_channel: ''
+quay_bridge_operator_subscription_approval: Automatic
+quay_bridge_operator_subscription_starting_csv: ''
+
+quay_container_security_operator_subscription_channel: ''
+quay_container_security_operator_subscription_approval: Automatic
+quay_container_security_operator_subscription_starting_csv: ''
+
+quay_operator_subscription_channel: ''
+quay_operator_subscription_approval: Automatic
+quay_operator_subscription_starting_csv: ''
+
 quay_instance_namespace: quay-enterprise
 quay_instance_name: quay-registry
 
 quay_clair_managed: true
+quay_replicas: 1

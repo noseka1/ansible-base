@@ -1,0 +1,34 @@
+- name: Create service account for managing the cluster
+  kubernetes.core.k8s:
+    template:
+      - cluster-import/argocd-mgmt-clusterrolebinding.yaml
+      - cluster-import/argocd-mgmt-sa.yaml
+
+# Create the sa token secret after the service account was created or the secret gets deleted
+- name: Create a static service account token
+  kubernetes.core.k8s:
+    template:
+      - cluster-import/argocd-mgmt-sa-token-static-secret.yaml
+    wait: true
+
+- name: Grab service account token secret
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: argocd-mgmt-sa-token-static
+    namespace: kube-system
+  register: gitops_instance_sa_secret_result
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_cluster_domain.yml
+
+- name: Import local cluster {{ openshift_common_cluster_domain }}
+  kubernetes.core.k8s:
+    template:
+      - cluster-import/managed-cluster-secret.yaml
+
+- name: Create project for deploying to cluster {{ openshift_common_cluster_domain }}
+  kubernetes.core.k8s:
+    template:
+      - cluster-import/cluster-appproject.yaml

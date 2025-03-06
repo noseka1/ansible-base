@@ -2,11 +2,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: wmco-operator
-    autogitops_app_src_path: wmco/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: wmco/operator
-    autogitops_app_namespace: openshift-windows-machine-config-operator
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ wmco_operator_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for openshift-machine-api/windows-user-data secret to appear
   kubernetes.core.k8s_info:

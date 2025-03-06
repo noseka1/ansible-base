@@ -1,22 +1,10 @@
-- name: Create namespace Minio namespace {{ minio_namespace }}
-  kubernetes.core.k8s:
-    template: minio-ns.yaml
-  when: minio_manage_namespace
-
-- name: Deploy minio
-  kubernetes.core.k8s:
-    template:
-      - minio-api-route.yaml
-      - minio-bucket-deploy.yaml
-      - minio-trace-deploy.yaml
-      - minio-config-pvc.yaml
-      - minio-console-route.yaml
-      - minio-deploy.yaml
-      - minio-server-credentials-secret.yaml
-      - minio-storage-pvc.yaml
-      - minio-svc.yaml
-      - minio-servicemonitor.yaml
-    namespace: '{{ minio_namespace }}'
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: '{{ minio_app_prefix }}minio/instance'
+    autogitops_app_namespace: '{{ minio_namespace }}'
 
 - name: Obtain Minio route
   import_tasks: get_minio_api_route.yml

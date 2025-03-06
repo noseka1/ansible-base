@@ -1,2 +1,0 @@
-subscriptionApproval: '{{ splunk_operator_subscription_approval }}'
-subscriptionChannel: '{{ splunk_operator_subscription_channel }}'

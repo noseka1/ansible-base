@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: jaeger-product
+  namespace: {{ jaeger_operator_namespace }}
+spec:
+{% if jaeger_operator_subscription_channel | length > 0 %}
+  channel: {{ jaeger_operator_subscription_channel }}
+{% endif %}
+  installPlanApproval: {{ jaeger_operator_subscription_approval }}
+  name: jaeger-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+{% if jaeger_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ jaeger_operator_subscription_starting_csv }}
+{% endif %}

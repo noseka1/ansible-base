@@ -1,17 +1,9 @@
-- name: Generate acme-aws resources from Helm Chart
-  kubernetes.core.helm_template:
-    chart_ref: '{{ autogitops_catalog_dir }}/cert-manager/acme-aws'
-    release_namespace: '{{ cert_manager_instance_namespace }}'
-    values_files:
-      - '{{ autogitops_catalog_dir }}/cert-manager/acme-aws/values.yaml'
-    values: '{{ lookup("template", "acme-aws/values.yaml") | from_yaml }}'
-  changed_when: false
-  register: cert_manager_acme_aws_helm_result
-
 - name: Deploy acme-aws certificate authority
   kubernetes.core.k8s:
-    definition: '{{ cert_manager_acme_aws_helm_result.stdout }}'
+    template:
+      - acme-aws/credentialsrequest.yaml
+      - acme-aws/clusterissuer.yaml
 
 - import_tasks: certificate_verify.yml
   vars:
-    cert_manager_certificate_issuer_name: acme-aws
+    certman_certificate_issuer_name: acme-aws

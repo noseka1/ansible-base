@@ -1,0 +1,38 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+  namespace: {{ rhbk_instance_namespace }}
+spec:
+  additionalOptions:
+  # The proxy and proxy-headers settings are required for edge-terminated ingress
+  # See also: https://github.com/keycloak/keycloak/issues/15107
+  - name: proxy
+    value: edge
+  - name: proxy-headers
+    value: forwarded
+  instances: 1
+  db:
+    vendor: postgres
+    host: postgres-db
+    usernameSecret:
+      name: keycloak-db
+      key: username
+    passwordSecret:
+      name: keycloak-db
+      key: password
+  hostname:
+    # Hostname must be set or the Ingress object won't create the respective Route
+    hostname: {{ rhbk_instance_hostname }}
+  ingress:
+    enabled: true
+    className: openshift-default
+  http:
+    # This will create an edge-terminated Route
+    httpEnabled: true
+{% if rhbk_trusted_ca_cert | length > 0 %}
+  truststores:
+    trusted-ca-bundle:
+      secret:
+        name: trusted-ca
+{% endif %}

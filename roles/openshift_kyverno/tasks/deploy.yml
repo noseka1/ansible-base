@@ -2,22 +2,18 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: kyverno-operator
-    autogitops_app_src_path: kyverno/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: kyverno/operator
-    autogitops_app_namespace: kyverno
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ kyverno_namespace }}'
   tags: kyverno_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: kyverno-policies
-    autogitops_app_src_path: kyverno/policies
+    autogitops_app_src_path: templates/policies
     autogitops_app_dst_path: kyverno/policies
-    autogitops_app_namespace: kyverno
-    autogitops_app_values: ''
+    autogitops_app_namespace: '{{ kyverno_namespace }}'
   tags: kyverno_policies
 
 - name: Check that Kyverno started generating internal admission reports
@@ -34,10 +30,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: kyverno-policy-reporter
-    autogitops_app_src_path: kyverno/policy-reporter
+    autogitops_app_src_path: templates/policy-reporter
     autogitops_app_dst_path: kyverno/policy-reporter
-    autogitops_app_namespace: kyverno-policy-reporter
+    autogitops_app_namespace: '{{ kyverno_policy_reporter_namespace }}'
     autogitops_app_values: ''
   tags: kyverno_policy_reporter
 
@@ -45,7 +40,8 @@
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
-    openshift_oauth_proxy_name: kyverno-policy-reporter
-    openshift_oauth_proxy_namespace: kyverno-policy-reporter
-    openshift_oauth_proxy_upstream: http://in-cluster-kyverno-policy-reporter-ui.kyverno-policy-reporter.svc:8080
+    oauth_proxy_name: kyverno-policy-reporter
+    oauth_proxy_namespace: '{{ kyverno_policy_reporter_namespace }}'
+    oauth_proxy_upstream: http://kyverno-policy-reporter-ui.kyverno-policy-reporter.svc:8080
+    oauth_proxy_app_prefix: kyverno-
   tags: kyverno_policy_reporter

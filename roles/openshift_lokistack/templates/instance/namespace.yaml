@@ -1,0 +1,6 @@
+{% if loki_instance_manage_namespace %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ loki_instance_namespace }}
+{% endif %}

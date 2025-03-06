@@ -11,7 +11,7 @@ spec:
     storage:
       files:
       - contents:
-          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlement_cert | b64encode}}
+          source: data:text/plain;charset=utf-8;base64,{{ openshift_rhel_entitlement_crt | b64encode}}
         mode: 0644
         path: /etc/pki/entitlement/entitlement.pem
       - contents:

@@ -2,8 +2,6 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: rhacs-operator
-    autogitops_app_src_path: rhacs/operator
+    autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhacs/operator
-    autogitops_app_namespace: '{{ rhacs_operator_subscription_namespace }}'
-    autogitops_app_values: '{{ lookup("template", "operator/values.yaml") }}'
+    autogitops_app_namespace: '{{ rhacs_operator_namespace }}'

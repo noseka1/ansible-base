@@ -2,33 +2,27 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: container-security-operator
-    autogitops_app_src_path: quay/container-security/operator
+    autogitops_app_src_path: templates/container-security/operator
     autogitops_app_dst_path: quay/container-security/operator
     autogitops_app_namespace: openshift-operators
-    autogitops_app_values: '{{ lookup("template", "container-security/operator/values.yaml") }}'
   tags: quay_security_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: quay-bridge-operator
-    autogitops_app_src_path: quay/quay-bridge/operator
+    autogitops_app_src_path: templates/quay-bridge/operator
     autogitops_app_dst_path: quay/quay-bridge/operator
     autogitops_app_namespace: openshift-operators
-    autogitops_app_values: '{{ lookup("template", "quay-bridge/operator/values.yaml") }}'
   tags: quay_bridge_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: quay-operator
-    autogitops_app_src_path: quay/quay/operator
+    autogitops_app_src_path: templates/quay/operator
     autogitops_app_dst_path: quay/quay/operator
     autogitops_app_namespace: openshift-operators
-    autogitops_app_values: '{{ lookup("template", "quay/operator/values.yaml") }}'
   tags: quay_operator
 
 - import_role:
@@ -36,6 +30,8 @@
     tasks_from: deploy.yml
   vars:
     minio_namespace: '{{ quay_instance_namespace }}-minio'
+    minio_manage_namespace: true
+    minio_app_prefix: quay-
   tags: quay_instance
 
 - import_role:
@@ -47,11 +43,9 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_name: quay
-    autogitops_app_src_path: quay/quay/instance
+    autogitops_app_src_path: templates/quay/instance
     autogitops_app_dst_path: quay/quay/instance
     autogitops_app_namespace: quay-enterprise
-    autogitops_app_values: '{{ lookup("template", "quay/instance/values.yaml") }}'
   tags: quay_instance
 
 - import_tasks: registry_init.yml

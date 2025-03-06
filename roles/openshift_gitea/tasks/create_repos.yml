@@ -10,7 +10,7 @@
       description: '{{ item.description }}'
       private: true
       auto_init: true
-      default_branch: master
+      default_branch: '{{ item.default_branch | default("master") }}'
     url_username: '{{ gitea_username }}'
     url_password: '{{ gitea_password }}'
     force_basic_auth: true

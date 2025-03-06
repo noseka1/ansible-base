@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: testapp-tls-passthrough
+spec:
+  selector:
+    # Use istio default ingress gateway
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: tls
+      protocol: TLS
+    hosts:
+    - testapp-tls-passthrough.@@ROUTER_DOMAIN@@
+    tls:
+      mode: PASSTHROUGH

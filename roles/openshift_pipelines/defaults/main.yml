@@ -1,0 +1,7 @@
+pipelines_operator_subscription_channel: ''
+pipelines_operator_subscription_approval: Automatic
+pipelines_operator_subscription_starting_csv: ''
+
+pipelines_operator_namespace: openshift-operators
+
+pipelines_instance_namespace: openshift-pipelines

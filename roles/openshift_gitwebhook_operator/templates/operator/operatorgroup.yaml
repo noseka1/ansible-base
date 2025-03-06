@@ -1,7 +1,5 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: {{ gitwebhook_operator_subscription_name }}
+  name: gitwebhook-operator
   namespace: {{ gitwebhook_operator_namespace }}
-spec:
-  upgradeStrategy: Default

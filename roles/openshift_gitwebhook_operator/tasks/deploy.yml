@@ -1,13 +1,7 @@
-- name: Deploy gitwebhook-operator
-  kubernetes.core.k8s:
-    template:
-      - gitwebhook-operator-ns.yaml
-      - gitwebhook-operator-og.yaml
-      - gitwebhook-operator-sub.yaml
-
 - import_role:
-    name: openshift_common
-    tasks_from: wait_for_operator.yml
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
   vars:
-    subscription_name: '{{ gitwebhook_operator_subscription_name }}'
-    subscription_namespace: '{{ gitwebhook_operator_namespace }}'
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: gitwebhook/operator
+    autogitops_app_namespace: '{{ gitwebhook_operator_namespace }}'

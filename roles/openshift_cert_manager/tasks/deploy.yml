@@ -1,4 +1,11 @@
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: cert-manager-operator
+    oscomm_subscription_namespace: '{{ certman_operator_namespace }}'
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

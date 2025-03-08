@@ -26,8 +26,9 @@
 - name: Delete LVM Storage operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-storage-ns.yaml
-      - operator/lvms-operator-sub.yaml
+      - operator/subscription.yaml
+      - operator/operatorgroup.yaml
+      - operator/namespace.yaml
     wait: true
     state: absent
 

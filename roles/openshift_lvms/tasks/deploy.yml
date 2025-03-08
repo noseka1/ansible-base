@@ -6,14 +6,14 @@
     name: openshift_common
     tasks_from: update_machineconfiguration.yml
   vars:
-    openshift_common_mc_update_yaml: '{{ lookup("template", "instance/cluster-machineconfiguration.yaml") | from_yaml }}'
+    openshift_common_mc_update_yaml: '{{ lookup("template", "machineconfig/cluster-machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
 - name: Create loop block device for LVM Storage volumes on each cluster node (may cause nodes to restart)
   kubernetes.core.k8s:
     template:
-      - instance/99-lvm-block-mc.yaml
-  register: machineconfig_result
+      - machineconfig/99-lvm-block-mc.yaml
+  register: lvms_machineconfig_result
   loop:
     - worker
     - master
@@ -26,21 +26,28 @@
     stable_cluster_retries: 10
   when:
     - not openshift_common_machineconfiguration_exists
-    - machineconfig_result is changed
+    - lvms_machineconfig_result is changed
+
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: lvms-operator
+    oscomm_subscription_namespace: '{{ lvms_namespace }}'
 
 - name: Deploy LVM Storage operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-storage-ns.yaml
-      - operator/openshift-storage-og.yaml
-      - operator/lvms-operator-sub.yaml
+      - operator/namespace.yaml
+      - operator/operatorgroup.yaml
+      - operator/subscription.yaml
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: lvms-operator
-    subscription_namespace: openshift-storage
+    subscription_namespace: '{{ lvms_namespace }}'
 
 - name: Deploy LVM Storage instance
   kubernetes.core.k8s:
@@ -52,7 +59,7 @@
     api_version: lvm.topolvm.io/v1alpha1
     kind: LVMCluster
     name: lvmcluster
-    namespace: openshift-storage
+    namespace: '{{ lvms_namespace }}'
   register: lvms_lvmcluster
   until:
     - lvms_lvmcluster.resources.0.status.deviceClassStatuses is defined

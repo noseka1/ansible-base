@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: lvms-operator
-  namespace: openshift-storage
+  namespace: {{ lvms_namespace }}
 spec:
 {% if lvms_operator_subscription_channel | length > 0 %}
   channel: {{ lvms_operator_subscription_channel }}
@@ -11,3 +11,6 @@ spec:
   name: lvms-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+{% if lvms_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ lvms_operator_subscription_starting_csv }}
+{% endif %}

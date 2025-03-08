@@ -1,22 +1,22 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: {{ openshift_virtualization_machine_name }}
-  namespace: {{ openshift_virtualization_machine_namespace }}
+  name: {{ osvirt_machine_name }}
+  namespace: {{ osvirt_machine_namespace }}
 spec:
   runStrategy: Always
   template:
     metadata:
       labels:
-        kubevirt.io/domain: {{ openshift_virtualization_machine_name }}
+        kubevirt.io/domain: {{ osvirt_machine_name }}
         kubevirt.io/size: small
-        vm.kubevirt.io/name: {{ openshift_virtualization_machine_name }}
+        vm.kubevirt.io/name: {{ osvirt_machine_name }}
         os.template.kubevirt.io/fedora39: 'true'
         flavor.template.kubevirt.io/small: 'true'
         workload.template.kubevirt.io/server: 'true'
     spec:
-{% if openshift_virtualization_machine_node_selector %}
-      nodeSelector: {{ openshift_virtualization_machine_node_selector | to_json }}
+{% if osvirt_machine_node_selector %}
+      nodeSelector: {{ osvirt_machine_node_selector | to_json }}
 {% endif %}
       tolerations:
       - effect: NoSchedule
@@ -36,12 +36,12 @@ spec:
               bus: virtio
             name: rootdisk
           interfaces:
-{% if openshift_virtualization_machine_pod_network %}
+{% if osvirt_machine_pod_network %}
           - masquerade: {}
             model: virtio
             name: default
 {% endif %}
-{% if openshift_virtualization_machine_multus_network_name | length > 0 %}
+{% if osvirt_machine_multus_network_name | length > 0 %}
           - bridge: {}
             model: virtio
             name: net2
@@ -53,24 +53,24 @@ spec:
           type: pc-q35-rhel8.3.0
         memory:
           guest: 2Gi
-      evictionStrategy: {{ openshift_virtualization_machine_eviction_strategy }}
-      hostname: {{ openshift_virtualization_machine_name }}
+      evictionStrategy: {{ osvirt_machine_eviction_strategy }}
+      hostname: {{ osvirt_machine_name }}
       networks:
-{% if openshift_virtualization_machine_pod_network %}
+{% if osvirt_machine_pod_network %}
       - name: default
         pod: {}
 {% endif %}
-{% if openshift_virtualization_machine_multus_network_name | length > 0 %}
+{% if osvirt_machine_multus_network_name | length > 0 %}
       - name: net2
         multus:
-          networkName: {{ openshift_virtualization_machine_multus_network_name }}
+          networkName: {{ osvirt_machine_multus_network_name }}
 {% endif %}
       terminationGracePeriodSeconds: 180
       volumes:
       - cloudInitNoCloud:
           secretRef:
-            name: {{ openshift_virtualization_machine_name }}-cloudinit
+            name: {{ osvirt_machine_name }}-cloudinit
         name: cloudinitdisk
       - persistentVolumeClaim:
-          claimName: {{ openshift_virtualization_machine_name }}-rootdisk
+          claimName: {{ osvirt_machine_name }}-rootdisk
         name: rootdisk

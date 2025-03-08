@@ -1,18 +1,18 @@
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: VolumeImportSource
 metadata:
-  name: {{ openshift_virtualization_machine_name }}-rootdisk
-  namespace: {{ openshift_virtualization_machine_namespace }}
+  name: {{ osvirt_machine_name }}-rootdisk
+  namespace: {{ osvirt_machine_namespace }}
 spec:
   source:
-{% if openshift_virtualization_machine_image_http_url | length > 0 %}
+{% if osvirt_machine_image_http_url | length > 0 %}
     http:
-      url: {{ openshift_virtualization_machine_image_http_url }}
-      certConfigMap: {{ openshift_virtualization_machine_name }}-trusted-ca-bundle
+      url: {{ osvirt_machine_image_http_url }}
+      certConfigMap: {{ osvirt_machine_name }}-trusted-ca-bundle
 {% endif %}
-{% if openshift_virtualization_machine_image_registry_url | length > 0 %}
+{% if osvirt_machine_image_registry_url | length > 0 %}
     registry:
-      url: {{ openshift_virtualization_machine_image_registry_url }}
+      url: {{ osvirt_machine_image_registry_url }}
       # Take advantage of the OpenShift pull secret which is required
       # to pull container images from the Red Hat registry.
       pullMethod: node

@@ -3,22 +3,22 @@
     api_version: storage.k8s.io/v1
     kind: StorageClass
     name: '{{ item }}'
-  register: openshift_virtualization_ocs_storageclasses_result
+  register: osvirt_ocs_storageclasses_result
   loop:
     - ocs-storagecluster-ceph-rbd-virtualization
     - ocs-external-storagecluster-ceph-rbd
     - rook-ceph-block-virtualization
 
 - set_fact:
-    openshift_virtualization_ocs_storageclasses_defs: >-
-      {{ openshift_virtualization_ocs_storageclasses_result.results | json_query("[].resources[0]") }}
+    osvirt_ocs_storageclasses_defs: >-
+      {{ osvirt_ocs_storageclasses_result.results | json_query("[].resources[0]") }}
 
 - set_fact:
-    openshift_virtualization_machine_eviction_strategy: LiveMigrate
-    openshift_virtualization_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
-    openshift_virtualization_machine_root_disk_storage_class_name: '{{ openshift_virtualization_ocs_storageclasses_defs.0.metadata.name }}'
-    openshift_virtualization_machine_root_disk_volume_mode: Block
-  when: openshift_virtualization_ocs_storageclasses_defs | length > 0
+    osvirt_machine_eviction_strategy: LiveMigrate
+    osvirt_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
+    osvirt_machine_root_disk_storage_class_name: '{{ osvirt_ocs_storageclasses_defs.0.metadata.name }}'
+    osvirt_machine_root_disk_volume_mode: Block
+  when: osvirt_ocs_storageclasses_defs | length > 0
 
 - import_role:
     name: openshift_autogitops
@@ -26,4 +26,4 @@
   vars:
     autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: openshift-virtualization/example-workload
-    autogitops_app_namespace: '{{ openshift_virtualization_machine_namespace }}'
+    autogitops_app_namespace: '{{ osvirt_machine_namespace }}'

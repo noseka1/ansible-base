@@ -8,9 +8,9 @@
     tasks_from: add_machineset.yml
   vars:
     add_machineset_role: baremetal
-    add_machineset_instance_type: '{{ openshift_virtualization_aws.instance_type }}'
-    add_machineset_availability_zones: '{{ openshift_virtualization_aws.availability_zones }}'
-    add_machineset_nodes_per_zone: '{{ openshift_virtualization_aws.nodes_per_zone }}'
+    add_machineset_instance_type: '{{ osvirt_aws.instance_type }}'
+    add_machineset_availability_zones: '{{ osvirt_aws.availability_zones }}'
+    add_machineset_nodes_per_zone: '{{ osvirt_aws.nodes_per_zone }}'
     add_machineset_labels:
       node-role.kubernetes.io/baremetal: ""
     add_machineset_retries: 300

@@ -1,5 +1,5 @@
 - import_tasks: example_delete.yml
-  tags: openshift_virtualization_example_workload
+  tags: osvirt_example_workload
 
 - name: Delete custom storageprofiles
   kubernetes.core.k8s:
@@ -9,7 +9,7 @@
       - storageprofiles/nfs-csi-storageprofile.yaml
       - storageprofiles/iscsi-target-storageprofile.yaml
     state: absent
-  tags: openshift_virtualization_instance
+  tags: osvirt_instance
 
 - import_role:
     name: openshift_common
@@ -26,21 +26,21 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
-  tags: openshift_virtualization_hostpathprov
+  tags: osvirt_hostpathprov
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/instance
-  tags: openshift_virtualization_instance
+  tags: osvirt_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/operator
-  tags: openshift_virtualization_operator
+  tags: osvirt_operator
 
 - import_tasks: cluster_nodes_delete.yml
-  tags: openshift_virtualization_cluster_nodes
+  tags: osvirt_cluster_nodes

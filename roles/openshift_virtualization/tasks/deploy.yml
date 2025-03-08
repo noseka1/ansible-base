@@ -1,5 +1,5 @@
 - import_tasks: cluster_nodes_deploy.yml
-  tags: openshift_virtualization_cluster_nodes
+  tags: osvirt_cluster_nodes
 
 - import_role:
     name: openshift_autogitops
@@ -8,7 +8,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-virtualization/operator
     autogitops_app_namespace: openshift-cnv
-  tags: openshift_virtualization_operator
+  tags: osvirt_operator
 
 - import_role:
     name: openshift_common
@@ -16,7 +16,7 @@
   vars:
     subscription_name: kubevirt-hyperconverged
     subscription_namespace: openshift-cnv
-  tags: openshift_virtualization_operator
+  tags: osvirt_operator
 
 - import_role:
     name: openshift_autogitops
@@ -25,7 +25,7 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: openshift-virtualization/instance
     autogitops_app_namespace: openshift-cnv
-  tags: openshift_virtualization_instance
+  tags: osvirt_instance
 
 - import_role:
     name: openshift_autogitops
@@ -34,7 +34,7 @@
     autogitops_app_src_path: templates/hostpath-provisioner
     autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
     autogitops_app_namespace: ''
-  tags: openshift_virtualization_hostpathprov
+  tags: osvirt_hostpathprov
 
 # CNV operator removes a storageprofile if the corresponding
 # storageclass doesn't exist on the cluster. Use Ansible to deploy
@@ -47,7 +47,7 @@
       - storageprofiles/local-hostpath-storageprofile.yaml
       - storageprofiles/nfs-csi-storageprofile.yaml
       - storageprofiles/iscsi-target-storageprofile.yaml
-  tags: openshift_virtualization_instance
+  tags: osvirt_instance
 
 - import_tasks: example_deploy.yml
-  tags: openshift_virtualization_example_workload
+  tags: osvirt_example_workload

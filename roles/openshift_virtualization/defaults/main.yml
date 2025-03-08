@@ -1,4 +1,4 @@
-openshift_virtualization_operator_subscription_channel: stable
+openshift_virtualization_operator_subscription_channel: ''
 openshift_virtualization_operator_subscription_approval: Automatic
 openshift_virtualization_operator_subscription_starting_csv: ''
 

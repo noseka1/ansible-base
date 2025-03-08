@@ -2,7 +2,7 @@ apiVersion: ocs.openshift.io/v1
 kind: StorageCluster
 metadata:
   name: ocs-external-storagecluster
-  namespace: openshift-storage
+  namespace: {{ odf_namespace }}
 spec:
   externalStorage:
     enable: true

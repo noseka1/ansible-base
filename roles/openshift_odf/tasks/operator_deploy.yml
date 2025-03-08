@@ -1,8 +1,8 @@
-- name: Check if openshift-storage namespace already exists
+- name: Check if {{ odf_namespace }} namespace already exists
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Namespace
-    name: openshift-storage
+    name: '{{ odf_namespace }}'
   register: odf_openshift_storage_namespace_result
 
 - import_role:
@@ -10,7 +10,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: odf-operator
-    oscomm_subscription_namespace: openshift-storage
+    oscomm_subscription_namespace: '{{ odf_namespace }}'
 
 - import_role:
     name: openshift_autogitops
@@ -18,7 +18,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: odf/operator
-    autogitops_app_namespace: openshift-storage
+    autogitops_app_namespace: '{{ odf_namespace }}'
 
 - import_role:
     name: openshift_common

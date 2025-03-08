@@ -8,7 +8,7 @@
   vars:
     autogitops_app_src_path: templates/instance/external
     autogitops_app_dst_path: odf/instance/external
-    autogitops_app_namespace: openshift-storage
+    autogitops_app_namespace: '{{ odf_namespace }}'
 
 - name: Check if default storage class exists
   import_role:

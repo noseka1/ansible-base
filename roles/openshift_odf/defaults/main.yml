@@ -2,6 +2,8 @@ odf_operator_subscription_channel: ''
 odf_operator_subscription_approval: Manual
 odf_operator_subscription_starting_csv: ''
 
+odf_namespace: openshift-storage
+
 odf_aws:
   # ODF cluster requires at least 4xlarge to fully deploy
   instance_type: m6i.4xlarge

@@ -10,5 +10,5 @@ metadata:
     openshift.io/node-selector: ""
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: openshift-storage
+  name: {{ odf_namespace }}
 {% endif %}

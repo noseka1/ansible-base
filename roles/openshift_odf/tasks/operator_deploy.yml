@@ -1,10 +1,3 @@
-- name: Check if {{ odf_namespace }} namespace already exists
-  kubernetes.core.k8s_info:
-    api_version: v1
-    kind: Namespace
-    name: '{{ odf_namespace }}'
-  register: odf_openshift_storage_namespace_result
-
 - import_role:
     name: openshift_common
     tasks_from: install_plan_approve

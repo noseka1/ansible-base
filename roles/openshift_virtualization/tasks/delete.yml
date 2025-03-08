@@ -21,7 +21,7 @@
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
 
- - import_role:
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

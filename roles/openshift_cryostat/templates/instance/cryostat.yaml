@@ -1,16 +1,15 @@
 kind: Cryostat
-apiVersion: operator.cryostat.io/v1beta1
+apiVersion: operator.cryostat.io/v1beta2
 metadata:
   name: {{ cryostat_instance_name }}
   namespace: {{ cryostat_instance_namespace }}
 spec:
   enableCertManager: {{ cryostat_instance_cert_manager }}
-  minimal: {{ cryostat_instance_minimal }}
   reportOptions:
     replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: '1'
         memory: 512Mi
   storageOptions:
     pvc:
@@ -18,3 +17,5 @@ spec:
         resources:
           requests:
             storage: 1Gi
+  targetNamespaces:
+  - {{ cryostat_instance_namespace }}

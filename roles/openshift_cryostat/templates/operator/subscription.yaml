@@ -4,11 +4,16 @@ metadata:
   name: {{ cryostat_operator_subscription_name }}
   namespace: {{ cryostat_operator_namespace }}
 spec:
+{% if cryostat_operator_subscription_channel | length > 0 %}
   channel: {{ cryostat_operator_subscription_channel }}
+{% endif %}
   installPlanApproval: {{ cryostat_operator_subscription_approval }}
   name: cryostat-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+{% if cryostat_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ cryostat_operator_subscription_starting_csv }}
+{% endif %}
   config:
     env:
     # By default, the operator expects cert-manager to be available in the cluster.

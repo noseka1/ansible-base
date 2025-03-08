@@ -1,16 +1,12 @@
+cryostat_operator_subscription_channel: ''
+cryostat_operator_subscription_approval: Manual
+cryostat_operator_subscription_starting_csv: ''
 cryostat_operator_subscription_name: cryostat-operator
-cryostat_operator_subscription_channel: stable
-cryostat_operator_subscription_approval: Automatic
 
-cryostat_operator_namespace: cryostat
+cryostat_operator_namespace: openshift-operators
 
 cryostat_instance_name: cryostat
 cryostat_instance_namespace: cryostat
-
-# The minimal property determines what is deployed alongside Cryostat. If false the operator deploys Cryostat,
-# with a customized Grafana and a Grafana Data Source for JFR files as 3 containers within a Pod.
-# When minimal is set to true, the Deployment consists of only the Cryostat container.
-cryostat_instance_minimal: false
 
 # By default, the operator expects cert-manager to be available in the cluster. The operator uses cert-manager
 # to generate a self-signed CA to allow traffic between Cryostat components within the cluster to use HTTPS.

@@ -1,13 +1,17 @@
-- name: Delete Cryostat instance
-  kubernetes.core.k8s:
-    template:
-      - instance/cryostat-cryostat.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: cryostat/instance
+  tags: cryostat_instance
 
-- name: Delete Cryostat namespace
-  kubernetes.core.k8s:
-    template:
-      - operator/cryostat-ns.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: cryostat/operator
+  tags: cryostat_operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

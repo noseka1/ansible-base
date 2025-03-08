@@ -1,39 +1,39 @@
-- name: Retrieve subscription {{ subscription_namespace }}/{{ subscription_name }}
+- name: Retrieve subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }}
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: '{{ subscription_name }}'
-    namespace: '{{ subscription_namespace }}'
-  register: operator_subscription
+    name: '{{ oscomm_subscription_name }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
+  register: oscomm_operator_subscription_result
   until:
-    - operator_subscription.resources.0.status is defined
+    - oscomm_operator_subscription_result.resources.0.status is defined
   retries: 60
   delay: 1
 
 - name: End the play execution if operator is already installed
   ansible.builtin.meta: end_play
   when:
-    - operator_subscription.resources.0.status.installedCSV | default('') | length > 0
+    - oscomm_operator_subscription_result.resources.0.status.installedCSV | default('') | length > 0
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for install plan to show up
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: '{{ subscription_name }}'
-    namespace: '{{ subscription_namespace }}'
-  register: operator_subscription
+    name: '{{ oscomm_subscription_name }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
+  register: oscomm_operator_subscription_result
   until:
-    - operator_subscription.resources.0.status.installPlanRef is defined
+    - oscomm_operator_subscription_result.resources.0.status.installPlanRef is defined
   retries: 60
   delay: 1
 
-- name: Approve install plan {{ operator_subscription.resources.0.status.installPlanRef.name }}
+- name: Approve install plan {{ oscomm_operator_subscription_result.resources.0.status.installPlanRef.name }}
   kubernetes.core.k8s:
     definition:
       apiVersion: operators.coreos.com/v1alpha1
       kind: InstallPlan
       metadata:
-        name: '{{ operator_subscription.resources.0.status.installPlanRef.name }}'
-        namespace: '{{ operator_subscription.resources.0.status.installPlanRef.namespace }}'
+        name: '{{ oscomm_operator_subscription_result.resources.0.status.installPlanRef.name }}'
+        namespace: '{{ oscomm_operator_subscription_result.resources.0.status.installPlanRef.namespace }}'
       spec:
         approved: true

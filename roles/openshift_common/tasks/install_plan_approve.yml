@@ -9,8 +9,8 @@
     ansible-playbook \
       {{ playbook_dir }}/openshift_install_plan_approve.yml \
       -i {{ playbook_dir }}/inventory/localhost.yml \
-      -e subscription_name={{ subscription_name }} \
-      -e subscription_namespace={{ subscription_namespace }}
+      -e oscomm_subscription_name={{ oscomm_subscription_name }} \
+      -e oscomm_subscription_namespace={{ oscomm_subscription_namespace }}
   environment:
     KUBECONFIG: '{{ lookup("env", "KUBECONFIG") }}'
   changed_when: false

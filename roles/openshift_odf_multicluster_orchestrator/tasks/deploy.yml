@@ -10,4 +10,5 @@
     name: openshift_common
     tasks_from: console_plugin_enable.yml
   vars:
-    openshift_common_enable_console_plugin: odf-multicluster-console
+    oscomm_enable_console_plugin:
+      - odf-multicluster-console

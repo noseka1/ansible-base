@@ -3,14 +3,15 @@
     api_version: operator.openshift.io/v1
     kind: Console
     name: cluster
-  register: openshift_common_console_result
+  register: oscomm_console_result
 
-- name: Disabling console plugin {{ openshift_common_disable_console_plugin }}
+- name: Disabling console plugins
   kubernetes.core.k8s_json_patch:
     api_version: operator.openshift.io/v1
     kind: Console
     name: cluster
     patch:
       - op: remove
-        path: /spec/plugins/{{ openshift_common_console_result.resources.0.spec.plugins.index(openshift_common_disable_console_plugin) }}
-  when: openshift_common_disable_console_plugin in openshift_common_console_result.resources.0.spec.plugins
+        path: /spec/plugins/{{ oscomm_console_result.resources.0.spec.plugins.index(item) }}
+  when: item in oscomm_console_result.resources.0.spec.plugins
+  loop: '{{ oscomm_disable_console_plugin }}'

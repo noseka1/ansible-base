@@ -16,4 +16,5 @@
     name: openshift_common
     tasks_from: console_plugin_enable.yml
   vars:
-    openshift_common_enable_console_plugin: gitops-plugin
+    oscomm_enable_console_plugin:
+      - gitops-plugin

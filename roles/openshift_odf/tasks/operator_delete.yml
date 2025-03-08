@@ -2,13 +2,9 @@
     name: openshift_common
     tasks_from: console_plugin_disable.yml
   vars:
-    openshift_common_disable_console_plugin: odf-console
-
-- import_role:
-    name: openshift_common
-    tasks_from: console_plugin_disable.yml
-  vars:
-    openshift_common_disable_console_plugin: odf-client-console
+    oscomm_disable_console_plugin:
+      - odf-console
+      - odf-client-console
 
 - import_role:
     name: openshift_autogitops

@@ -2,7 +2,8 @@
     name: openshift_common
     tasks_from: console_plugin_disable.yml
   vars:
-    openshift_common_disable_console_plugin: gitops-plugin
+    oscomm_disable_console_plugin:
+      - gitops-plugin
 
 - name: Delete GitOps operator
   kubernetes.core.k8s:

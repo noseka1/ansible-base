@@ -3,9 +3,9 @@
     api_version: operator.openshift.io/v1
     kind: Console
     name: cluster
-  register: openshift_common_console_result
+  register: oscomm_console_result
 
-- name: Enabling console plugin {{ openshift_common_enable_console_plugin }}
+- name: Enabling console plugins
   kubernetes.core.k8s_json_patch:
     api_version: operator.openshift.io/v1
     kind: Console
@@ -13,5 +13,6 @@
     patch:
       - op: add
         path: /spec/plugins/-
-        value: '{{ openshift_common_enable_console_plugin }}'
-  when: openshift_common_enable_console_plugin not in openshift_common_console_result.resources.0.spec.plugins
+        value: '{{ item }}'
+  when: item not in oscomm_console_result.resources.0.spec.plugins
+  loop: '{{ oscomm_enable_console_plugin }}'

@@ -17,8 +17,8 @@
     - (autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status!=nil && health.status=='Missing' && status=='OutOfSync']") | length)
        ==
       (autogitops_app_get_result.json.status.resources | default ([]) | length)
-  retries: 120
-  delay: 5
+  retries: 300
+  delay: 2
 
 - set_fact:
     autogitops_app_reconciled: >-

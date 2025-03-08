@@ -15,8 +15,8 @@
     - autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt
     - autogitops_app_get_result.json.status.sync.status | default('') == 'Synced'
     - autogitops_app_get_result.json.status.health.status | default('') == 'Healthy'
-  retries: '{{ autogitops_app_sync_retries | default(120) }}'
-  delay: 5
+  retries: '{{ autogitops_app_sync_retries | default(300) }}'
+  delay: 2
 
 - set_fact:
     autogitops_app_reconciled: >-

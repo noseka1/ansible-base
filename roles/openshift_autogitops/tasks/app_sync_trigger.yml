@@ -17,5 +17,5 @@
   register: autogitops_app_sync_result
   until:
     - autogitops_app_sync_result.json.status.reconciledAt is defined
-  retries: 120
-  delay: 5
+  retries: 300
+  delay: 2

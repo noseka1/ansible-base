@@ -1,10 +1,19 @@
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: metallb-operator
+    oscomm_subscription_namespace: metallb-system
+  tags: metallb_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: metallb/operator
     autogitops_app_namespace: metallb-system
+  tags: metallb_operator
 
 - import_role:
     name: openshift_common
@@ -12,6 +21,7 @@
   vars:
     subscription_name: metallb-operator
     subscription_namespace: metallb-system
+  tags: metallb_operator
 
 - import_role:
     name: openshift_autogitops
@@ -20,3 +30,4 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: metallb/instance
     autogitops_app_namespace: metallb-system
+  tags: metallb_instance

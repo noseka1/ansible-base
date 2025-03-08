@@ -7,7 +7,7 @@
   register: oscomm_operator_subscription_result
   until:
     - oscomm_operator_subscription_result.resources.0.status is defined
-  retries: 60
+  retries: 120
   delay: 1
 
 - name: End the play execution if operator is already installed
@@ -24,7 +24,7 @@
   register: oscomm_operator_subscription_result
   until:
     - oscomm_operator_subscription_result.resources.0.status.installPlanRef is defined
-  retries: 60
+  retries: 120
   delay: 1
 
 - name: Approve install plan {{ oscomm_operator_subscription_result.resources.0.status.installPlanRef.name }}

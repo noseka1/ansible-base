@@ -14,5 +14,5 @@
   environment:
     KUBECONFIG: '{{ lookup("env", "KUBECONFIG") }}'
   changed_when: false
-  async: 60
+  async: 240
   poll: 0

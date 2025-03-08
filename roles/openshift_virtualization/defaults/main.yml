@@ -1,6 +1,8 @@
 osvirt_operator_subscription_channel: ''
-osvirt_operator_subscription_approval: Automatic
+osvirt_operator_subscription_approval: Manual
 osvirt_operator_subscription_starting_csv: ''
+
+osvirt_namespace: openshift-cnv
 
 osvirt_kvm_emulation_enabled: false
 

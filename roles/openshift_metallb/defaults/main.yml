@@ -1,4 +1,4 @@
-metallb_operator_subscription_channel: stable
+metallb_operator_subscription_channel: ''
 metallb_operator_subscription_approval: Manual
 metallb_operator_subscription_starting_csv: ''
 

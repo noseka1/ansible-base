@@ -22,6 +22,10 @@ if obj.status ~= nil then
       health_status.status = "Healthy"
       health_status.message = msg
       return health_status
+    elseif numDegraded == 0 and csvInstalled then
+      health_status.status = "Healthy"
+      health_status.message = msg
+      return health_status
     elseif numPending > 0 and numDegraded == 0 then
       health_status.status = "Progressing"
       health_status.message = "An install plan for a subscription is pending installation"

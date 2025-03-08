@@ -1,0 +1,18 @@
+# Ansible can't execute a group of tasks in parallel to the main thread. As a workaround,
+# call ansible-playbook command directly. This is quite ugly.
+# See also: https://github.com/ansible/ansible/issues/19083
+- name: Spawn install plan approver job
+  shell: |-
+    if [ -z "$KUBECONFIG" ]; then
+      unset KUBECONFIG
+    fi
+    ansible-playbook \
+      {{ playbook_dir }}/openshift_install_plan_approve.yml \
+      -i {{ playbook_dir }}/inventory/localhost.yml \
+      -e subscription_name={{ subscription_name }} \
+      -e subscription_namespace={{ subscription_namespace }}
+  environment:
+    KUBECONFIG: '{{ lookup("env", "KUBECONFIG") }}'
+  changed_when: false
+  async: 60
+  poll: 0

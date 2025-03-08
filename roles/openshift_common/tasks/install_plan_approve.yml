@@ -1,7 +1,7 @@
 # Ansible can't execute a group of tasks in parallel to the main thread. As a workaround,
 # call ansible-playbook command directly. This is quite ugly.
 # See also: https://github.com/ansible/ansible/issues/19083
-- name: Spawn install plan approver job
+- name: Spawn install plan approver job for {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }}
   shell: |-
     if [ -z "$KUBECONFIG" ]; then
       unset KUBECONFIG

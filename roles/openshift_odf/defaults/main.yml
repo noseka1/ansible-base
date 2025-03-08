@@ -1,5 +1,5 @@
 odf_operator_subscription_channel: ''
-odf_operator_subscription_approval: Automatic
+odf_operator_subscription_approval: Manual
 odf_operator_subscription_starting_csv: ''
 
 odf_aws:

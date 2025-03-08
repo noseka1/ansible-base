@@ -8,7 +8,7 @@
   until:
     - operator_subscription.resources.0.status is defined
   retries: 60
-  delay: 10
+  delay: 1
 
 - pause:
     seconds: 600
@@ -30,7 +30,7 @@
   until:
     - operator_subscription.resources.0.status.installedCSV is defined
   retries: 60
-  delay: 10
+  delay: 1
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ subscription_namespace }}/{{ operator_subscription.resources.0.status.installedCSV }} to deploy
   kubernetes.core.k8s_info:

@@ -1,5 +1,5 @@
 rhacm_operator_subscription_channel: ''
-rhacm_operator_subscription_approval: Automatic
+rhacm_operator_subscription_approval: Manual
 rhacm_operator_subscription_starting_csv: ''
 
 rhacm_operator_namespace: open-cluster-management

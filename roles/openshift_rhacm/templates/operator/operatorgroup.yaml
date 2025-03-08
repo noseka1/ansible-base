@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: open-cluster-management
-  name: {{ rhacm_operator_namespace }}
+  name: {{ rhacm_operator_name }}
+  namespace: {{ rhacm_operator_namespace }}
 spec:
   targetNamespaces:
     - {{ rhacm_operator_namespace }}

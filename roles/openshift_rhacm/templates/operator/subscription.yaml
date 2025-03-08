@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: advanced-cluster-management
-  name: {{ rhacm_operator_namespace }}
+  name: {{ rhacm_operator_name }}
+  namespace: {{ rhacm_operator_namespace }}
 spec:
 {% if rhacm_operator_subscription_channel | length > 0 %}
   channel: {{ rhacm_operator_subscription_channel }}

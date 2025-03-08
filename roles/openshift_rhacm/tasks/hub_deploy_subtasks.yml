@@ -1,4 +1,11 @@
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: '{{ rhacm_operator_name }}'
+    oscomm_subscription_namespace: '{{ rhacm_operator_namespace }}'
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -10,7 +17,7 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: advanced-cluster-management
+    subscription_name: '{{ rhacm_operator_name }}'
     subscription_namespace: '{{ rhacm_operator_namespace }}'
 
 - import_role:

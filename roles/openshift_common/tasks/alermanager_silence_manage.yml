@@ -1,0 +1,46 @@
+- import_role:
+    name: openshift_common
+    tasks_from: openshift_oauth_token_get.yml
+
+- name: Retrieve AlertManager silences
+  uri:
+    url: https://alertmanager-main-openshift-monitoring.apps.{{ openshift_common_cluster_domain }}/api/v2/silences
+    headers:
+      Authorization: Bearer {{ oscommon_openshift_oauth_token }}
+    status_code: [ 200 ]
+  register: oscomm_get_silences_result
+
+- name: Find matching unexpired silence
+  set_fact:
+    oscomm_existing_silence: >-
+      {{ oscomm_get_silences_result.json | json_query("[?createdBy=='" + oscomm_silence_definition.createdBy + "' && status.state=='active']") }}
+
+- name: Add AlertManager ID field
+  set_fact:
+    oscomm_silence_definition: >-
+      {{ oscomm_silence_definition | combine({"id": oscomm_existing_silence.0.id}) | to_json | from_json }}
+  when: oscomm_existing_silence | length > 0
+
+# AlertManager API requires a future date for silence expiration. Set the silence
+# expiration to 5 seconds from now.
+- name: Compute expiration date
+  set_fact:
+    oscomm_silence_expiration: >-
+      {{ '%Y-%m-%dT%H:%M:%S.000Z' | strftime((now(fmt="%s") | int) + 5, utc=true) }}
+  when: oscomm_silence_state == 'absent'
+
+- name: Set expiration date
+  set_fact:
+    oscomm_silence_definition: >-
+      {{ oscomm_silence_definition | combine({"endsAt": oscomm_silence_expiration}) | to_json | from_json }}
+  when: oscomm_silence_state == 'absent'
+
+- name: Create/update silence {{ oscomm_silence_definition.createdBy }}
+  uri:
+    url: https://alertmanager-main-openshift-monitoring.apps.{{ openshift_common_cluster_domain }}/api/v2/silences
+    method: POST
+    headers:
+      Authorization: Bearer {{ oscommon_openshift_oauth_token }}
+    body_format: json
+    body: '{{ oscomm_silence_definition | to_json }}'
+    status_code: [ 200 ]

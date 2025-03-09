@@ -18,3 +18,10 @@
   vars:
     autogitops_app_dst_path: templates/operator
   tags: mtv_operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_disable.yml
+  vars:
+    oscomm_disable_console_plugin:
+      - forklift-console-plugin

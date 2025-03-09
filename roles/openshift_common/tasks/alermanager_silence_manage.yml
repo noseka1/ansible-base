@@ -1,3 +1,17 @@
+- assert:
+    that:
+      - oscomm_silence_definition is defined
+      - oscomm_silence_definition | length > 0
+    fail_msg: Variable 'oscomm_silence_definition' must not be empty
+    quiet: true
+
+- assert:
+    that:
+      - oscomm_silence_state is defined
+      - oscomm_silence_state in ['present', 'absent']
+    fail_msg: Variable 'oscomm_silence_state' must be set to 'present' or 'absent'
+    quiet: true
+
 - import_role:
     name: openshift_common
     tasks_from: openshift_oauth_token_get.yml

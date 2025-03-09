@@ -15,3 +15,11 @@
         path: /spec/plugins/{{ oscomm_console_result.resources.0.spec.plugins.index(item) }}
   when: item in oscomm_console_result.resources.0.spec.plugins
   loop: '{{ oscomm_disable_console_plugin }}'
+
+- name: Removing console plugins
+  kubernetes.core.k8s:
+    api_version: console.openshift.io/v1
+    kind: ConsolePlugin
+    name: '{{ item }}'
+    state: absent
+  loop: '{{ oscomm_disable_console_plugin }}'

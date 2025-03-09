@@ -6,6 +6,14 @@
   tags: netobserv_instance
 
 - import_role:
+    name: openshift_common
+    tasks_from: console_plugin_disable.yml
+  vars:
+    oscomm_disable_console_plugin:
+      - netobserv-plugin
+  tags: netobserv_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

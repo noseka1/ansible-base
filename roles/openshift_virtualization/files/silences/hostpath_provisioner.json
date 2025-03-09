@@ -1,0 +1,20 @@
+{
+  "comment": "Ansible creates HPP directory in the root partition. This is acknowledged.",
+  "createdBy": "Ansible ID ee03418c-1987-4897-8265-bc6fb5ce2d15",
+  "startsAt": "2025-01-01T00:00:00.000Z",
+  "endsAt": "3000-01-01T00:00:00.000Z",
+  "matchers": [
+    {
+      "isEqual": true,
+      "isRegex": false,
+      "name": "alertname",
+      "value": "HPPSharingPoolPathWithOS"
+    },
+    {
+      "isEqual": true,
+      "isRegex": false,
+      "name": "severity",
+      "value": "warning"
+    }
+  ]
+}

@@ -8,12 +8,12 @@
 
 - assert:
     that: external_dns_aws_access_key_id | length > 0
-    fail_msg: "Variable 'externaldns_aws_access_key_id' must not be empty"
+    fail_msg: Variable 'externaldns_aws_access_key_id' must not be empty
     quiet: true
 
 - assert:
     that: external_dns_aws_secret_access_key | length > 0
-    fail_msg: "Variable 'externaldns_aws_secret_access_key' must not be empty"
+    fail_msg: Variable 'externaldns_aws_secret_access_key' must not be empty
     quiet: true
 
 - import_role:

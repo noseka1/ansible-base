@@ -1,6 +1,6 @@
 - assert:
     that: dynatrace_api_url_environmentid | length > 0
-    fail_msg: "Variable 'dynatrace_api_url_environmentid' must not be empty"
+    fail_msg: Variable 'dynatrace_api_url_environmentid' must not be empty
     quiet: true
 
 - import_role:

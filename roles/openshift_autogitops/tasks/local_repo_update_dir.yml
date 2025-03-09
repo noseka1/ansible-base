@@ -12,7 +12,7 @@
 - assert:
     that:
       - autogitops_app_src_items | length > 0
-    fail_msg: 'There are no application manifests to deploy. The manifest source directory is empty.'
+    fail_msg: There are no application manifests to deploy. The manifest source directory is empty.
     quiet: true
 
 - name: Obtain application destination tree

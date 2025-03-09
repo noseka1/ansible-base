@@ -16,7 +16,7 @@
     that:
       - github_readonly_token is defined
       - github_readonly_token | length > 0
-    fail_msg: "Variable 'github_readonly_token' must not be empty"
+    fail_msg: Variable 'github_readonly_token' must not be empty
     quiet: true
 
 - name: Check that GitHub token is not expired

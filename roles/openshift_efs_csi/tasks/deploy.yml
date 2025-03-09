@@ -8,7 +8,7 @@
 
 - assert:
     that: efs_aws_file_system_id | length > 0
-    fail_msg: "Variable 'efs_aws_file_system_id' must not be empty"
+    fail_msg: Variable 'efs_aws_file_system_id' must not be empty
     quiet: true
 
 - import_role:

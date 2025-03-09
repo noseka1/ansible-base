@@ -17,7 +17,7 @@
 - assert:
     that:
       - rhbk_openshift_user_result.resources | length == 1
-    fail_msg: 'User "{{ rhbk_user.name }}" does not exist in OpenShift.'
+    fail_msg: User "{{ rhbk_user.name }}" does not exist in OpenShift.
     quiet: true
 
 - name: Create user {{ rhbk_user.name }} if it doesn't exist

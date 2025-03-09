@@ -8,7 +8,7 @@
 - name: Delete GitOps operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-gitops-operator-ns.yaml
+      - operator/namespace.yaml
     state: absent
     wait: true
 

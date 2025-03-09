@@ -1,9 +1,9 @@
 - name: Deploy GitOps operator
   kubernetes.core.k8s:
     template:
-      - operator/openshift-gitops-operator-ns.yaml
-      - operator/openshift-gitops-operator-og.yaml
-      - operator/openshift-gitops-operator-sub.yaml
+      - operator/namespace.yaml
+      - operator/operatorgroup.yaml
+      - operator/subscription.yaml
 
 - import_role:
     name: openshift_common

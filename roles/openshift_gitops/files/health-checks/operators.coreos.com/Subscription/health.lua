@@ -18,11 +18,7 @@ if obj.status ~= nil then
         numDegraded = numDegraded + 1
       end
     end
-    if numDegraded == 0 and numPending == 0 and csvInstalled then
-      health_status.status = "Healthy"
-      health_status.message = msg
-      return health_status
-    elseif numDegraded == 0 and csvInstalled then
+    if numDegraded == 0 and csvInstalled then
       health_status.status = "Healthy"
       health_status.message = msg
       return health_status

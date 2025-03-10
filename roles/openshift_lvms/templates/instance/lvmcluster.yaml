@@ -7,7 +7,9 @@ spec:
   storage:
     deviceClasses:
     - name: loop1-vg
+      fstype: xfs
       thinPoolConfig:
+        chunkSizeCalculationPolicy: Static
         name: thin-pool-1
         overprovisionRatio: 10
         sizePercent: 90

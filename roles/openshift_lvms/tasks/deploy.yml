@@ -1,4 +1,5 @@
 - import_tasks: cluster_nodes_prep.yml
+  tags: lvms_cluster_nodes_prep
 
 - import_role:
     name: openshift_common
@@ -6,13 +7,16 @@
   vars:
     oscomm_subscription_name: lvms-operator
     oscomm_subscription_namespace: '{{ lvms_namespace }}'
+  tags: lvms_operator
 
-- name: Deploy LVM Storage operator
-  kubernetes.core.k8s:
-    template:
-      - operator/namespace.yaml
-      - operator/operatorgroup.yaml
-      - operator/subscription.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: lvms/operator
+    autogitops_app_namespace: '{{ lvms_namespace }}'
+  tags: lvms_operator
 
 - import_role:
     name: openshift_common
@@ -20,11 +24,28 @@
   vars:
     subscription_name: lvms-operator
     subscription_namespace: '{{ lvms_namespace }}'
+  tags: lvms_operator
 
-- name: Deploy LVM Storage instance
-  kubernetes.core.k8s:
-    template:
-      - instance/lvmcluster-lvmcluster.yaml
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+  tags: lvms_instance
+
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+  tags: lvms_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: lvms/instance
+    autogitops_app_namespace: '{{ lvms_namespace }}'
+  tags: lvms_instance
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for LVMCluster to deploy
   kubernetes.core.k8s_info:
@@ -39,19 +60,4 @@
     - (lvms_lvmcluster.resources.0.status.deviceClassStatuses | selectattr('name', 'equalto', 'loop1-vg') | first).nodeStatus | length > 0
   retries: 60
   delay: 10
-
-- name: Check if default storage class exists
-  import_role:
-    name: openshift_common
-    tasks_from: get_default_storage_class.yml
-
-- name: Check if default volume snapshot class exists
-  import_role:
-    name: openshift_common
-    tasks_from: get_default_volume_snapshot_class.yml
-
-- name: Update storage class and snapshot class
-  kubernetes.core.k8s:
-    template:
-      - instance/lvms-loop1-vg-sc.yaml
-      - instance/lvms-loop1-vg-vsclass.yaml
+  tags: lvms_instance

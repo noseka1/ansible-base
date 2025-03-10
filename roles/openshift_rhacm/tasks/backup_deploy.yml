@@ -2,28 +2,20 @@
     name: openshift_oadp
     tasks_from: instance_deploy.yml
   vars:
-    # Note that OADP (Velero) must be deployed to the open-cluster-management-backup namespace
+    # Note that RHACM backup requires that OADP (Velero) is deployed
+    # in the open-cluster-management-backup namespace
     oadp_operator_namespace: '{{ rhacm_backup_namespace }}'
     oadp_operator_manage_namespace: false
     oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
     oadp_app_prefix: rhacm-
 
-- name: Schedule periodic RHACM backup (note that this requires OADP operator to be installed)
-  kubernetes.core.k8s:
-    template: backup/schedule-acm-backupschedule.yaml
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup schedule to be enabled
-  kubernetes.core.k8s_info:
-    api_version: cluster.open-cluster-management.io/v1beta1
-    kind: BackupSchedule
-    name: schedule-acm
-    namespace: '{{ rhacm_backup_namespace }}'
-  register: backupschedule_result
-  until:
-    - backupschedule_result.resources.0.status.phase is defined
-    - backupschedule_result.resources.0.status.phase == 'Enabled'
-  retries: 30
-  delay: 10
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/backup
+    autogitops_app_dst_path: rhacm/backup
+    autogitops_app_namespace: '{{ rhacm_backup_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete successfully
   kubernetes.core.k8s_info:

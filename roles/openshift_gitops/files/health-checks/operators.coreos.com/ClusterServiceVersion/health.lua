@@ -1,6 +1,7 @@
 health_status = {}
 
 succeeded = false
+failed = false
 
 if obj.status ~= nil then
   if obj.status.phase ~= nil then

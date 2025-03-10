@@ -11,7 +11,7 @@ After=systemd-udevd.service
 Type=oneshot
 RemainAfterExit=no
 
-ExecStart=/var/usrlocal/bin/create-lvm-block.sh
+ExecStart=/var/usrlocal/bin/create-lvms-block.sh
 
 [Install]
 WantedBy=multi-user.target

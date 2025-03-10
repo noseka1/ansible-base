@@ -9,7 +9,7 @@ data_size=2048G
 
 # Create an empty backing file
 if [ ! -f $data_path ]; then
-  truncate --size  $data_size $data_path
+  truncate --size $data_size $data_path
 fi
 
 # Initialize the loop device

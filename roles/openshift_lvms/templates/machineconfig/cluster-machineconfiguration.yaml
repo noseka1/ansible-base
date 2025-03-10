@@ -7,11 +7,11 @@ spec:
     files:
     - actions:
       - type: None
-      path: /var/usrlocal/bin/create-lvm-block.sh
+      path: /var/usrlocal/bin/create-lvms-block.sh
     units:
     - actions:
       - type: DaemonReload
       - restart:
-          serviceName: create-lvm-block.service
+          serviceName: create-lvms-block.service
         type: Restart
-      name: create-lvm-block.service
+      name: create-lvms-block.service

@@ -3,20 +3,20 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: {{ item }}
-  name: 99-{{ item }}-lvm-block
+  name: 99-{{ item }}-lvms-block
 spec:
   config:
     ignition:
       version: 3.2.0
     storage:
       files:
-      - path: /var/usrlocal/bin/create-lvm-block.sh
+      - path: /var/usrlocal/bin/create-lvms-block.sh
         mode: 0755
         contents:
-          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'create-lvm-block.sh', rstrip=false) | b64encode }}
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'create-lvms-block.sh', rstrip=false) | b64encode }}
     systemd:
       units:
-      - name: create-lvm-block.service
+      - name: create-lvms-block.service
         enabled: true
         contents: |
-          {{ lookup('file', 'create-lvm-block.service', rstrip=false) | indent(10) }}
+          {{ lookup('file', 'create-lvms-block.service', rstrip=false) | indent(10) }}

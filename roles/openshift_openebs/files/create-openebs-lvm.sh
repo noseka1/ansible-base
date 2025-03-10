@@ -17,7 +17,7 @@ else
   losetup --show $device_path $data_path
 fi
 
-# This triggers LVM auto-activation as a side-effect
+# This triggers LVM auto-activation as a side-effect which is what we want
 losetup --set-capacity $device_path
 
 # Install snapshot and thin volume module for lvm.

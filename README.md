@@ -1,5 +1,7 @@
 # Ansible Base
 
+## Setup
+
 Install dependencies with:
 
 ```
@@ -27,24 +29,47 @@ Many of the Ansible roles in this repo require that autogitops is deployed on th
 $ ansible-playbook -i inventory/localhost.yml openshift_autogitops_deploy.yml
 ```
 
-Ansible roles utilizing autogitops need access to Kubernetes manifests located in the [GitOps Catalog Helm repository](https://github.com/noseka1/gitops-catalog-helm). These roles expect to find a clone of this repository on the local machine at *{{ playbook_dir }}/../gitops-catalog-helm* by default. You can clone the repository by changing to the parent directory:
-
-```
-$ pushd ..
-```
-
-and cloning the GitOps Catalog Helm repository:
-
-```
-$ git clone https://github.com/noseka1/gitops-catalog-helm.git
-```
-
-```
-$ popd
-```
+## Example usage
 
 You can run a playbook using:
 
 ```
 $ ansible-playbook -i inventory/localhost.yml <playbook>
+```
+
+For example, to deploy NMState operator along with the respective instance, you can issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_deploy.yml
+```
+
+To uninstall NMState instance and the operator, issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_delete.yml
+```
+
+To get a list of available tags for deploying individual components, issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_deploy.yml --list-tags
+```
+
+```
+playbook: openshift_nmstate_deploy.yml
+
+  play #1 (localhost): localhost        TAGS: []
+        TASK TAGS: [nmstate_instance, nmstate_operator]
+```
+
+To deploy just the NMState operator, issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_deploy.yml --tags nmstate_operator
+```
+
+To uninstall just the NMState operator, issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_delete.yml --tags nmstate_operator
 ```

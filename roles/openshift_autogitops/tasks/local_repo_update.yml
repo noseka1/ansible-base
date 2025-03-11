@@ -25,4 +25,13 @@
     src: argocd_config.yaml
     dest: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ autogitops_app_type }}.yaml'
 
+- name: Clean up obsolete argocd_config files if they exist
+  file:
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ item }}.yaml'
+    state: absent
+  when: item != autogitops_app_type
+  loop:
+    - helm
+    - dir
+
 - include_tasks: local_repo_update_{{ autogitops_app_type }}.yml

@@ -4,18 +4,18 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: hashicorp-vault/instance
-    autogitops_app_namespace: '{{ hashicorp_vault_namespace }}'
+    autogitops_app_namespace: '{{ hvault_namespace }}'
 
 - name: Obtain vault route
   import_tasks: get_vault_route.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
   uri:
-    url: '{{ hashicorp_vault_addr }}/v1/sys/health'
+    url: '{{ hvault_addr }}/v1/sys/health'
     method: GET
-    validate_certs: '{{ not hashicorp_vault_skip_verify }}'
+    validate_certs: '{{ not hvault_skip_verify }}'
     status_code: [ 200, 501, 503 ]
-  register: hashicorp_vault_health
-  until: (hashicorp_vault_health.status in [ 200, 501 ] or (hashicorp_vault_health.json is defined and hashicorp_vault_health.json.sealed))
+  register: hvault_health
+  until: (hvault_health.status in [ 200, 501 ] or (hvault_health.json is defined and hvault_health.json.sealed))
   retries: 60
   delay: 10

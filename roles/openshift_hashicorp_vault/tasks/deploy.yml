@@ -1,7 +1,7 @@
 - import_tasks: install.yml
 
 - import_tasks: initialize.yml
-  when: hashicorp_vault_health.status == 501
+  when: hvault_health.status == 501
 
 - import_tasks: unseal.yml
 

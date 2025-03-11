@@ -4,10 +4,10 @@
       Vault installed successfully.
 
       You can log in with:
-      VAULT_ADDR={{ hashicorp_vault_addr }} VAULT_SKIP_VERIFY={{ hashicorp_vault_skip_verify }} vault login -method=userpass username=admin password=<password>
+      VAULT_ADDR={{ hvault_addr }} VAULT_SKIP_VERIFY={{ hvault_skip_verify }} vault login -method=userpass username=admin password=<password>
 
       You can browse to:
-      {{ hashicorp_vault_addr }}
+      {{ hvault_addr }}
 
 - debug:
     msg: "{{ msg.split('\n') }}"

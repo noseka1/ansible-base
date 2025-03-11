@@ -6,41 +6,41 @@
       default_lease_ttl: '{{ 365 * 24 * 60 * 60 }}'
       max_lease_ttl: '{{ 365 * 24 * 60 * 60 }}'
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
 
 - name: Set URLs for issue certificate endpoints
   hashivault_pki_url:
     mount_point: pki
     crl_distribution_points:
-      - '{{ hashicorp_vault_addr }}/v1/pki/crl'
+      - '{{ hvault_addr }}/v1/pki/crl'
     issuing_certificates:
-      - '{{ hashicorp_vault_addr }}/v1/pki/ca'
+      - '{{ hvault_addr }}/v1/pki/ca'
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
 
 - name: Upload root CA bundle
   hashivault_pki_ca_set:
     mount_point: pki
-    pem_bundle: '{{ hashicorp_vault_pki_ca_bundle }}'
+    pem_bundle: '{{ hvault_pki_ca_bundle }}'
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
-  when: hashicorp_vault_pki_ca_bundle | length > 0
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
+  when: hvault_pki_ca_bundle | length > 0
 
 - name: Generate root certificate
   hashivault_pki_ca:
     mount_point: pki
     common_name: myroot
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
-  when: hashicorp_vault_pki_ca_bundle | length == 0
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
+  when: hvault_pki_ca_bundle | length == 0
 
 - import_role:
     name: openshift_common
@@ -54,9 +54,9 @@
       allow_subdomains: true
       max_ttl: '{{ 365 * 24 * 60 * 60 }}'
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
 
 - name: Create policy that grants access to certificate generator
   hashivault_policy:
@@ -64,9 +64,9 @@
     rules: |
       path "pki/sign/mycluster"  { capabilities = ["update"] }
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'
 
 - name: Define cert-manager role
   hashivault_write:
@@ -76,6 +76,6 @@
       bound_service_account_namespaces: cert-manager,default
       policies: mycluster_signer
   environment:
-    VAULT_ADDR: '{{ hashicorp_vault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hashicorp_vault_skip_verify }}'
-    VAULT_TOKEN: '{{ hashicorp_vault_token }}'
+    VAULT_ADDR: '{{ hvault_addr }}'
+    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
+    VAULT_TOKEN: '{{ hvault_token }}'

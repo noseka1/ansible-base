@@ -4,7 +4,6 @@
   vars:
     oscomm_disable_console_plugin:
       - odf-console
-      - odf-client-console
 
 - import_role:
     name: openshift_autogitops

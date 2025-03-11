@@ -19,4 +19,3 @@
   vars:
     oscomm_enable_console_plugin:
       - odf-console
-      - odf-client-console

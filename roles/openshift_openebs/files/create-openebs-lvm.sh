@@ -9,7 +9,7 @@ data_size=2048G
 
 # Create an empty backing file and LVM volume group
 if [ ! -f $data_path ]; then
-  truncate --size  $data_size $data_path
+  truncate --size $data_size $data_path
   losetup --show $device_path $data_path
   pvcreate $device_path
   vgcreate $device_name-vg $device_path

@@ -1,4 +1,4 @@
 openebs_helm_repo: https://openebs.github.io/charts
-openebs_version: 3.7.0
-openebs_name: openebs
+openebs_version: 3.10.0
+
 openebs_namespace: openebs

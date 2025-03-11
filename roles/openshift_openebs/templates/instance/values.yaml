@@ -1,0 +1,23 @@
+openebs:
+  localprovisioner:
+    enabled: false
+  ndm:
+    enabled: false
+  ndmOperator:
+    enabled: false
+  webhook:
+    enabled: false
+  snapshotOperator:
+    enabled: false
+  provisioner:
+    enabled: false
+  apiserver:
+    enabled: false
+  lvm-localpv:
+    enabled: true
+    storageCapacity: false
+    crd:
+      enableInstall: true
+      volumeSnapshot: false
+  crd:
+    enableInstall: true

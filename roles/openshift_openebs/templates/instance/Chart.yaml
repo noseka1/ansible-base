@@ -1,0 +1,9 @@
+apiVersion: v2
+name: openebs-instance
+type: application
+version: 0.1.0
+
+dependencies:
+- name: openebs
+  version: {{ openebs_version }}
+  repository: {{ openebs_helm_repo }}

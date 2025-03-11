@@ -2,6 +2,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: Prune=false
 {% if not openshift_common_default_storage_class_exists or openshift_common_default_storage_class == 'ocs-storagecluster-ceph-rbd' %}
     storageclass.kubernetes.io/is-default-class: 'true'
 {% endif %}

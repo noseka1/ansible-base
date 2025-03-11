@@ -6,7 +6,7 @@ metadata:
 spec:
   vault:
     path: pki/sign/mycluster
-    server: {{ hashicorp_vault_addr }}
+    server: {{ hvault_addr }}
 {% if certman_hashicorp_vault_ca_bundle | length > 0 %}
     caBundle: {{ certman_hashicorp_vault_ca_bundle | b64encode }}
 {% endif %}

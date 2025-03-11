@@ -3,6 +3,7 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: nmstate/instance
+  tags: nmstate_instance
 
 - import_role:
     name: openshift_common
@@ -10,9 +11,11 @@
   vars:
     oscomm_disable_console_plugin:
       - nmstate-console-plugin
+  tags: nmstate_operator
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: nmstate/operator
+  tags: nmstate_operator

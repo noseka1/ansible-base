@@ -2,6 +2,7 @@
   stat:
     path: '{{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
     get_checksum: false
+    get_mime: false
   delegate_to: localhost
   register: vcsa_deploy
 

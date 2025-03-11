@@ -35,6 +35,7 @@
   stat:
     path: /etc/selinux/config
     get_checksum: false
+    get_mime: false
   register: image_vm_selinux_config_result
 
 - name: Fix SELinux file type

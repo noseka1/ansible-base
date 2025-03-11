@@ -2,6 +2,7 @@
   stat:
     path: /bin/bash
     get_checksum: false
+    get_mime: false
   register: common_tasks_binbash_result
 
 - set_fact:

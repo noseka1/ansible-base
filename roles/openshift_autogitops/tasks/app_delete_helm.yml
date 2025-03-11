@@ -7,6 +7,7 @@
   stat:
     path: '{{ autogitops_app_dst_dir }}/Chart.yaml'
     get_checksum: false
+    get_mime: false
   register: autogitops_app_chart_stat_result
 
 - name: Retrieve application Chart.yaml

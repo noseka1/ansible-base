@@ -1,0 +1,9 @@
+apiVersion: v2
+name: mimir-instance
+type: application
+version: 0.1.0
+
+dependencies:
+- name: mimir-distributed
+  version: {{ mimir_helm_version }}
+  repository: {{ mimir_helm_repo }}

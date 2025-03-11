@@ -1,13 +1,5 @@
-- name: Delete Mimir
-  kubernetes.core.helm:
-    name: '{{ mimir_name }}'
-    release_namespace: '{{ mimir_namespace }}'
-    wait: true
-    state: absent
-
-- name: Delete Mimir namespace
-  kubernetes.core.k8s:
-    template:
-      - mimir-ns.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: mimir/instance

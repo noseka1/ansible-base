@@ -1,6 +1,6 @@
 hvault_namespace: hashicorp-vault
 hvault_name: hashicorp-vault-instance
-hvault_skip_verify: true
+hvault_skip_verify: false
 
 # Custom PKI CA certificate bundle
 hvault_pki_ca_bundle: ''

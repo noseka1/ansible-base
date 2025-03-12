@@ -50,7 +50,9 @@
   hashivault_write:
     secret: /mypki/roles/mycluster
     data:
-      allowed_domains: apps.{{ openshift_common_cluster_domain }}
+      allowed_domains:
+        - '{{ openshift_common_cluster_domain }}'
+        - example.com
       allow_subdomains: true
       max_ttl: '{{ 365 * 24 * 60 * 60 }}'
   environment:

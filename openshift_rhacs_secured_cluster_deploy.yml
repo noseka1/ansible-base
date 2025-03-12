@@ -1,12 +1,10 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - fail:
-        msg: >-
-          Variable "rhacs_central_host" must be defined.
-      when: >
-        rhacs_central_host is not defined or
-        rhacs_central_host | length == 0
+    - assert:
+        that: rhacs_central_host | default('') | length > 0
+        fail_msg: Variable 'rhacs_central_host' must not be empty
+        quiet: true
 
     - import_role:
         name: openshift_rhacs

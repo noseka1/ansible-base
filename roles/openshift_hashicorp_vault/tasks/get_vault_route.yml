@@ -5,7 +5,9 @@
     name: '{{ hvault_name }}'
     namespace: '{{ hvault_namespace }}'
   register: hvault_route
+  when: hvault_addr is not defined
 
 - name: Set vault URL
   set_fact:
     hvault_addr: 'https://{{ hvault_route.resources.0.spec.host }}'
+  when: hvault_addr is not defined

@@ -10,7 +10,9 @@
     VAULT_AUTHTYPE: userpass
     VAULT_USER: admin
     VAULT_PASSWORD: '{{ generic_user_password }}'
+  when: hvault_token is not defined
 
 - name: Save vault admin token
   set_fact:
     hvault_token: '{{ hvault_token_result.token.auth.client_token }}'
+  when: hvault_token is not defined

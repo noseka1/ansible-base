@@ -6,6 +6,7 @@ external_secrets_subscription_approval: Automatic
 external_secrets_instance_namespace: external-secrets
 external_secrets_instance_name: external-secrets
 
+# Trusted CA certificate for HashiCorp Vault API endpoint
 external_secrets_hvault_ca_bundle: ''
 
 # OIDC-enabled cluster

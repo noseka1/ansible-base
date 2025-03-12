@@ -1,18 +1,17 @@
 - name: Retrieve an admin token
-  hashivault_token_create:
+  community.hashi_vault.vault_token_create:
+    url: '{{ hvault_addr }}'
+    validate_certs: '{{ not hvault_skip_verify }}'
+    auth_method: userpass
+    username: admin
+    password: '{{ generic_user_password }}'
     display_name: admin
     policies: admin
   changed_when: false
   register: hvault_token_result
-  environment:
-    VAULT_ADDR: '{{ hvault_addr }}'
-    VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
-    VAULT_AUTHTYPE: userpass
-    VAULT_USER: admin
-    VAULT_PASSWORD: '{{ generic_user_password }}'
   when: hvault_token is not defined
 
 - name: Save vault admin token
   set_fact:
-    hvault_token: '{{ hvault_token_result.token.auth.client_token }}'
+    hvault_token: '{{ hvault_token_result.login.auth.client_token }}'
   when: hvault_token is not defined

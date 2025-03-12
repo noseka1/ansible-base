@@ -21,7 +21,7 @@
     VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
     VAULT_TOKEN: '{{ hvault_token }}'
 
-- name: Define kube role
+- name: Define kube role allowing any default sa to read secrets
   hashivault_write:
     secret: /auth/kubernetes/role/default-reader
     data:

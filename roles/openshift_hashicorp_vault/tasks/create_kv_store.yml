@@ -1,6 +1,6 @@
 - name: Enable generic secret kv store
   hashivault_secret_engine:
-    name: kv
+    name: mykv
     backend: kv
     options: version=2
   environment:
@@ -10,9 +10,9 @@
 
 - name: Create policy that grants read access to all secrets
   hashivault_policy:
-    name: kv_reader
+    name: mykv_reader
     rules: |
-      path "kv/data/*"
+      path "mykv/data/*"
       {
         capabilities = [ "read", "list" ]
       }
@@ -27,7 +27,7 @@
     data:
       bound_service_account_names: default
       bound_service_account_namespaces: '*'
-      policies: kv_reader
+      policies: mykv_reader
   environment:
     VAULT_ADDR: '{{ hvault_addr }}'
     VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'
@@ -39,7 +39,7 @@
     data:
       bound_service_account_names: external-secrets,default
       bound_service_account_namespaces: external-secrets,default
-      policies: kv_reader
+      policies: mykv_reader
   environment:
     VAULT_ADDR: '{{ hvault_addr }}'
     VAULT_SKIP_VERIFY: '{{ hvault_skip_verify }}'

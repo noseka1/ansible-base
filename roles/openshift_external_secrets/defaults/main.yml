@@ -6,7 +6,7 @@ external_secrets_subscription_approval: Automatic
 external_secrets_instance_namespace: external-secrets
 external_secrets_instance_name: external-secrets
 
-external_secrets_vault_ca_bundle: ''
+external_secrets_hvault_ca_bundle: ''
 
 # OIDC-enabled cluster
 # true - when ROSA or OCP is configured to use OIDC provider
@@ -14,9 +14,9 @@ external_secrets_vault_ca_bundle: ''
 external_secrets_oidc_enabled: false
 
 # Secrets manager
-# vault - hashicorp vault
-# aws - aws secrets manager
-external_secrets_secrets_manager_type: vault
+# hvault - HashiCorp Vault
+# aws - AWS Secrets Manager
+external_secrets_secrets_manager_type: hvault
 
 external_secrets_aws_region: ''
 external_secrets_aws_access_key_id: ''

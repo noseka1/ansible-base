@@ -2,8 +2,8 @@
 
 - import_tasks: instance_deploy.yml
 
-- import_tasks: backend_vault.yml
-  when: external_secrets_secrets_manager_type == 'vault'
+- import_tasks: backend_hvault.yml
+  when: external_secrets_secrets_manager_type == 'hvault'
 
 - import_tasks: backend_aws.yml
   when: external_secrets_secrets_manager_type == 'aws'

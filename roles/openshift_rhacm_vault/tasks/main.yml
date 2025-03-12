@@ -10,8 +10,8 @@
     name: openshift_hashicorp_vault
     tasks_from: insert_secret.yml
   vars:
-    secret_name: mycluster
-    secret_data:
+    hvault_secret_name: mycluster
+    hvault_secret_data:
       pull_secret: '{{ redhat_cloud_pull_secret }}'
       install-config.yaml: |
         apiVersion: v1

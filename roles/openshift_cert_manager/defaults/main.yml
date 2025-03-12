@@ -14,7 +14,8 @@ certman_log_level: Normal
 # are Normal, Debug, Trace, TraceAll
 certman_operator_log_level: Normal
 
-certman_hashicorp_vault_ca_bundle: ''
+# Trusted CA certificate for HashiCorp Vault API endpoint
+certman_hvault_ca_bundle: ''
 
 certman_certificate_authority_tls_crt: ''
 certman_certificate_authority_tls_key: ''
@@ -28,4 +29,5 @@ certman_acme_gcp_acme_email: ''
 
 certman_acme_server: https://acme-staging-v02.api.letsencrypt.org/directory
 
+# Update this to the domain name for which you can issue certificates
 certman_certificate_dns_name: mytest.example.com

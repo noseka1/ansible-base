@@ -1,19 +1,19 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: hashicorp-vault
+  name: hvault
   namespace: {{ certman_instance_namespace }}
 spec:
   vault:
-    path: pki/sign/mycluster
+    path: mypki/sign/mycluster
     server: {{ hvault_addr }}
-{% if certman_hashicorp_vault_ca_bundle | length > 0 %}
-    caBundle: {{ certman_hashicorp_vault_ca_bundle | b64encode }}
+{% if certman_hvault_ca_bundle | length > 0 %}
+    caBundle: {{ certman_hvault_ca_bundle | b64encode }}
 {% endif %}
     auth:
       kubernetes:
         role: cert-manager
         mountPath: /v1/auth/kubernetes
         secretRef:
-          name: hashicorp-vault-token-static
+          name: hvault-token-static
           key: token

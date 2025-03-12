@@ -12,4 +12,4 @@
 
 - import_tasks: certificate_verify.yml
   vars:
-    certman_certificate_issuer_name: hashicorp-vault
+    certman_certificate_issuer_name: hvault

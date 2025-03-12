@@ -35,6 +35,25 @@
     - mtv_provider_result.resources | length == 1
   retries: 60
   delay: 5
+  tags: mtv_instance
+
+- include_role:
+    name: openshift_hashicorp_vault
+    tasks_from: insert_secret.yml
+    apply:
+      tags: mtv_provider
+  vars:
+    hvault_secret_name: mtv/provider/{{ item.name }}
+    hvault_secret_data:
+      insecureSkipVerify: '{{ item.insecure_skip_verify }}'
+      password: '{{ item.password }}'
+      thumbprint: '{{ item.thumbprint }}'
+      url: '{{ item.url }}'
+      user: '{{ item.user }}'
+      cacert: |
+        {{ item.ca_cert }}
+  loop: '{{ mtv_providers }}'
+  tags: mtv_provider
 
 - import_role:
     name: openshift_autogitops

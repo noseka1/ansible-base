@@ -9,5 +9,3 @@
   when: external_secrets_secrets_manager_type == 'aws'
 
 - import_tasks: check_secret.yml
-
-- import_tasks: bootstrap_token_deploy.yml

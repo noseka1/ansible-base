@@ -9,10 +9,10 @@
         kind: ClusterSecretStore
       - api_version: external-secrets.io/v1beta1
         kind: ExternalSecret
-        namespace: external_secrets_instance_namespace
+        namespace: extsecrets_instance_namespace
       - api_version: external-secrets.io/v1beta1
         kind: SecretStore
-        namespace: external_secrets_instance_namespace
+        namespace: extsecrets_instance_namespace
 
 - name: Delete external-secrets namespace
   kubernetes.core.k8s:

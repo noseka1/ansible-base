@@ -8,8 +8,8 @@
   kubernetes.core.k8s_info:
     api_version: operator.external-secrets.io/v1alpha1
     kind: OperatorConfig
-    namespace: '{{ external_secrets_instance_namespace }}'
-    name: '{{ external_secrets_instance_name }}'
+    namespace: '{{ extsecrets_instance_namespace }}'
+    name: '{{ extsecrets_instance_name }}'
   register: externalsecrets_result
   until:
     - externalsecrets_result.resources | length > 0
@@ -23,12 +23,12 @@
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ external_secrets_instance_name }}-webhook'
-    wait_for_deployment_namespace: '{{ external_secrets_instance_namespace }}'
+    wait_for_deployment_name: '{{ extsecrets_instance_name }}-webhook'
+    wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ external_secrets_instance_name }}-cert-controller'
-    wait_for_deployment_namespace: '{{ external_secrets_instance_namespace }}'
+    wait_for_deployment_name: '{{ extsecrets_instance_name }}-cert-controller'
+    wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'

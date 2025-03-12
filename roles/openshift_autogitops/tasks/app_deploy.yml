@@ -38,4 +38,8 @@
   retries: '{{ 3 * 60 + 60 | int }}'
   delay: 1
 
+# Secrets could have been updated in the secret store (HashiCorp Vault). Force the refresh of the secrets
+# in OpenShift to ensure all secrets are up to date. Application needs fresh secrets to sync properly.
+- import_tasks: app_externalsecrets_refresh.yml
+
 - import_tasks: app_sync_deploy.yml

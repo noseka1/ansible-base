@@ -25,6 +25,20 @@
     GIT_COMMITTER_EMAIL: autogitops@example.com
   when: autogitops_git_updated
 
+- name: Retrieve latest commit
+  command: git show
+  changed_when: false
+  args:
+    chdir: '{{ autogitops_git_dir }}'
+  register: autogitops_git_commit_result
+  when: autogitops_git_updated
+
+- name: Show git commit if ran with ansible-playbook -v
+  debug:
+    var: autogitops_git_commit_result.stdout_lines
+    verbosity: 1
+  when: autogitops_git_updated
+
 - name: Push changes to remote repo
   command: git push
   args:

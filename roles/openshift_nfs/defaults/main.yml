@@ -1,6 +1,5 @@
 nfsserver_namespace: nfs-server
 nfsserver_backing_volume_storageclass: local-hostpath
 
-csinfs_version: v4.10.0
-csinfs_name: csi-driver-nfs
-csinfs_namespace:  csi-driver-nfs
+nfscsi_version: v4.10.0
+nfscsi_namespace:  csi-driver-nfs

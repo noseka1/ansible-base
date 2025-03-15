@@ -9,7 +9,7 @@ metadata:
 provisioner: nfs.csi.k8s.io
 parameters:
   server: '{{ nfsserver_service.resources.0.spec.clusterIP }}'
-  share: /nfs-backing-volume
+  share: /
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: Immediate

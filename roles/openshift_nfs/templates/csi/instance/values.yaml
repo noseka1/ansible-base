@@ -1,0 +1,5 @@
+csi-driver-nfs:
+  externalSnapshotter:
+    enabled: true
+    customResourceDefinitions:
+      enabled: false

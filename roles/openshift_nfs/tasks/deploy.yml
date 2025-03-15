@@ -5,5 +5,43 @@
     autogitops_app_src_path: templates/nfs
     autogitops_app_dst_path: nfs-server/instance
     autogitops_app_namespace: '{{ nfsserver_namespace }}'
+  tags: nfsserver
 
-- import_tasks: csi_deploy.yml
+- name: Obtain nfs-server service
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: nfs-server
+    namespace: '{{ nfsserver_namespace }}'
+  register: nfsserver_service
+  tags: nfsserver
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/csi/instance
+    autogitops_app_dst_path: nfs-csi/instance
+    autogitops_app_namespace: '{{ nfscsi_namespace }}'
+  tags: nfscsi_instance
+
+- name: Check if default storage class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+  tags: nfscsi_storageclass
+
+- name: Check if default volume snapshot class exists
+  import_role:
+    name: openshift_common
+    tasks_from: get_default_volume_snapshot_class.yml
+  tags: nfscsi_storageclass
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/csi/storageclass
+    autogitops_app_dst_path: nfs-csi/storageclass
+    autogitops_app_namespace: '{{ nfscsi_namespace }}'
+  tags: nfscsi_storageclass

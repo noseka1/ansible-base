@@ -1,7 +1,20 @@
-- import_tasks: csi_delete.yml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: nfs-csi/instance
+  tags: nfscsi_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: nfs-server/storageclass
+  tags: nfscsi_storageclass
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: nfs-server/instance
+  tags: nfsserver

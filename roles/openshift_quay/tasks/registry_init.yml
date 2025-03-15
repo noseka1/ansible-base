@@ -2,7 +2,7 @@
 
 - name: Creating admin user at endpoint https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize
   uri:
-    url: "https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize"
+    url: https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/user/initialize
     method: POST
     validate_certs: true
     body_format: json

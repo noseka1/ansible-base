@@ -1,0 +1,14 @@
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: web-terminal
+    oscomm_subscription_namespace: '{{ webterm_operator_namespace }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: web-terminal/operator
+    autogitops_app_namespace: '{{ webterm_operator_namespace }}'

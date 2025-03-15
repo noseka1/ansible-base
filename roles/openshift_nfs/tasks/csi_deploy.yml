@@ -1,8 +1,8 @@
 - name: Create prerequisites for csi-driver-nfs
   kubernetes.core.k8s:
     template:
-      - csi-driver-nfs/csi-driver-nfs-ns.yaml
-      - csi-driver-nfs/csi-driver-nfs-scc-rolebinding.yaml
+      - csi/namespace.yaml
+      - csi/rolebinding.yaml
 
 - name: Add csi-driver-nfs chart repo
   kubernetes.core.helm_repository:
@@ -11,11 +11,11 @@
 
 - name: Deploy csi-driver-nfs Helm chart
   kubernetes.core.helm:
-    name: '{{ csi_driver_nfs_name }}'
+    name: '{{ csinfs_name }}'
     chart_ref: csi-driver-nfs/csi-driver-nfs
-    chart_version: '{{ csi_driver_nfs_version  }}'
-    release_namespace: '{{ csi_driver_nfs_namespace }}'
-    release_values: '{{ lookup("template", "csi-driver-nfs/values.yaml") | from_yaml }}'
+    chart_version: '{{ csinfs_version  }}'
+    release_namespace: '{{ csinfs_namespace }}'
+    release_values: '{{ lookup("template", "csi/values.yaml") | from_yaml }}'
     skip_crds: true
     wait: true
 
@@ -25,7 +25,7 @@
     kind: Service
     name: rook-nfs
     namespace: rook-nfs
-  register: rook_nfs_service
+  register: rooknfs_service
 
 - name: Check if default storage class exists
   import_role:
@@ -35,4 +35,4 @@
 - name: Create nfs-csi storageclass
   kubernetes.core.k8s:
     template:
-      - csi-driver-nfs/nfs-csi-sc.yaml
+      - csi/storageclass.yaml

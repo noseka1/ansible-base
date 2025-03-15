@@ -8,7 +8,7 @@ metadata:
   name: nfs-csi
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: '{{ rook_nfs_service.resources.0.spec.clusterIP }}'
+  server: '{{ rooknfs_service.resources.0.spec.clusterIP }}'
   share: /nfs-backing-volume
 reclaimPolicy: Delete
 allowVolumeExpansion: true

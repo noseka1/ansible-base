@@ -1,6 +1,6 @@
-rook_volume_path: /var/local/rook-nfs-backing-volume
-rook_base_url: https://raw.githubusercontent.com/rook/nfs/v1.7.3
+rooknfs_base_url: https://raw.githubusercontent.com/rook/nfs/v1.7.3
+rooknfs_backing_volume_storageclass: local-hostpath
 
-csi_driver_nfs_version: v4.10.0
-csi_driver_nfs_name: csi-driver-nfs
-csi_driver_nfs_namespace:  csi-driver-nfs
+csinfs_version: v4.10.0
+csinfs_name: csi-driver-nfs
+csinfs_namespace:  csi-driver-nfs

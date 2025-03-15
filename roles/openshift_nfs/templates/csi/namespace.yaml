@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ csi_driver_nfs_namespace }}
+  name: {{ csinfs_namespace }}

@@ -1,22 +1,21 @@
 - name: Delete Rook NFS server
   kubernetes.core.k8s:
     template:
-      - rook-nfs/rook-nfs-nfsserver.yml
+      - rook-nfs/nfsserver.yaml
+      - rook-nfs/pvc.yaml
     state: absent
-
-- import_tasks: backing_volume_delete.yml
 
 - name: Delete Rook NFS operator
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
     state: absent
   loop:
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
-    - '{{ rook_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
 
 - name: Delete corrected SCC
   kubernetes.core.k8s:
     template:
-      - rook-nfs/rook-nfs-scc.yml
+      - rook-nfs/scc.yaml
     state: absent

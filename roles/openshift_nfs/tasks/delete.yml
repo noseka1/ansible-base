@@ -1,3 +1,3 @@
-- import_tasks: csi_driver_nfs_delete.yml
+- import_tasks: csi_delete.yml
 
 - import_tasks: rook_delete.yml

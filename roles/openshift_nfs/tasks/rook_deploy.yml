@@ -1,5 +1,30 @@
-- import_tasks: rook_nfs_deploy_operator.yml
+- name: Deploy corrected SCC
+  kubernetes.core.k8s:
+    template: rook-nfs/scc.yaml
 
-- import_tasks: backing_volume_create.yml
+- name: Deploy Rook NFS operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', item, split_lines=false) }}"
+  loop:
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/crds.yaml'
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/rbac.yaml'
+    - '{{ rooknfs_base_url }}/cluster/examples/kubernetes/nfs/operator.yaml'
 
-- import_tasks: rook_nfs_deploy_server.yml
+- name: Deploy Rook NFS server
+  kubernetes.core.k8s:
+    template:
+      - rook-nfs/pvc.yaml
+      - rook-nfs/nfsserver.yaml
+
+- name: Wait until Rook NFS service shows up
+  kubernetes.core.k8s_info:
+    api_version: nfs.rook.io/v1alpha1
+    kind: NFSServer
+    name: rook-nfs
+    namespace: rook-nfs
+  register: rooknfs_server
+  until:
+    - rooknfs_server.resources.0.status.state is defined
+    - rooknfs_server.resources.0.status.state == 'Running'
+  retries: 60
+  delay: 10

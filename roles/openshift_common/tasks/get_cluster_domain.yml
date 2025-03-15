@@ -4,6 +4,7 @@
     kind: Infrastructure
     name: cluster
   register: openshift_common_infrastructure_result
+  when: openshift_common_cluster_domain is not defined
 
 - name: Set openshift_common_cluster_domain
   set_fact:
@@ -11,6 +12,8 @@
       {{ openshift_common_infrastructure_result.resources.0.status.apiServerURL }}
     openshift_common_cluster_domain: >-
       {{ openshift_common_infrastructure_result.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}
+  when: openshift_common_cluster_domain is not defined
 
 - debug:
     var: openshift_common_cluster_domain
+  when: openshift_common_cluster_domain is not defined

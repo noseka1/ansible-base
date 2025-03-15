@@ -9,7 +9,7 @@
 - name: Obtain vault route
   import_tasks: get_vault_route.yml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for vault to come up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for HashiCorp Vault to come up
   uri:
     url: '{{ hvault_addr }}/v1/sys/health'
     method: GET

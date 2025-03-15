@@ -1,0 +1,10 @@
+- import_tasks: keyval_create.yml
+  vars:
+    hvault_keyval_name: mykv
+    hvault_keyval_reader:
+      - role_name: default-reader
+        sa_names: default
+        sa_namespaces: '*'
+      - role_name: external-secrets
+        sa_names: external-secrets,default
+        sa_namespaces: external-secrets,default

@@ -2,5 +2,11 @@ hvault_namespace: hashicorp-vault
 hvault_name: hashicorp-vault-instance
 hvault_skip_verify: false
 
+# Create a custom key-value store and insert sample secrets
+hvault_custom_keyval_create: true
+
+# Create a custom PKI
+hvault_custom_pki_create: true
+
 # Custom PKI CA certificate bundle
 hvault_pki_ca_bundle: ''

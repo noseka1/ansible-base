@@ -1,3 +1,6 @@
+- import_role:
+    name: ansible-modules-hashivault
+
 - import_tasks: install.yml
 
 - import_tasks: initialize.yml
@@ -11,10 +14,10 @@
 
 - import_tasks: enable_kube_auth.yml
 
-- import_tasks: create_kv_store.yml
+- import_tasks: custom_keyval_create.yml
+  when: hvault_custom_keyval_create
 
-- import_tasks: insert_secrets.yml
-
-- import_tasks: create_pki.yml
+- import_tasks: custom_pki_create.yml
+  when: hvault_custom_pki_create
 
 - import_tasks: report_success.yml

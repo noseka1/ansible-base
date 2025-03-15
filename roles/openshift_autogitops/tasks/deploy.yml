@@ -29,3 +29,31 @@
     template:
       - autogitops-ns.yaml
       - autogitops-appset.yaml
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: deploy.yml
+  vars:
+    hvault_custom_keyval_create: false
+    hvault_custom_pki_create: false
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: keyval_create.yml
+  vars:
+    hvault_keyval_name: autogitops
+    hvault_keyval_reader:
+      - role_name: external-secrets
+        sa_names: external-secrets
+        sa_namespaces: external-secrets
+
+- import_role:
+    name: openshift_external_secrets
+    tasks_from: deploy.yml
+
+- import_role:
+    name: openshift_external_secrets
+    tasks_from: backend_hvault.yml
+  vars:
+    extsecrets_hvault_name: autogitops
+    extsecrets_hvault_mount_point: autogitops

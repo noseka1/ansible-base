@@ -2,11 +2,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs-backing-volume
-  namespace: rook-nfs
+  namespace: {{ nfsserver_namespace }}
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  storageClassName: {{ rooknfs_backing_volume_storageclass }}
+      storage: 100Gi
+  storageClassName: {{ nfsserver_backing_volume_storageclass }}

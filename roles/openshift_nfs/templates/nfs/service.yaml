@@ -1,0 +1,17 @@
+# This manifest is based on:
+# https://github.com/appscode/third-party-tools/blob/master/storage/nfs/README.md
+apiVersion: v1
+kind: Service
+metadata:
+  name: nfs-server
+  namespace: {{ nfsserver_namespace }}
+spec:
+  ports:
+  - name: nfs
+    port: 2049
+  - name: mountd
+    port: 20048
+  - name: rpcbind
+    port: 111
+  selector:
+    app: nfs-server

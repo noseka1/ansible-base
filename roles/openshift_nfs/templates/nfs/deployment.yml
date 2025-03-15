@@ -1,0 +1,45 @@
+# This manifest is based on:
+# https://github.com/appscode/third-party-tools/blob/master/storage/nfs/README.md
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-server
+  namespace: {{ nfsserver_namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: nfs-server
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: In
+                values:
+                - ""
+      containers:
+      - name: nfs-server
+        image: k8s.gcr.io/volume-nfs:0.8
+        ports:
+        - name: nfs
+          containerPort: 2049
+        - name: mountd
+          containerPort: 20048
+        - name: rpcbind
+          containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: storage
+          mountPath: /exports
+      serviceAccountName: nfs-server
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: nfs-backing-volume

@@ -19,13 +19,13 @@
     skip_crds: true
     wait: true
 
-- name: Obtain rook-nfs service
+- name: Obtain nfs-server service
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    name: rook-nfs
-    namespace: rook-nfs
-  register: rooknfs_service
+    name: nfs-server
+    namespace: '{{ nfsserver_namespace }}'
+  register: nfsserver_service
 
 - name: Check if default storage class exists
   import_role:

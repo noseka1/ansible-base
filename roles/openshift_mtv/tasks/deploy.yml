@@ -34,7 +34,7 @@
   until:
     - mtv_provider_result.resources | length == 1
   retries: 60
-  delay: 5
+  delay: 1
   tags: mtv_instance
 
 - import_role:

@@ -9,7 +9,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: nfs-server/storageclass
+    autogitops_app_dst_path: nfs-csi/storageclass
   tags: nfscsi_storageclass
 
 - import_role:

@@ -5,3 +5,4 @@
     name: '{{ gitops_instance_name }}-server'
     namespace: '{{ gitops_instance_namespace }}'
   register: argocd_route
+  when: argocd_route is not defined

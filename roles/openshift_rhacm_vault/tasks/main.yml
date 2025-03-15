@@ -1,7 +1,8 @@
 - import_role:
     name: openshift_hashicorp_vault
-    tasks_from: insert_secret.yml
+    tasks_from: secret_insert.yml
   vars:
+    hvault_mount_point: mykv
     hvault_secret_name: mycluster
     hvault_secret_data:
       pull_secret: '{{ redhat_cloud_pull_secret }}'

@@ -1,23 +1,38 @@
 - name: Create AWS keys for user account which talks to AWS SM
   kubernetes.core.k8s:
-    template: backend-aws/aws-sm-secret.yaml
+    template: backend-aws/secret.yaml
   when: not extsecrets_oidc_enabled
 
 - name: Create AWS Secrets Manager backend - will use AWS keys
   kubernetes.core.k8s:
-    template: backend-aws/aws-sm-secretstore-key.yaml
+    template: backend-aws/secretstore-key.yaml
   when: not extsecrets_oidc_enabled
 
 - name: Create AWS service account
   kubernetes.core.k8s:
-    template: backend-aws/aws-service-account-sa.yaml
+    template: backend-aws/serviceaccount.yaml
   when: extsecrets_oidc_enabled
 
 - name: Create AWS Secrets Manager backend - will use SA and OIDC
   kubernetes.core.k8s:
-    template: backend-aws/aws-sm-secretstore-jwt.yaml
+    template: backend-aws/secretstore-jwt.yaml
   when: extsecrets_oidc_enabled
 
 - name: Create an external secret for testing
   kubernetes.core.k8s:
-    template: backend-aws/external-secrets-test-secret-aws.yml
+    template: backend-aws/externalsecret.yml
+
+- name: Retrieve the respective secret created by the operator
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ extsecrets_instance_name }}-test'
+    namespace: '{{ extsecrets_instance_namespace }}'
+  register: extsecrets_test_secret
+  until: extsecrets_test_secret.resources | length > 0
+  retries: 120
+  delay: 1
+
+- name: Fail if the secret value is not correct
+  fail:
+  when: (extsecrets_test_secret.resources.0.data.testkey | b64decode) != 'testvalue'

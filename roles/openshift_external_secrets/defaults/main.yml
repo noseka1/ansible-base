@@ -1,23 +1,30 @@
-extsecrets_subscription_namespace: openshift-operators
-extsecrets_subscription_name: external-secrets-operator
-extsecrets_subscription_channel: stable
-extsecrets_subscription_approval: Automatic
+extsecrets_operator_subscription_channel: ''
+extsecrets_operator_subscription_approval: Manual
+extsecrets_operator_subscription_starting_csv: ''
+extsecrets_operator_subscription_name: external-secrets-operator
+
+extsecrets_operator_namespace: openshift-operators
 
 extsecrets_instance_namespace: external-secrets
 extsecrets_instance_name: external-secrets
 
+################################
+# HashiCorp Vault secret store #
+################################
+
+extsecrets_hvault_name: hvault
+extsecrets_hvault_mount_point: mykv
 # Trusted CA certificate for HashiCorp Vault API endpoint
 extsecrets_hvault_ca_bundle: ''
+
+####################################
+# AWS Secrets Manager secret store #
+####################################
 
 # OIDC-enabled cluster
 # true - when ROSA or OCP is configured to use OIDC provider
 # false - when ROSA or OCP is NOT configured to use OIDC provider
 extsecrets_oidc_enabled: false
-
-# Secrets manager
-# hvault - HashiCorp Vault
-# aws - AWS Secrets Manager
-extsecrets_secrets_manager_type: hvault
 
 extsecrets_aws_region: ''
 extsecrets_aws_access_key_id: ''

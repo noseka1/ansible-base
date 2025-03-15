@@ -2,10 +2,25 @@
     name: openshift_hashicorp_vault
     tasks_from: get_vault_route.yml
 
-- name: Create HashiCorp Vault backend
+- name: Create HashiCorp Vault backend "{{ extsecrets_hvault_name }}"
   kubernetes.core.k8s:
-    template: backend-hvault/vault-secretstore.yaml
+    template: backend-hvault/clustersecretstore.yaml
 
 - name: Create an external secret for testing
   kubernetes.core.k8s:
-    template: backend-hvault/external-secrets-test-secret-hvault.yml
+    template: backend-hvault/externalsecret.yaml
+
+- name: Retrieve the respective secret created by the operator
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ extsecrets_hvault_name }}-test'
+    namespace: '{{ extsecrets_instance_namespace }}'
+  register: extsecrets_test_secret
+  until: extsecrets_test_secret.resources | length > 0
+  retries: 120
+  delay: 1
+
+- name: Fail if the secret value is not correct
+  fail:
+  when: (extsecrets_test_secret.resources.0.data.testkey | b64decode) != 'testvalue'

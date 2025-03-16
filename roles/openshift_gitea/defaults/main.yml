@@ -11,6 +11,5 @@ gitea_database_type: sqlite3
 
 gitea_username: gitadmin
 gitea_password: '{{ generic_user_password }}'
-gitea_cacert: ''
 
 gitea_create_repos: []

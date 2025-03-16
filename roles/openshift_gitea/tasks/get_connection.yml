@@ -11,20 +11,11 @@
     msg: Gitea route doesn't exist. Is Gitea installed on the cluster?
   when: gitea_route.resources | length == 0
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_ingress_trusted_ca_bundle.yml
-
 - name: Set Gitea connection
   set_fact:
     gitea_hostname: '{{ gitea_route.resources.0.spec.host }}'
     gitea_username: '{{ gitea_username }}'
     gitea_password: '{{ gitea_password }}'
-
-- name: Set Gitea connection CA cert
-  set_fact:
-    gitea_cacert: '{{ openshift_common_ingress_trusted_ca_bundle }}'
-  when: gitea_cacert | length == 0
 
 - name: Set git repository connection
   set_fact:

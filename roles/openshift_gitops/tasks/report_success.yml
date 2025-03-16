@@ -2,7 +2,7 @@
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo CD to come up
   uri:
-    url: 'https://{{ argocd_route.resources.0.spec.host }}/api/v1/session'
+    url: 'https://{{ argocd_route_host }}/api/v1/session'
     method: POST
     body:
       username: admin
@@ -20,9 +20,9 @@
       Argo CD installed successfully.
 
       You can browse to:
-      https://{{ argocd_route.resources.0.spec.host }}
+      https://{{ argocd_route_host }}
 
       Or you can log in with:
-      argocd login {{ argocd_route.resources.0.spec.host }} --username admin
+      argocd login {{ argocd_route_host }} --username admin
 
 - debug: msg="{{ msg.split('\n') }}"

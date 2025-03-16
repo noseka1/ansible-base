@@ -2,7 +2,7 @@
 
 - name: Create repository '{{ gitops_repo_name }}'
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/repositories?upsert=true
+    url: https://{{ argocd_route_host }}/api/v1/repositories?upsert=true
     method: POST
     body_format: json
     body:

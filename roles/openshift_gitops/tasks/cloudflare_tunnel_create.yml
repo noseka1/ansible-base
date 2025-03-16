@@ -6,4 +6,4 @@
   vars:
     cloudflared_namespace: '{{ gitops_instance_namespace }}'
     cloudflared_manage_namespace: false
-    cloudflared_target_hostname: '{{ argocd_route.resources.0.spec.host }}'
+    cloudflared_target_hostname: '{{ argocd_route_host }}'

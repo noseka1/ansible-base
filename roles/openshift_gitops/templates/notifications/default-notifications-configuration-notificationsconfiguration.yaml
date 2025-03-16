@@ -5,7 +5,7 @@ metadata:
   namespace: {{ gitops_instance_namespace }}
 spec:
   context:
-    argocdUrl: https://{{ argocd_route.resources.0.spec.host }}
+    argocdUrl: https://{{ argocd_route_host }}
 
   services:
     service.webhook.mywebhook: |

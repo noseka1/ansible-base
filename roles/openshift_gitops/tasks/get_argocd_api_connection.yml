@@ -2,7 +2,7 @@
 
 - name: Get API token
   uri:
-    url: https://{{ argocd_route.resources.0.spec.host }}/api/v1/session
+    url: https://{{ argocd_route_host }}/api/v1/session
     method: POST
     body_format: json
     body:
@@ -14,6 +14,6 @@
   register: argocd_session_result
 
 - set_fact:
-    argocd_api_url: https://{{ argocd_route.resources.0.spec.host }}
+    argocd_api_url: https://{{ argocd_route_host }}
     argocd_api_token: '{{ argocd_api_token | default(argocd_session_result.json.token) }}'
   when: argocd_api_token is not defined

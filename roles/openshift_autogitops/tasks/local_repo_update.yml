@@ -1,7 +1,7 @@
 - name: Set application config and destination directory
   set_fact:
-    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
-    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_app_dst_path }}'
+    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ autogitops_app_dst_path }}'
 
 - name: Ensure application directories exist
   file:

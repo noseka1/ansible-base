@@ -8,7 +8,7 @@
 
 - name: Set application destination directory
   set_fact:
-    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_app_dst_path }}'
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ autogitops_app_dst_path }}'
 
 - name: Ensure root application destination directory exists
   file:

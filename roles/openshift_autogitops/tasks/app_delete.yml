@@ -11,7 +11,7 @@
 
 - name: Set application config directory
   set_fact:
-    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
+    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
 
 - name: Check if application.yaml exists
   stat:

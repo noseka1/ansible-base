@@ -14,7 +14,7 @@ spec:
     value: AutoGitOps - Ansible-driven Argo CD automation
   project: {{ autogitops_app_project }}
   source:
-    path: manifests/{{ autogitops_app_dst_path }}
+    path: {{ autogitops_app_dst_path }}
     repoURL: {{ gitea_repo_url_plain }}
     targetRevision: ag-{{ openshift_common_cluster_domain }}
     directory:

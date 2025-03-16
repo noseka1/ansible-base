@@ -14,3 +14,5 @@ vault:
       path: /v1/sys/health?standbyok=true&uninitcode=200
   ui:
     enabled: true
+
+consoleLinkHref: https://{{ hvault_name }}-{{ hvault_namespace }}.apps.{{ openshift_common_cluster_domain }}

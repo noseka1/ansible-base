@@ -11,7 +11,7 @@ roles:
 collections:
 - name: kubernetes.core
   src: https://github.com/ansible-collections/kubernetes.core
-  version: 2.3.2
+  version: 3.3.0
 
 - name: amazon.aws
   src: https://github.com/ansible-collections/amazon.aws

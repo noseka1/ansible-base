@@ -1,10 +1,10 @@
 - name: Create Gitea namespace
   kubernetes.core.k8s:
     template:
-      - gitea-ns.yaml
-      - gitea-admin-secret.yaml
-      - gitea-route.yaml
-      - gitea-scc-rolebinding.yaml
+      - namespace.yaml
+      - secret.yaml
+      - rolebinding.yaml
+      - route.yaml
 
 - name: Obtain Gitea route
   kubernetes.core.k8s_info:

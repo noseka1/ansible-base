@@ -8,6 +8,6 @@
 - name: Delete Gitea namespace
   kubernetes.core.k8s:
     template:
-      - gitea-ns.yaml
+      - namespace.yaml
     wait: true
     state: absent

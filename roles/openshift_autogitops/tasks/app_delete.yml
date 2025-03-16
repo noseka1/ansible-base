@@ -23,43 +23,21 @@
   register: autogitops_app_dir_slurp_result
   when: autogitops_app_dir_stat_result.stat.exists
 
-- name: Check if argocd_config_helm.yaml exists
-  stat:
-    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
-  register: autogitops_app_helm_stat_result
-
-- name: Retrieve argocd_config_helm.yaml
-  slurp:
-    path: '{{ autogitops_app_cfg_dir }}/argocd_config_helm.yaml'
-  register: autogitops_app_helm_slurp_result
-  when: autogitops_app_helm_stat_result.stat.exists
-
 - name: Application git directory does not exist
   set_fact:
     autogitops_app_dst_dir: ''
   when:
     - not autogitops_app_dir_stat_result.stat.exists
-    - not autogitops_app_helm_stat_result.stat.exists
 
 - name: Set application git directory
   set_fact:
     autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_dir_slurp_result.content | b64decode | from_yaml).sourcePath }}'
   when: autogitops_app_dir_stat_result.stat.exists
 
-- name: Set application git directory
-  set_fact:
-    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_helm_slurp_result.content | b64decode | from_yaml).sourcePath }}'
-  when: autogitops_app_helm_stat_result.stat.exists
-
 - include_tasks: app_delete_dir.yml
   when:
     - autogitops_app_dst_dir | length > 0
     - autogitops_app_dir_stat_result.stat.exists
-
-- include_tasks: app_delete_helm.yml
-  when:
-    - autogitops_app_dst_dir | length > 0
-    - autogitops_app_helm_stat_result.stat.exists
 
 - include_tasks: local_repo_push.yml
   when: autogitops_app_dst_dir | length > 0
@@ -85,16 +63,13 @@
 - include_tasks: app_sync_delete.yml
   when: autogitops_app_resource_result.status == 200
 
-- name: Delete application directory {{ autogitops_app_dst_dir }}
+- name: Delete application directories
   file:
-    path: '{{ autogitops_app_dst_dir }}'
+    path: '{{ item }}'
     state: absent
-  when: autogitops_app_dst_dir | length > 0
-
-- name: Delete application directory {{ autogitops_app_cfg_dir }}
-  file:
-    path: '{{ autogitops_app_cfg_dir }}'
-    state: absent
+  loop:
+    - '{{ autogitops_app_dst_dir }}'
+    - '{{ autogitops_app_cfg_dir }}'
 
 - import_tasks: local_repo_push.yml
 

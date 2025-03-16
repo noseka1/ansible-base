@@ -11,6 +11,18 @@
     - '{{ autogitops_app_dst_dir }}'
     - '{{ autogitops_app_cfg_dir }}'
 
+- name: Create argocd_config_dir.yaml
+  template:
+    src: argocd_config.yaml
+    dest: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+
+- name: Clean up obsolete argocd_config files if they exist
+  file:
+    path: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ item }}.yaml'
+    state: absent
+  loop:
+    - helm
+
 - name: Check if Chart.yaml file exists
   stat:
     path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/Chart.yaml'
@@ -20,19 +32,5 @@
 
 - set_fact:
     autogitops_app_type: '{{ "helm" if autogitops_app_chart_stat_result.stat.exists else "dir" }}'
-
-- name: Create argocd_config_{{ autogitops_app_type }}.yaml
-  template:
-    src: argocd_config.yaml
-    dest: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ autogitops_app_type }}.yaml'
-
-- name: Clean up obsolete argocd_config files if they exist
-  file:
-    path: '{{ autogitops_app_cfg_dir }}/argocd_config_{{ item }}.yaml'
-    state: absent
-  when: item != autogitops_app_type
-  loop:
-    - helm
-    - dir
 
 - include_tasks: local_repo_update_{{ autogitops_app_type }}.yml

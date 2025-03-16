@@ -1,9 +1,32 @@
-- include_tasks: local_repo_update_helm_subdir.yml
-  loop:
-    - templates
-    - files
+- name: Create temporary directory for {{ autogitops_app_name }}
+  tempfile:
+    state: directory
+    suffix: -{{ autogitops_app_name }}-helm
+  changed_when: false
+  register: autogitops_app_tmpdir
 
-- name: Check if values file exists
+- name: Ensure subdirectories exist
+  file:
+    path: '{{ item }}'
+    state: directory
+  changed_when: false
+  loop:
+    - '{{ autogitops_app_tmpdir.path }}/source'
+    - '{{ autogitops_app_tmpdir.path }}/render'
+
+- name: Sync application directory {{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }} to source
+  ansible.posix.synchronize:
+    src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/'
+    dest: '{{ autogitops_app_tmpdir.path }}/source'
+    archive: false
+    compress: false
+    recursive: true
+    links: true
+    perms: true
+    delete: true
+  changed_when: false
+
+- name: Check if values.yaml file exists
   stat:
     path: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
     get_checksum: false
@@ -13,16 +36,42 @@
 - name: Create values.yaml
   template:
     src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
-    dest: '{{ autogitops_app_dst_dir }}/values.yaml'
+    dest: '{{ autogitops_app_tmpdir.path }}/source/values.yaml'
+  changed_when: false
   when: autogitops_app_values_stat_result.stat.exists
-
-- name: Remove values.yaml
-  file:
-    path: '{{ autogitops_app_dst_dir }}/values.yaml'
-    state: absent
-  when: not autogitops_app_values_stat_result.stat.exists
 
 - name: Copy Chart.yaml
   template:
     src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/Chart.yaml'
-    dest: '{{ autogitops_app_dst_dir }}/Chart.yaml'
+    dest: '{{ autogitops_app_tmpdir.path }}/source/Chart.yaml'
+  changed_when: false
+
+- name: Render manifests from Helm templates
+  kubernetes.core.helm_template:
+    chart_ref: '{{ autogitops_app_tmpdir.path }}/source'
+    output_dir: '{{ autogitops_app_tmpdir.path }}/render'
+    dependency_update: true
+    include_crds: true
+    release_name: '{{ autogitops_app_name }}'
+    release_namespace: '{{ autogitops_app_namespace }}'
+  changed_when: false
+
+- name: Sync rendered manifests to {{ autogitops_app_dst_dir }}
+  ansible.posix.synchronize:
+    src: '{{ autogitops_app_tmpdir.path }}/render/'
+    dest: '{{ autogitops_app_dst_dir }}'
+    archive: false
+    compress: false
+    recursive: true
+    links: true
+    perms: true
+    delete: true
+    # Compare src and dest based on checksum as opposed to the modification time (default).
+    # Task will only be marked as changed if the actual file content changed.
+    checksum: true
+
+- name: Delete temporary directory {{ autogitops_app_tmpdir.path }}
+  file:
+    path: '{{ autogitops_app_tmpdir.path }}'
+    state: absent
+  changed_when: false

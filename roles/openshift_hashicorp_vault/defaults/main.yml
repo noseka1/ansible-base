@@ -10,3 +10,6 @@ hvault_custom_pki_create: true
 
 # Custom PKI CA certificate bundle
 hvault_pki_ca_bundle: ''
+
+# Deploy Vault Agent Injector component
+hvault_injector_enabled: true

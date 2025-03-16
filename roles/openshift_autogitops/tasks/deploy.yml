@@ -36,6 +36,7 @@
   vars:
     hvault_custom_keyval_create: false
     hvault_custom_pki_create: false
+    hvault_injector_enabled: false
 
 - import_role:
     name: openshift_hashicorp_vault

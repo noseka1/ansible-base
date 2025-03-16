@@ -1,4 +1,7 @@
 autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/autogitops-workspace'
+
 autogitops_git_repo_name: autogitops
 
 autogitops_argocd_validate_certs: true
+
+autogitops_root_name: 0-root

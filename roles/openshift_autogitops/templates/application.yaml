@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ autogitops_app_name }}
+  name: {{ autogitops_app_name }}
+  namespace: {{ autogitops_argocd_namespace }}
+spec:
+  destination:
+    name: {{ openshift_common_cluster_domain }}
+    namespace: '{{ autogitops_app_namespace }}'
+  info:
+  - name: creator
+    value: AutoGitOps - Ansible-driven Argo CD automation
+  project: {{ autogitops_app_project }}
+  source:
+    path: manifests/{{ autogitops_app_dst_path }}
+    repoURL: {{ gitea_repo_url_plain }}
+    targetRevision: ag-{{ openshift_common_cluster_domain }}
+    directory:
+      recurse: true
+  syncPolicy:
+{% if autogitops_app_dst_path == autogitops_root_name %}
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
+{% endif %}
+    syncOptions:
+    # Sync only out-of-sync resources instead of all application resources. This speeds up the sync
+    # process. See also:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#selective-sync
+    - ApplyOutOfSyncOnly=true
+    # Let Argo CD fail the sync whenever it finds a resource in the current Application that is already
+    # applied in the cluster by another Application. This behavior is safer than the default.
+    # See also: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#fail-the-sync-if-a-shared-resource-is-found
+    - FailOnSharedResource=true
+    # Switch to server-side apply to avoid the isssue with resource is too big to fit into the
+    # allowed annotation size of 262144 bytes. See also:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#server-side-apply
+    - ServerSideApply=true
+    # The default PrunePropagationPolicy is foreground. With this policy, the deletion
+    # of metallb and vertical-pod-autoscaler operators hangs.Set the PrunePropagationPolicy
+    # to background to solve this issue. Kubectl defaults to background as well. See also:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#resources-prune-deletion-propagation-policy
+    # https://github.com/argoproj/argo-cd/issues/4397
+    # https://github.com/argoproj/argo-cd/issues/5216
+    # https://github.com/argoproj/argo-cd/pull/5524
+    # https://github.com/argoproj/argo-cd/issues/5724
+    - PrunePropagationPolicy=background

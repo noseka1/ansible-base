@@ -7,8 +7,6 @@
 
 - import_tasks: remote_repo_create.yml
 
-- import_tasks: local_repo_create.yml
-
 - import_role:
     name: openshift_gitops
     tasks_from: create_repo.yml
@@ -20,15 +18,12 @@
     gitops_repo_force_http_basic_auth: true
     gitops_repo_type: git
 
-- name: Set name for Kubernetes namespace
-  set_fact:
-    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
-
-- name: Create cluster namespace and autogitops application set
-  kubernetes.core.k8s:
-    template:
-      - autogitops-ns.yaml
-      - autogitops-appset.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: root_deploy.yml
+  vars:
+    autogitops_app_dst_path: '{{ autogitops_root_name }}'
+    autogitops_app_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
 
 - import_role:
     name: openshift_hashicorp_vault

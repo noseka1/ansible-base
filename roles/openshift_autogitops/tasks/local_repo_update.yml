@@ -1,7 +1,7 @@
 - name: Set application config and destination directory
   set_fact:
-    autogitops_app_cfg_dir: '{{ autogitops_git_dir}}/apps/{{ autogitops_app_name }}'
-    autogitops_app_dst_dir: '{{ autogitops_git_dir}}/manifests/{{ autogitops_app_dst_path }}'
+    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_app_dst_path }}'
 
 - name: Ensure application directories exist
   file:
@@ -11,10 +11,10 @@
     - '{{ autogitops_app_dst_dir }}'
     - '{{ autogitops_app_cfg_dir }}'
 
-- name: Create argocd_config_dir.yaml
+- name: Create application.yaml
   template:
-    src: argocd_config.yaml
-    dest: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+    src: application.yaml
+    dest: '{{ autogitops_app_cfg_dir }}/application.yaml'
 
 - name: Check if Chart.yaml file exists
   stat:

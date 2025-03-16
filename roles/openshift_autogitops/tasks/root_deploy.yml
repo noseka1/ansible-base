@@ -1,0 +1,29 @@
+- name: Set application variables
+  set_fact:
+    autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
+    autogitops_app_project: '{{ openshift_common_cluster_domain | regex_replace("\.", "-") }}'
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+
+- import_tasks: local_repo_create.yml
+
+- name: Set application destination directory
+  set_fact:
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_app_dst_path }}'
+
+- name: Ensure root application destination directory exists
+  file:
+    path: '{{ autogitops_app_dst_dir }}'
+    state: directory
+
+- name: Create a .gitkeep file to allow checking the empty directory into git
+  copy:
+    dest: '{{ autogitops_app_dst_dir }}/.gitkeep'
+    content: ''
+
+- import_tasks: local_repo_push.yml
+
+- name: Create cluster namespace and root application
+  kubernetes.core.k8s:
+    template:
+      - namespace.yaml
+      - application.yaml

@@ -4,23 +4,24 @@
 
 - import_tasks: local_repo_create.yml
 
-- name: Set application name
+- name: Set application variables
   set_fact:
     autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
+    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
 
 - name: Set application config directory
   set_fact:
-    autogitops_app_cfg_dir:  '{{ autogitops_git_dir }}/apps/{{ autogitops_app_name }}'
+    autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/manifests/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
 
-- name: Check if argocd_config_dir.yaml exists
+- name: Check if application.yaml exists
   stat:
-    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
+    path: '{{ autogitops_app_cfg_dir }}/application.yaml'
   register: autogitops_app_dir_stat_result
 
-- name: Retrieve argocd_config_dir.yaml
+- name: Retrieve application.yaml
   slurp:
-    path: '{{ autogitops_app_cfg_dir }}/argocd_config_dir.yaml'
-  register: autogitops_app_dir_slurp_result
+    path: '{{ autogitops_app_cfg_dir }}/application.yaml'
+  register: autogitops_app_yaml_slurp_result
   when: autogitops_app_dir_stat_result.stat.exists
 
 - name: Application git directory does not exist
@@ -31,7 +32,7 @@
 
 - name: Set application git directory
   set_fact:
-    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_dir_slurp_result.content | b64decode | from_yaml).sourcePath }}'
+    autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_yaml_slurp_result.content | b64decode | from_yaml).spec.source.path }}'
   when: autogitops_app_dir_stat_result.stat.exists
 
 - include_tasks: app_delete_dir.yml
@@ -41,10 +42,6 @@
 
 - include_tasks: local_repo_push.yml
   when: autogitops_app_dst_dir | length > 0
-
-- name: Set application namespace
-  set_fact:
-    autogitops_argocd_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
 
 - import_role:
     name: openshift_gitops

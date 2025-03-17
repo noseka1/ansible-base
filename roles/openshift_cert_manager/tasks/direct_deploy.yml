@@ -11,7 +11,14 @@
       - operator/namespace.yaml
       - operator/operatorgroup.yaml
       - operator/subscription.yaml
-    wait: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_operator.yml
+  vars:
+    subscription_name: cert-manager-operator
+    subscription_namespace: '{{ certman_operator_namespace }}'
+  tags: osvirt_operator
 
 - name: Deploy cert manager instance
   kubernetes.core.k8s:

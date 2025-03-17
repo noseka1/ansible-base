@@ -1,0 +1,11 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for kind {{ oscommon_kind_apiversion  }} {{ oscommon_kind_name }} to become available
+  kubernetes.core.k8s_info:
+    api_version: '{{ oscommon_kind_apiversion }}'
+    kind: '{{ oscommon_kind_name }}'
+    label_selectors:
+      - nomatch=nomatch
+  register: oscommon_kind_result
+  until:
+    - oscommon_kind_result.msg | default('') | length == 0
+  retries: 60
+  delay: 1

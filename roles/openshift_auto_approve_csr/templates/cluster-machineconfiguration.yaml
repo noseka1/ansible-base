@@ -10,4 +10,7 @@ spec:
       path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod/run.sh
     - actions:
       - type: None
+      path: /etc/kubernetes/static-pod-resources/auto-approve-csr-pod/token
+    - actions:
+      - type: None
       path: /etc/kubernetes/manifests/auto-approve-csr-pod.yaml

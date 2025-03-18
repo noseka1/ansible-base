@@ -20,11 +20,12 @@
   ignore_errors: true
   register: openshift_common_mcp_result
   until:
-    - openshift_common_mcp_result.resources | default([]) | json_query("[?status.conditions[?type=='RenderDegraded' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | default([]) | json_query("[?status.conditions[?type=='Updated' && status=='False']]") | length == 0
-    - openshift_common_mcp_result.resources | default([]) | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | default([]) | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | default([]) | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
+    - openshift_common_mcp_result.resources | default([]) | length > 0
+    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='True']]") | length == 0
+    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='False']]") | length == 0
+    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
+    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
+    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
   retries: '{{ 120 * (openshift_common_mcp_max_pool_size | int) }}'
   delay: 10
 

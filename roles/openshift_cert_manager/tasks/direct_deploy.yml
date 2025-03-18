@@ -33,4 +33,4 @@
   vars:
     wait_for_deployment_name: cert-manager-webhook
     wait_for_deployment_namespace: '{{ certman_instance_namespace }}'
-    wait_for_deployment_retries: 90
+    wait_for_deployment_retries: 60

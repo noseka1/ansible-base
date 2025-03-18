@@ -3,11 +3,11 @@
     api_version: machineconfiguration.openshift.io/v1
     kind: MachineConfigPool
   ignore_errors: true
-  register: openshift_common_mcp_result
+  register: oscommon_mcp_result
 
 - set_fact:
     openshift_common_mcp_max_pool_size: >-
-      {{ openshift_common_mcp_result.resources | default([]) | json_query("[].status.machineCount") | sort | last | default(3) }}
+      {{ oscommon_mcp_result.resources | default([]) | json_query("[].status.machineCount") | sort | last | default(3) }}
 
 - name: Wait for {{ stable_cluster_delay }} seconds
   wait_for:
@@ -18,14 +18,14 @@
     api_version: machineconfiguration.openshift.io/v1
     kind: MachineConfigPool
   ignore_errors: true
-  register: openshift_common_mcp_result
+  register: oscommon_mcp_result
   until:
-    - openshift_common_mcp_result.resources | default([]) | length > 0
-    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='False']]") | length == 0
-    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
-    - openshift_common_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
+    - oscommon_mcp_result.resources | default([]) | length > 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='True']]") | length == 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='False']]") | length == 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
   retries: '{{ 120 * (openshift_common_mcp_max_pool_size | int) }}'
   delay: 10
 
@@ -42,22 +42,22 @@
   command: >
     oc version
   changed_when: false
-  register: oc_version_result
+  register: oscommon_oc_version_result
   until:
-    - oc_version_result is success
+    - oscommon_oc_version_result is success
   retries: 60
   delay: 10
 
 - name: Show cluster info
   debug:
-    var: oc_version_result.stdout_lines
+    var: oscommon_oc_version_result.stdout_lines
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift APIs to become available
   command: >
     oc api-resources
   changed_when: false
-  register: api_resources_result
+  register: oscommon_api_resources_result
   until:
-    - api_resources_result is success
+    - oscommon_api_resources_result is success
   retries: 60
   delay: 10

@@ -19,7 +19,7 @@
     template: monitoring/alertmanager-main-secret.yaml
   when: openshift_send_alerts_to_slack_url | length > 0
 
-- name: Enabled cluster monitoring for openshift-operators namespace
+- name: Enable cluster monitoring for openshift-operators namespace
   kubernetes.core.k8s:
     template:
       - openshift-operators-ns.yaml

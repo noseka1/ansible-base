@@ -6,14 +6,14 @@
   register: oscommon_mcp_result
 
 - set_fact:
-    openshift_common_mcp_max_pool_size: >-
+    oscommon_mcp_max_pool_size: >-
       {{ oscommon_mcp_result.resources | default([]) | json_query("[].status.machineCount") | sort | last | default(3) }}
 
 - name: Wait for {{ stable_cluster_delay }} seconds
   wait_for:
     timeout: '{{ stable_cluster_delay }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for MachineConfigPools to become stable
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for MachineConfigPools to become stable (max_pool_size is {{ oscommon_mcp_max_pool_size }})
   kubernetes.core.k8s_info:
     api_version: machineconfiguration.openshift.io/v1
     kind: MachineConfigPool
@@ -26,7 +26,7 @@
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
-  retries: '{{ 120 * (openshift_common_mcp_max_pool_size | int) }}'
+  retries: '{{ 120 * (oscommon_mcp_max_pool_size | int) }}'
   delay: 10
 
 - name: Reset retry count and job complete

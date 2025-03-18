@@ -8,12 +8,16 @@
 - set_fact:
     oscommon_mcp_max_pool_size: >-
       {{ oscommon_mcp_result.resources | default([]) | json_query("[].status.machineCount") | sort | last | default(3) }}
+    oscommon_mcp_pool_count: >-
+      {{ oscommon_mcp_result.resources | default(['master', 'worker']) | length }}
 
 - name: Wait for {{ stable_cluster_delay }} seconds
   wait_for:
     timeout: '{{ stable_cluster_delay }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for MachineConfigPools to become stable (max_pool_size is {{ oscommon_mcp_max_pool_size }})
+- name: >-
+    Waiting since {{ lookup("pipe", "date +%r") }} for MachineConfigPools to become stable
+    (pool_count is {{ oscommon_mcp_pool_count }}, max_pool_size is {{ oscommon_mcp_max_pool_size }})
   kubernetes.core.k8s_info:
     api_version: machineconfiguration.openshift.io/v1
     kind: MachineConfigPool
@@ -21,11 +25,11 @@
   register: oscommon_mcp_result
   until:
     - oscommon_mcp_result.resources | default([]) | length > 0
-    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='True']]") | length == 0
-    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='False']]") | length == 0
-    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='True']]") | length == 0
-    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='True']]") | length == 0
-    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='True']]") | length == 0
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='False']]") | length >= oscommon_mcp_pool_count | int
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='True']]") | length >= oscommon_mcp_pool_count | int
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='False']]") | length >= oscommon_mcp_pool_count | int
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='NodeDegraded' && status=='False']]") | length >= oscommon_mcp_pool_count | int
+    - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Degraded' && status=='False']]") | length >= oscommon_mcp_pool_count | int
   retries: '{{ 120 * (oscommon_mcp_max_pool_size | int) }}'
   delay: 10
 

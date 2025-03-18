@@ -24,7 +24,7 @@
   ignore_errors: true
   register: oscommon_mcp_result
   until:
-    - oscommon_mcp_result.resources | default([]) | length > 0
+    - oscommon_mcp_result.resources | default([]) | length >= oscommon_mcp_pool_count | int
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='RenderDegraded' && status=='False']]") | length >= oscommon_mcp_pool_count | int
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updated' && status=='True']]") | length >= oscommon_mcp_pool_count | int
     - oscommon_mcp_result.resources | json_query("[?status.conditions[?type=='Updating' && status=='False']]") | length >= oscommon_mcp_pool_count | int

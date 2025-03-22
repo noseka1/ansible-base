@@ -1,4 +1,4 @@
-docker_registry_namespace: docker-registry
+dockerreg_namespace: docker-registry
 
 # Authentication provider, choose "htpasswd" or "none"
-docker_registry_auth: htpasswd
+dockerreg_auth: htpasswd

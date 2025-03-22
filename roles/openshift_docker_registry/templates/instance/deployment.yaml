@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: docker-registry
-  namespace: {{ docker_registry_namespace }}
+  namespace: {{ dockerreg_namespace }}
 spec:
   replicas: 1
   selector:

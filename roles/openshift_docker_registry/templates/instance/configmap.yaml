@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: docker-registry
-  namespace: {{ docker_registry_namespace }}
+  namespace: {{ dockerreg_namespace }}
 data:
   config.yml: |
     # List of available configuration options can be found at
@@ -14,7 +14,7 @@ data:
       formatter: json
       level: info
     auth:
-{% if docker_registry_auth == 'htpasswd' %}
+{% if dockerreg_auth == 'htpasswd' %}
       htpasswd:
         realm: Registry Realm
         path: /auth/htpasswd

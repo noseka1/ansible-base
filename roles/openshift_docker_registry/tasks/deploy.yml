@@ -4,6 +4,6 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: docker-registry/instance
-    autogitops_app_namespace: '{{ docker_registry_namespace }}'
+    autogitops_app_namespace: '{{ dockerreg_namespace }}'
 
 - import_tasks: report_success.yml

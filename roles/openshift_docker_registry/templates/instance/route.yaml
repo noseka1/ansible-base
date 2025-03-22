@@ -2,7 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: docker-registry
-  namespace: {{ docker_registry_namespace }}
+  namespace: {{ dockerreg_namespace }}
 spec:
   port:
     targetPort: https

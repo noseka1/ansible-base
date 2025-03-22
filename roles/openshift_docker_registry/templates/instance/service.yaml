@@ -4,7 +4,7 @@ metadata:
   annotations:
     service.beta.openshift.io/serving-cert-secret-name: docker-registry-tls
   name: docker-registry
-  namespace: {{ docker_registry_namespace }}
+  namespace: {{ dockerreg_namespace }}
 spec:
   ports:
     - name: https

@@ -3,20 +3,20 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: docker-registry
-    namespace: '{{ docker_registry_namespace }}'
-  register: docker_registry_route
+    namespace: '{{ dockerreg_namespace }}'
+  register: dockerreg_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry to come up
   uri:
-    url: 'https://{{ docker_registry_route.resources.0.spec.host }}'
+    url: 'https://{{ dockerreg_route.resources.0.spec.host }}'
     method: GET
     status_code: [ 200 ]
     url_username: admin
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: true
-  register: docker_registry_result
-  until: docker_registry_result.status in [ 200 ]
+  register: dockerreg_result
+  until: dockerreg_result.status in [ 200 ]
   retries: 60
   delay: 5
 
@@ -25,6 +25,6 @@
     msg: |
       Docker registry installed successfully.
 
-      Docker registry URL: https://{{ docker_registry_route.resources.0.spec.host }}
+      Docker registry URL: https://{{ dockerreg_route.resources.0.spec.host }}
 
 - debug: msg="{{ msg.split('\n') }}"

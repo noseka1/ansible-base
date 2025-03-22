@@ -14,9 +14,13 @@ data:
       formatter: json
       level: info
     auth:
+{% if docker_registry_auth == 'htpasswd' %}
       htpasswd:
         realm: Registry Realm
         path: /auth/htpasswd
+{% else %}
+      none:
+{% endif %}
     http:
       addr: :5000
       tls:

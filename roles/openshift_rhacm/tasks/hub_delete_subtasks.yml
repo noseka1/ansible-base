@@ -4,6 +4,13 @@
   vars:
     autogitops_app_dst_path: rhacm/instance
 
+- include_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacm/instance/openshift-pull-secret'
+
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml

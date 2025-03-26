@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: rhacm/observability
+    autogitops_app_dst_path: rhacm/observability/main
   tags: rhacm_observability
 
 - include_role:
@@ -17,7 +17,7 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacm/instance/openshift-pull-secret'
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacm/observability/openshift-pull-secret'
 
 - import_role:
     name: openshift_minio

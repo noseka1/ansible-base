@@ -48,6 +48,9 @@ spec:
     - configOverrides: {}
       enabled: false
       name: siteconfig
+    - configOverrides: {}
+      enabled: false
+      name: edge-manager-preview
   imagePullSecret: openshift-pull-secret
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:

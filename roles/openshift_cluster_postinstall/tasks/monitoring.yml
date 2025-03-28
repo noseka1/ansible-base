@@ -4,16 +4,6 @@
   kubernetes.core.k8s:
     template: monitoring/cluster-monitoring-config-cm.yaml
 
-- name: Create convenience routes for accessing Prometheus UI, AlertManager UI, and Thanos Querier UI
-  kubernetes.core.k8s:
-    template:
-      - monitoring/prometheus-k8s-custom-route.yaml
-      - monitoring/alertmanager-main-custom-route.yaml
-      - monitoring/thanos-querier-custom-route.yaml
-      - monitoring/prometheus-k8s-sa.yaml
-      - monitoring/alertmanager-main-sa.yaml
-      - monitoring/thanos-querier-sa.yaml
-
 - name: Configure OpenShift to send alerts to Slack
   kubernetes.core.k8s:
     template: monitoring/alertmanager-main-secret.yaml

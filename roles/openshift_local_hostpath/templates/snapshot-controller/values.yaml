@@ -1,2 +1,5 @@
 controller:
+  enabled: true
+  rbac:
+    enabled: true
   replicaCount: 1

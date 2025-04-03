@@ -19,6 +19,9 @@ spec:
     # Enable SCSI persistent reservations
     persistentReservation: true
   infra: {}
+  resourceRequirements:
+    # CPU overcommit ratio (default is 10)
+    vmiCPUAllocationRatio: 10
   workloads:
     nodePlacement:
       tolerations:

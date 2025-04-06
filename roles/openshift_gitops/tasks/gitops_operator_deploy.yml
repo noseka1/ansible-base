@@ -1,3 +1,10 @@
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: '{{ gitops_operator_name }}'
+    oscomm_subscription_namespace: '{{ gitops_operator_namespace }}'
+
 - name: Deploy GitOps operator
   kubernetes.core.k8s:
     template:

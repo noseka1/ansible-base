@@ -1,5 +1,5 @@
 gitops_operator_subscription_channel: ''
-gitops_operator_subscription_approval: Automatic
+gitops_operator_subscription_approval: Manual
 gitops_operator_subscription_starting_csv: ''
 
 gitops_operator_namespace: openshift-gitops-operator

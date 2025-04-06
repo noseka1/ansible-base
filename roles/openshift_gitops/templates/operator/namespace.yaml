@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: {{ gitops_subscription_namespace }}
+  name: {{ gitops_operator_namespace }}

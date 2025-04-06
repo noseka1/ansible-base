@@ -1,18 +1,18 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: {{ gitops_subscription_name }}
-  namespace: {{ gitops_subscription_namespace }}
+  name: {{ gitops_operator_name }}
+  namespace: {{ gitops_operator_namespace }}
 spec:
-{% if gitops_subscription_channel | length > 0 %}
-  channel: {{ gitops_subscription_channel }}
+{% if gitops_operator_subscription_channel | length > 0 %}
+  channel: {{ gitops_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ gitops_subscription_approval }}
+  installPlanApproval: {{ gitops_operator_subscription_approval }}
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if gitops_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ gitops_subscription_starting_csv }}
+{% if gitops_operator_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ gitops_operator_subscription_starting_csv }}
 {% endif %}
   config:
     env:

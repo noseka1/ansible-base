@@ -17,7 +17,6 @@
       ---
       {{ lookup('template', 'instance/csi-nfsplugin-snapclass-vsclass.yaml') }}
     state: absent
-    wait: true
 
 - name: Delete Rook Ceph object store
   kubernetes.core.k8s:
@@ -26,7 +25,6 @@
       ---
       {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
     state: absent
-    wait: true
 
 - name: Delete Rook Ceph file system
   kubernetes.core.k8s:
@@ -37,7 +35,6 @@
       ---
       {{ lookup('template', 'instance/csi-cephfsplugin-snapclass-vsclass.yaml') }}
     state: absent
-    wait: true
 
 - import_role:
     name: openshift_common

@@ -1,4 +1,4 @@
-rook_ceph_version: 1.13.1
+rook_ceph_version: 1.15.9
 rook_ceph_git_url: https://raw.githubusercontent.com/rook/rook/v{{ rook_ceph_version }}
 rook_ceph_csi_addons_version: 0.8.0
 rook_ceph_csi_addons_git_url: https://raw.githubusercontent.com/csi-addons/kubernetes-csi-addons/v{{ rook_ceph_csi_addons_version }}

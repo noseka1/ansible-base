@@ -28,7 +28,7 @@ data:
 apiVersion: ceph.rook.io/v1
 kind: CephCluster
 metadata:
-  name: my-cluster
+  name: mycluster
   namespace: rook-ceph # namespace:cluster
 spec:
   dataDirHostPath: /var/lib/rook

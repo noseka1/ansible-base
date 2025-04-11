@@ -29,7 +29,7 @@
 - name: Deploy Rook Ceph cluster
   kubernetes.core.k8s:
     template:
-      - instance/my-cluster-cephcluster.yaml
+      - instance/mycluster-cephcluster.yaml
       - instance/rook-ceph-block-sc.yaml
       - instance/csi-rbdplugin-snapclass-vsclass.yaml
 
@@ -37,7 +37,7 @@
   kubernetes.core.k8s_info:
     api_version: ceph.rook.io/v1
     kind: CephCluster
-    name: my-cluster
+    name: mycluster
     namespace: '{{ rook_ceph_namespace }}'
   register: rook_ceph_cluster_result
   until:

@@ -50,7 +50,7 @@
 - name: Delete Rook Ceph cluster
   kubernetes.core.k8s:
     template:
-      - instance/my-cluster-cephcluster.yaml
+      - instance/mycluster-cephcluster.yaml
       - instance/rook-ceph-block-sc.yaml
       - instance/csi-rbdplugin-snapclass-vsclass.yaml
     state: absent

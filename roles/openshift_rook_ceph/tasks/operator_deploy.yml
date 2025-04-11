@@ -6,6 +6,11 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/common.yaml', split_lines=false) }}"
 
+- name: Fix PodSecurity violation warnings
+  kubernetes.core.k8s:
+    template:
+      - templates/operator/namespace.yaml
+
 - name: Deploy Rook Ceph operator
   kubernetes.core.k8s:
     definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/operator-openshift.yaml', split_lines=false)

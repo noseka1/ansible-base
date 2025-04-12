@@ -10,7 +10,7 @@
     - 7zip
     - copyq
     - curl
-    - gitbash
+    - git.install
     - googlechrome
     - mobaxterm
     - notepadplusplus

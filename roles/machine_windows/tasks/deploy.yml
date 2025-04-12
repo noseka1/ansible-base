@@ -1,0 +1,13 @@
+- import_role:
+    name: ruzickap.virtio-win
+  tags: mw_virtio_win
+
+- import_tasks: windows_configure.yml
+  tags: mw_windows_configure
+
+- import_tasks: tools_install.yml
+  tags: mw_tools_install
+
+- import_tasks: updates_install.yml
+  when: mw_updates_install
+  tags: mw_updates_install

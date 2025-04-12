@@ -2,3 +2,4 @@
   tasks:
     - import_role:
         name: machine_windows
+        tasks_from: deploy.yml

@@ -12,6 +12,14 @@
     type: dword
     data: 0
 
+- name: Disable firewall for Domain, Public and Private profiles
+  community.windows.win_firewall:
+    state: disabled
+    profiles:
+      - Domain
+      - Private
+      - Public
+
 - name: Enable Remote Desktop (RDP) services
   win_feature:
     name: Remote-Desktop-Services

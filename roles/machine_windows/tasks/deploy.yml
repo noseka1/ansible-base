@@ -1,3 +1,5 @@
+# Note that this role downloads virtio-win.iso from the Fedora website. The download can take up to 60 minutes.
+# The download URL can be overriden by setting the Ansible variable virtio_win_iso_url
 - import_role:
     name: ruzickap.virtio-win
   tags: mw_virtio_win

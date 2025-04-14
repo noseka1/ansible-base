@@ -4,10 +4,6 @@ roles:
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
   version: 5.1.1
 
-- name: ruzickap.virtio-win
-  src: https://github.com/noseka1/ansible-role-virtio-win
-  version: main
-
 collections:
 - name: kubernetes.core
   src: https://github.com/ansible-collections/kubernetes.core

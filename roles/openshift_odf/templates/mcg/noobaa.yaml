@@ -1,0 +1,34 @@
+apiVersion: noobaa.io/v1alpha1
+kind: NooBaa
+metadata:
+  name: noobaa
+  namespace: {{ odf_namespace }}
+spec:
+  # LoggingType specifies the type of logging for the bucket
+  # There are two types available: best-effort and guaranteed logging
+  # - best-effort(default) - less immune to failures but with better performance
+  # - guaranteed - much more reliable but need to provide a storage class that supports RWX PVs
+  bucketLogging:
+    loggingType: best-effort
+  cleanupPolicy:
+    # For production deployments, set this to false to avoid accidental data loss
+    allowNoobaaDeletion: true
+  coreResources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+  dbResources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+  dbType: postgres
+  # Sets the service type to ClusterIP instead of LoadBalancer
+  disableLoadBalancerService: true
+  endpoints:
+    # MinCount, the number of endpoint instances (pods)
+    # to be used as the lower bound when autoscaling
+    minCount: 1
+    # MaxCount, the number of endpoint instances (pods)
+    # to be used as the upper bound when autoscaling
+    maxCount: 2
+  manualDefaultBackingStore: true

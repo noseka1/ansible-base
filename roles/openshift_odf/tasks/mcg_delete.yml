@@ -1,0 +1,27 @@
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: objectbucket.io/v1alpha1
+        kind: ObjectBucketClaim
+  tags: odf_mcg
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: objectbucket.io/v1alpha1
+        kind: ObjectBucket
+  tags: odf_mcg
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: odf/mcg
+  tags: odf_mcg
+
+- import_tasks: operator_delete.yml
+  tags: odf_operator

@@ -1,0 +1,10 @@
+apiVersion: samba-operator.samba.org/v1alpha1
+kind: SmbSecurityConfig
+metadata:
+  name: myusers
+  namespace: {{ smbsrv_instance_namespace }}
+spec:
+  mode: user
+  users:
+    secret: myusers
+    key: myusers

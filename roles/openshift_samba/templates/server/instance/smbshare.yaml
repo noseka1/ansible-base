@@ -1,0 +1,19 @@
+# Example Samba share configurations:
+# https://github.com/samba-in-kubernetes/samba-operator/blob/master/docs/howto.md
+apiVersion: samba-operator.samba.org/v1alpha1
+kind: SmbShare
+metadata:
+  name: {{ smbsrv_instance_share_name }}
+  namespace: {{ smbsrv_instance_namespace }}
+spec:
+  shareName: {{ smbsrv_instance_share_name }}
+  securityConfig: myusers
+  readOnly: false
+  storage:
+    pvc:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi

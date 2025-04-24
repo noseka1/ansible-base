@@ -1,0 +1,15 @@
+smbsrv_operator_kustomization: github.com/samba-in-kubernetes/samba-operator/config/default?ref=v0.6
+
+smbsrv_instance_namespace: samba-instance
+smbsrv_instance_share_name: myshare
+
+smbcsi_operator_subscription_channel: ''
+smbcsi_operator_subscription_approval: Manual
+smbcsi_operator_subscription_starting_csv: ''
+smbcsi_operator_subscription_name: smb-csi-driver-operator
+
+smbcsi_operator_namespace: openshift-cluster-csi-drivers
+
+smbcsi_share_name: myshare
+smbcsi_share_namespace: samba-myshare
+smbcsi_share_source: //myshare.samba-instance.svc/myshare

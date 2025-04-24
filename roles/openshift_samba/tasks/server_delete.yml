@@ -1,0 +1,19 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: smbsrv/instance
+
+- include_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+    apply:
+      tags: smbsrv
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/smbsrv/instance/myusers'
+
+- name: Delete Samba operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + smbsrv_operator_kustomization) }}"
+    state: absent

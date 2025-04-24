@@ -1,0 +1,38 @@
+- name: Deploy Samba operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('pipe', 'oc kustomize ' + smbsrv_operator_kustomization) }}"
+    wait: true
+
+- include_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+    apply:
+      tags: smbsrv
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/smbsrv/instance/myusers'
+    hvault_secret_data:
+      myusers: |
+        {
+          "samba-container-config": "v0",
+          "users": {
+            "all_entries": [
+              {
+                "name": "admin",
+                "password": "{{ generic_user_password }}"
+              },
+              {
+                "name": "devel",
+                "password": "{{ generic_user_password }}"
+              }
+            ]
+          }
+        }
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/server/instance
+    autogitops_app_dst_path: smbsrv/instance
+    autogitops_app_namespace: '{{ smbsrv_instance_namespace }}'

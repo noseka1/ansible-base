@@ -1,0 +1,30 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: smbcsi/share
+
+- include_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+    apply:
+      tags: smbcsi
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/smbcsi/share/smbcreds-{{ smbcsi_share_name }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: smbcsi/instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: smbcsi/operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml

@@ -5,11 +5,6 @@
     autogitops_app_dst_path: mtv/provider
   tags: mtv_provider
 
-- import_role:
-    name: openshift_common
-    tasks_from: get_cluster_domain.yml
-  tags: mtv_provider
-
 - include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml

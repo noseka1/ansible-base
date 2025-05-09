@@ -138,6 +138,10 @@ spec:
     # Switch to resource tracking using annotations.
     # See also https://argo-cd.readthedocs.io/en/stable/user-guide/resource_tracking/
     application.resourceTrackingMethod: annotation
+    # Prevent out-of-sync when using aggregated cluster roles. See also:
+    # https://github.com/argoproj/argo-cd/issues/2382
+    resource.compareoptions: |
+      ignoreAggregatedRoles: true
     # See also Known Kubernetes types in CRDs (Resource limits, Volume mounts etc)
     # https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/#known-kubernetes-types-in-crds-resource-limits-volume-mounts-etc
     # This makes the sonarqube-postgresql StatefulSet sync

@@ -1,5 +1,5 @@
 wmco_operator_subscription_channel: ''
-wmco_operator_subscription_approval: Automatic
+wmco_operator_subscription_approval: Manual
 wmco_operator_subscription_starting_csv: ''
 
 wmco_operator_namespace: openshift-windows-machine-config-operator

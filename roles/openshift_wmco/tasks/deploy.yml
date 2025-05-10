@@ -1,5 +1,8 @@
 - import_tasks: hybrid_networking.yml
+  tags: wmco_networking
 
 - import_tasks: operator_deploy.yml
+  tags: wmco_operator
 
 - import_tasks: example_deploy.yml
+  tags: wmco_example

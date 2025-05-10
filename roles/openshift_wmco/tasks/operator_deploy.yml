@@ -1,4 +1,14 @@
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/wmco/operator/cloud-private-key'
+    hvault_secret_data:
+      private-key.pem: |
+        {{ generic_ssh_key_pair.private_key | indent(4) }}
+
+- import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:

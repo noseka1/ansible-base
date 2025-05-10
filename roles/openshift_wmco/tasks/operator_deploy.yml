@@ -6,7 +6,7 @@
     hvault_secret_name: '{{ openshift_common_cluster_domain }}/wmco/operator/cloud-private-key'
     hvault_secret_data:
       private-key.pem: |
-        {{ generic_ssh_key_pair.private_key | indent(4) }}
+        {{ generic_ssh_key_pair.private_key }}
 
 - import_role:
     name: openshift_common

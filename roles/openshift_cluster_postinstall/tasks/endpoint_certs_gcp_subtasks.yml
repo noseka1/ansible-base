@@ -6,9 +6,9 @@
     name: openshift_cert_manager
     tasks_from: issuer_acme_gcp_direct_deploy.yml
   vars:
-    cert_manager_acme_server: https://acme-v02.api.letsencrypt.org/directory
-    cert_manager_acme_gcp_cloud_dns_projectid: '{{ openshift_common_infrastructure.status.platformStatus.gcp.projectID }}'
-    cert_manager_certificate_dns_name: 'mytest.{{ openshift_common_cluster_domain }}'
+    certman_acme_server: https://acme-v02.api.letsencrypt.org/directory
+    certman_acme_gcp_cloud_dns_projectid: '{{ openshift_common_infrastructure.status.platformStatus.gcp.projectID }}'
+    certman_certificate_dns_name: 'mytest.{{ openshift_common_cluster_domain }}'
 
 - import_tasks: endpoint_certs_complete.yml
   vars:

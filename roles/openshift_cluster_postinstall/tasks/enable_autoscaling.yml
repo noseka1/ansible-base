@@ -2,21 +2,17 @@
   kubernetes.core.k8s:
     template: default-clusterautoscaler.yml
 
-- name: Set cluster_id
+- name: Set ocpost_cluster_id
   set_fact:
-    cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+    ocpost_cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets
   kubernetes.core.k8s_info:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api
-  register: machinesets_result
+  register: ocpost_machinesets_result
 
 - name: Enable autoscaling for machinesets
   kubernetes.core.k8s:
     template: machineautoscaler.yml
-  when: item.metadata.name.startswith(cluster_id)
-  loop: '{{ machinesets_result.resources }}'
-  loop_control:
-    label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'

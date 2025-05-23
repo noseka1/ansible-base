@@ -66,6 +66,12 @@ class Graph(object):
             to_version = node_list[edge[1]]
             self.add_edge(from_version, to_version)
 
+        for cond_edges in channel_response["conditionalEdges"]:
+            for edge in cond_edges["edges"]:
+                from_version = edge["from"]
+                to_version = edge["to"]
+                self.add_edge(from_version, to_version)
+
     def get_latest_version_on_channel(self, channel):
         versions = list()
         for node in self.nodes.values():

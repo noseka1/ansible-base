@@ -6,6 +6,8 @@ import pprint
 import requests
 import sys
 
+LOG_LEVEL=logging.INFO
+
 OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?channel=%s'
 CHANNEL = 'channel'
 STABLE = 'stable'
@@ -111,7 +113,7 @@ class Graph(object):
 class Main(object):
 
     def main(self):
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=LOG_LEVEL)
 
         from_version_arg, to_channel_arg, to_version_arg, channel_arg = self.read_program_arguments()
 

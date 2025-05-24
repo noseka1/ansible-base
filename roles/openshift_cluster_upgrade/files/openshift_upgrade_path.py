@@ -10,7 +10,6 @@ LOG_LEVEL=logging.INFO
 
 OPENSHIFT_GRAPH_URL = 'https://api.openshift.com/api/upgrades_info/v1/graph?channel=%s'
 CHANNEL = 'channel'
-STABLE = 'stable'
 VERSION = 'version'
 MAJOR = 4
 

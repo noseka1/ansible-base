@@ -10,6 +10,7 @@ spec:
       fstype: xfs
       thinPoolConfig:
         chunkSizeCalculationPolicy: Static
+        metadataSizeCalculationPolicy: Host
         name: thin-pool-1
         overprovisionRatio: 10
         sizePercent: 90

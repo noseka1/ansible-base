@@ -11,14 +11,11 @@ spec:
 {% else %}
   controllerAvailabilityPolicy: HighlyAvailable
 {% endif %}
-  dns:
-    baseDomain: ""
   etcd:
     managed:
       storage:
         persistentVolume:
           size: 8Gi
-          storageClassName: null
         type: PersistentVolume
     managementType: Managed
   fips: false

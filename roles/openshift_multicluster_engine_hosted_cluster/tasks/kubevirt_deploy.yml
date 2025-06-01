@@ -1,21 +1,20 @@
 - name: Enable wildcard DNS routes
   kubernetes.core.k8s:
     template:
-      - kubevirt/default-ingresscontroller.yaml
+      - kubevirt/prereqs/default-ingresscontroller.yaml
 
 - name: Create namespace for hosted cluster configuration
   kubernetes.core.k8s:
     template:
-      - kubevirt/hosted-clusters-ns.yaml
+      - kubevirt/prereqs/hosted-clusters-ns.yaml
 
-- name: Deploy cluster {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }} to KubeVirt
-  kubernetes.core.k8s:
-    template:
-      - kubevirt/cluster-pull-secret.yaml
-      - kubevirt/cluster-etcd-encryption-key-secret.yaml
-      - kubevirt/cluster-ssh-key-secret.yaml
-      - kubevirt/cluster-hostedcluster.yaml
-      - kubevirt/cluster-nodepool.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/kubevirt/instance
+    autogitops_app_dst_path: hosted-cluster/kubevirt
+    autogitops_app_namespace: hosted-clusters
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for hosted control plane to become ready
   kubernetes.core.k8s_info:

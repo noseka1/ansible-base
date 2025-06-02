@@ -8,6 +8,13 @@
     template:
       - kubevirt/prereqs/hosted-clusters-ns.yaml
 
+- name: Fix kubevirt-csi controller deployment
+  kubernetes.core.k8s:
+    template:
+      - kubevirt/fix/namespace.yaml
+      - kubevirt/fix/role.yaml
+      - kubevirt/fix/rolebinding.yaml
+
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml

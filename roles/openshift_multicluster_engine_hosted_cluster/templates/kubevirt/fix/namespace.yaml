@@ -1,0 +1,4 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hosted-clusters-{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}

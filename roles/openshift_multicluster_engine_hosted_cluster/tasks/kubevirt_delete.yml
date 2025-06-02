@@ -3,3 +3,18 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: hosted-cluster/kubevirt
+
+- import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_objects:
+      - api_version: cluster.open-cluster-management.io/v1
+        kind: ManagedCluster
+        name: '{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+      - api_version: v1
+        kind: Namespace
+        name: '{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+      - api_version: v1
+        kind: Namespace
+        name: 'klusterlet-{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'

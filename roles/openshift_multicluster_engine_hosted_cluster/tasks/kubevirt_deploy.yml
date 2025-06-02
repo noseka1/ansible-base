@@ -22,5 +22,6 @@
     autogitops_app_src_path: templates/kubevirt/instance
     autogitops_app_dst_path: hosted-cluster/kubevirt
     autogitops_app_namespace: hosted-clusters
+    autogitops_app_sync_retries: 600
 
 - import_tasks: kubevirt_success.yml

@@ -13,3 +13,24 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: hosted-cluster/kubevirt
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-etcd-encryption-key'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-pull-secret'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-ssh-key'

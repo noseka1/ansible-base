@@ -1,0 +1,9 @@
+apiVersion: v2
+name: kubevirtbmc
+type: application
+version: 0.1.0
+
+dependencies:
+- name: kubevirtbmc
+  version: 0.2.3
+  repository: https://charts.zespre.com

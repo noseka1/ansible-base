@@ -24,7 +24,6 @@ spec:
         volumeMounts:
         - mountPath: /lib/modules
           name: lib-modules
-          readonly: true
         - mountPath: /run/dbus
           name: run-dbus
         - mountPath: /storage

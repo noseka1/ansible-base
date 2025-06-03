@@ -1,17 +1,17 @@
-- set_fact:
-    iscsi_target_service_ip: ''
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: iscsi-target/volumes
 
-- name: Delete iscsi-target persistent volumes
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-pv.yaml
-      - iscsi-target-sc.yaml
-    state: absent
-    wait: true
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: iscsi-target/instance
 
-- name: Delete iscsi-target namespace
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-ns.yaml
-    state: absent
-    wait: true
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: iscsi-target/namespace

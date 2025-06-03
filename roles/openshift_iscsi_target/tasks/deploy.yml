@@ -1,13 +1,12 @@
 - include_tasks: mc_deploy.yml
 
-- name: Create iscsi-target namespace
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-ns.yaml
-      - iscsi-target-sa.yaml
-      - iscsi-target-scc-role.yaml
-      - iscsi-target-scc-rolebinding.yaml
-      - iscsi-target-svc.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/namespace
+    autogitops_app_dst_path: iscsi-target/namespace
+    autogitops_app_namespace: '{{ iscsi_target_namespace }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for service IP
   kubernetes.core.k8s_info:
@@ -24,16 +23,18 @@
 - set_fact:
     iscsi_target_service_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
 
-- name: Deploy iscsi-target
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-init-cm.yaml
-      - iscsi-target-pvc.yaml
-      - iscsi-target-deploy.yaml
-    wait: true
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: iscsi-target/instance
+    autogitops_app_namespace: '{{ iscsi_target_namespace }}'
 
-- name: Create iscsi-target persistent volumes
-  kubernetes.core.k8s:
-    template:
-      - iscsi-target-sc.yaml
-      - iscsi-target-pv.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/volumes
+    autogitops_app_dst_path: iscsi-target/volumes
+    autogitops_app_namespace: ''

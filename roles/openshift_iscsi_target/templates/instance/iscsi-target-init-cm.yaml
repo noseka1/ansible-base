@@ -5,4 +5,4 @@ metadata:
   namespace: {{ iscsi_target_namespace }}
 data:
   init.sh: |
-    {{ lookup('template', 'init.sh') | indent(4) }}
+    {{ lookup('template', ansible_parent_role_paths.0 + '/templates/init/init.sh') | indent(4) }}

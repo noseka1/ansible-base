@@ -4,7 +4,8 @@ lun_dir=/storage
 lun_size={{ iscsi_target_volume_size_gb }}G
 target_name=iqn.2025-01.com.example.target:0
 initiator_name=iqn.2025-01.com.example.initiator:0
-target_service_ip={{ iscsi_target_service_ip }}
+target_service_a_ip={{ iscsi_target_service_a_ip }}
+target_service_b_ip={{ iscsi_target_service_b_ip }}
 
 echo
 echo ***************
@@ -31,8 +32,11 @@ targetcli /iscsi/$target_name/tpg1/portals delete 0.0.0.0 3260
 # Listen on the pod IP, and allow connecting via pod IP
 targetcli /iscsi/$target_name/tpg1/portals create $(hostname -i) 3260
 
-# Allow connecting via service IP
-targetcli /iscsi/$target_name/tpg1/portals create $target_service_ip 3260
+# Allow connecting via service A IP
+targetcli /iscsi/$target_name/tpg1/portals create $target_service_a_ip 3260
+#
+# Allow connecting via service B IP
+targetcli /iscsi/$target_name/tpg1/portals create $target_service_b_ip 3260
 
 # Create LUNs
 for i in $(seq 0 9); do

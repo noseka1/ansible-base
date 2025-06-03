@@ -8,11 +8,11 @@
     autogitops_app_dst_path: iscsi-target/namespace
     autogitops_app_namespace: '{{ iscsi_target_namespace }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for service IP
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for service A IP
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    name: iscsi-target
+    name: iscsi-target-a
     namespace: '{{ iscsi_target_namespace }}'
   register: iscsi_target_service_result
   until:
@@ -21,7 +21,22 @@
   delay: 1
 
 - set_fact:
-    iscsi_target_service_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
+    iscsi_target_service_a_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for service B IP
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: iscsi-target-b
+    namespace: '{{ iscsi_target_namespace }}'
+  register: iscsi_target_service_result
+  until:
+    - iscsi_target_service_result.resources.0.spec.clusterIP | default('') | length > 0
+  retries: 10
+  delay: 1
+
+- set_fact:
+    iscsi_target_service_b_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
 
 - import_role:
     name: openshift_autogitops

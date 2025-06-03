@@ -22,7 +22,7 @@
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-etcd-encryption-key'
     hvault_secret_data:
-      key: m9nEHssmMwuYJ1UuPGpGYyeUL8fRJhZVM48IjS6Ghbg=
+      key: '01234567890123456789012345678901'
 
 - import_role:
     name: openshift_hashicorp_vault

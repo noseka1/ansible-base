@@ -15,7 +15,6 @@ spec:
     iscsiInterface: default
     lun: {{ i }}
     portals:
-    - {{ iscsi_target_service_a_ip }}:3260
     - {{ iscsi_target_service_b_ip }}:3260
     targetPortal: {{ iscsi_target_service_a_ip }}:3260
   persistentVolumeReclaimPolicy: Retain

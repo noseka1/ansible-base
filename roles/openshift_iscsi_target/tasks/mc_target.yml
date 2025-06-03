@@ -6,13 +6,13 @@
     name: openshift_common
     tasks_from: update_machineconfiguration.yml
   vars:
-    openshift_common_mc_update_yaml: '{{ lookup("template", "cluster-machineconfiguration.yaml") | from_yaml }}'
+    openshift_common_mc_update_yaml: '{{ lookup("template", "mc/target/cluster-machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
 - name: Create /etc/target/pr directory on cluster nodes (may cause nodes to restart)
   kubernetes.core.k8s:
     template:
-      - 52-iscsi-target-mc.yaml
+      - mc/target/52-iscsi-target-mc.yaml
   register: iscsi_target_machineconfig_result
   loop:
     - worker

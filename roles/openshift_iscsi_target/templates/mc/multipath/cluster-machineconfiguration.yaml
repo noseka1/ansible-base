@@ -1,0 +1,12 @@
+apiVersion: operator.openshift.io/v1
+kind: MachineConfiguration
+metadata:
+  name: cluster
+spec:
+  nodeDisruptionPolicy:
+    files:
+    - actions:
+      - restart:
+          serviceName: multipathd.service
+        type: Restart
+      path: /etc/multipath.conf

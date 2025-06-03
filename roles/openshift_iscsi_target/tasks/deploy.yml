@@ -1,4 +1,6 @@
-- include_tasks: mc_deploy.yml
+- import_tasks: mc_multipath.yml
+
+- import_tasks: mc_target.yml
 
 - import_role:
     name: openshift_autogitops

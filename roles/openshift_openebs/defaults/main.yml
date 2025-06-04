@@ -2,3 +2,8 @@ openebs_helm_repo: https://openebs.github.io/charts
 openebs_version: 3.10.0
 
 openebs_namespace: openebs
+
+# By default, allocate storage on both master and worker nodes
+openebs_storage_nodes:
+  - worker
+  - master

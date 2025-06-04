@@ -5,5 +5,5 @@ openebs_namespace: openebs
 
 # By default, allocate storage on both master and worker nodes
 openebs_storage_nodes:
-  - worker
   - master
+  - worker

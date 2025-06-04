@@ -4,7 +4,7 @@
 
 device_name=loop0
 device_path=/dev/$device_name
-data_path=/var/local/${device_name}-device-data.img
+data_path=/var/local/openebs-${device_name}-device-data.img
 data_size=2048G
 
 # Create an empty backing file and LVM volume group

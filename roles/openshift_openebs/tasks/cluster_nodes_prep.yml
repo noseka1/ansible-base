@@ -11,7 +11,7 @@
 
 - name: Create LVM group for OpenEBS volumes on each cluster node (may cause nodes to restart)
   kubernetes.core.k8s:
-    template: machineconfig/99-openebs-lvm-mc.yaml
+    template: machineconfig/53-openebs-lvm-mc.yaml
   register: openebs_machineconfig_result
   loop: '{{ openebs_storage_nodes }}'
 

@@ -3,7 +3,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: {{ item }}
-  name: 99-{{ item }}-lvms-block
+  name: 54-{{ item }}-lvms-block
 spec:
   config:
     ignition:

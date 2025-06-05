@@ -12,7 +12,7 @@
 - name: Create loop block device for LVM Storage volumes on each cluster node (may cause nodes to restart)
   kubernetes.core.k8s:
     template:
-      - machineconfig/99-lvm-block-mc.yaml
+      - machineconfig/54-lvm-block-mc.yaml
   register: lvms_machineconfig_result
   loop:
     - worker

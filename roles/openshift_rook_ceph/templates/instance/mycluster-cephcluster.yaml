@@ -1,6 +1,6 @@
 # This file is based on:
-# https://github.com/rook/rook/blob/v1.12.2/deploy/examples/cluster-test.yaml
-# https://github.com/rook/rook/blob/v1.12.2/deploy/examples/cluster-on-pvc.yaml
+# https://github.com/rook/rook/blob/v1.16.7/deploy/examples/cluster-test.yaml
+# https://github.com/rook/rook/blob/v1.16.7/deploy/examples/cluster-on-pvc.yaml
 #
 #################################################################################################################
 # Define the settings for the rook-ceph cluster with common settings for a small test cluster.
@@ -11,29 +11,16 @@
 #   kubectl create -f crds.yaml -f common.yaml -f operator.yaml
 #   kubectl create -f cluster-test.yaml
 #################################################################################################################
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: rook-config-override
-  namespace: rook-ceph # namespace:cluster
-data:
-  config: |
-    [global]
-    osd_pool_default_size = 1
-    mon_warn_on_pool_no_redundancy = false
-    bdev_flock_retry = 20
-    bluefs_buffered_io = false
-    mon_data_avail_warn = 10
----
 apiVersion: ceph.rook.io/v1
 kind: CephCluster
 metadata:
   name: mycluster
   namespace: rook-ceph # namespace:cluster
 spec:
+  # If there are multiple clusters, the directory must be unique for each cluster.
   dataDirHostPath: /var/lib/rook
   cephVersion:
-    image: quay.io/ceph/ceph:v18
+    image: quay.io/ceph/ceph:v19
     allowUnsupported: true
   mon:
     count: 1
@@ -46,6 +33,8 @@ spec:
     # size appropriate for monitor data will be used.
     volumeClaimTemplate:
       spec:
+        accessModes:
+          - ReadWriteOnce
         storageClassName: {{ rook_ceph_mon_pvc_template }}
         resources:
           requests:
@@ -53,6 +42,9 @@ spec:
   mgr:
     count: 1
     allowMultiplePerNode: true
+    modules:
+      - name: rook
+        enabled: true
   dashboard:
     enabled: true
   crashCollector:
@@ -90,6 +82,13 @@ spec:
     mgr: system-cluster-critical
   disruptionManagement:
     managePodBudgets: true
+  cephConfig:
+    global:
+      osd_pool_default_size: "1"
+      mon_warn_on_pool_no_redundancy: "false"
+      bdev_flock_retry: "20"
+      bluefs_buffered_io: "false"
+      mon_data_avail_warn: "10"
 ---
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool

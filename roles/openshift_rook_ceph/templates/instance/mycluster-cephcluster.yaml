@@ -61,7 +61,7 @@ spec:
     storageClassDeviceSets:
       - name: set1
         # The number of OSDs to create from this device set
-        count: 3
+        count: 1
         # IMPORTANT: If volumes specified by the storageClassName are not portable across nodes
         # this needs to be set to false. For example, if using the local storage provisioner
         # this should be false.

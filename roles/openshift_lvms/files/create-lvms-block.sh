@@ -19,3 +19,9 @@ losetup \
   --show \
   $device_path \
   $data_path
+
+# This triggers LVM auto-activation as a side-effect which is what we want
+# This is required since OpenShift 4.18
+losetup \
+  --set-capacity \
+  $device_path

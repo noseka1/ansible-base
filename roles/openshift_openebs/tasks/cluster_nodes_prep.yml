@@ -13,7 +13,9 @@
   kubernetes.core.k8s:
     template: machineconfig/53-openebs-lvm-mc.yaml
   register: openebs_machineconfig_result
-  loop: '{{ openebs_storage_nodes }}'
+  loop:
+    - master
+    - worker
 
 - import_role:
     name: openshift_common

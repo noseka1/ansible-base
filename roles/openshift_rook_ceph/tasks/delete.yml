@@ -1,3 +1,5 @@
 - import_tasks: instance_delete.yml
+  tags: rook_ceph_instance
 
 - import_tasks: operator_delete.yml
+  tags: rook_ceph_operator

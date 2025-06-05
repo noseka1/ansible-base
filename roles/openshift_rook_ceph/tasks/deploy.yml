@@ -1,5 +1,8 @@
 - import_tasks: operator_deploy.yml
+  tags: rook_ceph_operator
 
 - import_tasks: instance_deploy.yml
+  tags: rook_ceph_instance
 
 - import_tasks: report_success.yml
+  tags: rook_ceph_instance

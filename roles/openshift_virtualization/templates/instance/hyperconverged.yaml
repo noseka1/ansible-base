@@ -19,6 +19,12 @@ spec:
     # Enable SCSI persistent reservations
     persistentReservation: true
   infra: {}
+  liveMigrationConfig:
+    # Use post copy mode when memory dirty rates are high to ensure the migration converges.
+    # See also:
+    # https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/live-migration#virt-configuring-live-migration-heavy_virt-configuring-live-migration
+    # https://kubevirt.io/user-guide/compute/live_migration/#post-copy
+    allowPostCopy: true
   resourceRequirements:
     # CPU overcommit ratio (default is 10)
     vmiCPUAllocationRatio: 10

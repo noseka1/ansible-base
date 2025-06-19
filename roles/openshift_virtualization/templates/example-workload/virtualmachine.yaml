@@ -46,6 +46,10 @@ spec:
             model: virtio
             name: net2
 {% endif %}
+          # Enable a side-car container that tails serial console logs. In OpenShift Web Console, this can be
+          # enabled by the toggle button "Guest system log access". To tail the serial console logs:
+          # oc logs -f -c guest-console-log virt-launcher-example-t9th7
+          logSerialConsole: true
           # CPU hotplug doesn't work with multiqueue virtio-net at this time
           networkInterfaceMultiqueue: false
           rng: {}

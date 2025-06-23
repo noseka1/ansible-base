@@ -26,7 +26,7 @@ spec:
     # https://kubevirt.io/user-guide/compute/live_migration/#post-copy
     allowPostCopy: true
   resourceRequirements:
-    # CPU overcommit ratio (default is 10)
+    # CPU overcommit ratio (default is 10). Set it to 1 for no CPU overcommit.
     vmiCPUAllocationRatio: 10
   workloads:
     nodePlacement:

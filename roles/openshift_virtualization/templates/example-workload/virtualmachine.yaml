@@ -53,6 +53,13 @@ spec:
           # CPU hotplug doesn't work with multiqueue virtio-net at this time
           networkInterfaceMultiqueue: false
           rng: {}
+          # The Microsoft Windows 11 installer requires the presence of a TPM device, even though it doesn't
+          # use this. Persistence is not required in this case however.
+          # Some disk encryption software have optional/mandatory TPM support. For example, Bitlocker requires
+          # a persistent TPM device.
+          # See also https://kubevirt.io/user-guide/compute/persistent_tpm_and_uefi_state/
+          tpm:
+            persistent: false
         machine:
           type: pc-q35-rhel8.3.0
         memory:

@@ -12,6 +12,10 @@ openshift_cluster_postinstall_oidc:
 openshift_cluster_postinstall_kernel_arguments: []
 #  - loglevel=7
 #  - udev.log_priority=debug
+# Preparation for PCI passthrough for virtual machine on OpenShift Virtualization
+# See also https://kubevirt.io/user-guide/compute/host-devices/
+#  - intel_iommu=on
+#  - amd_iommu=on
 
 openshift_cluster_postinstall_deploy_infra_nodes: false
 

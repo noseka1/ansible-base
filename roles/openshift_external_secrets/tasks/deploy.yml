@@ -4,6 +4,7 @@
   vars:
     oscomm_subscription_name: '{{ extsecrets_operator_subscription_name }}'
     oscomm_subscription_namespace: '{{ extsecrets_operator_namespace }}'
+  tags: extsecrets_operator
 
 - import_role:
     name: openshift_autogitops
@@ -12,6 +13,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: external-secrets/operator
     autogitops_app_namespace: '{{ extsecrets_operator_namespace }}'
+  tags: extsecrets_operator
 
 - import_role:
     name: openshift_common
@@ -19,6 +21,7 @@
   vars:
     subscription_name: '{{ extsecrets_operator_subscription_name }}'
     subscription_namespace: '{{ extsecrets_operator_namespace }}'
+  tags: extsecrets_operator
 
 - import_role:
     name: openshift_autogitops
@@ -27,6 +30,7 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: external-secrets/instance
     autogitops_app_namespace: '{{ extsecrets_instance_namespace }}'
+  tags: extsecrets_instance
 
 - import_role:
     name: openshift_common
@@ -34,6 +38,7 @@
   vars:
     wait_for_deployment_name: '{{ extsecrets_instance_name }}-webhook'
     wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'
+  tags: extsecrets_instance
 
 - import_role:
     name: openshift_common
@@ -41,3 +46,4 @@
   vars:
     wait_for_deployment_name: '{{ extsecrets_instance_name }}-cert-controller'
     wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'
+  tags: extsecrets_instance

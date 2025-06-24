@@ -38,8 +38,15 @@ osvirt_machine_image_http_url: ''
 
 # Pull the machine image from a container registry. Example image registry URLs:
 # docker://quay.io/containerdisks/fedora:40
+# docker://quay.io/containerdisks/centos-stream:10
+# docker://quay.io/containerdisks/ubuntu:24.04
+# docker://quay.io/containerdisks/opensuse-tumbleweed:1.0.0
+# docker://quay.io/containerdisks/opensuse-leap:15.6
+# docker://quay.io/containerdisks/debian:12
 # docker://registry.redhat.io/rhel8/rhel-guest-image:8.10.0
 # docker://registry.redhat.io/rhel9/rhel-guest-image:9.4
+# See also:
+# https://github.com/kubevirt/containerdisks
 osvirt_machine_image_registry_url: 'docker://quay.io/containerdisks/fedora:40'
 
 osvirt_machine_service_type: NodePort

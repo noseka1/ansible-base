@@ -1,5 +1,6 @@
+# g4dn.xlarge = GPU-enabled virtual machine instance (1x GPU, 4x vCPU, 16 GB RAM, $0.526/hour)
+# g4dn.metal = GPU-enabled bare metal (8x GPU, 96 x vCPU, 384 GB RAM, $7.824/hour)
 ngpu_instance_type: g4dn.xlarge
-#ngpu_instance_type: p3.2xlarge
 ngpu_availability_zones: [ a, b, c ]
 ngpu_nodes_per_zone: 1
 ngpu_nodes_total: '{{ (ngpu_availability_zones | length) * ngpu_nodes_per_zone }}'

@@ -1,4 +1,10 @@
-- name: Deploy GPU Nodes MachineSet
+- name: Configure PCI passthrough for GPU nodes
+  kubernetes.core.k8s:
+    template:
+      - passthrough/81-gpu-vfio-mc.yaml
+      - passthrough/gpu-mcp.yaml
+
+- name: Deploy GPU nodes MachineSet
   import_role:
     name: openshift_common
     tasks_from: add_machineset.yml

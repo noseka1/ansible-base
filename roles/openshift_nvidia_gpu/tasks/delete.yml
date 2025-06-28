@@ -6,3 +6,10 @@
     add_machineset_role: gpu
     add_machineset_availability_zones: '{{ ngpu_availability_zones }}'
     add_machineset_nodes_per_zone: '{{ ngpu_nodes_per_zone }}'
+
+- name: Delete PCI passthrough for GPU nodes
+  kubernetes.core.k8s:
+    template:
+      - passthrough/81-gpu-vfio-mc.yaml
+      - passthrough/gpu-mcp.yaml
+    state: absent

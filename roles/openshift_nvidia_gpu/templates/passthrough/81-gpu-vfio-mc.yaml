@@ -1,0 +1,23 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: gpu
+  name: 81-gpu-vfio
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - path: /etc/modprobe.d/vfio.conf
+        mode: 420
+        contents:
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'passthrough/modprobe.d/vfio-pci.conf', rstrip=false) | b64encode }}
+      - path: /etc/modules-load.d/vfio-pci.conf
+        mode: 420
+        contents:
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('file', 'passthrough/modules-load.d/vfio-pci.conf', rstrip=false) | b64encode }}
+  kernelArguments:
+  - intel_iommu=on
+  - amd_iommu=on

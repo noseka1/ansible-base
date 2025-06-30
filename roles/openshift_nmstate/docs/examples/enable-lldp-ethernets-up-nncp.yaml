@@ -1,0 +1,29 @@
+# Enable Link Layer Discovery Protocol (LLDP) on all Ethernet interfaces. See also:
+# Example: Node network configuration policy to enable LLDP reporting
+# https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/kubernetes-nmstate#virt-example-enabling-lldp-policy_k8s-nmstate-updating-node-network-config
+#
+# Once LLDP is enabled, the NetworkManager will listen on LLDP packages, there is no need to run other LLDP agent daemon like lldpad.
+# Link: https://nmstate.io/features/lldp.html
+#
+# Verify that LLDP is enabled for the specific interfaces:
+# $ nmcli --fields connection.lldp con show ovs-if-phys0
+# connection.lldp:                        enable-rx
+#
+# Display information about neighboring devices learned through the Link Layer Discovery Protocol (LLDP).
+# $ nmcli dev lldp
+#
+# Note that only LLDP receive (RX) is supported at this time. LLDP transmit (TX) is not supported:
+#
+# LLDP tx support on baremetal
+# https://issues.redhat.com/browse/RFE-4209
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: enable-lldp-ethernets-up
+spec:
+  capture:
+    ethernets: interfaces.type=="ethernet"
+    ethernets-up: capture.ethernets | interfaces.state=="up"
+    ethernets-lldp: capture.ethernets-up | interfaces.lldp.enabled:=true
+  desiredState:
+    interfaces: "{{ capture.ethernets-lldp.interfaces }}"

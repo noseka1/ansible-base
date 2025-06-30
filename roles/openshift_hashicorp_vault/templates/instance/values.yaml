@@ -3,6 +3,14 @@ vault:
     openshift: true
   injector:
     enabled: {{ hvault_injector_enabled }}
+    # Use OpenShift-specific images as per
+    # https://github.com/hashicorp/vault-helm/blob/v0.30.0/values.openshift.yaml
+    image:
+      repository: "registry.connect.redhat.com/hashicorp/vault-k8s"
+      tag: "1.6.2-ubi"
+    agentImage:
+      repository: "registry.connect.redhat.com/hashicorp/vault"
+      tag: "1.19.0-ubi"
   server:
     auditStorage:
       enabled: true
@@ -12,6 +20,11 @@ vault:
       # This readiness probe succeeds even when HashiCorp Vault is uninitialized. This allows Argo CD
       # to fully sync the application the first time it is deployed.
       path: /v1/sys/health?standbyok=true&uninitcode=200
+    # Use OpenShift-specific images as per
+    # https://github.com/hashicorp/vault-helm/blob/v0.30.0/values.openshift.yaml
+    image:
+      repository: "registry.connect.redhat.com/hashicorp/vault"
+      tag: "1.19.0-ubi"
   ui:
     enabled: true
 

@@ -22,7 +22,10 @@ osvirt_machine_ssh_authorized_key: ''
 osvirt_machine_eviction_strategy: 'None'
 osvirt_machine_node_selector: {}
 #  node-role.kubernetes.io/baremetal: ""
-#
+osvirt_machine_tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/baremetal
+    operator: Exists
 osvirt_machine_root_disk_access_modes:
   - ReadWriteOnce
 osvirt_machine_root_disk_capacity: 10Gi

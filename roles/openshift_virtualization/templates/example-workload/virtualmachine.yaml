@@ -18,9 +18,9 @@ spec:
 {% if osvirt_machine_node_selector %}
       nodeSelector: {{ osvirt_machine_node_selector | to_json }}
 {% endif %}
-      tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/baremetal
+{% if osvirt_machine_tolerations %}
+      tolerations: {{ osvirt_machine_tolerations | to_json }}
+{% endif %}
       domain:
         cpu:
           cores: 1

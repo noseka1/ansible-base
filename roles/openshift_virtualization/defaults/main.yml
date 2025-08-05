@@ -36,11 +36,11 @@ osvirt_machine_pod_network: true
 osvirt_machine_multus_network_name: ''
 
 # Download the machine image from URL. Example machine image URLs:
-# https://download.fedoraproject.org/pub/fedora/linux/releases/40/Server/x86_64/images/Fedora-Server-KVM-40-1.14.x86_64.qcow2
+# https://download.fedoraproject.org/pub/fedora/linux/releases/42/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-42-1.1.x86_64.qcow2
 osvirt_machine_image_http_url: ''
 
 # Pull the machine image from a container registry. Example image registry URLs:
-# docker://quay.io/containerdisks/fedora:40
+# docker://quay.io/containerdisks/fedora:42
 # docker://quay.io/containerdisks/centos-stream:10
 # docker://quay.io/containerdisks/ubuntu:24.04
 # docker://quay.io/containerdisks/opensuse-tumbleweed:1.0.0
@@ -50,7 +50,7 @@ osvirt_machine_image_http_url: ''
 # docker://registry.redhat.io/rhel9/rhel-guest-image:9.4
 # See also:
 # https://github.com/kubevirt/containerdisks
-osvirt_machine_image_registry_url: 'docker://quay.io/containerdisks/fedora:40'
+osvirt_machine_image_registry_url: 'docker://quay.io/containerdisks/fedora:42'
 
 osvirt_machine_service_type: NodePort
 osvirt_machine_service_port: 27017

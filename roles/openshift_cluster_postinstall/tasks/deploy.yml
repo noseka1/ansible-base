@@ -43,6 +43,8 @@
 
 - import_tasks: configure_ingresscontroller.yml
 
+- import_tasks: configure_network.yml
+
 - import_tasks: ensure_storage.yml
 
 - import_tasks: clusterwide_proxy.yml

@@ -6,14 +6,7 @@ metadata:
 spec:
   runStrategy: Always
   template:
-    metadata:
-      labels:
-        kubevirt.io/domain: {{ osvirt_machine_name }}
-        kubevirt.io/size: small
-        vm.kubevirt.io/name: {{ osvirt_machine_name }}
-        os.template.kubevirt.io/fedora39: 'true'
-        flavor.template.kubevirt.io/small: 'true'
-        workload.template.kubevirt.io/server: 'true'
+    metadata: {}
     spec:
 {% if osvirt_machine_node_selector %}
       nodeSelector: {{ osvirt_machine_node_selector | to_json }}

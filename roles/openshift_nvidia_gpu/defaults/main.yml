@@ -1,5 +1,7 @@
-# g4dn.xlarge = GPU-enabled virtual machine instance (1x GPU, 4x vCPU, 16 GB RAM, $0.526/hour)
-# g4dn.metal = GPU-enabled bare metal (8x GPU, 96 x vCPU, 384 GB RAM, $7.824/hour)
+# g4dn.xlarge = GPU-enabled virtual machine instance (4x vCPU, 16 GB RAM, 1x GPU, 16 GB VRAM, $0.526/hour)
+# g5.xlarge   = GPU-enabled virtual machine instance (4x vCPU, 16 GB RAM, 1x GPU, 24 GB VRAM, $1.006/hour)
+# g6.xlarge   = GPU-enabled virtual machine instance (4x vCPU, 16 GB RAM, 1x GPU, 24 GB VRAM, $0.804/hour)
+# g4dn.metal  = GPU-enabled bare metal (96 x vCPU, 384 GB RAM, 8x GPU, 128 VRAM, $7.824/hour)
 # Provisioning of g4dn.metal may fail due to: You have requested more vCPU capacity than your current vCPU limit of 64 allows for the instance bucket that the specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit.
 ngpu_instance_type: g4dn.xlarge
 ngpu_availability_zones: [ a, b, c ]

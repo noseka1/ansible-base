@@ -15,7 +15,7 @@ odf_aws:
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone
 odf_storage_device_set_count: 1
-# Storage capacity per OSD
+# Storage capacity per OSD (tested minimum is 1Gi)
 odf_storage_device_set_storage_capacity: 50Gi
 
 odf_platform_to_storageclass:

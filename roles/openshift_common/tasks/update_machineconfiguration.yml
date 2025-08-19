@@ -62,8 +62,8 @@
     openshift_common_mc_apply_spec:
       spec:
         nodeDisruptionPolicy:
-          files: '{{ openshift_common_mc_apply_files.stdout }}'
-          units: '{{ openshift_common_mc_apply_units.stdout }}'
+          files: '{{ openshift_common_mc_apply_files.stdout | from_json }}'
+          units: '{{ openshift_common_mc_apply_units.stdout | from_json }}'
 
 - set_fact:
     openshift_common_mc_apply_yaml: '{{ openshift_common_mc_update_yaml | combine(openshift_common_mc_apply_spec, recursive=true) }}'

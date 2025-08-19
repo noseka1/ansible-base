@@ -5,7 +5,7 @@
   loop:
     - worker
     - master
-  when: openshift_cluster_postinstall_kernel_arguments
+  when: openshift_cluster_postinstall_kernel_arguments | length > 0
 
 - import_role:
     name: openshift_common

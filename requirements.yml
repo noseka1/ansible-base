@@ -2,30 +2,30 @@ roles:
 # Requires RPM package python3-hvac
 - name: ansible-modules-hashivault
   src: https://github.com/TerryHowe/ansible-modules-hashivault.git
-  version: 5.1.1
+  version: 5.4.0
 
 collections:
 - name: kubernetes.core
   src: https://github.com/ansible-collections/kubernetes.core
-  version: 3.3.0
+  version: 6.1.0
 
 - name: amazon.aws
   src: https://github.com/ansible-collections/amazon.aws
-  version: 6.1.0
+  version: 10.1.1
 
 - name: ansible.windows
   src: https://github.com/ansible-collections/ansible.windows
-  version: 1.11.1
+  version: 3.2.0
 
 - name: chocolatey.chocolatey
   src: https://github.com/chocolatey/chocolatey-ansible
-  version: 1.3.0
+  version: 1.5.3
 
 # Requires RPM package python3-pyvmomi
 - name: community.vmware
   src: https://github.com/ansible-collections/community.vmware
-  version: 3.5.0
+  version: 5.7.2
 
 - name: azure.azcollection
   src: https://github.com/ansible-collections/azure
-  version: 1.15.0
+  version: 3.7.0

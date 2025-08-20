@@ -1,3 +1,4 @@
+---
 {% if minio_manage_namespace %}
 apiVersion: v1
 kind: Namespace

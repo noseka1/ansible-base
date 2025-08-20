@@ -1,3 +1,4 @@
+---
 {% if oadp_operator_manage_namespace %}
 apiVersion: v1
 kind: Namespace

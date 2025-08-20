@@ -1,3 +1,4 @@
+---
 {% for item in ocpost_machinesets_result.resources %}
 {% if item.metadata.name.startswith(ocpost_cluster_id) %}
 ---

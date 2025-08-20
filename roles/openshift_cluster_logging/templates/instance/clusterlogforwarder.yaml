@@ -1,3 +1,4 @@
+---
 {% if clusterlog_forward_to_loki or
       clusterlog_forward_to_syslog or
       clusterlog_forward_to_splunk %}

@@ -1,5 +1,6 @@
 {% for key, value in multicluster_engine_managed_cluster_baremetal.cluster_nodes.items() %}
 {% if value.bmh is defined %}
+---
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:

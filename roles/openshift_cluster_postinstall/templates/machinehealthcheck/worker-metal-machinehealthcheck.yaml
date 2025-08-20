@@ -2,6 +2,10 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineHealthCheck
 metadata:
+  # Enable power-cycle remediation. With this remediation strategy, unhealthy hosts are rebooted instead of removed from the cluster.
+  # See also https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/machine_management/deploying-machine-health-checks#mgmt-power-remediation-baremetal-about-creating-mhc-baremetal_deploying-machine-health-checks
+  annotations:
+    machine.openshift.io/remediation-strategy: external-baremetal
   name: worker-metal
   namespace: openshift-machine-api
 spec:

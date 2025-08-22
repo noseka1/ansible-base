@@ -11,6 +11,17 @@ odf_aws:
   availability_zones: [ a, b, c ]
   nodes_per_zone: 1
 
+# Choose one of the resource profiles:
+# 1. Lean mode: Minimizes resource consumption by allocating fewer CPUs and less memory for resource-efficient operations.
+# 2. Balanced mode (default): Optimized for right amount of CPU and memory resources to support diverse workloads.
+# 3. Performance mode: Tailored for high-performance, allocating ample CPUs and memory to ensure optimal execution of demanding workloads.
+#
+# Resource profile definitions can be found at:
+# https://github.com/red-hat-storage/ocs-operator/blob/d54f77ab27992184d66a5c6901cdc3ca457ae079/controllers/defaults/resources.go
+#
+# For production clusters, choose balanced or performance
+odf_resource_profile: lean
+
 # Set this to number of availability (failure) zones
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone

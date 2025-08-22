@@ -40,6 +40,9 @@ spec:
 {% endif %}
   nfs:
     enable: true
+{% if odf_resource_profile | length > 0 %}
+  resourceProfile: {{ odf_resource_profile }}
+{% endif %}
   storageDeviceSets:
   - config: {}
     count: {{ odf_storage_device_set_count }}

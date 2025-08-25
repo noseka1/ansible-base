@@ -19,6 +19,9 @@ spec:
       enable: true
 {% endif %}
 {% endif %}
+  managedResources:
+    cephCluster:
+      monCount: {{ odf_mon_count }}
 {% if odf_user_hostpath_for_mon_data_dir %}
   monDataDirHostPath: /var/lib/rook
 {% else %}

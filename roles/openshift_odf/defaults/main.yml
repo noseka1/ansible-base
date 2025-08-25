@@ -22,6 +22,11 @@ odf_aws:
 # For production clusters, choose balanced or performance
 odf_resource_profile: lean
 
+# Choose number of monitors, typically 3 or 5
+# Prefer deploying 5 monitors over 3 if possible for increased resiliency. With 5 monitors you can tolerate failure of 2 monitors.
+# Each monitor is placed in a different failure domain. 5 monitors require a cluster topology with minimum of 5 failure domains.
+odf_mon_count: 3
+
 # Set this to number of availability (failure) zones
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone

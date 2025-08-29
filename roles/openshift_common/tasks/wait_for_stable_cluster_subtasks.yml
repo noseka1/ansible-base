@@ -41,6 +41,8 @@
       Progressing: {{ clusteroperator_progressing }}
       Degraded: {{ clusteroperator_degraded }}
     ''
+    To skip waiting for the operators you can set Ansible variable stable_cluster_wait_for_operators = false.
+    ''
   pause:
     seconds: 120
   when: not stable_cluster_job_complete

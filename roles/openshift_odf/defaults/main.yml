@@ -27,6 +27,19 @@ odf_resource_profile: lean
 # Each monitor is placed in a different failure domain. 5 monitors require a cluster topology with minimum of 5 failure domains.
 odf_mon_count: 3
 
+# Host networking allows the Ceph cluster to use network interfaces on Kubernetes hosts for communication as opposed to using the pod overlay network.
+# This eliminates latency from the software-defined pod network, but it provides no host-level security isolation.
+# The Ceph pods will have .spec.hostNetwork = true. The addressRanges configuration is used to determine the existing node IP address
+# that the Ceph components can bind to.
+# Link: https://rook.io/docs/rook/latest/CRDs/Cluster/network-providers/#host-networking
+#odf_network:
+#  provider: host
+#  addressRanges:
+#    public:
+#      - "192.168.40.0/24"
+#    cluster:
+#      - "192.168.40.0/24"
+
 # Set this to number of availability (failure) zones
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone

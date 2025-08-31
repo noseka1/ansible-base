@@ -29,7 +29,7 @@ odf_mon_count: 3
 
 # Host networking allows the Ceph cluster to use network interfaces on Kubernetes hosts for communication as opposed to using the pod overlay network.
 # This eliminates latency from the software-defined pod network, but it provides no host-level security isolation.
-# The Ceph pods will have .spec.hostNetwork = true. The addressRanges configuration is used to determine the existing node IP address
+# Host networking sets .spec.hostNetwork = true in Ceph pods. The addressRanges configuration is used to determine an existing node IP address
 # that the Ceph components can bind to.
 # Link: https://rook.io/docs/rook/latest/CRDs/Cluster/network-providers/#host-networking
 #odf_network:

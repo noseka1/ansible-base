@@ -1,8 +1,8 @@
-- import_tasks: get_rhacs_central_host.yml
+- import_tasks: get_rhacs_central_reencrypt_host.yml
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for RHACS to come up
   uri:
-    url: 'https://{{ rhacs_central_host }}'
+    url: 'https://{{ rhacs_central_reencrypt_host }}'
   register: result
   until: result.status == 200
   retries: 12
@@ -13,7 +13,7 @@
     msg: |
       RHACS installed successfully.
 
-      You can browse to https://{{ rhacs_central_host }}
+      You can browse to https://{{ rhacs_central_reencrypt_host }}
 
 - debug:
     msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,13 @@
+- name: Obtain RHACS reencrypt route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: central-reencrypt
+    namespace: '{{ rhacs_instance_namespace }}'
+  register: rhacs_reencrypt_route
+  until: rhacs_reencrypt_route.resources | length > 0
+  retries: 12
+  delay: 10
+
+- set_fact:
+    rhacs_central_reencrypt_host: '{{ rhacs_reencrypt_route.resources.0.spec.host }}'

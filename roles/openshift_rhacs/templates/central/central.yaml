@@ -31,8 +31,7 @@ spec:
       nodePort:
         enabled: false
       route:
-        reencrypt:
-          enabled: true
+        enabled: true
     monitoring:
       exposeEndpoint: Enabled
     persistence:

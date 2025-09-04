@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: central
+    name: central-reencrypt
     namespace: '{{ rhacs_instance_namespace }}'
   register: rhacs_route
   until: rhacs_route.resources | length > 0

@@ -6,7 +6,7 @@ metadata:
 spec:
   # LoggingType specifies the type of logging for the bucket
   # There are two types available: best-effort and guaranteed logging
-  # - best-effort(default) - less immune to failures but with better performance
+  # - best-effort (default) - less immune to failures but with better performance
   # - guaranteed - much more reliable but need to provide a storage class that supports RWX PVs
   bucketLogging:
     loggingType: best-effort

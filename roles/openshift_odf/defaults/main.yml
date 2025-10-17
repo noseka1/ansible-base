@@ -40,6 +40,13 @@ odf_mon_count: 3
 #    cluster:
 #      - "192.168.40.0/24"
 
+# Define custom public and cluster networks
+#odf_network:
+#  provider: multus
+#  selectors:
+#    public: default/odfpublic
+#    cluster: default/odfcluster
+
 # Set this to number of availability (failure) zones
 odf_storage_device_set_replica: 3
 # Set this to number of disks across all storage nodes in a single zone

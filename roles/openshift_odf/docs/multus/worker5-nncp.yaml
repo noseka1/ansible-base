@@ -1,0 +1,39 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: worker5.mycluster4.example.com
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: worker5.mycluster4.example.com
+  desiredState:
+    interfaces:
+    - name: odfpublic
+      type: mac-vlan
+      state: up
+      mac-vlan:
+        base-iface: ens4
+        mode: bridge
+      ipv4:
+        address:
+          - ip: 192.168.41.28
+            prefix-length: 24
+        dhcp: false
+        enabled: true
+    - name: odfcluster
+      type: mac-vlan
+      state: up
+      mac-vlan:
+        base-iface: ens5
+        mode: bridge
+      ipv4:
+        address:
+          - ip: 192.168.43.28
+            prefix-length: 24
+        dhcp: false
+        enabled: true
+    routes:
+      config:
+      - destination: 192.168.42.0/24
+        next-hop-interface: odfpublic
+      - destination: 192.168.44.0/24
+        next-hop-interface: odfcluster

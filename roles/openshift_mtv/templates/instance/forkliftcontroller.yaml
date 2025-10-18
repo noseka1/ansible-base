@@ -3,5 +3,23 @@ kind: ForkliftController
 metadata:
   name: forklift-controller
   namespace: openshift-mtv
+# Available settings can be found at:
+# https://github.com/kubev2v/forklift/blob/8cab1f558b89346d1eefaa2d8947404d884f8dd3/operator/config/crd/bases/forklift.konveyor.io_forkliftcontrollers.yaml
 spec:
   olm_managed: true
+  # Enable OCP live migration (default: false)
+  #
+  # Live migration is when a powered on VM is migrated to a separate host or new location within the same host without
+  # being shut down. Live migration is available for migrating Virtual Machines within namespaces on the same
+  # OpenShift Virtualization provider or between OpenShift Virtualization providers, provided that the source and destination
+  # clusters are compatible, and the feature is enabled on both clusters.
+  #
+  # See also:
+  # https://github.com/kubev2v/forklift/blob/8cab1f558b89346d1eefaa2d8947404d884f8dd3/docs/ocp-live-migration.md
+  # https://github.com/kubev2v/forklift/blob/8cab1f558b89346d1eefaa2d8947404d884f8dd3/docs/enhancements/kubevirt-live-migration.md
+  feature_ocp_live_migration: 'true'
+  # Enable copy offload plugins (default: false)
+  #
+  # See also:
+  # https://github.com/kubev2v/forklift/blob/8cab1f558b89346d1eefaa2d8947404d884f8dd3/docs/enhancements/vsphere-xcopy-volume-populator.md
+  feature_copy_offload: 'true'

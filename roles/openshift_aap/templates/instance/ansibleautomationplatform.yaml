@@ -13,5 +13,8 @@ spec:
   hub:
     disabled: false
     storage_type: file
+{% if aap_instance_file_storage_storage_class | length > 0 %}
+    file_storage_storage_class: {{ aap_instance_file_storage_storage_class }}
+{% endif %}
   lightspeed:
     disabled: true

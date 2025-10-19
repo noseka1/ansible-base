@@ -5,3 +5,6 @@ aap_operator_subscription_starting_csv: ''
 aap_namespace: aap
 
 aap_instance_name: aap
+
+# AAP requires ReadWriteMany (RWX) storage
+aap_instance_file_storage_storage_class: ''

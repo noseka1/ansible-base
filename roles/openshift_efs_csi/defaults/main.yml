@@ -4,4 +4,5 @@ efs_operator_subscription_starting_csv: ''
 
 efs_namespace: openshift-cluster-csi-drivers
 
+# Example file system id: fs-02e36f0c0a9f77036
 efs_aws_file_system_id: ''

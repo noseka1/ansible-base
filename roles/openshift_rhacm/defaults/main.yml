@@ -14,6 +14,9 @@ rhacm_instance_place_on_infra_nodes: false
 # To deploy a highly-available RHACM change this value from Basic to High:
 rhacm_instance_availability: Basic
 
+# Import local-cluster to Argo CD in openshift-gitops namespace
+rhacm_instance_import_to_argocd: false
+
 rhacm_backup_namespace: open-cluster-management-backup
 
 # Observability instance size, allowed values: default, minimal, small, medium

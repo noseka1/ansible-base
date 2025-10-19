@@ -5,7 +5,7 @@
     name: openshift-gitops
   register: openshift_gitops_namespace
 
-- name: Put local-cluster under GitOps management
+- name: Import local-cluster to Argo CD in openshift-gitops namespace
   kubernetes.core.k8s:
     template:
       - gitops/all-openshift-clusters-managedclustersetbinding.yaml

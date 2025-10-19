@@ -1,6 +1,7 @@
 - import_tasks: hub_deploy_subtasks.yml
 
 - import_tasks: gitops_config.yml
+  when: rhacm_instance_import_to_argocd
 
 - import_tasks: users_config.yml
 

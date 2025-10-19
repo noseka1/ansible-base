@@ -1,3 +1,3 @@
 # AWS EFS CSI driver
 
-This Helm chart installs the AWS EFS CSI driver to OpenShift. Before using this Helm chart, create an EFS filesystem in AWS as described in [Creating and configuring access to EFS volumes in AWS](https://docs.openshift.com/container-platform/4.12/storage/container_storage_interface/persistent-storage-csi-aws-efs.html).
+This Helm chart installs the AWS EFS CSI driver to OpenShift. Before using this Helm chart, create an EFS filesystem in AWS as described in [Using Container Storage Interface (CSI)](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/using-container-storage-interface-csi).

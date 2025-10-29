@@ -11,9 +11,9 @@
 - name: Delete Rook Ceph NFS
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/nfs-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/nfs-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/nfs/storageclass.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi/nfs/storageclass.yaml', split_lines=false) }}
       ---
       {{ lookup('template', 'instance/csi-nfsplugin-snapclass-vsclass.yaml') }}
     state: absent
@@ -21,17 +21,17 @@
 - name: Delete Rook Ceph object store
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/object-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/object-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
     state: absent
 
 - name: Delete Rook Ceph file system
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/filesystem-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/filesystem-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/cephfs/storageclass.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi/cephfs/storageclass.yaml', split_lines=false) }}
       ---
       {{ lookup('template', 'instance/csi-cephfsplugin-snapclass-vsclass.yaml') }}
     state: absent
@@ -56,14 +56,14 @@
 - name: Delete CSI Addons
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/rbac.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_csi_addons_git_url + '/deploy/controller/rbac.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/setup-controller.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_csi_addons_git_url + '/deploy/controller/setup-controller.yaml', split_lines=false) }}
     state: absent
     wait: true
 
 - name: Delete Rook Ceph toolbox
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/toolbox.yaml', split_lines=false) }}"
+    definition: "{{ lookup('url', rook_ceph_git_url + '/deploy/examples/toolbox.yaml', split_lines=false) }}"
     state: absent
     wait: true

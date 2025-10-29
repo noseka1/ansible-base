@@ -10,7 +10,7 @@
 
 - name: Deploy Rook Ceph toolbox
   kubernetes.core.k8s:
-    definition: "{{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/toolbox.yaml', split_lines=false) }}"
+    definition: "{{ lookup('url', rook_ceph_git_url + '/deploy/examples/toolbox.yaml', split_lines=false) }}"
 
 - name: Configure Ceph dashboard
   kubernetes.core.k8s:
@@ -20,11 +20,11 @@
 - name: Deploy CSI Addons
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/crds.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_csi_addons_git_url + '/deploy/controller/crds.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/rbac.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_csi_addons_git_url + '/deploy/controller/rbac.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_csi_addons_git_url }}/deploy/controller/setup-controller.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_csi_addons_git_url + '/deploy/controller/setup-controller.yaml', split_lines=false) }}
 
 - name: Deploy Rook Ceph cluster
   kubernetes.core.k8s:
@@ -50,9 +50,9 @@
 - name: Deploy Rook Ceph filesystem
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/filesystem-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/filesystem-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/cephfs/storageclass.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi/cephfs/storageclass.yaml', split_lines=false) }}
       ---
       {{ lookup('template', 'instance/csi-cephfsplugin-snapclass-vsclass.yaml') }}
 
@@ -72,9 +72,9 @@
 - name: Deploy Rook Ceph object store
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/object-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/object-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph object store to become healthy
   kubernetes.core.k8s_info:
@@ -92,9 +92,9 @@
 - name: Deploy Rook Ceph NFS
   kubernetes.core.k8s:
     definition: |
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/nfs-test.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/nfs-test.yaml', split_lines=false) }}
       ---
-      {{ lookup('url', '{{ rook_ceph_git_url }}/deploy/examples/csi/nfs/storageclass.yaml', split_lines=false) }}
+      {{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi/nfs/storageclass.yaml', split_lines=false) }}
       ---
       {{ lookup('template', 'instance/csi-nfsplugin-snapclass-vsclass.yaml') }}
 

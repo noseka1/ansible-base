@@ -28,4 +28,4 @@ spec:
         next-hop-interface: eth0
   interfaces:
   - name: eth0
-    macAddress: 52:54:00:2c:0e:01
+    macAddress: 52:54:00:08:0e:01

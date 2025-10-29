@@ -67,7 +67,8 @@
       Alternatively, if you are PXE booting your machines, you can find the boot artifacts here:
       {{ multicluster_engine_managed_cluster_infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_nodes.keys() | length }} cluster host(s) to show up in the inventory
   kubernetes.core.k8s_info:
@@ -77,15 +78,28 @@
   register: multicluster_engine_managed_cluster_agent_result
   until: >-
     multicluster_engine_managed_cluster.cluster_nodes.keys() is
-      subset(multicluster_engine_managed_cluster_agent_result.resources | json_query("[*].status.inventory.interfaces[*].macAddress") | flatten)
+      subset(multicluster_engine_managed_cluster_agent_result.resources | json_query("[*].status.inventory.hostname"))
   retries: 180
   delay: 10
 
-- include_tasks: deploy_cluster_baremetal_bind_host.yml
+- name: Bind host to the cluster
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: agent-install.openshift.io/v1beta1
+      kind: Agent
+      metadata:
+        name:  '{{ item.metadata.name }}'
+        namespace: '{{ item.metadata.namespace }}'
+      spec:
+        approved: true
+        clusterDeploymentName:
+          name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+          namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+        role: '{{ multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname].role }}'
+  when: multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname] is defined
   loop: '{{ multicluster_engine_managed_cluster_agent_result.resources }}'
   loop_control:
-    loop_var: outer_item
-    label: '{{ outer_item.metadata.name }}'
+    label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname].role | default ("") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
   kubernetes.core.k8s_info:

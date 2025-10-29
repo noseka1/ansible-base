@@ -50,7 +50,7 @@ multicluster_engine_managed_cluster_baremetal:
   # For example: '{{ role_path }}/templates/assisted-installer/network-config/static/*.yaml'
   network_config_fileglob: ''
   cluster_nodes:
-    '52:54:00:2c:0e:01':
+    master1.mycluster8.example.com:
       role: master
       # Optionally, boot the node using BMC:
       bmh:
@@ -58,10 +58,11 @@ multicluster_engine_managed_cluster_baremetal:
           address: redfish-virtualmedia+http://sushy.lab.example.com:8000/redfish/v1/Systems/019f4d03-aaa3-4db7-b934-e614ce6db22e
           username: dummy
           password: dummy
+        boot_macaddr: '52:54:00:08:0e:01'
         boot_mode: legacy
         root_device_hints:
           deviceName: /dev/vda
-    '52:54:00:2c:0e:02':
+    master2.mycluster8.example.com:
       role: master
-    '52:54:00:2c:0e:03':
+    master3.mycluster8.example.com:
       role: master

@@ -5,7 +5,7 @@
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
-  name: {{ key | regex_replace(':', '-',) }}
+  name: {{ key }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
   annotations:
     inspect.metal3.io: disabled
@@ -14,7 +14,7 @@ metadata:
 spec:
   online: true
   automatedCleaningMode: disabled
-  bootMACAddress: '{{ key }}'
+  bootMACAddress: '{{ value.bmh.boot_macaddr }}'
   bmc:
     address: '{{ value.bmh.bmc.address }}'
     credentialsName: bmc-{{ key | regex_replace(':', '-',) }}

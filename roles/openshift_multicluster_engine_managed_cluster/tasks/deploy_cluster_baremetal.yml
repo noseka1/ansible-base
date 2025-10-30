@@ -22,7 +22,6 @@
 - name: Create infrastructure environment objects
   kubernetes.core.k8s:
     template:
-      - assisted-installer/infraenv/capi-provider-role-role.yaml
       - assisted-installer/infraenv/pullsecret-cluster-secret.yaml
       - assisted-installer/infraenv/cluster-infraenv.yaml
       - assisted-installer/infraenv/baremetalhost.yaml

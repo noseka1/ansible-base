@@ -37,8 +37,8 @@ multicluster_engine_os_image_trusted_ca: ''
 # $ openshift-install coreos print-stream-json | jq .architectures.x86_64.artifacts.metal.formats.iso
 # If the list is empty, images for several recent OpenShift versions will be downloaded by default
 multicluster_engine_os_images:
-  - openshiftVersion: '4.16'
-    version: 416.94.202410172137-0
-    url: https://rhcos.mirror.openshift.com/art/storage/prod/streams/4.16-9.4/builds/416.94.202410172137-0/x86_64/rhcos-416.94.202410172137-0-live.x86_64.iso
+  - openshiftVersion: '4.20'
+    version: 9.6.20250826-1
+    url: https://rhcos.mirror.openshift.com/art/storage/prod/streams/rhel-9.6/builds/9.6.20250826-1/x86_64/rhcos-9.6.20250826-1-live-iso.x86_64.iso
     cpuArchitecture: x86_64
     rootFSUrl: ''

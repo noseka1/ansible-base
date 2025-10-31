@@ -8,7 +8,6 @@ metadata:
 spec:
   applicationManager:
     enabled: true
-    argocdCluster: true
   certPolicyController:
     enabled: true
   iamPolicyController:

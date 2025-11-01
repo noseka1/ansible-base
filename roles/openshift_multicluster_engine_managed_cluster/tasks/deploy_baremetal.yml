@@ -16,8 +16,20 @@
     template:
       - assisted-installer/infraenv/cluster-infraenv-ns.yaml
 
-- import_tasks: deploy_baremetal_network.yml
+- name: Deploy network configuration for baremetal nodes
   when: multicluster_engine_managed_cluster_baremetal.network_config_fileglob | default('') | length > 0
+  block:
+    - set_fact:
+        network_config_files: >
+          {{ lookup("fileglob", "{{ multicluster_engine_managed_cluster_baremetal.network_config_fileglob }}", wantlist=True) }}
+
+    - name: Network configuration files
+      debug:
+        var: network_config_files
+
+    - name: Create cluster networking configuration
+      kubernetes.core.k8s:
+        template: '{{ network_config_files }}'
 
 - name: Create infrastructure environment objects
   kubernetes.core.k8s:

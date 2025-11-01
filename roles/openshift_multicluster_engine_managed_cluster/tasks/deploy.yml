@@ -9,7 +9,7 @@
   when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]
 
 - import_tasks: deploy_cluster_baremetal.yml
-  when: multicluster_engine_managed_cluster_platform == 'BareMetal'
+  when: multicluster_engine_managed_cluster_platform in [ 'BareMetal' ]
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_name }} for deployment to complete
   kubernetes.core.k8s_info:

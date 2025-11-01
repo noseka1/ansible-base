@@ -5,10 +5,10 @@
     template:
       - clusterimageset/clusterimageset.yaml
 
-- import_tasks: deploy_cluster_cloud.yml
+- import_tasks: deploy_cloud.yml
   when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]
 
-- import_tasks: deploy_cluster_baremetal.yml
+- import_tasks: deploy_baremetal.yml
   when: multicluster_engine_managed_cluster_platform in [ 'BareMetal' ]
 
 - import_tasks: deploy_complete.yml

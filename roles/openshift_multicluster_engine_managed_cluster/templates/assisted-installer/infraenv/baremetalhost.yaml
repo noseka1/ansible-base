@@ -7,8 +7,6 @@ kind: BareMetalHost
 metadata:
   name: {{ key }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
-  annotations:
-    inspect.metal3.io: disabled
   labels:
     infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:

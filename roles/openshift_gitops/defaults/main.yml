@@ -10,6 +10,7 @@ gitops_operator_name: openshift-gitops-operator
 gitops_instance_namespace: openshift-gitops
 gitops_instance_name: openshift-gitops
 
+# For production deployments, set this to true:
 gitops_instance_high_availability: false
 
 # If your OIDC provider is set up with a certificate which is not signed by one of the well known

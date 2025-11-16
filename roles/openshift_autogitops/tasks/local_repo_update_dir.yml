@@ -47,7 +47,7 @@
 - name: Convert source tree to dictionary
   set_fact:
     autogitops_app_src_items_dict: >-
-      {{ autogitops_app_src_items | items2dict(key_name='path',value_name='path') }}
+      {{ autogitops_app_src_items | items2dict(key_name='path', value_name='path') }}
 
 - name: Ensure deleted files are removed
   file:

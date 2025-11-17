@@ -19,5 +19,5 @@ spec:
     registryPullQPS: 0
     # Increase the maximum number of pods that can be placed on a single node. The default maximum is 250.
     # When using a single-node cluster, this default maximum can be easily exceeded.
-    # See also: https://docs.openshift.com/container-platform/4.15/nodes/nodes/nodes-nodes-managing-max-pods.html
+    # See also https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/working-with-nodes#nodes-nodes-managing-max-pods
     maxPods: 500

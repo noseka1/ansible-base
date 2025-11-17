@@ -55,7 +55,7 @@ multicluster_engine_managed_cluster_baremetal:
       # Optionally, boot the node using BMC:
       bmh:
         bmc:
-          address: redfish-virtualmedia+http://sushy.lab.example.com:8000/redfish/v1/Systems/019f4d03-aaa3-4db7-b934-e614ce6db22e
+          address: redfish-virtualmedia+http://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0021-000000000000
           username: dummy
           password: dummy
         boot_macaddr: '52:54:00:08:21:00'

@@ -21,7 +21,7 @@
   block:
     - set_fact:
         network_config_files: >
-          {{ lookup("fileglob", "{{ multicluster_engine_managed_cluster_baremetal.network_config_fileglob }}", wantlist=True) }}
+          {{ lookup("fileglob", multicluster_engine_managed_cluster_baremetal.network_config_fileglob, wantlist=True) }}
 
     - name: Network configuration files
       debug:

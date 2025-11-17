@@ -65,3 +65,6 @@ openshift_cluster_postinstall_install_custom_rpms: false
 
 # Enable periodic trimming of filesystems on OpenShift nodes
 openshift_cluster_postinstall_enable_fstrim: false
+
+# Make operators hosted on OperatorHub.io available for installation via OLM
+openshift_cluster_postinstall_enable_operatorhub: false

@@ -76,6 +76,7 @@
 - import_tasks: oauth_provider.yml
 
 - import_tasks: operatorhub_io.yml
+  when: openshift_cluster_postinstall_enable_operatorhub
 
 - import_tasks: image_registry.yml
 

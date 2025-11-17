@@ -1,12 +1,12 @@
-- name: Obtain cluster infrastructure info
-  kubernetes.core.k8s_info:
-    api_version: config.openshift.io/v1
-    kind: Infrastructure
-    name: cluster
-  register: openshift_common_infrastructure_result
-  when: openshift_common_infrastructure is not defined
+- when: openshift_common_infrastructure is not defined
+  block:
+    - name: Obtain cluster infrastructure info
+      kubernetes.core.k8s_info:
+        api_version: config.openshift.io/v1
+        kind: Infrastructure
+        name: cluster
+      register: openshift_common_infrastructure_result
 
-- name: Set openshift_common_infrastructure
-  set_fact:
-    openshift_common_infrastructure: '{{ openshift_common_infrastructure_result.resources.0 }}'
-  when: openshift_common_infrastructure is not defined
+    - name: Set openshift_common_infrastructure
+      set_fact:
+        openshift_common_infrastructure: '{{ openshift_common_infrastructure_result.resources.0 }}'

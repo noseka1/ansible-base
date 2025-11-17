@@ -1,12 +1,12 @@
-- name: Obtain Argo CD route
-  kubernetes.core.k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: '{{ gitops_instance_name }}-server'
-    namespace: '{{ gitops_instance_namespace }}'
-  register: argocd_route_result
-  when: argocd_route_host is not defined
+- when: argocd_route_host is not defined
+  block:
+    - name: Obtain Argo CD route
+      kubernetes.core.k8s_info:
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: '{{ gitops_instance_name }}-server'
+        namespace: '{{ gitops_instance_namespace }}'
+      register: argocd_route_result
 
-- set_fact:
-    argocd_route_host: '{{ argocd_route_result.resources.0.spec.host }}'
-  when: argocd_route_host is not defined
+    - set_fact:
+        argocd_route_host: '{{ argocd_route_result.resources.0.spec.host }}'

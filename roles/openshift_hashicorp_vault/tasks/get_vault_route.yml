@@ -1,13 +1,13 @@
-- name: Obtain vault route
-  kubernetes.core.k8s_info:
-    api_version: route.openshift.io/v1
-    kind: Route
-    name: '{{ hvault_name }}'
-    namespace: '{{ hvault_namespace }}'
-  register: hvault_route
-  when: hvault_addr is not defined
+- when: hvault_addr is not defined
+  block:
+    - name: Obtain vault route
+      kubernetes.core.k8s_info:
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: '{{ hvault_name }}'
+        namespace: '{{ hvault_namespace }}'
+      register: hvault_route
 
-- name: Set vault URL
-  set_fact:
-    hvault_addr: 'https://{{ hvault_route.resources.0.spec.host }}'
-  when: hvault_addr is not defined
+    - name: Set vault URL
+      set_fact:
+        hvault_addr: 'https://{{ hvault_route.resources.0.spec.host }}'

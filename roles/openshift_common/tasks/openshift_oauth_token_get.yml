@@ -2,20 +2,20 @@
     name: openshift_common
     tasks_from: get_cluster_domain.yml
 
-- name: Grab OpenShift OAUTH token
-  uri:
-    url: https://oauth-openshift.apps.{{ openshift_common_cluster_domain }}/oauth/authorize?client_id=openshift-challenging-client&response_type=token
-    headers:
-      X-CSRF-Token: dummy
-    url_username: admin
-    url_password: '{{ generic_user_password }}'
-    force_basic_auth: true
-    status_code: [ 200 ]
-  register: oscommon_openshift_oauth_token_result
-  when: oscommon_openshift_oauth_token is not defined
+- when: oscommon_openshift_oauth_token is not defined
+  block:
+    - name: Grab OpenShift OAUTH token
+      uri:
+        url: https://oauth-openshift.apps.{{ openshift_common_cluster_domain }}/oauth/authorize?client_id=openshift-challenging-client&response_type=token
+        headers:
+          X-CSRF-Token: dummy
+        url_username: admin
+        url_password: '{{ generic_user_password }}'
+        force_basic_auth: true
+        status_code: [ 200 ]
+      register: oscommon_openshift_oauth_token_result
 
-- name: Set oscommon_openshift_oauth_token
-  set_fact:
-    oscommon_openshift_oauth_token: >-
-      {{ oscommon_openshift_oauth_token_result.url | urlsplit(query='fragment') | regex_replace('(^|.*&)access_token=([^&]+).*', '\2') | urldecode }}
-  when: oscommon_openshift_oauth_token is not defined
+    - name: Set oscommon_openshift_oauth_token
+      set_fact:
+        oscommon_openshift_oauth_token: >-
+          {{ oscommon_openshift_oauth_token_result.url | urlsplit(query='fragment') | regex_replace('(^|.*&)access_token=([^&]+).*', '\2') | urldecode }}

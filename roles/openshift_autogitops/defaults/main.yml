@@ -1,4 +1,4 @@
-autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/autogitops-workspace'
+autogitops_workspace_dir: '{{ lookup("env", "HOME") }}/lab/autogitops'
 
 autogitops_git_repo_name: autogitops
 

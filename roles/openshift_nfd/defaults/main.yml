@@ -1,5 +1,3 @@
 nfd_operator_subscription_channel: ''
 nfd_operator_subscription_approval: Automatic
 nfd_operator_subscription_starting_csv: ''
-
-nfd_instance_operand_image: registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9:v4.17

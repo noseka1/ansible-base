@@ -5,5 +5,4 @@ metadata:
   namespace: openshift-nfd
 spec:
   operand:
-    image: {{ nfd_instance_operand_image }}
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent

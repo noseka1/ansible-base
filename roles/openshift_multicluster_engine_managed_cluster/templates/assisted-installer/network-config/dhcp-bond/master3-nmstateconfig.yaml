@@ -23,6 +23,6 @@ spec:
         - eth1
   interfaces:
   - name: eth0
-    macAddress: 52:54:00:08:23:00
+    macAddress: '52:54:00:08:23:00'
   - name: eth1
-    macAddress: 52:54:00:08:23:01
+    macAddress: '52:54:00:08:23:01'

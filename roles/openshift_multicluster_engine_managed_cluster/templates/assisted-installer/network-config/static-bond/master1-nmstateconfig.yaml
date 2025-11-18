@@ -35,6 +35,6 @@ spec:
         next-hop-interface: bond0
   interfaces:
   - name: eth0
-    macAddress: 52:54:00:08:21:00
+    macAddress: '52:54:00:08:21:00'
   - name: eth1
-    macAddress: 52:54:00:08:21:01
+    macAddress: '52:54:00:08:21:01'

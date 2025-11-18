@@ -45,7 +45,7 @@ spec:
       - i3.metal
       - i3en.metal
   unhealthyConditions:
-  - status: "False"
+  - status: 'False'
     timeout: 480s
     type: Ready
   - status: Unknown

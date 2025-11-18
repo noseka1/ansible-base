@@ -16,7 +16,7 @@ spec:
     - key: machine.openshift.io/cluster-api-machineset
       operator: Exists
   unhealthyConditions:
-  - status: "False"
+  - status: 'False'
     timeout: 480s
     type: Ready
   - status: Unknown

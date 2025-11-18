@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: openshift-nfd
-  namespace: {{ nfd_namespace }}
+  namespace: openshift-nfd
 spec:
   targetNamespaces:
-  - {{ nfd_namespace }}
+  - openshift-nfd

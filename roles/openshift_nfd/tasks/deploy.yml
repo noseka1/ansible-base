@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-feature-discovery/operator
-    autogitops_app_namespace: '{{ nfd_namespace }}'
+    autogitops_app_namespace: openshift-nfd
 
 - import_role:
     name: openshift_autogitops
@@ -12,4 +12,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: node-feature-discovery/instance
-    autogitops_app_namespace: '{{ nfd_namespace }}'
+    autogitops_app_namespace: openshift-nfd

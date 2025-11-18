@@ -2,7 +2,7 @@ apiVersion: nfd.openshift.io/v1
 kind: NodeFeatureDiscovery
 metadata:
   name: nfd
-  namespace: {{ nfd_namespace }}
+  namespace: openshift-nfd
 spec:
   operand:
     image: {{ nfd_instance_operand_image }}

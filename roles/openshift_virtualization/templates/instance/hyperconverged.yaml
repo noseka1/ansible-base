@@ -7,11 +7,6 @@ metadata:
         {
           "op":"add",
           "path":"/spec/configuration/developerConfiguration/featureGates/-",
-          "value":"VMLiveUpdateFeatures"
-        },
-        {
-          "op":"add",
-          "path":"/spec/configuration/developerConfiguration/featureGates/-",
           "value":"EnableVirtioFsStorageVolumes"
         }
       ]

@@ -45,6 +45,18 @@ spec:
     - configOverrides: {}
       enabled: false
       name: image-based-install-operator
+    - configOverrides: {}
+      enabled: false
+      name: cluster-api
+    - configOverrides: {}
+      enabled: false
+      name: cluster-api-provider-aws
+    - configOverrides: {}
+      enabled: false
+      name: cluster-api-provider-metal3-preview
+    - configOverrides: {}
+      enabled: false
+      name: cluster-api-provider-openshift-assisted-preview
   targetNamespace: multicluster-engine
 {% if multicluster_engine_place_on_infra_nodes %}
   nodeSelector:

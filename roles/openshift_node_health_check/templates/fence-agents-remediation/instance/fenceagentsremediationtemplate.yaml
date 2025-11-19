@@ -1,0 +1,18 @@
+apiVersion: fence-agents-remediation.medik8s.io/v1alpha1
+kind: FenceAgentsRemediationTemplate
+metadata:
+  name: remediation
+  namespace: openshift-workload-availability
+spec:
+  template:
+    spec:
+      agent: {{ fenceagents_remediation_agent }}
+      retrycount: 5
+      retryinterval: 5s
+      timeout: 1m0s
+      remediationStrategy: OutOfServiceTaint
+      sharedSecretName: remediation-shared
+      nodeSecretNames:
+    {% for key, value in fenceagents_remediation_node_parameters.items() %}
+        {{ key }}: remediation-node-{{ key }}
+    {% endfor %}

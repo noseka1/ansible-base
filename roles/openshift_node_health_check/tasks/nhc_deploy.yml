@@ -1,0 +1,29 @@
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: node-healthcheck-operator
+    oscomm_subscription_namespace: openshift-workload-availability
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/node-health-check/operator
+    autogitops_app_dst_path: node-health-check/operator
+    autogitops_app_namespace: openshift-workload-availability
+
+- import_role:
+    name: openshift_common
+    tasks_from: console_plugin_enable.yml
+  vars:
+    oscomm_enable_console_plugin:
+      - node-remediation-console-plugin
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/node-health-check/instance
+    autogitops_app_dst_path: node-health-check/instance
+    autogitops_app_namespace: ''

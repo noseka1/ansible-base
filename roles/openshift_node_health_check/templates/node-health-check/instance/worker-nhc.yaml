@@ -1,0 +1,26 @@
+apiVersion: remediation.medik8s.io/v1alpha1
+kind: NodeHealthCheck
+metadata:
+  name: worker
+spec:
+  minHealthy: 51%
+  remediationTemplate:
+    apiVersion: fence-agents-remediation.medik8s.io/v1alpha1
+    kind: FenceAgentsRemediationTemplate
+    name: remediation
+    namespace: openshift-workload-availability
+  unhealthyConditions:
+  - status: 'False'
+    duration: 8m
+    type: Ready
+  - status: Unknown
+    duration: 15m
+    type: Ready
+  selector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/worker
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: DoesNotExist
+    - key: node-role.kubernetes.io/master
+      operator: DoesNotExist

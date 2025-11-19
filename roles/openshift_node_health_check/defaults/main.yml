@@ -1,0 +1,47 @@
+nodehealthcheck_operator_subscription_channel: ''
+nodehealthcheck_operator_subscription_approval: Manual
+nodehealthcheck_operator_subscription_starting_csv: ''
+
+fenceagents_operator_subscription_channel: ''
+fenceagents_operator_subscription_approval: Manual
+fenceagents_operator_subscription_starting_csv: ''
+
+fenceagents_remediation_agent: fence_redfish
+
+# Fence agent parameters
+#
+# For fence_redfish agent, see the parameters at:
+# https://manpages.debian.org/testing/fence-agents/fence_redfish.8.en.html
+# https://github.com/ClusterLabs/fence-agents/blob/07285aacbc2194c6a2dfc7dd62dda9a3308bc243/agents/redfish/fence_redfish.py
+#
+fenceagents_remediation_node_parameters: {}
+#  master1.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0021-000000000000
+#    '--username': dummy
+#    '--password': dummy
+#  master2.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0022-000000000000
+#    '--username': dummy
+#    '--password': dummy
+#  master3.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0023-000000000000
+#    '--username': dummy
+#    '--password': dummy
+#  worker1.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0031-000000000000
+#    '--username': dummy
+#    '--password': dummy
+#  worker2.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0032-000000000000
+#    '--username': dummy
+#    '--password': dummy
+#  worker3.mycluster8.example.com:
+#    '--systems-uri': /redfish/v1/Systems/00000000-0000-0008-0033-000000000000
+#    '--username': dummy
+#    '--password': dummy
+
+fenceagents_remediation_shared_parameters: {}
+#  '--action': reboot
+#  '--ip': sushy.lab.example.com
+#  '--ipport': '8000'
+#  '--ssl-insecure': ''

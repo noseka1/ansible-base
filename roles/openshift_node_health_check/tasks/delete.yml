@@ -1,0 +1,5 @@
+- import_tasks: nhc_delete.yml
+
+- import_tasks: far_delete.yml
+
+- import_tasks: namespace_delete.yml

@@ -6,7 +6,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: kubevirt-hyperconverged
-    oscomm_subscription_namespace: '{{ osvirt_namespace }}'
+    oscomm_subscription_namespace: openshift-cnv
   tags: osvirt_operator
 
 - import_role:
@@ -15,7 +15,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-virtualization/operator
-    autogitops_app_namespace: '{{ osvirt_namespace }}'
+    autogitops_app_namespace: openshift-cnv
   tags: osvirt_operator
 
 - import_role:
@@ -23,7 +23,7 @@
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: kubevirt-hyperconverged
-    subscription_namespace: '{{ osvirt_namespace }}'
+    subscription_namespace: openshift-cnv
   tags: osvirt_operator
 
 - import_role:
@@ -32,7 +32,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: openshift-virtualization/instance
-    autogitops_app_namespace: '{{ osvirt_namespace }}'
+    autogitops_app_namespace: openshift-cnv
   tags: osvirt_instance
 
 - import_role:

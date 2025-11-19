@@ -15,4 +15,4 @@
   kubernetes.core.k8s:
     template:
       - hypershift/hypershift-operator-oidc-provider-s3-credentials-secret.yaml
-      - hypershift/hypershift-operator-private-link-credentials.yaml
+      - hypershift/hypershift-operator-private-link-credentials-secret.yaml

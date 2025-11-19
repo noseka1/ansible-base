@@ -7,7 +7,7 @@ spec:
 {% if odf_operator_subscription_channel | length > 0 %}
   channel: {{ odf_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ odf_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: odf-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

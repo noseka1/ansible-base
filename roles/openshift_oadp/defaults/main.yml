@@ -1,5 +1,4 @@
 oadp_operator_subscription_channel: ''
-oadp_operator_subscription_approval: Manual
 oadp_operator_subscription_starting_csv: ''
 
 oadp_operator_name: oadp-operator

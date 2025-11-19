@@ -7,7 +7,7 @@ spec:
 {% if oadp_operator_subscription_channel | length > 0 %}
   channel: {{ oadp_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ oadp_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

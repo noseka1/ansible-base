@@ -7,7 +7,7 @@ spec:
 {% if metallb_operator_subscription_channel | length > 0 %}
   channel: {{ metallb_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ metallb_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

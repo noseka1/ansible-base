@@ -1,5 +1,4 @@
 cryostat_operator_subscription_channel: ''
-cryostat_operator_subscription_approval: Manual
 cryostat_operator_subscription_starting_csv: ''
 cryostat_operator_subscription_name: cryostat-operator
 

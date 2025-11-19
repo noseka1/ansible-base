@@ -1,5 +1,4 @@
 efs_operator_subscription_channel: ''
-efs_operator_subscription_approval: Manual
 efs_operator_subscription_starting_csv: ''
 
 efs_namespace: openshift-cluster-csi-drivers

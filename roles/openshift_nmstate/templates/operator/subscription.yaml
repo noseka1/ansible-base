@@ -7,7 +7,7 @@ spec:
 {% if nmstate_operator_subscription_channel | length > 0 %}
   channel: {{ nmstate_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ nmstate_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: kubernetes-nmstate-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

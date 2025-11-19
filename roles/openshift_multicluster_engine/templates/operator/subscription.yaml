@@ -7,7 +7,7 @@ spec:
 {% if multicluster_engine_operator_subscription_channel | length > 0 %}
   channel: {{ multicluster_engine_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ multicluster_engine_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: multicluster-engine
   source: redhat-operators
   sourceNamespace: openshift-marketplace

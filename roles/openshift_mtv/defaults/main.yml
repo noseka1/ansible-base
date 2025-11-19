@@ -1,5 +1,4 @@
 mtv_operator_subscription_channel: ''
-mtv_operator_subscription_approval: Manual
 mtv_operator_subscription_starting_csv: ''
 
 # Create MTV migration source

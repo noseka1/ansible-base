@@ -1,9 +1,7 @@
 nodehealthcheck_operator_subscription_channel: ''
-nodehealthcheck_operator_subscription_approval: Manual
 nodehealthcheck_operator_subscription_starting_csv: ''
 
 fenceagents_operator_subscription_channel: ''
-fenceagents_operator_subscription_approval: Manual
 fenceagents_operator_subscription_starting_csv: ''
 
 fenceagents_remediation_agent: fence_redfish

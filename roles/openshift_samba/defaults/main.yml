@@ -4,7 +4,6 @@ smbsrv_instance_namespace: samba-instance
 smbsrv_instance_share_name: myshare
 
 smbcsi_operator_subscription_channel: ''
-smbcsi_operator_subscription_approval: Manual
 smbcsi_operator_subscription_starting_csv: ''
 smbcsi_operator_subscription_name: smb-csi-driver-operator
 

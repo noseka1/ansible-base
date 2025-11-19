@@ -1,5 +1,4 @@
 loki_operator_subscription_channel: ''
-loki_operator_subscription_approval: Manual
 loki_operator_subscription_starting_csv: ''
 
 loki_operator_namespace: openshift-operators-redhat

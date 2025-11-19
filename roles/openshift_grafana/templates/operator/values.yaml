@@ -1,3 +1,3 @@
-subscriptionApproval: {{ grafana_operator_subscription_approval }}
+subscriptionApproval: Manual
 subscriptionChannel: {{ grafana_operator_subscription_channel }}
 subscriptionStartingCsv: {{ grafana_operator_subscription_starting_csv }}

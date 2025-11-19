@@ -7,7 +7,7 @@ spec:
 {% if smbcsi_operator_subscription_channel | length > 0 %}
   channel: {{ smbcsi_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ smbcsi_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: smb-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

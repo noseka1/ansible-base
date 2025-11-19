@@ -7,7 +7,7 @@ spec:
 {% if wmco_operator_subscription_channel | length > 0 %}
   channel: {{ wmco_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ wmco_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: windows-machine-config-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

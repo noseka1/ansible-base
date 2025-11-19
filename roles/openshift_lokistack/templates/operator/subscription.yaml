@@ -7,7 +7,7 @@ spec:
 {% if loki_operator_subscription_channel | length > 0 %}
   channel: {{ loki_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ loki_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: loki-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

@@ -7,7 +7,7 @@ spec:
 {% if netobserv_operator_subscription_channel | length > 0 %}
   channel: {{ netobserv_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ netobserv_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: netobserv-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

@@ -7,7 +7,7 @@ spec:
 {% if nodehealthcheck_operator_subscription_channel | length > 0 %}
   channel: {{ nodehealthcheck_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ nodehealthcheck_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: node-healthcheck-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

@@ -7,7 +7,7 @@ spec:
 {% if gitops_operator_subscription_channel | length > 0 %}
   channel: {{ gitops_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ gitops_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

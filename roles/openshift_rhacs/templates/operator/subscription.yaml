@@ -7,7 +7,7 @@ spec:
 {% if rhacs_operator_subscription_channel | length > 0 %}
   channel: {{ rhacs_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ rhacs_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: rhacs-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

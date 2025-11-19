@@ -7,7 +7,7 @@ spec:
 {% if kmm_operator_subscription_channel | length > 0 %}
   channel: {{ kmm_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ kmm_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: kernel-module-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace

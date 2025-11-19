@@ -1,5 +1,4 @@
 rhacm_operator_subscription_channel: ''
-rhacm_operator_subscription_approval: Manual
 rhacm_operator_subscription_starting_csv: ''
 
 # Should the RHACM components be installed on infra nodes?

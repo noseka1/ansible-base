@@ -1,5 +1,4 @@
 extsecrets_operator_subscription_channel: ''
-extsecrets_operator_subscription_approval: Manual
 extsecrets_operator_subscription_starting_csv: ''
 extsecrets_operator_subscription_name: external-secrets-operator
 

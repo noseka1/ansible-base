@@ -7,7 +7,7 @@ spec:
 {% if extsecrets_operator_subscription_channel | length > 0 %}
   channel: {{ extsecrets_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ extsecrets_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: external-secrets-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

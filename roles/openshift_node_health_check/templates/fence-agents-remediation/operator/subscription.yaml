@@ -7,7 +7,7 @@ spec:
 {% if fenceagents_operator_subscription_channel | length > 0 %}
   channel: {{ fenceagents_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ fenceagents_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: fence-agents-remediation
   source: redhat-operators
   sourceNamespace: openshift-marketplace

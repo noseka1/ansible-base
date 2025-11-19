@@ -1,5 +1,4 @@
 lvms_operator_subscription_channel: ''
-lvms_operator_subscription_approval: Manual
 lvms_operator_subscription_starting_csv: ''
 
 lvms_namespace: lvms

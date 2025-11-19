@@ -7,7 +7,7 @@ spec:
 {% if lvms_operator_subscription_channel | length > 0 %}
   channel: {{ lvms_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ lvms_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: lvms-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

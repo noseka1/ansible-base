@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/cluster-discovery
     autogitops_app_dst_path: mce/cluster-discovery
-    autogitops_app_namespace: '{{ multicluster_engine_discovery_namespace }}'
+    autogitops_app_namespace: discovered-clusters

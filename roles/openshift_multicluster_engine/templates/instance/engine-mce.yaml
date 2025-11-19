@@ -1,7 +1,7 @@
 apiVersion: multicluster.openshift.io/v1
 kind: MultiClusterEngine
 metadata:
-  name: {{ multicluster_engine_instance_name }}
+  name: multicluster-engine
 spec:
   availabilityConfig: {{ multicluster_engine_instance_availability }}
   overrides:
@@ -45,7 +45,7 @@ spec:
     - configOverrides: {}
       enabled: false
       name: image-based-install-operator
-  targetNamespace: {{ multicluster_engine_instance_namespace }}
+  targetNamespace: multicluster-engine
   imagePullSecret: openshift-pull-secret
 {% if multicluster_engine_place_on_infra_nodes %}
   nodeSelector:

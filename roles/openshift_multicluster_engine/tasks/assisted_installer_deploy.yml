@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/assisted-installer
     autogitops_app_dst_path: mce/assisted-installer
-    autogitops_app_namespace: '{{ multicluster_engine_instance_namespace }}'
+    autogitops_app_namespace: multicluster-engine

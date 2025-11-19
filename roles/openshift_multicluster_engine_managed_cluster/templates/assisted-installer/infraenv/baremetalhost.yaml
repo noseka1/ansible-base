@@ -16,6 +16,7 @@ spec:
   bmc:
     address: '{{ value.bmh.bmc.address }}'
     credentialsName: bmc-{{ key | regex_replace(':', '-',) }}
+    disableCertificateVerification: {{ value.bmh.bmc.disable_certificate_verification }}
   bootMode: '{{ value.bmh.boot_mode }}'
   rootDeviceHints: {{ value.bmh.root_device_hints | to_json }}
 {% endif %}

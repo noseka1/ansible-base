@@ -55,9 +55,10 @@ multicluster_engine_managed_cluster_baremetal:
       # Optionally, boot the node using BMC:
       bmh:
         bmc:
-          address: redfish-virtualmedia+http://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0021-000000000000
+          address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0021-000000000000
           username: dummy
           password: dummy
+          disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:21:00'
         boot_mode: legacy
         root_device_hints:

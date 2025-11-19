@@ -1,5 +1,5 @@
 multicluster_engine_operator_subscription_channel: ''
-multicluster_engine_operator_subscription_approval: Automatic
+multicluster_engine_operator_subscription_approval: Manual
 multicluster_engine_operator_subscription_starting_csv: ''
 
 # Should the multi-cluster engine components be installed on infra nodes?

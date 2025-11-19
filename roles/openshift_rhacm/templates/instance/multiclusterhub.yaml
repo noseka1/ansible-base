@@ -54,7 +54,6 @@ spec:
     - configOverrides: {}
       enabled: false
       name: fine-grained-rbac-preview
-  imagePullSecret: openshift-pull-secret
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

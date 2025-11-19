@@ -13,15 +13,6 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacm/observability/openshift-pull-secret'
-    hvault_secret_data:
-      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
-
-- include_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_insert.yml
-  vars:
-    hvault_mount_point: autogitops
     hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacm/observability/thanos-object-storage'
     hvault_secret_data:
       thanos.yaml: '{{ lookup("template", "observability/thanos/thanos.yaml") }}'

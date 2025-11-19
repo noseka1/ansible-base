@@ -11,8 +11,12 @@ spec:
       retryinterval: 5s
       timeout: 1m0s
       remediationStrategy: OutOfServiceTaint
+{% if fenceagents_remediation_shared_parameters.keys() | length > 0 %}
       sharedSecretName: remediation-shared
+{% endif %}
+{% if fenceagents_remediation_node_parameters.keys() | length > 0 %}
       nodeSecretNames:
-    {% for key, value in fenceagents_remediation_node_parameters.items() %}
+{% endif %}
+{% for key, value in fenceagents_remediation_node_parameters.items() %}
         {{ key }}: remediation-node-{{ key }}
-    {% endfor %}
+{% endfor %}

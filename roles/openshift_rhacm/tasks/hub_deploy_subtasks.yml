@@ -2,8 +2,8 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ rhacm_operator_name }}'
-    oscomm_subscription_namespace: '{{ rhacm_operator_namespace }}'
+    oscomm_subscription_name: advanced-cluster-management
+    oscomm_subscription_namespace: open-cluster-management
 
 - import_role:
     name: openshift_autogitops
@@ -11,14 +11,14 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhacm/operator
-    autogitops_app_namespace: '{{ rhacm_operator_namespace }}'
+    autogitops_app_namespace: open-cluster-management
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ rhacm_operator_name }}'
-    subscription_namespace: '{{ rhacm_operator_namespace }}'
+    subscription_name: advanced-cluster-management
+    subscription_namespace: open-cluster-management
 
 - include_role:
     name: openshift_hashicorp_vault
@@ -35,7 +35,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: rhacm/instance
-    autogitops_app_namespace: '{{ rhacm_instance_namespace }}'
+    autogitops_app_namespace: open-cluster-management
 
 - name: Wait until managedcluster local-cluster object is available
   kubernetes.core.k8s_info:

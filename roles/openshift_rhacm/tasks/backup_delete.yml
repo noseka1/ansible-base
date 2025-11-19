@@ -8,7 +8,7 @@
     name: openshift_oadp
     tasks_from: instance_delete.yml
   vars:
-    oadp_operator_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_operator_namespace: open-cluster-management-backup
     oadp_operator_manage_namespace: false
-    oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_instance_namespace: open-cluster-management-backup
     oadp_app_prefix: rhacm-

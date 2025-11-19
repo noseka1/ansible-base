@@ -4,9 +4,9 @@
   vars:
     # Note that RHACM backup requires that OADP (Velero) is deployed
     # in the open-cluster-management-backup namespace
-    oadp_operator_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_operator_namespace: open-cluster-management-backup
     oadp_operator_manage_namespace: false
-    oadp_instance_namespace: '{{ rhacm_backup_namespace }}'
+    oadp_instance_namespace: open-cluster-management-backup
     oadp_app_prefix: rhacm-
 
 - import_role:
@@ -15,13 +15,13 @@
   vars:
     autogitops_app_src_path: templates/backup
     autogitops_app_dst_path: rhacm/backup
-    autogitops_app_namespace: '{{ rhacm_backup_namespace }}'
+    autogitops_app_namespace: open-cluster-management-backup
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete successfully
   kubernetes.core.k8s_info:
     api_version: velero.io/v1
     kind: Backup
-    namespace: '{{ rhacm_backup_namespace }}'
+    namespace: open-cluster-management-backup
   register: backup_result
   until:
     - backup_result.resources is defined
@@ -40,7 +40,7 @@
     api_version: policy.open-cluster-management.io/v1
     kind: Policy
     name: backup-restore-enabled
-    namespace: '{{ rhacm_backup_namespace }}'
+    namespace: open-cluster-management-backup
   register: policy_result
   until:
     - policy_result.resources.0.status.compliant is defined

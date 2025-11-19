@@ -2,12 +2,6 @@ rhacm_operator_subscription_channel: ''
 rhacm_operator_subscription_approval: Manual
 rhacm_operator_subscription_starting_csv: ''
 
-rhacm_operator_namespace: open-cluster-management
-rhacm_operator_name: advanced-cluster-management
-
-rhacm_instance_namespace: open-cluster-management
-rhacm_instance_name: multiclusterhub
-
 # Should the RHACM components be installed on infra nodes?
 rhacm_instance_place_on_infra_nodes: false
 
@@ -17,16 +11,13 @@ rhacm_instance_availability: Basic
 # Import local-cluster to Argo CD in openshift-gitops namespace
 rhacm_instance_import_to_argocd: false
 
-rhacm_backup_namespace: open-cluster-management-backup
-
 # Observability instance size, allowed values: default, minimal, small, medium
 # large, xlarge, 2xlarge, 4xlarge
 rhacm_observability_instance_size: default
-rhacm_observability_namespace: open-cluster-management-observability
 
 # If you want to use an existing S3 storage, set this value to false:
 rhacm_observability_minio_enabled: true
-rhacm_observability_minio_namespace: '{{ rhacm_observability_namespace }}-minio'
+rhacm_observability_minio_namespace: open-cluster-management-observability-minio
 
 # If you are using an existing S3 storage, configure the bucket connection here:
 rhacm_observability_s3_bucket: YOUR_S3_BUCKET

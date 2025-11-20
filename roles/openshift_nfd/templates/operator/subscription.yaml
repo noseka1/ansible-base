@@ -7,7 +7,7 @@ spec:
 {% if nfd_operator_subscription_channel | length > 0 %}
   channel: {{ nfd_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ nfd_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: nfd
   source: redhat-operators
   sourceNamespace: openshift-marketplace

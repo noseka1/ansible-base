@@ -12,7 +12,7 @@ The following screenshots illustrate the configuration:
 
 On the OpenShift side,  it is essential to explicitly request the addition of the groups claim in the token, as demonstrated in this configuration:
 
-```
+```yaml
 apiVersion: config.openshift.io/v1
 kind: OAuth
 metadata:
@@ -51,8 +51,8 @@ Once Okta and OpenShift has been set up, and the user has successfully logged in
 
 ```
 $ oc get group
-
 ```
+
 ```
 NAME                                          USERS
 Everyone                                      anosek@redhat.com
@@ -65,7 +65,7 @@ open-cluster-management-subscription-admins   admin
 $ oc get group cluster-admins -o yaml
 ```
 
-```
+```yaml
 apiVersion: user.openshift.io/v1
 kind: Group
 metadata:

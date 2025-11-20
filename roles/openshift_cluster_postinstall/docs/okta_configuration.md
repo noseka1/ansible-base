@@ -1,8 +1,8 @@
 # Configuring Okta as an Identity Provider for OpenShift
 
-To configure Okta as an OIDC provider for OpenShift, you can follow the article [How to Configure Okta as An Identity Provider for OpenShift](https://www.redhat.com/en/blog/how-to-configure-okta-as-an-identity-provider-for-openshift)
+To set up Okta as an OIDC provider for OpenShift, you may follow the article [How to Configure Okta as An Identity Provider for OpenShift](https://www.redhat.com/en/blog/how-to-configure-okta-as-an-identity-provider-for-openshift)
 
-The above article does not include the Okta configuration for including the `groups` claim in the access token. If you'd like OpenShift to create the groups and group membership based on the groups claim in the Okta token, it is required to configure Okta to include the groups claim in the token. Such an Okta configuration is described in the paragraph [Add a groups claim for the org authorization server](https://developer.okta.com/docs/guides/customize-tokens-groups-claim/main/#add-a-groups-claim-for-the-org-authorization-server) of Okta documentation.
+The aforementioned article does not mention the Okta configuration necessary for incorporating the `groups` claim into the access token. If you'd like OpenShift to generate groups and group membership based on the groups claim in the Okta token, it is required to configure Okta to include the groups claim in the token. Such an Okta configuration is described in the paragraph [Add a groups claim for the org authorization server](https://developer.okta.com/docs/guides/customize-tokens-groups-claim/main/#add-a-groups-claim-for-the-org-authorization-server) found in the Okta documentation.
 
 The following screenshots illustrate the configuration:
 
@@ -10,7 +10,44 @@ The following screenshots illustrate the configuration:
 
 ![Refresh application data](images/okta2.png "Refresh application data")
 
-After Okta was configured to include the groups claim in the token and the user logged into OpenShift, OpenShift will create the respective user groups and add the user to those groups:
+On the OpenShift side,  it is essential to explicitly request the addition of the groups claim in the token, as demonstrated in this configuration:
+
+```
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  - name: okta
+    mappingMethod: claim
+    type: OpenID
+    openID:
+      clientID: 0oaxmn05t6RozFEHq697
+      clientSecret:
+        name: openidconnect
+      extraScopes:
+      - email
+      - profile
+      # The "groups" scope must be explicitely requested
+      # or Okta won't add groups claim to the token
+      - groups
+      extraAuthorizeParameters:
+        include_granted_scopes: 'true'
+      claims:
+        preferredUsername:
+        - preferred_username
+        - email
+        name:
+        - name
+        - email
+        email:
+        - email
+        groups:
+        - groups
+      issuer: https://integrator-3853299-admin.okta.com
+```
+
+Once Okta and OpenShift has been set up, and the user has successfully logged into OpenShift, OpenShift will generate the corresponding user groups and include the user in those groups:
 
 ```
 $ oc get group

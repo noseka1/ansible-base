@@ -1,4 +1,12 @@
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: ansible-automation-platform
+    oscomm_subscription_namespace: '{{ aap_namespace }}'
+  tags: metallb_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

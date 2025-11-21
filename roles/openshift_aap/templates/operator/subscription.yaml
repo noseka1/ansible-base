@@ -7,7 +7,7 @@ spec:
 {% if aap_operator_subscription_channel | length > 0 %}
   channel: {{ aap_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ aap_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: ansible-automation-platform-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

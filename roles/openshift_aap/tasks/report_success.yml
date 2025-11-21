@@ -28,7 +28,7 @@
     namespace: aap
   register: aap_controller_route_result
   until: aap_controller_route_result.resources | length > 0
-  retries: 60
+  retries: 120
   delay: 5
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Ansible Automation Platform to come up

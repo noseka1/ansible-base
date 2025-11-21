@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: ansible-automation-platform
-    oscomm_subscription_namespace: '{{ aap_namespace }}'
+    oscomm_subscription_namespace: aap
   tags: metallb_operator
 
 - import_role:
@@ -12,7 +12,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: aap/operator
-    autogitops_app_namespace: '{{ aap_namespace }}'
+    autogitops_app_namespace: aap
   tags: aap_operator
 
 - import_role:
@@ -21,7 +21,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: aap/instance
-    autogitops_app_namespace: '{{ aap_namespace }}'
+    autogitops_app_namespace: aap
   tags: aap_instance
 
 - import_tasks: report_success.yml

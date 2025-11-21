@@ -1,10 +1,10 @@
 apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatform
 metadata:
-  name: {{ aap_instance_name }}
-  namespace: {{ aap_namespace }}
+  name: aap
+  namespace: aap
 spec:
-  admin_password_secret: {{ aap_instance_name }}-admin-password
+  admin_password_secret: aap-admin-password
   no_log: false
   controller:
     disabled: false

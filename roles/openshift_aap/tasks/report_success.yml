@@ -2,8 +2,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ aap_instance_name }}'
-    namespace: '{{ aap_namespace }}'
+    name: aap
+    namespace: aap
   register: aap_gateway_route_result
   until: aap_gateway_route_result.resources | length > 0
   retries: 12
@@ -13,8 +13,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ aap_instance_name }}-eda'
-    namespace: '{{ aap_namespace }}'
+    name: aap-eda
+    namespace: aap
   register: aap_eda_route_result
   until: aap_eda_route_result.resources | length > 0
   retries: 60
@@ -24,8 +24,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ aap_instance_name }}-controller'
-    namespace: '{{ aap_namespace }}'
+    name: aap-controller
+    namespace: aap
   register: aap_controller_route_result
   until: aap_controller_route_result.resources | length > 0
   retries: 60

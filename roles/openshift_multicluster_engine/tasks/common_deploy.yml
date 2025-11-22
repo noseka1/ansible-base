@@ -2,7 +2,7 @@
 
 - import_tasks: assisted_installer_deploy.yml
 
-- import_tasks: cluster_discovery_config.yml
+- import_tasks: cluster_discovery_deploy.yml
   when: redhat_ocm_api_token | length > 0
 
 - import_tasks: hypershift_aws_config.yml

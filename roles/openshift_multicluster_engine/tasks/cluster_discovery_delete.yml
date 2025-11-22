@@ -3,3 +3,10 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: mce/cluster-discovery
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/cluster-discovery/host-inventory-creds'

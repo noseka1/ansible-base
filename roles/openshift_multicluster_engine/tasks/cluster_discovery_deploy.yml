@@ -1,0 +1,17 @@
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/cluster-discovery/host-inventory-creds'
+    hvault_secret_data:
+      auth_method: offline-token
+      ocmAPIToken: '{{ redhat_ocm_api_token }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/cluster-discovery
+    autogitops_app_dst_path: mce/cluster-discovery
+    autogitops_app_namespace: discovered-clusters

@@ -9,6 +9,6 @@ spec:
       labelSelector:
         matchExpressions:
         - key: vendor
-          operator: "In"
+          operator: In
           values:
           - OpenShift

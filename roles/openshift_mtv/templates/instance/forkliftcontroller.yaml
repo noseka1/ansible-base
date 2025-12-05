@@ -6,6 +6,13 @@ metadata:
 # Available settings can be found at:
 # https://github.com/kubev2v/forklift/blob/8cab1f558b89346d1eefaa2d8947404d884f8dd3/operator/config/crd/bases/forklift.konveyor.io_forkliftcontrollers.yaml
 spec:
+  # Improve MTV performance by tuning the following settings:
+  controller_container_limits_cpu: "8"
+  controller_container_limits_memory: 8Gi
+  controller_max_concurrent_reconciles: 20
+  controller_max_vm_inflight: 30
+  inventory_container_limits_cpu: "4"
+  inventory_container_limits_memory: 8Gi
   # Enable OCP live migration (default: false)
   #
   # Live migration is when a powered on VM is migrated to a separate host or new location within the same host without

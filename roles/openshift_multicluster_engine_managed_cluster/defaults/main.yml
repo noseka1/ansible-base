@@ -60,6 +60,7 @@ multicluster_engine_managed_cluster_baremetal:
           password: dummy
           disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:21:00'
+        # Choose boot mode 'legacy' or 'UEFI'
         boot_mode: legacy
         root_device_hints:
           deviceName: /dev/vda

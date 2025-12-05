@@ -1,0 +1,16 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: all-openshift-clusters
+  namespace: openshift-gitops
+spec:
+  # Tolerations are required or unreachable clusters are removed
+  tolerations:
+  - key: cluster.open-cluster-management.io/unreachable
+    operator: Exists
+  - key: cluster.open-cluster-management.io/unavailable
+    operator: Exists
+  predicates:
+  - requiredClusterSelector:
+      # Empty label selector matches all objects in the collection.
+      labelSelector: {}

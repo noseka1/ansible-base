@@ -2,7 +2,9 @@
 
 - name: Configure persistent storage for monitoring and enable monitoring of user-defined workloads
   kubernetes.core.k8s:
-    template: monitoring/cluster-monitoring-config-cm.yaml
+    template:
+      - monitoring/cluster-monitoring-config-cm.yaml
+      - monitoring/user-workload-monitoring-config-cm.yaml
 
 - name: Configure OpenShift to send alerts to Slack
   kubernetes.core.k8s:

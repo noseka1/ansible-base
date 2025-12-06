@@ -14,7 +14,8 @@ data:
         spec:
           resources:
             requests:
-              storage: 50Gi
+              storage: 1Gi
+          #storageClassName: local-hostpath
 {% if openshift_cluster_postinstall_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
@@ -23,13 +24,23 @@ data:
         effect: NoSchedule
 {% endif %}
     prometheusK8s:
+      # If you define a value for retentionSize and do not define retention, only the retentionSize value applies.
+      # Data compaction occurs every two hours. Therefore, a persistent volume (PV) might fill up before compaction,
+      # potentially exceeding the retentionSize limit. In such cases, the KubePersistentVolumeFillingUp alert fires
+      # until the space on a PV is lower than the retentionSize limit.
+      # Link: https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/monitoring/about-openshift-container-platform-monitoring#retention-time-and-size-for-prometheus-metrics-data_key-concepts
+      # At present, we recommend setting the retention size to, at most, 80-85% of your allocated Prometheus disk space.
+      # This increases the likelihood that older entries will be removed prior to hitting any disk limitations.
+      # Link: https://prometheus.io/docs/prometheus/latest/storage/#right-sizing-retention-size
+      retentionSize: 150GB
       volumeClaimTemplate:
         metadata:
           name: prometheus
         spec:
           resources:
             requests:
-              storage: 50Gi
+              storage: 200Gi
+          #storageClassName: local-hostpath
 {% if openshift_cluster_postinstall_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""

@@ -23,6 +23,9 @@ spec:
         maxEntriesLimitPerQuery: 10000
         # MaxQuerySeries defines the maximum of unique series that is returned by a metric query.
         maxQuerySeries: 3000
+  # Available sizes are 1x.demo, 1x.pico, 1x.extra-small, 1x.small, 1x.medium
+  # For production systems, use 1x.small or 1x.medium
+  # Link: https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html-single/configuring_logging/index#loki-sizing_configuring-the-log-store
   size: 1x.extra-small
   storage:
     schemas:

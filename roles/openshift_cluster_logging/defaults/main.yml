@@ -1,5 +1,4 @@
 clusterlog_operator_subscription_channel: ''
-clusterlog_operator_subscription_approval: Manual
 clusterlog_operator_subscription_starting_csv: ''
 
 # Send the logs to the default Loki instance. This will deploy a LokiStack instance and send

@@ -7,7 +7,7 @@ spec:
 {% if clusterlog_operator_subscription_channel | length > 0 %}
   channel: {{ clusterlog_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ clusterlog_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: cluster-logging
   source: redhat-operators
   sourceNamespace: openshift-marketplace

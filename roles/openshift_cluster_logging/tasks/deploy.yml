@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/namespace
     autogitops_app_dst_path: cluster-logging/namespace
-    autogitops_app_namespace: '{{ clusterlog_namespace }}'
+    autogitops_app_namespace: openshift-logging
   tags: clusterlog_namespace
 
 - import_role:
@@ -13,14 +13,14 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: cluster-logging/operator
-    autogitops_app_namespace: '{{ clusterlog_namespace }}'
+    autogitops_app_namespace: openshift-logging
   tags: clusterlog_operator
 
 - import_role:
     name: openshift_lokistack
     tasks_from: deploy.yml
   vars:
-    loki_instance_namespace: '{{ clusterlog_namespace }}'
+    loki_instance_namespace: openshift-logging
     loki_instance_manage_namespace: false
     loki_instance_app_prefix: openshift-logging-
     loki_instance_tenants_mode: openshift-logging
@@ -45,7 +45,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: cluster-logging/instance
-    autogitops_app_namespace: '{{ clusterlog_namespace }}'
+    autogitops_app_namespace: openshift-logging
   tags: clusterlog_instance
 
 - import_role:
@@ -54,7 +54,7 @@
   vars:
     autogitops_app_src_path: templates/event-router
     autogitops_app_dst_path: cluster-logging/event-router
-    autogitops_app_namespace: '{{ clusterlog_namespace }}'
+    autogitops_app_namespace: openshift-logging
   tags: clusterlog_event_router
 
 - import_tasks: report_success.yml

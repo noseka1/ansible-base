@@ -6,7 +6,7 @@ apiVersion: observability.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
   name: collector
-  namespace: {{ clusterlog_namespace }}
+  namespace: openshift-logging
 spec:
   serviceAccount:
     name: collector

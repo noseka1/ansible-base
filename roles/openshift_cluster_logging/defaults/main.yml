@@ -2,8 +2,6 @@ clusterlog_operator_subscription_channel: ''
 clusterlog_operator_subscription_approval: Automatic
 clusterlog_operator_subscription_starting_csv: ''
 
-clusterlog_namespace: openshift-logging
-
 # Send the logs to the default Loki instance. This will deploy a LokiStack instance and send
 # the logs there. You can disable this and forward the logs to other destinations instead.
 clusterlog_forward_to_loki: true

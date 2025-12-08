@@ -5,7 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: eventrouter
-  namespace: {{ clusterlog_namespace }}
+  namespace: openshift-logging
 roleRef:
   kind: ClusterRole
   name: event-reader

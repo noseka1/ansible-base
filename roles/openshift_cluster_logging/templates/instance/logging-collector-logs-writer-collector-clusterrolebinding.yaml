@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: collector
-  namespace: {{ clusterlog_namespace }}
+  namespace: openshift-logging

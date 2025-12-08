@@ -2,4 +2,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: collector
-  namespace: {{ clusterlog_namespace }}
+  namespace: openshift-logging

@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: {{ clusterlog_namespace }}
+  name: openshift-logging

@@ -28,7 +28,7 @@
     name: openshift_lokistack
     tasks_from: delete.yml
   vars:
-    loki_instance_namespace: '{{ clusterlog_namespace }}'
+    loki_instance_namespace: openshift-logging
     loki_instance_manage_namespace: false
     loki_instance_app_prefix: openshift-logging-
     loki_instance_tenants_mode: openshift-logging

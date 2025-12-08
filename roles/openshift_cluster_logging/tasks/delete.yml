@@ -18,6 +18,15 @@
   tags: clusterlog_instance
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/cluster-logging/instance/splunk-hec-token'
+  when: clusterlog_forward_to_splunk
+  tags: clusterlog_instance
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

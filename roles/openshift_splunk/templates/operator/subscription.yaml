@@ -7,7 +7,7 @@ spec:
 {% if splunk_operator_subscription_channel | length > 0 %}
   channel: {{ splunk_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ splunk_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: splunk-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace

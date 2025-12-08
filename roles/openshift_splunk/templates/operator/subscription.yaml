@@ -14,3 +14,7 @@ spec:
 {% if splunk_operator_subscription_starting_csv | length > 0 %}
   startingCSV: {{ splunk_operator_subscription_starting_csv }}
 {% endif %}
+  config:
+    env:
+    - name: SPLUNK_GENERAL_TERMS
+      value: '--accept-sgt-current-at-splunk-com'

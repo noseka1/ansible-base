@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: splunk
-    oscomm_subscription_namespace: openshift-operators
+    oscomm_subscription_namespace: '{{ splunk_operator_namespace }}'
 
 - import_role:
     name: openshift_autogitops
@@ -11,7 +11,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: splunk/operator
-    autogitops_app_namespace: openshift-operators
+    autogitops_app_namespace: '{{ splunk_operator_namespace }}'
 
 - import_role:
     name: openshift_hashicorp_vault

@@ -8,6 +8,14 @@
   tags: clusterlog_namespace
 
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: cluster-logging
+    oscomm_subscription_namespace: openshift-logging
+  tags: clusterlog_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

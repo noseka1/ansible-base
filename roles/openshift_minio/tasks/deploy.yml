@@ -1,4 +1,14 @@
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ minio_app_prefix }}minio/instance/credentials'
+    hvault_secret_data:
+      minio_access_key: admin
+      minio_secret_key: '{{ generic_user_password }}'
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

@@ -15,7 +15,7 @@ spec:
   # Configure persistent storage for the image registry.
   storage:
     pvc:
-      claim: registry
+      claim: image-registry
 {% endif %}
 {% if openshift_cluster_postinstall_deploy_infra_nodes %}
   # Place image registry on infra nodes. See also:

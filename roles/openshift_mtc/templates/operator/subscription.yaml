@@ -7,7 +7,7 @@ spec:
 {% if mtc_operator_subscription_channel | length > 0 %}
   channel: {{ mtc_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ mtc_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: mtc-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

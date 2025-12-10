@@ -13,6 +13,11 @@ metadata:
   name: kubevirt-hyperconverged
   namespace: openshift-cnv
 spec:
+  # By default, live migration of virtual machines between nodes with differing CPU models is not possible. To allow live-migrating between nodes
+  # with different CPUs, you can set the defaultCPUModel to a common model supported by all cluster nodes. Check the cpu-feature.node.kubevirt.io
+  # labels on the Node object to find out which CPU models are supported by a specific node. Following the modification of the default CPU model,
+  # it is necessary to restart the virtual machines in order for them to adapt the new CPU model.
+  #defaultCPUModel: Skylake-Server-noTSX-IBRS
   # Migrate the VM on eviction if live migration is possible, otherwise directly evict
   evictionStrategy: LiveMigrateIfPossible
   featureGates:

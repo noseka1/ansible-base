@@ -34,6 +34,12 @@ spec:
     secret:
       name: loki-s3
       type: s3
+    # Optionally, configure trusted CA certificate for the S3 endpoint.
+    #tls:
+      # caName is the name of a ConfigMap containing the CA certificate.
+      # Note that this is a refence to a ConfigMap and not a Secret object!
+      #caName: loki-s3
+      #caKey: ca.crt
   storageClassName: {{ openshift_common_default_storage_class }}
   tenants:
     mode: {{ loki_instance_tenants_mode }}

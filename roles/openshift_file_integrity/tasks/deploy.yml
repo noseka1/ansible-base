@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: file-integrity-operator
-    oscomm_subscription_namespace: '{{ fileintegrity_namespace }}'
+    oscomm_subscription_namespace: openshift-file-integrity
 
 - import_role:
     name: openshift_autogitops
@@ -11,7 +11,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: file-integrity/operator
-    autogitops_app_namespace: '{{ fileintegrity_namespace }}'
+    autogitops_app_namespace: openshift-file-integrity
 
 - import_role:
     name: openshift_autogitops
@@ -19,7 +19,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: file-integrity/instance
-    autogitops_app_namespace: '{{ fileintegrity_namespace }}'
+    autogitops_app_namespace: openshift-file-integrity
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for FileIntegrityNodeStatus to show up
   kubernetes.core.k8s_info:

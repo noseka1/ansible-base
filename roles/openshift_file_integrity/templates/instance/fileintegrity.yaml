@@ -2,7 +2,7 @@ apiVersion: fileintegrity.openshift.io/v1alpha1
 kind: FileIntegrity
 metadata:
   name: cluster-fileintegrity
-  namespace: {{ fileintegrity_namespace }}
+  namespace: openshift-file-integrity
 spec:
   config:
     gracePeriod: 900

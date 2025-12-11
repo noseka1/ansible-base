@@ -7,7 +7,7 @@ spec:
 {% if fileintegrity_operator_subscription_channel | length > 0 %}
   channel: {{ fileintegrity_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ fileintegrity_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: file-integrity-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

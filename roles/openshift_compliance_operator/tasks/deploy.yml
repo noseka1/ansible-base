@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: compliance-operator/operator
-    autogitops_app_namespace: '{{ compliance_operator_namespace }}'
+    autogitops_app_namespace: openshift-compliance
 
 - import_role:
     name: openshift_autogitops
@@ -12,14 +12,14 @@
   vars:
     autogitops_app_src_path: templates/scan
     autogitops_app_dst_path: compliance-operator/scan
-    autogitops_app_namespace: '{{ compliance_cis_namespace }}'
+    autogitops_app_namespace: openshift-compliance
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
   kubernetes.core.k8s_info:
     api_version: compliance.openshift.io/v1alpha1
     kind: ComplianceScan
-    namespace: '{{ compliance_cis_namespace }}'
-    name: '{{ compliance_cis_name }}'
+    namespace: openshift-compliance
+    name: ocp4-cis
   register: compliance_cis_scan_result
   until:
     - compliance_cis_scan_result.resources.0.status.phase is defined

@@ -2,7 +2,7 @@ apiVersion: compliance.openshift.io/v1alpha1
 kind: ScanSettingBinding
 metadata:
   name: cis-compliance
-  namespace: {{ compliance_cis_namespace }}
+  namespace: openshift-compliance
 profiles:
 - apiGroup: compliance.openshift.io/v1alpha1
   kind: Profile

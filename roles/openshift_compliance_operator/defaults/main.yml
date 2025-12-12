@@ -1,8 +1,3 @@
 compliance_operator_subscription_channel: ''
 compliance_operator_subscription_approval: Automatic
 compliance_operator_subscription_starting_csv: ''
-
-compliance_operator_namespace: openshift-compliance
-
-compliance_cis_namespace: openshift-compliance
-compliance_cis_name: ocp4-cis

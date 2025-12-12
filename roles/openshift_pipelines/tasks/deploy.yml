@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/namespace
     autogitops_app_dst_path: openshift-pipelines/namespace
-    autogitops_app_namespace: '{{ pipelines_instance_namespace }}'
+    autogitops_app_namespace: openshift-pipelines
 
 - import_role:
     name: openshift_autogitops
@@ -12,7 +12,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-pipelines/operator
-    autogitops_app_namespace: '{{ pipelines_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the Tasks to be created
   kubernetes.core.k8s_info:

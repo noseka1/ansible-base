@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: openshift-pipelines-operator
-  namespace: {{ pipelines_operator_namespace }}
+  namespace: openshift-operators
 spec:
 {% if pipelines_operator_subscription_channel | length > 0 %}
   channel: {{ pipelines_operator_subscription_channel }}

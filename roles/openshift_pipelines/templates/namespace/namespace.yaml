@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: {{ pipelines_instance_namespace }}
+  name: openshift-pipelines

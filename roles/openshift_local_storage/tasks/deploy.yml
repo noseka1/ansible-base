@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: local-storage/operator
-    autogitops_app_namespace: '{{ localstorage_namespace }}'
+    autogitops_app_namespace: openshift-local-storage
   tags: local_storage_operator
 
 - import_role:
@@ -13,5 +13,5 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: local-storage/instance
-    autogitops_app_namespace: '{{ localstorage_namespace }}'
+    autogitops_app_namespace: openshift-local-storage
   tags: local_storage_instance

@@ -2,7 +2,7 @@ apiVersion: local.storage.openshift.io/v1alpha1
 kind: LocalVolumeSet
 metadata:
   name: myvolumeset1
-  namespace: {{ localstorage_namespace }}
+  namespace: openshift-local-storage
 spec:
   deviceInclusionSpec:
     deviceTypes:

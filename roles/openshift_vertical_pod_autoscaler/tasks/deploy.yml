@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: vertical-pod-autoscaler/operator
-    autogitops_app_namespace: '{{ vpa_operator_namespace }}'
+    autogitops_app_namespace: openshift-vertical-pod-autoscaler
 
 - import_role:
     name: openshift_autogitops
@@ -12,4 +12,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: vertical-pod-autoscaler/instance
-    autogitops_app_namespace: '{{ vpa_operator_namespace }}'
+    autogitops_app_namespace: openshift-vertical-pod-autoscaler

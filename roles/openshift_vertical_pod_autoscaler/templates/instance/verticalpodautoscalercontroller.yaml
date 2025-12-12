@@ -2,7 +2,7 @@ apiVersion: autoscaling.openshift.io/v1
 kind: VerticalPodAutoscalerController
 metadata:
   name: default
-  namespace: {{ vpa_instance_namespace }}
+  namespace: openshift-vertical-pod-autoscaler
 spec:
   minReplicas: 2
   podMinCPUMillicores: 25

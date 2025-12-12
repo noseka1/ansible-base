@@ -7,7 +7,7 @@ spec:
 {% if localstorage_operator_subscription_channel | length > 0 %}
   channel: {{ localstorage_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ localstorage_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: local-storage-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

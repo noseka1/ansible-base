@@ -7,7 +7,7 @@ spec:
 {% if node_observ_operator_subscription_channel | length > 0 %}
   channel: {{ node_observ_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ node_observ_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: node-observability-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

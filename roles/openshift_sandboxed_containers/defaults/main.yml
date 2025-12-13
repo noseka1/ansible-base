@@ -1,5 +1,4 @@
 sandboxed_containers_operator_subscription_channel: ''
-sandboxed_containers_operator_subscription_approval: Automatic
 sandboxed_containers_operator_subscription_starting_csv: ''
 
 sandboxed_containers_example_workload_namespace: openshift-sandboxed-containers-operator-example

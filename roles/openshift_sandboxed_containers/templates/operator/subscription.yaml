@@ -7,7 +7,7 @@ spec:
 {% if sandboxed_containers_operator_subscription_channel | length > 0 %}
   channel: {{ sandboxed_containers_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ sandboxed_containers_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: sandboxed-containers-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

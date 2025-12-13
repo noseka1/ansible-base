@@ -7,7 +7,7 @@ spec:
 {% if descheduler_operator_subscription_channel | length > 0 %}
   channel: {{ descheduler_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ descheduler_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: cluster-kube-descheduler-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

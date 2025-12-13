@@ -1,9 +1,10 @@
-- name: Deploy ingress node firewall operator
-  kubernetes.core.k8s:
-    template:
-      - operator/ingress-node-firewall-ns.yaml
-      - operator/ingress-node-firewall-og.yaml
-      - operator/ingress-node-firewall-sub.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: ingress-node-firewall/operator
+    autogitops_app_namespace: openshift-ingress-node-firewall
 
 - import_role:
     name: openshift_common
@@ -12,10 +13,13 @@
     subscription_name: ingress-node-firewall
     subscription_namespace: openshift-ingress-node-firewall
 
-- name: Deploy ingress node firewall daemonset
-  kubernetes.core.k8s:
-    template:
-      - instance/ingressnodefirewallconfig-ingressnodefirewallconfig.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: ingress-node-firewall/instance
+    autogitops_app_namespace: openshift-ingress-node-firewall
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for ingress node firewall daemonset to deploy
   kubernetes.core.k8s_info:

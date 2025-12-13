@@ -7,7 +7,7 @@ spec:
 {% if tang_operator_subscription_channel | length > 0 %}
   channel: {{ tang_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ tang_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: tang-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

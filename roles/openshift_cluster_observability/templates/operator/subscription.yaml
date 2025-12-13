@@ -7,7 +7,7 @@ spec:
 {% if clusterobserv_operator_subscription_channel | length > 0 %}
   channel: {{ clusterobserv_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ clusterobserv_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: cluster-observability-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

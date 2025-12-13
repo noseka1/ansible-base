@@ -1,5 +1,4 @@
 clusterobserv_operator_subscription_channel: ''
-clusterobserv_operator_subscription_approval: Automatic
 clusterobserv_operator_subscription_starting_csv: ''
 
 clusterobserv_monstack_namespace: cluster-observability

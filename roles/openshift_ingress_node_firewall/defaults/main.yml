@@ -1,2 +1,2 @@
-ingress_node_firewall_subscription_channel: stable
-ingress_node_firewall_subscription_approval: Automatic
+ingress_node_firewall_operator_subscription_channel: ''
+ingress_node_firewall_operator_subscription_starting_csv: ''

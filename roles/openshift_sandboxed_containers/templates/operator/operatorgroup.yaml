@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: openshift-sandboxed-containers-operator
-  namespace: {{ sandboxed_containers_operator_namespace }}
+  namespace: openshift-sandboxed-containers-operator
 spec:
   targetNamespaces:
-  - {{ sandboxed_containers_operator_namespace }}
+  - openshift-sandboxed-containers-operator

@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-sandboxed-containers/operator
-    autogitops_app_namespace: '{{ sandboxed_containers_operator_namespace }}'
+    autogitops_app_namespace: openshift-sandboxed-containers-operator
   tags: sandboxed_containers_operator
 
 - import_role:

@@ -1,7 +1,7 @@
 apiVersion: kataconfiguration.openshift.io/v1
 kind: KataConfig
 metadata:
-  name: {{ sandboxed_containers_instance_name }}
+  name: cluster-kataconfig
 spec:
   checkNodeEligibility: false
   logLevel: info

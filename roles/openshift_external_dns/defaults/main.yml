@@ -1,5 +1,4 @@
 externaldns_operator_subscription_channel: ''
-externaldns_operator_subscription_approval: Automatic
 externaldns_operator_subscription_starting_csv: ''
 
 externaldns_domain_name: myzonedomain.example.com

@@ -6,4 +6,4 @@ metadata:
   labels:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/enforce-version: v1.24
-  name: {{ ingress_node_firewall_subscription_namespace }}
+  name: openshift-ingress-node-firewall

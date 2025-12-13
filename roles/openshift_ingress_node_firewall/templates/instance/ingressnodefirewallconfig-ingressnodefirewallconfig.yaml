@@ -1,8 +1,8 @@
 apiVersion: ingressnodefirewall.openshift.io/v1alpha1
 kind: IngressNodeFirewallConfig
 metadata:
-  name: {{ ingress_node_firewall_instance_name }}
-  namespace: {{ ingress_node_firewall_instance_namespace }}
+  name: ingressnodefirewallconfig
+  namespace: openshift-ingress-node-firewall
 spec:
   nodeSelector:
     node-role.kubernetes.io/worker: ""

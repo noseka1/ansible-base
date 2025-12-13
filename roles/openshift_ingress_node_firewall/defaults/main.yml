@@ -1,2 +1,2 @@
-ingress_node_firewall_operator_subscription_channel: ''
-ingress_node_firewall_operator_subscription_starting_csv: ''
+ingressnodefw_subscription_channel: ''
+ingressnodefw_subscription_starting_csv: ''

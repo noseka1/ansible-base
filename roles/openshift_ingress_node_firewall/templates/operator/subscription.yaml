@@ -4,13 +4,13 @@ metadata:
   name: ingress-node-firewall
   namespace: openshift-ingress-node-firewall
 spec:
-{% if ingress_node_firewall_operator_subscription_channel | length > 0 %}
-  channel: {{ ingress_node_firewall_operator_subscription_channel }}
+{% if ingressnodefw_subscription_channel | length > 0 %}
+  channel: {{ ingressnodefw_subscription_channel }}
 {% endif %}
   installPlanApproval: Manual
   name: ingress-node-firewall
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if ingress_node_firewall_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ ingress_node_firewall_operator_subscription_starting_csv }}
+{% if ingressnodefw_subscription_starting_csv | length > 0 %}
+  startingCSV: {{ ingressnodefw_subscription_starting_csv }}
 {% endif %}

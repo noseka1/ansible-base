@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example
-  namespace: {{ sandboxconts_example_workload_namespace }}
+  namespace: openshift-sandboxed-containers-operator-example
 spec:
   selector:
     matchLabels:

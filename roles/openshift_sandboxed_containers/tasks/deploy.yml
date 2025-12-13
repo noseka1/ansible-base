@@ -30,5 +30,5 @@
   vars:
     autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: openshift-sandboxed-containers/example-workload
-    autogitops_app_namespace: '{{ sandboxconts_example_workload_namespace }}'
+    autogitops_app_namespace: openshift-sandboxed-containers-operator-example
   tags: sandboxconts_example

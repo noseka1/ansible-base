@@ -3,18 +3,18 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-sandboxed-containers/example-workload
-  tags: sandboxed_containers_example
+  tags: sandboxconts_example
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-sandboxed-containers/instance
-  tags: sandboxed_containers_instance
+  tags: sandboxconts_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-sandboxed-containers/operator
-  tags: sandboxed_containers_operator
+  tags: sandboxconts_operator

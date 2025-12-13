@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example
-  namespace: {{ sandboxed_containers_example_workload_namespace }}
+  namespace: {{ sandboxconts_example_workload_namespace }}
 spec:
   selector:
     matchLabels:

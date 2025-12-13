@@ -4,7 +4,7 @@
   vars:
     oscomm_subscription_name: sandboxed-containers-operator
     oscomm_subscription_namespace: openshift-sandboxed-containers-operator
-  tags: sandboxed_containers_operator
+  tags: sandboxconts_operator
 
 - import_role:
     name: openshift_autogitops
@@ -13,7 +13,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: openshift-sandboxed-containers/operator
     autogitops_app_namespace: openshift-sandboxed-containers-operator
-  tags: sandboxed_containers_operator
+  tags: sandboxconts_operator
 
 - import_role:
     name: openshift_autogitops
@@ -22,7 +22,7 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: openshift-sandboxed-containers/instance
     autogitops_app_namespace: ''
-  tags: sandboxed_containers_instance
+  tags: sandboxconts_instance
 
 - import_role:
     name: openshift_autogitops
@@ -30,5 +30,5 @@
   vars:
     autogitops_app_src_path: templates/example-workload
     autogitops_app_dst_path: openshift-sandboxed-containers/example-workload
-    autogitops_app_namespace: '{{ sandboxed_containers_example_workload_namespace }}'
-  tags: sandboxed_containers_example
+    autogitops_app_namespace: '{{ sandboxconts_example_workload_namespace }}'
+  tags: sandboxconts_example

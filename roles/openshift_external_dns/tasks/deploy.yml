@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: external-dns/operator
-    autogitops_app_namespace: '{{ externaldns_operator_namespace }}'
+    autogitops_app_namespace: external-dns-operator
 
 - assert:
     that: external_dns_aws_access_key_id | length > 0
@@ -22,4 +22,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: external-dns/instance
-    autogitops_app_namespace: '{{ externaldns_instance_namespace }}'
+    autogitops_app_namespace: external-dns

@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ externaldns_operator_namespace }}
+  name: external-dns-operator

@@ -2,7 +2,7 @@ apiVersion: externaldns.olm.openshift.io/v1alpha1
 kind: ExternalDNS
 metadata:
   name: external-dns
-  namespace: {{ externaldns_instance_namespace }}
+  namespace: external-dns
 spec:
   provider:
     aws:

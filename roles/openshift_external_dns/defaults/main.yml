@@ -2,10 +2,6 @@ externaldns_operator_subscription_channel: ''
 externaldns_operator_subscription_approval: Automatic
 externaldns_operator_subscription_starting_csv: ''
 
-externaldns_operator_namespace: external-dns-operator
-
-externaldns_instance_namespace: external-dns
-
 externaldns_domain_name: myzonedomain.example.com
 
 externaldns_aws_access_key_id: ''

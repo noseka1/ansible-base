@@ -2,7 +2,7 @@ apiVersion: nodeobservability.olm.openshift.io/v1alpha2
 kind: NodeObservabilityRun
 metadata:
   name: example
-  namespace: {{ node_observ_example_namespace }}
+  namespace: node-observability-operator
 spec:
   nodeObservabilityRef:
     name: cluster

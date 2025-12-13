@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-observability/operator
-    autogitops_app_namespace: '{{ node_observ_operator_namespace }}'
+    autogitops_app_namespace: node-observability-operator
 
 - import_role:
     name: openshift_autogitops
@@ -20,14 +20,14 @@
   vars:
     autogitops_app_src_path: templates/example
     autogitops_app_dst_path: node-observability/example
-    autogitops_app_namespace: '{{ node_observ_example_namespace }}'
+    autogitops_app_namespace: node-observability-operator
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for profiling query to complete
   kubernetes.core.k8s_info:
     api_version: nodeobservability.olm.openshift.io/v1alpha2
     kind: NodeObservabilityRun
     name: example
-    namespace: '{{ node_observ_example_namespace }}'
+    namespace: node-observability-operator
   register: node_observability_example_result
   until:
     - node_observability_example_result.resources.0.status.conditions.conditions is defined

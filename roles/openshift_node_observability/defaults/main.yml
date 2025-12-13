@@ -1,7 +1,3 @@
 node_observ_operator_subscription_channel: ''
 node_observ_operator_subscription_approval: Automatic
 node_observ_operator_subscription_starting_csv: ''
-
-node_observ_operator_namespace: node-observability-operator
-
-node_observ_example_namespace: node-observability-operator

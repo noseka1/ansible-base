@@ -1,5 +1,3 @@
 tang_operator_subscription_channel: ''
 tang_operator_subscription_approval: Automatic
 tang_operator_subscription_starting_csv: ''
-
-tang_instance_namespace: tang

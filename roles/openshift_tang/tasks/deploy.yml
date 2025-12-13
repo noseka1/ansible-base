@@ -12,4 +12,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: tang/instance
-    autogitops_app_namespace: '{{ tang_instance_namespace }}'
+    autogitops_app_namespace: tang

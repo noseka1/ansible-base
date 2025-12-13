@@ -2,7 +2,7 @@ apiVersion: daemons.redhat.com/v1alpha1
 kind: TangServer
 metadata:
   name: tangserver
-  namespace: {{ tang_instance_namespace }}
+  namespace: tang
 spec:
   healthScript: /usr/bin/tangd-health-check
   image: registry.redhat.io/rhel9/tang

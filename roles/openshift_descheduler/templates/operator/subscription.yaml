@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: cluster-kube-descheduler-operator
-  namespace: {{ descheduler_namespace }}
+  namespace: openshift-kube-descheduler-operator
 spec:
 {% if descheduler_operator_subscription_channel | length > 0 %}
   channel: {{ descheduler_operator_subscription_channel }}

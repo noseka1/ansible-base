@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: descheduler/operator
-    autogitops_app_namespace: '{{ descheduler_namespace }}'
+    autogitops_app_namespace: openshift-kube-descheduler-operator
 
 - import_role:
     name: openshift_autogitops
@@ -12,4 +12,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: descheduler/instance
-    autogitops_app_namespace: '{{ descheduler_namespace }}'
+    autogitops_app_namespace: openshift-kube-descheduler-operator

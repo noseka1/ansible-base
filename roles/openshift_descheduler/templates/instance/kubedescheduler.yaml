@@ -2,7 +2,7 @@ apiVersion: operator.openshift.io/v1
 kind: KubeDescheduler
 metadata:
   name: cluster
-  namespace: {{ descheduler_namespace }}
+  namespace: openshift-kube-descheduler-operator
 spec:
   deschedulingIntervalSeconds: 3600
   logLevel: Normal

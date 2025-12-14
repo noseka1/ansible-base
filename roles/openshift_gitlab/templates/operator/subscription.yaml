@@ -7,7 +7,7 @@ spec:
 {% if gitlab_operator_subscription_channel | length > 0 %}
   channel: {{ gitlab_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ gitlab_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: gitlab-operator-kubernetes
   source: certified-operators
   sourceNamespace: openshift-marketplace

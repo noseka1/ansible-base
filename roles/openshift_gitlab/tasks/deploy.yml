@@ -25,6 +25,16 @@
   tags: gitlab_instance
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: gitlab/instance/initial-root-password
+    hvault_secret_data:
+      password: '{{ generic_user_password }}'
+  tags: gitlab_instance
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

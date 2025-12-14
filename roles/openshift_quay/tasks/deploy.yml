@@ -1,4 +1,12 @@
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: container-security-operator
+    oscomm_subscription_namespace: openshift-operators
+  tags: quay_security_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -8,6 +16,14 @@
   tags: quay_security_operator
 
 - import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: quay-bridge-operator
+    oscomm_subscription_namespace: openshift-operators
+  tags: quay_bridge_operator
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -15,6 +31,14 @@
     autogitops_app_dst_path: quay/quay-bridge/operator
     autogitops_app_namespace: openshift-operators
   tags: quay_bridge_operator
+
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: quay-operator
+    oscomm_subscription_namespace: openshift-operators
+  tags: quay_operator
 
 - import_role:
     name: openshift_autogitops

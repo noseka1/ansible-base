@@ -7,7 +7,7 @@ spec:
 {% if quay_operator_subscription_channel | length > 0 %}
   channel: {{ quay_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ quay_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: quay-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

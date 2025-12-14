@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/display-name: Nginx Ingress
-  name: {{ nginx_operator_namespace }}
+  name: nginx-ingress-operator

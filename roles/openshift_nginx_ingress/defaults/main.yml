@@ -2,8 +2,4 @@ nginx_operator_subscription_channel: ''
 nginx_operator_subscription_approval: Automatic
 nginx_operator_subscription_starting_csv: ''
 
-nginx_operator_namespace: nginx-ingress-operator
-
-nginx_instance_namespace: nginx-ingress
-
 nginx_instance_image_tag: 4.0.1-ubi

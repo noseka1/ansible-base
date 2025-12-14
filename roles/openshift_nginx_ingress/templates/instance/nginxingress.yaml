@@ -4,7 +4,7 @@ apiVersion: charts.nginx.org/v1alpha1
 kind: NginxIngress
 metadata:
   name: nginxingress
-  namespace: {{ nginx_instance_namespace }}
+  namespace: nginx-ingress
 spec:
   controller:
     affinity: {}

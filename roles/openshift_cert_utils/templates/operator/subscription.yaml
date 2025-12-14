@@ -7,7 +7,7 @@ spec:
 {% if certutils_operator_subscription_channel | length > 0 %}
   channel: {{ certutils_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ certutils_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: cert-utils-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

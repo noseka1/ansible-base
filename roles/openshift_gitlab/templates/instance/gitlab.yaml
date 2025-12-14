@@ -2,7 +2,7 @@ kind: GitLab
 apiVersion: apps.gitlab.com/v1beta1
 metadata:
   name: gitlab
-  namespace: {{ gitlab_instance_namespace }}
+  namespace: gitlab-system
 spec:
   chart:
     values:

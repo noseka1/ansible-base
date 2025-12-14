@@ -7,7 +7,7 @@ spec:
 {% if groupsync_operator_subscription_channel | length > 0 %}
   channel: {{ groupsync_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ groupsync_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: group-sync-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

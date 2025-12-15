@@ -6,6 +6,7 @@ metadata:
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:
+  # Enable application manager to import the managed cluster into Argo CD
   applicationManager:
     enabled: true
   certPolicyController:

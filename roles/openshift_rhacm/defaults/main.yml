@@ -10,7 +10,7 @@ rhacm_instance_availability: Basic
 # Import local-cluster to Argo CD in openshift-gitops namespace
 rhacm_instance_import_to_argocd: false
 
-# Observability instance size, allowed values: default, minimal, small, medium
+# Observability instance size, allowed values: default, minimal, small, medium,
 # large, xlarge, 2xlarge, 4xlarge
 rhacm_observability_instance_size: default
 

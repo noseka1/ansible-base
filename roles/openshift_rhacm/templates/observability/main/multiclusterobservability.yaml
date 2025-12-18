@@ -8,6 +8,8 @@ spec:
       retentionResolution1h: 30d # How long to retain samples of 1 hour in bucket
       retentionResolution5m: 14d
       retentionResolutionRaw: 5d
+  # Observability instance size, allowed values: default, minimal, small, medium,
+  # large, xlarge, 2xlarge, 4xlarge
   instanceSize: {{ rhacm_observability_instance_size }}
   imagePullPolicy: IfNotPresent
   observabilityAddonSpec: # The ObservabilityAddonSpec defines the global settings for all managed clusters which have observability add-on enabled

@@ -11,7 +11,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: cost-management/operator
-    autogitops_app_namespace: '{{ costman_namespace }}'
+    autogitops_app_namespace: costmanagement-metrics-operator
 
 - import_role:
     name: openshift_autogitops
@@ -19,4 +19,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: cost-management/instance
-    autogitops_app_namespace: '{{ costman_namespace }}'
+    autogitops_app_namespace: costmanagement-metrics-operator

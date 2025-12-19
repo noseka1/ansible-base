@@ -1,6 +1,4 @@
 costman_operator_subscription_channel: ''
 costman_operator_subscription_starting_csv: ''
 
-costman_namespace: costmanagement-metrics-operator
-
 costman_instance_source_name: INSERT-SOURCE-NAME

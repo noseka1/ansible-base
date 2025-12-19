@@ -7,7 +7,7 @@ spec:
 {% if tempostack_operator_subscription_channel | length > 0 %}
   channel: {{ tempostack_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ tempostack_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: tempo-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace

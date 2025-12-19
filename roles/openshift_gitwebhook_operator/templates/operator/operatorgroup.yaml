@@ -2,4 +2,4 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: gitwebhook-operator
-  namespace: {{ gitwebhook_operator_namespace }}
+  namespace: gitwebhook-operator

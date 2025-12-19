@@ -1,5 +1,4 @@
 costman_operator_subscription_channel: ''
-costman_operator_subscription_approval: Automatic
 costman_operator_subscription_starting_csv: ''
 
 costman_namespace: costmanagement-metrics-operator

@@ -22,6 +22,18 @@
     autogitops_app_namespace: openshift-operators
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/tempostack/instance/s3-creds'
+    hvault_secret_data:
+      endpoint: http://minio.{{ tempostack_instance_namespace }}-minio.svc:9000
+      bucket: mybucket1
+      access_key_id: admin
+      access_key_secret: '{{ generic_user_password }}'
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

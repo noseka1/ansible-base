@@ -7,7 +7,7 @@ spec:
 {% if gitwebhook_operator_subscription_channel | length > 0 %}
   channel: {{ gitwebhook_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ gitwebhook_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: gitwebhook-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

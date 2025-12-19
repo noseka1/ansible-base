@@ -7,7 +7,7 @@ spec:
 {% if skupper_operator_subscription_channel | length > 0 %}
   channel: {{ skupper_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ skupper_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: skupper-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

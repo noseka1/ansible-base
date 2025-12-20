@@ -11,6 +11,10 @@
     validate_certs: false
     status_code: [ 200, 401 ]
   register: rhbk_token_result
+  until:
+    - rhbk_token_result.json.access_token | default('') | length > 0
+  retries: 30
+  delay: 10
 
 - set_fact:
     rhbk_access_token: '{{ rhbk_token_result.json.access_token }}'

@@ -2,7 +2,7 @@ apiVersion: k8s.keycloak.org/v2alpha1
 kind: Keycloak
 metadata:
   name: keycloak
-  namespace: {{ rhbk_instance_namespace }}
+  namespace: keycloak
 spec:
   additionalOptions:
   # The proxy and proxy-headers settings are required for edge-terminated ingress

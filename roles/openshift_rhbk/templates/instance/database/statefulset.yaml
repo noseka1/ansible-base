@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgresql-db
-  namespace: {{ rhbk_instance_namespace }}
+  namespace: keycloak
 spec:
   serviceName: postgresql-db
   selector:

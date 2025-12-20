@@ -3,7 +3,7 @@
     api_version: v1
     kind: Secret
     name: keycloak-initial-admin
-    namespace: '{{ rhbk_instance_namespace }}'
+    namespace: keycloak
   register: rhbk_secret
 
 - name: Fail if Keycloak secret doesn't exist

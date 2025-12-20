@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhbk/operator
-    autogitops_app_namespace: '{{ rhbk_operator_namespace }}'
+    autogitops_app_namespace: keycloak
 
 - import_tasks: get_instance_hostname.yml
 
@@ -14,7 +14,7 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: rhbk/instance
-    autogitops_app_namespace: '{{ rhbk_instance_namespace }}'
+    autogitops_app_namespace: keycloak
 
 - import_tasks: get_connection.yml
 

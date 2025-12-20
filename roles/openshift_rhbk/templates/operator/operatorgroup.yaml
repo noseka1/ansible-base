@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: rhbk-operator
-  namespace: {{ rhbk_operator_namespace }}
+  namespace: keycloak
 spec:
   targetNamespaces:
-  - {{ rhbk_operator_namespace }}
+  - keycloak

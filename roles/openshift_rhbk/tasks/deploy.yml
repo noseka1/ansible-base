@@ -16,6 +16,17 @@
 - import_tasks: get_instance_hostname.yml
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: rhbk/instance/keycloak-db
+    hvault_secret_data:
+      username: admin
+      password: '{{ generic_user_password }}'
+      admin_password: '{{ generic_user_password }}'
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

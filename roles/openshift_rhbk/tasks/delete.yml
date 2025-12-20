@@ -13,6 +13,13 @@
     autogitops_app_dst_path: rhbk/instance
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: rhbk/instance/keycloak-db
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

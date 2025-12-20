@@ -1,5 +1,4 @@
 rhbk_operator_subscription_channel: ''
-rhbk_operator_subscription_approval: Automatic
 rhbk_operator_subscription_starting_csv: ''
 
 rhbk_trusted_ca_cert: ''

@@ -4,8 +4,6 @@ artifactory-oss:
       service:
         type: ClusterIP
     postgresql:
-      auth:
-        password: '{{ generic_user_password }}'
       global:
         compatibility:
           openshift:

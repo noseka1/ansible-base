@@ -2,7 +2,7 @@ kind: KedaController
 apiVersion: keda.sh/v1alpha1
 metadata:
   name: keda
-  namespace: {{ keda_namespace }}
+  namespace: openshift-keda
 spec:
   watchNamespace: ''
   operator:

@@ -1,5 +1,3 @@
 keda_operator_subscription_channel: ''
 keda_operator_subscription_approval: Automatic
 keda_operator_subscription_starting_csv: ''
-
-keda_namespace: openshift-keda

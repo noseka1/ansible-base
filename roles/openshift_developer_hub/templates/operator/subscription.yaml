@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: rhdh
-  namespace: {{ rhdh_operator_namespace }}
+  namespace: rhdh-operator
 spec:
 {% if rhdh_operator_subscription_channel | length > 0 %}
   channel: {{ rhdh_operator_subscription_channel }}

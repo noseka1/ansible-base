@@ -16,7 +16,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: developer-hub/operator
-    autogitops_app_namespace: '{{ rhdh_operator_namespace }}'
+    autogitops_app_namespace: rhdh-operator
   tags: rhdh_operator
 
 - import_role:

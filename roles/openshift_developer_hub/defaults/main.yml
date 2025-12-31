@@ -2,6 +2,4 @@ rhdh_operator_subscription_channel: ''
 rhdh_operator_subscription_approval: Automatic
 rhdh_operator_subscription_starting_csv: ''
 
-rhdh_operator_namespace: rhdh-operator
-
 rhdh_instance_namespace: developer-hub

@@ -2,4 +2,4 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name:  rhdh-operator
-  namespace: {{ rhdh_operator_namespace }}
+  namespace: rhdh-operator

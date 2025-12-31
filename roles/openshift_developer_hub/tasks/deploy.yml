@@ -28,6 +28,20 @@
   tags: rhdh_operator
 
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhdh/instance/secrets-rhdh'
+    hvault_secret_data:
+      KEYCLOAK_CLIENT_SECRET: '{{ rhbk_client_secret_result.json.value }}'
+      BACKEND_SECRET: '{{ "change me 123456" | b64encode }}'
+      SESSION_SECRET: '{{ "change me 123456" | b64encode }}'
+      # TODO Configure trusted CA certificate
+      NODE_TLS_REJECT_UNAUTHORIZED: '0'
+  tags: rhdh_instance
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

@@ -1,0 +1,21 @@
+- name: Obtain Artifactory route
+  kubernetes.core.k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: artifactory-oss
+    namespace: artifactory-oss
+  register: artifactory_route_result
+
+- name: Report success
+  set_fact:
+    msg: |
+      Artifactory installed successfully.
+
+      You can browse to
+      https://{{ artifactory_route_result.resources.0.spec.host }}
+
+      and log in using initial credentials:
+      Username: admin
+      Password: password
+
+- debug: msg="{{ msg.split('\n') }}"

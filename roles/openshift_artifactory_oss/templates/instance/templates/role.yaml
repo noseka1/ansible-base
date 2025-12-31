@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: anyuid-seccomp
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - artifactory-oss-anyuid-seccomp
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use

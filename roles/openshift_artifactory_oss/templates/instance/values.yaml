@@ -1,8 +1,12 @@
-artifactory:
-  nginx:
-    enabled: true
-    service:
-      type: ClusterIP
+artifactory-oss:
   artifactory:
+    nginx:
+      service:
+        type: ClusterIP
     postgresql:
-      postgresqlPassword: '{{ generic_user_password }}'
+      auth:
+        password: '{{ generic_user_password }}'
+      global:
+        compatibility:
+          openshift:
+            adaptSecurityContext: force

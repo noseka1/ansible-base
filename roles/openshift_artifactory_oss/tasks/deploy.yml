@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: artifactory-oss/instance
-    autogitops_app_namespace: '{{ artifactory_operator_namespace }}'
+    autogitops_app_namespace: '{{ artifactory_instance_namespace }}'

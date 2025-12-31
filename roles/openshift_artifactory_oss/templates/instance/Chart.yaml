@@ -5,5 +5,5 @@ version: 0.1.0
 
 dependencies:
 - name: artifactory-oss
-  version: 107.55.13
+  version: 107.125.8
   repository: https://charts.jfrog.io

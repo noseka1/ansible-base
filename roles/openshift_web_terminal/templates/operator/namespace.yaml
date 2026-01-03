@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ webterm_operator_namespace }}
+  name: openshift-terminal-operator

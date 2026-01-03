@@ -1,4 +1,2 @@
 webterm_operator_subscription_channel: ''
 webterm_operator_subscription_starting_csv: ''
-
-webterm_operator_namespace: openshift-terminal-operator

@@ -4,5 +4,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   name: bpfman
-  namespace: {{ ebpfman_operator_namespace }}
+  namespace: bpfman
 spec:

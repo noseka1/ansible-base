@@ -6,4 +6,4 @@ metadata:
     pod-security.kubernetes.io/audit-version: latest
     pod-security.kubernetes.io/warn: privileged
     pod-security.kubernetes.io/warn-version: latest
-  name: {{ ebpfman_operator_namespace }}
+  name: bpfman

@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: ebpf-manager/operator
-    autogitops_app_namespace: '{{ ebpfman_operator_namespace }}'
+    autogitops_app_namespace: bpfman

@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   name: bpfman
-  namespace: {{ ebpfman_operator_namespace }}
+  namespace: bpfman
 spec:
 {% if ebpfman_operator_subscription_channel | length > 0 %}
   channel: {{ ebpfman_operator_subscription_channel }}

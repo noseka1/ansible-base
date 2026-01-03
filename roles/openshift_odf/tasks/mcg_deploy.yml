@@ -1,6 +1,7 @@
 # Deploy standalone NooBaa (Multicloud Object Gateway)
-# See also: https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html-single/deploying_the_red_hat_quay_operator_on_openshift_container_platform/index#creating-standalone-object-gateway
-#
+# See also:
+# * https://docs.redhat.com/en/documentation/red_hat_quay/3.15/html-single/deploying_the_red_hat_quay_operator_on_openshift_container_platform/index#operator-standalone-object-gateway
+# * https://docs.redhat.com/en/documentation/red_hat_openshift_data_foundation/4.19/html/deploying_openshift_data_foundation_using_bare_metal_infrastructure/deploy-standalone-multicloud-object-gateway
 - import_tasks: operator_deploy.yml
   tags: odf_operator
 

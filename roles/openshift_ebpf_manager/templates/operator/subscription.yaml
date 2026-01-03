@@ -9,7 +9,7 @@ spec:
 {% if ebpfman_operator_subscription_channel | length > 0 %}
   channel: {{ ebpfman_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ ebpfman_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: bpfman-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace

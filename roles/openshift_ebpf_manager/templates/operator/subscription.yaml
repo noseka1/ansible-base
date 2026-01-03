@@ -1,8 +1,6 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
   name: bpfman
   namespace: bpfman
 spec:

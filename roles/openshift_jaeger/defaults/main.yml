@@ -1,8 +1,3 @@
 jaeger_operator_subscription_channel: ''
 jaeger_operator_subscription_approval: Automatic
 jaeger_operator_subscription_starting_csv: ''
-
-jaeger_operator_namespace: openshift-distributed-tracing
-
-jaeger_instance_namespace: jaeger
-jaeger_instance_name: jaeger

@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: jaeger/operator
-    autogitops_app_namespace: '{{ jaeger_operator_namespace }}'
+    autogitops_app_namespace: openshift-distributed-tracing

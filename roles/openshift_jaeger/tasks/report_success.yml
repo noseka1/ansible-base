@@ -2,8 +2,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ jaeger_instance_name }}'
-    namespace: '{{ jaeger_instance_namespace }}'
+    name: jaeger
+    namespace: jaeger
   register: jaeger_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Jaeger to come up

@@ -4,6 +4,6 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: jaeger/instance
-    autogitops_app_namespace: '{{ jaeger_instance_namespace }}'
+    autogitops_app_namespace: jaeger
 
 - import_tasks: report_success.yml

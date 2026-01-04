@@ -2,7 +2,7 @@ apiVersion: operator.open-cluster-management.io/v1alpha4
 kind: MulticlusterGlobalHub
 metadata:
   name: multiclusterglobalhub
-  namespace: {{ rhacm_global_hub_namespace }}
+  namespace: multicluster-global-hub
 spec:
   # Specifies deployment replication for improved availability.
   # Options are: Basic and High (default)

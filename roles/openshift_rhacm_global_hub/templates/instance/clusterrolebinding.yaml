@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: multicluster-global-hub-operator
-  namespace: {{ rhacm_global_hub_namespace }}
+  namespace: multicluster-global-hub

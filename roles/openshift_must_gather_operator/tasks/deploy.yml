@@ -1,4 +1,14 @@
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/must-gather/operator/case-management-creds'
+    hvault_secret_data:
+      username: '{{ must_gather_operator_case_management_username }}'
+      password: '{{ must_gather_operator_case_management_password }}'
+
+- import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:

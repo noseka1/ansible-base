@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_amq_streams
-        tasks_from: deploy_operator.yml
+        tasks_from: operator_deploy.yml

@@ -1,6 +1,6 @@
 - name: Create namespace {{ amq_streams_kafka_mirror_maker_namespace }}
   kubernetes.core.k8s:
-    template: kafka-mirror-maker-ns.yaml
+    template: kafka-mirror-maker/namespace.yaml
 
 - name: Deploy two Kafka instances and Mirror Maker
   kubernetes.core.k8s:

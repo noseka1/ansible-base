@@ -7,7 +7,7 @@
 
 - name: Deploy AMQ Streams operator
   kubernetes.core.k8s:
-    template: amq-streams-sub.yaml
+    template: operator/subscription.yaml
 
 - import_role:
     name: openshift_common

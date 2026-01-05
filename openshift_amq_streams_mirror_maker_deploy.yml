@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_amq_streams
-        tasks_from: deploy_mirror_maker.yml
+        tasks_from: mirror_maker_deploy.yml

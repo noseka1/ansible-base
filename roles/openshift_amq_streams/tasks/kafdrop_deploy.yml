@@ -9,7 +9,7 @@
     name: kafdrop
     chart_ref: /tmp/kafdrop/chart
     release_namespace: '{{ amq_streams_kafdrop_namespace }}'
-    release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
+    release_values: '{{ lookup("template", "kafdrop/values.yaml") | from_yaml }}'
     wait: true
 
 - name: Deploy oauth-proxy

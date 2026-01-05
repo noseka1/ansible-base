@@ -10,5 +10,5 @@
 
 - name: Delete namespace
   kubernetes.core.k8s:
-    template: kafka-mirror-maker-ns.yaml
+    template: kafka-mirror-maker/namespace.yaml
     state: absent

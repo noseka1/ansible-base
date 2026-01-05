@@ -12,5 +12,5 @@
 
 - name: Delete namespace
   kubernetes.core.k8s:
-    template: kafka-cluster-ns.yaml
+    template: kafka-cluster/namespace.yaml
     state: absent

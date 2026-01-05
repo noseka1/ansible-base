@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_amq_streams
-        tasks_from: deploy_kafka_single.yml
+        tasks_from: kafka_single_deploy.yml

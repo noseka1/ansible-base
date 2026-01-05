@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: odf-multicluster-orchestrator
-  namespace: {{ odfmulticlusterorch_operator_namespace }}
+  namespace: openshift-operators
 spec:
 {% if odfmulticlusterorch_operator_subscription_channel | length > 0 %}
   channel: {{ odfmulticlusterorch_operator_subscription_channel }}

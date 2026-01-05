@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: odf-multicluster-orchestrator/operator
-    autogitops_app_namespace: '{{ odfmulticlusterorch_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators
 
 - import_role:
     name: openshift_common

@@ -1,10 +1,10 @@
-amq_streams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/0.38.0/examples
+amqstreams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/0.38.0/examples
 
-amq_streams_kafdrop_version: 3.30.0
+amqstreams_kafdrop_version: 3.30.0
 
-amq_streams_operator_subscription_channel: ''
-amq_streams_operator_subscription_starting_csv: ''
+amqstreams_operator_subscription_channel: ''
+amqstreams_operator_subscription_starting_csv: ''
 
-amq_streams_kafka_single_namespace: kafka-single
-amq_streams_kafka_cluster_namespace: kafka-cluster
-amq_streams_kafka_mirror_maker_namespace: kafka-mirror-maker
+amqstreams_kafka_single_namespace: kafka-single
+amqstreams_kafka_cluster_namespace: kafka-cluster
+amqstreams_kafka_mirror_maker_namespace: kafka-mirror-maker

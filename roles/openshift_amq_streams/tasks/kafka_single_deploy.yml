@@ -1,19 +1,19 @@
-- name: Create namespace {{ amq_streams_kafka_single_namespace }}
+- name: Create namespace {{ amqstreams_kafka_single_namespace }}
   kubernetes.core.k8s:
     template: kafka-single/namespace.yaml
 
 - name: Deploy Kafka instance
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: '{{ amq_streams_kafka_single_namespace }}'
+    namespace: '{{ amqstreams_kafka_single_namespace }}'
   loop:
-    - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'
+    - '{{ amqstreams_examples }}/kafka/kafka-persistent-single.yaml'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
-    namespace: '{{ amq_streams_kafka_single_namespace }}'
+    namespace: '{{ amqstreams_kafka_single_namespace }}'
     name: my-cluster
   register: kafka_instance
   until:
@@ -25,9 +25,9 @@
 
 - import_tasks: create_topics.yml
   vars:
-    amq_streams_topics_namespace: '{{ amq_streams_kafka_single_namespace }}'
-    amq_streams_topics_replicas: 1
+    amqstreams_topics_namespace: '{{ amqstreams_kafka_single_namespace }}'
+    amqstreams_topics_replicas: 1
 
 - import_tasks: deploy_kafdrop.yml
   vars:
-    amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_single_namespace }}'
+    amqstreams_kafdrop_namespace: '{{ amqstreams_kafka_single_namespace }}'

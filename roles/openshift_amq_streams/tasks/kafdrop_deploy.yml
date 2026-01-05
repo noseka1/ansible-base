@@ -2,13 +2,13 @@
   git:
     repo: https://github.com/obsidiandynamics/kafdrop.git
     dest: /tmp/kafdrop
-    version: '{{ amq_streams_kafdrop_version }}'
+    version: '{{ amqstreams_kafdrop_version }}'
 
 - name: Deploy Kafdrop chart from local path
   kubernetes.core.helm:
     name: kafdrop
     chart_ref: /tmp/kafdrop/chart
-    release_namespace: '{{ amq_streams_kafdrop_namespace }}'
+    release_namespace: '{{ amqstreams_kafdrop_namespace }}'
     release_values: '{{ lookup("template", "kafdrop/values.yaml") | from_yaml }}'
     wait: true
 
@@ -18,6 +18,6 @@
     tasks_from: deploy.yml
   vars:
     oauth_proxy_name: kafdrop
-    oauth_proxy_namespace: '{{ amq_streams_kafdrop_namespace }}'
+    oauth_proxy_namespace: '{{ amqstreams_kafdrop_namespace }}'
     oauth_proxy_upstream: http://kafdrop:9000
     oauth_proxy_app_prefix: kafdrop-

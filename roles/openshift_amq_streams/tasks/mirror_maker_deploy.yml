@@ -1,21 +1,21 @@
-- name: Create namespace {{ amq_streams_kafka_mirror_maker_namespace }}
+- name: Create namespace {{ amqstreams_kafka_mirror_maker_namespace }}
   kubernetes.core.k8s:
     template: kafka-mirror-maker/namespace.yaml
 
 - name: Deploy two Kafka instances and Mirror Maker
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: '{{ amq_streams_kafka_mirror_maker_namespace }}'
+    namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
   loop:
-    - '{{ amq_streams_examples }}/mirror-maker/kafka-source.yaml'
-    - '{{ amq_streams_examples }}/mirror-maker/kafka-target.yaml'
-    - '{{ amq_streams_examples }}/mirror-maker/kafka-mirror-maker-2-sync-groups.yaml'
+    - '{{ amqstreams_examples }}/mirror-maker/kafka-source.yaml'
+    - '{{ amqstreams_examples }}/mirror-maker/kafka-target.yaml'
+    - '{{ amqstreams_examples }}/mirror-maker/kafka-mirror-maker-2-sync-groups.yaml'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Source deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
-    namespace: '{{ amq_streams_kafka_mirror_maker_namespace }}'
+    namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
     name: my-source-cluster
   register: kafka_instance
   until:
@@ -29,7 +29,7 @@
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
-    namespace: '{{ amq_streams_kafka_mirror_maker_namespace }}'
+    namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
     name: my-target-cluster
   register: kafka_instance
   until:
@@ -43,7 +43,7 @@
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: KafkaMirrorMaker2
-    namespace: '{{ amq_streams_kafka_mirror_maker_namespace }}'
+    namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
     name: my-mirror-maker-2
   register: mirror_maker_instance
   until:

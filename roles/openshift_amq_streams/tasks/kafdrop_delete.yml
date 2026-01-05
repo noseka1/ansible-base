@@ -8,6 +8,6 @@
 - name: Delete Kafdrop
   kubernetes.core.helm:
     name: kafdrop
-    release_namespace: '{{ amq_streams_kafdrop_namespace }}'
+    release_namespace: '{{ amqstreams_kafdrop_namespace }}'
     release_state: absent
     wait: true

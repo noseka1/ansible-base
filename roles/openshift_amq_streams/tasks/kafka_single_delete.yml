@@ -1,14 +1,14 @@
 - import_tasks: delete_kafdrop.yml
   vars:
-    amq_streams_kafdrop_namespace: '{{ amq_streams_kafka_single_namespace }}'
+    amqstreams_kafdrop_namespace: '{{ amqstreams_kafka_single_namespace }}'
 
 - name: Delete Kafka instance
   kubernetes.core.k8s:
     definition: "{{ lookup('url', item, split_lines=false) }}"
-    namespace: '{{ amq_streams_kafka_single_namespace }}'
+    namespace: '{{ amqstreams_kafka_single_namespace }}'
     state: absent
   loop:
-    - '{{ amq_streams_examples }}/kafka/kafka-persistent-single.yaml'
+    - '{{ amqstreams_examples }}/kafka/kafka-persistent-single.yaml'
 
 - name: Delete namespace
   kubernetes.core.k8s:

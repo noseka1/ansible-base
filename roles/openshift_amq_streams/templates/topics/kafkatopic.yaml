@@ -2,9 +2,9 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: {{ item }}
-  namespace: {{ amq_streams_topics_namespace }}
+  namespace: {{ amqstreams_topics_namespace }}
   labels:
     strimzi.io/cluster: my-cluster
 spec:
   partitions: 1
-  replicas: {{ amq_streams_topics_replicas }}
+  replicas: {{ amqstreams_topics_replicas }}

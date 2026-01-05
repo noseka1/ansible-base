@@ -1,5 +1,5 @@
 image:
-  tag: '{{ amq_streams_kafdrop_version }}'
+  tag: '{{ amqstreams_kafdrop_version }}'
 kafka:
   brokerConnect: my-cluster-kafka-bootstrap:9092
 service:

@@ -3,7 +3,6 @@ amq_streams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-op
 amq_streams_kafdrop_version: 3.30.0
 
 amq_streams_subscription_name: amq-streams
-amq_streams_subscription_namespace: openshift-operators
 amq_streams_subscription_approval: Automatic
 
 amq_streams_kafka_single_namespace: kafka-single

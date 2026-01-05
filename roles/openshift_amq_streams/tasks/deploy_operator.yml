@@ -7,4 +7,4 @@
     tasks_from: wait_for_operator.yml
   vars:
     subscription_name: '{{ amq_streams_subscription_name }}'
-    subscription_namespace: '{{ amq_streams_subscription_namespace }}'
+    subscription_namespace: openshift-operators

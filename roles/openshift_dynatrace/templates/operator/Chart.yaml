@@ -1,9 +1,0 @@
-apiVersion: v2
-name: dynatrace-operator
-type: application
-version: 0.1.0
-
-dependencies:
-- name: dynatrace-operator
-  version: 0.12.1
-  repository: https://raw.githubusercontent.com/Dynatrace/dynatrace-operator/main/config/helm/repos/stable

@@ -4,4 +4,4 @@
   vars:
     autogitops_app_src_path: templates/amq-broker/operator
     autogitops_app_dst_path: amq-broker/operator
-    autogitops_app_namespace: '{{ amqbroker_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators

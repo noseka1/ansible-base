@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: fuse-console
-  namespace: {{ fuseconsole_operator_namespace }}
+  namespace: amq-broker
 spec:
   targetNamespaces:
-  - {{ fuseconsole_operator_namespace }}
+  - amq-broker

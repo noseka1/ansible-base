@@ -2,16 +2,8 @@ amqbroker_operator_subscription_channel: 7.10.x
 amqbroker_operator_subscription_approval: Automatic
 amqbroker_operator_subscription_starting_csv: ''
 
-amqbroker_operator_namespace: openshift-operators
-
-amqbroker_instance_namespace: amq-broker
-
 amqbroker_replicas: 3
 
 fuseconsole_operator_subscription_channel: 7.10.x
 fuseconsole_operator_subscription_approval: Automatic
 fuseconsole_operator_subscription_starting_csv: ''
-
-fuseconsole_operator_namespace: amq-broker
-
-fuseconsole_instance_namespace: amq-broker

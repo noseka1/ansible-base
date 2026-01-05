@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: broker
-  namespace: {{ amqbroker_instance_namespace }}
+  namespace: amq-broker
 spec:
   selector:
     matchLabels:

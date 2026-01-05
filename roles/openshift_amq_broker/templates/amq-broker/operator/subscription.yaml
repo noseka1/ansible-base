@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: amq-broker-rhel8
-  namespace: {{ amqbroker_operator_namespace }}
+  namespace: openshift-operators
 spec:
 {% if amqbroker_operator_subscription_channel | length > 0 %}
   channel: {{ amqbroker_operator_subscription_channel }}

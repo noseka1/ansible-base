@@ -2,7 +2,7 @@ apiVersion: hawt.io/v1alpha1
 kind: Hawtio
 metadata:
   name: fuse-console
-  namespace: {{ fuseconsole_instance_namespace }}
+  namespace: amq-broker
 spec:
   replicas: 1
   resources:

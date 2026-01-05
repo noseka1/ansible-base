@@ -4,7 +4,7 @@
   vars:
     autogitops_app_src_path: templates/fuse-console/operator
     autogitops_app_dst_path: fuse-console/operator
-    autogitops_app_namespace: '{{ fuseconsole_operator_namespace }}'
+    autogitops_app_namespace: amq-broker
 
 - import_role:
     name: openshift_autogitops
@@ -12,4 +12,4 @@
   vars:
     autogitops_app_src_path: templates/fuse-console/instance
     autogitops_app_dst_path: fuse-console/instance
-    autogitops_app_namespace: '{{ fuseconsole_instance_namespace }}'
+    autogitops_app_namespace: amq-broker

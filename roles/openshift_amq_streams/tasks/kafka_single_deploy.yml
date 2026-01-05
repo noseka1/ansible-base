@@ -28,6 +28,6 @@
     amqstreams_topics_namespace: '{{ amqstreams_kafka_single_namespace }}'
     amqstreams_topics_replicas: 1
 
-- import_tasks: deploy_kafdrop.yml
+- import_tasks: kafdrop_deploy.yml
   vars:
     amqstreams_kafdrop_namespace: '{{ amqstreams_kafka_single_namespace }}'

@@ -1,4 +1,4 @@
-- import_tasks: delete_kafdrop.yml
+- import_tasks: kafdrop_delete.yml
   vars:
     amqstreams_kafdrop_namespace: '{{ amqstreams_kafka_cluster_namespace }}'
 

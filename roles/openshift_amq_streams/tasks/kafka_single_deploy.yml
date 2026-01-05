@@ -7,7 +7,7 @@
     definition: "{{ lookup('url', item, split_lines=false) }}"
     namespace: '{{ amqstreams_kafka_single_namespace }}'
   loop:
-    - '{{ amqstreams_examples }}/kafka/kafka-persistent-single.yaml'
+    - '{{ amqstreams_examples }}/kafka/kafka-single-node.yaml'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka deployment to complete
   kubernetes.core.k8s_info:

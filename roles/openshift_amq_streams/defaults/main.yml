@@ -1,4 +1,4 @@
-amqstreams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/0.38.0/examples
+amqstreams_examples: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/0.48.0/examples
 
 amqstreams_kafdrop_version: 3.30.0
 

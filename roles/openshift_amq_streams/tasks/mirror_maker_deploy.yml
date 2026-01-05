@@ -16,7 +16,7 @@
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
     namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
-    name: my-source-cluster
+    name: cluster-a
   register: kafka_instance
   until:
     - kafka_instance.resources.0.status.conditions is defined
@@ -30,7 +30,7 @@
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
     namespace: '{{ amqstreams_kafka_mirror_maker_namespace }}'
-    name: my-target-cluster
+    name: cluster-b
   register: kafka_instance
   until:
     - kafka_instance.resources.0.status.conditions is defined

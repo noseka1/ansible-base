@@ -8,7 +8,7 @@
     namespace: '{{ amqstreams_kafka_single_namespace }}'
     state: absent
   loop:
-    - '{{ amqstreams_examples }}/kafka/kafka-persistent-single.yaml'
+    - '{{ amqstreams_examples }}/kafka/kafka-single-node.yaml'
 
 - name: Delete namespace
   kubernetes.core.k8s:

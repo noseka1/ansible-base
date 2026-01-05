@@ -17,4 +17,5 @@
       If you deployed VPA after installing Goldilocks, restart Goldilocks pods to
       reread the VPA objects.
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

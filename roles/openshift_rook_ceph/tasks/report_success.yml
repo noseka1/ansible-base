@@ -27,4 +27,5 @@
       The 'admin' user password can be retrieved using:
       $ oc get -n {{ rook_ceph_namespace }} secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

@@ -35,4 +35,5 @@
 
       Authorization token: {{ admin_secret_result.resources.0.data.token | b64decode }}
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

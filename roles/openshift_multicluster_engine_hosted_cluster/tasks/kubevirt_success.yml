@@ -19,4 +19,5 @@
 
       oc extract -n hosted-clusters secret/{{ hostedcluster_result.resources.0.status.kubeadminPassword.name }} --to -
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

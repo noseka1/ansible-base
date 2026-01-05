@@ -23,4 +23,5 @@
       You can browse to:
       https://{{ argo_rollouts_route.resources.0.spec.host }}
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

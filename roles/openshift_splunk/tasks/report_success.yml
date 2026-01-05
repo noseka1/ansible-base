@@ -22,4 +22,5 @@
       To display Splunk credentials, type:
       oc extract -n {{ splunk_instance_namespace }} secret/splunk-{{ splunk_instance_namespace }}-secret --to -
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

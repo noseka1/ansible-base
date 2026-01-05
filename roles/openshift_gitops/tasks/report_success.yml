@@ -25,4 +25,5 @@
       Or you can log in with:
       argocd login {{ argocd_route_host }} --username admin
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

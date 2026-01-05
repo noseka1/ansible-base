@@ -16,4 +16,5 @@
       You can browse to the Keycloak Web UI and log in as user "{{ rhbk_username }}":
       https://{{ rhbk_hostname }}
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

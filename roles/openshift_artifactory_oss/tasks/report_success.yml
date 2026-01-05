@@ -18,4 +18,5 @@
       Username: admin
       Password: password
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

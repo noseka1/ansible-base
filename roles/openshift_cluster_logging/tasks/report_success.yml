@@ -8,4 +8,5 @@
 
       Go to OpenShift Web Console, refresh the browse page, and navigate to Observe -> Logs to view the collected logs.
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

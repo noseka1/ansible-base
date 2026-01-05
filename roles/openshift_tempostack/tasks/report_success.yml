@@ -7,4 +7,5 @@
       Explore and choose Tempo as a data source. You will see the traces created
       by the trace generator job.
 
-- debug: msg="{{ msg.split('\n') }}"
+- debug:
+    msg: "{{ msg.split('\n') }}"

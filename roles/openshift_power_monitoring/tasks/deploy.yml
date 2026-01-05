@@ -17,8 +17,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: power-monitoring-operator
-    subscription_namespace: openshift-operators
+    oscomm_subscription_name: power-monitoring-operator
+    oscomm_subscription_namespace: openshift-operators
 
 - import_role:
     name: openshift_autogitops

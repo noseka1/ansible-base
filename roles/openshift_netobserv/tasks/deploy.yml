@@ -28,8 +28,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: netobserv-operator
-    subscription_namespace: '{{ netobserv_operator_namespace }}'
+    oscomm_subscription_name: netobserv-operator
+    oscomm_subscription_namespace: '{{ netobserv_operator_namespace }}'
 
 - import_role:
     name: openshift_autogitops

@@ -13,5 +13,5 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: amq-streams
-    subscription_namespace: openshift-operators
+    oscomm_subscription_name: amq-streams
+    oscomm_subscription_namespace: openshift-operators

@@ -17,8 +17,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: odf-operator
-    subscription_namespace: '{{ odf_namespace }}'
+    oscomm_subscription_name: odf-operator
+    oscomm_subscription_namespace: '{{ odf_namespace }}'
 
 - import_role:
     name: openshift_common

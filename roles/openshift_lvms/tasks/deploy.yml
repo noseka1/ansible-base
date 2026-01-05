@@ -22,8 +22,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: lvms-operator
-    subscription_namespace: '{{ lvms_namespace }}'
+    oscomm_subscription_name: lvms-operator
+    oscomm_subscription_namespace: '{{ lvms_namespace }}'
   tags: lvms_operator
 
 - name: Check if default storage class exists

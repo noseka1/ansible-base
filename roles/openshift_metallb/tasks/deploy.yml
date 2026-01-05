@@ -19,8 +19,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: metallb-operator
-    subscription_namespace: metallb-system
+    oscomm_subscription_name: metallb-operator
+    oscomm_subscription_namespace: metallb-system
   tags: metallb_operator
 
 - import_role:

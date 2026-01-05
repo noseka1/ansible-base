@@ -17,8 +17,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: ingress-node-firewall
-    subscription_namespace: openshift-ingress-node-firewall
+    oscomm_subscription_name: ingress-node-firewall
+    oscomm_subscription_namespace: openshift-ingress-node-firewall
 
 - import_role:
     name: openshift_autogitops

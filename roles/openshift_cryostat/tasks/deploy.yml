@@ -19,8 +19,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ cryostat_operator_subscription_name }}'
-    subscription_namespace: '{{ cryostat_operator_namespace }}'
+    oscomm_subscription_name: '{{ cryostat_operator_subscription_name }}'
+    oscomm_subscription_namespace: '{{ cryostat_operator_namespace }}'
   tags: cryostat_operator
 
 - import_role:

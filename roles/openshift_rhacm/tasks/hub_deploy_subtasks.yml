@@ -17,8 +17,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: advanced-cluster-management
-    subscription_namespace: open-cluster-management
+    oscomm_subscription_name: advanced-cluster-management
+    oscomm_subscription_namespace: open-cluster-management
 
 - import_role:
     name: openshift_autogitops

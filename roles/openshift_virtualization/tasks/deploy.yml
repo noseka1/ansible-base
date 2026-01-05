@@ -22,8 +22,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: kubevirt-hyperconverged
-    subscription_namespace: openshift-cnv
+    oscomm_subscription_name: kubevirt-hyperconverged
+    oscomm_subscription_namespace: openshift-cnv
   tags: osvirt_operator
 
 - import_role:

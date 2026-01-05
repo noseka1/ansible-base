@@ -1,33 +1,33 @@
-- name: Retrieve subscription {{ subscription_namespace }}/{{ subscription_name }}
+- name: Retrieve subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }}
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: '{{ subscription_name }}'
-    namespace: '{{ subscription_namespace }}'
+    name: '{{ oscomm_subscription_name }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
   register: operator_subscription
   until:
     - operator_subscription.resources.0.status is defined
   retries: 60
   delay: 1
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for subscription {{ subscription_namespace }}/{{ subscription_name }} to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }} to deploy
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: '{{ subscription_name }}'
-    namespace: '{{ subscription_namespace }}'
+    name: '{{ oscomm_subscription_name }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
   register: operator_subscription
   until:
     - operator_subscription.resources.0.status.installedCSV is defined
   retries: 60
   delay: 1
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ subscription_namespace }}/{{ operator_subscription.resources.0.status.installedCSV }} to deploy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ oscomm_subscription_namespace }}/{{ operator_subscription.resources.0.status.installedCSV }} to deploy
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: ClusterServiceVersion
     name: '{{ operator_subscription.resources.0.status.installedCSV }}'
-    namespace: '{{ subscription_namespace }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
   register: operator_csv
   until:
     - operator_csv.resources.0.status.phase is defined

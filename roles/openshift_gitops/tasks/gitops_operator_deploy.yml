@@ -16,8 +16,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ gitops_operator_name }}'
-    subscription_namespace: '{{ gitops_operator_namespace }}'
+    oscomm_subscription_name: '{{ gitops_operator_name }}'
+    oscomm_subscription_namespace: '{{ gitops_operator_namespace }}'
 
 - import_role:
     name: openshift_common

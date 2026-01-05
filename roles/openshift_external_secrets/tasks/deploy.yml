@@ -19,8 +19,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: '{{ extsecrets_operator_subscription_name }}'
-    subscription_namespace: '{{ extsecrets_operator_namespace }}'
+    oscomm_subscription_name: '{{ extsecrets_operator_subscription_name }}'
+    oscomm_subscription_namespace: '{{ extsecrets_operator_namespace }}'
   tags: extsecrets_operator
 
 - import_role:

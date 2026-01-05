@@ -17,8 +17,8 @@
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    subscription_name: external-dns-operator
-    subscription_namespace: external-dns-operator
+    oscomm_subscription_name: external-dns-operator
+    oscomm_subscription_namespace: external-dns-operator
 
 - assert:
     that: external_dns_aws_access_key_id | length > 0

@@ -7,7 +7,7 @@ spec:
 {% if amqbroker_operator_subscription_channel | length > 0 %}
   channel: {{ amqbroker_operator_subscription_channel }}
 {% endif %}
-  installPlanApproval: {{ amqbroker_operator_subscription_approval }}
+  installPlanApproval: Manual
   name: amq-broker-rhel8
   source: redhat-operators
   sourceNamespace: openshift-marketplace

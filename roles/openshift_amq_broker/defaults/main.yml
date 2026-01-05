@@ -1,9 +1,7 @@
 amqbroker_operator_subscription_channel: 7.10.x
-amqbroker_operator_subscription_approval: Automatic
 amqbroker_operator_subscription_starting_csv: ''
 
 amqbroker_replicas: 3
 
 fuseconsole_operator_subscription_channel: 7.10.x
-fuseconsole_operator_subscription_approval: Automatic
 fuseconsole_operator_subscription_starting_csv: ''

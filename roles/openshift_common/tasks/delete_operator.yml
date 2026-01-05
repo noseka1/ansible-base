@@ -1,9 +1,9 @@
-- name: Delete operator subscription {{ delete_operator_subscription_namespace }}/{{ delete_operator_subscription_name }}
+- name: Delete operator subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }}
   kubernetes.core.k8s:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: '{{ delete_operator_subscription_name }}'
-    namespace: '{{ delete_operator_subscription_namespace }}'
+    name: '{{ oscomm_subscription_name }}'
+    namespace: '{{ oscomm_subscription_namespace }}'
     wait: true
     state: absent
 

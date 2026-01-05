@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: must-gather-operator
-  namespace: {{ mustgather_operator_namespace }}
+  namespace: must-gather-operator
 spec:
 {% if mustgather_operator_subscription_channel | length > 0 %}
   channel: {{ mustgather_operator_subscription_channel }}

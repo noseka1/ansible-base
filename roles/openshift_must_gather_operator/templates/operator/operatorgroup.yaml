@@ -2,4 +2,4 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: must-gather-operator
-  namespace: {{ mustgather_operator_namespace }}
+  namespace: must-gather-operator

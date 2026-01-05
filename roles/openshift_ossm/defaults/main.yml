@@ -1,28 +1,7 @@
 ossm_operator_subscription_channel: ''
-ossm_operator_subscription_approval: Automatic
 ossm_operator_subscription_starting_csv: ''
 
-ossm_operator_namespace: openshift-operators
-
-ossm_elasticsearch_operator_subscription_channel: ''
-ossm_elasticsearch_operator_subscription_approval: Automatic
-ossm_elasticsearch_operator_subscription_starting_csv: ''
-
-ossm_elasticsearch_operator_namespace: openshift-operators-redhat
-
 ossm_kiali_operator_subscription_channel: ''
-ossm_kiali_operator_subscription_approval: Automatic
 ossm_kiali_operator_subscription_starting_csv: ''
 
-ossm_kiali_operator_namespace: openshift-operators
-
-ossm_instance_namespace: istio-system
-
-ossm_autoscaling:
-  enabled: false
-
-ossm_access_logging_enabled: false
-
-ossm_grafana_persistence_enabled: false
-
-ossm_jaeger_persistent_enabled: false
+ossm_istio_version: v1.27.3

@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: {{ ossm_instance_namespace }}
+  name: istio-cni

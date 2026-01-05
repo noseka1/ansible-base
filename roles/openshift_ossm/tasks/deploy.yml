@@ -1,10 +1,9 @@
 - import_role:
-    name: openshift_autogitops
-    tasks_from: app_deploy.yml
+    name: openshift_common
+    tasks_from: install_plan_approve
   vars:
-    autogitops_app_src_path: templates/elasticsearch/operator
-    autogitops_app_dst_path: ossm/elasticsearch/operator
-    autogitops_app_namespace: '{{ ossm_elasticsearch_operator_namespace }}'
+    oscomm_subscription_name: kiali-ossm
+    oscomm_subscription_namespace: openshift-operators
 
 - import_role:
     name: openshift_autogitops
@@ -12,7 +11,14 @@
   vars:
     autogitops_app_src_path: templates/kiali/operator
     autogitops_app_dst_path: ossm/kiali/operator
-    autogitops_app_namespace: '{{ ossm_kiali_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators
+
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: servicemeshoperator
+    oscomm_subscription_namespace: openshift-operators
 
 - import_role:
     name: openshift_autogitops
@@ -20,7 +26,7 @@
   vars:
     autogitops_app_src_path: templates/service-mesh/operator
     autogitops_app_dst_path: ossm/service-mesh/operator
-    autogitops_app_namespace: '{{ ossm_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators
 
 - import_role:
     name: openshift_common
@@ -33,6 +39,14 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/service-mesh/instance
-    autogitops_app_dst_path: ossm/service-mesh/instance
-    autogitops_app_namespace: '{{ ossm_instance_namespace }}'
+    autogitops_app_src_path: templates/service-mesh/instance/system
+    autogitops_app_dst_path: ossm/service-mesh/instance/system
+    autogitops_app_namespace: istio-system
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/service-mesh/instance/cni
+    autogitops_app_dst_path: ossm/service-mesh/instance/cni
+    autogitops_app_namespace: istio-cni

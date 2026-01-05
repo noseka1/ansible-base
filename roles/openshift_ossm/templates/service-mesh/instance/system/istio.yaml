@@ -1,0 +1,15 @@
+apiVersion: sailoperator.io/v1
+kind: Istio
+metadata:
+  name: default
+spec:
+  namespace: istio-system
+  updateStrategy:
+    inactiveRevisionDeletionGracePeriodSeconds: 30
+    type: InPlace
+  version: {{ ossm_istio_version }}
+  values:
+    meshConfig:
+      discoverySelectors:
+      - matchLabels:
+          istio-discovery: enabled

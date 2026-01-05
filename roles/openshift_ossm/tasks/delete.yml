@@ -2,7 +2,13 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: ossm/service-mesh/instance
+    autogitops_app_dst_path: ossm/service-mesh/instance/cni
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: ossm/service-mesh/instance/system
 
 - import_role:
     name: openshift_autogitops
@@ -15,12 +21,6 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: ossm/kiali/operator
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_delete.yml
-  vars:
-    autogitops_app_dst_path: ossm/elasticsearch/operator
 
 - import_role:
     name: openshift_common

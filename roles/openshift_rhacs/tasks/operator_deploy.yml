@@ -2,8 +2,8 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ rhacs_operator_subscription_name }}'
-    oscomm_subscription_namespace: '{{ rhacs_operator_namespace }}'
+    oscomm_subscription_name: rhacs-operator
+    oscomm_subscription_namespace: rhacs-operator
 
 - import_role:
     name: openshift_autogitops
@@ -11,4 +11,4 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: rhacs/operator
-    autogitops_app_namespace: '{{ rhacs_operator_namespace }}'
+    autogitops_app_namespace: rhacs-operator

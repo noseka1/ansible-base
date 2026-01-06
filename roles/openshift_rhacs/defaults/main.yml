@@ -1,8 +1,5 @@
 rhacs_operator_subscription_channel: ''
 rhacs_operator_subscription_starting_csv: ''
-rhacs_operator_subscription_name: rhacs-operator
-
-rhacs_operator_namespace: rhacs-operator
 
 rhacs_instance_namespace: stackrox
 

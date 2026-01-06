@@ -6,7 +6,7 @@
   vars:
     autogitops_app_src_path: templates/namespace
     autogitops_app_dst_path: rhacs/namespace
-    autogitops_app_namespace: '{{ rhacs_instance_namespace }}'
+    autogitops_app_namespace: stackrox
 
 - import_tasks: central_deploy.yml
 

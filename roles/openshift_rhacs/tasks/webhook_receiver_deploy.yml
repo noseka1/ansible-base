@@ -2,7 +2,7 @@
     name: openshift_webhook_receiver
     tasks_from: deploy.yml
   vars:
-    webhook_receiver_namespace: '{{ rhacs_instance_namespace }}'
+    webhook_receiver_namespace: stackrox
     webhook_receiver_manage_namespace: false
     webhook_receiver_app_prefix: rhacs-
 
@@ -16,7 +16,7 @@
     body:
       generic:
         auditLoggingEnabled: true
-        endpoint: http://webhook-receiver.{{ rhacs_instance_namespace }}.svc:8080
+        endpoint: http://webhook-receiver.stackrox.svc:8080
       name: My Webhook Receiver
       type: generic
       uiEndpoint: https://{{ rhacs_central_host }}

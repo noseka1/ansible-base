@@ -1,8 +1,6 @@
 rhacs_operator_subscription_channel: ''
 rhacs_operator_subscription_starting_csv: ''
 
-rhacs_instance_namespace: stackrox
-
 # If RHACS is not connected to the Internet, set this to 'Offline' to enable offline mode
 rhacs_central_connectivity_policy: Online
 

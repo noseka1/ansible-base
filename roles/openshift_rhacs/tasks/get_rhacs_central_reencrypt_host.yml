@@ -3,7 +3,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: central-reencrypt
-    namespace: '{{ rhacs_instance_namespace }}'
+    namespace: stackrox
   register: rhacs_reencrypt_route
   until: rhacs_reencrypt_route.resources | length > 0
   retries: 12

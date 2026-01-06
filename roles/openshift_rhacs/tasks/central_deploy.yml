@@ -8,14 +8,14 @@
   vars:
     autogitops_app_src_path: templates/central
     autogitops_app_dst_path: rhacs/central
-    autogitops_app_namespace: '{{ rhacs_instance_namespace }}'
+    autogitops_app_namespace: stackrox
 
 - name: Obtain Central TLS secret
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
     name: central-tls
-    namespace: '{{ rhacs_instance_namespace }}'
+    namespace: stackrox
   register: rhacs_central_tls
   until: rhacs_central_tls.resources | length == 1
   retries: 12

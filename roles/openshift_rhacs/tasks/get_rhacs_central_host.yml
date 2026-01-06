@@ -3,7 +3,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: central
-    namespace: '{{ rhacs_instance_namespace }}'
+    namespace: stackrox
   register: rhacs_route
   until: rhacs_route.resources | length > 0
   retries: 12

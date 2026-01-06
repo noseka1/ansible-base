@@ -35,7 +35,7 @@
 - name: Apply the generated init-bundle (skip if no new bundle generated in the previous step)
   kubernetes.core.k8s:
     definition: '{{ generate_cert_result.json.kubectlBundle | b64decode }}'
-    namespace: '{{ rhacs_instance_namespace }}'
+    namespace: stackrox
   when: generate_cert_result.status == 200
 
 - import_role:
@@ -44,7 +44,7 @@
   vars:
     autogitops_app_src_path: templates/secured-cluster
     autogitops_app_dst_path: rhacs/secured-cluster
-    autogitops_app_namespace: '{{ rhacs_instance_namespace }}'
+    autogitops_app_namespace: stackrox
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_common_cluster_domain }} to become healthy
   uri:

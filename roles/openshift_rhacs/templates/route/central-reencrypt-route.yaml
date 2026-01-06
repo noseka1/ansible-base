@@ -2,7 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: central-reencrypt
-  namespace: {{ rhacs_instance_namespace }}
+  namespace: stackrox
 spec:
   port:
     targetPort: https

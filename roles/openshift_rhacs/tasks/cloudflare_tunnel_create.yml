@@ -4,6 +4,6 @@
     name: openshift_cloudflared
     tasks_from: deploy.yml
   vars:
-    cloudflared_namespace: '{{ rhacs_instance_namespace }}'
+    cloudflared_namespace: stackrox
     cloudflared_manage_namespace: false
     cloudflared_target_hostname: '{{ rhacs_central_host }}'

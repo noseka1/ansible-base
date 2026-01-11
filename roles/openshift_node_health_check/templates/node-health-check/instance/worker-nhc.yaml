@@ -3,7 +3,10 @@ kind: NodeHealthCheck
 metadata:
   name: worker
 spec:
-  minHealthy: 51%
+  # The value of 60% for minHealthy indicates that if 40% or more of the nodes
+  # become unhealthy, the health check will not take any action. It will wait
+  # for a human to intervene.
+  minHealthy: 60%
   remediationTemplate:
     apiVersion: fence-agents-remediation.medik8s.io/v1alpha1
     kind: FenceAgentsRemediationTemplate

@@ -10,9 +10,18 @@ spec:
   controller_container_limits_cpu: "8"
   controller_container_limits_memory: 8Gi
   controller_max_concurrent_reconciles: 20
-  controller_max_vm_inflight: 30
   inventory_container_limits_cpu: "4"
   inventory_container_limits_memory: 8Gi
+  # The following table describes the optimal MAX_VM_INFLIGHT values for vSphere versions and endpoints:
+  # vSphere version	   Endpoint            Optimal MAX_VM_INFLIGHT value
+  # 6.5                ESXi endpoint       10
+  # 6.7                ESXi endpoint       40
+  # 6.7                vSphere endpoint    50
+  #
+  # See also:
+  # Performance recommendations for migrating from VMware vSphere to OpenShift Virtualization
+  # https://access.redhat.com/articles/6242511
+  controller_max_vm_inflight: 50
   # Enable OCP live migration (default: false)
   #
   # Live migration is when a powered on VM is migrated to a separate host or new location within the same host without

@@ -1,6 +1,6 @@
 multicluster_engine_hosted_cluster_kubevirt:
   cluster_name: mycluster20
-  ocp_release_image: 4.18.14-x86_64
+  ocp_release_image: 4.20.8-x86_64
   control_plane_replicas: 1
   data_plane_replicas: 2
   ssh_authorized_key: ''

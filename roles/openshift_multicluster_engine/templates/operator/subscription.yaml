@@ -4,13 +4,13 @@ metadata:
   name: multicluster-engine
   namespace: multicluster-engine
 spec:
-  channel: {{ multicluster_engine_operator_subscription_channel | default('""', true) }}
+  channel: {{ mce_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: multicluster-engine
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ multicluster_engine_operator_subscription_starting_csv | default('""', true) }}
-{% if multicluster_engine_place_on_infra_nodes %}
+  channel: {{ mce_operator_subscription_starting_csv | default('""', true) }}
+{% if mce_place_on_infra_nodes %}
   config:
     nodeSelector:
       node-role.kubernetes.io/infra: ""

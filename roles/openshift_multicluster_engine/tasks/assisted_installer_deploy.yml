@@ -6,7 +6,7 @@
     hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/assisted-installer/host-inventory-creds'
     hvault_secret_data:
       pullSecret: '{{ redhat_cloud_pull_secret }}'
-      ssh-publickey: '{{ multicluster_engine_ssh_authorized_key }}'
+      ssh-publickey: '{{ mce_ssh_authorized_key }}'
 
 - import_role:
     name: openshift_autogitops

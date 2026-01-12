@@ -6,9 +6,9 @@
   amazon.aws.s3_bucket:
     name: openshift-oidc-bucket-{{ openshift_common_cluster_uuid }}
     acl: public-read
-    access_key: '{{ multicluster_engine_hypershift_aws.aws_access_key_id }}'
-    secret_key: '{{ multicluster_engine_hypershift_aws.aws_secret_access_key }}'
-    region: '{{ multicluster_engine_hypershift_aws.aws_region }}'
+    access_key: '{{ mce_hypershift_aws.aws_access_key_id }}'
+    secret_key: '{{ mce_hypershift_aws.aws_secret_access_key }}'
+    region: '{{ mce_hypershift_aws.aws_region }}'
     state: present
 
 - name: Create hypershift configuration secrets

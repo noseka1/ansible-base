@@ -3,7 +3,7 @@ kind: MultiClusterEngine
 metadata:
   name: multicluster-engine
 spec:
-  availabilityConfig: {{ multicluster_engine_instance_availability }}
+  availabilityConfig: {{ mce_instance_availability }}
   overrides:
     components:
     - configOverrides: {}
@@ -58,7 +58,7 @@ spec:
       enabled: false
       name: cluster-api-provider-openshift-assisted-preview
   targetNamespace: multicluster-engine
-{% if multicluster_engine_place_on_infra_nodes %}
+{% if mce_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""
   tolerations:

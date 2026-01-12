@@ -4,13 +4,9 @@ metadata:
   name: nginx-ingress-operator
   namespace: nginx-ingress-operator
 spec:
-{% if nginx_operator_subscription_channel | length > 0 %}
-  channel: {{ nginx_operator_subscription_channel }}
-{% endif %}
+  channel: {{ nginx_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: nginx-ingress-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
-{% if nginx_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ nginx_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ nginx_operator_subscription_starting_csv | default('""', true) }}

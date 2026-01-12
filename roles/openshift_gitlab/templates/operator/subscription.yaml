@@ -4,13 +4,9 @@ metadata:
   name: gitlab-operator-kubernetes
   namespace: gitlab-system
 spec:
-{% if gitlab_operator_subscription_channel | length > 0 %}
-  channel: {{ gitlab_operator_subscription_channel }}
-{% endif %}
+  channel: {{ gitlab_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: gitlab-operator-kubernetes
   source: certified-operators
   sourceNamespace: openshift-marketplace
-{% if gitlab_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ gitlab_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ gitlab_operator_subscription_starting_csv | default('""', true) }}

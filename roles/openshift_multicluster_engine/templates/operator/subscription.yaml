@@ -4,16 +4,12 @@ metadata:
   name: multicluster-engine
   namespace: multicluster-engine
 spec:
-{% if multicluster_engine_operator_subscription_channel | length > 0 %}
-  channel: {{ multicluster_engine_operator_subscription_channel }}
-{% endif %}
+  channel: {{ multicluster_engine_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: multicluster-engine
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if multicluster_engine_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ multicluster_engine_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ multicluster_engine_operator_subscription_starting_csv | default('""', true) }}
 {% if multicluster_engine_place_on_infra_nodes %}
   config:
     nodeSelector:

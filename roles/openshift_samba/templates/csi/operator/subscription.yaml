@@ -4,13 +4,9 @@ metadata:
   name: {{ smbcsi_operator_subscription_name }}
   namespace: {{ smbcsi_operator_namespace }}
 spec:
-{% if smbcsi_operator_subscription_channel | length > 0 %}
-  channel: {{ smbcsi_operator_subscription_channel }}
-{% endif %}
+  channel: {{ smbcsi_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: smb-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if smbcsi_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ smbcsi_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ smbcsi_operator_subscription_starting_csv | default('""', true) }}

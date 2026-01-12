@@ -4,13 +4,9 @@ metadata:
   name: group-sync-operator
   namespace: group-sync-operator
 spec:
-{% if groupsync_operator_subscription_channel | length > 0 %}
-  channel: {{ groupsync_operator_subscription_channel }}
-{% endif %}
+  channel: {{ groupsync_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: group-sync-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{% if groupsync_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ groupsync_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ groupsync_operator_subscription_starting_csv | default('""', true) }}

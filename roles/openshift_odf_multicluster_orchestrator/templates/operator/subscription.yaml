@@ -4,13 +4,9 @@ metadata:
   name: odf-multicluster-orchestrator
   namespace: openshift-operators
 spec:
-{% if odfmulticlusterorch_operator_subscription_channel | length > 0 %}
-  channel: {{ odfmulticlusterorch_operator_subscription_channel }}
-{% endif %}
+  channel: {{ odfmulticlusterorch_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: odf-multicluster-orchestrator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if odfmulticlusterorch_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ odfmulticlusterorch_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ odfmulticlusterorch_operator_subscription_starting_csv | default('""', true) }}

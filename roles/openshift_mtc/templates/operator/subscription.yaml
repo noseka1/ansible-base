@@ -4,13 +4,9 @@ metadata:
   name: mtc-operator
   namespace: openshift-migration
 spec:
-{% if mtc_operator_subscription_channel | length > 0 %}
-  channel: {{ mtc_operator_subscription_channel }}
-{% endif %}
+  channel: {{ mtc_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: mtc-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if mtc_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ mtc_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ mtc_operator_subscription_starting_csv | default('""', true) }}

@@ -4,13 +4,9 @@ metadata:
   name: openshift-pipelines-operator
   namespace: openshift-operators
 spec:
-{% if pipelines_operator_subscription_channel | length > 0 %}
-  channel: {{ pipelines_operator_subscription_channel }}
-{% endif %}
+  channel: {{ pipelines_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: openshift-pipelines-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if pipelines_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ pipelines_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ pipelines_operator_subscription_starting_csv | default('""', true) }}

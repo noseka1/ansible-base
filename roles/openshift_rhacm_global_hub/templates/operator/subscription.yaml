@@ -4,13 +4,9 @@ metadata:
   name: multicluster-global-hub-operator-rh
   namespace: multicluster-global-hub
 spec:
-{% if rhacm_global_hub_operator_subscription_channel | length > 0 %}
-  channel: {{ rhacm_global_hub_operator_subscription_channel }}
-{% endif %}
+  channel: {{ rhacm_global_hub_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: multicluster-global-hub-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if rhacm_global_hub_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ rhacm_global_hub_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ rhacm_global_hub_operator_subscription_starting_csv | default('""', true) }}

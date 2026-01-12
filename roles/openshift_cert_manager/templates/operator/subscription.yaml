@@ -4,13 +4,9 @@ metadata:
   name: cert-manager-operator
   namespace: {{ certman_operator_namespace }}
 spec:
-{% if certman_operator_subscription_channel | length > 0 %}
-  channel: {{ certman_operator_subscription_channel }}
-{% endif %}
+  channel: {{ certman_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: openshift-cert-manager-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if certman_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ certman_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ certman_operator_subscription_starting_csv | default('""', true) }}

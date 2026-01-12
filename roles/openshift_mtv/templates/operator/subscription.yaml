@@ -4,13 +4,9 @@ metadata:
   name: mtv-operator
   namespace: openshift-mtv
 spec:
-{% if mtv_operator_subscription_channel | length > 0 %}
-  channel: {{ mtv_operator_subscription_channel }}
-{% endif %}
+  channel: {{ mtv_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: mtv-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if mtv_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ mtv_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ mtv_operator_subscription_starting_csv | default('""', true) }}

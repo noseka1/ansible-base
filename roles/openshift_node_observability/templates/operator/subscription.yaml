@@ -4,13 +4,9 @@ metadata:
   name: node-observability-operator
   namespace: node-observability-operator
 spec:
-{% if nodeobserv_operator_subscription_channel | length > 0 %}
-  channel: {{ nodeobserv_operator_subscription_channel }}
-{% endif %}
+  channel: {{ nodeobserv_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: node-observability-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if nodeobserv_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ nodeobserv_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ nodeobserv_operator_subscription_starting_csv | default('""', true) }}

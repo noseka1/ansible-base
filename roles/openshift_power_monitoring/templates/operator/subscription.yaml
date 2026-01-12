@@ -4,13 +4,9 @@ metadata:
   name: power-monitoring-operator
   namespace: openshift-operators
 spec:
-{% if powermon_operator_subscription_channel | length > 0 %}
-  channel: {{ powermon_operator_subscription_channel }}
-{% endif %}
+  channel: {{ powermon_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: power-monitoring-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if powermon_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ powermon_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ powermon_operator_subscription_starting_csv | default('""', true) }}

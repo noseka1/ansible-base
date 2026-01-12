@@ -4,13 +4,9 @@ metadata:
   name: must-gather-operator
   namespace: must-gather-operator
 spec:
-{% if mustgather_operator_subscription_channel | length > 0 %}
-  channel: {{ mustgather_operator_subscription_channel }}
-{% endif %}
+  channel: {{ mustgather_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: must-gather-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{% if mustgather_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ mustgather_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ mustgather_operator_subscription_starting_csv | default('""', true) }}

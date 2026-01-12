@@ -4,13 +4,9 @@ metadata:
   name: {{ nodemaintenance_operator_subscription_name }}
   namespace: {{ nodemaintenance_operator_namespace }}
 spec:
-{% if nodemaintenance_operator_subscription_channel | length > 0 %}
-  channel: {{ nodemaintenance_operator_subscription_channel }}
-{% endif %}
+  channel: {{ nodemaintenance_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: node-maintenance-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if nodemaintenance_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ nodemaintenance_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ nodemaintenance_operator_subscription_starting_csv | default('""', true) }}

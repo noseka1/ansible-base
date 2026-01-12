@@ -4,13 +4,9 @@ metadata:
   name: rhbk-operator
   namespace: keycloak
 spec:
-{% if rhbk_operator_subscription_channel | length > 0 %}
-  channel: {{ rhbk_operator_subscription_channel }}
-{% endif %}
+  channel: {{ rhbk_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: rhbk-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if rhbk_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ rhbk_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ rhbk_operator_subscription_starting_csv | default('""', true) }}

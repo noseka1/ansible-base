@@ -4,13 +4,9 @@ metadata:
   name: vertical-pod-autoscaler
   namespace: openshift-vertical-pod-autoscaler
 spec:
-{% if vpa_operator_subscription_channel | length > 0 %}
-  channel: {{ vpa_operator_subscription_channel }}
-{% endif %}
+  channel: {{ vpa_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: vertical-pod-autoscaler
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if vpa_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ vpa_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ vpa_operator_subscription_starting_csv | default('""', true) }}

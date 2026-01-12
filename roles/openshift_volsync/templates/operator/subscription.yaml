@@ -4,13 +4,9 @@ metadata:
   name: volsync-product
   namespace: openshift-operators
 spec:
-{% if volsync_operator_subscription_channel | length > 0 %}
-  channel: {{ volsync_operator_subscription_channel }}
-{% endif %}
+  channel: {{ volsync_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: volsync-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if volsync_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ volsync_operator_subscription_starting_csv }}
-{% endif %}
+  startingCSV: {{ volsync_operator_subscription_starting_csv | default('""', true) }}

@@ -4,16 +4,12 @@ metadata:
   name: advanced-cluster-management
   namespace: open-cluster-management
 spec:
-{% if rhacm_operator_subscription_channel | length > 0 %}
-  channel: {{ rhacm_operator_subscription_channel }}
-{% endif %}
+  channel: {{ rhacm_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: advanced-cluster-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if rhacm_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ rhacm_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ rhacm_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     # HTTP proxy settings

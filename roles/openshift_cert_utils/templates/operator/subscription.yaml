@@ -4,13 +4,9 @@ metadata:
   name: cert-utils-operator
   namespace: cert-utils-operator
 spec:
-{% if certutils_operator_subscription_channel | length > 0 %}
-  channel: {{ certutils_operator_subscription_channel }}
-{% endif %}
+  channel: {{ certutils_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: cert-utils-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{% if certutils_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ certutils_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ certutils_operator_subscription_starting_csv | default('""', true) }}

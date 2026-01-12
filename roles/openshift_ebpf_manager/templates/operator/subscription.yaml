@@ -4,13 +4,9 @@ metadata:
   name: bpfman
   namespace: bpfman
 spec:
-{% if ebpfman_operator_subscription_channel | length > 0 %}
-  channel: {{ ebpfman_operator_subscription_channel }}
-{% endif %}
+  channel: {{ ebpfman_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: bpfman-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if ebpfman_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ ebpfman_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ ebpfman_operator_subscription_starting_csv | default('""', true) }}

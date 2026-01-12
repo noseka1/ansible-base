@@ -4,13 +4,9 @@ metadata:
   name: aws-efs-csi-driver-operator
   namespace: {{ efs_namespace }}
 spec:
-{% if efs_operator_subscription_channel | length > 0 %}
-  channel: {{ efs_operator_subscription_channel }}
-{% endif %}
+  channel: {{ efs_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: aws-efs-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if efs_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ efs_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ efs_operator_subscription_starting_csv | default('""', true) }}

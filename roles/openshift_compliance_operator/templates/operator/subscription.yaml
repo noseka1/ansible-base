@@ -4,13 +4,9 @@ metadata:
   name: compliance-operator
   namespace: openshift-compliance
 spec:
-{% if compliance_operator_subscription_channel | length > 0 %}
-  channel: {{ compliance_operator_subscription_channel }}
-{% endif %}
+  channel: {{ compliance_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: compliance-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if compliance_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ compliance_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ compliance_operator_subscription_starting_csv | default('""', true) }}

@@ -4,16 +4,12 @@ metadata:
   name: splunk
   namespace: {{ splunk_operator_namespace }}
 spec:
-{% if splunk_operator_subscription_channel | length > 0 %}
-  channel: {{ splunk_operator_subscription_channel }}
-{% endif %}
+  channel: {{ splunk_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: splunk-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
-{% if splunk_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ splunk_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ splunk_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     - name: SPLUNK_GENERAL_TERMS

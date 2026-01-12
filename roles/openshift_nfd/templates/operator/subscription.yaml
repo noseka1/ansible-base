@@ -4,13 +4,9 @@ metadata:
   name: nfd
   namespace: openshift-nfd
 spec:
-{% if nfd_operator_subscription_channel | length > 0 %}
-  channel: {{ nfd_operator_subscription_channel }}
-{% endif %}
+  channel: {{ nfd_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: nfd
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if nfd_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ nfd_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ nfd_operator_subscription_starting_csv | default('""', true) }}

@@ -4,13 +4,9 @@ metadata:
   name: gitwebhook-operator
   namespace: gitwebhook-operator
 spec:
-{% if gitwebhook_operator_subscription_channel | length > 0 %}
-  channel: {{ gitwebhook_operator_subscription_channel }}
-{% endif %}
+  channel: {{ gitwebhook_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: gitwebhook-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{% if gitwebhook_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ gitwebhook_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ gitwebhook_operator_subscription_starting_csv | default('""', true) }}

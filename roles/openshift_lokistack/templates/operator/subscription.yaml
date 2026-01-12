@@ -4,13 +4,9 @@ metadata:
   name: loki-operator
   namespace: {{ loki_operator_namespace }}
 spec:
-{% if loki_operator_subscription_channel | length > 0 %}
-  channel: {{ loki_operator_subscription_channel }}
-{% endif %}
+  channel: {{ loki_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: loki-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if loki_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ loki_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ loki_operator_subscription_starting_csv | default('""', true) }}

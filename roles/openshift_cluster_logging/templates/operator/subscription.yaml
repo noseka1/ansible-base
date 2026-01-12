@@ -4,13 +4,9 @@ metadata:
   name: cluster-logging
   namespace: openshift-logging
 spec:
-{% if clusterlog_operator_subscription_channel | length > 0 %}
-  channel: {{ clusterlog_operator_subscription_channel }}
-{% endif %}
+  channel: {{ clusterlog_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: cluster-logging
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if clusterlog_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ clusterlog_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ clusterlog_operator_subscription_starting_csv | default('""', true) }}

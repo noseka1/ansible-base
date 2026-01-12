@@ -4,13 +4,9 @@ metadata:
   name: fence-agents-remediation
   namespace: openshift-workload-availability
 spec:
-{% if fenceagents_operator_subscription_channel | length > 0 %}
-  channel: {{ fenceagents_operator_subscription_channel }}
-{% endif %}
+  channel: {{ fenceagents_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: fence-agents-remediation
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if fenceagents_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ fenceagents_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ fenceagents_operator_subscription_starting_csv | default('""', true) }}

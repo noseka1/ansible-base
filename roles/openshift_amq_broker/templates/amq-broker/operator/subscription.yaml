@@ -4,13 +4,9 @@ metadata:
   name: amq-broker-rhel8
   namespace: openshift-operators
 spec:
-{% if amqbroker_operator_subscription_channel | length > 0 %}
-  channel: {{ amqbroker_operator_subscription_channel }}
-{% endif %}
+  channel: {{ amqbroker_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: amq-broker-rhel8
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if amqbroker_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ amqbroker_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ amqbroker_operator_subscription_starting_csv | default('""', true) }}

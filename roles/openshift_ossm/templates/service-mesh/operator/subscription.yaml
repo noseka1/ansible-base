@@ -4,13 +4,9 @@ metadata:
   name: servicemeshoperator
   namespace: openshift-operators
 spec:
-{% if ossm_operator_subscription_channel | length > 0 %}
-  channel: {{ ossm_operator_subscription_channel }}
-{% endif %}
+  channel: {{ ossm_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: servicemeshoperator3
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if ossm_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ ossm_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ ossm_operator_subscription_starting_csv | default('""', true) }}

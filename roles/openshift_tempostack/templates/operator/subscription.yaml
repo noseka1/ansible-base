@@ -4,13 +4,9 @@ metadata:
   name: tempo-product
   namespace: openshift-operators
 spec:
-{% if tempostack_operator_subscription_channel | length > 0 %}
-  channel: {{ tempostack_operator_subscription_channel }}
-{% endif %}
+  channel: {{ tempostack_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: tempo-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if tempostack_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ tempostack_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ tempostack_operator_subscription_starting_csv | default('""', true) }}

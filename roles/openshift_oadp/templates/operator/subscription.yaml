@@ -4,13 +4,9 @@ metadata:
   name: {{ oadp_operator_name }}
   namespace: {{ oadp_operator_namespace }}
 spec:
-{% if oadp_operator_subscription_channel | length > 0 %}
-  channel: {{ oadp_operator_subscription_channel }}
-{% endif %}
+  channel: {{ oadp_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if oadp_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ oadp_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ oadp_operator_subscription_starting_csv | default('""', true) }}

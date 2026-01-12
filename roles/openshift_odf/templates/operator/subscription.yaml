@@ -4,13 +4,9 @@ metadata:
   name: odf-operator
   namespace: {{ odf_namespace }}
 spec:
-{% if odf_operator_subscription_channel | length > 0 %}
-  channel: {{ odf_operator_subscription_channel }}
-{% endif %}
+  channel: {{ odf_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: odf-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if odf_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ odf_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ odf_operator_subscription_starting_csv | default('""', true) }}

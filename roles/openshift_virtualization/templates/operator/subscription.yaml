@@ -4,16 +4,12 @@ metadata:
   name: kubevirt-hyperconverged
   namespace: openshift-cnv
 spec:
-{% if osvirt_operator_subscription_channel | length > 0 %}
-  channel: {{ osvirt_operator_subscription_channel }}
-{% endif %}
+  channel: {{ osvirt_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: kubevirt-hyperconverged
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if osvirt_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ osvirt_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ osvirt_operator_subscription_starting_csv | default('""', true) }}
   config:
     selector:
       matchLabels:

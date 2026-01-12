@@ -4,13 +4,9 @@ metadata:
   name: rhacs-operator
   namespace: rhacs-operator
 spec:
-{% if rhacs_operator_subscription_channel | length > 0 %}
-  channel: {{ rhacs_operator_subscription_channel }}
-{% endif %}
+  channel: {{ rhacs_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: rhacs-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if rhacs_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ rhacs_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ rhacs_operator_subscription_starting_csv | default('""', true) }}

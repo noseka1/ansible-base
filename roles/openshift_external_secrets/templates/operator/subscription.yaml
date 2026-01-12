@@ -4,13 +4,9 @@ metadata:
   name: {{ extsecrets_operator_subscription_name }}
   namespace: {{ extsecrets_operator_namespace }}
 spec:
-{% if extsecrets_operator_subscription_channel | length > 0 %}
-  channel: {{ extsecrets_operator_subscription_channel }}
-{% endif %}
+  channel: {{ extsecrets_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: external-secrets-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{% if extsecrets_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ extsecrets_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ extsecrets_operator_subscription_starting_csv | default('""', true) }}

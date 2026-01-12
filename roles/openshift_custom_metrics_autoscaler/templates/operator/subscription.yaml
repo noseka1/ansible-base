@@ -4,13 +4,9 @@ metadata:
   name: openshift-custom-metrics-autoscaler-operator
   namespace: openshift-keda
 spec:
-{% if keda_operator_subscription_channel | length > 0 %}
-  channel: {{ keda_operator_subscription_channel }}
-{% endif %}
+  channel: {{ keda_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: openshift-custom-metrics-autoscaler-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if keda_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ keda_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ keda_operator_subscription_starting_csv | default('""', true) }}

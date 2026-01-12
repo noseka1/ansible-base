@@ -4,13 +4,9 @@ metadata:
   name: amq-streams
   namespace: openshift-operators
 spec:
-{% if amqstreams_operator_subscription_channel | length > 0 %}
-  channel: {{ amqstreams_operator_subscription_channel }}
-{% endif %}
+  channel: {{ amqstreams_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: amq-streams
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if amqstreams_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ amqstreams_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ amqstreams_operator_subscription_starting_csv | default('""', true) }}

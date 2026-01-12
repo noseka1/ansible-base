@@ -4,13 +4,9 @@ metadata:
   name: skupper-operator
   namespace: openshift-operators
 spec:
-{% if skupper_operator_subscription_channel | length > 0 %}
-  channel: {{ skupper_operator_subscription_channel }}
-{% endif %}
+  channel: {{ skupper_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: skupper-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if skupper_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ skupper_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ skupper_operator_subscription_starting_csv | default('""', true) }}

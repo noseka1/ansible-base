@@ -4,13 +4,9 @@ metadata:
   name: container-security-operator
   namespace: openshift-operators
 spec:
-{% if quay_container_security_operator_subscription_channel | length > 0 %}
-  channel: {{ quay_container_security_operator_subscription_channel }}
-{% endif %}
+  channel: {{ quay_container_security_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: container-security-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if quay_container_security_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ quay_container_security_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ quay_container_security_operator_subscription_starting_csv | default('""', true) }}

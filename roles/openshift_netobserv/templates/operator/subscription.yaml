@@ -4,13 +4,9 @@ metadata:
   name: netobserv-operator
   namespace: {{ netobserv_operator_namespace }}
 spec:
-{% if netobserv_operator_subscription_channel | length > 0 %}
-  channel: {{ netobserv_operator_subscription_channel }}
-{% endif %}
+  channel: {{ netobserv_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: netobserv-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if netobserv_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ netobserv_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ netobserv_operator_subscription_starting_csv | default('""', true) }}

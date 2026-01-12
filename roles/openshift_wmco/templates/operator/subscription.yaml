@@ -4,13 +4,9 @@ metadata:
   name: windows-machine-config-operator
   namespace: {{ wmco_operator_namespace }}
 spec:
-{% if wmco_operator_subscription_channel | length > 0 %}
-  channel: {{ wmco_operator_subscription_channel }}
-{% endif %}
+  channel: {{ wmco_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: windows-machine-config-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if wmco_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ wmco_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ wmco_operator_subscription_starting_csv | default('""', true) }}

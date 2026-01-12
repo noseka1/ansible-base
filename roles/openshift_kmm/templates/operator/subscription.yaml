@@ -4,13 +4,9 @@ metadata:
   name: kernel-module-management
   namespace: openshift-kmm
 spec:
-{% if kmm_operator_subscription_channel | length > 0 %}
-  channel: {{ kmm_operator_subscription_channel }}
-{% endif %}
+  channel: {{ kmm_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: kernel-module-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if kmm_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ kmm_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ kmm_operator_subscription_starting_csv | default('""', true) }}

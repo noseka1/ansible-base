@@ -4,13 +4,9 @@ metadata:
   name: sandboxed-containers-operator
   namespace: openshift-sandboxed-containers-operator
 spec:
-{% if sandboxconts_operator_subscription_channel | length > 0 %}
-  channel: {{ sandboxconts_operator_subscription_channel }}
-{% endif %}
+  channel: {{ sandboxconts_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: sandboxed-containers-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if sandboxconts_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ sandboxconts_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ sandboxconts_operator_subscription_starting_csv | default('""', true) }}

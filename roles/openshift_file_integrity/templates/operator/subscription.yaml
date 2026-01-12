@@ -4,13 +4,9 @@ metadata:
   name: file-integrity-operator
   namespace: openshift-file-integrity
 spec:
-{% if fileintegrity_operator_subscription_channel | length > 0 %}
-  channel: {{ fileintegrity_operator_subscription_channel }}
-{% endif %}
+  channel: {{ fileintegrity_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: file-integrity-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if fileintegrity_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ fileintegrity_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ fileintegrity_operator_subscription_starting_csv | default('""', true) }}

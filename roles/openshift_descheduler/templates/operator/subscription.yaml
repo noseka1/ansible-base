@@ -4,13 +4,9 @@ metadata:
   name: cluster-kube-descheduler-operator
   namespace: openshift-kube-descheduler-operator
 spec:
-{% if descheduler_operator_subscription_channel | length > 0 %}
-  channel: {{ descheduler_operator_subscription_channel }}
-{% endif %}
+  channel: {{ descheduler_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: cluster-kube-descheduler-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if descheduler_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ descheduler_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ descheduler_operator_subscription_starting_csv | default('""', true) }}

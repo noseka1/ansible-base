@@ -4,13 +4,9 @@ metadata:
   name: tang-operator
   namespace: openshift-operators
 spec:
-{% if tang_operator_subscription_channel | length > 0 %}
-  channel: {{ tang_operator_subscription_channel }}
-{% endif %}
+  channel: {{ tang_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: tang-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if tang_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ tang_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ tang_operator_subscription_starting_csv | default('""', true) }}

@@ -4,13 +4,9 @@ metadata:
   name: ingress-node-firewall
   namespace: openshift-ingress-node-firewall
 spec:
-{% if ingressnodefw_subscription_channel | length > 0 %}
-  channel: {{ ingressnodefw_subscription_channel }}
-{% endif %}
+  channel: {{ ingressnodefw_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: ingress-node-firewall
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if ingressnodefw_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ ingressnodefw_subscription_starting_csv }}
-{% endif %}
+  channel: {{ ingressnodefw_subscription_starting_csv | default('""', true) }}

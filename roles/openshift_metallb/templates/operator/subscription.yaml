@@ -4,13 +4,9 @@ metadata:
   name: metallb-operator
   namespace: metallb-system
 spec:
-{% if metallb_operator_subscription_channel | length > 0 %}
-  channel: {{ metallb_operator_subscription_channel }}
-{% endif %}
+  channel: {{ metallb_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if metallb_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ metallb_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ metallb_operator_subscription_starting_csv | default('""', true) }}

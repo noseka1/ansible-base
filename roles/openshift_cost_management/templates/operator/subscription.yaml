@@ -4,13 +4,9 @@ metadata:
   name: costmanagement-metrics-operator
   namespace: costmanagement-metrics-operator
 spec:
-{% if costman_operator_subscription_channel | length > 0 %}
-  channel: {{ costman_operator_subscription_channel }}
-{% endif %}
+  channel: {{ costman_operator_subscription_channel | default('""', true) }}
   installPlanApproval: Manual
   name: costmanagement-metrics-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-{% if costman_operator_subscription_starting_csv | length > 0 %}
-  startingCSV: {{ costman_operator_subscription_starting_csv }}
-{% endif %}
+  channel: {{ costman_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: netobserv-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ netobserv_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ netobserv_operator_subscription_starting_csv | default('""', true) }}

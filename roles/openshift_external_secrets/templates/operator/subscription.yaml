@@ -9,4 +9,4 @@ spec:
   name: external-secrets-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ extsecrets_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ extsecrets_operator_subscription_starting_csv | default('""', true) }}

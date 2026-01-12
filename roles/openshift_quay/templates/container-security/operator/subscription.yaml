@@ -9,4 +9,4 @@ spec:
   name: container-security-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ quay_container_security_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ quay_container_security_operator_subscription_starting_csv | default('""', true) }}

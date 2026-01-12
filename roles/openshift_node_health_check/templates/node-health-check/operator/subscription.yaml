@@ -9,4 +9,4 @@ spec:
   name: node-healthcheck-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ nodehealthcheck_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ nodehealthcheck_operator_subscription_starting_csv | default('""', true) }}

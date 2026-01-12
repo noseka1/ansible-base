@@ -9,4 +9,4 @@ spec:
   name: servicemeshoperator3
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ ossm_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ ossm_operator_subscription_starting_csv | default('""', true) }}

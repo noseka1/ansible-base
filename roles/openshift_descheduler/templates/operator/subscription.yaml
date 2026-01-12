@@ -9,4 +9,4 @@ spec:
   name: cluster-kube-descheduler-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ descheduler_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ descheduler_operator_subscription_starting_csv | default('""', true) }}

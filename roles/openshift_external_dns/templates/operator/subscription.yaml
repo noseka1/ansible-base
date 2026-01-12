@@ -9,4 +9,4 @@ spec:
   name: external-dns-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ externaldns_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ externaldns_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: mtv-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ mtv_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ mtv_operator_subscription_starting_csv | default('""', true) }}

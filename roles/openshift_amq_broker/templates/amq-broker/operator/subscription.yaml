@@ -9,4 +9,4 @@ spec:
   name: amq-broker-rhel8
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ amqbroker_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ amqbroker_operator_subscription_starting_csv | default('""', true) }}

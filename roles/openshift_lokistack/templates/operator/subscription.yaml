@@ -9,4 +9,4 @@ spec:
   name: loki-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ loki_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ loki_operator_subscription_starting_csv | default('""', true) }}

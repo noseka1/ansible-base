@@ -9,7 +9,7 @@ spec:
   name: advanced-cluster-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ rhacm_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ rhacm_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     # HTTP proxy settings

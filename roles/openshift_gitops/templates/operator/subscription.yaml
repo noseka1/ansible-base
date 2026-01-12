@@ -9,7 +9,7 @@ spec:
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ gitops_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ gitops_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     # Create the default instance in the openshift-gitops namespace

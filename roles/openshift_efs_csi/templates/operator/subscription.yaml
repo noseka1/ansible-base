@@ -9,4 +9,4 @@ spec:
   name: aws-efs-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ efs_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ efs_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: ansible-automation-platform-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ aap_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ aap_operator_subscription_starting_csv | default('""', true) }}

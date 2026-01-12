@@ -9,4 +9,4 @@ spec:
   name: amq-streams
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ amqstreams_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ amqstreams_operator_subscription_starting_csv | default('""', true) }}

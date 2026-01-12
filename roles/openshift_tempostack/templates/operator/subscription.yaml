@@ -9,4 +9,4 @@ spec:
   name: tempo-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ tempostack_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ tempostack_operator_subscription_starting_csv | default('""', true) }}

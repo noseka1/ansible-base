@@ -9,4 +9,4 @@ spec:
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ oadp_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ oadp_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: ingress-node-firewall
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ ingressnodefw_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ ingressnodefw_subscription_starting_csv | default('""', true) }}

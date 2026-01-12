@@ -9,4 +9,4 @@ spec:
   name: nfd
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ nfd_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ nfd_operator_subscription_starting_csv | default('""', true) }}

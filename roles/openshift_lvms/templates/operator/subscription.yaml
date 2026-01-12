@@ -9,4 +9,4 @@ spec:
   name: lvms-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ lvms_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ lvms_operator_subscription_starting_csv | default('""', true) }}

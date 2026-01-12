@@ -9,4 +9,4 @@ spec:
   name: cert-utils-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ certutils_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ certutils_operator_subscription_starting_csv | default('""', true) }}

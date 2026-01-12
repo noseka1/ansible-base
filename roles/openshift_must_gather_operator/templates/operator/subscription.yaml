@@ -9,4 +9,4 @@ spec:
   name: must-gather-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ mustgather_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ mustgather_operator_subscription_starting_csv | default('""', true) }}

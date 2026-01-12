@@ -9,4 +9,4 @@ spec:
   name: vertical-pod-autoscaler
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ vpa_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ vpa_operator_subscription_starting_csv | default('""', true) }}

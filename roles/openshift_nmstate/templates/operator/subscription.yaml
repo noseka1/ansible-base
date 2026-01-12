@@ -9,4 +9,4 @@ spec:
   name: kubernetes-nmstate-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ nmstate_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ nmstate_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: gitlab-operator-kubernetes
   source: certified-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ gitlab_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ gitlab_operator_subscription_starting_csv | default('""', true) }}

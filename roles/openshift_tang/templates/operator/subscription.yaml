@@ -9,4 +9,4 @@ spec:
   name: tang-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ tang_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ tang_operator_subscription_starting_csv | default('""', true) }}

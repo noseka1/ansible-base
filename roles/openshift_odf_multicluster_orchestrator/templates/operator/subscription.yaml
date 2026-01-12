@@ -9,4 +9,4 @@ spec:
   name: odf-multicluster-orchestrator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ odfmulticlusterorch_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ odfmulticlusterorch_operator_subscription_starting_csv | default('""', true) }}

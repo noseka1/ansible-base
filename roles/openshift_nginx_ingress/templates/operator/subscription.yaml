@@ -9,4 +9,4 @@ spec:
   name: nginx-ingress-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ nginx_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ nginx_operator_subscription_starting_csv | default('""', true) }}

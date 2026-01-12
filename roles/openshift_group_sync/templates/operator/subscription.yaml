@@ -9,4 +9,4 @@ spec:
   name: group-sync-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ groupsync_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ groupsync_operator_subscription_starting_csv | default('""', true) }}

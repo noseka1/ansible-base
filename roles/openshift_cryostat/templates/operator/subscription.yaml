@@ -9,7 +9,7 @@ spec:
   name: cryostat-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ cryostat_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ cryostat_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     # By default, the operator expects cert-manager to be available in the cluster.

@@ -9,4 +9,4 @@ spec:
   name: sandboxed-containers-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ sandboxconts_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ sandboxconts_operator_subscription_starting_csv | default('""', true) }}

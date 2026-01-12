@@ -9,4 +9,4 @@ spec:
   name: file-integrity-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ fileintegrity_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ fileintegrity_operator_subscription_starting_csv | default('""', true) }}

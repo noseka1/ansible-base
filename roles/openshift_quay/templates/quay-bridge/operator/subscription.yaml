@@ -9,4 +9,4 @@ spec:
   name: quay-bridge-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ quay_bridge_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ quay_bridge_operator_subscription_starting_csv | default('""', true) }}

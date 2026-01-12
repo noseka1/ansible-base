@@ -9,7 +9,7 @@ spec:
   name: splunk-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ splunk_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ splunk_operator_subscription_starting_csv | default('""', true) }}
   config:
     env:
     - name: SPLUNK_GENERAL_TERMS

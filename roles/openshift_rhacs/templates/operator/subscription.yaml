@@ -9,4 +9,4 @@ spec:
   name: rhacs-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ rhacs_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ rhacs_operator_subscription_starting_csv | default('""', true) }}

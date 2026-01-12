@@ -9,4 +9,4 @@ spec:
   name: deployment-validation-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ dvo_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ dvo_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: smb-csi-driver-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ smbcsi_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ smbcsi_operator_subscription_starting_csv | default('""', true) }}

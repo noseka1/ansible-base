@@ -9,4 +9,4 @@ spec:
   name: node-maintenance-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ nodemaintenance_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ nodemaintenance_operator_subscription_starting_csv | default('""', true) }}

@@ -9,4 +9,4 @@ spec:
   name: multicluster-global-hub-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ rhacm_global_hub_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ rhacm_global_hub_operator_subscription_starting_csv | default('""', true) }}

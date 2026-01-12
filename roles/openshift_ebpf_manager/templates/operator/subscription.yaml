@@ -9,4 +9,4 @@ spec:
   name: bpfman-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ ebpfman_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ ebpfman_operator_subscription_starting_csv | default('""', true) }}

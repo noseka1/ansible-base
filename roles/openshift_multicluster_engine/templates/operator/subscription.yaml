@@ -9,7 +9,7 @@ spec:
   name: multicluster-engine
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ mce_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ mce_operator_subscription_starting_csv | default('""', true) }}
 {% if mce_place_on_infra_nodes %}
   config:
     nodeSelector:

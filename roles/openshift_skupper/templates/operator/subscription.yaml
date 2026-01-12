@@ -9,4 +9,4 @@ spec:
   name: skupper-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: {{ skupper_operator_subscription_starting_csv | default('""', true) }}
+  startingCSV: {{ skupper_operator_subscription_starting_csv | default('""', true) }}

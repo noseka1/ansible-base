@@ -2,14 +2,14 @@
   kubernetes.core.k8s_info:
     api_version: hypershift.openshift.io/v1beta1
     kind: HostedCluster
-    name: '{{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}'
+    name: '{{ mcehostedcluster_kubevirt.cluster_name }}'
     namespace: hosted-clusters
   register: hostedcluster_result
 
 - name: Set msg
   set_fact:
     msg: |
-      Cluster {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }} deployed successfully.
+      Cluster {{ mcehostedcluster_kubevirt.cluster_name }} deployed successfully.
 
       You can download the admin kubeconfig by issuing:
 

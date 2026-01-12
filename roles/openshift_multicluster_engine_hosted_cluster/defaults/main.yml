@@ -1,4 +1,4 @@
-multicluster_engine_hosted_cluster_kubevirt:
+mcehostedcluster_kubevirt:
   cluster_name: mycluster20
   ocp_release_image: 4.20.8-x86_64
   control_plane_replicas: 1

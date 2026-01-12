@@ -1,12 +1,12 @@
 apiVersion: hypershift.openshift.io/v1beta1
 kind: HostedCluster
 metadata:
-  name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}
+  name: {{ mcehostedcluster_kubevirt.cluster_name }}
   namespace: hosted-clusters
 spec:
   autoscaling: {}
   configuration: {}
-{% if multicluster_engine_hosted_cluster_kubevirt.control_plane_replicas == 1 %}
+{% if mcehostedcluster_kubevirt.control_plane_replicas == 1 %}
   controllerAvailabilityPolicy: SingleReplica
 {% else %}
   controllerAvailabilityPolicy: HighlyAvailable
@@ -31,13 +31,13 @@ spec:
       baseDomainPassthrough: true
     type: KubeVirt
   pullSecret:
-    name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-pull-secret
+    name: {{ mcehostedcluster_kubevirt.cluster_name }}-pull-secret
   release:
-    image: quay.io/openshift-release-dev/ocp-release:{{ multicluster_engine_hosted_cluster_kubevirt.ocp_release_image }}
+    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_kubevirt.ocp_release_image }}
   secretEncryption:
     aescbc:
       activeKey:
-        name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-etcd-encryption-key
+        name: {{ mcehostedcluster_kubevirt.cluster_name }}-etcd-encryption-key
     type: aescbc
   services:
   - service: APIServer
@@ -56,4 +56,4 @@ spec:
     servicePublishingStrategy:
       type: Route
   sshKey:
-    name: {{ multicluster_engine_hosted_cluster_kubevirt.cluster_name }}-ssh-key
+    name: {{ mcehostedcluster_kubevirt.cluster_name }}-ssh-key

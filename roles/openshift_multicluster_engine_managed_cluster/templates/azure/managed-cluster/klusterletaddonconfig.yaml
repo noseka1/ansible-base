@@ -3,8 +3,8 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: {{ multicluster_engine_managed_cluster.cluster_name }}
-  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
+  name: {{ mcemanagedcluster_info.cluster_name }}
+  namespace: {{ mcemanagedcluster_info.cluster_name }}
 spec:
   # Enable application manager to import the managed cluster into Argo CD
   applicationManager:
@@ -15,11 +15,11 @@ spec:
     enabled: true
   policyController:
     enabled: true
-{% if multicluster_engine_managed_cluster.clusterwide_proxy %}
+{% if mcemanagedcluster_info.clusterwide_proxy %}
   proxyConfig:
-    httpProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.http_proxy }}
-    httpsProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.https_proxy }}
-    noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
+    httpProxy: {{ mcemanagedcluster_info.clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ mcemanagedcluster_info.clusterwide_proxy.https_proxy }}
+    noProxy: {{ mcemanagedcluster_info.clusterwide_proxy.no_proxy }}
 {% endif %}
   searchCollector:
     enabled: true

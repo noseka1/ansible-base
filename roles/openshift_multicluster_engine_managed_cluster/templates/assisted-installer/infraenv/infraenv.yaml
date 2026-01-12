@@ -1,32 +1,32 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: InfraEnv
 metadata:
-  name: {{ multicluster_engine_managed_cluster.cluster_name }}
-  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+  name: {{ mcemanagedcluster_info.cluster_name }}
+  namespace: {{ mcemanagedcluster_info.cluster_name }}-infraenv
   labels:
-    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
-    networkType: {{ multicluster_engine_managed_cluster.network_type }}
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mcemanagedcluster_info.location }}'
+    networkType: {{ mcemanagedcluster_info.network_type }}
 spec:
-{% if multicluster_engine_managed_cluster.trusted_ca_bundle is defined and
-      multicluster_engine_managed_cluster.trusted_ca_bundle %}
+{% if mcemanagedcluster_info.trusted_ca_bundle is defined and
+      mcemanagedcluster_info.trusted_ca_bundle %}
   additionalTrustBundle: |
-    {{ multicluster_engine_managed_cluster.trusted_ca_bundle | indent(4) }}
+    {{ mcemanagedcluster_info.trusted_ca_bundle | indent(4) }}
 {% endif %}
   agentLabels:
-    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mcemanagedcluster_info.location }}'
   pullSecretRef:
-    name: {{ multicluster_engine_managed_cluster.cluster_name }}-pull-secret
-  sshAuthorizedKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
+    name: {{ mcemanagedcluster_info.cluster_name }}-pull-secret
+  sshAuthorizedKey: '{{ mcemanagedcluster_info.ssh_authorized_key }}'
   nmStateConfigLabelSelector:
     matchLabels:
-      infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
-{% if multicluster_engine_managed_cluster.clusterwide_proxy is defined and
-      multicluster_engine_managed_cluster.clusterwide_proxy %}
+      infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
+{% if mcemanagedcluster_info.clusterwide_proxy is defined and
+      mcemanagedcluster_info.clusterwide_proxy %}
   proxy:
-    httpProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.http_proxy }}
-    httpsProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.https_proxy }}
-    noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
+    httpProxy: {{ mcemanagedcluster_info.clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ mcemanagedcluster_info.clusterwide_proxy.https_proxy }}
+    noProxy: {{ mcemanagedcluster_info.clusterwide_proxy.no_proxy }}
 {% else %}
   proxy: {}
 {% endif %}
-  cpuArchitecture: {{ multicluster_engine_managed_cluster.cpu_architecture }}
+  cpuArchitecture: {{ mcemanagedcluster_info.cpu_architecture }}

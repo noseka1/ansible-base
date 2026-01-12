@@ -5,4 +5,4 @@
         name: openshift_multicluster_engine_managed_cluster
         tasks_from: aws_delete.yml
       vars:
-        multicluster_engine_managed_cluster: '{{ multicluster_engine_managed_cluster_aws }}'
+        mcemanagedcluster_info: '{{ mcemanagedcluster_aws }}'

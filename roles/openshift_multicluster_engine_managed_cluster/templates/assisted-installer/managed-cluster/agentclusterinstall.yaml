@@ -3,19 +3,19 @@ kind: AgentClusterInstall
 metadata:
   annotations:
     agent-install.openshift.io/install-config-overrides: '{{ lookup("template", "assisted-installer/install-config/install-config.yaml") | from_yaml | to_json }}'
-  name: {{ multicluster_engine_managed_cluster.cluster_name }}
-  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
+  name: {{ mcemanagedcluster_info.cluster_name }}
+  namespace: {{ mcemanagedcluster_info.cluster_name }}
 spec:
-{% if not multicluster_engine_managed_cluster.user_managed_networking %}
-  apiVIP: {{ multicluster_engine_managed_cluster.api_vip }}
-  ingressVIP: {{ multicluster_engine_managed_cluster.ingress_vip }}
+{% if not mcemanagedcluster_info.user_managed_networking %}
+  apiVIP: {{ mcemanagedcluster_info.api_vip }}
+  ingressVIP: {{ mcemanagedcluster_info.ingress_vip }}
 {% endif %}
   clusterDeploymentRef:
-    name: {{ multicluster_engine_managed_cluster.cluster_name }}
+    name: {{ mcemanagedcluster_info.cluster_name }}
   provisionRequirements:
-    controlPlaneAgents: {{ multicluster_engine_managed_cluster_control_plane_agents | int }}
-{% if multicluster_engine_managed_cluster_worker_agents | int > 0 %}
-    workerAgents: {{ multicluster_engine_managed_cluster_worker_agents | int }}
+    controlPlaneAgents: {{ mcemanagedcluster_control_plane_agents | int }}
+{% if mcemanagedcluster_worker_agents | int > 0 %}
+    workerAgents: {{ mcemanagedcluster_worker_agents | int }}
 {% endif %}
   # By default, SMT (or hyperthreading) is enabled to increase the performance of your machines' cores.
   # Therefore, you can omit this section unless you wish to disable hyperthreading.
@@ -28,20 +28,20 @@ spec:
   - hyperthreading: Enabled
     name: worker
   imageSetRef:
-    name: img{{ multicluster_engine_managed_cluster.ocp_release_image | regex_replace('_', '-',) }}-appsub
+    name: img{{ mcemanagedcluster_info.ocp_release_image | regex_replace('_', '-',) }}-appsub
   networking:
     clusterNetwork:
     - cidr: 10.128.0.0/14
       hostPrefix: 23
     serviceNetwork:
     - 172.30.0.0/16
-    userManagedNetworking: {{ multicluster_engine_managed_cluster.user_managed_networking }}
-{% if multicluster_engine_managed_cluster.clusterwide_proxy %}
+    userManagedNetworking: {{ mcemanagedcluster_info.user_managed_networking }}
+{% if mcemanagedcluster_info.clusterwide_proxy %}
   proxy:
-    httpProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.http_proxy }}
-    httpsProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.https_proxy }}
-    noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
+    httpProxy: {{ mcemanagedcluster_info.clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ mcemanagedcluster_info.clusterwide_proxy.https_proxy }}
+    noProxy: {{ mcemanagedcluster_info.clusterwide_proxy.no_proxy }}
 {% endif %}
-{% if multicluster_engine_managed_cluster.ssh_authorized_key | length > 0 %}
-  sshPublicKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
+{% if mcemanagedcluster_info.ssh_authorized_key | length > 0 %}
+  sshPublicKey: '{{ mcemanagedcluster_info.ssh_authorized_key }}'
 {% endif %}

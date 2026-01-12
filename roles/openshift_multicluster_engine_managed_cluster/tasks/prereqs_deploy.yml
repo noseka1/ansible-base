@@ -1,4 +1,4 @@
-- name: Create ClusterImageSet for OCP version {{ multicluster_engine_managed_cluster.ocp_release_image }}
+- name: Create ClusterImageSet for OCP version {{ mcemanagedcluster_info.ocp_release_image }}
   kubernetes.core.k8s:
     template:
       - clusterimageset/clusterimageset.yaml

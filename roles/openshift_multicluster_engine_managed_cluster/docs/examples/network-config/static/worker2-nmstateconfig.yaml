@@ -2,9 +2,9 @@ apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
 metadata:
   labels:
-    infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
+    infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
   name: worker2
-  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+  namespace: {{ mcemanagedcluster_info.cluster_name }}-infraenv
 spec:
   config:
     interfaces:

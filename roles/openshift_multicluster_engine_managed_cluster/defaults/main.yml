@@ -1,4 +1,4 @@
-multicluster_engine_managed_cluster_aws:
+mcemanagedcluster_aws:
   cluster_name: mycluster12
   base_domain: sandbox2727.opentlc.com
   ocp_release_image: 4.20.8-x86_64
@@ -10,7 +10,7 @@ multicluster_engine_managed_cluster_aws:
   aws_region: us-east-1
 
 # Azure Subscription Based Blank Open Environment setup (https://demo.redhat.com/catalog?category=Open_Environments&item=babylon-catalog-prod%2Fazure-gpte.open-environment-azure-subscription.prod)
-multicluster_engine_managed_cluster_azure:
+mcemanagedcluster_azure:
   cluster_name: mycluster15
   base_domain: 7xdft.azure.redhatworkshops.io
   ocp_release_image: 4.20.8-x86_64
@@ -30,7 +30,7 @@ multicluster_engine_managed_cluster_azure:
   # managed_cluster_set: tenant-01
   # generate_name: tenant-01-
 
-multicluster_engine_managed_cluster_baremetal:
+mcemanagedcluster_baremetal:
   cluster_name: mycluster8
   base_domain: example.com
   ocp_release_image: 4.20.8-x86_64

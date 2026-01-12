@@ -5,4 +5,4 @@
         name: openshift_multicluster_engine_managed_cluster
         tasks_from: azure_deploy.yml
       vars:
-        multicluster_engine_managed_cluster: '{{ multicluster_engine_managed_cluster_azure }}'
+        mcemanagedcluster_info: '{{ mcemanagedcluster_azure }}'

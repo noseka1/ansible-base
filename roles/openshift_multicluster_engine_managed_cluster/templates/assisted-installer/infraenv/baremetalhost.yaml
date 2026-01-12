@@ -1,14 +1,14 @@
 ---
-{% for key, value in multicluster_engine_managed_cluster.cluster_nodes_individual.items() %}
+{% for key, value in mcemanagedcluster_info.cluster_nodes_individual.items() %}
 {% if value.bmh is defined %}
 ---
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
   name: {{ key }}
-  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}-infraenv
+  namespace: {{ mcemanagedcluster_info.cluster_name }}-infraenv
   labels:
-    infraenvs.agent-install.openshift.io: {{ multicluster_engine_managed_cluster.cluster_name }}
+    infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
 spec:
   online: true
   automatedCleaningMode: disabled

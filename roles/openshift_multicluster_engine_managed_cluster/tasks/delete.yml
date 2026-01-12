@@ -7,5 +7,5 @@
     wait: true
     wait_timeout: 1800
 
-- import_tasks: delete_baremetal.yml
+- import_tasks: baremetal_delete.yml
   when: multicluster_engine_managed_cluster_platform == 'BareMetal'

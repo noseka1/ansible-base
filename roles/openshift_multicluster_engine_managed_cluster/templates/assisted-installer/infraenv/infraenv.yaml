@@ -16,7 +16,9 @@ spec:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mcemanagedcluster_info.location }}'
   pullSecretRef:
     name: {{ mcemanagedcluster_info.cluster_name }}-pull-secret
+{% if mcemanagedcluster_info.ssh_authorized_key | length > 0 %}
   sshAuthorizedKey: '{{ mcemanagedcluster_info.ssh_authorized_key }}'
+{% endif %}
   nmStateConfigLabelSelector:
     matchLabels:
       infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}

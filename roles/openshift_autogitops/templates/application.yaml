@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     name: {{ openshift_common_cluster_domain }}
-    namespace: '{{ autogitops_app_namespace }}'
+    namespace: {{ autogitops_app_namespace }}
   info:
   - name: creator
     value: AutoGitOps - Ansible-driven Argo CD automation

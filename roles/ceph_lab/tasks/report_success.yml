@@ -18,4 +18,4 @@
       Note that OSDs and other cluster components may still be deploying ...
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

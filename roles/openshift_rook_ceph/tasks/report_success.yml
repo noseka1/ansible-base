@@ -28,4 +28,4 @@
       $ oc get -n {{ rook_ceph_namespace }} secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

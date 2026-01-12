@@ -48,4 +48,4 @@
       'ssh root@rhvh.lab.example.com hosted-engine --deploy --config-append=/root/hosted-engine-deploy-answers-file.conf'
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

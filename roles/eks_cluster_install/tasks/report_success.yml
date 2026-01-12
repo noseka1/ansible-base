@@ -8,4 +8,4 @@
       Note that for the above command to work, you have to have AWS CLI installed and configured with valid credentials in ~/.aws/credentials
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

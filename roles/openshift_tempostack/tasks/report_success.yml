@@ -8,4 +8,4 @@
       by the trace generator job.
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

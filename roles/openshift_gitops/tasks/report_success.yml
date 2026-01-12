@@ -26,4 +26,4 @@
       argocd login {{ argocd_route_host }} --username admin
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

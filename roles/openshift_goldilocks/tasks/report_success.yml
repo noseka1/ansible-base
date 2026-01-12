@@ -18,4 +18,4 @@
       reread the VPA objects.
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

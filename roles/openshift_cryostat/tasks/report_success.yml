@@ -27,4 +27,4 @@
       oc extract --namespace {{ cryostat_instance_namespace }} secret/cryostat-jmx-auth --to -
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

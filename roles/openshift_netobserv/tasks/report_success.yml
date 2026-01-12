@@ -6,4 +6,4 @@
       $ oc delete pods -n openshift-console -l app=console
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

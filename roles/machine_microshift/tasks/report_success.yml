@@ -7,4 +7,4 @@
       scp root@{{ ansible_facts.fqdn }}:/var/lib/microshift/resources/kubeadmin/{{ ansible_facts.fqdn }}/kubeconfig .
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

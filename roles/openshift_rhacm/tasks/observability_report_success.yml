@@ -15,4 +15,4 @@
       https://{{ rhacm_observability_route.resources.0.spec.host }}
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

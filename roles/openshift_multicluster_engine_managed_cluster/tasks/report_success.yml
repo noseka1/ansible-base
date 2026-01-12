@@ -33,4 +33,4 @@
       You can download the admin kubeconfig by issuing 'oc extract -n {{ multicluster_engine_managed_cluster.cluster_name }} secret/{{ multicluster_engine_managed_cluster_clusterdeployment_result.resources.0.spec.clusterMetadata.adminKubeconfigSecretRef.name }} --keys kubeconfig'
 
 - debug:
-    msg: '{{ msg.split("\n") }}'
+    msg: "{{ msg.split('\n') }}"

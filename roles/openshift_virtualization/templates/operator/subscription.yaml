@@ -16,4 +16,4 @@ spec:
         name: hyperconverged-cluster-operator
     env:
     - name: KVM_EMULATION
-      value: {{ osvirt_kvm_emulation_enabled | string }}'
+      value: '{{ osvirt_kvm_emulation_enabled | string }}'

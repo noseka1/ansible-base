@@ -1,5 +1,5 @@
 ---
-{% for key, value in multicluster_engine_managed_cluster_baremetal.cluster_nodes.items() %}
+{% for key, value in multicluster_engine_managed_cluster_baremetal.cluster_nodes_individual.items() %}
 {% if value.bmh is defined %}
 ---
 apiVersion: metal3.io/v1alpha1
@@ -15,7 +15,7 @@ spec:
   bootMACAddress: '{{ value.bmh.boot_macaddr }}'
   bmc:
     address: '{{ value.bmh.bmc.address }}'
-    credentialsName: bmc-{{ key | regex_replace(':', '-',) }}
+    credentialsName: bmc-creds
     disableCertificateVerification: {{ value.bmh.bmc.disable_certificate_verification }}
   bootMode: '{{ value.bmh.boot_mode }}'
   rootDeviceHints: {{ value.bmh.root_device_hints | to_json }}

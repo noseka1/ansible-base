@@ -1,8 +1,12 @@
+- import_tasks: rhacm_detect.yml
+
+- import_tasks: prereqs_deploy.yml
+
 - set_fact:
     multicluster_engine_managed_cluster_control_plane_agents: >-
-      {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'master') | length }}
+      {{ multicluster_engine_managed_cluster.cluster_nodes_individual.values() | selectattr('role', 'equalto', 'master') | length }}
     multicluster_engine_managed_cluster_worker_agents: >-
-      {{ multicluster_engine_managed_cluster.cluster_nodes.values() | selectattr('role', 'equalto', 'worker') | length }}
+      {{ multicluster_engine_managed_cluster.cluster_nodes_individual.values() | selectattr('role', 'equalto', 'worker') | length }}
 
 - fail:
     msg: user_managed_networking must be set to true when deploying SNO
@@ -11,43 +15,50 @@
     - multicluster_engine_managed_cluster_worker_agents | int == 0
     - multicluster_engine_managed_cluster.user_managed_networking == false
 
-- name: Create infrastructure environment namespace for deploying OpenShift cluster {{ multicluster_engine_managed_cluster.cluster_name }}
-  kubernetes.core.k8s:
-    template:
-      - assisted-installer/infraenv/cluster-infraenv-ns.yaml
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/bmc-creds'
+    hvault_secret_data:
+      username: '{{ multicluster_engine_managed_cluster.cluster_nodes_shared.bmh.bmc.username }}'
+      password: '{{ multicluster_engine_managed_cluster.cluster_nodes_shared.bmh.bmc.password }}'
+  when: multicluster_engine_managed_cluster_baremetal.cluster_nodes_shared.bmh.bmc is defined
 
-- name: Deploy network configuration for baremetal nodes
-  when: multicluster_engine_managed_cluster_baremetal.network_config_fileglob | default('') | length > 0
-  block:
-    - set_fact:
-        network_config_files: >
-          {{ lookup("fileglob", multicluster_engine_managed_cluster_baremetal.network_config_fileglob, wantlist=True) }}
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/pull-secret'
+    hvault_secret_data:
+      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
 
-    - name: Network configuration files
-      debug:
-        var: network_config_files
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/assisted-installer/infraenv
+    autogitops_app_dst_path: mce/managed-cluster/assisted-installer/infraenv
+    autogitops_app_namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}-infraenv'
 
-    - name: Create cluster networking configuration
-      kubernetes.core.k8s:
-        template: '{{ network_config_files }}'
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/managed-cluster/pull-secret'
+    hvault_secret_data:
+      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
 
-- name: Create infrastructure environment objects
-  kubernetes.core.k8s:
-    template:
-      - assisted-installer/infraenv/pullsecret-cluster-secret.yaml
-      - assisted-installer/infraenv/cluster-infraenv.yaml
-      - assisted-installer/infraenv/baremetalhost.yaml
-      - assisted-installer/infraenv/bmc-secret.yaml
-
-- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
-  kubernetes.core.k8s:
-    template:
-      - common/cluster-ns.yaml
-      - common/cluster-clusterdeployment.yaml
-      - common/cluster-klusterletaddonconfig.yaml
-      - common/cluster-managedcluster.yaml
-      - common/cluster-pull-secret-secret.yaml
-      - assisted-installer/cluster-agentclusterinstall.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/assisted-installer/managed-cluster
+    autogitops_app_dst_path: mce/managed-cluster/assisted-installer/managed-cluster
+    autogitops_app_namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for installer ISO image to be generated
   kubernetes.core.k8s_info:
@@ -81,14 +92,14 @@
 - debug:
     msg: "{{ msg.split('\n') }}"
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_nodes.keys() | length }} cluster host(s) to show up in the inventory
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_nodes_individual.keys() | length }} cluster host(s) to show up in the inventory
   kubernetes.core.k8s_info:
     api_version: agent-install.openshift.io/v1beta1
     kind: Agent
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}-infraenv'
   register: multicluster_engine_managed_cluster_agent_result
   until: >-
-    multicluster_engine_managed_cluster.cluster_nodes.keys() is
+    multicluster_engine_managed_cluster.cluster_nodes_individual.keys() is
       subset(multicluster_engine_managed_cluster_agent_result.resources | json_query("[*].status.inventory.hostname"))
   retries: 180
   delay: 10
@@ -106,11 +117,11 @@
         clusterDeploymentName:
           name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
           namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
-        role: '{{ multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname].role }}'
-  when: multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname] is defined
+        role: '{{ multicluster_engine_managed_cluster.cluster_nodes_individual[item.status.inventory.hostname].role }}'
+  when: multicluster_engine_managed_cluster.cluster_nodes_individual[item.status.inventory.hostname] is defined
   loop: '{{ multicluster_engine_managed_cluster_agent_result.resources }}'
   loop_control:
-    label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ multicluster_engine_managed_cluster.cluster_nodes[item.status.inventory.hostname].role | default ("") }}'
+    label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ multicluster_engine_managed_cluster.cluster_nodes_individual[item.status.inventory.hostname].role | default ("") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
   kubernetes.core.k8s_info:
@@ -146,3 +157,5 @@
     - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions is defined
     - multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
     - (multicluster_engine_managed_cluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True"
+
+- import_tasks: report_success.yml

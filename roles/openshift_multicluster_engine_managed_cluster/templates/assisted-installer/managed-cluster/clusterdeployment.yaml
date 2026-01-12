@@ -1,0 +1,20 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+  namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
+  labels:
+    vendor: OpenShift
+spec:
+  baseDomain: {{ multicluster_engine_managed_cluster.base_domain }}
+  clusterName: {{ multicluster_engine_managed_cluster.cluster_name }}
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: {{ multicluster_engine_managed_cluster.cluster_name }}
+    version: v1beta1
+  platform:
+    agentBareMetal:
+      agentSelector: {}
+  pullSecretRef:
+    name: {{ multicluster_engine_managed_cluster.cluster_name }}-pull-secret

@@ -15,7 +15,7 @@ spec:
   agentLabels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ multicluster_engine_managed_cluster.location }}'
   pullSecretRef:
-    name: pullsecret-{{ multicluster_engine_managed_cluster.cluster_name }}
+    name: {{ multicluster_engine_managed_cluster.cluster_name }}-pull-secret
   sshAuthorizedKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
   nmStateConfigLabelSelector:
     matchLabels:

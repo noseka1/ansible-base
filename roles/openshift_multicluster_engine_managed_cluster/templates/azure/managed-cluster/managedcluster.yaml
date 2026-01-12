@@ -2,13 +2,7 @@ apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
   labels:
-    cloud: {{ multicluster_engine_managed_cluster_platform | lower}}
-{% if multicluster_engine_managed_cluster_platform == 'AWS' %}
-    region: {{ multicluster_engine_managed_cluster.aws_region }}
-{% endif %}
-{% if multicluster_engine_managed_cluster_platform == 'AZURE' %}
     region: {{ multicluster_engine_managed_cluster.azure_region }}
-{% endif %}
     name: {{ multicluster_engine_managed_cluster.cluster_name }}
     vendor: OpenShift
 {% if multicluster_engine_managed_cluster.managed_cluster_set is defined %}

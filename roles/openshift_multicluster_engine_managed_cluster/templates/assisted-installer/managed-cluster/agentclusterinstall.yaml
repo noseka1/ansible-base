@@ -2,7 +2,7 @@ apiVersion: extensions.hive.openshift.io/v1beta1
 kind: AgentClusterInstall
 metadata:
   annotations:
-    agent-install.openshift.io/install-config-overrides: '{{ lookup("template", "assisted-installer/install-config.yaml") | from_yaml | to_json }}'
+    agent-install.openshift.io/install-config-overrides: '{{ lookup("template", "assisted-installer/install-config/install-config.yaml") | from_yaml | to_json }}'
   name: {{ multicluster_engine_managed_cluster.cluster_name }}
   namespace: {{ multicluster_engine_managed_cluster.cluster_name }}
 spec:
@@ -14,7 +14,9 @@ spec:
     name: {{ multicluster_engine_managed_cluster.cluster_name }}
   provisionRequirements:
     controlPlaneAgents: {{ multicluster_engine_managed_cluster_control_plane_agents | int }}
+{% if multicluster_engine_managed_cluster_worker_agents | int > 0 %}
     workerAgents: {{ multicluster_engine_managed_cluster_worker_agents | int }}
+{% endif %}
   # By default, SMT (or hyperthreading) is enabled to increase the performance of your machines' cores.
   # Therefore, you can omit this section unless you wish to disable hyperthreading.
   # You can disable SMT by setting the parameter value to 'Disabled'. Then, you must disable it in all cluster machines;
@@ -40,4 +42,6 @@ spec:
     httpsProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.https_proxy }}
     noProxy: {{ multicluster_engine_managed_cluster.clusterwide_proxy.no_proxy }}
 {% endif %}
+{% if multicluster_engine_managed_cluster.ssh_authorized_key | length > 0 %}
   sshPublicKey: '{{ multicluster_engine_managed_cluster.ssh_authorized_key }}'
+{% endif %}

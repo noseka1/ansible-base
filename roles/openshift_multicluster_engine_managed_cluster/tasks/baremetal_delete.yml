@@ -1,7 +1,33 @@
-- name: Delete infrastructure environment
-  kubernetes.core.k8s:
-    template:
-      - assisted-installer/infraenv/cluster-infraenv.yaml
-      - assisted-installer/infraenv/cluster-infraenv-ns.yaml
-    wait: true
-    state: absent
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: mce/managed-cluster/assisted-installer/managed-cluster
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/managed-cluster/pull-secret'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: mce/managed-cluster/assisted-installer/infraenv
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/bmc-creds'
+  when: multicluster_engine_managed_cluster_baremetal.cluster_nodes_shared.bmh.bmc is defined
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/pull-secret'

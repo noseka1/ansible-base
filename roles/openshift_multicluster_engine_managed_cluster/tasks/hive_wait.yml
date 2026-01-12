@@ -1,21 +1,6 @@
-- set_fact:
-    multicluster_engine_managed_cluster_platform_lower: '{{ multicluster_engine_managed_cluster_platform | lower }}'
-
-- name: Create objects for deployment of {{ multicluster_engine_managed_cluster.cluster_name }} managed cluster
-  kubernetes.core.k8s:
-    template:
-      - common/cluster-ns.yaml
-      - common/cluster-clusterdeployment.yaml
-      - common/cluster-klusterletaddonconfig.yaml
-      - common/cluster-managedcluster.yaml
-      - common/cluster-pull-secret-secret.yaml
-      - '{{ multicluster_engine_managed_cluster_platform_lower}}/cluster-cloud-creds-secret.yaml'
-      - '{{ multicluster_engine_managed_cluster_platform_lower}}/cluster-install-config-secret.yaml'
-      - '{{ multicluster_engine_managed_cluster_platform_lower}}/cluster-ssh-private-key-secret.yaml'
-
 - name: Retrieve cluster provisioning reference
   kubernetes.core.k8s_info:
-    api_version:
+    api_version: hive.openshift.io/v1
     kind: ClusterDeployment
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
     namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
@@ -50,7 +35,7 @@
 
 - debug:
     msg: >-
-      oc logs -n {{ multicluster_engine_managed_cluster.cluster_name }} job/{{ multicluster_engine_managed_cluster_clusterprovision_result.resources.0.status.jobRef.name }} -c hive -f
+      oc logs -n {{ multicluster_engine_managed_cluster.cluster_name }} job/{{ multicluster_engine_managed_cluster_clusterprovision_result.resources.0.status.jobRef.name }} -c installer -f
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for provisioning job {{ multicluster_engine_managed_cluster_clusterprovision_result.resources.0.status.jobRef.name }} to complete
   kubernetes.core.k8s_info:

@@ -1,0 +1,51 @@
+- import_tasks: rhacm_detect.yml
+
+- import_tasks: prereqs_deploy.yml
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/azure/cloud-creds'
+    hvault_secret_data:
+      osServicePrincipal.json: '{{ multicluster_engine_managed_cluster.os_service_ppal }}'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/azure/install-config'
+    hvault_secret_data:
+      install-config.yaml: '{{ lookup("template", "azure/install-config/install-config.yaml") }}'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/azure/pull-secret'
+    hvault_secret_data:
+      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/azure/ssh-private-key'
+    hvault_secret_data:
+      ssh-privatekey: '{{ generic_ssh_key_pair.private_key }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/azure/managed-cluster
+    autogitops_app_dst_path: mce/managed-cluster/azure
+    autogitops_app_namespace: '{{ multicluster_engine_managed_cluster.cluster_name }}'
+
+- import_tasks: hive_wait.yml
+
+- import_tasks: report_success.yml

@@ -18,7 +18,6 @@
     kind: ManagedCluster
     name: '{{ multicluster_engine_managed_cluster.cluster_name }}'
   register: multicluster_engine_managed_cluster_managedcluster_result
-  when: multicluster_engine_managed_cluster_platform in [ 'AWS', 'AZURE' ]
   until:
     - multicluster_engine_managed_cluster_managedcluster_result.resources.0.status.conditions is defined
     - multicluster_engine_managed_cluster_managedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | list | length > 0

@@ -3,7 +3,6 @@
   tasks:
     - import_role:
         name: openshift_multicluster_engine_managed_cluster
-        tasks_from: deploy.yml
+        tasks_from: azure_deploy.yml
       vars:
         multicluster_engine_managed_cluster: '{{ multicluster_engine_managed_cluster_azure }}'
-        multicluster_engine_managed_cluster_platform: AZURE

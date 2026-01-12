@@ -1,7 +1,7 @@
 multicluster_engine_managed_cluster_aws:
   cluster_name: mycluster12
   base_domain: sandbox2727.opentlc.com
-  ocp_release_image: 4.20.0-x86_64
+  ocp_release_image: 4.20.8-x86_64
   control_plane_replicas: 3
   data_plane_replicas: 1
   clusterwide_proxy: {}
@@ -13,7 +13,7 @@ multicluster_engine_managed_cluster_aws:
 multicluster_engine_managed_cluster_azure:
   cluster_name: mycluster15
   base_domain: 7xdft.azure.redhatworkshops.io
-  ocp_release_image: 4.20.0-x86_64
+  ocp_release_image: 4.20.8-x86_64
   clusterwide_proxy: {}
   os_service_ppal:
     clientId: XXXXX
@@ -33,7 +33,7 @@ multicluster_engine_managed_cluster_azure:
 multicluster_engine_managed_cluster_baremetal:
   cluster_name: mycluster8
   base_domain: example.com
-  ocp_release_image: 4.20.0-x86_64
+  ocp_release_image: 4.20.8-x86_64
   clusterwide_proxy: {}
   trusted_ca_bundle: ''
   api_vip: 192.168.80.10
@@ -46,18 +46,18 @@ multicluster_engine_managed_cluster_baremetal:
   user_managed_networking: false
   # Network type options are 'static' or 'dhcp'
   network_type: dhcp
-  # List of network configuration files that will be applied before cluster installation.
-  # For example: '{{ role_path }}/templates/assisted-installer/network-config/static/*.yaml'
-  network_config_fileglob: ''
-  cluster_nodes:
+  cluster_nodes_shared:
+    bmh:
+      bmc:
+        username: dummy
+        password: dummy
+  cluster_nodes_individual:
     master1.mycluster8.example.com:
       role: master
       # Optionally, boot the node using BMC:
       bmh:
         bmc:
           address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0021-000000000000
-          username: dummy
-          password: dummy
           disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:21:00'
         # Choose boot mode 'legacy' or 'UEFI'
@@ -66,5 +66,21 @@ multicluster_engine_managed_cluster_baremetal:
           deviceName: /dev/vda
     master2.mycluster8.example.com:
       role: master
+      bmh:
+        bmc:
+          address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0022-000000000000
+          disable_certificate_verification: true
+        boot_macaddr: '52:54:00:08:22:00'
+        boot_mode: legacy
+        root_device_hints:
+          deviceName: /dev/vda
     master3.mycluster8.example.com:
       role: master
+      bmh:
+        bmc:
+          address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0023-000000000000
+          disable_certificate_verification: true
+        boot_macaddr: '52:54:00:08:23:00'
+        boot_mode: legacy
+        root_device_hints:
+          deviceName: /dev/vda

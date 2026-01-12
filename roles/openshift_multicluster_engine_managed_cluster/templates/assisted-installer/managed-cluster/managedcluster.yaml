@@ -1,0 +1,12 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    name: {{ multicluster_engine_managed_cluster.cluster_name }}
+    vendor: OpenShift
+{% if multicluster_engine_managed_cluster.managed_cluster_set is defined %}
+    cluster.open-cluster-management.io/clusterset: {{ multicluster_engine_managed_cluster.managed_cluster_set }}
+{% endif %}
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+spec:
+  hubAcceptsClient: true

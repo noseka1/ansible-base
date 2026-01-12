@@ -3,7 +3,6 @@
   tasks:
     - import_role:
         name: openshift_multicluster_engine_managed_cluster
-        tasks_from: delete.yml
+        tasks_from: aws_delete.yml
       vars:
         multicluster_engine_managed_cluster: '{{ multicluster_engine_managed_cluster_aws }}'
-        multicluster_engine_managed_cluster_platform: AWS

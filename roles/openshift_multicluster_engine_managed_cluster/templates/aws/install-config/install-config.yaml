@@ -1,0 +1,39 @@
+apiVersion: v1
+metadata:
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+baseDomain: {{ multicluster_engine_managed_cluster.base_domain }}
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: {{ multicluster_engine_managed_cluster.control_plane_replicas }}
+  platform:
+    aws:
+      rootVolume:
+        iops: 4000
+        size: 100
+        type: io1
+      type: m6i.2xlarge
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: {{ multicluster_engine_managed_cluster.data_plane_replicas }}
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 100
+        type: io1
+      type: m6i.xlarge
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineCIDR: 10.0.0.0/16
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  aws:
+    region: {{ multicluster_engine_managed_cluster.aws_region }}
+pullSecret: "" # skip, hive will inject based on its secrets
+sshKey: {{ generic_ssh_key_pair.public_key }}

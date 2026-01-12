@@ -1,0 +1,43 @@
+apiVersion: v1
+metadata:
+  name: {{ multicluster_engine_managed_cluster.cluster_name }}
+baseDomain: {{ multicluster_engine_managed_cluster.base_domain }}
+controlPlane:
+  hyperthreading: Enabled
+  architecture: amd64
+  name: master
+  replicas: {{ multicluster_engine_managed_cluster.control_plane_replicas }}
+  platform:
+    azure:
+      osDisk:
+        diskSizeGB: 128
+      type: Standard_D4s_v3
+compute:
+- hyperthreading: Enabled
+  architecture: amd64
+  name: worker
+  replicas: {{ multicluster_engine_managed_cluster.data_plane_replicas }}
+  platform:
+    azure:
+      type: Standard_D4s_v3
+      zones:
+      - "1"
+      - "2"
+      - "3"
+networking:
+  clusterNetwork:
+  - cidr: {{ multicluster_engine_managed_cluster.cluster_network_cidr }}
+    hostPrefix: 23
+  machineCIDR: 10.0.0.0/16
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - {{ multicluster_engine_managed_cluster.service_network_cidr }}
+platform:
+  azure:
+    region: {{ multicluster_engine_managed_cluster.azure_region }}
+    baseDomainResourceGroupName: {{ multicluster_engine_managed_cluster.base_domain_resource_group_name }}
+{% if multicluster_engine_managed_cluster.resource_group_name is defined %}
+    resourceGroupName: {{ multicluster_engine_managed_cluster.resource_group_name }}
+{% endif %}
+pullSecret: "" # skip, hive will inject based on its secrets
+sshKey: {{ generic_ssh_key_pair.public_key }}

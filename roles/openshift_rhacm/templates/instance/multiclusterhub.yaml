@@ -5,7 +5,6 @@ metadata:
   name: multiclusterhub
 spec:
   availabilityConfig: {{ rhacm_instance_availability }}
-  enableClusterBackup: false
   ingress: {}
   overrides:
     components:
@@ -54,6 +53,9 @@ spec:
     - configOverrides: {}
       enabled: false
       name: fine-grained-rbac-preview
+    - configOverrides: {}
+      enabled: false
+      name: cnv-mtv-integrations-preview
 {% if rhacm_instance_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

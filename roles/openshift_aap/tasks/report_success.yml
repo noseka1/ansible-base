@@ -53,4 +53,4 @@
       https://{{ aap_gateway_route_result.resources.0.spec.host }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

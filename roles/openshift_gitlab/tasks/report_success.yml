@@ -6,4 +6,4 @@
       https://gitlab.apps.{{ openshift_common_cluster_domain }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

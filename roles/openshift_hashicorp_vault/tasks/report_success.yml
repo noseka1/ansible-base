@@ -10,4 +10,4 @@
       {{ hvault_addr }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

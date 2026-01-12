@@ -22,4 +22,4 @@
       $ oc login --username cluster-admin {{ rosa_cluster_install_describe_json.api.url }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

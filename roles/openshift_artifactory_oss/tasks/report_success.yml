@@ -19,4 +19,4 @@
       Password: password
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

@@ -16,4 +16,4 @@
       You can browse to https://{{ rhacs_central_reencrypt_host }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

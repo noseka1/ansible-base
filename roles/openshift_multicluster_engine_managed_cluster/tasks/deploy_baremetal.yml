@@ -79,7 +79,7 @@
       {{ multicluster_engine_managed_cluster_infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ multicluster_engine_managed_cluster.cluster_nodes.keys() | length }} cluster host(s) to show up in the inventory
   kubernetes.core.k8s_info:

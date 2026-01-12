@@ -5,4 +5,4 @@
       A container image registry is avaialable at: {{ nexus_repository_manager_docker_repo_route.resources.0.spec.host }}
 
 - debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: '{{ msg.split("\n") }}'

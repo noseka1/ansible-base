@@ -1,1 +1,1 @@
-{{ multicluster_engine_managed_cluster_baremetal.install_config_overrides | to_yaml }}
+{{ multicluster_engine_managed_cluster.install_config_overrides | to_yaml }}

@@ -1,5 +1,5 @@
 ---
-{% for key, value in multicluster_engine_managed_cluster_baremetal.cluster_nodes_individual.items() %}
+{% for key, value in multicluster_engine_managed_cluster.cluster_nodes_individual.items() %}
 {% if value.bmh is defined %}
 ---
 apiVersion: metal3.io/v1alpha1

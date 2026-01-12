@@ -24,7 +24,7 @@
     hvault_secret_data:
       username: '{{ multicluster_engine_managed_cluster.cluster_nodes_shared.bmh.bmc.username }}'
       password: '{{ multicluster_engine_managed_cluster.cluster_nodes_shared.bmh.bmc.password }}'
-  when: multicluster_engine_managed_cluster_baremetal.cluster_nodes_shared.bmh.bmc is defined
+  when: multicluster_engine_managed_cluster.cluster_nodes_shared.bmh.bmc is defined
 
 - import_role:
     name: openshift_hashicorp_vault

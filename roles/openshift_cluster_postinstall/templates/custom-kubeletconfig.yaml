@@ -31,3 +31,19 @@ spec:
     # node will be 40.
     # Setting podsPerCore to 0 (which is the default) disables this limit:
     podsPerCore: 0
+    # The rate at which the Kubelet talks to the Kubernetes API server depends on queries per second (QPS) and burst values. The default values
+    # are 50 for kubeAPIQPS and 100 for kubeAPIBurst. Increasing the default kubeAPIBurst and kubeAPIQPS values can improve pod startup times in
+    # clusters with large nodes.
+    #
+    # On a VM-based clusters the default values 50 and 100 are recommended as we don’t want to overload the Kubernetes API server. On bare metal
+    # clusters, the control plane has enough hardware resources to accommodate the additional load on the Kubernetes API server.
+    #
+    # References:
+    # * OpenShift Virtualization - Tuning & Scaling Guide
+    #   https://access.redhat.com/articles/6994974
+    # * Let’s Speed up Kubernetes Again!
+    #   https://medium.com/@muthanagavamsi/lets-speed-up-kubernetes-again-666fa5de541c
+{% if openshift_common_infrastructure.status.platformStatus.type == 'BareMetal' %}
+    kubeAPIQPS: 100
+    kubeAPIBurst: 200
+{% endif %}

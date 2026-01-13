@@ -1,5 +1,6 @@
 - set_fact:
     openshift_cluster_install: '{{ openshift_cluster_install_gcp }}'
+    openshift_cluster_install_platform: GCP
 
 - import_tasks: gcp_setup.yml
   environment:

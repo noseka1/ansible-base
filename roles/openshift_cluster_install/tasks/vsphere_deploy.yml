@@ -1,4 +1,5 @@
 - set_fact:
     openshift_cluster_install: '{{ openshift_cluster_install_vsphere }}'
+    openshift_cluster_install_platform: VSPHERE
 
 - import_tasks: common_deploy.yml

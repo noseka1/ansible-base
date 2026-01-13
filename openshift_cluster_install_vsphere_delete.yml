@@ -3,6 +3,4 @@
   tasks:
     - import_role:
         name: openshift_cluster_install
-        tasks_from: delete.yml
-      vars:
-        openshift_cluster_install_platform: VSPHERE
+        tasks_from: vsphere_delete.yml

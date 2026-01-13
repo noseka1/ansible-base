@@ -1,0 +1,24 @@
+- name: Deploy acme-azure credentials request
+  kubernetes.core.k8s:
+    template:
+      - acme-azure/credentialsrequest.yaml
+
+- name: Grab generated credentials
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: acme-azure-credentials
+    namespace: '{{ certman_instance_namespace }}'
+  register: certman_azure_credentials
+  until: certman_azure_credentials.resources | length > 0
+  retries: 30
+  delay: 1
+
+- name: Deploy acme-azure certificate authority
+  kubernetes.core.k8s:
+    template:
+      - acme-azure/clusterissuer.yaml
+
+- import_tasks: certificate_verify.yml
+  vars:
+    certman_certificate_issuer_name: acme-azure

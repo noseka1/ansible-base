@@ -23,6 +23,10 @@ certman_acme_aws_region: ''
 certman_acme_aws_hosted_zone_id: ''
 certman_acme_aws_acme_email: ''
 
+certman_acme_azure_resource_group_name: ''
+certman_acme_azure_hosted_zone_name: ''
+certman_acme_azure_acme_email: ''
+
 certman_acme_gcp_cloud_dns_projectid: ''
 certman_acme_gcp_acme_email: ''
 

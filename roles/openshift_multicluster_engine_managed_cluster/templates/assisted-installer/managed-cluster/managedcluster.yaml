@@ -9,4 +9,6 @@ metadata:
 {% endif %}
   name: {{ mcemanagedcluster_info.cluster_name }}
 spec:
+  # This is required to allow the automatic import of the cluster into Hub.
+  # Without this setting the cluster remains in Detached state.
   hubAcceptsClient: true

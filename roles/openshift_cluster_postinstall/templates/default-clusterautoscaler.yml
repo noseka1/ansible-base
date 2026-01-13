@@ -1,4 +1,4 @@
-piVersion: autoscaling.openshift.io/v1
+apiVersion: autoscaling.openshift.io/v1
 kind: ClusterAutoscaler
 metadata:
   name: default

@@ -98,6 +98,11 @@
     - openshift_cluster_postinstall_configure_endpoint_certs
     - openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
+- import_tasks: endpoint_certs_azure.yml
+  when:
+    - openshift_cluster_postinstall_configure_endpoint_certs
+    - openshift_common_infrastructure.status.platformStatus.type == 'Azure'
+
 - import_tasks: endpoint_certs_gcp.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
@@ -106,7 +111,7 @@
 - import_tasks: endpoint_certs_private.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
-    - openshift_common_infrastructure.status.platformStatus.type not in ['AWS', 'GCP']
+    - openshift_common_infrastructure.status.platformStatus.type not in ['AWS', 'Azure', 'GCP']
 
 - import_tasks: cluster_info.yml
 

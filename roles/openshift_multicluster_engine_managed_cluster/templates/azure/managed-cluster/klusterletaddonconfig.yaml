@@ -11,8 +11,6 @@ spec:
     enabled: true
   certPolicyController:
     enabled: true
-  iamPolicyController:
-    enabled: true
   policyController:
     enabled: true
 {% if mcemanagedcluster_info.clusterwide_proxy %}

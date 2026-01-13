@@ -3,6 +3,8 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   name: {{ mcemanagedcluster_info.cluster_name }}
   namespace: {{ mcemanagedcluster_info.cluster_name }}
 spec:

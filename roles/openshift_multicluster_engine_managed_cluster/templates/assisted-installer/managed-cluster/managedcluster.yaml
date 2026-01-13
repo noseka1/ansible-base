@@ -1,6 +1,8 @@
 apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     name: {{ mcemanagedcluster_info.cluster_name }}
     vendor: OpenShift

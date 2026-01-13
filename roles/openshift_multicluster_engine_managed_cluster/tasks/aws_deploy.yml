@@ -1,3 +1,6 @@
+- set_fact:
+    mcemanagedcluster_info: '{{ mcemanagedcluster_aws }}'
+
 - import_tasks: rhacm_detect.yml
 
 - import_tasks: prereqs_deploy.yml

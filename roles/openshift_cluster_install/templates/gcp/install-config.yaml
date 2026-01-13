@@ -23,7 +23,7 @@ compute:
       - {{ openshift_cluster_install.gcp_region }}-a
       - {{ openshift_cluster_install.gcp_region }}-b
       - {{ openshift_cluster_install.gcp_region }}-c
-  replicas: 3
+  replicas: {{ openshift_cluster_install.data_plane_replicas }}
 networking:
   clusterNetwork:
   - cidr: {{ openshift_cluster_install.cluster_network_cidr }}

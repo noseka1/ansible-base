@@ -5,6 +5,7 @@ openshift_cluster_install_aws:
   channel: stable-4.20
   version: latest
   control_plane_replicas: 1
+  data_plane_replicas: 3
   network_type: OVNKubernetes
   cluster_network_cidr: 10.128.0.0/14
   service_network_cidr: 172.30.0.0/16
@@ -19,6 +20,7 @@ openshift_cluster_install_gcp:
   channel: stable-4.20
   version: latest
   control_plane_replicas: 1
+  data_plane_replicas: 3
   network_type: OVNKubernetes
   cluster_network_cidr: 10.128.0.0/14
   service_network_cidr: 172.30.0.0/16
@@ -35,8 +37,8 @@ openshift_cluster_install_azure:
   network_type: OVNKubernetes
   cluster_network_cidr: 10.128.0.0/14
   service_network_cidr: 172.30.0.0/16
-  data_plane_replicas: 2
   control_plane_replicas: 3
+  data_plane_replicas: 2
   azure_client_id: XXXX-XXXX-XXXX-XXXX-XXXX
   azure_secret: XXXXX_XXXXX
   azure_tenant_id: redhat0.onmicrosoft.com
@@ -54,8 +56,8 @@ openshift_cluster_install_vsphere:
   base_domain: dynamic.opentlc.com
   channel: stable-4.20
   version: latest
-  data_plane_replicas: 0
   control_plane_replicas: 3
+  data_plane_replicas: 0
   api_vip: 192.168.123.201
   ingress_vip: 192.168.123.202
   network_type: OVNKubernetes

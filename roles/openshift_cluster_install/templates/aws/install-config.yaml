@@ -12,7 +12,7 @@ controlPlane:
 compute:
 - hyperthreading: Enabled
   name: worker
-  replicas: 3
+  replicas: {{ openshift_cluster_install.data_plane_replicas }}
   platform:
     aws:
       type: m6i.xlarge

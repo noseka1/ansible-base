@@ -36,6 +36,12 @@ spec:
   resourceRequirements:
     # CPU overcommit ratio (default is 10). Set it to 1 for no CPU overcommit.
     vmiCPUAllocationRatio: 10
+  # Apply the scalable tuning parameters recommended for large scale "High Burst" scenarios (i.e. creating many VMs at once or in large batches).
+  # The highBurst profile applies tested and safe QPS and burst values for all Virt components.
+  # See also:
+  # OpenShift Virtualization - Tuning & Scaling Guide
+  # https://access.redhat.com/articles/6994974
+  tuningPolicy: highBurst
   workloads:
     nodePlacement:
       tolerations:

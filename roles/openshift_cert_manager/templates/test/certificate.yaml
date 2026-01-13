@@ -8,6 +8,6 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: {{ certman_certificate_issuer_name }}
-  commonName: {{ certman_certificate_dns_name }}
+  commonName: '{{ certman_certificate_dns_name }}'
   dnsNames:
-  - {{ certman_certificate_dns_name }}
+  - '{{ certman_certificate_dns_name }}'

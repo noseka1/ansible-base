@@ -1,4 +1,4 @@
 - set_fact:
-    openshift_cluster_install: '{{ openshift_cluster_install_vsphere }}'
+    osclusterinstall_info: '{{ osclusterinstall_vsphere }}'
 
 - import_tasks: common_delete.yml

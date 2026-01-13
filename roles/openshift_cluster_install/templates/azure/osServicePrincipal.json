@@ -1,6 +1,6 @@
 {
-  "subscriptionId": "{{ openshift_cluster_install_azure.subscription_id }}",
-  "clientId": "{{ openshift_cluster_install_azure.azure_client_id }}",
-  "clientSecret": "{{ openshift_cluster_install_azure.azure_secret }}",
-  "tenantId": "{{ openshift_cluster_install_azure.azure_tenant_id }}"
+  "subscriptionId": "{{ osclusterinstall_azure.subscription_id }}",
+  "clientId": "{{ osclusterinstall_azure.azure_client_id }}",
+  "clientSecret": "{{ osclusterinstall_azure.azure_secret }}",
+  "tenantId": "{{ osclusterinstall_azure.azure_tenant_id }}"
 }

@@ -1,35 +1,35 @@
 apiVersion: v1
 metadata:
-  name: {{ openshift_cluster_install.cluster_name }}
-baseDomain: {{ openshift_cluster_install.base_domain }}
+  name: {{ osclusterinstall_info.cluster_name }}
+baseDomain: {{ osclusterinstall_info.base_domain }}
 controlPlane:
   hyperthreading: Enabled
   name: master
-  replicas: {{ openshift_cluster_install.control_plane_replicas }}
+  replicas: {{ osclusterinstall_info.control_plane_replicas }}
 compute:
 - hyperthreading: Enabled
   name: worker
-  replicas: {{ openshift_cluster_install.data_plane_replicas }}
+  replicas: {{ osclusterinstall_info.data_plane_replicas }}
 networking:
   clusterNetwork:
-  - cidr: {{ openshift_cluster_install.cluster_network_cidr }}
+  - cidr: {{ osclusterinstall_info.cluster_network_cidr }}
     hostPrefix: 23
   machineNetwork:
-  - cidr: {{ openshift_cluster_install.machine_network_cidr }}
-  networkType: {{ openshift_cluster_install.network_type }}
+  - cidr: {{ osclusterinstall_info.machine_network_cidr }}
+  networkType: {{ osclusterinstall_info.network_type }}
   serviceNetwork:
-  - {{ openshift_cluster_install.service_network_cidr }}
+  - {{ osclusterinstall_info.service_network_cidr }}
 platform:
   vsphere:
-    vCenter: '{{ openshift_cluster_install.vsphere_vcenter }}'
-    username: '{{ openshift_cluster_install.vsphere_username }}'
-    password: '{{ openshift_cluster_install.vsphere_password }}'
-    datacenter: '{{ openshift_cluster_install.vsphere_datacenter }}'
-    defaultDatastore: '{{ openshift_cluster_install.vsphere_default_datastore }}'
-    folder: '{{ openshift_cluster_install.vsphere_folder }}'
-    network: '{{ openshift_cluster_install.vsphere_network }}'
-    cluster: '{{ openshift_cluster_install.vsphere_cluster }}'
-    apiVIPs: [ '{{ openshift_cluster_install.api_vip }}' ]
-    ingressVIPs: [ '{{ openshift_cluster_install.ingress_vip }}' ]
+    vCenter: '{{ osclusterinstall_info.vsphere_vcenter }}'
+    username: '{{ osclusterinstall_info.vsphere_username }}'
+    password: '{{ osclusterinstall_info.vsphere_password }}'
+    datacenter: '{{ osclusterinstall_info.vsphere_datacenter }}'
+    defaultDatastore: '{{ osclusterinstall_info.vsphere_default_datastore }}'
+    folder: '{{ osclusterinstall_info.vsphere_folder }}'
+    network: '{{ osclusterinstall_info.vsphere_network }}'
+    cluster: '{{ osclusterinstall_info.vsphere_cluster }}'
+    apiVIPs: [ '{{ osclusterinstall_info.api_vip }}' ]
+    ingressVIPs: [ '{{ osclusterinstall_info.ingress_vip }}' ]
 pullSecret: '{{ redhat_cloud_pull_secret }}'
 sshKey: '{{ generic_ssh_key_pair.public_key }}'

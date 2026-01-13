@@ -1,33 +1,33 @@
 apiVersion: v1
 metadata:
-  name: {{ openshift_cluster_install.cluster_name }}
-baseDomain: {{ openshift_cluster_install.base_domain }}
+  name: {{ osclusterinstall_info.cluster_name }}
+baseDomain: {{ osclusterinstall_info.base_domain }}
 controlPlane:
   hyperthreading: Enabled
   name: master
-  replicas: {{ openshift_cluster_install.control_plane_replicas }}
+  replicas: {{ osclusterinstall_info.control_plane_replicas }}
   platform:
     azure: {}
 compute:
 - hyperthreading: Enabled
   name: worker
-  replicas: {{ openshift_cluster_install.data_plane_replicas }}
+  replicas: {{ osclusterinstall_info.data_plane_replicas }}
   platform:
     azure: {}
 networking:
   clusterNetwork:
-  - cidr: {{ openshift_cluster_install.cluster_network_cidr }}
+  - cidr: {{ osclusterinstall_info.cluster_network_cidr }}
     hostPrefix: 23
   machineCIDR: 10.0.0.0/16
-  networkType: {{ openshift_cluster_install.network_type }}
+  networkType: {{ osclusterinstall_info.network_type }}
   serviceNetwork:
-  - {{ openshift_cluster_install.service_network_cidr }}
+  - {{ osclusterinstall_info.service_network_cidr }}
 platform:
   azure:
-    region: {{ openshift_cluster_install.azure_region }}
-    baseDomainResourceGroupName: {{ openshift_cluster_install.base_domain_resource_group_name }}
-{% if openshift_cluster_install.resource_group_name is defined %}
-    resourceGroupName: {{ openshift_cluster_install.resource_group_name }}
+    region: {{ osclusterinstall_info.azure_region }}
+    baseDomainResourceGroupName: {{ osclusterinstall_info.base_domain_resource_group_name }}
+{% if osclusterinstall_info.resource_group_name is defined %}
+    resourceGroupName: {{ osclusterinstall_info.resource_group_name }}
 {% endif %}
     outboundType: Loadbalancer
 pullSecret: '{{ redhat_cloud_pull_secret }}'

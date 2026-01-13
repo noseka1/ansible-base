@@ -1,46 +1,46 @@
 - name: Check the install_complete timestamp
   stat:
-    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     get_checksum: false
     get_mime: false
-  register: openshift_cluster_install_complete
+  register: osclusterinstall_complete
 
 - debug:
     msg: >-
-      Found cluster installation timestamp in directory {{ openshift_cluster_install.config_dir }}, assuming that the
+      Found cluster installation timestamp in directory {{ osclusterinstall_info.config_dir }}, assuming that the
       cluster already exists, skipping the installation. If you are trying to reinstall the cluster, delete the cluster
       using an Ansible playbook before running this playbook.
 
   when:
-    - openshift_cluster_install_complete.stat.exists
+    - osclusterinstall_complete.stat.exists
 
 - name: Set target OpenShift version
   set_fact:
-    openshift_cluster_install_version_resolved: '{{ openshift_cluster_install.version }}'
+    osclusterinstall_version_resolved: '{{ osclusterinstall_info.version }}'
   when:
-    - openshift_cluster_install.version != 'latest'
-    - not openshift_cluster_install_complete.stat.exists
+    - osclusterinstall_info.version != 'latest'
+    - not osclusterinstall_complete.stat.exists
 
 - import_tasks: cluster_version.yml
   when:
-    - openshift_cluster_install.version == 'latest'
-    - not openshift_cluster_install_complete.stat.exists
+    - osclusterinstall_info.version == 'latest'
+    - not osclusterinstall_complete.stat.exists
 
 - import_tasks: cluster_installer.yml
   when:
-    - not openshift_cluster_install_complete.stat.exists
+    - not osclusterinstall_complete.stat.exists
 
 - import_tasks: cluster_install.yml
   when:
-    - not openshift_cluster_install_complete.stat.exists
+    - not osclusterinstall_complete.stat.exists
 
 - name: Create the timestamp
   file:
-    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     state: touch
     mode: '0644'
   when:
-    - not openshift_cluster_install_complete.stat.exists
+    - not osclusterinstall_complete.stat.exists
 
 - import_tasks: report_success.yml
 
@@ -48,6 +48,6 @@
     name: openshift_cluster_postinstall
     tasks_from: deploy.yml
   environment:
-    K8S_AUTH_KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
-    KUBECONFIG: '{{ openshift_cluster_install.config_dir }}/auth/kubeconfig'
-  when: openshift_cluster_install_run_postinstall
+    K8S_AUTH_KUBECONFIG: '{{ osclusterinstall_info.config_dir }}/auth/kubeconfig'
+    KUBECONFIG: '{{ osclusterinstall_info.config_dir }}/auth/kubeconfig'
+  when: osclusterinstall_run_postinstall

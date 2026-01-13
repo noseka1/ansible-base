@@ -1,15 +1,15 @@
 - set_fact:
-    openshift_cluster_install: '{{ openshift_cluster_install_gcp }}'
-    openshift_cluster_install_platform: GCP
+    osclusterinstall_info: '{{ osclusterinstall_gcp }}'
+    osclusterinstall_platform: GCP
 
 - import_tasks: gcp_setup.yml
   environment:
     GCP_AUTH_KIND: serviceaccount
-    GCP_SERVICE_ACCOUNT_FILE: '{{ openshift_cluster_install_gcp.gcp_service_account_file }}'
-    GCP_PROJECT: '{{ openshift_cluster_install_gcp.gcp_projectid }}'
+    GCP_SERVICE_ACCOUNT_FILE: '{{ osclusterinstall_gcp.gcp_service_account_file }}'
+    GCP_PROJECT: '{{ osclusterinstall_gcp.gcp_projectid }}'
 
 - import_tasks: common_deploy.yml
   environment:
     GCP_AUTH_KIND: serviceaccount
-    GCP_SERVICE_ACCOUNT_FILE: '{{ openshift_cluster_install_gcp.gcp_service_account_file }}'
-    GCP_PROJECT: '{{ openshift_cluster_install_gcp.gcp_projectid }}'
+    GCP_SERVICE_ACCOUNT_FILE: '{{ osclusterinstall_gcp.gcp_service_account_file }}'
+    GCP_PROJECT: '{{ osclusterinstall_gcp.gcp_projectid }}'

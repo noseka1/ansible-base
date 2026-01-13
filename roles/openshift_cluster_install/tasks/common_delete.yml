@@ -1,23 +1,23 @@
 - name: Check the install_complete timestamp
   stat:
-    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     get_checksum: false
     get_mime: false
-  register: openshift_cluster_install_complete
+  register: osclusterinstall_complete
 
 - debug:
-    msg: You can follow the logs using 'tail -f {{ openshift_cluster_install.config_dir }}/.openshift_install.log'
-  when: openshift_cluster_install_complete.stat.exists
+    msg: You can follow the logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
+  when: osclusterinstall_complete.stat.exists
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift deletion to complete
   command: >-
     ./openshift-install destroy cluster --dir . --log-level debug
   args:
-    chdir: '{{ openshift_cluster_install.config_dir }}'
-  when: openshift_cluster_install_complete.stat.exists
+    chdir: '{{ osclusterinstall_info.config_dir }}'
+  when: osclusterinstall_complete.stat.exists
 
 - name: Delete the timestamp
   file:
-    path: '{{ openshift_cluster_install.config_dir }}/install_complete'
+    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     state: absent
-  when: openshift_cluster_install_complete.stat.exists
+  when: osclusterinstall_complete.stat.exists

@@ -1,4 +1,4 @@
-openshift_cluster_install_aws:
+osclusterinstall_aws:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster10'
   cluster_name: mycluster10
   base_domain: sandbox1422.opentlc.com
@@ -13,7 +13,7 @@ openshift_cluster_install_aws:
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-openshift_cluster_install_gcp:
+osclusterinstall_gcp:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster11'
   cluster_name: mycluster11
   base_domain: sandbox1422.opentlc.com
@@ -28,7 +28,7 @@ openshift_cluster_install_gcp:
   gcp_region: us-west1
   gcp_projectid: openenv-pvdbt
 
-openshift_cluster_install_azure:
+osclusterinstall_azure:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster14'
   cluster_name: ocp4-azure
   base_domain: XXXX.azure.redhatworkshops.io
@@ -50,7 +50,7 @@ openshift_cluster_install_azure:
   azure_config_path: '{{ lookup("env", "HOME") }}/.azure/osServicePrincipal.json'
   create_azure_dns_zone: false
 
-openshift_cluster_install_vsphere:
+osclusterinstall_vsphere:
   config_dir: '{{ lookup("env", "HOME") }}/lab/openshift/mycluster18'
   cluster_name: 8bcng
   base_domain: dynamic.opentlc.com
@@ -73,7 +73,7 @@ openshift_cluster_install_vsphere:
   vsphere_network: segment-sandbox-8bcng
   vsphere_cluster: /SDDC-Datacenter/host/Cluster-1
 
-openshift_cluster_install_installer_url: >-
-  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_cluster_install_version_resolved }}/openshift-install-linux-{{ openshift_cluster_install_version_resolved }}.tar.gz
+osclusterinstall_installer_url: >-
+  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/openshift-install-linux-{{ osclusterinstall_version_resolved }}.tar.gz
 
-openshift_cluster_install_run_postinstall: false
+osclusterinstall_run_postinstall: false

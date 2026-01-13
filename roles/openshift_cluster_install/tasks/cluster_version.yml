@@ -1,8 +1,8 @@
-- name: Retrieve latest version on {{ openshift_cluster_install.channel }} channel
-  script: ../openshift_cluster_upgrade/files/openshift_upgrade_path.py {{ openshift_cluster_install.channel }}
+- name: Retrieve latest version on {{ osclusterinstall_info.channel }} channel
+  script: ../openshift_cluster_upgrade/files/openshift_upgrade_path.py {{ osclusterinstall_info.channel }}
   changed_when: false
   register: upgrade_path
 
 - name: Set target OpenShift version
   set_fact:
-    openshift_cluster_install_version_resolved: '{{ upgrade_path.stdout_lines[0] }}'
+    osclusterinstall_version_resolved: '{{ upgrade_path.stdout_lines[0] }}'

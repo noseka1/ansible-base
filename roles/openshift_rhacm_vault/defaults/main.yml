@@ -1,5 +1,0 @@
-rhacm_vault_cluster:
-  base_domain: mycluster1.example.com
-  aws_region: us-east-2
-  aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
-  aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

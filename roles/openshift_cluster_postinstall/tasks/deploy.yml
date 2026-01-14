@@ -30,8 +30,8 @@
 - import_tasks: deploy_infra_nodes.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
 
-- import_tasks: enable_autoscaling.yml
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+- import_tasks: cluster_autoscaling.yml
+  when: openshift_common_infrastructure.status.platformStatus.type in ['AWS', 'Azure', 'GCP']
 
 - import_tasks: configure_machine_healthcheck.yml
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'

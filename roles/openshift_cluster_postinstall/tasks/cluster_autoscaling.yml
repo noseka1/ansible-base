@@ -1,6 +1,6 @@
 - name: Create cluster autoscaler
   kubernetes.core.k8s:
-    template: default-clusterautoscaler.yml
+    template: autoscaling/clusterautoscaler.yml
 
 - name: Set ocpost_cluster_id
   set_fact:
@@ -15,4 +15,4 @@
 
 - name: Enable autoscaling for machinesets
   kubernetes.core.k8s:
-    template: machineautoscaler.yml
+    template: autoscaling/machineautoscaler.yml

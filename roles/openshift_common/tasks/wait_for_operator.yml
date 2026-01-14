@@ -1,15 +1,3 @@
-- name: Retrieve subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }}
-  kubernetes.core.k8s_info:
-    api_version: operators.coreos.com/v1alpha1
-    kind: Subscription
-    name: '{{ oscomm_subscription_name }}'
-    namespace: '{{ oscomm_subscription_namespace }}'
-  register: oscomm_operator_subscription
-  until:
-    - oscomm_operator_subscription.resources.0.status is defined
-  retries: 60
-  delay: 1
-
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for subscription {{ oscomm_subscription_namespace }}/{{ oscomm_subscription_name }} to deploy
   kubernetes.core.k8s_info:
     api_version: operators.coreos.com/v1alpha1
@@ -19,7 +7,7 @@
   register: oscomm_operator_subscription
   until:
     - oscomm_operator_subscription.resources.0.status.installedCSV is defined
-  retries: 60
+  retries: 120
   delay: 1
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for the csv {{ oscomm_subscription_namespace }}/{{ oscomm_operator_subscription.resources.0.status.installedCSV }} to deploy

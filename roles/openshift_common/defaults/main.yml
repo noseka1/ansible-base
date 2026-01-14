@@ -1,8 +1,8 @@
-add_machineset_role: worker
-add_machineset_instance_type: m6i.large
-add_machineset_taints: []
-add_machineset_labels: {}
-add_machineset_nodes_per_zone: 1
-add_machineset_availability_zones: [ a, b, c ]
-add_machineset_nodes_total: '{{ (add_machineset_availability_zones | length) * add_machineset_nodes_per_zone }}'
-add_machineset_retries: 120
+oscommon_add_machineset_role: worker
+oscommon_add_machineset_instance_type: m6i.large
+oscommon_add_machineset_taints: []
+oscommon_add_machineset_labels: {}
+oscommon_add_machineset_nodes_per_zone: 1
+oscommon_add_machineset_availability_zones: [ a, b, c ]
+oscommon_add_machineset_nodes_total: '{{ (oscommon_add_machineset_availability_zones | length) * oscommon_add_machineset_nodes_per_zone }}'
+oscommon_add_machineset_retries: 120

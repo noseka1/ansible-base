@@ -3,29 +3,29 @@ kind: MachineSet
 metadata:
   labels:
     machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-  name: {{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}
+  name: {{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}
   namespace: openshift-machine-api
 spec:
-  replicas: {{ add_machineset_nodes_per_zone }}
+  replicas: {{ oscommon_add_machineset_nodes_per_zone }}
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-      machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}
+      machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}
   template:
     metadata:
       labels:
         machine.openshift.io/cluster-api-cluster: {{ cluster_id }}
-        machine.openshift.io/cluster-api-machine-role: {{ add_machineset_role }}
-        machine.openshift.io/cluster-api-machine-type: {{ add_machineset_role }}
-        machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}
+        machine.openshift.io/cluster-api-machine-role: {{ oscommon_add_machineset_role }}
+        machine.openshift.io/cluster-api-machine-type: {{ oscommon_add_machineset_role }}
+        machine.openshift.io/cluster-api-machineset: {{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}
     spec:
       metadata:
-        labels: {{ add_machineset_labels | to_json }}
-      taints: {{ add_machineset_taints | to_json }}
+        labels: {{ oscommon_add_machineset_labels | to_json }}
+      taints: {{ oscommon_add_machineset_taints | to_json }}
       providerSpec:
         value:
           ami:
-            id: {{ add_machineset_ami_id }}
+            id: {{ oscommon_add_machineset_ami_id }}
           apiVersion: machine.openshift.io/v1beta1
           blockDevices:
           - ebs:
@@ -40,7 +40,7 @@ spec:
           deviceIndex: 0
           iamInstanceProfile:
             id: {{ cluster_id }}-worker-profile
-          instanceType: {{ add_machineset_instance_type }}
+          instanceType: {{ oscommon_add_machineset_instance_type }}
           kind: AWSMachineProviderConfig
           placement:
             availabilityZone: {{ aws_region }}{{ item }}

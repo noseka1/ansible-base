@@ -1,11 +1,11 @@
 - name: Delete GPU Nodes MachineSet
   import_role:
     name: openshift_common
-    tasks_from: delete_machineset.yml
+    tasks_from: machineset_delete.yml
   vars:
-    add_machineset_role: gpu
-    add_machineset_availability_zones: '{{ ngpu_availability_zones }}'
-    add_machineset_nodes_per_zone: '{{ ngpu_nodes_per_zone }}'
+    oscommon_add_machineset_role: gpu
+    oscommon_add_machineset_availability_zones: '{{ ngpu_availability_zones }}'
+    oscommon_add_machineset_nodes_per_zone: '{{ ngpu_nodes_per_zone }}'
 
 - name: Delete PCI passthrough for GPU nodes
   kubernetes.core.k8s:

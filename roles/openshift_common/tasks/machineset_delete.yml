@@ -12,8 +12,8 @@
   kubernetes.core.k8s:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: '{{ cluster_id }}-{{ add_machineset_role }}-{{ aws_region }}{{ item }}'
+    name: '{{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}'
     namespace: openshift-machine-api
     wait: true
     state: absent
-  loop: '{{ add_machineset_availability_zones }}'
+  loop: '{{ oscommon_add_machineset_availability_zones }}'

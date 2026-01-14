@@ -5,13 +5,13 @@
 - name: Deploy bare metal nodes machineset
   import_role:
     name: openshift_common
-    tasks_from: add_machineset.yml
+    tasks_from: machineset_deploy.yml
   vars:
-    add_machineset_role: baremetal
-    add_machineset_instance_type: '{{ osvirt_aws.instance_type }}'
-    add_machineset_availability_zones: '{{ osvirt_aws.availability_zones }}'
-    add_machineset_nodes_per_zone: '{{ osvirt_aws.nodes_per_zone }}'
-    add_machineset_labels:
+    oscommon_add_machineset_role: baremetal
+    oscommon_add_machineset_instance_type: '{{ osvirt_aws.instance_type }}'
+    oscommon_add_machineset_availability_zones: '{{ osvirt_aws.availability_zones }}'
+    oscommon_add_machineset_nodes_per_zone: '{{ osvirt_aws.nodes_per_zone }}'
+    oscommon_add_machineset_labels:
       node-role.kubernetes.io/baremetal: ""
-    add_machineset_retries: 300
+    oscommon_add_machineset_retries: 300
   when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'

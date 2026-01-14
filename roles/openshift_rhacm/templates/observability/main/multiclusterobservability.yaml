@@ -8,6 +8,15 @@ spec:
       retentionResolution1h: 30d # How long to retain samples of 1 hour in bucket
       retentionResolution5m: 14d
       retentionResolutionRaw: 5d
+  capabilities:
+    platform:
+      analytics:
+        # Enable RightSizing Recommendation dashboards in the RHACM's Grafana
+        # See also https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.15/html-single/observability/index#optimize-work-right-size
+        namespaceRightSizingRecommendation:
+          enabled: true
+        virtualizationRightSizingRecommendation:
+          enabled: true
   # Observability instance size, allowed values: default, minimal, small, medium,
   # large, xlarge, 2xlarge, 4xlarge
   instanceSize: {{ rhacm_observability_instance_size }}

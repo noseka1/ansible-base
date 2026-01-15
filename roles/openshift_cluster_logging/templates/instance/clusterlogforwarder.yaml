@@ -14,6 +14,7 @@ spec:
     resources:
       limits:
         cpu: "6"
+        # Higher memory limit to prevent collector pods from getting OOMKilled
         memory: 8Gi
   outputs:
 {% if clusterlog_forward_to_loki %}

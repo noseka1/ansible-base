@@ -5,4 +5,4 @@
 - name: Set openshift_common_machineconfiguration_exists
   set_fact:
     openshift_common_machineconfiguration_exists: >-
-      {{ openshift_common_cluster_version_majorminor is version('4.17', '>=', strict=true) }}
+      {{ oscommon_cluster_version_majorminor is version('4.17', '>=', strict=true) }}

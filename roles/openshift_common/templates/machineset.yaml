@@ -49,7 +49,7 @@ spec:
           - filters:
             - name: tag:Name
               values:
-{% if openshift_common_cluster_version_majorminor is version('4.16', '<', strict=true) %}
+{% if oscommon_cluster_version_majorminor is version('4.16', '<', strict=true) %}
               - {{ oscommon_add_machineset_cluster_id }}-worker-sg
 {% else %}
               - {{ oscommon_add_machineset_cluster_id }}-node
@@ -62,7 +62,7 @@ spec:
             filters:
             - name: tag:Name
               values:
-{% if openshift_common_cluster_version_majorminor is version('4.16', '<', strict=true) %}
+{% if oscommon_cluster_version_majorminor is version('4.16', '<', strict=true) %}
               - {{ oscommon_add_machineset_cluster_id }}-private-{{ oscommon_add_machineset_aws_region }}{{ item }}
 {% else %}
               - {{ oscommon_add_machineset_cluster_id }}-subnet-private-{{ oscommon_add_machineset_aws_region }}{{ item }}

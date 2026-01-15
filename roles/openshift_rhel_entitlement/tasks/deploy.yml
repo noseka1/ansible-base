@@ -17,7 +17,7 @@
 
 - set_fact:
     openshift_rhel_entitlement_repo_file: redhat9.repo
-  when: openshift_common_cluster_version_majorminor is version('4.13', '>=', strict=true)
+  when: oscommon_cluster_version_majorminor is version('4.13', '>=', strict=true)
 
 - name: Configure RHEL entitlement for cluster nodes
   kubernetes.core.k8s:

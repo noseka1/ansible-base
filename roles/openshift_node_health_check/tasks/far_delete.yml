@@ -9,14 +9,14 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/fence-agents-remediation/shared'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/fence-agents-remediation/shared'
 
 - include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/fence-agents-remediation/node/{{ item.key }}'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/fence-agents-remediation/node/{{ item.key }}'
   loop: '{{ fenceagents_remediation_node_parameters | dict2items }}'
   loop_control:
     label: '{{ item.key }}'

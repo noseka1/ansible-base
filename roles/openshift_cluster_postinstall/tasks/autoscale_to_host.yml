@@ -1,6 +1,6 @@
 - name: Set cluster_id
   set_fact:
-    cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+    cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets
   kubernetes.core.k8s_info:

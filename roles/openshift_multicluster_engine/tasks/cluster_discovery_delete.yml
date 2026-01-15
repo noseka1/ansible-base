@@ -9,4 +9,4 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/cluster-discovery/host-inventory-creds'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/cluster-discovery/host-inventory-creds'

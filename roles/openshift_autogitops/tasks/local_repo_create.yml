@@ -5,7 +5,7 @@
     gitea_repo_name: '{{ autogitops_git_repo_name }}'
 
 - set_fact:
-    autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ openshift_common_cluster_domain }}'
+    autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ oscommon_cluster_domain }}'
 
 - name: Cluster local git directory
   debug:
@@ -21,6 +21,6 @@
   git:
     repo: '{{ gitea_repo_url_creds }}'
     dest: '{{ autogitops_git_dir }}'
-    version: 'ag-{{ openshift_common_cluster_domain }}'
+    version: 'ag-{{ oscommon_cluster_domain }}'
     single_branch: true
     force: true

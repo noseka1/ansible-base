@@ -4,10 +4,10 @@
   loop:
     - cert_name: api-cert
       cert_namespace: openshift-config
-      cert_common_name: 'api.{{ openshift_common_cluster_domain }}'
+      cert_common_name: 'api.{{ oscommon_cluster_domain }}'
     - cert_name: wildcard-cert
       cert_namespace: openshift-ingress
-      cert_common_name: '*.apps.{{ openshift_common_cluster_domain }}'
+      cert_common_name: '*.apps.{{ oscommon_cluster_domain }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for certificates to become ready
   kubernetes.core.k8s_info:

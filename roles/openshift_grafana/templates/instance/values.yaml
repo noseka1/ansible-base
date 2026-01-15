@@ -3,7 +3,7 @@
 # Override this default Grafana version with a more recent version:
 baseImage: docker.io/grafana/grafana-oss:11.3.1
 
-consoleLinkHref: https://grafana-grafana.apps.{{ openshift_common_cluster_domain }}
+consoleLinkHref: https://grafana-grafana.apps.{{ oscommon_cluster_domain }}
 
 dashboards:
   # Import modern Kubernetes dashboards from https://github.com/dotdc/grafana-dashboards-kubernetes

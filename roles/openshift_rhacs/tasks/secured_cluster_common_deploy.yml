@@ -1,6 +1,6 @@
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
 
 - import_tasks: get_rhacs_central_host.yml
   when: rhacs_central_host | length == 0
@@ -24,7 +24,7 @@
     method: POST
     body_format: json
     body:
-      name: '{{ openshift_common_cluster_domain }}'
+      name: '{{ oscommon_cluster_domain }}'
     url_username: admin
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
@@ -46,7 +46,7 @@
     autogitops_app_dst_path: rhacs/secured-cluster
     autogitops_app_namespace: stackrox
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ openshift_common_cluster_domain }} to become healthy
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ oscommon_cluster_domain }} to become healthy
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/clusters'
     url_username: admin
@@ -55,8 +55,8 @@
     validate_certs: false
   register: get_clusters_result
   until:
-    - (get_clusters_result.json.clusters | selectattr("name", "equalto", openshift_common_cluster_domain) | length) == 1
-    - (get_clusters_result.json.clusters | selectattr("name", "equalto", openshift_common_cluster_domain) | first).healthStatus != None
-    - (get_clusters_result.json.clusters | selectattr("name", "equalto", openshift_common_cluster_domain) | first).healthStatus.overallHealthStatus == 'HEALTHY'
+    - (get_clusters_result.json.clusters | selectattr("name", "equalto", oscommon_cluster_domain) | length) == 1
+    - (get_clusters_result.json.clusters | selectattr("name", "equalto", oscommon_cluster_domain) | first).healthStatus != None
+    - (get_clusters_result.json.clusters | selectattr("name", "equalto", oscommon_cluster_domain) | first).healthStatus.overallHealthStatus == 'HEALTHY'
   retries: 120
   delay: 10

@@ -18,7 +18,7 @@
 
 - name: Retrieve AlertManager silences
   uri:
-    url: https://alertmanager-main-openshift-monitoring.apps.{{ openshift_common_cluster_domain }}/api/v2/silences
+    url: https://alertmanager-main-openshift-monitoring.apps.{{ oscommon_cluster_domain }}/api/v2/silences
     headers:
       Authorization: Bearer {{ oscommon_openshift_oauth_token }}
     status_code: [ 200 ]
@@ -51,7 +51,7 @@
 
 - name: Create/update silence {{ oscomm_silence_definition.createdBy }}
   uri:
-    url: https://alertmanager-main-openshift-monitoring.apps.{{ openshift_common_cluster_domain }}/api/v2/silences
+    url: https://alertmanager-main-openshift-monitoring.apps.{{ oscommon_cluster_domain }}/api/v2/silences
     method: POST
     headers:
       Authorization: Bearer {{ oscommon_openshift_oauth_token }}

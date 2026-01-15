@@ -15,7 +15,7 @@ spec:
         install: false
       global:
         hosts:
-          domain: apps.{{ openshift_common_cluster_domain }}
+          domain: apps.{{ oscommon_cluster_domain }}
           hostSuffix: null
         ingress:
           # Use OpenShift default ingress class

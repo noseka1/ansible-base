@@ -9,7 +9,7 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/splunk/instance/credentials'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/splunk/instance/credentials'
 
 - import_role:
     name: openshift_autogitops

@@ -4,7 +4,7 @@
 
 - name: Set ocpost_cluster_id
   set_fact:
-    ocpost_cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+    ocpost_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets
   kubernetes.core.k8s_info:

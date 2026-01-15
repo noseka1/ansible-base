@@ -6,4 +6,4 @@ spec:
   backgroundColor: {{ openshift_cluster_postinstall_cluster_banner.background_color }}
   color: '#ffffff'
   location: BannerTop
-  text: {{ openshift_common_cluster_domain }}
+  text: {{ oscommon_cluster_domain }}

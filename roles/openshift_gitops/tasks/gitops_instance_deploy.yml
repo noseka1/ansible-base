@@ -7,7 +7,7 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
 
 - name: Deploy Argo CD
   kubernetes.core.k8s:

@@ -28,7 +28,7 @@
       tags: smbcsi
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/smbcsi/share/smbcreds-{{ smbcsi_share_name }}'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/smbcsi/share/smbcreds-{{ smbcsi_share_name }}'
     hvault_secret_data:
       username: admin
       password: '{{ generic_user_password }}'

@@ -1,6 +1,6 @@
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
 
 - import_tasks: prereqs_deploy.yml
   tags: autogitops_prereqs
@@ -29,7 +29,7 @@
     tasks_from: root_deploy.yml
   vars:
     autogitops_app_dst_path: '{{ autogitops_root_name }}'
-    autogitops_app_namespace: ag-{{ openshift_common_cluster_domain | regex_replace('\.', '-') }}
+    autogitops_app_namespace: ag-{{ oscommon_cluster_domain | regex_replace('\.', '-') }}
 
 - import_role:
     name: openshift_hashicorp_vault

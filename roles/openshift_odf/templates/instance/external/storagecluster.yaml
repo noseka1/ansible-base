@@ -9,9 +9,9 @@ spec:
   labelSelector: {}
   managedResources:
     cephBlockPools: {}
-{% if odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db is defined %}
+{% if odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mcg_db is defined %}
   multiCloudGateway:
-    dbStorageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
+    dbStorageClassName: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mcg_db }}
 {% endif %}
   network:
     connections:

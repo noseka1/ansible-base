@@ -10,7 +10,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/aws/cloud-creds'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/aws/cloud-creds'
     hvault_secret_data:
       aws_access_key_id: '{{ mcemanagedcluster_info.aws_access_key_id }}'
       aws_secret_access_key: '{{ mcemanagedcluster_info.aws_secret_access_key }}'
@@ -20,7 +20,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/aws/install-config'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/aws/install-config'
     hvault_secret_data:
       install-config.yaml: '{{ lookup("template", "aws/install-config/install-config.yaml") }}'
 
@@ -29,7 +29,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/aws/pull-secret'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/aws/pull-secret'
     hvault_secret_data:
       .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
 
@@ -38,7 +38,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mce/managed-cluster/aws/ssh-private-key'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/aws/ssh-private-key'
     hvault_secret_data:
       ssh-privatekey: '{{ generic_ssh_key_pair.private_key }}'
 

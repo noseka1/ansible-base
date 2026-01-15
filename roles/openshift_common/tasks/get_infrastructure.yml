@@ -1,12 +1,19 @@
-- when: openshift_common_infrastructure is not defined
+- when: oscommon_infrastructure is not defined
   block:
     - name: Obtain cluster infrastructure info
       kubernetes.core.k8s_info:
         api_version: config.openshift.io/v1
         kind: Infrastructure
         name: cluster
-      register: openshift_common_infrastructure_result
+      register: oscommon_infrastructure_result
 
-    - name: Set openshift_common_infrastructure
+    - name: Set infrastructure info
       set_fact:
-        openshift_common_infrastructure: '{{ openshift_common_infrastructure_result.resources.0 }}'
+        oscommon_infrastructure: '{{ oscommon_infrastructure_result.resources.0 }}'
+        oscommon_cluster_url: >-
+          {{ oscommon_infrastructure_result.resources.0.status.apiServerURL }}
+        oscommon_cluster_domain: >-
+          {{ oscommon_infrastructure_result.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}
+
+    - debug:
+        var: oscommon_cluster_domain

@@ -2,8 +2,8 @@
 
 - name: Set cluster ID and AWS region
   set_fact:
-    oscommon_add_machineset_cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
-    oscommon_add_machineset_aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
+    oscommon_add_machineset_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
+    oscommon_add_machineset_aws_region: '{{ oscommon_infrastructure.status.platformStatus.aws.region }}'
 
 - name: Remove machinesets from the cluster
   kubernetes.core.k8s:

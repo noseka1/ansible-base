@@ -3,29 +3,29 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacs/central/central-db-password'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-db-password'
 
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacs/central/central-htpasswd'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-htpasswd'
 
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacs/central/scanner-db-password'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/scanner-db-password'
 
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/rhacs/central/central-default-tls-cert'
-  when: rhacs_central_default_tls_cert[openshift_common_cluster_domain] is defined
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-default-tls-cert'
+  when: rhacs_central_default_tls_cert[oscommon_cluster_domain] is defined
 
 - import_role:
     name: openshift_autogitops

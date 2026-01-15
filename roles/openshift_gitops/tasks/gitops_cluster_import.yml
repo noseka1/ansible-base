@@ -21,14 +21,14 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
 
-- name: Import local cluster {{ openshift_common_cluster_domain }}
+- name: Import local cluster {{ oscommon_cluster_domain }}
   kubernetes.core.k8s:
     template:
       - cluster-import/managed-cluster-secret.yaml
 
-- name: Create project for deploying to cluster {{ openshift_common_cluster_domain }}
+- name: Create project for deploying to cluster {{ oscommon_cluster_domain }}
   kubernetes.core.k8s:
     template:
       - cluster-import/cluster-appproject.yaml

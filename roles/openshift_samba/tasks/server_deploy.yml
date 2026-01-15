@@ -10,7 +10,7 @@
       tags: smbsrv
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/smbsrv/instance/myusers'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/smbsrv/instance/myusers'
     hvault_secret_data:
       myusers: |
         {

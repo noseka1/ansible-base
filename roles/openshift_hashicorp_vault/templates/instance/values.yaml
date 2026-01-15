@@ -28,4 +28,4 @@ vault:
   ui:
     enabled: true
 
-consoleLinkHref: https://{{ hvault_name }}-{{ hvault_namespace }}.apps.{{ openshift_common_cluster_domain }}
+consoleLinkHref: https://{{ hvault_name }}-{{ hvault_namespace }}.apps.{{ oscommon_cluster_domain }}

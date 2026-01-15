@@ -18,4 +18,4 @@
       - effect: NoSchedule
         key: node.ocs.openshift.io/storage
         value: "true"
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when: oscommon_infrastructure.status.platformStatus.type == 'AWS'

@@ -161,7 +161,7 @@
     body:
       alias: openshift-v4
       config:
-        baseUrl: '{{ openshift_common_infrastructure.status.apiServerURL }}'
+        baseUrl: '{{ oscommon_infrastructure.status.apiServerURL }}'
         clientId: keycloak-{{ rhbk_realm_name }}-broker
         clientSecret: keycloak-{{ rhbk_realm_name }}-broker
       enabled: true

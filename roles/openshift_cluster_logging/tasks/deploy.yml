@@ -52,7 +52,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/cluster-logging/instance/splunk-hec-token'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/cluster-logging/instance/splunk-hec-token'
     hvault_secret_data:
       hecToken: '{{ splunk_hec_token }}'
   when: clusterlog_forward_to_splunk

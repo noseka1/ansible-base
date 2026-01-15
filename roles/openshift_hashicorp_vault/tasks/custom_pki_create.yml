@@ -44,14 +44,14 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
 
 - name: Define role for generating certificates
   hashivault_write:
     secret: /mypki/roles/mycluster
     data:
       allowed_domains:
-        - '{{ openshift_common_cluster_domain }}'
+        - '{{ oscommon_cluster_domain }}'
         - example.com
       allow_subdomains: true
       max_ttl: '{{ 365 * 24 * 60 * 60 }}'

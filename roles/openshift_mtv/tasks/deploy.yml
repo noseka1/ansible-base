@@ -39,7 +39,7 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
   tags: mtv_provider
 
 - include_role:
@@ -49,7 +49,7 @@
       tags: mtv_provider
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mtv/provider/{{ item.name }}'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mtv/provider/{{ item.name }}'
     hvault_secret_data:
       insecureSkipVerify: '{{ item.insecure_skip_verify }}'
       password: '{{ item.password }}'

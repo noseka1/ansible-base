@@ -7,10 +7,6 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
-
-- import_role:
-    name: openshift_common
     tasks_from: get_infrastructure.yml
 
 - import_role:
@@ -22,23 +18,23 @@
     tasks_from: get_provisioning.yml
 
 - import_tasks: configure_images_mirrors.yml
-  when: openshift_cluster_postinstall_image_mirrors[openshift_common_cluster_domain] is defined
+  when: openshift_cluster_postinstall_image_mirrors[oscommon_cluster_domain] is defined
 
 - import_tasks: etcd_encryption.yml
   when: openshift_cluster_postinstall_etcd_encryption
 
 - import_tasks: deploy_infra_nodes.yml
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: cluster_autoscaling.yml
-  when: openshift_common_infrastructure.status.platformStatus.type in ['AWS', 'Azure', 'GCP']
+  when: oscommon_infrastructure.status.platformStatus.type in ['AWS', 'Azure', 'GCP']
 
 - import_tasks: configure_machine_healthcheck.yml
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: autoscale_to_host.yml
   when:
-    - openshift_common_infrastructure.status.platformStatus.type == 'BareMetal'
+    - oscommon_infrastructure.status.platformStatus.type == 'BareMetal'
     - openshift_common_provisioning_exists
 
 - import_tasks: configure_ingresscontroller.yml
@@ -96,22 +92,22 @@
 - import_tasks: endpoint_certs_aws.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
-    - openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+    - oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: endpoint_certs_azure.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
-    - openshift_common_infrastructure.status.platformStatus.type == 'Azure'
+    - oscommon_infrastructure.status.platformStatus.type == 'Azure'
 
 - import_tasks: endpoint_certs_gcp.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
-    - openshift_common_infrastructure.status.platformStatus.type == 'GCP'
+    - oscommon_infrastructure.status.platformStatus.type == 'GCP'
 
 - import_tasks: endpoint_certs_private.yml
   when:
     - openshift_cluster_postinstall_configure_endpoint_certs
-    - openshift_common_infrastructure.status.platformStatus.type not in ['AWS', 'Azure', 'GCP']
+    - oscommon_infrastructure.status.platformStatus.type not in ['AWS', 'Azure', 'GCP']
 
 - import_tasks: cluster_info.yml
 

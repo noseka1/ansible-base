@@ -20,7 +20,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/aap/instance/aap-admin-password'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/aap/instance/aap-admin-password'
     hvault_secret_data:
       password: '{{ generic_user_password }}'
   tags: aap_instance

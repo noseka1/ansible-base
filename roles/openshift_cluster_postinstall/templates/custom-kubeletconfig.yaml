@@ -43,7 +43,7 @@ spec:
     #   https://access.redhat.com/articles/6994974
     # * Let’s Speed up Kubernetes Again!
     #   https://medium.com/@muthanagavamsi/lets-speed-up-kubernetes-again-666fa5de541c
-{% if openshift_common_infrastructure.status.platformStatus.type == 'BareMetal' %}
+{% if oscommon_infrastructure.status.platformStatus.type == 'BareMetal' %}
     kubeAPIQPS: 100
     kubeAPIBurst: 200
 {% endif %}

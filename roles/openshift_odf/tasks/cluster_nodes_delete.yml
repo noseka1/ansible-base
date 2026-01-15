@@ -10,4 +10,4 @@
     oscommon_add_machineset_role: odf
     oscommon_add_machineset_availability_zones: '{{ odf_aws.availability_zones }}'
     oscommon_add_machineset_nodes_per_zone: '{{ odf_aws.nodes_per_zone }}'
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when: oscommon_infrastructure.status.platformStatus.type == 'AWS'

@@ -28,7 +28,7 @@ spec:
         memory: 500Mi
 {% endif %}
   centralEndpoint: {{ rhacs_central_host }}:443
-  clusterName: {{ openshift_common_cluster_domain }}
+  clusterName: {{ oscommon_cluster_domain }}
   perNode:
     collector:
       # Collection method is either EBPF, CORE_BPF, or NO_COLLECTION.

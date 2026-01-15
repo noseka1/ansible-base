@@ -19,18 +19,18 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-etcd-encryption-key'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-etcd-encryption-key'
 
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-pull-secret'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-pull-secret'
 
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-ssh-key'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-ssh-key'

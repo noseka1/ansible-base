@@ -3,4 +3,4 @@ kind: ImageDigestMirrorSet
 metadata:
   name: custom-image-mirrors
 spec:
-  imageDigestMirrors: {{ openshift_cluster_postinstall_image_mirrors[openshift_common_cluster_domain] | from_yaml }}
+  imageDigestMirrors: {{ openshift_cluster_postinstall_image_mirrors[oscommon_cluster_domain] | from_yaml }}

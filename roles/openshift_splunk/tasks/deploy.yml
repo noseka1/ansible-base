@@ -18,7 +18,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/splunk/instance/credentials'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/splunk/instance/credentials'
     hvault_secret_data:
       #hec_token: CEEC6F85-10D4-41FD-B7BA-86026102C3B5
       #idxc_secret: AA8CUQWAwEaESgV7WSGAt6o3

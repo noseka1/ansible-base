@@ -33,13 +33,13 @@ spec:
       resources:
         requests:
           storage: 10Gi
-      storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mon_pvc_template }}
+      storageClassName: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mon_pvc_template }}
       volumeMode: Filesystem
     status: {}
 {% endif %}
-{% if odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db is defined %}
+{% if odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mcg_db is defined %}
   multiCloudGateway:
-    dbStorageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].mcg_db }}
+    dbStorageClassName: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mcg_db }}
 {% endif %}
 {% if odf_network is defined %}
   network:
@@ -61,13 +61,13 @@ spec:
         resources:
           requests:
             storage: '{{ odf_storage_device_set_storage_capacity }}'
-        storageClassName: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets }}
+        storageClassName: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].storage_device_sets }}
         volumeMode: Block
       status: {}
     name: ocs-deviceset
     placement: {}
-{% if odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses %}
-    portable: {{ odf_platform_to_storageclass[openshift_common_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses }}
+{% if odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses %}
+    portable: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].storage_device_sets in portable_storageclasses }}
 {% endif %}
     preparePlacement: {}
     replica: {{ odf_storage_device_set_replica }}

@@ -17,11 +17,11 @@
 
 - import_role:
     name: openshift_common
-    tasks_from: get_cluster_domain.yml
+    tasks_from: get_infrastructure.yml
   tags: gitlab_instance
 
 - set_fact:
-    gitlab_hostname: gitlab.apps.{{ openshift_common_cluster_domain }}
+    gitlab_hostname: gitlab.apps.{{ oscommon_cluster_domain }}
   tags: gitlab_instance
 
 - import_role:

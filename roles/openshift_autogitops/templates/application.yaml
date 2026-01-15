@@ -7,7 +7,7 @@ metadata:
   namespace: {{ autogitops_argocd_namespace }}
 spec:
   destination:
-    name: {{ openshift_common_cluster_domain }}
+    name: {{ oscommon_cluster_domain }}
     namespace: {{ autogitops_app_namespace | default('""', true) }}
   info:
   - name: creator
@@ -16,7 +16,7 @@ spec:
   source:
     path: {{ autogitops_app_dst_path }}
     repoURL: {{ gitea_repo_url_plain }}
-    targetRevision: ag-{{ openshift_common_cluster_domain }}
+    targetRevision: ag-{{ oscommon_cluster_domain }}
     directory:
       recurse: true
   syncPolicy:

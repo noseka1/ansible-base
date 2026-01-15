@@ -14,4 +14,4 @@
     oscommon_add_machineset_labels:
       node-role.kubernetes.io/baremetal: ""
     oscommon_add_machineset_retries: 300
-  when: openshift_common_infrastructure.status.platformStatus.type == 'AWS'
+  when: oscommon_infrastructure.status.platformStatus.type == 'AWS'

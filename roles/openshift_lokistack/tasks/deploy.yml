@@ -39,7 +39,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/{[ loki_instance_app_prefix }}lokistack/instance/loki-s3'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/{[ loki_instance_app_prefix }}lokistack/instance/loki-s3'
     hvault_secret_data:
       access_key_id: admin
       access_key_secret: '{{ generic_user_password }}'

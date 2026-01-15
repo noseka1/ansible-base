@@ -6,7 +6,7 @@ AUTHENTICATION_TYPE: Database
 DISTRIBUTED_STORAGE_CONFIG:
   default:
   - RHOCSStorage
-  - hostname: minio-api-{{ quay_instance_namespace }}-minio.apps.{{ openshift_common_cluster_domain }}
+  - hostname: minio-api-{{ quay_instance_namespace }}-minio.apps.{{ oscommon_cluster_domain }}
     port: 443
     is_secure: true
     access_key: admin

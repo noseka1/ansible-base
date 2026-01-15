@@ -6,6 +6,6 @@
     name: openshift_auto_approve_csr
     tasks_from: deploy.yml
   when: >-
-    openshift_common_infrastructure.status.platformStatus.type == 'None' or
-    (openshift_common_infrastructure.status.platformStatus.type == 'BareMetal' and
+    oscommon_infrastructure.status.platformStatus.type == 'None' or
+    (oscommon_infrastructure.status.platformStatus.type == 'BareMetal' and
       not openshift_common_provisioning_exists)

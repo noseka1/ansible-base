@@ -12,7 +12,7 @@
       tags: mtv_provider
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: '{{ openshift_common_cluster_domain }}/mtv/provider/{{ item.name }}'
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mtv/provider/{{ item.name }}'
   loop: '{{ mtv_providers }}'
   tags: mtv_provider
 

@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: loki-alerts
-  namespace: {{ loki_operator_namespace }}
+  namespace: openshift-operators-redhat
 spec:
   groups:
   - name: LokiRateLimitAlerts

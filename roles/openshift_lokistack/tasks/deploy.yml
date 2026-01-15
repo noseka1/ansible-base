@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: loki-operator
-    oscomm_subscription_namespace: '{{ loki_operator_namespace }}'
+    oscomm_subscription_namespace: openshift-operators-redhat
   tags: lokistack_operator
 
 - import_role:
@@ -12,7 +12,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: lokistack/operator
-    autogitops_app_namespace: '{{ loki_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators-redhat
   tags: lokistack_operator
 
 - import_role:

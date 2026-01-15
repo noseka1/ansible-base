@@ -2,17 +2,17 @@
 
 - name: Set cluster_id
   set_fact:
-    cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+    oscommon_add_machineset_cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
 
 - name: Set AWS region
   set_fact:
-    aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
+    oscommon_add_machineset_aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
 
 - name: Remove machinesets from the cluster
   kubernetes.core.k8s:
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: '{{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}'
+    name: '{{ oscommon_add_machineset_cluster_id }}-{{ oscommon_add_machineset_role }}-{{ oscommon_add_machineset_aws_region }}{{ item }}'
     namespace: openshift-machine-api
     wait: true
     state: absent

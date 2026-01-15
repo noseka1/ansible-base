@@ -1,12 +1,9 @@
 - import_tasks: get_infrastructure.yml
 
-- name: Set cluster_id
+- name: Set cluster_id and aws_region
   set_fact:
-    cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
-
-- name: Set AWS region
-  set_fact:
-    aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
+    oscommon_add_machineset_cluster_id: '{{ openshift_common_infrastructure.status.infrastructureName }}'
+    oscommon_add_machineset_aws_region: '{{ openshift_common_infrastructure.status.platformStatus.aws.region }}'
 
 - name: Retrieve existing machinesets
   kubernetes.core.k8s_info:
@@ -17,7 +14,7 @@
 
 - name: Set AWS ami id
   set_fact:
-    add_machineset_ami_id: '{{ oscommon_existing_machinesets_result.resources.0.spec.template.spec.providerSpec.value.ami.id }}'
+    oscommon_add_machineset_ami_id: '{{ oscommon_existing_machinesets_result.resources.0.spec.template.spec.providerSpec.value.ami.id }}'
 
 - import_role:
     name: openshift_common
@@ -33,7 +30,7 @@
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api
-    name: '{{ cluster_id }}-{{ oscommon_add_machineset_role }}-{{ aws_region }}{{ item }}'
+    name: '{{ oscommon_add_machineset_cluster_id }}-{{ oscommon_add_machineset_role }}-{{ oscommon_add_machineset_aws_region }}{{ item }}'
   register: oscommon_machineset_result
   until:
     - oscommon_machineset_result.resources.0.status.availableReplicas is defined

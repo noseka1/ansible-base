@@ -56,14 +56,6 @@ data:
       - key: node-role.kubernetes.io/infra
         effect: NoSchedule
 {% endif %}
-    k8sPrometheusAdapter:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: node-role.kubernetes.io/infra
-        effect: NoSchedule
-{% endif %}
     kubeStateMetrics:
 {% if openshift_cluster_postinstall_deploy_infra_nodes %}
       nodeSelector:

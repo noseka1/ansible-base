@@ -18,6 +18,8 @@ openshift_cluster_postinstall_kernel_arguments: []
 #  - amd_iommu=on
 
 openshift_cluster_postinstall_deploy_infra_nodes: false
+# Instance type m6i.2xlarge = 8 vCPUs, 32 GiB RAM
+openshift_cluster_postinstall_deploy_infra_nodes_instance_type: m6i.2xlarge
 
 # Configure container image mirrors by digest and tag
 openshift_cluster_postinstall_image_mirrors: {}

@@ -23,7 +23,7 @@
 - import_tasks: etcd_encryption.yml
   when: openshift_cluster_postinstall_etcd_encryption
 
-- import_tasks: deploy_infra_nodes.yml
+- import_tasks: infra_nodes.yml
   when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: cluster_autoscaling.yml

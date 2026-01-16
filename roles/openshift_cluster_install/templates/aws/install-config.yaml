@@ -8,6 +8,7 @@ controlPlane:
   replicas: {{ osclusterinstall_info.control_plane_replicas }}
   platform:
     aws:
+      # m6i.2xlarge = 8 vCPUs, 32 GiB RAM
       type: m6i.2xlarge
 compute:
 - hyperthreading: Enabled
@@ -15,7 +16,8 @@ compute:
   replicas: {{ osclusterinstall_info.data_plane_replicas }}
   platform:
     aws:
-      type: m6i.xlarge
+      # m6i.2xlarge = 8 vCPUs, 32 GiB RAM
+      type: m6i.2xlarge
 networking:
   clusterNetwork:
   - cidr: {{ osclusterinstall_info.cluster_network_cidr }}

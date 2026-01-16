@@ -56,7 +56,7 @@ spec:
     - configOverrides: {}
       enabled: false
       name: cnv-mtv-integrations-preview
-{% if rhacm_instance_place_on_infra_nodes %}
+{% if rhacm_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""
   tolerations:

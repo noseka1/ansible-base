@@ -13,13 +13,15 @@ spec:
   config:
     env:
     # HTTP proxy settings
+    # If no proxy settings are specified here then the cluster-wide proxy settings found in the status
+    # field of the Proxy resource are injected.
     - name: HTTP_PROXY
       value: ""
     - name: HTTPS_PROXY
       value: ""
     - name: NO_PROXY
       value: ""
-{% if rhacm_instance_place_on_infra_nodes %}
+{% if rhacm_place_on_infra_nodes %}
     nodeSelector:
       node-role.kubernetes.io/infra: ""
     tolerations:

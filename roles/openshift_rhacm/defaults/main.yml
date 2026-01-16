@@ -2,7 +2,7 @@ rhacm_operator_subscription_channel: ''
 rhacm_operator_subscription_starting_csv: ''
 
 # Should the RHACM components be installed on infra nodes?
-rhacm_instance_place_on_infra_nodes: false
+rhacm_place_on_infra_nodes: false
 
 # To deploy a highly-available RHACM change this value from Basic to High:
 rhacm_instance_availability: Basic

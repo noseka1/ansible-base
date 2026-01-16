@@ -17,7 +17,7 @@ spec:
   collector:
     resources:
       limits:
-        cpu: "6"
+        cpu: "2"
         # Higher memory limit to prevent collector pods from getting OOMKilled
         memory: 8Gi
   outputs:

@@ -10,3 +10,6 @@ loki_instance_app_prefix: ''
 # Defines the mode in which lokistack-gateway component will be configured
 # Known values are static, dynamic, openshift-network, openshift-logging
 loki_instance_tenants_mode: openshift-network
+
+# Should the Loki components be installed on infra nodes?
+loki_place_on_infra_nodes: false

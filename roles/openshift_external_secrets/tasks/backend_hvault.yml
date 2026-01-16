@@ -15,7 +15,7 @@
     api_version: v1
     kind: Secret
     name: '{{ extsecrets_hvault_name }}-test'
-    namespace: '{{ extsecrets_instance_namespace }}'
+    namespace: external-secrets
   register: extsecrets_test_secret
   until: extsecrets_test_secret.resources | length > 0
   retries: 120

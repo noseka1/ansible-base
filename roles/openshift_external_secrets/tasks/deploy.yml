@@ -2,8 +2,8 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ extsecrets_operator_subscription_name }}'
-    oscomm_subscription_namespace: '{{ extsecrets_operator_namespace }}'
+    oscomm_subscription_name: openshift-external-secrets-operator
+    oscomm_subscription_namespace: external-secrets-operator
   tags: extsecrets_operator
 
 - import_role:
@@ -12,15 +12,15 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: external-secrets/operator
-    autogitops_app_namespace: '{{ extsecrets_operator_namespace }}'
+    autogitops_app_namespace: external-secrets-operator
   tags: extsecrets_operator
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
-    oscomm_subscription_name: '{{ extsecrets_operator_subscription_name }}'
-    oscomm_subscription_namespace: '{{ extsecrets_operator_namespace }}'
+    oscomm_subscription_name: openshift-external-secrets-operator
+    oscomm_subscription_namespace: external-secrets-operator
   tags: extsecrets_operator
 
 - import_role:
@@ -29,21 +29,21 @@
   vars:
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: external-secrets/instance
-    autogitops_app_namespace: '{{ extsecrets_instance_namespace }}'
+    autogitops_app_namespace: external-secrets
   tags: extsecrets_instance
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ extsecrets_instance_name }}-webhook'
-    wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'
+    wait_for_deployment_name: external-secrets-cert-controller
+    wait_for_deployment_namespace: external-secrets
   tags: extsecrets_instance
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ extsecrets_instance_name }}-cert-controller'
-    wait_for_deployment_namespace: '{{ extsecrets_instance_namespace }}'
+    wait_for_deployment_name: external-secrets-webhook
+    wait_for_deployment_namespace: external-secrets
   tags: extsecrets_instance

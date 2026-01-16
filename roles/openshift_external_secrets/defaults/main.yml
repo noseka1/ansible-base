@@ -1,11 +1,8 @@
 extsecrets_operator_subscription_channel: ''
 extsecrets_operator_subscription_starting_csv: ''
-extsecrets_operator_subscription_name: external-secrets-operator
 
-extsecrets_operator_namespace: openshift-operators
-
-extsecrets_instance_namespace: external-secrets
-extsecrets_instance_name: external-secrets
+# Should the External Secrets components be installed on infra nodes?
+extsecrets_place_on_infra_nodes: false
 
 ################################
 # HashiCorp Vault secret store #

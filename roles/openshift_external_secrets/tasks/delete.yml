@@ -13,22 +13,21 @@
       - api_version: external-secrets.io/v1beta1
         kind: SecretStore
         namespace: extsecrets_instance_namespace
+  tags: extsecrets_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: external-secrets/instance
+  tags: extsecrets_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: external-secrets/operator
-
-- import_role:
-    name: openshift_common
-    tasks_from: prune_csvs.yml
+  tags: extsecrets_operator
 
 - import_role:
     name: openshift_common
@@ -41,3 +40,4 @@
       - api_version: admissionregistration.k8s.io/v1
         kind: ValidatingWebhookConfiguration
         name: secretstore-validate
+  tags: extsecrets_operator

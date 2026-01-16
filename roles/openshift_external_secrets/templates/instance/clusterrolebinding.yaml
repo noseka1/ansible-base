@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-secrets-allow-metrics-access-instance
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-secrets-operator-metrics-reader
+subjects:
+- kind: ServiceAccount
+  name: external-secrets
+  namespace: external-secrets
+- kind: ServiceAccount
+  name: external-secrets-cert-controller
+  namespace: external-secrets
+- kind: ServiceAccount
+  name: external-secrets-webhook
+  namespace: external-secrets

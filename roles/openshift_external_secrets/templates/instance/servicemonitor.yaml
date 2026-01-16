@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: external-secrets-metrics-monitor
+  namespace: external-secrets
+spec:
+  endpoints:
+  - interval: 60s
+    path: /metrics
+    port: metrics
+    scheme: http
+    scrapeTimeout: 30s
+  namespaceSelector:
+    matchNames:
+    - external-secrets
+  selector:
+    matchExpressions:
+    - key: app.kubernetes.io/name
+      operator: In
+      values:
+      - external-secrets
+      - external-secrets-cert-controller
+      - external-secrets-webhook
+    - key: app.kubernetes.io/instance
+      operator: In
+      values:
+      - external-secrets
+    - key: app.kubernetes.io/managed-by
+      operator: In
+      values:
+      - external-secrets-operator

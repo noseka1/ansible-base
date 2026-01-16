@@ -26,8 +26,8 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
-    name: '{{ extsecrets_instance_name }}-test'
-    namespace: '{{ extsecrets_instance_namespace }}'
+    name: external-secrets-test
+    namespace: external-secrets
   register: extsecrets_test_secret
   until: extsecrets_test_secret.resources | length > 0
   retries: 120

@@ -3,14 +3,14 @@
     tasks_from: delete_kubernetes_objects.yml
   vars:
     delete_kubernetes_objects:
-      - api_version: external-secrets.io/v1beta1
+      - api_version: external-secrets.io/v1
         kind: ClusterExternalSecret
-      - api_version: external-secrets.io/v1beta1
+      - api_version: external-secrets.io/v1
         kind: ClusterSecretStore
-      - api_version: external-secrets.io/v1beta1
+      - api_version: external-secrets.io/v1
         kind: ExternalSecret
         namespace: extsecrets_instance_namespace
-      - api_version: external-secrets.io/v1beta1
+      - api_version: external-secrets.io/v1
         kind: SecretStore
         namespace: extsecrets_instance_namespace
   tags: extsecrets_instance

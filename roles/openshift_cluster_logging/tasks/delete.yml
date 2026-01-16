@@ -3,6 +3,7 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: cluster-logging/event-router
+  when: clusterlog_deploy_eventrouter
   tags: clusterlog_event_router
 
 - import_role:

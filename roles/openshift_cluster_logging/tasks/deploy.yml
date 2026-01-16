@@ -74,6 +74,7 @@
     autogitops_app_src_path: templates/event-router
     autogitops_app_dst_path: cluster-logging/event-router
     autogitops_app_namespace: openshift-logging
+  when: clusterlog_deploy_eventrouter
   tags: clusterlog_event_router
 
 - import_tasks: report_success.yml

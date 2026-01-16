@@ -12,3 +12,6 @@ clusterlog_forward_to_syslog: false
 # Forward logs to Splunk. Use the openshift_splunk_deploy.yml playbook to install
 # the Splunk instance that will receive the logs.
 clusterlog_forward_to_splunk: false
+
+# Optionally, deploy event router
+clusterlog_deploy_eventrouter: false

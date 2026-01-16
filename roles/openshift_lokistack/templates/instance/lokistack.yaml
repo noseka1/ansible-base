@@ -23,6 +23,30 @@ spec:
         maxEntriesLimitPerQuery: 10000
         # MaxQuerySeries defines the maximum of unique series that is returned by a metric query.
         maxQuerySeries: 3000
+      # You can set retention rules globally, per-tenant, or both. If you configure both, tenant rules have precedence over global rules.
+      #
+      # Important: If there is no retention period defined on the S3 bucket or in the LokiStack custom resource (CR), then the logs are not pruned
+      # and they stay in the S3 bucket forever, which might fill up the s3 storage.
+      #
+      # For cost-effective log pruning, configure retention policies directly on the S3 bucket. Use the lifecycle management features of the S3 bucket
+      # to ensure automatic deletion of old logs. This also avoids extra processing from Loki and delete requests to S3.
+      #
+      # If the object storage does not support lifecycle policies, you must configure LokiStack to enforce retention internally. The supported
+      # retention period is up to 30 days.
+      #
+      # See also https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html/configuring_logging/configuring-lokistack-storage#logging-loki-retention_configuring-the-log-store
+      retention:
+        days: 30
+    tenants:
+      application:
+        retention:
+          days: 30
+      audit:
+        retention:
+          days: 30
+      infrastructure:
+        retention:
+          days: 30
   # Available sizes are 1x.demo, 1x.pico, 1x.extra-small, 1x.small, 1x.medium
   # For production systems, use 1x.small or 1x.medium
   # Link: https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html-single/configuring_logging/index#loki-sizing_configuring-the-log-store

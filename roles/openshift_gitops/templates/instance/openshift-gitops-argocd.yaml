@@ -186,3 +186,13 @@ spec:
       check: |
         {{ lookup('file', item.path, rstrip=false) | indent(8) }}
 {% endfor %}
+# As of GitOps operator version 1.19.0, this nodePlacement is ignored
+{% if gitops_place_on_infra_nodes %}
+  nodePlacement:
+    nodeSelector:
+      node-role.kubernetes.io/infra: ""
+    tolerations:
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
+{% endif %}

@@ -6,6 +6,9 @@ gitops_operator_namespace: openshift-gitops-operator
 # able to detect that OpenShift GitOps operator is installed on the cluster
 gitops_operator_name: openshift-gitops-operator
 
+# Should the Argo CD components be installed on infra nodes?
+gitops_place_on_infra_nodes: false
+
 gitops_instance_namespace: openshift-gitops
 gitops_instance_name: openshift-gitops
 

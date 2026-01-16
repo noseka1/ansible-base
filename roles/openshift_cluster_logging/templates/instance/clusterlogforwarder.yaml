@@ -61,10 +61,18 @@ spec:
 {% if clusterlog_forward_to_loki %}
   - name: loki-pipeline
     inputRefs:
+    #  Includes journald logs from nodes and logs from infrastructure containers
+    #  running in the following namespaces:
+    #  * default
+    #  * kube-*
+    #  * openshift-*
     - infrastructure
     - application
     #  By default cluster logging does NOT send audit logs to the internal store
-    #  because the internal store does not provide a secure storage
+    #  because the internal store does not provide a secure storage.
+    #
+    #  Includes audit logs from the OpenShift API server, Kubernetes API server audit logs,
+    #  ovn audit logs, and node audit logs from auditd (/var/log/audit/audit.log).
     - audit
     outputRefs:
     - loki

@@ -1,7 +1,11 @@
 efs_operator_subscription_channel: ''
 efs_operator_subscription_starting_csv: ''
 
-efs_namespace: openshift-cluster-csi-drivers
+# Create EFS file system instance on AWS
+efs_aws_manage: true
+efs_aws_access_key_id: ''
+efs_aws_secret_access_key: ''
 
+# Use existing EFS instance on AWS
 # Example file system id: fs-02e36f0c0a9f77036
 efs_aws_file_system_id: ''

@@ -1,0 +1,76 @@
+- assert:
+    that: efs_aws_access_key_id | length > 0
+    fail_msg: Variable 'efs_aws_access_key_id' must not be empty
+    quiet: true
+
+- assert:
+    that: efs_aws_secret_access_key | length > 0
+    fail_msg: Variable 'efs_aws_secret_access_key' must not be empty
+    quiet: true
+
+- import_role:
+    name: openshift_common
+    tasks_from: get_infrastructure.yml
+
+- name: Set cluster ID and AWS region
+  set_fact:
+    efs_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
+    efs_aws_region: '{{ oscommon_infrastructure.status.platformStatus.aws.region }}'
+
+- name: Retrieve OpenShift cluster VPC
+  amazon.aws.ec2_vpc_net_info:
+    filters:
+      'tag:Name': '{{ efs_cluster_id }}-vpc'
+    aws_access_key_id: '{{ efs_aws_access_key_id }}'
+    aws_secret_access_key: '{{ efs_aws_secret_access_key }}'
+  register: efs_vpc_result
+
+- name: Retrieve private subnets in {{ efs_vpc_result.vpcs.0.vpc_id }}
+  amazon.aws.ec2_vpc_subnet_info:
+    filters:
+      vpc-id: '{{ efs_vpc_result.vpcs.0.vpc_id }}'
+      'tag:Name': '{{ efs_cluster_id }}-subnet-private-{{ efs_aws_region }}*'
+    aws_access_key_id: '{{ efs_aws_access_key_id }}'
+    aws_secret_access_key: '{{ efs_aws_secret_access_key }}'
+  register: efs_subnets_result
+
+- name: Create security group that accepts NFS traffic on port 2049
+  amazon.aws.ec2_security_group:
+    name: myefs
+    description: Accept NFS traffic on port 2049
+    vpc_id: '{{ efs_vpc_result.vpcs.0.vpc_id }}'
+    region: '{{ efs_aws_region }}'
+    tags:
+      Name: myefs
+    rules:
+      - proto: tcp
+        ports:
+          - 2049
+        cidr_ip: 0.0.0.0/0
+        rule_desc: Allow all on port 2049
+    aws_access_key_id: '{{ efs_aws_access_key_id }}'
+    aws_secret_access_key: '{{ efs_aws_secret_access_key }}'
+  register: efs_security_group_result
+
+- name: Prepare targets list
+  shell:
+    cmd: |-
+      echo '{{ efs_subnets_result.subnets | default([]) | to_json }}' |
+      jq --compact-output '[.[]|{"subnet_id":.subnet_id,"security_groups":["{{ efs_security_group_result.group_id }}"]}]'
+  changed_when: false
+  register: efs_target_list
+
+- name: Deploy EFS on AWS
+  community.aws.efs:
+    name: myefs
+    encrypt: true
+    region: '{{ efs_aws_region }}'
+    tags:
+      Name: myefs
+    aws_access_key_id: '{{ efs_aws_access_key_id }}'
+    aws_secret_access_key: '{{ efs_aws_secret_access_key }}'
+    targets: '{{ efs_target_list.stdout | from_json }}'
+  register: efs_result
+
+- set_fact:
+    efs_aws_file_system_id: '{{ efs_result.efs.file_system_id }}'

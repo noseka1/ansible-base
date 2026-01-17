@@ -1,3 +1,7 @@
+- import_tasks: efs_deploy.yml
+  when: efs_aws_manage
+  tags: efs_aws_manage
+
 - import_role:
     name: openshift_common
     tasks_from: install_plan_approve

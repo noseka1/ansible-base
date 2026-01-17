@@ -3,19 +3,23 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: efs-csi/test-volume
+  tags: efs_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: efs-csi/instance
+  tags: efs_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: efs-csi/operator
+  tags: efs_operator
 
 - import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml
+  tags: efs_operator

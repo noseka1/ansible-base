@@ -4,6 +4,7 @@
   vars:
     oscomm_subscription_name: aws-efs-csi-driver-operator
     oscomm_subscription_namespace: openshift-cluster-csi-drivers
+  tags: efs_operator
 
 - import_role:
     name: openshift_autogitops
@@ -12,6 +13,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: efs-csi/operator
     autogitops_app_namespace: openshift-cluster-csi-drivers
+  tags: efs_operator
 
 - assert:
     that: efs_aws_file_system_id | length > 0
@@ -25,6 +27,7 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: efs-csi/instance
     autogitops_app_namespace: ''
+  tags: efs_instance
 
 - import_role:
     name: openshift_autogitops
@@ -33,3 +36,4 @@
     autogitops_app_src_path: templates/test-volume
     autogitops_app_dst_path: efs-csi/test-volume
     autogitops_app_namespace: openshift-cluster-csi-drivers
+  tags: efs_instance

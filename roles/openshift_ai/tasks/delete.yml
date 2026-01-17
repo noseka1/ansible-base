@@ -1,0 +1,13 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: osai/instance
+  tags: osai_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: osai/operator
+  tags: osai_operator

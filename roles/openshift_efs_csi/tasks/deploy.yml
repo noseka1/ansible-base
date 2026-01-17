@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: aws-efs-csi-driver-operator
-    oscomm_subscription_namespace: '{{ efs_namespace }}'
+    oscomm_subscription_namespace: openshift-cluster-csi-drivers
 
 - import_role:
     name: openshift_autogitops
@@ -11,7 +11,7 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: efs-csi/operator
-    autogitops_app_namespace: '{{ efs_namespace }}'
+    autogitops_app_namespace: openshift-cluster-csi-drivers
 
 - assert:
     that: efs_aws_file_system_id | length > 0
@@ -32,4 +32,4 @@
   vars:
     autogitops_app_src_path: templates/volume
     autogitops_app_dst_path: efs-csi/volume
-    autogitops_app_namespace: '{{ efs_namespace }}'
+    autogitops_app_namespace: openshift-cluster-csi-drivers

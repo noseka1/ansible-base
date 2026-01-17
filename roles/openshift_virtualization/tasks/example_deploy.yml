@@ -8,6 +8,7 @@
     - ocs-storagecluster-ceph-rbd-virtualization
     - ocs-external-storagecluster-ceph-rbd
     - rook-ceph-block-virtualization
+    - efs-csi
 
 - set_fact:
     osvirt_ocs_storageclasses_defs: >-
@@ -17,7 +18,7 @@
     osvirt_machine_eviction_strategy: LiveMigrate
     osvirt_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
     osvirt_machine_root_disk_storage_class_name: '{{ osvirt_ocs_storageclasses_defs.0.metadata.name }}'
-    osvirt_machine_root_disk_volume_mode: Block
+    osvirt_machine_root_disk_volume_mode: '{{ "Filesystem" if osvirt_ocs_storageclasses_defs.0.metadata.name in ["efs-csi"] else "Block" }}'
   when: osvirt_ocs_storageclasses_defs | length > 0
 
 - import_role:

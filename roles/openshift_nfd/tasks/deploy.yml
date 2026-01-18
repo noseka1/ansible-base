@@ -4,7 +4,7 @@
   vars:
     oscomm_subscription_name: nfd
     oscomm_subscription_namespace: openshift-nfd
-  tags: extsecrets_operator
+  tags: nfd_operator
 
 - import_role:
     name: openshift_autogitops
@@ -13,6 +13,7 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-feature-discovery/operator
     autogitops_app_namespace: openshift-nfd
+  tags: nfd_operator
 
 - import_role:
     name: openshift_autogitops
@@ -21,3 +22,4 @@
     autogitops_app_src_path: templates/instance
     autogitops_app_dst_path: node-feature-discovery/instance
     autogitops_app_namespace: openshift-nfd
+  tags: nfd_instance

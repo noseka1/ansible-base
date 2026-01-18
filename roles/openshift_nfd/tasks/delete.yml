@@ -3,9 +3,11 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: node-feature-discovery/instance
+  tags: nfd_instance
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: node-feature-discovery/operator
+  tags: nfd_operator

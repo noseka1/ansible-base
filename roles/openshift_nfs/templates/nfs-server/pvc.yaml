@@ -9,4 +9,6 @@ spec:
   resources:
     requests:
       storage: 100Gi
+{% if nfsserver_backing_volume_storageclass | length > 0 %}
   storageClassName: {{ nfsserver_backing_volume_storageclass }}
+{% endif %}

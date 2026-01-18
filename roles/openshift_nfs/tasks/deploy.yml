@@ -2,7 +2,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/nfs
+    autogitops_app_src_path: templates/nfs-server
     autogitops_app_dst_path: nfs-server/instance
     autogitops_app_namespace: '{{ nfsserver_namespace }}'
   tags: nfsserver
@@ -20,7 +20,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/csi/instance
+    autogitops_app_src_path: templates/nfs-csi/instance
     autogitops_app_dst_path: nfs-csi/instance
     autogitops_app_namespace: csi-driver-nfs
   tags: nfscsi_instance
@@ -41,7 +41,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/csi/storageclass
+    autogitops_app_src_path: templates/nfs-csi/storageclass
     autogitops_app_dst_path: nfs-csi/storageclass
     autogitops_app_namespace: csi-driver-nfs
   tags: nfscsi_storageclass

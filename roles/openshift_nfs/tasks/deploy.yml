@@ -22,7 +22,7 @@
   vars:
     autogitops_app_src_path: templates/csi/instance
     autogitops_app_dst_path: nfs-csi/instance
-    autogitops_app_namespace: '{{ nfscsi_namespace }}'
+    autogitops_app_namespace: csi-driver-nfs
   tags: nfscsi_instance
 
 - name: Check if default storage class exists
@@ -43,5 +43,5 @@
   vars:
     autogitops_app_src_path: templates/csi/storageclass
     autogitops_app_dst_path: nfs-csi/storageclass
-    autogitops_app_namespace: '{{ nfscsi_namespace }}'
+    autogitops_app_namespace: csi-driver-nfs
   tags: nfscsi_storageclass

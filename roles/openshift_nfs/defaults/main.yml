@@ -1,4 +1,4 @@
 nfsserver_namespace: nfs-server
 nfsserver_backing_volume_storageclass: local-hostpath
 
-nfscsi_version: v4.10.0
+nfscsi_helm_chart_version: v4.12.1

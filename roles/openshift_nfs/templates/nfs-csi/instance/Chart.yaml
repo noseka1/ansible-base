@@ -5,5 +5,5 @@ version: 0.1.0
 
 dependencies:
 - name: csi-driver-nfs
-  version: {{ nfscsi_version }}
+  version: {{ nfscsi_helm_chart_version }}
   repository: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts

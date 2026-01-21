@@ -1,4 +1,15 @@
 - import_role:
+    name: openshift_common
+    tasks_from: delete_kubernetes_objects.yml
+  vars:
+    delete_kubernetes_finalizers: true
+    delete_kubernetes_objects:
+      - api_version: build.openshift.io/v1
+        kind: Build
+        namespace: kmm-example
+  tags: kmm_example
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

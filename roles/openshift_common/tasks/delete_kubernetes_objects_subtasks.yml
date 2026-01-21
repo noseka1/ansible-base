@@ -6,6 +6,20 @@
     namespace: '{{ outer_item.namespace | default(omit) }}'
   register: existing_objects
 
+- name: Remove finalizer from {{ existing_objects.resources | length }} Kubernetes object(s)
+  kubernetes.core.k8s_json_patch:
+    api_version: '{{ outer_item.api_version }}'
+    kind: '{{ outer_item.kind }}'
+    name: '{{ item.metadata.name }}'
+    namespace: '{{ item.metadata.namespace | default(omit) }}'
+    patch:
+      - op: remove
+        path: /metadata/finalizers
+  when: delete_kubernetes_finalizers | default(false)
+  loop: '{{ existing_objects.resources }}'
+  loop_control:
+    label: '{{ outer_item.kind }} {{ item.metadata.namespace + "/" if item.metadata.namespace is defined else "" }}{{ item.metadata.name }}'
+
 - name: Delete {{ existing_objects.resources | length }} Kubernetes object(s)
   kubernetes.core.k8s:
     api_version: '{{ outer_item.api_version }}'

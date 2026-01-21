@@ -4,6 +4,7 @@
   vars:
     oscomm_subscription_name: kernel-module-management
     oscomm_subscription_namespace: openshift-kmm
+  tags: kmm_operator
 
 - import_role:
     name: openshift_autogitops
@@ -12,3 +13,28 @@
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: kmm/operator
     autogitops_app_namespace: openshift-kmm
+  tags: kmm_operator
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/kmm-example
+    autogitops_app_dst_path: kmm/kmm-example
+    autogitops_app_namespace: kmm-example
+  tags: kmm_example
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for kernel module to install on cluster nodes
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Node
+    label_selectors:
+      - node-role.kubernetes.io/worker=
+  register: kmm_node_result
+  until:
+    - kmm_node_result.resources | json_query('[?metadata.labels."kmm.node.kubernetes.io/kmm-example.kmm-ci-a.ready"!=nil]') | length
+      ==
+      kmm_node_result.resources | length
+  retries: 60
+  delay: 10
+  tags: kmm_example

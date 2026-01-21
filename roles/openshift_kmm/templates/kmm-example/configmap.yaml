@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-kmm-ci-a-dockerfile
+  namespace: kmm-example
+data:
+  dockerfile: |
+    {{ lookup('file', ansible_parent_role_paths.0 + '/files/Dockerfile', rstrip=false) | indent(4) }}

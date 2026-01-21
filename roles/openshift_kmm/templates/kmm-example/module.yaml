@@ -1,0 +1,26 @@
+apiVersion: kmm.sigs.x-k8s.io/v1beta1
+kind: Module
+metadata:
+  name: kmm-ci-a
+  namespace: kmm-example
+spec:
+  moduleLoader:
+    serviceAccountName: kmm-module-loader
+    container:
+      modprobe:
+        moduleName: kmm-ci-a
+        dirName: /opt
+      kernelMappings:
+      - regexp: '^.*'
+        containerImage: image-registry.openshift-image-registry.svc:5000/kmm-example/kmm-kmod-${KERNEL_FULL_VERSION}-v1.0
+        build:
+          dockerfileConfigMap:
+            name: build-kmm-ci-a-dockerfile
+        registryTLS:
+          insecureSkipTLSVerify: true
+  # Deploy on all worker nodes
+  selector:
+    node-role.kubernetes.io/worker: ""
+  # Ignore any taints on the node
+  tolerations:
+  - operator: Exists

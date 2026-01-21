@@ -1,0 +1,29 @@
+---
+# Privileges needed for the pod that is loading and unloading
+# the kernel module.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kmm-module-loader-scc
+  namespace: kmm-example
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
+subjects:
+- kind: ServiceAccount
+  name: kmm-module-loader
+---
+# Allow push/pull to internal OpenShift registry in this project
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kmm-module-loader-registry-editor
+  namespace: kmm-example
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: registry-editor
+subjects:
+- kind: ServiceAccount
+  name: kmm-module-loader

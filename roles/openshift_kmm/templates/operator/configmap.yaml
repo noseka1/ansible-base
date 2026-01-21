@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kmm-operator-manager-config
+  namespace: openshift-kmm
+data:
+  controller_config.yaml: |
+    job:
+      # Keep the build pod around for some time
+      gcDelay: 24h

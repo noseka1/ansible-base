@@ -8,22 +8,23 @@
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
-    wait_for_deployment_name: '{{ contour_operator_name }}'
-    wait_for_deployment_namespace: '{{ contour_operator_namespace }}'
+    wait_for_deployment_name: contour-operator
+    wait_for_deployment_namespace: contour-operator
 
-- name: Deploy Contour instance
-  kubernetes.core.k8s:
-    template:
-      - contour-ns.yaml
-      - contour-scc-rolebinding.yaml
-      - contour-contour.yaml
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: contour/instance
+    autogitops_app_namespace: contour
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ contour_instance_name }} deployment to complete
   kubernetes.core.k8s_info:
     api_version: operator.projectcontour.io/v1alpha1
     kind: Contour
-    name: '{{ contour_instance_name }}'
-    namespace: '{{ contour_instance_namespace }}'
+    name: contour
+    namespace: contour
   register: contour_instance
   until:
     - contour_instance.resources.0.status.conditions is defined

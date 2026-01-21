@@ -1,4 +1,14 @@
 - import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/docker-registry/instance/docker-registry-htpasswd'
+    hvault_secret_data:
+      htpasswd: |
+        admin:{{ generic_user_password | string | password_hash("bcrypt", "constant1234567890123.") }}
+
+- import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

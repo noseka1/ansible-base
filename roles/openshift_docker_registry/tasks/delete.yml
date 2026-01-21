@@ -3,3 +3,10 @@
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: docker-registry/instance
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/docker-registry/instance/docker-registry-htpasswd'

@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    name: '{{ smtp4dev_name }}'
+    name: smtp4dev
     namespace: '{{ smtp4dev_namespace }}'
   register: smtp4dev_service_result
 
@@ -14,5 +14,5 @@
   when: smtp4dev_service_result.resources | length == 0
 
 - set_fact:
-    smtp4dev_hostname: '{{ smtp4dev_name }}.{{ smtp4dev_namespace }}.svc'
+    smtp4dev_hostname: smtp4dev.{{ smtp4dev_namespace }}.svc
     smtp4dev_port: 25

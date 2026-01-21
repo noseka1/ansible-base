@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: '{{ smtp4dev_name }}'
+    name: smtp4dev
     namespace: '{{ smtp4dev_namespace }}'
   register: smtp4dev_route_result
 

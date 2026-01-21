@@ -1,34 +1,7 @@
-- name: Deploy Contour operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('url', item, split_lines=false) }}"
-  loop:
-    - '{{ contour_operator_url }}'
-
-- import_role:
-    name: openshift_common
-    tasks_from: wait_for_deployment.yml
-  vars:
-    wait_for_deployment_name: contour-operator
-    wait_for_deployment_namespace: contour-operator
-
 - import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/instance
-    autogitops_app_dst_path: contour/instance
+    autogitops_app_src_path: templates/contour
+    autogitops_app_dst_path: contour
     autogitops_app_namespace: contour
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ contour_instance_name }} deployment to complete
-  kubernetes.core.k8s_info:
-    api_version: operator.projectcontour.io/v1alpha1
-    kind: Contour
-    name: contour
-    namespace: contour
-  register: contour_instance
-  until:
-    - contour_instance.resources.0.status.conditions is defined
-    - contour_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (contour_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: 60
-  delay: 10

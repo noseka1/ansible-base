@@ -1,0 +1,5 @@
+contour:
+  global:
+    compatibility:
+      openshift:
+        adaptSecurityContext: force

@@ -2,11 +2,4 @@
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: contour/instance
-
-- name: Delete Contour operator
-  kubernetes.core.k8s:
-    definition: "{{ lookup('url', item, split_lines=false) }}"
-    state: absent
-  loop:
-    - '{{ contour_operator_url }}'
+    autogitops_app_dst_path: contour

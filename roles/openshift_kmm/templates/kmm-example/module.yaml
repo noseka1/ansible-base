@@ -1,6 +1,8 @@
 apiVersion: kmm.sigs.x-k8s.io/v1beta1
 kind: Module
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   name: kmm-ci-a
   namespace: kmm-example
 spec:

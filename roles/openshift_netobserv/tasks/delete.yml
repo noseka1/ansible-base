@@ -28,3 +28,4 @@
     loki_instance_manage_namespace: true
     loki_instance_app_prefix: netobserv-
     loki_instance_tenants_mode: openshift-network
+  tags: netobserv_instance

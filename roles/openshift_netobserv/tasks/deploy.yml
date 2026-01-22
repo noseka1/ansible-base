@@ -6,6 +6,7 @@
     loki_instance_manage_namespace: true
     loki_instance_app_prefix: netobserv-
     loki_instance_tenants_mode: openshift-network
+  tags: netobserv_instance
 
 - import_role:
     name: openshift_common
@@ -30,6 +31,7 @@
   vars:
     oscomm_subscription_name: netobserv-operator
     oscomm_subscription_namespace: openshift-netobserv-operator
+  tags: netobserv_operator
 
 - import_role:
     name: openshift_autogitops
@@ -41,3 +43,4 @@
   tags: netobserv_instance
 
 - import_tasks: report_success.yml
+  tags: netobserv_instance

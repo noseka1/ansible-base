@@ -13,4 +13,4 @@
 - name: Enable cluster monitoring for openshift-operators namespace
   kubernetes.core.k8s:
     template:
-      - openshift-operators-ns.yaml
+      - monitoring/openshift-operators-ns.yaml

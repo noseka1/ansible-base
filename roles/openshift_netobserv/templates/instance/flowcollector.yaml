@@ -6,7 +6,7 @@ kind: FlowCollector
 metadata:
   name: cluster
 spec:
-  namespace: {{ netobserv_instance_namespace }}
+  namespace: netobserv
   deploymentModel: Direct
   agent:
     type: eBPF
@@ -51,7 +51,7 @@ spec:
   loki:
     mode: LokiStack
     lokiStack:
-      namespace: {{ netobserv_instance_namespace }}-loki
+      namespace: netobserv-loki
       name: loki
   consolePlugin:
     enable: true

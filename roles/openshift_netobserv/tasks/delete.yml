@@ -24,7 +24,7 @@
     name: openshift_lokistack
     tasks_from: delete.yml
   vars:
-    loki_instance_namespace: '{{ netobserv_instance_namespace }}-loki'
+    loki_instance_namespace: netobserv-loki
     loki_instance_manage_namespace: true
     loki_instance_app_prefix: netobserv-
     loki_instance_tenants_mode: openshift-network

@@ -6,7 +6,7 @@ metadata:
     uninstall.ocs.openshift.io/cleanup-policy: '{{ odf_uninstall_cleanup_policy }}'
     uninstall.ocs.openshift.io/mode: '{{ odf_uninstall_mode }}'
   name: ocs-storagecluster
-  namespace: {{ odf_namespace }}
+  namespace: openshift-storage
 spec:
   enableCephTools: true
 {% if odf_encryption_clusterwide or odf_encryption_kms_enable %}

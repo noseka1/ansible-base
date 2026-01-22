@@ -11,5 +11,5 @@
   vars:
     autogitops_app_src_path: templates/mcg
     autogitops_app_dst_path: odf/mcg
-    autogitops_app_namespace: '{{ odf_namespace }}'
+    autogitops_app_namespace: openshift-storage
   tags: odf_mcg

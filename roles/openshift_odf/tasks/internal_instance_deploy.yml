@@ -27,5 +27,5 @@
   vars:
     autogitops_app_src_path: templates/instance/internal
     autogitops_app_dst_path: odf/instance/internal
-    autogitops_app_namespace: '{{ odf_namespace }}'
+    autogitops_app_namespace: openshift-storage
     autogitops_app_sync_retries: 600

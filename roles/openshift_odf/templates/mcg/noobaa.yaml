@@ -2,7 +2,7 @@ apiVersion: noobaa.io/v1alpha1
 kind: NooBaa
 metadata:
   name: noobaa
-  namespace: {{ odf_namespace }}
+  namespace: openshift-storage
 spec:
   # LoggingType specifies the type of logging for the bucket
   # There are two types available: best-effort and guaranteed logging

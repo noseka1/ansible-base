@@ -3,7 +3,7 @@
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: odf-operator
-    oscomm_subscription_namespace: '{{ odf_namespace }}'
+    oscomm_subscription_namespace: openshift-storage
 
 - import_role:
     name: openshift_autogitops
@@ -11,14 +11,14 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: odf/operator
-    autogitops_app_namespace: '{{ odf_namespace }}'
+    autogitops_app_namespace: openshift-storage
 
 - import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
     oscomm_subscription_name: odf-operator
-    oscomm_subscription_namespace: '{{ odf_namespace }}'
+    oscomm_subscription_namespace: openshift-storage
 
 - import_role:
     name: openshift_common

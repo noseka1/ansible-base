@@ -2,7 +2,7 @@ apiVersion: noobaa.io/v1alpha1
 kind: BucketClass
 metadata:
   name: noobaa-default-bucket-class
-  namespace: {{ odf_namespace }}
+  namespace: openshift-storage
 spec:
   placementPolicy:
     tiers:

@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: openshift-storage
-  namespace: {{ odf_namespace }}
+  namespace: openshift-storage
 spec:
   targetNamespaces:
-  - {{ odf_namespace }}
+  - openshift-storage

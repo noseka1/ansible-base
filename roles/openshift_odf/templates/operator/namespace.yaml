@@ -9,4 +9,4 @@ metadata:
     openshift.io/node-selector: ""
   labels:
     openshift.io/cluster-monitoring: "true"
-  name: {{ odf_namespace }}
+  name: openshift-storage

@@ -24,13 +24,15 @@
     autogitops_app_namespace: openshift-mtv
   tags: mtv_instance
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Provider "host" to show up
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for Provider "host" to show up if KubeVirt is deployed
   kubernetes.core.k8s_info:
     api_version: forklift.konveyor.io/v1beta1
     kind: Provider
     namespace: openshift-mtv
     name: host
   register: mtv_provider_result
+  when: >-
+    'kubevirt.io' in lookup('k8s', cluster_info='api_groups')
   until:
     - mtv_provider_result.resources | length == 1
   retries: 60

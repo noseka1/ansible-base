@@ -28,8 +28,8 @@
     name: openshift_lokistack
     tasks_from: deploy.yml
   vars:
-    loki_instance_namespace: openshift-logging
-    loki_instance_manage_namespace: false
+    loki_instance_namespace: openshift-logging-loki
+    loki_instance_manage_namespace: true
     loki_instance_app_prefix: openshift-logging-
     loki_instance_tenants_mode: openshift-logging
   when: clusterlog_forward_to_loki

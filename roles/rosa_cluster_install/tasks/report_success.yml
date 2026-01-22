@@ -19,7 +19,7 @@
       $ OCM_CONFIG={{ rosa_cluster_install.config_dir }}/.ocm.json rosa describe cluster --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
 
       The cluster admin user may still be provisioning. After several minutes you can log in with:
-      $ oc login --username cluster-admin {{ rosa_cluster_install_describe_json.api.url }}
+      $ oc login --username cluster-admin --namespace default {{ rosa_cluster_install_describe_json.api.url }}
 
 - debug:
     msg: "{{ msg.split('\n') }}"

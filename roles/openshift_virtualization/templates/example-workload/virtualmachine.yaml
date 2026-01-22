@@ -53,8 +53,6 @@ spec:
           # See also https://kubevirt.io/user-guide/compute/persistent_tpm_and_uefi_state/
           tpm:
             persistent: false
-        machine:
-          type: pc-q35-rhel8.3.0
         memory:
           guest: 2Gi
       evictionStrategy: {{ osvirt_machine_eviction_strategy }}

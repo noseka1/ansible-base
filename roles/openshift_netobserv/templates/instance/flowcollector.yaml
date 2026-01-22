@@ -22,22 +22,22 @@ spec:
       # PacketDrop
       privileged: true
       resources:
-        requests:
-          memory: 50Mi
-          cpu: 100m
         limits:
           memory: 800Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
   processor:
     # Enrich network flow data with the topology.kubernetes.io/zone
     # label value applied to the nodes
     addZone: true
     logLevel: info
     resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
       limits:
         memory: 800Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
     # logTypes defines the desired record types to generate. Possible values are:
     # * Flows (default) to export regular network flows
     # * Conversations to generate events for started conversations, ended conversations
@@ -61,20 +61,18 @@ spec:
       portNames:
         "3100": loki
     quickFilters:
-    - name: Applications
+    - default: true
       filter:
-        src_namespace!: 'openshift-,netobserv'
-        dst_namespace!: 'openshift-,netobserv'
-      default: true
-    - name: Infrastructure
+        flow_layer: '"app"'
+      name: Applications
+    - filter:
+        flow_layer: '"infra"'
+      name: Infrastructure
+    - default: true
       filter:
-        src_namespace: 'openshift-,netobserv'
-        dst_namespace: 'openshift-,netobserv'
-    - name: Pods network
-      filter:
-        src_kind: 'Pod'
-        dst_kind: 'Pod'
-      default: true
-    - name: Services network
-      filter:
-        dst_kind: 'Service'
+        dst_kind: '"Pod"'
+        src_kind: '"Pod"'
+      name: Pods network
+    - filter:
+        dst_kind: '"Service"'
+      name: Services network

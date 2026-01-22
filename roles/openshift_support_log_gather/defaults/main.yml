@@ -1,0 +1,11 @@
+slg_operator_subscription_channel: ''
+slg_operator_subscription_starting_csv: ''
+
+# Create secret holding the credentials for Red Hat support portal
+slg_case_management_username: ''
+slg_case_management_password: ''
+
+ # Red Hat support case ID, for example '03576820'. The case ID appears in the URL, for example:
+ # https://access.redhat.com/support/cases/#/case/03576820
+ # Must-gather will be uploaded to this support case.
+slg_case_management_caseid: ''

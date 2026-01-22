@@ -1,0 +1,31 @@
+apiVersion: operator.openshift.io/v1alpha1
+kind: MustGather
+metadata:
+  name: example
+  namespace: support-log-gather-operator
+spec:
+  serviceAccountName: gather-admin
+  audit: true
+#  proxyConfig:
+#    httpProxy: "http://proxy.example.com:8080"
+#    httpsProxy: "https://proxy.example.com:8443"
+#    noProxy: ".example.com,localhost"
+  mustGatherTimeout: 3h0m0s
+{% if slg_case_management_username | length > 0 and
+      slg_case_management_password | length > 0 and
+      slg_case_management_caseid | length > 0 %}
+  uploadTarget:
+    type: SFTP
+    sftp:
+      caseID: '{{ slg_case_management_caseid }}'
+      caseManagementAccountSecretRef:
+        name: support-log-gather-creds
+      host: sftp.access.redhat.com
+{% endif %}
+  retainResourcesOnCompletion: true
+  storage:
+    type: PersistentVolume
+    persistentVolume:
+      claim:
+        name: support-log-gather
+      subPath: support-log-gather-bundles/case-{{ slg_case_management_caseid | default('123456789') }}

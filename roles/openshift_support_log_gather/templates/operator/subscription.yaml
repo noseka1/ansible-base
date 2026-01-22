@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: support-log-gather-operator
+  namespace: support-log-gather-operator
+spec:
+  channel: {{ slg_operator_subscription_channel | default('""', true) }}
+  installPlanApproval: Manual
+  name: support-log-gather-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: {{ slg_operator_subscription_starting_csv | default('""', true) }}

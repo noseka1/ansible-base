@@ -6,4 +6,4 @@
 - import_role:
     name: openshift_local_hostpath
     tasks_from: deploy.yml
-  when: not openshift_common_default_storage_class_exists
+  when: not oscommon_default_storage_class_exists

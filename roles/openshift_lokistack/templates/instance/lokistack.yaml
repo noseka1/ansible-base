@@ -64,7 +64,7 @@ spec:
       # Note that this is a refence to a ConfigMap and not a Secret object!
       #caName: loki-s3
       #caKey: ca.crt
-  storageClassName: {{ openshift_common_default_storage_class }}
+  storageClassName: {{ oscommon_default_storage_class }}
   tenants:
     mode: {{ loki_instance_tenants_mode }}
 {% if loki_place_on_infra_nodes %}

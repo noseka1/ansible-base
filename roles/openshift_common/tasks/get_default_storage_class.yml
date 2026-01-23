@@ -2,17 +2,17 @@
   kubernetes.core.k8s_info:
     api_version: storage.k8s.io/v1
     kind: StorageClass
-  register: openshift_common_storage_classes
+  register: oscommon_storage_classes_result
 
 - set_fact:
-    openshift_common_default_storage_class: ''
-    openshift_common_default_storage_class_exists: false
+    oscommon_default_storage_class: ''
+    oscommon_default_storage_class_exists: false
 
 - set_fact:
-    openshift_common_default_storage_class: '{{ item.metadata.name }}'
-    openshift_common_default_storage_class_exists: true
+    oscommon_default_storage_class: '{{ item.metadata.name }}'
+    oscommon_default_storage_class_exists: true
   when:
     - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] | default('') == 'true'
-  loop: '{{ openshift_common_storage_classes.resources }}'
+  loop: '{{ oscommon_storage_classes_result.resources }}'
   loop_control:
     label: '{{ item.metadata.name }}'

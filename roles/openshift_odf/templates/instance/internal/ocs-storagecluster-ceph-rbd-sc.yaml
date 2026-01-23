@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: Prune=false
-{% if not openshift_common_default_storage_class_exists or openshift_common_default_storage_class == 'ocs-storagecluster-ceph-rbd' %}
+{% if not oscommon_default_storage_class_exists or oscommon_default_storage_class == 'ocs-storagecluster-ceph-rbd' %}
     storageclass.kubernetes.io/is-default-class: 'true'
 {% endif %}
   name: ocs-storagecluster-ceph-rbd

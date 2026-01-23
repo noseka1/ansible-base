@@ -2,17 +2,17 @@
   kubernetes.core.k8s_info:
     api_version: snapshot.storage.k8s.io/v1
     kind: VolumeSnapshotClass
-  register: openshift_common_volume_snapshot_classes
+  register: oscommon_volume_snapshot_classes_result
 
 - set_fact:
-    openshift_common_default_volume_snapshot_class: ''
-    openshift_common_default_volume_snapshot_class_exists: false
+    oscommon_default_volume_snapshot_class: ''
+    oscommon_default_volume_snapshot_class_exists: false
 
 - set_fact:
-    openshift_common_default_volume_snapshot_class: '{{ item.metadata.name }}'
-    openshift_common_default_volume_snapshot_class_exists: true
+    oscommon_default_volume_snapshot_class: '{{ item.metadata.name }}'
+    oscommon_default_volume_snapshot_class_exists: true
   when:
     - item.metadata.annotations['snapshot.storage.kubernetes.io/is-default-class'] | default('') == 'true'
-  loop: '{{ openshift_common_volume_snapshot_classes.resources }}'
+  loop: '{{ oscommon_volume_snapshot_classes_result.resources }}'
   loop_control:
     label: '{{ item.metadata.name }}'

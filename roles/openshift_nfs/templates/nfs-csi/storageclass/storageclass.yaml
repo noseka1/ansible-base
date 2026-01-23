@@ -2,7 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
-{% if not openshift_common_default_storage_class_exists or openshift_common_default_storage_class == 'nfs-csi' %}
+{% if not oscommon_default_storage_class_exists or oscommon_default_storage_class == 'nfs-csi' %}
     storageclass.kubernetes.io/is-default-class: 'true'
 {% endif %}
   name: nfs-csi

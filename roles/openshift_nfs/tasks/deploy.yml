@@ -14,7 +14,9 @@
     name: nfs-server
     namespace: '{{ nfsserver_namespace }}'
   register: nfsserver_service
-  tags: nfsserver
+  tags:
+    - nfsserver
+    - nfscsi_storageclass
 
 - import_role:
     name: openshift_autogitops

@@ -32,7 +32,7 @@
       - node-role.kubernetes.io/worker=
   register: kmm_node_result
   until:
-    - kmm_node_result.resources | json_query('[?metadata.labels."kmm.node.kubernetes.io/kmm-example.kmm-ci-a.ready"!=nil]') | length
+    - kmm_node_result.resources | json_query('[?metadata.labels."kmm.node.kubernetes.io/kmm-example.kmm-ci-a.ready"==`""`]') | length
       ==
       kmm_node_result.resources | length
   retries: 60

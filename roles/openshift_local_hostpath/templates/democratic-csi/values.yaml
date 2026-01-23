@@ -34,7 +34,9 @@ controller:
       - --node-deployment=true
 
   driver:
-    image: docker.io/democraticcsi/democratic-csi:{{ localhostpath_democratic_csi_image_tag }}
+    image:
+      registry: docker.io/democraticcsi/democratic-csi
+      tag: '{{ localhostpath_democratic_csi_image_tag }}'
     securityContext:
       privileged: true
   rbac:
@@ -48,7 +50,9 @@ node:
       - name: local-storage
         mountPath: {{ localhostpath_host_path }}
         mountPropagation: Bidirectional
-    image: docker.io/democraticcsi/democratic-csi:{{ localhostpath_democratic_csi_image_tag }}
+    image:
+      registry: docker.io/democraticcsi/democratic-csi
+      tag: '{{ localhostpath_democratic_csi_image_tag }}'
     # Allowed values are info, debug
     logLevel: info
   extraVolumes:
@@ -63,13 +67,18 @@ node:
 
 storageClasses:
   - name: local-hostpath
-    defaultClass: {{ not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath' }}
+    annotations:
+      storageclass.kubernetes.io/is-default-class: >-
+        {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath') | to_json }}
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
     allowVolumeExpansion: false
 
 volumeSnapshotClasses:
   - name: local-hostpath
+    annotations:
+      snapshot.storage.kubernetes.io/is-default-class: >-
+        {{ (not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'local-hostpath') | to_json }}
 
 driver:
   config:

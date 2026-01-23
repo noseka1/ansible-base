@@ -1,0 +1,10 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: Prune=false
+    storageclass.kubevirt.io/is-default-virt-class: >-
+      {{ (not oscommon_default_virt_storage_class or oscommon_default_virt_storage_class == 'ocs-storagecluster-ceph-rbd-virtualization') | to_json }}
+  name: ocs-storagecluster-ceph-rbd-virtualization

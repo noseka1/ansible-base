@@ -63,7 +63,7 @@ node:
 
 storageClasses:
   - name: local-hostpath
-    defaultClass: {{ not oscommon_default_storage_class_exists or oscommon_default_storage_class == 'local-hostpath' }}
+    defaultClass: {{ not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath' }}
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
     allowVolumeExpansion: false

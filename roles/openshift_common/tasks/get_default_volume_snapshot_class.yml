@@ -5,14 +5,5 @@
   register: oscommon_volume_snapshot_classes_result
 
 - set_fact:
-    oscommon_default_volume_snapshot_class: ''
-    oscommon_default_volume_snapshot_class_exists: false
-
-- set_fact:
-    oscommon_default_volume_snapshot_class: '{{ item.metadata.name }}'
-    oscommon_default_volume_snapshot_class_exists: true
-  when:
-    - item.metadata.annotations['snapshot.storage.kubernetes.io/is-default-class'] | default('') == 'true'
-  loop: '{{ oscommon_volume_snapshot_classes_result.resources }}'
-  loop_control:
-    label: '{{ item.metadata.name }}'
+    oscommon_default_volume_snapshot_class: >-
+      {{ oscommon_volume_snapshot_classes_result.resources | json_query('[?metadata.annotations."snapshot.storage.kubernetes.io/is-default-class"==`"true"`].metadata.name') }}

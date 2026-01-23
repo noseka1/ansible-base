@@ -3,7 +3,7 @@ kind: VolumeSnapshotClass
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-{% if not oscommon_default_volume_snapshot_class_exists or oscommon_default_volume_snapshot_class == 'lvms-loop1-vg' %}
+{% if not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'lvms-loop1-vg' %}
     snapshot.storage.kubernetes.io/is-default-class: 'true'
 {% endif %}
   labels:

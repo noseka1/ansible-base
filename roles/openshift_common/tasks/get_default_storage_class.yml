@@ -5,14 +5,7 @@
   register: oscommon_storage_classes_result
 
 - set_fact:
-    oscommon_default_storage_class: ''
-    oscommon_default_storage_class_exists: false
-
-- set_fact:
-    oscommon_default_storage_class: '{{ item.metadata.name }}'
-    oscommon_default_storage_class_exists: true
-  when:
-    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] | default('') == 'true'
-  loop: '{{ oscommon_storage_classes_result.resources }}'
-  loop_control:
-    label: '{{ item.metadata.name }}'
+    oscommon_default_storage_class: >-
+      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubernetes.io/is-default-class"==`"true"`].metadata.name') }}
+    oscommon_default_virt_storage_class: >-
+      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubevirt.io/is-default-virt-class"==`"true"`].metadata.name') }}

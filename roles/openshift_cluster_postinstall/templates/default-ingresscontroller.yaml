@@ -4,6 +4,8 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
+  # Deploy 3 ingress routers for increased availability (default is 2)
+  replicas: 3
 {% if oscommon_infrastructure.status.platformStatus.type == 'AWS' %}
   # The rootfs image download in RHACM assisted installer won't work unless the ingress controller uses NLB.
   # See also the section "Enabling Central Infrastructure Management on Amazon Web Services" in
@@ -21,7 +23,7 @@ spec:
   logging:
     access:
       destination:
-        # Send ingress access logs to a side-car container
+        # Send ingress access logs to a side-car container named "logs"
         type: Container
 {% if openshift_cluster_postinstall_deploy_infra_nodes %}
   # Deploy ingress router on infra nodes

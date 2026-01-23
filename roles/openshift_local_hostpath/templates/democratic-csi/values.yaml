@@ -70,6 +70,8 @@ storageClasses:
     annotations:
       storageclass.kubernetes.io/is-default-class: >-
         {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath') | to_json }}
+      storageclass.kubevirt.io/is-default-virt-class: >-
+        {{ (not oscommon_default_virt_storage_class or oscommon_default_virt_storage_class == 'local-hostpath') | to_json }}
     reclaimPolicy: Delete
     volumeBindingMode: WaitForFirstConsumer
     allowVolumeExpansion: false

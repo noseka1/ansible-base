@@ -3,7 +3,6 @@ kind: StorageClass
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-{% if not oscommon_default_storage_class or oscommon_default_storage_class == 'lvms-loop1-vg' %}
-    storageclass.kubernetes.io/is-default-class: 'true'
-{% endif %}
+    storageclass.kubernetes.io/is-default-class: >-
+      {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'lvms-loop1-vg') | to_json }}
   name: lvms-loop1-vg

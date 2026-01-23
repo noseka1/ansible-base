@@ -4,9 +4,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: Prune=false
-{% if not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'ocs-external-storagecluster-rbdplugin-snapclass' %}
-    snapshot.storage.kubernetes.io/is-default-class: 'true'
-{% endif %}
+    snapshot.storage.kubernetes.io/is-default-class: >-
+      {{ (not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'ocs-external-storagecluster-rbdplugin-snapclass') | to_json }}
   labels:
     # Enable creating of snapshots using Velero
     velero.io/csi-volumesnapshot-class: 'true'

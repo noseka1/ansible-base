@@ -2,9 +2,8 @@ kind: VolumeSnapshotClass
 apiVersion: snapshot.storage.k8s.io/v1
 metadata:
   annotations:
-{% if not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'openebs-lvm' %}
-    snapshot.storage.kubernetes.io/is-default-class: 'true'
-{% endif %}
+    snapshot.storage.kubernetes.io/is-default-class: >-
+      {{ (not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'openebs-lvm') | to_json }}
   labels:
     # Enable creating of openebs-lvm snapshots using Velero
     velero.io/csi-volumesnapshot-class: 'true'

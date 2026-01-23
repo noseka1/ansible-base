@@ -20,9 +20,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
-{% if not oscommon_default_storage_class or oscommon_default_storage_class == 'rook-ceph-block' %}
-    storageclass.kubernetes.io/is-default-class: 'true'
-{% endif %}
+    storageclass.kubernetes.io/is-default-class: >-
+      {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'rook-ceph-block') | to_json }}
   name: rook-ceph-block
 # Change "rook-ceph" provisioner prefix to match the operator namespace if needed
 provisioner: rook-ceph.rbd.csi.ceph.com # driver:namespace:operator
@@ -72,7 +71,8 @@ kind: StorageClass
 metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: 'false'
-    storageclass.kubevirt.io/is-default-virt-class: 'true'
+    storageclass.kubevirt.io/is-default-virt-class: >-
+      {{ (not oscommon_default_virt_storage_class or oscommon_default_virt_storage_class == 'rook-ceph-block-virtualization') | to_json }}
   name: rook-ceph-block-virtualization
 # Change "rook-ceph" provisioner prefix to match the operator namespace if needed
 provisioner: rook-ceph.rbd.csi.ceph.com # driver:namespace:operator

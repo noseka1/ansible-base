@@ -4,7 +4,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: Prune=false
-{% if not oscommon_default_storage_class or oscommon_default_storage_class == 'ocs-external-storagecluster-ceph-rbd' %}
-    storageclass.kubernetes.io/is-default-class: 'true'
-{% endif %}
+    storageclass.kubernetes.io/is-default-class: >-
+      {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'ocs-external-storagecluster-ceph-rbd') | to_json }}
   name: ocs-external-storagecluster-ceph-rbd

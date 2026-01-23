@@ -34,7 +34,7 @@ controller:
       - --node-deployment=true
 
   driver:
-    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_democratic_csi_image_tag }}
+    image: docker.io/democraticcsi/democratic-csi:{{ localhostpath_democratic_csi_image_tag }}
     securityContext:
       privileged: true
   rbac:
@@ -46,15 +46,15 @@ node:
   driver:
     extraVolumeMounts:
       - name: local-storage
-        mountPath: {{ local_hostpath_host_path }}
+        mountPath: {{ localhostpath_host_path }}
         mountPropagation: Bidirectional
-    image: docker.io/democraticcsi/democratic-csi:{{ local_hostpath_democratic_csi_image_tag }}
+    image: docker.io/democraticcsi/democratic-csi:{{ localhostpath_democratic_csi_image_tag }}
     # Allowed values are info, debug
     logLevel: info
   extraVolumes:
     - name: local-storage
       hostPath:
-        path: {{ local_hostpath_host_path }}
+        path: {{ localhostpath_host_path }}
         type: DirectoryOrCreate
   rbac:
     openshift:
@@ -85,8 +85,8 @@ driver:
             # Disable storage capacity reporting to allow overprovisioning
             #- GET_CAPACITY
     local-hostpath:
-      shareBasePath: {{ local_hostpath_host_path }}
-      controllerBasePath: {{ local_hostpath_host_path }}
+      shareBasePath: {{ localhostpath_host_path }}
+      controllerBasePath: {{ localhostpath_host_path }}
       dirPermissionsMode: "0777"
       dirPermissionsUser: 0
       dirPermissionsGroup: 0

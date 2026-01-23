@@ -13,7 +13,7 @@
   kubernetes.core.k8s:
     template:
       - prereqs/machineconfig.yaml
-  register: local_hostpath_machineconfig_result
+  register: localhostpath_machineconfig_result
   loop:
     - worker
     - master
@@ -26,7 +26,7 @@
     stable_cluster_retries: 10
   when:
     - not openshift_common_machineconfiguration_exists
-    - local_hostpath_machineconfig_result is changed
+    - localhostpath_machineconfig_result is changed
 
 - name: Check if default storage class exists
   import_role:
@@ -47,7 +47,7 @@
   kubernetes.core.helm:
     name: local-hostpath
     chart_ref: democratic-csi/democratic-csi
-    chart_version: '{{ local_hostpath_democratic_csi_helm_chart_version  }}'
+    chart_version: '{{ localhostpath_democratic_csi_helm_chart_version  }}'
     release_namespace: local-hostpath
     release_values: '{{ lookup("template", "democratic-csi/values.yaml") | from_yaml }}'
     wait: true
@@ -56,7 +56,7 @@
   kubernetes.core.helm:
     name: local-hostpath-snapshot
     chart_ref: democratic-csi/snapshot-controller
-    chart_version: '{{ local_hostpath_snapshot_controller_helm_chart_version  }}'
+    chart_version: '{{ localhostpath_snapshot_controller_helm_chart_version  }}'
     release_namespace: local-hostpath
     release_values: '{{ lookup("template", "snapshot-controller/values.yaml") | from_yaml }}'
     wait: true

@@ -1,6 +1,6 @@
-local_hostpath_democratic_csi_helm_chart_version: 0.14.7
-local_hostpath_democratic_csi_image_tag: v1.9.3
+localhostpath_democratic_csi_helm_chart_version: 0.14.7
+localhostpath_democratic_csi_image_tag: v1.9.3
 
-local_hostpath_snapshot_controller_helm_chart_version: 0.2.4
+localhostpath_snapshot_controller_helm_chart_version: 0.2.4
 
-local_hostpath_host_path: /var/local/local-hostpath
+localhostpath_host_path: /var/local/local-hostpath

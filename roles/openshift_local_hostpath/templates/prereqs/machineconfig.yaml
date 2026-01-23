@@ -20,8 +20,8 @@ spec:
           Before=kubelet.service
 
           [Service]
-          ExecStartPre=/bin/mkdir -p {{ local_hostpath_host_path }}
-          ExecStart=/usr/bin/chcon -Rt container_file_t {{ local_hostpath_host_path }}
+          ExecStartPre=/bin/mkdir -p {{ localhostpath_host_path }}
+          ExecStart=/usr/bin/chcon -Rt container_file_t {{ localhostpath_host_path }}
 
           [Install]
           WantedBy=multi-user.target

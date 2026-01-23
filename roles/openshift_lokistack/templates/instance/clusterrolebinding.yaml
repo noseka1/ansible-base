@@ -1,0 +1,20 @@
+# This is a workaround for LOG-7015:
+#
+# Having two Lokistack CR with the same name in different namespaces causes Lokistack fails
+# https://issues.redhat.com/browse/LOG-7015
+#
+# When cluster-logging and netobserv are deployed at the same time, the loki-gateway logs following errors:
+#
+# loki-gateway-f96c8bc9d-m6njs gateway 01-23 17:42:10 E0123 16:42:10.076704       1 webhook.go:154] Failed to make webhook authenticator request: tokenreviews.authentication.k8s.io is forbidden: User "system:serviceaccount:netobserv-loki:loki-gateway" cannot create resource "tokenreviews" in API group "authentication.k8s.io" at the cluster scope
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ loki_instance_app_prefix }}custom-loki-gateway-authorizer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: loki-gateway-authorizer
+subjects:
+- kind: ServiceAccount
+  name: loki-gateway
+  namespace: {{ loki_instance_namespace }}

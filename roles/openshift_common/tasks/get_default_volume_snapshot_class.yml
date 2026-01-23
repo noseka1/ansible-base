@@ -6,4 +6,4 @@
 
 - set_fact:
     oscommon_default_volume_snapshot_class: >-
-      {{ oscommon_volume_snapshot_classes_result.resources | json_query('[?metadata.annotations."snapshot.storage.kubernetes.io/is-default-class"==`"true"`].metadata.name') }}
+      {{ oscommon_volume_snapshot_classes_result.resources | json_query('[?metadata.annotations."snapshot.storage.kubernetes.io/is-default-class"==`"true"`].metadata.name | [0]') }}

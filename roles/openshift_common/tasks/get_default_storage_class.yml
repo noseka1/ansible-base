@@ -6,6 +6,6 @@
 
 - set_fact:
     oscommon_default_storage_class: >-
-      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubernetes.io/is-default-class"==`"true"`].metadata.name') }}
+      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubernetes.io/is-default-class"==`"true"`].metadata.name | [0]') }}
     oscommon_default_virt_storage_class: >-
-      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubevirt.io/is-default-virt-class"==`"true"`].metadata.name') }}
+      {{ oscommon_storage_classes_result.resources | json_query('[?metadata.annotations."storageclass.kubevirt.io/is-default-virt-class"==`"true"`].metadata.name | [0]') }}

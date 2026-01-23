@@ -6,13 +6,13 @@
     name: openshift_common
     tasks_from: update_machineconfiguration.yml
   vars:
-    openshift_common_mc_update_yaml: '{{ lookup("template", "cluster-machineconfiguration.yaml") | from_yaml }}'
+    openshift_common_mc_update_yaml: '{{ lookup("template", "prereqs/machineconfiguration.yaml") | from_yaml }}'
   when: openshift_common_machineconfiguration_exists
 
 - name: Create a directory for volumes on each cluster node (may cause nodes to restart)
   kubernetes.core.k8s:
     template:
-      - 51-local-hostpath-mc.yaml
+      - prereqs/machineconfig.yaml
   register: local_hostpath_machineconfig_result
   loop:
     - worker
@@ -36,7 +36,7 @@
 - name: Create {{ local_hostpath_namespace }} namespace
   kubernetes.core.k8s:
     template:
-      - local-hostpath-ns.yaml
+      - prereqs/namespace.yaml
 
 - name: Add democratic csi repo
   kubernetes.core.helm_repository:

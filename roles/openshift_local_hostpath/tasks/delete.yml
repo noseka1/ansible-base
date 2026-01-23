@@ -15,6 +15,6 @@
 - name: Delete {{ local_hostpath_namespace }} namespace
   kubernetes.core.k8s:
     template:
-      - local-hostpath-ns.yaml
+      - prereqs/namespace.yaml
     state: absent
     wait: true

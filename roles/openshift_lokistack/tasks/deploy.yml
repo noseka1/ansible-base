@@ -31,7 +31,7 @@
 
 - fail:
     msg: No default storage class found on the cluster.
-  when: openshift_common_default_storage_class | length == 0
+  when: not openshift_common_default_storage_class_exists
   tags: lokistack_instance
 
 - import_role:

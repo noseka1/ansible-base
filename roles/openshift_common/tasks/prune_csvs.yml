@@ -32,7 +32,17 @@
 
 - name: Delete CVSs that don't belong to an existing Subscription
   kubernetes.core.k8s:
-    template: prune_csvs.yml
+    resource_definition: |
+      {% for ns in prune_csvs_existing_namespaces.resources %}
+      {% for item in prune_csvs_delete %}
+      ---
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      metadata:
+        name: {{ item }}
+        namespace: {{ ns.metadata.name }}
+      {% endfor %}
+      {% endfor %}
     state: absent
   register: prune_csvs_delete_result
   failed_when:

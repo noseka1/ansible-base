@@ -1,18 +1,18 @@
 - name: Delete snapshot controller Helm chart
   kubernetes.core.helm:
-    name: '{{ local_hostpath_name }}-snapshot'
-    release_namespace: '{{ local_hostpath_namespace }}'
+    name: local-hostpath-snapshot
+    release_namespace: local-hostpath
     release_state: absent
     wait: true
 
 - name: Delete democratic csi Helm chart
   kubernetes.core.helm:
-    name: '{{ local_hostpath_name }}'
-    release_namespace: '{{ local_hostpath_namespace }}'
+    name: local-hostpath
+    release_namespace: local-hostpath
     release_state: absent
     wait: true
 
-- name: Delete {{ local_hostpath_namespace }} namespace
+- name: Delete local-hostpath namespace
   kubernetes.core.k8s:
     template:
       - prereqs/namespace.yaml

@@ -6,19 +6,13 @@
 
 - set_fact:
     openshift_common_default_storage_class: ''
-
-- set_fact:
     openshift_common_default_storage_class_exists: false
 
 - set_fact:
     openshift_common_default_storage_class: '{{ item.metadata.name }}'
+    openshift_common_default_storage_class_exists: true
   when:
-    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] is defined
-    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] == 'true'
+    - item.metadata.annotations['storageclass.kubernetes.io/is-default-class'] | default('') == 'true'
   loop: '{{ openshift_common_storage_classes.resources }}'
   loop_control:
     label: '{{ item.metadata.name }}'
-
-- set_fact:
-    openshift_common_default_storage_class_exists: true
-  when: openshift_common_default_storage_class | length > 0

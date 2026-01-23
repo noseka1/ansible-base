@@ -6,19 +6,13 @@
 
 - set_fact:
     openshift_common_default_volume_snapshot_class: ''
-
-- set_fact:
     openshift_common_default_volume_snapshot_class_exists: false
 
 - set_fact:
     openshift_common_default_volume_snapshot_class: '{{ item.metadata.name }}'
+    openshift_common_default_volume_snapshot_class_exists: true
   when:
-    - item.metadata.annotations['snapshot.storage.kubernetes.io/is-default-class'] is defined
-    - item.metadata.annotations['snapshot.storage.kubernetes.io/is-default-class'] == 'true'
+    - item.metadata.annotations['snapshot.storage.kubernetes.io/is-default-class'] | default('') == 'true'
   loop: '{{ openshift_common_volume_snapshot_classes.resources }}'
   loop_control:
     label: '{{ item.metadata.name }}'
-
-- set_fact:
-    openshift_common_default_volume_snapshot_class_exists: true
-  when: openshift_common_default_volume_snapshot_class | length > 0

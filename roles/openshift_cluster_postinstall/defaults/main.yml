@@ -34,16 +34,15 @@ openshift_cluster_postinstall_configure_endpoint_certs: false
 openshift_cluster_postinstall_configure_kubeconfig: true
 
 # Send OpenShift monitoring alerts to Slack
-openshift_send_alerts_to_slack:
-  enabled: false
-  slack_url: ''
+openshift_send_alerts_to_slack_enabled: false
+openshift_send_alerts_to_slack_url: ''
 
 # Send OpenShift monitoring alerts to email
 openshift_send_alerts_to_email:
-  enabled: false
-  # Note that port number is mandatory
-  smarthost: 'smtp4dev.smtp4dev.svc:25'
-  require_tls: false
+openshift_send_alerts_to_email_enabled: false
+# Note that port number is mandatory
+openshift_send_alerts_to_email_smarthost: 'smtp4dev.smtp4dev.svc:25'
+openshift_send_alerts_to_email_require_tls: false
 
 openshift_cluster_postinstall_cluster_banner:
   enabled: false

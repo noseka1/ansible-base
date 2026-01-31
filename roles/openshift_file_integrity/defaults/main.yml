@@ -1,4 +1,2 @@
 fileintegrity_operator_subscription_channel: ''
 fileintegrity_operator_subscription_starting_csv: ''
-
-fileintegrity_namespace: openshift-file-integrity

@@ -74,7 +74,8 @@ openshift_cluster_postinstall_custom_yum_sslcacert: {}
 # (requires RHEL entitlements configured on nodes)
 openshift_cluster_postinstall_install_custom_rpms: false
 
-# Enable periodic trimming of filesystems on OpenShift nodes
+# Enable periodic trimming of filesystems on OpenShift nodes. This is useful if the OpenShift
+# node is a virtual machine.
 openshift_cluster_postinstall_enable_fstrim: false
 
 # Make operators hosted on OperatorHub.io available for installation via OLM

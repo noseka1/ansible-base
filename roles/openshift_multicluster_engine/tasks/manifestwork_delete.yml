@@ -3,3 +3,5 @@
     template: manifestwork/test-hello-work-manifestwork.yaml
     wait: true
     state: absent
+  when: >-
+    'work.open-cluster-management.io' in lookup('k8s', cluster_info='api_groups')

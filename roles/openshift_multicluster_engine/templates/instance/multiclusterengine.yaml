@@ -53,10 +53,10 @@ spec:
       name: cluster-api-provider-aws
     - configOverrides: {}
       enabled: false
-      name: cluster-api-provider-metal3-preview
+      name: cluster-api-provider-metal3
     - configOverrides: {}
       enabled: false
-      name: cluster-api-provider-openshift-assisted-preview
+      name: cluster-api-provider-openshift-assisted
   targetNamespace: multicluster-engine
 {% if mce_place_on_infra_nodes %}
   nodeSelector:

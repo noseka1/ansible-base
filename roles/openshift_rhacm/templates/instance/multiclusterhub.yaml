@@ -49,9 +49,6 @@ spec:
       name: siteconfig
     - configOverrides: {}
       enabled: false
-      name: edge-manager-preview
-    - configOverrides: {}
-      enabled: false
       name: fine-grained-rbac-preview
     - configOverrides: {}
       enabled: false

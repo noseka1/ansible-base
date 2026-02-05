@@ -9,13 +9,24 @@
 # $ nmcli --fields connection.lldp con show ovs-if-phys0
 # connection.lldp:                        enable-rx
 #
-# Display information about neighboring devices learned through the Link Layer Discovery Protocol (LLDP).
+# Display information about neighboring devices learned through the Link Layer Discovery Protocol (LLDP):
+#
+# The information is included in the nodenetworkstate resource for the specific node:
+#
+# $ oc get nodenetworkstate <node>
+#
+# Directly on the node, the nmcli can be used to list the neighboring devices:
+#
 # $ nmcli dev lldp
 #
 # Note that only LLDP receive (RX) is supported at this time. LLDP transmit (TX) is not supported:
 #
 # LLDP tx support on baremetal
 # https://issues.redhat.com/browse/RFE-4209
+#
+# Note that the following configuration may fail to apply due to conflicts with other NNCP configurations
+# applied to the same node:
+#
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:

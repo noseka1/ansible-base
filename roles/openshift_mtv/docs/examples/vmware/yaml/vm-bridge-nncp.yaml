@@ -10,11 +10,17 @@ spec:
       ipv4:
         enabled: false
       state: up
+      # Enable LLDP to receive information on which switch and switch port
+      # is this network interace connected to.
+      lldp:
+        enabled: true
     - name: ens8
       type: ethernet
       ipv4:
         enabled: false
       state: up
+      lldp:
+        enabled: true
     - name: bond1
       type: bond
       link-aggregation:

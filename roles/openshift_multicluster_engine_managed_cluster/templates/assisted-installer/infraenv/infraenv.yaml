@@ -10,8 +10,7 @@ spec:
 {% if mcemanagedcluster_info.ntp_sources | default([]) %}
   additionalNTPSources: {{ mcemanagedcluster_info.ntp_sources | to_yaml }}
 {% endif %}
-{% if mcemanagedcluster_info.trusted_ca_bundle is defined and
-      mcemanagedcluster_info.trusted_ca_bundle %}
+{% if mcemanagedcluster_info.trusted_ca_bundle | default('') %}
   additionalTrustBundle: |
     {{ mcemanagedcluster_info.trusted_ca_bundle | indent(4) }}
 {% endif %}
@@ -19,14 +18,13 @@ spec:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mcemanagedcluster_info.location }}'
   pullSecretRef:
     name: {{ mcemanagedcluster_info.cluster_name }}-pull-secret
-{% if mcemanagedcluster_info.ssh_authorized_key | length > 0 %}
+{% if mcemanagedcluster_info.ssh_authorized_key | default('') %}
   sshAuthorizedKey: '{{ mcemanagedcluster_info.ssh_authorized_key }}'
 {% endif %}
   nmStateConfigLabelSelector:
     matchLabels:
       infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
-{% if mcemanagedcluster_info.clusterwide_proxy is defined and
-      mcemanagedcluster_info.clusterwide_proxy %}
+{% if mcemanagedcluster_info.clusterwide_proxy | default({}) %}
   proxy:
     httpProxy: {{ mcemanagedcluster_info.clusterwide_proxy.http_proxy }}
     httpsProxy: {{ mcemanagedcluster_info.clusterwide_proxy.https_proxy }}

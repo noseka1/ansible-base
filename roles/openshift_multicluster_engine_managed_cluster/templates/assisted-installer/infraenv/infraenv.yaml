@@ -7,6 +7,9 @@ metadata:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mcemanagedcluster_info.location }}'
     networkType: {{ mcemanagedcluster_info.network_type }}
 spec:
+{% if mcemanagedcluster_info.ntp_sources | default([]) %}
+  additionalNTPSources: {{ mcemanagedcluster_info.ntp_sources | to_yaml }}
+{% endif %}
 {% if mcemanagedcluster_info.trusted_ca_bundle is defined and
       mcemanagedcluster_info.trusted_ca_bundle %}
   additionalTrustBundle: |

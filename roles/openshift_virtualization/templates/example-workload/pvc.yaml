@@ -1,6 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  labels:
+    # Silence the KubePersistentVolumeFillingUp for PVCs that hold virtual machine disks
+    # since these disks consume the entire PVC by design.
+    # See also https://github.com/kubevirt/containerized-data-importer/commit/483359bf69180d4d490ae37e28cea19b6d11c1e7
+    alerts.k8s.io/KubePersistentVolumeFillingUp: disabled
   name: {{ osvirt_machine_name }}-rootdisk
   namespace: {{ osvirt_machine_namespace }}
 spec:

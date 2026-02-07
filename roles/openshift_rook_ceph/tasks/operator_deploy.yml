@@ -19,9 +19,13 @@
                    | regex_replace('CSI_ENABLE_CSIADDONS: \"false\"', 'CSI_ENABLE_CSIADDONS: \"true\"')
                  }}"
 
+- name: Deploy Ceph CSI operator
+  kubernetes.core.k8s:
+    definition: "{{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi-operator.yaml', split_lines=false) }}"
+
 - import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
     wait_for_deployment_name: rook-ceph-operator
-    wait_for_deployment_namespace: '{{ rook_ceph_namespace }}'
+    wait_for_deployment_namespace: rook-ceph

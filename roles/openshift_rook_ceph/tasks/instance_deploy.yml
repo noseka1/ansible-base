@@ -39,7 +39,7 @@
 - name: Deploy Rook Ceph cluster
   kubernetes.core.k8s:
     template:
-      - instance/mycluster-cephcluster.yaml
+      - instance/cephcluster.yaml
       - instance/rook-ceph-block-sc.yaml
       - instance/csi-rbdplugin-snapclass-vsclass.yaml
 

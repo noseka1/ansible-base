@@ -38,6 +38,8 @@ spec:
     vmiCPUAllocationRatio: 4
   # Apply the scalable tuning parameters recommended for large scale "High Burst" scenarios (i.e. creating many VMs at once or in large batches).
   # The highBurst profile applies tested and safe QPS and burst values for all Virt components.
+  # If using default settings, it took several hours to schedule and start 700 VMs on a 40-node bare metal cluster. The performance is expected
+  # to improve with the setting of the highBurst policy.
   # See also:
   # OpenShift Virtualization - Tuning & Scaling Guide
   # https://access.redhat.com/articles/6994974

@@ -44,6 +44,10 @@ spec:
   # OpenShift Virtualization - Tuning & Scaling Guide
   # https://access.redhat.com/articles/6994974
   tuningPolicy: highBurst
+  # Block the deletion of the HyperConverged resource if virtual machines still exist on the cluster. Deletion of HyperConverged resource results
+  # in a cascading deletion of virtual machines. BlockUninstallIfWorkloadsExist is the safest choice to protect the workloads from accidental
+  # data loss, so it's strongly advised. BlockUninstallIfWorkloadsExist is the default uninstall strategy when none is defined.
+  uninstallStrategy: BlockUninstallIfWorkloadsExist
   workloads:
     nodePlacement:
       tolerations:

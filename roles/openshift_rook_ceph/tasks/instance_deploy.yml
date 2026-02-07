@@ -8,6 +8,16 @@
     name: openshift_common
     tasks_from: get_default_volume_snapshot_class.yml
 
+- assert:
+    that: query('kubernetes.core.k8s', api_version='v1', kind='StorageClass', resource_name=rook_ceph_mon_pvc_template) | length == 1
+    fail_msg: Storage class '{{ rook_ceph_mon_pvc_template }}' does not exist
+    quiet: true
+
+- assert:
+    that: query('kubernetes.core.k8s', api_version='v1', kind='StorageClass', resource_name=rook_ceph_storage_device_sets) | length == 1
+    fail_msg: Storage class '{{ rook_ceph_storage_device_sets }}' does not exist
+    quiet: true
+
 - name: Deploy Rook Ceph toolbox
   kubernetes.core.k8s:
     definition: "{{ lookup('url', rook_ceph_git_url + '/deploy/examples/toolbox.yaml', split_lines=false) }}"

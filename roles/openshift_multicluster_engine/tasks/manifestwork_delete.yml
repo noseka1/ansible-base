@@ -4,4 +4,4 @@
     wait: true
     state: absent
   when: >-
-    'work.open-cluster-management.io' in lookup('kubernetes.core.k8s', cluster_info='api_groups')
+    'work.open-cluster-management.io' in query('kubernetes.core.k8s', cluster_info='api_groups')

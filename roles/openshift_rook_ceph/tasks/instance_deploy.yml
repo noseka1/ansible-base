@@ -48,7 +48,7 @@
     api_version: ceph.rook.io/v1
     kind: CephCluster
     name: mycluster
-    namespace: '{{ rook_ceph_namespace }}'
+    namespace: rook-ceph
   register: rook_ceph_cluster_result
   until:
     - rook_ceph_cluster_result.resources.0.status.conditions is defined
@@ -71,7 +71,7 @@
     api_version: ceph.rook.io/v1
     kind: CephFilesystem
     name: myfs
-    namespace: '{{ rook_ceph_namespace }}'
+    namespace: rook-ceph
   register: rook_ceph_filesystem_result
   until:
     - rook_ceph_filesystem_result.resources.0.status.phase is defined
@@ -91,7 +91,7 @@
     api_version: ceph.rook.io/v1
     kind: CephObjectStore
     name: my-store
-    namespace: '{{ rook_ceph_namespace }}'
+    namespace: rook-ceph
   register: rook_ceph_objectstore_result
   until:
     - rook_ceph_objectstore_result.resources.0.status.phase is defined
@@ -113,7 +113,7 @@
     api_version: ceph.rook.io/v1
     kind: CephNFS
     name: my-nfs
-    namespace: '{{ rook_ceph_namespace }}'
+    namespace: rook-ceph
   register: rook_ceph_nfs_result
   until:
     - rook_ceph_nfs_result.resources.0.status.phase is defined

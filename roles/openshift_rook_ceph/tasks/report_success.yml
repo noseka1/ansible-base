@@ -3,7 +3,7 @@
     api_version: route.openshift.io/v1
     kind: Route
     name: rook-ceph-mgr-dashboard
-    namespace: '{{ rook_ceph_namespace }}'
+    namespace: rook-ceph
   register: rook_ceph_dashboard_result
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph dashboard to become available
@@ -25,7 +25,7 @@
       https://{{ rook_ceph_dashboard_result.resources.0.spec.host }}
 
       The 'admin' user password can be retrieved using:
-      $ oc get -n {{ rook_ceph_namespace }} secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
+      $ oc get -n rook-ceph secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
 
 - debug:
     msg: "{{ msg.split('\n') }}"

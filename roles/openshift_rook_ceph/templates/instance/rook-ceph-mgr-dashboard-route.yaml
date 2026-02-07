@@ -2,7 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: rook-ceph-mgr-dashboard
-  namespace: {{ rook_ceph_namespace }}
+  namespace: rook-ceph
 spec:
   port:
     targetPort: http-dashboard

@@ -62,7 +62,6 @@
       - storageprofiles/efs-csi-storageprofile.yaml
       - storageprofiles/iscsi-target-storageprofile.yaml
       - storageprofiles/local-hostpath-storageprofile.yaml
-      - storageprofiles/local-path-storageprofile.yaml
       - storageprofiles/nfs-csi-storageprofile.yaml
       - storageprofiles/openebs-lvm-storageprofile.yaml
   tags: osvirt_instance

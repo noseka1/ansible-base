@@ -1,9 +1,0 @@
-apiVersion: cdi.kubevirt.io/v1beta1
-kind: StorageProfile
-metadata:
-  name: local-path
-spec:
-  claimPropertySets:
-  - accessModes:
-    - ReadWriteOnce
-    volumeMode: Filesystem

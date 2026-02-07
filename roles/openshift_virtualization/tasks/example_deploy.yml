@@ -9,8 +9,10 @@
     - ocs-storagecluster-ceph-rbd-virtualization
     - ocs-external-storagecluster-ceph-rbd
     - rook-ceph-block-virtualization
+    - rook-ceph-block
     - nfs-csi
     - efs-csi
+    - rook-cephfs
 
 - name: Pick the most preferred storageclass
   set_fact:
@@ -22,7 +24,7 @@
     osvirt_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
     osvirt_machine_root_disk_storage_class_name: '{{ osvirt_ocs_storageclasses_defs.0.metadata.name }}'
     osvirt_machine_root_disk_volume_mode: >-
-      {{ "Filesystem" if osvirt_ocs_storageclasses_defs.0.metadata.name in ["nfs-csi", "efs-csi"] else "Block" }}
+      {{ "Filesystem" if osvirt_ocs_storageclasses_defs.0.metadata.name in ["nfs-csi", "efs-csi", "rook-cephfs"] else "Block" }}
   when: osvirt_ocs_storageclasses_defs | length > 0
 
 - import_role:

@@ -24,7 +24,14 @@ spec:
   # See also https://github.com/kubevirt/kubevirt/blob/dd56bf189f1b7cb257af52106a5fd302a8221231/docs/handling-eviction-requests.md
   evictionStrategy: LiveMigrateIfPossible
   featureGates:
-    # Enable SCSI persistent reservations
+    # DecentralizedLiveMigration enables the decentralized live migration (cross-cluster migration) feature.
+    # This feature allows live migration of VirtualMachineInstances between different clusters.
+    decentralizedLiveMigration: true
+    # Enable persistent reservation of a LUN through the SCSI Persistent Reserve commands on Kubevirt.
+    # In order to issue privileged SCSI ioctls, the VM requires activation of the persistent reservation flag.
+    # Once this feature gate is enabled, then the additional container with the qemu-pr-helper is deployed
+    # inside the virt-handler pod.
+    # Enabling (or removing) the feature gate causes the redeployment of the virt-handler pod.
     persistentReservation: true
   infra: {}
   liveMigrationConfig:

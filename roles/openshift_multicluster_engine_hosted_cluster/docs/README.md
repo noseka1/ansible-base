@@ -6,6 +6,7 @@ See also the Prerequisites section in [Create a Kubevirt cluster](https://hypers
 
 References:
 
+* [Support matrix for hosted control planes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/hosted_control_planes/preparing-to-deploy-hosted-control-planes#hcp-support-matrix_hcp-requirements)
 * [Deploying hosted control planes on AWS](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/hosted_control_planes/deploying-hosted-control-planes#deploying-hosted-control-planes-on-aws)
 * [Deploying hosted control planes on bare metal](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/hosted_control_planes/deploying-hosted-control-planes#deploying-hosted-control-planes-on-bare-metal)
 * [Deploying hosted control planes on OpenShift Virtualization](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/hosted_control_planes/deploying-hosted-control-planes#deploying-hosted-control-planes-on-openshift-virtualization)

@@ -3,6 +3,7 @@ mcehostedcluster_kubevirt:
   ocp_release_image: 4.20.8-x86_64
   control_plane_replicas: 1
   data_plane_replicas: 2
+  etcd_storage_storageclass: ''
   ssh_authorized_key: ''
   nodepool_rootvolume_accessmodes:
     - ReadWriteOnce

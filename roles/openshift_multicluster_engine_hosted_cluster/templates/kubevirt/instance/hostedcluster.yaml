@@ -16,6 +16,9 @@ spec:
       storage:
         persistentVolume:
           size: 8Gi
+{% if mcehostedcluster_kubevirt.etcd_storage_storageclass | default('') %}
+          storageClassName: {{ mcehostedcluster_kubevirt.etcd_storage_storageclass }}
+{% endif %}
         type: PersistentVolume
     managementType: Managed
   fips: false

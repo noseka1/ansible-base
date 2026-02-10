@@ -44,4 +44,4 @@
     autogitops_app_namespace: hosted-clusters
     autogitops_app_sync_retries: 600
 
-- import_tasks: kubevirt_success.yml
+- import_tasks: kubevirt/report_success.yml

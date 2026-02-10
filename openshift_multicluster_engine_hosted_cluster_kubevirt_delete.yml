@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_multicluster_engine_hosted_cluster
-        tasks_from: kubevirt_delete.yml
+        tasks_from: kubevirt/delete.yml

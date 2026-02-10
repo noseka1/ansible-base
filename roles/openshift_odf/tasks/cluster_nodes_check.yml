@@ -1,15 +1,10 @@
-- name: Get labeled ODF nodes
-  kubernetes.core.k8s_info:
-    api_version: v1
-    kind: Node
-    label_selectors:
-      - cluster.ocs.openshift.io/openshift-storage=
-  register: odf_nodes_result
+- assert:
+    that: query('kubernetes.core.k8s', api_version='v1', kind='Node', label_selector='cluster.ocs.openshift.io/openshift-storage=') | length >= 3
+    fail_msg: |
+      Need at least 3 nodes labeled as ODF nodes. You can label cluster nodes using:
 
-- fail:
-    msg: |
-      Need at least 3 ODF nodes. You can label cluster nodes using: 'oc label nodes <node> cluster.ocs.openshift.io/openshift-storage='
+      $ oc label nodes <node> cluster.ocs.openshift.io/openshift-storage=
 
       Optionally, you can define cluster topology by adding OSD topology labels as defined at:
       https://www.rook.io/docs/rook/latest/CRDs/Cluster/ceph-cluster-crd/#osd-topology
-  when: (odf_nodes_result.resources | list | length) < 3
+    quiet: true

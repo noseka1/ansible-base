@@ -2,7 +2,7 @@ apiVersion: hypershift.openshift.io/v1beta1
 kind: HostedCluster
 metadata:
   name: {{ mcehostedcluster_kubevirt.cluster_name }}
-  namespace: hosted-clusters
+  namespace: {{ mcehostedcluster_kubevirt.cluster_name }}-hosted
 spec:
   autoscaling: {}
   configuration: {}

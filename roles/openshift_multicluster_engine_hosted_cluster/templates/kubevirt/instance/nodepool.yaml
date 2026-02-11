@@ -2,7 +2,7 @@ apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
 metadata:
   name: {{ mcehostedcluster_kubevirt.cluster_name }}
-  namespace: hosted-clusters
+  namespace: {{ mcehostedcluster_kubevirt.cluster_name }}-hosted
 spec:
   arch: amd64
   clusterName: {{ mcehostedcluster_kubevirt.cluster_name }}

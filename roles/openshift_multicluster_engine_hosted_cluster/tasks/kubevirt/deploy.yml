@@ -1,12 +1,7 @@
 - name: Enable wildcard DNS routes
   kubernetes.core.k8s:
     template:
-      - kubevirt/prereqs/default-ingresscontroller.yaml
-
-- name: Create namespace for hosted cluster configuration
-  kubernetes.core.k8s:
-    template:
-      - kubevirt/prereqs/hosted-clusters-ns.yaml
+      - kubevirt/prereqs/ingresscontroller.yaml
 
 - import_role:
     name: openshift_hashicorp_vault
@@ -41,7 +36,7 @@
   vars:
     autogitops_app_src_path: templates/kubevirt/instance
     autogitops_app_dst_path: hosted-cluster/kubevirt
-    autogitops_app_namespace: hosted-clusters
+    autogitops_app_namespace: '{{ mcehostedcluster_kubevirt.cluster_name }}-hosted'
     autogitops_app_sync_retries: 600
 
 - import_tasks: kubevirt/report_success.yml

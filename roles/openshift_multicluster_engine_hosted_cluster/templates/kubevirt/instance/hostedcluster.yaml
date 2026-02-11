@@ -1,12 +1,12 @@
 apiVersion: hypershift.openshift.io/v1beta1
 kind: HostedCluster
 metadata:
-  name: {{ mcehostedcluster_kubevirt.cluster_name }}
-  namespace: {{ mcehostedcluster_kubevirt.cluster_name }}-hosted
+  name: {{ mcehostedcluster_info.cluster_name }}
+  namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
 spec:
   autoscaling: {}
   configuration: {}
-{% if mcehostedcluster_kubevirt.control_plane_replicas == 1 %}
+{% if mcehostedcluster_info.control_plane_replicas == 1 %}
   controllerAvailabilityPolicy: SingleReplica
 {% else %}
   controllerAvailabilityPolicy: HighlyAvailable
@@ -16,8 +16,8 @@ spec:
       storage:
         persistentVolume:
           size: 8Gi
-{% if mcehostedcluster_kubevirt.etcd_storage_storageclass | default('') %}
-          storageClassName: {{ mcehostedcluster_kubevirt.etcd_storage_storageclass }}
+{% if mcehostedcluster_info.etcd_storageclass | default('') %}
+          storageClassName: {{ mcehostedcluster_info.etcd_storageclass }}
 {% endif %}
         type: PersistentVolume
     managementType: Managed
@@ -34,13 +34,13 @@ spec:
       baseDomainPassthrough: true
     type: KubeVirt
   pullSecret:
-    name: {{ mcehostedcluster_kubevirt.cluster_name }}-pull-secret
+    name: {{ mcehostedcluster_info.cluster_name }}-pull-secret
   release:
-    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_kubevirt.ocp_release_image }}
+    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_info.ocp_release_image }}
   secretEncryption:
     aescbc:
       activeKey:
-        name: {{ mcehostedcluster_kubevirt.cluster_name }}-etcd-encryption-key
+        name: {{ mcehostedcluster_info.cluster_name }}-etcd-encryption-key
     type: aescbc
   services:
   - service: APIServer
@@ -59,4 +59,4 @@ spec:
     servicePublishingStrategy:
       type: Route
   sshKey:
-    name: {{ mcehostedcluster_kubevirt.cluster_name }}-ssh-key
+    name: {{ mcehostedcluster_info.cluster_name }}-ssh-key

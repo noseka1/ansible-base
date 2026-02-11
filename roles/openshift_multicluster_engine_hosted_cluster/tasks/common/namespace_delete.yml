@@ -1,0 +1,26 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-namespace
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-etcd-encryption-key'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-pull-secret'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_delete.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-ssh-key'

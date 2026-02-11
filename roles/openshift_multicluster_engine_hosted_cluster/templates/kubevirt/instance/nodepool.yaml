@@ -1,11 +1,11 @@
 apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
 metadata:
-  name: {{ mcehostedcluster_kubevirt.cluster_name }}
-  namespace: {{ mcehostedcluster_kubevirt.cluster_name }}-hosted
+  name: {{ mcehostedcluster_info.cluster_name }}
+  namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
 spec:
   arch: amd64
-  clusterName: {{ mcehostedcluster_kubevirt.cluster_name }}
+  clusterName: {{ mcehostedcluster_info.cluster_name }}
   management:
     autoRepair: false
     upgradeType: Replace
@@ -18,14 +18,14 @@ spec:
         memory: 6Gi
       rootVolume:
         persistent:
-          accessModes: {{ mcehostedcluster_kubevirt.nodepool_rootvolume_accessmodes | to_yaml }}
-          size: {{ mcehostedcluster_kubevirt.nodepool_rootvolume_size }}
-{% if mcehostedcluster_kubevirt.nodepool_rootvolume_storageclass | length > 0 %}
-          storageClass: {{ mcehostedcluster_kubevirt.nodepool_rootvolume_storageclass }}
+          accessModes: {{ mcehostedcluster_info.nodepool_rootvolume_accessmodes | to_yaml }}
+          size: {{ mcehostedcluster_info.nodepool_rootvolume_size }}
+{% if mcehostedcluster_info.nodepool_rootvolume_storageclass | length > 0 %}
+          storageClass: {{ mcehostedcluster_info.nodepool_rootvolume_storageclass }}
 {% endif %}
-          volumeMode: {{ mcehostedcluster_kubevirt.nodepool_rootvolume_volumemode }}
+          volumeMode: {{ mcehostedcluster_info.nodepool_rootvolume_volumemode }}
         type: Persistent
     type: KubeVirt
   release:
-    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_kubevirt.ocp_release_image }}
-  replicas: {{ mcehostedcluster_kubevirt.data_plane_replicas }}
+    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_info.ocp_release_image }}
+  replicas: {{ mcehostedcluster_info.data_plane_replicas }}

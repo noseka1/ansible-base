@@ -1,0 +1,23 @@
+- name: Retrive hosted cluster {{ mcehostedcluster_info.cluster_name }}
+  kubernetes.core.k8s_info:
+    api_version: hypershift.openshift.io/v1beta1
+    kind: HostedCluster
+    name: '{{ mcehostedcluster_info.cluster_name }}'
+    namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'
+  register: hostedcluster_result
+
+- name: Set msg
+  set_fact:
+    msg: |
+      Cluster {{ mcehostedcluster_info.cluster_name }} deployed successfully.
+
+      You can download the admin kubeconfig by issuing:
+
+      oc extract -n {{ mcehostedcluster_info.cluster_name }}-hosted secret/{{ hostedcluster_result.resources.0.status.kubeconfig.name }}
+
+      You can display the kubeadmin password by issuing:
+
+      oc extract -n {{ mcehostedcluster_info.cluster_name }}-hosted secret/{{ hostedcluster_result.resources.0.status.kubeadminPassword.name }} --to -
+
+- debug:
+    msg: "{{ msg.split('\n') }}"

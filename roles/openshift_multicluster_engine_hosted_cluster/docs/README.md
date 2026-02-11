@@ -4,9 +4,13 @@
 
 Prerequisites:
 
-* For KubeVirt hosted cluster, the management OCP cluster must have LoadBalancer service support. You can install MetalLB on the management OCP cluster.
+* For KubeVirt hosted cluster, the management OCP cluster must have support for LoadBalancer service. You can for example install MetalLB to get the LoadBalancer service support.
 
 See also the Prerequisites section in [Create a Kubevirt cluster](https://hypershift-docs.netlify.app/how-to/kubevirt/create-kubevirt-cluster/).
+
+## Agent (bare metal) hosted cluster
+
+See also [Create an Agent cluster](https://hypershift-docs.netlify.app/how-to/agent/create-agent-cluster/).
 
 ## References
 

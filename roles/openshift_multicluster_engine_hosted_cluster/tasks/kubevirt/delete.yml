@@ -1,3 +1,6 @@
+- set_fact:
+    mcehostedcluster_info: '{{ mcehostedcluster_kubevirt }}'
+
 # Detach the cluster from MCE before deleting the cluster
 - import_role:
     name: openshift_common
@@ -6,31 +9,12 @@
     delete_kubernetes_objects:
       - api_version: cluster.open-cluster-management.io/v1
         kind: ManagedCluster
-        name: '{{ mcehostedcluster_kubevirt.cluster_name }}'
+        name: '{{ mcehostedcluster_info.cluster_name }}'
 
 - import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
-    autogitops_app_dst_path: hosted-cluster/kubevirt
+    autogitops_app_dst_path: hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-instance
 
-- import_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_delete.yml
-  vars:
-    hvault_mount_point: autogitops
-    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-etcd-encryption-key'
-
-- import_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_delete.yml
-  vars:
-    hvault_mount_point: autogitops
-    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-pull-secret'
-
-- import_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_delete.yml
-  vars:
-    hvault_mount_point: autogitops
-    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/kubevirt/{{ mcehostedcluster_kubevirt.cluster_name }}-ssh-key'
+- import_tasks: common/namespace_delete.yml

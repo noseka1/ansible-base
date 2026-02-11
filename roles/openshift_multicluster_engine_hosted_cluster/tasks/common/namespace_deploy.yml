@@ -1,0 +1,34 @@
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-etcd-encryption-key'
+    hvault_secret_data:
+      key: '01234567890123456789012345678901'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-pull-secret'
+    hvault_secret_data:
+      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-ssh-key'
+    hvault_secret_data:
+      id_rsa.pub: '{{ mcehostedcluster_info.ssh_authorized_key }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/common/namespace
+    autogitops_app_dst_path: hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-namespace
+    autogitops_app_namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'

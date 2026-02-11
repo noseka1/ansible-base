@@ -5,6 +5,8 @@ mcehostedcluster_kubevirt:
   data_plane_replicas: 2
   etcd_storageclass: ''
   ssh_authorized_key: ''
+  clusterwide_proxy: {}
+  trusted_ca_bundle: ''
   nodepool_rootvolume_accessmodes:
     - ReadWriteOnce
   nodepool_rootvolume_size: 32Gi

@@ -5,7 +5,20 @@ metadata:
   namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
 spec:
   autoscaling: {}
-  configuration: {}
+  configuration:
+{% if mcehostedcluster_info.clusterwide_proxy | default({})
+     or mcehostedcluster_info.trusted_ca_bundle | default('') %}
+    proxy:
+{% endif %}
+{% if mcehostedcluster_info.clusterwide_proxy | default({}) %}
+      httpProxy: {{ mcehostedcluster_info.clusterwide_proxy.http_proxy }}
+      httpsProxy: {{ mcehostedcluster_info.clusterwide_proxy.https_proxy }}
+      noProxy: {{ mcehostedcluster_info.clusterwide_proxy.no_proxy }}
+{% endif %}
+{% if mcehostedcluster_info.trusted_ca_bundle | default('') %}
+      trustedCA:
+        name: custom-user-ca-bundle
+{% endif %}
 {% if mcehostedcluster_info.control_plane_replicas == 1 %}
   controllerAvailabilityPolicy: SingleReplica
 {% else %}

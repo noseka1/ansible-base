@@ -1,0 +1,11 @@
+---
+{% if mcehostedcluster_info.trusted_ca_bundle | default('') %}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-user-ca-bundle
+  namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
+data:
+  ca-bundle.crt: |
+    {{ mcehostedcluster_info.trusted_ca_bundle | indent(4) }}
+{% endif %}

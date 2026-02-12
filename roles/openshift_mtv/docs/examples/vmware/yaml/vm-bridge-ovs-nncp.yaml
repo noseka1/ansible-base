@@ -49,8 +49,3 @@ spec:
       - bridge: vm-bridge
         localnet: localnet-vm-bridge
         state: present
-  interfaces:
-  - name: ens7
-    macAddress: 52:54:00:d5:e9:da
-  - name: ens8
-    macAddress: 52:54:00:d5:e9:db

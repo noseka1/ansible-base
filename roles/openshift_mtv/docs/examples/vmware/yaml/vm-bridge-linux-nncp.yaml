@@ -72,8 +72,3 @@ spec:
     #        prefix-length: 24
     #    dhcp: false
     #    enabled: true
-  interfaces:
-  - name: ens7
-    macAddress: 52:54:00:d5:e9:da
-  - name: ens8
-    macAddress: 52:54:00:d5:e9:db

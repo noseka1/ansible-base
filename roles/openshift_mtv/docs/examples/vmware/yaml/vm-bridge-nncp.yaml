@@ -9,6 +9,8 @@ spec:
       type: ethernet
       ipv4:
         enabled: false
+      ipv6:
+        enabled: false
       state: up
       # Enable LLDP to receive information on which switch and switch port
       # is this network interace connected to.
@@ -18,15 +20,17 @@ spec:
       type: ethernet
       ipv4:
         enabled: false
+      ipv6:
+        enabled: false
       state: up
       lldp:
         enabled: true
     - name: bond1
       type: bond
       link-aggregation:
-        mode: balance-alb
+        mode: active-backup
         options:
-          miimon: "140"
+          miimon: '140'
         port:
         - ens7
         - ens8

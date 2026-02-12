@@ -7,7 +7,7 @@
       cert_common_name: 'api.{{ oscommon_cluster_domain }}'
     - cert_name: wildcard-cert
       cert_namespace: openshift-ingress
-      cert_common_name: '*.apps.{{ oscommon_cluster_domain }}'
+      cert_common_name: '*.{{ oscommon_default_ingresscontroller.spec.domain }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for certificates to become ready
   kubernetes.core.k8s_info:
@@ -28,17 +28,22 @@
   retries: 48
   delay: 5
 
-- name: Configure cluster certificates
+- name: Configure certificate for Kubernetes API
   kubernetes.core.k8s:
-    template:
-      - endpoint-certs/cluster-apiserver.yaml
-      - endpoint-certs/default-ingresscontroller.yaml
-  register: openshift_cluster_postinstall_endpoint_certs_apply_result
+    template: endpoint-certs/cluster-apiserver.yaml
+  register: openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result
+  when:
+    - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
+
+- name: Configure certificate for default OpenShift ingress router
+  kubernetes.core.k8s:
+    template: endpoint-certs/default-ingresscontroller.yaml
+  register: openshift_cluster_postinstall_endpoint_certs_apply_ingresscontroller_result
 
 - import_tasks: kubeconfig_remove_ca.yml
   when:
-    - openshift_cluster_postinstall_endpoint_certs_apply_result is changed
     - openshift_cluster_postinstall_configure_kubeconfig
+    - openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result is changed
 
 - import_role:
     name: openshift_common
@@ -46,4 +51,6 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_cluster_postinstall_endpoint_certs_apply_result is changed
+  when: >-
+    openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result is changed or
+    openshift_cluster_postinstall_endpoint_certs_apply_ingresscontroller_result is changed

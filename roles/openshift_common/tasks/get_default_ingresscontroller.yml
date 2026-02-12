@@ -1,0 +1,13 @@
+- when: oscommon_default_ingresscontroller is not defined
+  block:
+    - name: Retrieve default ingresscontroller configuration
+      kubernetes.core.k8s_info:
+        api_version: operator.openshift.io/v1
+        kind: IngressController
+        name: default
+        namespace: openshift-ingress-operator
+      register: oscommon_default_ingresscontroller_result
+
+    - name: Set infrastructure info
+      set_fact:
+        oscommon_default_ingresscontroller: '{{ oscommon_default_ingresscontroller_result.resources.0 }}'

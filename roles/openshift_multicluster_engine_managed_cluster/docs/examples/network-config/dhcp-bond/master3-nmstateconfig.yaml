@@ -14,6 +14,8 @@ spec:
       ipv4:
         enabled: true
         dhcp: true
+      ipv6:
+        enabled: false
       link-aggregation:
         mode: active-backup
         options:

@@ -17,6 +17,8 @@ spec:
         - ip: 192.168.80.23
           prefix-length: 24
         dhcp: false
+      ipv6:
+        enabled: false
       link-aggregation:
         mode: active-backup
         options:

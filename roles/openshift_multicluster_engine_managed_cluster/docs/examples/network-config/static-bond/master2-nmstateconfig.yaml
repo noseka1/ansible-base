@@ -35,8 +35,3 @@ spec:
       - destination: 0.0.0.0/0
         next-hop-address: 192.168.80.1
         next-hop-interface: bond0
-  interfaces:
-  - name: eth0
-    macAddress: '52:54:00:08:22:00'
-  - name: eth1
-    macAddress: '52:54:00:08:22:01'

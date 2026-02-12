@@ -23,8 +23,3 @@ spec:
         port:
         - eth0
         - eth1
-  interfaces:
-  - name: eth0
-    macAddress: '52:54:00:08:21:00'
-  - name: eth1
-    macAddress: '52:54:00:08:21:01'

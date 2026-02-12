@@ -1,0 +1,56 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vm-bridge
+spec:
+  desiredState:
+    interfaces:
+    - name: ens7
+      type: ethernet
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      state: up
+      # Enable LLDP to receive information on which switch and switch port
+      # is this network interace connected to.
+      lldp:
+        enabled: true
+    - name: ens8
+      type: ethernet
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      state: up
+      lldp:
+        enabled: true
+    - name: bond1
+      type: bond
+      link-aggregation:
+        mode: active-backup
+        options:
+          miimon: '140'
+        port:
+        - ens7
+        - ens8
+      state: up
+    - name: vm-bridge
+      type: ovs-bridge
+      bridge:
+        port:
+        - name: bond1
+        allow-extra-patch-ports: true
+        options:
+          stp: false
+      state: up
+    ovn:
+      bridge-mappings:
+      - bridge: vm-bridge
+        localnet: localnet-vm-bridge
+        state: present
+  interfaces:
+  - name: ens7
+    macAddress: 52:54:00:d5:e9:da
+  - name: ens8
+    macAddress: 52:54:00:d5:e9:db

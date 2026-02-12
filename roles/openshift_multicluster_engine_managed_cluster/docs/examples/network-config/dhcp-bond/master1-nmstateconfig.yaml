@@ -17,7 +17,7 @@ spec:
       link-aggregation:
         mode: active-backup
         options:
-          miimon: '140'
+          miimon: '100'
         port:
         - eth0
         - eth1

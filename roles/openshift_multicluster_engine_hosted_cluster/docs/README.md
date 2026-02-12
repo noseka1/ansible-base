@@ -8,7 +8,7 @@ Prerequisites:
 
 See also the Prerequisites section in [Create a Kubevirt cluster](https://hypershift-docs.netlify.app/how-to/kubevirt/create-kubevirt-cluster/).
 
-## Agent (bare metal) hosted cluster
+## Agent hosted cluster
 
 See also [Create an Agent cluster](https://hypershift-docs.netlify.app/how-to/agent/create-agent-cluster/).
 

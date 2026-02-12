@@ -8,6 +8,26 @@ metadata:
 spec:
   config:
     interfaces:
+    - name: eth0
+      type: ethernet
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      # Enable LLDP to receive information on which switch and switch port
+      # is this network interace connected to.
+      lldp:
+        enabled: true
+      state: up
+    - name: eth1
+      type: ethernet
+      ipv4:
+        enabled: false
+      ipv6:
+        enabled: false
+      lldp:
+        enabled: true
+      state: up
     - name: bond0
       type: bond
       state: up

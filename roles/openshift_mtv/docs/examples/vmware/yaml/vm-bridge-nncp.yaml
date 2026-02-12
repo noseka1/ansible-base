@@ -55,18 +55,19 @@ spec:
     # PING 10.85.0.99 (10.85.0.99) 56(84) bytes of data.
     # 64 bytes from 10.85.0.99: icmp_seq=1 ttl=64 time=0.253 ms
     # ...
-    - name: vm-bridge.131
-      type: vlan
-      state: up
-      vlan:
-        base-iface: vm-bridge
-        id: 131
-      ipv4:
-        address:
-          - ip: 10.85.0.50
-            prefix-length: 24
-        dhcp: false
-        enabled: true
+    #
+    #- name: vm-bridge.131
+    #  type: vlan
+    #  state: up
+    #  vlan:
+    #    base-iface: vm-bridge
+    #    id: 131
+    #  ipv4:
+    #    address:
+    #      - ip: 10.85.0.50
+    #        prefix-length: 24
+    #    dhcp: false
+    #    enabled: true
   interfaces:
   - name: ens7
     macAddress: 52:54:00:d5:e9:da

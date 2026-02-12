@@ -30,7 +30,7 @@ spec:
       link-aggregation:
         mode: active-backup
         options:
-          miimon: '140'
+          miimon: '100'
         port:
         - ens7
         - ens8

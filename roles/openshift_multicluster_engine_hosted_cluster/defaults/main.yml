@@ -9,6 +9,8 @@ mcehostedcluster_kubevirt:
   trusted_ca_bundle: ''
   nodepool_rootvolume_accessmodes:
     - ReadWriteOnce
+  nodepool_compute_cores: 2
+  nodepool_compute_memory: 6Gi
   nodepool_rootvolume_size: 32Gi
   nodepool_rootvolume_storageclass: ''
   # Allowed volume mode values are Filesystem or Block

@@ -14,8 +14,8 @@ spec:
     kubevirt:
       attachDefaultNetwork: true
       compute:
-        cores: 2
-        memory: 6Gi
+        cores: {{ mcehostedcluster_info.nodepool_compute_cores | default(2) | int }}
+        memory: '{{ mcehostedcluster_info.nodepool_compute_memory | default("6Gi") }}'
       rootVolume:
         persistent:
           accessModes: {{ mcehostedcluster_info.nodepool_rootvolume_accessmodes | to_yaml }}

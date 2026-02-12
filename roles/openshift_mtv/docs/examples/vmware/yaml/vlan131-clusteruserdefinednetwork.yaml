@@ -12,11 +12,12 @@ spec:
   network:
     topology: Localnet
     localnet:
-      role: Secondary
+      ipam:
+        mode: Disabled
+      mtu: 1500
       physicalNetworkName: localnet-vm-bridge
+      role: Secondary
       vlan:
         mode: Access
         access:
           id: 131
-      ipam:
-        mode: Disabled

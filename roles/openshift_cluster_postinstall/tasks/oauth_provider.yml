@@ -1,12 +1,12 @@
 - name: Create OIDC provider secret
   kubernetes.core.k8s:
     template: oauth/openidconnect-secret.yaml
-  when: openshift_cluster_postinstall_oidc.enabled
+  when: osclusterpostinst_oidc.enabled
 
 - name: Create htpasswd secret
   kubernetes.core.k8s:
     template: oauth/htpasswd-secret.yaml
-  when: openshift_cluster_postinstall_htpasswd.enabled
+  when: osclusterpostinst_htpasswd.enabled
 
 - name: Ensure correct user-identity association
   kubernetes.core.k8s:
@@ -14,12 +14,12 @@
   loop:
     - admin
     - devel
-  when: openshift_cluster_postinstall_htpasswd.enabled
+  when: osclusterpostinst_htpasswd.enabled
 
 - name: Configure authentication using htpasswd and OIDC and set token expiration to 31 days
   kubernetes.core.k8s:
     template: oauth/oauth.yaml
-  register: openshift_cluster_postinstall_oauth_result
+  register: osclusterpostinst_oauth_result
 
 - import_role:
     name: openshift_common
@@ -28,5 +28,5 @@
     stable_cluster_delay: 120
     stable_cluster_retries: 10
   when:
-    - openshift_cluster_postinstall_oidc.enabled
-    - openshift_cluster_postinstall_oauth_result is changed
+    - osclusterpostinst_oidc.enabled
+    - osclusterpostinst_oauth_result is changed

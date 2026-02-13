@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Node
-  register: openshift_cluster_postinstall_nodes_result
+  register: osclusterpostinst_nodes_result
 
 - name: Configure default ingresscontroller
   kubernetes.core.k8s:

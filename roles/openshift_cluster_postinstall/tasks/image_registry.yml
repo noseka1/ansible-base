@@ -3,19 +3,19 @@
     api_version: imageregistry.operator.openshift.io/v1
     kind: Config
     name: cluster
-  register: openshift_cluster_postinstall_image_registry_config
+  register: osclusterpostinst_image_registry_config
 
 - name: Allocate persistent volume for image registry
   kubernetes.core.k8s:
     template: image-registry/registry-pvc.yaml
   when:
-    - openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState is defined
-    - openshift_cluster_postinstall_image_registry_config.resources.0.spec.managementState == 'Removed'
+    - osclusterpostinst_image_registry_config.resources.0.spec.managementState is defined
+    - osclusterpostinst_image_registry_config.resources.0.spec.managementState == 'Removed'
 
 - name: Configure the integrated image registry
   kubernetes.core.k8s:
     template: image-registry/cluster-config.yaml
-  register: openshift_cluster_postinstall_image_registry_apply_result
+  register: osclusterpostinst_image_registry_apply_result
 
 - import_role:
     name: openshift_common
@@ -23,4 +23,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_cluster_postinstall_image_registry_apply_result is changed
+  when: osclusterpostinst_image_registry_apply_result is changed

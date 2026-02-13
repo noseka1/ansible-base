@@ -3,4 +3,4 @@ kind: User
 metadata:
   name: {{ item }}
 identities:
-- {{ openshift_cluster_postinstall_htpasswd.name }}:{{ item }}
+- {{ osclusterpostinst_htpasswd.name }}:{{ item }}

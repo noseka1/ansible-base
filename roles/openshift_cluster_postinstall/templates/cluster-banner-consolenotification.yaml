@@ -3,7 +3,7 @@ kind: ConsoleNotification
 metadata:
   name: cluster-banner
 spec:
-  backgroundColor: {{ openshift_cluster_postinstall_cluster_banner.background_color }}
+  backgroundColor: {{ osclusterpostinst_cluster_banner.background_color }}
   color: '#ffffff'
   location: BannerTop
   text: {{ oscommon_cluster_domain }}

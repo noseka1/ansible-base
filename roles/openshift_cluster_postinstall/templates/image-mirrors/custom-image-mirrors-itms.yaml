@@ -3,4 +3,4 @@ kind: ImageTagMirrorSet
 metadata:
   name: custom-image-mirrors
 spec:
-  imageTagMirrors: {{ openshift_cluster_postinstall_image_mirrors[oscommon_cluster_domain] | from_yaml }}
+  imageTagMirrors: {{ osclusterpostinst_image_mirrors[oscommon_cluster_domain] | from_yaml }}

@@ -1,15 +1,15 @@
-openshift_cluster_postinstall_htpasswd:
+osclusterpostinst_htpasswd:
   enabled: true
   name: htpasswd
 
-openshift_cluster_postinstall_oidc:
+osclusterpostinst_oidc:
   enabled: false
   name: okta
   issuer: https://dev-67244641-admin.okta.com
   client_id: 0oa8j5quabJj7xug05d7
   client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXX
 
-openshift_cluster_postinstall_kernel_arguments: []
+osclusterpostinst_kernel_arguments: []
 #  - loglevel=7
 #  - udev.log_priority=debug
 # Preparation for PCI passthrough for virtual machine on OpenShift Virtualization
@@ -17,34 +17,34 @@ openshift_cluster_postinstall_kernel_arguments: []
 #  - intel_iommu=on
 #  - amd_iommu=on
 
-openshift_cluster_postinstall_deploy_infra_nodes: false
+osclusterpostinst_deploy_infra_nodes: false
 # Instance type m6i.2xlarge = 8 vCPUs, 32 GiB RAM
-openshift_cluster_postinstall_deploy_infra_nodes_instance_type: m6i.2xlarge
+osclusterpostinst_deploy_infra_nodes_instance_type: m6i.2xlarge
 
 # Configure container image mirrors by digest and tag
-openshift_cluster_postinstall_image_mirrors: {}
+osclusterpostinst_image_mirrors: {}
 
-openshift_cluster_postinstall_clusterwide_proxy: {}
+osclusterpostinst_clusterwide_proxy: {}
 
-openshift_cluster_postinstall_trusted_ca_bundle: ''
+osclusterpostinst_trusted_ca_bundle: ''
 
-openshift_cluster_postinstall_configure_endpoint_certs: false
+osclusterpostinst_configure_endpoint_certs: false
 
 # Modify kubeconfig file to work with the updated Kubernetes API endpoint certificate
-openshift_cluster_postinstall_configure_kubeconfig: true
+osclusterpostinst_configure_kubeconfig: true
 
 # Send OpenShift monitoring alerts to Slack
-openshift_send_alerts_to_slack_enabled: false
-openshift_send_alerts_to_slack_url: ''
+osclusterpostinst_send_alerts_to_slack_enabled: false
+osclusterpostinst_send_alerts_to_slack_url: ''
 
 # Send OpenShift monitoring alerts to email
-openshift_send_alerts_to_email:
-openshift_send_alerts_to_email_enabled: false
+osclusterpostinst_send_alerts_to_email:
+osclusterpostinst_send_alerts_to_email_enabled: false
 # Note that port number is mandatory
-openshift_send_alerts_to_email_smarthost: 'smtp4dev.smtp4dev.svc:25'
-openshift_send_alerts_to_email_require_tls: false
+osclusterpostinst_send_alerts_to_email_smarthost: 'smtp4dev.smtp4dev.svc:25'
+osclusterpostinst_send_alerts_to_email_require_tls: false
 
-openshift_cluster_postinstall_cluster_banner:
+osclusterpostinst_cluster_banner:
   enabled: false
   background_color: '#008000' # green (dev)
   #background_color: '#9fc5e8' # light blue (test)
@@ -52,31 +52,31 @@ openshift_cluster_postinstall_cluster_banner:
   #background_color: '#dd0000' # red (prod)
 
 # Set core user password. The password of user core can be set on OCP >= 4.13
-openshift_cluster_postinstall_set_core_user_password: false
+osclusterpostinst_set_core_user_password: false
 
 # Set root user password. Use this on development systems only!
-openshift_cluster_postinstall_set_root_user_password: false
+osclusterpostinst_set_root_user_password: false
 
 # Enable etcd encryption for the cluster to provide an additional layer of data security
-openshift_cluster_postinstall_etcd_encryption: false
+osclusterpostinst_etcd_encryption: false
 
 # Deploy auto-gitops as part of the cluster post-installation process
-openshift_cluster_postinstall_deploy_autogitops: false
+osclusterpostinst_deploy_autogitops: false
 
 # Install RHEL entitlement on OpenShift nodes. This allows the OpenShift nodes and container
 # workloads running on OpenShift nodes to pull RPM packages from restricted Red Hat repos
-openshift_cluster_postinstall_rhel_entitlement: false
+osclusterpostinst_rhel_entitlement: false
 
 # Use custom trusted CA certificate instead of the default redhat-uep.pem
-openshift_cluster_postinstall_custom_yum_sslcacert: {}
+osclusterpostinst_custom_yum_sslcacert: {}
 
 # Overlay custom rpm packages on OpenShift nodes filesystem
 # (requires RHEL entitlements configured on nodes)
-openshift_cluster_postinstall_install_custom_rpms: false
+osclusterpostinst_install_custom_rpms: false
 
 # Enable periodic trimming of filesystems on OpenShift nodes. This is useful if the OpenShift
 # node is a virtual machine.
-openshift_cluster_postinstall_enable_fstrim: false
+osclusterpostinst_enable_fstrim: false
 
 # Make operators hosted on OperatorHub.io available for installation via OLM
-openshift_cluster_postinstall_enable_operatorhub: false
+osclusterpostinst_enable_operatorhub: false

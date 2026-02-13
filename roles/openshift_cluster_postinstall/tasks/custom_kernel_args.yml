@@ -1,11 +1,11 @@
 - name: Add custom kernel arguments to OpenShift nodes (will cause nodes to restart)
   kubernetes.core.k8s:
     template: 62-custom-kernel-args-mc.yaml
-  register: openshift_cluster_postinstall_machineconfig_result
+  register: osclusterpostinst_machineconfig_result
   loop:
     - worker
     - master
-  when: openshift_cluster_postinstall_kernel_arguments | length > 0
+  when: osclusterpostinst_kernel_arguments | length > 0
 
 - import_role:
     name: openshift_common
@@ -13,4 +13,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_cluster_postinstall_machineconfig_result is changed
+  when: osclusterpostinst_machineconfig_result is changed

@@ -22,4 +22,4 @@ spec:
     # 'None' No requests are logged; even OAuth access token requests and OAuth authorize token
     # requests are not logged.
     #
-    profile: {{ openshift_cluster_postinstall_audit_profile | default('Default') }}
+    profile: {{ osclusterpostinst_audit_profile | default('Default') }}

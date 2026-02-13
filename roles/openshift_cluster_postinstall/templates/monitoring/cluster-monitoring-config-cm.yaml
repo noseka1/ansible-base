@@ -16,7 +16,7 @@ data:
             requests:
               storage: 1Gi
           #storageClassName: local-hostpath
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -41,7 +41,7 @@ data:
             requests:
               storage: 200Gi
           #storageClassName: local-hostpath
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -49,7 +49,7 @@ data:
         effect: NoSchedule
 {% endif %}
     prometheusOperator:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -57,7 +57,7 @@ data:
         effect: NoSchedule
 {% endif %}
     kubeStateMetrics:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -65,7 +65,7 @@ data:
         effect: NoSchedule
 {% endif %}
     telemeterClient:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -73,7 +73,7 @@ data:
         effect: NoSchedule
 {% endif %}
     openshiftStateMetrics:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -81,7 +81,7 @@ data:
         effect: NoSchedule
 {% endif %}
     thanosQuerier:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
@@ -89,7 +89,7 @@ data:
         effect: NoSchedule
 {% endif %}
     monitoringPlugin:
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:

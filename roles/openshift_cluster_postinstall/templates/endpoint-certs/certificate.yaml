@@ -7,7 +7,7 @@ spec:
   secretName: {{ item.cert_name }}
   issuerRef:
     kind: ClusterIssuer
-    name: {{ openshift_cluster_postinstall_cert_issuer_name }}
+    name: {{ osclusterpostinst_cert_issuer_name }}
   commonName: '{{ item.cert_common_name }}'
   dnsNames:
   - '{{ item.cert_common_name }}'

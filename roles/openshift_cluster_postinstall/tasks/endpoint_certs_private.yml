@@ -8,4 +8,4 @@
 
 - import_tasks: endpoint_certs_complete.yml
   vars:
-    openshift_cluster_postinstall_cert_issuer_name: certificate-authority
+    osclusterpostinst_cert_issuer_name: certificate-authority

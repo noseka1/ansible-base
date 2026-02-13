@@ -12,7 +12,7 @@
 - name: Enable periodic trimming of filesystems on OpenShift nodes (may cause nodes to restart)
   kubernetes.core.k8s:
     template: fstrim/72-fstrim-mc.yaml
-  register: openshift_cluster_postinstall_machineconfig_result
+  register: osclusterpostinst_machineconfig_result
   loop:
     - worker
     - master
@@ -25,4 +25,4 @@
     stable_cluster_retries: 10
   when:
     - not openshift_common_machineconfiguration_exists
-    - openshift_cluster_postinstall_machineconfig_result is changed
+    - osclusterpostinst_machineconfig_result is changed

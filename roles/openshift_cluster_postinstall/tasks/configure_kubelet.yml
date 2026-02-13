@@ -1,7 +1,7 @@
 - name: Apply Kubelet configuration
   kubernetes.core.k8s:
     template: custom-kubeletconfig.yaml
-  register: openshift_cluster_postinstall_kubelet_config_result
+  register: osclusterpostinst_kubelet_config_result
 
 - import_role:
     name: openshift_common
@@ -9,4 +9,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_cluster_postinstall_kubelet_config_result is changed
+  when: osclusterpostinst_kubelet_config_result is changed

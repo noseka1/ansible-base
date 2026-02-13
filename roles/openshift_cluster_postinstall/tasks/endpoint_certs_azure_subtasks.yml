@@ -3,7 +3,7 @@
     api_version: config.openshift.io/v1
     kind: DNS
     name: cluster
-  register: openshift_cluster_postinstall_cluster_dns
+  register: osclusterpostinst_cluster_dns
 
 - import_role:
     name: openshift_cert_manager
@@ -14,10 +14,10 @@
     tasks_from: issuer_acme_azure_direct_deploy.yml
   vars:
     certman_acme_server: https://acme-v02.api.letsencrypt.org/directory
-    certman_acme_azure_resource_group_name: '{{ (openshift_cluster_postinstall_cluster_dns.resources.0.spec.publicZone.id | split("/"))[4] }}'
-    certman_acme_azure_hosted_zone_name: '{{ (openshift_cluster_postinstall_cluster_dns.resources.0.spec.publicZone.id | split("/"))[8] }}'
+    certman_acme_azure_resource_group_name: '{{ (osclusterpostinst_cluster_dns.resources.0.spec.publicZone.id | split("/"))[4] }}'
+    certman_acme_azure_hosted_zone_name: '{{ (osclusterpostinst_cluster_dns.resources.0.spec.publicZone.id | split("/"))[8] }}'
     certman_certificate_dns_name: 'mytest.{{ oscommon_cluster_domain }}'
 
 - import_tasks: endpoint_certs_complete.yml
   vars:
-    openshift_cluster_postinstall_cert_issuer_name: acme-azure
+    osclusterpostinst_cert_issuer_name: acme-azure

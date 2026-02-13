@@ -20,30 +20,30 @@
       cert_namespace: openshift-config
     - cert_name: wildcard-cert
       cert_namespace: openshift-ingress
-  register: openshift_cluster_postinstall_endpoint_certs_result
+  register: osclusterpostinst_endpoint_certs_result
   until:
-    - openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions is defined
-    - openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
-    - (openshift_cluster_postinstall_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
+    - osclusterpostinst_endpoint_certs_result.resources.0.status.conditions is defined
+    - osclusterpostinst_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
+    - (osclusterpostinst_endpoint_certs_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
   retries: 48
   delay: 5
 
 - name: Configure certificate for Kubernetes API
   kubernetes.core.k8s:
     template: endpoint-certs/cluster-apiserver.yaml
-  register: openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result
+  register: osclusterpostinst_endpoint_certs_apply_apiserver_result
   when:
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - name: Configure certificate for default OpenShift ingress router
   kubernetes.core.k8s:
     template: endpoint-certs/default-ingresscontroller.yaml
-  register: openshift_cluster_postinstall_endpoint_certs_apply_ingresscontroller_result
+  register: osclusterpostinst_endpoint_certs_apply_ingresscontroller_result
 
 - import_tasks: kubeconfig_remove_ca.yml
   when:
-    - openshift_cluster_postinstall_configure_kubeconfig
-    - openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result is changed
+    - osclusterpostinst_configure_kubeconfig
+    - osclusterpostinst_endpoint_certs_apply_apiserver_result is changed
 
 - import_role:
     name: openshift_common
@@ -52,5 +52,5 @@
     stable_cluster_delay: 120
     stable_cluster_retries: 10
   when: >-
-    openshift_cluster_postinstall_endpoint_certs_apply_apiserver_result is changed or
-    openshift_cluster_postinstall_endpoint_certs_apply_ingresscontroller_result is changed
+    osclusterpostinst_endpoint_certs_apply_apiserver_result is changed or
+    osclusterpostinst_endpoint_certs_apply_ingresscontroller_result is changed

@@ -4,10 +4,10 @@
     tasks_from: machineset_deploy.yml
   vars:
     oscommon_add_machineset_role: infra
-    oscommon_add_machineset_instance_type: '{{ openshift_cluster_postinstall_deploy_infra_nodes_instance_type }}'
+    oscommon_add_machineset_instance_type: '{{ osclusterpostinst_deploy_infra_nodes_instance_type }}'
     oscommon_add_machineset_labels:
       node-role.kubernetes.io/infra: ""
     oscommon_add_machineset_taints:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
-  when: openshift_cluster_postinstall_deploy_infra_nodes
+  when: osclusterpostinst_deploy_infra_nodes

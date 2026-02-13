@@ -7,7 +7,7 @@
     api_version: machine.openshift.io/v1beta1
     kind: MachineSet
     namespace: openshift-machine-api
-  register: openshift_cluster_postinstall_machinesets_result
+  register: osclusterpostinst_machinesets_result
 
 - name: Add autoscale-to-host annotation
   kubernetes.core.k8s:
@@ -21,6 +21,6 @@
           metal3.io/autoscale-to-hosts: ''
     state: patched
   when: item.metadata.name.startswith(cluster_id)
-  loop: '{{ openshift_cluster_postinstall_machinesets_result.resources }}'
+  loop: '{{ osclusterpostinst_machinesets_result.resources }}'
   loop_control:
     label: '{{ item.metadata.namespace }} {{ item.metadata.name }}'

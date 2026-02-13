@@ -4,7 +4,7 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
-{% if openshift_cluster_postinstall_nodes_result.resources | default([]) | length >= 3 %}
+{% if osclusterpostinst_nodes_result.resources | default([]) | length >= 3 %}
   # Deploy 3 ingress routers for increased availability (default is 2)
   replicas: 3
 {% endif %}
@@ -27,7 +27,7 @@ spec:
       destination:
         # Send ingress access logs to a side-car container named "logs"
         type: Container
-{% if openshift_cluster_postinstall_deploy_infra_nodes %}
+{% if osclusterpostinst_deploy_infra_nodes %}
   # Deploy ingress router on infra nodes
   # See also https://docs.openshift.com/container-platform/4.14/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets
   nodePlacement:

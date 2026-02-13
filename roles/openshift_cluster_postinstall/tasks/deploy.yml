@@ -22,11 +22,11 @@
     tasks_from: get_provisioning.yml
 
 - import_tasks: configure_images_mirrors.yml
-  when: openshift_cluster_postinstall_image_mirrors[oscommon_cluster_domain] is defined
+  when: osclusterpostinst_image_mirrors[oscommon_cluster_domain] is defined
 
 - import_tasks: etcd_encryption.yml
   when:
-    - openshift_cluster_postinstall_etcd_encryption
+    - osclusterpostinst_etcd_encryption
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: infra_nodes.yml
@@ -55,7 +55,7 @@
 - import_tasks: rhel_entitlement.yml
 
 - import_tasks: install_custom_rpms.yml
-  when: openshift_cluster_postinstall_install_custom_rpms
+  when: osclusterpostinst_install_custom_rpms
 
 - import_tasks: custom_kernel_args.yml
 
@@ -64,18 +64,18 @@
 
 - import_tasks: set_core_user_password.yml
   when:
-    - openshift_cluster_postinstall_set_core_user_password
+    - osclusterpostinst_set_core_user_password
     - oscommon_cluster_version_majorminor is version('4.13', '>=', strict=true)
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: set_root_user_password.yml
   when:
-    - openshift_cluster_postinstall_set_root_user_password
+    - osclusterpostinst_set_root_user_password
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: enable_fstrim.yml
   when:
-    - openshift_cluster_postinstall_enable_fstrim
+    - osclusterpostinst_enable_fstrim
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: kube_apiserver_audit.yml
@@ -87,7 +87,7 @@
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: operatorhub_io.yml
-  when: openshift_cluster_postinstall_enable_operatorhub
+  when: osclusterpostinst_enable_operatorhub
 
 - import_tasks: image_registry.yml
 
@@ -101,28 +101,28 @@
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
 - import_tasks: cluster_banner.yml
-  when: openshift_cluster_postinstall_cluster_banner.enabled
+  when: osclusterpostinst_cluster_banner.enabled
 
 - import_tasks: delete_succeeded_pods.yml
 
 - import_tasks: endpoint_certs_aws.yml
   when:
-    - openshift_cluster_postinstall_configure_endpoint_certs
+    - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
 - import_tasks: endpoint_certs_azure.yml
   when:
-    - openshift_cluster_postinstall_configure_endpoint_certs
+    - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'Azure'
 
 - import_tasks: endpoint_certs_gcp.yml
   when:
-    - openshift_cluster_postinstall_configure_endpoint_certs
+    - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'GCP'
 
 - import_tasks: endpoint_certs_private.yml
   when:
-    - openshift_cluster_postinstall_configure_endpoint_certs
+    - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type not in ['AWS', 'Azure', 'GCP']
 
 - import_tasks: cluster_info.yml
@@ -130,4 +130,4 @@
 - import_role:
     name: openshift_autogitops
     tasks_from: deploy.yml
-  when: openshift_cluster_postinstall_deploy_autogitops
+  when: osclusterpostinst_deploy_autogitops

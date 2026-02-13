@@ -3,7 +3,7 @@
     template:
       - user-ca-bundle-cm.yaml
       - cluster-proxy.yaml
-  register: openshift_cluster_postinstall_proxy_result
+  register: osclusterpostinst_proxy_result
 
 - import_role:
     name: openshift_common
@@ -11,4 +11,4 @@
   vars:
     stable_cluster_delay: 120
     stable_cluster_retries: 10
-  when: openshift_cluster_postinstall_proxy_result is changed
+  when: osclusterpostinst_proxy_result is changed

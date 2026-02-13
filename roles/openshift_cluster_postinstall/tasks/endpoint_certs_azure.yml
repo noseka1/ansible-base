@@ -3,10 +3,10 @@
     api_version: config.openshift.io/v1
     kind: APIServer
     name: cluster
-  register: openshift_cluster_postinstall_cluster_apiserver_result
+  register: osclusterpostinst_cluster_apiserver_result
 
 - name: If custom certificate has not been configured, go ahead and set up OpenShift certificates
   import_tasks: endpoint_certs_azure_subtasks.yml
   when:
-    - openshift_cluster_postinstall_cluster_apiserver_result.resources.0.spec.servingCerts.namedCertificates.0 is not defined or
+    - osclusterpostinst_cluster_apiserver_result.resources.0.spec.servingCerts.namedCertificates.0 is not defined or
       oscommon_default_ingresscontroller.spec.defaultCertificate.name is not defined

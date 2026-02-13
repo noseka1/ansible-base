@@ -4,46 +4,46 @@
 - name: Enable etcd encryption
   kubernetes.core.k8s:
     template: etcd-encryption/cluster-apiserver.yaml
-  register: openshift_cluster_postinstall_etcd_encryption_result
+  register: osclusterpostinst_etcd_encryption_result
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift API Server resources to encrypt
   kubernetes.core.k8s_info:
     api_version: operator.openshift.io/v1
     kind: OpenShiftAPIServer
     name: cluster
-  register: openshift_cluster_postinstall_openshiftapiserver_result
+  register: osclusterpostinst_openshiftapiserver_result
   until:
-    - openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions is defined
-    - openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (openshift_cluster_postinstall_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
+    - osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions is defined
+    - osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
+    - (osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
   retries: 120
   delay: 10
-  when: openshift_cluster_postinstall_etcd_encryption_result is changed
+  when: osclusterpostinst_etcd_encryption_result is changed
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes API Server resources to encrypt
   kubernetes.core.k8s_info:
     api_version: operator.openshift.io/v1
     kind: KubeAPIServer
     name: cluster
-  register: openshift_cluster_postinstall_kubernetesapiserver_result
+  register: osclusterpostinst_kubernetesapiserver_result
   until:
-    - openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions is defined
-    - openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (openshift_cluster_postinstall_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
+    - osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions is defined
+    - osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
+    - (osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
   retries: 120
   delay: 10
-  when: openshift_cluster_postinstall_etcd_encryption_result is changed
+  when: osclusterpostinst_etcd_encryption_result is changed
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift OAuth API resources to encrypt
   kubernetes.core.k8s_info:
     api_version: operator.openshift.io/v1
     kind: Authentication
     name: cluster
-  register: openshift_cluster_postinstall_openshiftoauth_result
+  register: osclusterpostinst_openshiftoauth_result
   until:
-    - openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions is defined
-    - openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (openshift_cluster_postinstall_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
+    - osclusterpostinst_openshiftoauth_result.resources.0.status.conditions is defined
+    - osclusterpostinst_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
+    - (osclusterpostinst_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
   retries: 120
   delay: 10
-  when: openshift_cluster_postinstall_etcd_encryption_result is changed
+  when: osclusterpostinst_etcd_encryption_result is changed

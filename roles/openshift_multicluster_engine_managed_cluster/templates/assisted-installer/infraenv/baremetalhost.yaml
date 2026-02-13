@@ -11,6 +11,22 @@ metadata:
     infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
 spec:
   online: true
+  # Select the automatedCleaningMode to apply during the provisioning and deprovisioning of nodes.
+  #
+  # The default setting for automatedCleaningMode is "metadata". By choosing the "metadata" mode,
+  # you instruct Ironic to destroy the GUID Partition Tables (GPT), Master Boot Records (MBR),
+  # LVM metadata, and LUKS headers from the bare metal node. Conversely, if the automatedCleaningMode
+  # is configured to "disabled", the automated cleaning process will be skipped during both
+  # provisioning and deprovisioning.
+  #
+  # It is advisable to set the mode to disabled to avert potential disasters. We previously experienced
+  # a situation where the bare metal cluster was inadvertently deleted; specifically, the corresponding
+  # InfraEnv and ClusterDeployment objects were removed from the RHACM cluster, leading to the
+  # deprovisioning of all cluster nodes.
+  #
+  # When the automatedCleaningMode is set to disabled, the cluster nodes are merely powered off, and no
+  # data on these nodes is lost. To recover from an accidental deletion of the cluster, one can simply
+  # power the cluster nodes back on and re-import the cluster into RHACM.
   automatedCleaningMode: disabled
   bootMACAddress: '{{ value.bmh.boot_macaddr }}'
   bmc:

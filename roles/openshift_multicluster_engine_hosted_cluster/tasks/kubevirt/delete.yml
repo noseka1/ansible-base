@@ -10,6 +10,7 @@
       - api_version: cluster.open-cluster-management.io/v1
         kind: ManagedCluster
         name: '{{ mcehostedcluster_info.cluster_name }}'
+    delete_kubernetes_objects_retries: 60
 
 - import_role:
     name: openshift_autogitops

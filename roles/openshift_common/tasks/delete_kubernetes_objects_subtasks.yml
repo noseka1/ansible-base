@@ -39,5 +39,5 @@
     namespace: '{{ outer_item.namespace | default(omit) }}'
   register: remaining_objects
   until: remaining_objects.resources | length == 0
-  retries: 30
+  retries: '{{ delete_kubernetes_objects_retries | default(30) }}'
   delay: 5

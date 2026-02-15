@@ -9,11 +9,11 @@ spec:
 {% else %}
     name: ''
 {% endif %}
-{% if osclusterpostinst_clusterwide_proxy[oscommon_cluster_domain] is defined %}
-  httpProxy: {{ osclusterpostinst_clusterwide_proxy[oscommon_cluster_domain].http_proxy }}
-  httpsProxy: {{ osclusterpostinst_clusterwide_proxy[oscommon_cluster_domain].https_proxy }}
-  noProxy: {{ osclusterpostinst_clusterwide_proxy[oscommon_cluster_domain].no_proxy }}
+{% if osclusterpostinst_clusterwide_proxy %}
+  httpProxy: {{ osclusterpostinst_clusterwide_proxy.http_proxy }}
+  httpsProxy: {{ osclusterpostinst_clusterwide_proxy.https_proxy }}
+  noProxy: {{ osclusterpostinst_clusterwide_proxy.no_proxy }}
   readinessEndpoints:
-    - http://www.google.com
-    - https://www.google.com
+  - http://www.google.com
+  - https://www.google.com
 {% endif %}

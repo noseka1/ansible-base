@@ -10,7 +10,7 @@
 
 - name: Create notifier in RHACS (returns HTTP 409 if the notifier already exists)
   uri:
-    url: 'https://{{ rhacs_central_host }}/v1/notifiers'
+    url: https://{{ rhacs_central_host }}/v1/notifiers
     method: POST
     body_format: json
     body:

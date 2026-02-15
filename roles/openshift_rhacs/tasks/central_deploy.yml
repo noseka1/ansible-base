@@ -37,9 +37,11 @@
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-default-tls-cert'
     hvault_secret_data:
-      tls.crt: '{{ rhacs_central_default_tls_cert[oscommon_cluster_domain].crt }}'
-      tls.key: '{{ rhacs_central_default_tls_cert[oscommon_cluster_domain].key }}'
-  when: rhacs_central_default_tls_cert[oscommon_cluster_domain] is defined
+      tls.crt: '{{ rhacs_central_default_tls_cert_crt }}'
+      tls.key: '{{ rhacs_central_default_tls_cert_key }}'
+  when:
+    - rhacs_central_default_tls_cert_crt | length > 0
+    - rhacs_central_default_tls_cert_key | length > 0
 
 - import_role:
     name: openshift_autogitops

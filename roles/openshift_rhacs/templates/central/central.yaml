@@ -20,7 +20,8 @@ spec:
           cpu: 100m
           memory: 500Mi
 {% endif %}
-{% if rhacs_central_default_tls_cert[oscommon_cluster_domain] is defined %}
+{% if rhacs_central_default_tls_cert_crt | length > 0 and
+      rhacs_central_default_tls_cert_key | length > 0 %}
     defaultTLSSecret:
       name: central-default-tls-cert
 {% endif %}

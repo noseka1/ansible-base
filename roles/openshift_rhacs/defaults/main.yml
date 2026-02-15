@@ -5,7 +5,8 @@ rhacs_operator_subscription_starting_csv: ''
 rhacs_central_connectivity_policy: Online
 
 # Use custom certificate for Central ingress instead of the self-signed one
-rhacs_central_default_tls_cert: {}
+rhacs_central_default_tls_cert_crt: ''
+rhacs_central_default_tls_cert_key: ''
 
 # CA certificates that will be added to the RHACS trusted certificates
 rhacs_additional_trusted_ca: ''

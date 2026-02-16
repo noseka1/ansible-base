@@ -7,7 +7,7 @@
       cert_common_name: 'api.{{ oscommon_cluster_domain }}'
     - cert_name: wildcard-cert
       cert_namespace: openshift-ingress
-      cert_common_name: '*.{{ oscommon_default_ingresscontroller.spec.domain }}'
+      cert_common_name: '*.{{ oscommon_default_ingresscontroller.status.domain }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for certificates to become ready
   kubernetes.core.k8s_info:

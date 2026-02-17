@@ -1,3 +1,2 @@
-ddvector_name: datadog-vector-instance
 ddvector_namespace: datadog-vector
 ddvector_manage_namespace: true

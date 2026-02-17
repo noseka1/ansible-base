@@ -2,7 +2,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
-    name: '{{ ddvector_name }}'
+    name: datadog-vector-instance
     namespace: '{{ ddvector_namespace }}'
   register: ddvector_service_result
 
@@ -14,5 +14,5 @@
   when: ddvector_service_result.resources | length == 0
 
 - set_fact:
-    ddvector_hostname: '{{ ddvector_name }}.{{ ddvector_namespace }}.svc'
+    ddvector_hostname: 'datadog-vector-instance.{{ ddvector_namespace }}.svc'
     ddvector_port: 9000

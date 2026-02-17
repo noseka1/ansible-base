@@ -5,5 +5,5 @@ version: 0.1.0
 
 dependencies:
 - name: vector
-  version: 0.41.0
+  version: 0.50.0
   repository: https://helm.vector.dev

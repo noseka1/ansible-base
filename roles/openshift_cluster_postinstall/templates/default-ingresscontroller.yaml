@@ -4,7 +4,10 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
-{% if osclusterpostinst_nodes_result.resources | default([]) | length >= 3 %}
+{% if (osclusterpostinst_ingress_result.resources.0.status.defaultPlacement == 'ControlPlane' and
+     osclusterpostinst_nodes_result.resources | json_query('[?metadata.labels."node-role.kubernetes.io/control-plane"==`""`]') | length >= 3) or
+      (osclusterpostinst_ingress_result.resources.0.status.defaultPlacement == 'Workers' and
+     osclusterpostinst_nodes_result.resources | json_query('[?metadata.labels."node-role.kubernetes.io/worker"==`""`]') | length >= 3) %}
   # Deploy 3 ingress routers for increased availability (default is 2)
   replicas: 3
 {% endif %}

@@ -3,5 +3,38 @@ kind: Network
 metadata:
   name: cluster
 spec:
+  # Deploy FRR routing into openshift-frr-k8s namespace. This allows for advertising cluster network routes via BGP.
+  additionalRoutingCapabilities:
+    providers:
+    - FRR
+  defaultNetwork:
+    ovnKubernetesConfig:
+      gatewayConfig:
+        # ipForwarding controls IP forwarding for all traffic on OVN-Kubernetes managed interfaces (such as br-ex).
+        # By default this is set to "Restricted", and Kubernetes related traffic is still forwarded appropriately, but other
+        # IP traffic will not be routed by the OCP node. If there is a desire to allow the host to forward traffic across
+        # OVN-Kubernetes managed interfaces, then set this field to "Global".
+        # Setting gatewayConfig to "Restricted" (default) configures cluster nodes with:
+        #  sysctl -w net.ipv4.ip_forward=0
+        #  sysctl -w net.ipv6.conf.all.forwarding=0
+        # Setting gatewayConfig to "Global" configures cluster nodes with:
+        #  sysctl -w net.ipv4.ip_forward=1
+        #  sysctl -w net.ipv6.conf.all.forwarding=1
+        ipForwarding: Restricted
+        # By default, OVNKubernetes does not pass the network traffic through the host network stack when sending out traffic.
+        # Instead, egress traffic is always sent directly through the host interface connected to the br-ex bridge. If your
+        # cluster node comes with secondary network interfaces that are necessary for accessing specific network destinations,
+        # you will need to enable the routingViaHost setting and set ipForwarding to Global within the OVNKubernetes
+        # configuration. Additional details can be found in the knowledgebase article 6962558 OVN-Kubernetes ignores host
+        # routes for outgoing traffic: https://access.redhat.com/solutions/6962558
+        routingViaHost: false
+      # routeAdvertisements determines if the functionality to advertise cluster network routes through a dynamic routing
+      # protocol, such as BGP, is enabled or not. This functionality is configured through the ovn-kubernetes
+      # RouteAdvertisements CRD. It requires the 'FRR' routing capability provider to be enabled as an additional routing
+      # capability. Default is "Disabled".
+      routeAdvertisements: Enabled
   # Enable multi-network policy (MultiNetworkPolicy CRD)
+  # MultiNetworkPolicy are similar to NetworkPolicy objects, but NetworkPolicy
+  # objects only apply to the primary interface. With MultiNetworkPolicy, you can
+  # control the traffic that a pod can receive over the secondary interfaces.
   useMultiNetworkPolicy: true

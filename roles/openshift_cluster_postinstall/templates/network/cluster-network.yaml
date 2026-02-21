@@ -33,6 +33,15 @@ spec:
       # RouteAdvertisements CRD. It requires the 'FRR' routing capability provider to be enabled as an additional routing
       # capability. Default is "Disabled".
       routeAdvertisements: Enabled
+    # Persistent network audit logs are dumped to the host at /var/log/ovn/. See also:
+    # https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/network_security/logging-network-security
+    # To enable logging of allowed and denied traffic in the specific namespace, annotate the namespace using the command:
+    # $ oc annotate namespace <name> k8s.ovn.org/acl-logging='{"deny":"alert","allow":"alert"}'
+    policyAuditConfig:
+      # Max size an ACL_audit log file is allowed to reach before rotation occurs. Default is 50 MB.
+      maxFileSize: 50
+      # Approximate maximum number of messages to generate per-second per-node. Default is 20 msgs/sec.
+      rateLimit: 20
   # Enable multi-network policy (MultiNetworkPolicy CRD)
   # MultiNetworkPolicy are similar to NetworkPolicy objects, but NetworkPolicy
   # objects only apply to the primary interface. With MultiNetworkPolicy, you can

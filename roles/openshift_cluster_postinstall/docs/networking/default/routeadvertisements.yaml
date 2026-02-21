@@ -1,0 +1,14 @@
+apiVersion: k8s.ovn.org/v1
+kind: RouteAdvertisements
+metadata:
+  name: udn-example-default
+spec:
+  advertisements:
+  - PodNetwork
+  - EgressIP
+  frrConfigurationSelector:
+    matchLabels:
+      advertise: udn-example-default
+  networkSelectors:
+  - networkSelectionType: DefaultNetwork
+  nodeSelector: {}

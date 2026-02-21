@@ -1,0 +1,19 @@
+apiVersion: k8s.ovn.org/v1
+kind: RouteAdvertisements
+metadata:
+  name: udn-example-layer2
+spec:
+  advertisements:
+  - PodNetwork
+  # EgressIP advertisement is currently not supported for Layer2 networks
+  #- EgressIP
+  frrConfigurationSelector:
+    matchLabels:
+      advertise: udn-example-layer2
+  networkSelectors:
+  - clusterUserDefinedNetworkSelector:
+      networkSelector:
+        matchLabels:
+          advertise: udn-example-layer2
+    networkSelectionType: ClusterUserDefinedNetworks
+  nodeSelector: {}

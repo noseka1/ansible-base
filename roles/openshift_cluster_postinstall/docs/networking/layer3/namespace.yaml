@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: udn-example-layer3-ns1
+  labels:
+    k8s.ovn.org/primary-user-defined-network: ""
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: udn-example-layer3-ns2
+  labels:
+    k8s.ovn.org/primary-user-defined-network: ""

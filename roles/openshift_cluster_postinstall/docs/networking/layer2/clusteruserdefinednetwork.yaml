@@ -1,0 +1,23 @@
+apiVersion: k8s.ovn.org/v1
+kind: ClusterUserDefinedNetwork
+metadata:
+  labels:
+    advertise: udn-example-layer2
+  name: udn-example-layer2
+spec:
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: In
+      values:
+      - udn-example-layer2-ns1
+      - udn-example-layer2-ns2
+  network:
+    layer2:
+      role: Primary
+      ipam:
+        lifecycle: Persistent
+        mode: Enabled
+      subnets:
+      - 10.91.0.0/16
+    topology: Layer2

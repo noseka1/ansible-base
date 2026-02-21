@@ -1,0 +1,18 @@
+apiVersion: k8s.ovn.org/v1
+kind: RouteAdvertisements
+metadata:
+  name: udn-example-layer3
+spec:
+  advertisements:
+  - PodNetwork
+  - EgressIP
+  frrConfigurationSelector:
+    matchLabels:
+      advertise: udn-example-layer3
+  networkSelectors:
+  - clusterUserDefinedNetworkSelector:
+      networkSelector:
+        matchLabels:
+          advertise: udn-example-layer3
+    networkSelectionType: ClusterUserDefinedNetworks
+  nodeSelector: {}

@@ -1,0 +1,27 @@
+apiVersion: frrk8s.metallb.io/v1beta1
+kind: FRRConfiguration
+metadata:
+  labels:
+    advertise: udn-example-default
+  name: udn-example-default
+  namespace: openshift-frr-k8s
+spec:
+  bgp:
+    routers:
+    - asn: 64512
+      neighbors:
+      - address: 192.168.50.1
+        asn: 65000
+        # Prevent error: DisableMP==false not supported
+        disableMP: true
+        dualStackAddressFamily: false
+        ebgpMultiHop: true
+        toAdvertise:
+          allowed:
+            mode: all
+        toReceive:
+          allowed:
+            mode: all
+      prefixes:
+      # Advertise service network
+      - 172.30.0.0/16

@@ -1,0 +1,20 @@
+apiVersion: k8s.ovn.org/v1
+kind: ClusterUserDefinedNetwork
+metadata:
+  labels:
+    advertise: udn-example-layer3
+  name: udn-example-layer3
+spec:
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: In
+      values:
+      - udn-example-layer3-ns1
+      - udn-example-layer3-ns2
+  network:
+    layer3:
+      role: Primary
+      subnets:
+      - cidr: 10.92.0.0/16
+    topology: Layer3

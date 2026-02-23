@@ -1,0 +1,28 @@
+- import_tasks: mc_deploy.yml
+  tags: sriovnet_mc
+
+- import_role:
+    name: openshift_common
+    tasks_from: install_plan_approve
+  vars:
+    oscomm_subscription_name: sriov-network-operator
+    oscomm_subscription_namespace: openshift-sriov-network-operator
+  tags: sriovnet_operator
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/operator
+    autogitops_app_dst_path: sriov-network/operator
+    autogitops_app_namespace: openshift-sriov-network-operator
+  tags: sriovnet_operator
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/instance
+    autogitops_app_dst_path: sriov-network/instance
+    autogitops_app_namespace: openshift-sriov-network-operator
+  tags: sriovnet_instance

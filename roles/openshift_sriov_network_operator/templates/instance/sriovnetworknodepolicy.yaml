@@ -1,0 +1,52 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: sriov1
+  namespace: openshift-sriov-network-operator
+spec:
+  # The resource name of the SR-IOV network device plugin. You can create multiple SR-IOV
+  # network node policies for a resource name. When specifying a name, be sure to use the
+  # accepted syntax expression ^[a-zA-Z0-9_]+$ in the resourceName.
+  resourceName: sriov1
+  # The node selector specifies the nodes to configure. Only SR-IOV network devices on
+  # the selected nodes are configured. The SR-IOV Container Network Interface (CNI) plugin
+  # and device plugin are deployed on selected nodes only.
+  # Node Feature Discovery can automatically label the nodes using the label:
+  # feature.node.kubernetes.io/network-sriov.capable: "true"
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  # Optional: The priority is an integer value between 0 and 99. A smaller value receives
+  # higher priority. For example, a priority of 10 is a higher priority than 99. The
+  # default value is 99.
+  #priority: 99
+  # Optional: The maximum transmission unit (MTU) of the physical function and all its
+  # virtual functions. The maximum MTU value can vary for different network interface
+  # controller (NIC) models.
+  #mtu: 1500
+  # Optional: Set needVhostNet to true to mount the /dev/vhost-net device in the pod. Use
+  # the mounted /dev/vhost-net device with Data Plane Development Kit (DPDK) to forward
+  # traffic to the kernel network stack. Defaults to false.
+  #needVhostNet: false
+  # The number of the virtual functions (VF) to create for the SR-IOV physical network
+  # device. For an Intel network interface controller (NIC), the number of VFs cannot be
+  # larger than the total VFs supported by the device. For a Mellanox NIC, the number of VFs
+  # cannot be larger than 127.
+  numVfs: 7
+  # The externallyManaged field indicates whether the SR-IOV Network Operator manages all,
+  # or only a subset of virtual functions (VFs). With the value set to false the SR-IOV
+  # Network Operator manages and configures all VFs on the PF.
+  externallyManaged: false
+  # The NIC selector identifies the device to which this resource applies. You do not have
+  # to specify values for all the parameters. It is recommended to identify the network
+  # device with enough precision to avoid selecting a device unintentionally.
+  nicSelector:
+    # Optional: The vendor hexadecimal vendor identifier of the SR-IOV network device.
+    # Vendor 8086 is Intel, vendor 15b3 is Mellanox, ...
+    vendor: '8086'
+    # Optional: The device hexadecimal device identifier of the SR-IOV network device.
+    # For example, 101b is the device ID for a Mellanox ConnectX-6 device.
+    # You can obtain the device ID from the output of lspci -vv.
+    deviceID: '10ca'
+  # The driver to configure for the VFs created from this resource. The only allowed values
+  # are netdevice and vfio-pci. The default value is netdevice.
+  deviceType: netdevice

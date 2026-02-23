@@ -1,0 +1,12 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 62-{{ item }}-network-sriov-igb
+spec:
+  kernelArguments:
+  - intel_iommu=on
+  - amd_iommu=on
+  # Intel 82576 supports a maximum of 7 VFs per port
+  - igb.max_vfs=7

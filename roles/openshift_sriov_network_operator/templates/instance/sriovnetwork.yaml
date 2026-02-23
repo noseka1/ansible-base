@@ -1,0 +1,26 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: sriov1
+  namespace: openshift-sriov-network-operator
+spec:
+  # SRIOV Network device plugin endpoint resource name. The value for the
+  # spec.resourceName parameter from the SriovNetworkNodePolicy object that defines
+  # the SR-IOV hardware for this additional network.
+  resourceName: sriov1
+  # Namespace where the NetworkAttachmentDefinition custom resource will be created.
+  networkNamespace: default
+  # Optional: Specifies the VLAN ID to assign to an additional network. The default
+  # value of 0 means that an additional network has no VLAN ID tag. Supported VLAN ID
+  # values range from 1 to 4094.
+  #vlan: 101
+  # Optional: The spoof check mode of the VF. The allowed values are the strings "on"
+  # and "off".
+  #spoofChk: 'on'
+  # Optional: A configuration object for the IPAM CNI plugin as a YAML block scalar. The
+  # plugin manages IP address assignment for the attachment definition.
+  ipam: |-
+    {
+      "mac": true,
+      "ips": true
+    }

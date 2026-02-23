@@ -1,0 +1,16 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: sriov-network/instance
+  tags: sriovnet_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: sriov-network/operator
+  tags: sriovnet_operator
+
+- import_tasks: mc_delete.yml
+  tags: sriovnet_mc

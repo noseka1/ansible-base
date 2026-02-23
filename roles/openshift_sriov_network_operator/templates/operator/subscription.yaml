@@ -1,0 +1,19 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: sriov-network-operator
+  namespace: openshift-sriov-network-operator
+spec:
+  channel: {{ sriovnet_operator_subscription_channel | default('""', true) }}
+  installPlanApproval: Manual
+  name: sriov-network-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: {{ sriovnet_operator_subscription_starting_csv | default('""', true) }}
+  config:
+    env:
+    # Allow unsupported NICs. Don't use this setting for production deployments.
+    # You can obtain the list of supported NICs by issuing the command:
+    # $ oc get configmap -n openshift-sriov-network-operator supported-nic-ids -o yaml
+    - name: DEV_MODE
+      value: 'TRUE'

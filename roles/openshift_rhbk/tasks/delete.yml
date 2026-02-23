@@ -17,7 +17,7 @@
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: rhbk/instance/keycloak-db
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/rhbk/instance/keycloak-db'
 
 - import_role:
     name: openshift_autogitops

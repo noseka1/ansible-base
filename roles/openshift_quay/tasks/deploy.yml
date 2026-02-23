@@ -68,7 +68,7 @@
     tasks_from: secret_insert.yml
   vars:
     hvault_mount_point: autogitops
-    hvault_secret_name: quay/quay/config
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/quay/quay/config'
     hvault_secret_data:
       config.yaml: '{{ lookup("template", "quay/config/config.yaml") | from_yaml }}'
   tags: quay_instance

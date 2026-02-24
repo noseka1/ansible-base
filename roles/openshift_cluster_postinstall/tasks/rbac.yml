@@ -3,3 +3,4 @@
     template:
       - rbac/cluster-admin-group.yaml
       - rbac/cluster-admin-0-clusterrolebinding.yaml
+      - rbac/developer-group.yaml

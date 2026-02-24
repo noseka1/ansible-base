@@ -1,0 +1,5 @@
+- name: Apply Kubernetes RBAC configuration
+  kubernetes.core.k8s:
+    template:
+      - rbac/cluster-admin-group.yaml
+      - rbac/cluster-admin-0-clusterrolebinding.yaml

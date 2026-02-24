@@ -81,7 +81,7 @@
 - import_tasks: kube_apiserver_audit.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: user_groups.yml
+- import_tasks: rbac.yml
 
 - import_tasks: oauth_provider.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']

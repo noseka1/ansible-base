@@ -57,13 +57,13 @@ $ oc get group
 ```
 NAME                                          USERS
 Everyone                                      anosek@redhat.com
-cluster-admins                                admin, anosek@redhat.com
+cluster-admin                                 admin, anosek@redhat.com
 mygroup1                                      anosek@redhat.com
 open-cluster-management-subscription-admins   admin
 ```
 
 ```
-$ oc get group cluster-admins -o yaml
+$ oc get group cluster-admin -o yaml
 ```
 
 ```yaml
@@ -73,7 +73,7 @@ metadata:
   annotations:
     oauth.openshift.io/idp.okta: synced
   creationTimestamp: "2025-11-19T19:55:45Z"
-  name: cluster-admins
+  name: cluster-admin
   resourceVersion: "437771"
   uid: 0e8202e2-06c6-4f8a-879d-c7f25d6c25cf
 users:

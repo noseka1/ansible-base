@@ -1,0 +1,16 @@
+# The built-in edit role in OpenShift does not include the permissions found
+# in the kubevirt.io:migrate cluster role. These permission allow live-migrating
+# VMs between cluster nodes. This rolebinding is used in addition to the edit
+# role to also grant permissions to live-migrate virtual machines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: osvirt-migrate
+  namespace: kubevirt-example
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubevirt.io:migrate
+subjects:
+- kind: Group
+  name: developer-edit

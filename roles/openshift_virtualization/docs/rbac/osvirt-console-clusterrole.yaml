@@ -1,0 +1,17 @@
+# This role provides access to the VNC console of virtual machines. The
+# built-in view role in OpenShift does not provide access to the VNC console.
+# This cluster role can be utilized alongside the view role to also grant VNC
+# console access to users with read-only permissions.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: osvirt-console
+rules:
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - virtualmachineinstances/console
+  - virtualmachineinstances/vnc
+  - virtualmachineinstances/vnc/screenshot
+  verbs:
+  - get

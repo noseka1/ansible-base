@@ -1,3 +1,0 @@
-manageNamespace: {{ ddvector_manage_namespace }}
-vector:
-  role: Stateless-Aggregator

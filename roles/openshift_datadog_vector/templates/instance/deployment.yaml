@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datadog-vector-instance
+  namespace: {{ ddvector_namespace }}
+  labels:
+    app.kubernetes.io/name: vector
+    app.kubernetes.io/instance: datadog-vector-instance
+    app.kubernetes.io/component: Stateless-Aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vector
+      app.kubernetes.io/instance: datadog-vector-instance
+      app.kubernetes.io/component: Stateless-Aggregator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vector
+        app.kubernetes.io/instance: datadog-vector-instance
+        app.kubernetes.io/component: Stateless-Aggregator
+    spec:
+      serviceAccountName: datadog-vector-instance
+      containers:
+      - name: vector
+        image: timberio/vector:0.53.0-distroless-libc
+        args:
+        - --config-dir
+        - /etc/vector/
+        env:
+        - name: VECTOR_LOG
+          value: "info"
+        ports:
+        - name: datadog-agent
+          containerPort: 8282
+          protocol: TCP
+        - name: fluent
+          containerPort: 24224
+          protocol: TCP
+        - name: logstash
+          containerPort: 5044
+          protocol: TCP
+        - name: splunk-hec
+          containerPort: 8080
+          protocol: TCP
+        - name: statsd
+          containerPort: 8125
+          protocol: TCP
+        - name: syslog
+          containerPort: 9000
+          protocol: TCP
+        - name: vector
+          containerPort: 6000
+          protocol: TCP
+        - name: prom-exporter
+          containerPort: 9090
+          protocol: TCP
+        volumeMounts:
+        - name: data
+          mountPath: /vector-data-dir
+        - name: config
+          mountPath: /etc/vector/
+          readOnly: true
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: config
+        projected:
+          sources:
+          - configMap:
+              name: datadog-vector-instance

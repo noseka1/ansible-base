@@ -1,9 +1,0 @@
-apiVersion: v2
-name: datadog-vector
-type: application
-version: 0.1.0
-
-dependencies:
-- name: vector
-  version: 0.50.0
-  repository: https://helm.vector.dev

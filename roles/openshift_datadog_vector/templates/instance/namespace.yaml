@@ -1,0 +1,7 @@
+---
+{% if ddvector_manage_namespace %}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ ddvector_namespace }}
+{% endif %}

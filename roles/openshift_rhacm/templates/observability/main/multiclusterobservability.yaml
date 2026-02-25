@@ -17,8 +17,9 @@ spec:
           enabled: true
         virtualizationRightSizingRecommendation:
           enabled: true
-  # Observability instance size, allowed values: default, minimal, small, medium,
-  # large, xlarge, 2xlarge, 4xlarge
+  # Observability instance size, allowed values: default, minimal, small, medium, large, xlarge, 2xlarge, 4xlarge
+  # The resource requests as well as number of replicas for all components is defined in:
+  # https://github.com/stolostron/multicluster-observability-operator/blob/b8ec4cd0a40ad5dd23a1733f4518388553bbcfc7/operators/multiclusterobservability/pkg/config/resources_map.go
   instanceSize: {{ rhacm_observability_instance_size }}
   imagePullPolicy: IfNotPresent
   observabilityAddonSpec: # The ObservabilityAddonSpec defines the global settings for all managed clusters which have observability add-on enabled

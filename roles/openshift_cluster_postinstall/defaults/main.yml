@@ -38,11 +38,13 @@ osclusterpostinst_send_alerts_to_slack_enabled: false
 osclusterpostinst_send_alerts_to_slack_url: ''
 
 # Send OpenShift monitoring alerts to email
-osclusterpostinst_send_alerts_to_email:
 osclusterpostinst_send_alerts_to_email_enabled: false
 # Note that port number is mandatory
 osclusterpostinst_send_alerts_to_email_smarthost: 'smtp4dev.smtp4dev.svc:25'
 osclusterpostinst_send_alerts_to_email_require_tls: false
+
+# Send network audit logs to syslog? It logs the traffic that was allowed or denied by NetworkPolicies.
+osclusterpostinst_send_network_audit_logs_to_syslog_enabled: false
 
 osclusterpostinst_cluster_banner:
   enabled: false

@@ -18,6 +18,9 @@ spec:
   - name: logstash
     port: 5044
     protocol: TCP
+  - name: socket-udp
+    port: 1520
+    protocol: UDP
   - name: splunk-hec
     port: 8080
     protocol: TCP

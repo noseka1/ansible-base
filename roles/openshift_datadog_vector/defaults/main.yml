@@ -1,2 +1,4 @@
 ddvector_namespace: datadog-vector
 ddvector_manage_namespace: true
+
+ddvector_check_connection: true

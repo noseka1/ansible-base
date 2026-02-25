@@ -43,6 +43,9 @@ osclusterpostinst_send_alerts_to_email_enabled: false
 osclusterpostinst_send_alerts_to_email_smarthost: 'smtp4dev.smtp4dev.svc:25'
 osclusterpostinst_send_alerts_to_email_require_tls: false
 
+# Send ingress router access logs to syslog?
+osclusterpostinst_send_ingress_access_logs_to_syslog_enabled: false
+
 # Send network audit logs to syslog? It logs the traffic that was allowed or denied by NetworkPolicies.
 osclusterpostinst_send_network_audit_logs_to_syslog_enabled: false
 

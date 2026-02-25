@@ -28,8 +28,17 @@ spec:
   logging:
     access:
       destination:
+{% if osclusterpostinst_send_ingress_access_logs_to_syslog_enabled %}
+        type: Syslog
+        syslog:
+          address: '{{ ddvector_ip }}'
+          port: {{ ddvector_port_syslog_udp }}
+          facility: local1
+          maxLength: 4096
+{% else %}
         # Send ingress access logs to a side-car container named "logs"
         type: Container
+{% endif %}
 {% if osclusterpostinst_deploy_infra_nodes %}
   # Deploy ingress router on infra nodes
   # See also https://docs.openshift.com/container-platform/4.14/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets

@@ -10,6 +10,11 @@
     kind: Node
   register: osclusterpostinst_nodes_result
 
+- import_role:
+    name: openshift_datadog_vector
+    tasks_from: get_connection.yml
+  when: osclusterpostinst_send_ingress_access_logs_to_syslog_enabled
+
 - name: Configure default ingresscontroller
   kubernetes.core.k8s:
     template: default-ingresscontroller.yaml

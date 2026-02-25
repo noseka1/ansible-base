@@ -14,7 +14,7 @@
         localFacility: LOCAL0
         tcpConfig:
           hostname: '{{ ddvector_hostname }}'
-          port: '{{ ddvector_port }}'
+          port: '{{ ddvector_port_tcp }}'
           skipTlsVerify: false
           useTls": false
       name: My Syslog Receiver

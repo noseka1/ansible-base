@@ -10,3 +10,4 @@
 - set_fact:
     ddvector_hostname: 'datadog-vector-instance.{{ ddvector_namespace }}.svc'
     ddvector_port_tcp: 9000
+    ddvector_port_udp: 1514

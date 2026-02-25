@@ -24,7 +24,10 @@ spec:
   - name: statsd
     port: 8125
     protocol: TCP
-  - name: syslog
+  - name: syslog-udp
+    port: 1514
+    protocol: UDP
+  - name: syslog-tcp
     port: 9000
     protocol: TCP
   - name: vector

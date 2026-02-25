@@ -47,7 +47,10 @@ spec:
         - name: statsd
           containerPort: 8125
           protocol: TCP
-        - name: syslog
+        - name: syslog-udp
+          containerPort: 1514
+          protocol: UDP
+        - name: syslog-tcp
           containerPort: 9000
           protocol: TCP
         - name: vector

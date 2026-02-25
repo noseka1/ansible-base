@@ -1,2 +1,8 @@
 sriovnet_operator_subscription_channel: ''
 sriovnet_operator_subscription_starting_csv: ''
+
+osclusterpostinst_kernel_arguments:
+  - intel_iommu=on
+  - amd_iommu=on
+  # Intel 82576 supports a maximum of 7 VFs per port
+  - igb.max_vfs=7

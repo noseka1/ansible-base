@@ -39,6 +39,10 @@ spec:
   # The NIC selector identifies the device to which this resource applies. You do not have
   # to specify values for all the parameters. It is recommended to identify the network
   # device with enough precision to avoid selecting a device unintentionally.
+  #
+  # To list the actual values of device parameters after installing the SR-IOV network
+  # operator, you can issue the command:
+  # $ oc get sriovnetworknodestate -n openshift-sriov-network-operator -o json | jq '.items[].status'.interfaces
   nicSelector:
     # Optional: The vendor hexadecimal vendor identifier of the SR-IOV network device.
     # Vendor 8086 is Intel, vendor 15b3 is Mellanox, ...

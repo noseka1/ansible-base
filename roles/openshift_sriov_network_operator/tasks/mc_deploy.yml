@@ -13,3 +13,13 @@
     stable_cluster_delay: 120
     stable_cluster_retries: 10
   when: sriovnet_machineconfig_result is changed
+
+- assert:
+    that: >-
+      query('kubernetes.core.k8s', api_version='v1', kind='Node',
+        label_selector='feature.node.kubernetes.io/network-sriov.capable=') | length >= 0
+    fail_msg: |
+      Need at least 1 node labeled as SR-IOV capable.
+
+      Node Feature Discovery can automatically label the nodes. Did you deploy this operator?
+    quiet: true

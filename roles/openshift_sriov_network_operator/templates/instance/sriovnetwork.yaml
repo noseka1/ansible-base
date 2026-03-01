@@ -21,6 +21,6 @@ spec:
   # plugin manages IP address assignment for the attachment definition.
   ipam: |-
     {
-      "mac": true,
-      "ips": true
+      "type": "whereabouts",
+      "range": "192.168.13.0/24"
     }

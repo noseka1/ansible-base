@@ -74,6 +74,8 @@ spec:
     #  Includes audit logs from the OpenShift API server, Kubernetes API server audit logs,
     #  ovn audit logs, and node audit logs from auditd (/var/log/audit/audit.log).
     - audit
+    filterRefs:
+    - custom-kubeapiaudit
     outputRefs:
     - loki
 {% endif %}
@@ -83,6 +85,8 @@ spec:
     - application
     - infrastructure
     - audit
+    filterRefs:
+    - custom-kubeapiaudit
     outputRefs:
     - syslog
 {% endif %}
@@ -92,7 +96,23 @@ spec:
     - application
     - infrastructure
     - audit
+    filterRefs:
+    - custom-kubeapiaudit
     outputRefs:
     - splunk
 {% endif %}
+  filters:
+  # The kubeAPIAudit filter applies a list of default rules that filters
+  # the audit messages as follows:
+  # * Messages with with response code 404, 409, 422, and 429 are dropped.
+  # * System read-only events (get, list, watch, head, options) are dropped.
+  # * Drop write events by service account for same namespace as resource
+  #   or for non-namespaced resource.
+  # * Remove responseObject from the message for system events.
+  #  See also the documentation at:
+  #  https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html/configuring_logging/configuring-log-forwarding#logging-audit-log-filtering_configuring-log-forwarding
+  - name: custom-kubeapiaudit
+    type: kubeAPIAudit
+    kubeAPIAudit:
+      rules: []
 {% endif %}

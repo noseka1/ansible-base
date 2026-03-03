@@ -113,8 +113,8 @@ spec:
     #  because the internal store does not provide a secure storage.
     - audit-without-auditd
     filterRefs:
-    - detect-multiline-exception
     - custom-kubeapiaudit
+    - detect-multiline-exception
     outputRefs:
     - loki
 {% endif %}
@@ -125,8 +125,8 @@ spec:
     - infrastructure
     - audit-without-auditd
     filterRefs:
-    - detect-multiline-exception
     - custom-kubeapiaudit
+    - detect-multiline-exception
     outputRefs:
     - syslog
 {% endif %}
@@ -137,8 +137,8 @@ spec:
     - infrastructure
     - audit-without-audit
     filterRefs:
-    - detect-multiline-exception
     - custom-kubeapiaudit
+    - detect-multiline-exception
     outputRefs:
     - splunk
 {% endif %}

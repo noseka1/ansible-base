@@ -58,6 +58,12 @@ spec:
           secretName: splunk-secret
 {% endif %}
   filters:
+  # Enable multi-line error detection of container logs. Enabling this feature
+  # could have performance implications and may require additional computing
+  # resources or alternate logging solutions.
+  # See also https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html/configuring_logging/configuring-log-forwarding#enabling-multi-line-exception-detection_configuring-log-forwarding
+  - name: detect-multiline-exception
+    type: detectMultilineException
   # The kubeAPIAudit filter applies a list of default rules that filters
   # the audit messages as follows:
   # * Messages with with response code 404, 409, 422, and 429 are dropped.
@@ -89,6 +95,7 @@ spec:
     #  ovn audit logs, and node audit logs from auditd (/var/log/audit/audit.log).
     - audit
     filterRefs:
+    - detect-multiline-exception
     - custom-kubeapiaudit
     outputRefs:
     - loki
@@ -100,6 +107,7 @@ spec:
     - infrastructure
     - audit
     filterRefs:
+    - detect-multiline-exception
     - custom-kubeapiaudit
     outputRefs:
     - syslog
@@ -111,6 +119,7 @@ spec:
     - infrastructure
     - audit
     filterRefs:
+    - detect-multiline-exception
     - custom-kubeapiaudit
     outputRefs:
     - splunk

@@ -48,7 +48,7 @@ spec:
         retention:
           days: 30
   # Available sizes are 1x.demo, 1x.pico, 1x.extra-small, 1x.small, 1x.medium
-  # For production systems, use 1x.small or 1x.medium
+  # For production systems, use 1x.extra-small (100 GB/day), 1x.small (500 GB/day), or 1x.medium (2 TB/day)
   # Link: https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html-single/configuring_logging/index#loki-sizing_configuring-the-log-store
   size: 1x.extra-small
   storage:

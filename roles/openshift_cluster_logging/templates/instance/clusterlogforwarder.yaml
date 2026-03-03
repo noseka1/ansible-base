@@ -20,6 +20,18 @@ spec:
         cpu: "2"
         # Higher memory limit to prevent collector pods from getting OOMKilled
         memory: 8Gi
+  inputs:
+  # The built-in "audit" input includes the rather verbose and low-level auditd
+  # logs. Define a custom input that excludes the auditd logs to reduce the size
+  # of collected logs. See also:
+  # https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html/configuring_logging/configuring-log-forwarding#input-spec-filter-audit-infrastructure_configuring-log-forwarding
+  - name: audit-without-auditd
+    type: audit
+    audit:
+      sources:
+      - kubeAPI
+      - openshiftAPI
+      - ovn
   outputs:
 {% if clusterlog_forward_to_loki %}
   - name: loki
@@ -99,7 +111,7 @@ spec:
     #
     #  By default cluster logging does NOT send audit logs to the internal store
     #  because the internal store does not provide a secure storage.
-    - audit
+    - audit-without-auditd
     filterRefs:
     - detect-multiline-exception
     - custom-kubeapiaudit
@@ -111,7 +123,7 @@ spec:
     inputRefs:
     - application
     - infrastructure
-    - audit
+    - audit-without-auditd
     filterRefs:
     - detect-multiline-exception
     - custom-kubeapiaudit
@@ -123,7 +135,7 @@ spec:
     inputRefs:
     - application
     - infrastructure
-    - audit
+    - audit-without-audit
     filterRefs:
     - detect-multiline-exception
     - custom-kubeapiaudit

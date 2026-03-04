@@ -1,0 +1,27 @@
+apiVersion: monitoring.openshift.io/v1
+kind: AlertingRule
+metadata:
+ name: virtual-machine-high-vcpu-delay
+ namespace: openshift-monitoring
+spec:
+ groups:
+ - name: vm.rules
+   rules:
+   - alert: VirtualMachineHighVCPUDelay
+     expr: >-
+       avg by (name, namespace) (rate(kubevirt_vmi_vcpu_delay_seconds_total[5m])) > 0.05
+     for: 5m
+     annotations:
+       summary: >-
+         Virtual machine {{ $labels.namespace }}/{{ $labels.name }} is experiencing shortage of CPU
+         resources
+       description: >-
+         Virtual machine {{ $labels.name }} in namespace {{ $labels.namespace }} is experiencing vCPU
+         delay higher than 5%. The vCPU delay represents the percentage of time the vCPU wanted to
+         execute a task, but the underlying hypervisor was busy serving other VMs. The vCPU delay
+         is exposed to the VM as a steal time.
+
+         To address the problem, you may consider live-migrating the VM to a node in the cluster that is
+         less busy.
+     labels:
+       severity: warning

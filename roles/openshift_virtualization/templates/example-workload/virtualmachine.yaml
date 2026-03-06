@@ -4,6 +4,10 @@ metadata:
   name: {{ osvirt_machine_name }}
   namespace: {{ osvirt_machine_namespace }}
 spec:
+  # There are currently five RunStrategies defined:
+  # Always, RerunOnFailure, Once, Manual, Halted
+  # See the description of the runStrategy options at
+  # https://kubevirt.io/user-guide/compute/run_strategies/#runstrategy
   runStrategy: Always
   template:
     metadata: {}

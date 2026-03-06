@@ -43,13 +43,15 @@
   retries: 12
   delay: 5
 
-- name: Extract the certificate subject name
-  command:
-    cmd: openssl x509 -noout -subject
-    stdin: '{{ certman_test_secret.resources.0.data["tls.crt"] | b64decode }}'
-  changed_when: false
-  register: certman_test_cert_subject
+- name: Extract the certificate information
+  community.crypto.x509_certificate_info:
+    content: '{{ certman_test_secret.resources.0.data["tls.crt"] | b64decode }}'
+  register: certman_test_cert_info
 
-- name: Fail if the certificate subject is not correct
-  fail:
-  when: certman_test_cert_subject.stdout.find(certman_certificate_dns_name) == -1
+- name: Verify the certificate subject is correct
+  assert:
+    that: certman_test_cert_info.subject == certman_certificate_dns_name
+    fail_msg: >
+      The certificate subject does not equal {{ certman_certificate_dns_name }}
+      Actual subject is {{ certman_test_cert_info.subject }}
+    quiet: true

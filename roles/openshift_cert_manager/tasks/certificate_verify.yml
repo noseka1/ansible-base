@@ -50,8 +50,8 @@
 
 - name: Verify the certificate subject is correct
   assert:
-    that: certman_test_cert_info.subject == certman_certificate_dns_name
-    fail_msg: >
+    that: certman_test_cert_info.subject.commonName == certman_certificate_dns_name
+    fail_msg: |
       The certificate subject does not equal {{ certman_certificate_dns_name }}
-      Actual subject is {{ certman_test_cert_info.subject }}
-    quiet: true
+      Actual subject is {{ certman_test_cert_info.subject.commonName }}
+    success_msg: Certificate subject verified for {{ certman_certificate_dns_name }}

@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: all
   tasks:
     - import_role:
         name: openshift_cluster_postinstall

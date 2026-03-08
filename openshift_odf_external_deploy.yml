@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: all
   gather_facts: false
   tasks:
     - import_role:
@@ -21,7 +21,7 @@
         cephlab_external_cluster_script: '{{ hostvars.localhost.odf_external_cluster_script }}'
       tags: odf_instance
 
-- hosts: localhost
+- hosts: all
   gather_facts: false
   tasks:
     - import_role:

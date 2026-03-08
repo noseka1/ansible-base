@@ -52,6 +52,10 @@ mcemanagedcluster_baremetal:
       bmc:
         username: dummy
         password: dummy
+        disable_certificate_verification: true
+      # Choose boot mode 'legacy' or 'UEFI'
+      boot_mode: legacy
+
   cluster_nodes_individual:
     master1.mycluster8.example.com:
       role: master
@@ -59,10 +63,7 @@ mcemanagedcluster_baremetal:
       bmh:
         bmc:
           address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0021-000000000000
-          disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:21:00'
-        # Choose boot mode 'legacy' or 'UEFI'
-        boot_mode: legacy
         root_device_hints:
           deviceName: /dev/vda
     master2.mycluster8.example.com:
@@ -70,9 +71,7 @@ mcemanagedcluster_baremetal:
       bmh:
         bmc:
           address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0022-000000000000
-          disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:22:00'
-        boot_mode: legacy
         root_device_hints:
           deviceName: /dev/vda
     master3.mycluster8.example.com:
@@ -80,8 +79,6 @@ mcemanagedcluster_baremetal:
       bmh:
         bmc:
           address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0008-0023-000000000000
-          disable_certificate_verification: true
         boot_macaddr: '52:54:00:08:23:00'
-        boot_mode: legacy
         root_device_hints:
           deviceName: /dev/vda

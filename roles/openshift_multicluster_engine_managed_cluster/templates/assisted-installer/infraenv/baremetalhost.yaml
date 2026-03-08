@@ -32,8 +32,8 @@ spec:
   bmc:
     address: '{{ value.bmh.bmc.address }}'
     credentialsName: bmc-creds
-    disableCertificateVerification: {{ value.bmh.bmc.disable_certificate_verification }}
-  bootMode: '{{ value.bmh.boot_mode }}'
+    disableCertificateVerification: {{ mcemanagedcluster_info.cluster_nodes_shared.bmh.bmc.disable_certificate_verification }}
+  bootMode: {{ mcemanagedcluster_info.cluster_nodes_shared.bmh.boot_mode }}
   rootDeviceHints: {{ value.bmh.root_device_hints | to_json }}
 {% endif %}
 {% endfor %}

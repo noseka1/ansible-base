@@ -55,7 +55,6 @@ mcemanagedcluster_baremetal:
         disable_certificate_verification: true
       # Choose boot mode 'legacy' or 'UEFI'
       boot_mode: legacy
-
   cluster_nodes_individual:
     master1:
       role: master

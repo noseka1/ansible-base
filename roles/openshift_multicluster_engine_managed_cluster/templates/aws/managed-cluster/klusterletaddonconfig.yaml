@@ -1,5 +1,5 @@
 ---
-{% if rhacm_detected %}
+{% if mcemanagedcluster_rhacm_detected %}
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:

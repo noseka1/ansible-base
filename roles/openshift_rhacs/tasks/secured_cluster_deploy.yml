@@ -1,3 +1,7 @@
+- assert:
+    that: rhacs_central_host | default('') | length > 0
+    fail_msg: Variable 'rhacs_central_host' must not be empty
+
 - import_tasks: operator_deploy.yml
 
 - import_role:

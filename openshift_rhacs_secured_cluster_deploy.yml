@@ -1,10 +1,6 @@
 - hosts: all
   gather_facts: false
   tasks:
-    - assert:
-        that: rhacs_central_host | default('') | length > 0
-        fail_msg: Variable 'rhacs_central_host' must not be empty
-
     - import_role:
         name: openshift_rhacs
         tasks_from: secured_cluster_deploy.yml

@@ -91,8 +91,11 @@
   register: mcemanagedcluster_agentclusterinstall_result
 
 - assert:
-    that: (mcemanagedcluster_agentclusterinstall_result | json_query('resources[0].status.conditions[?type==`Failed`].status | [0]') == 'False')
-    fail_msg: |
-      Cluster installation failed. Check the AgentClusterInstall resource status for details.
+    that: >-
+      (mcemanagedcluster_agentclusterinstall_result | json_query('resources[0].status.conditions[?type==`Failed`].status | [0]') == 'False')
+    fail_msg: >-
+      Agent cluster installation of {{ mcemanagedcluster_info.cluster_name }} failed. Check the AgentClusterInstall resource status for details.
+    success_msg: >-
+      Agent cluster installation of {{ mcemanagedcluster_info.cluster_name }} completed successfully.
 
 - import_tasks: report_success.yml

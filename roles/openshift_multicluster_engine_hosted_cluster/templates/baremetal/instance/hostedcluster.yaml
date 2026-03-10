@@ -1,0 +1,87 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: {{ mcehostedcluster_info.cluster_name }}
+  namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
+spec:
+  autoscaling: {}
+  configuration:
+{% if mcehostedcluster_info.clusterwide_proxy | default({})
+     or mcehostedcluster_info.trusted_ca_bundle | default('') %}
+    proxy:
+{% endif %}
+{% if mcehostedcluster_info.clusterwide_proxy | default({}) %}
+      httpProxy: {{ mcehostedcluster_info.clusterwide_proxy.http_proxy }}
+      httpsProxy: {{ mcehostedcluster_info.clusterwide_proxy.https_proxy }}
+      noProxy: {{ mcehostedcluster_info.clusterwide_proxy.no_proxy }}
+{% endif %}
+{% if mcehostedcluster_info.trusted_ca_bundle | default('') %}
+      trustedCA:
+        name: custom-user-ca-bundle
+{% endif %}
+{% if mcehostedcluster_info.control_plane_replicas == 1 %}
+  controllerAvailabilityPolicy: SingleReplica
+{% else %}
+  controllerAvailabilityPolicy: HighlyAvailable
+{% endif %}
+  dns:
+    baseDomain: {{ mcehostedcluster_info.dns_base_domain }}
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 8Gi
+{% if mcehostedcluster_info.etcd_storageclass | default('') %}
+          storageClassName: {{ mcehostedcluster_info.etcd_storageclass }}
+{% endif %}
+        type: PersistentVolume
+    managementType: Managed
+  fips: false
+  networking:
+    clusterNetwork:
+    - cidr: 10.132.0.0/14
+    networkType: OVNKubernetes
+    serviceNetwork:
+    - cidr: 172.31.0.0/16
+  olmCatalogPlacement: management
+  platform:
+    agent:
+      agentNamespace: {{ mcehostedcluster_info.cluster_name }}-infraenv
+    type: Agent
+  pullSecret:
+    name: {{ mcehostedcluster_info.cluster_name }}-pull-secret
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_info.ocp_release_image }}
+  secretEncryption:
+    aescbc:
+      activeKey:
+        name: {{ mcehostedcluster_info.cluster_name }}-etcd-encryption-key
+    type: aescbc
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  - service: Ignition
+    servicePublishingStrategy:
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  - service: Konnectivity
+    servicePublishingStrategy:
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  - service: OAuthServer
+    servicePublishingStrategy:
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  - service: OIDC
+    servicePublishingStrategy:
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  sshKey:
+    name: {{ mcehostedcluster_info.cluster_name }}-ssh-key

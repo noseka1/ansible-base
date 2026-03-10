@@ -1,0 +1,18 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: {{ mcehostedcluster_info.cluster_name }}
+  namespace: {{ mcehostedcluster_info.cluster_name }}-hosted
+spec:
+  arch: amd64
+  clusterName: {{ mcehostedcluster_info.cluster_name }}
+  management:
+    autoRepair: false
+    upgradeType: InPlace
+  nodeDrainTimeout: 0s
+  platform:
+    agent: {}
+    type: Agent
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:{{ mcehostedcluster_info.ocp_release_image }}
+  replicas: {{ mcehostedcluster_info.data_plane_replicas }}

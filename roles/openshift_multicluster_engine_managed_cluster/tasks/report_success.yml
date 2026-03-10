@@ -4,26 +4,23 @@
     kind: ClusterDeployment
     name: '{{ mcemanagedcluster_info.cluster_name }}'
     namespace: '{{ mcemanagedcluster_info.cluster_name }}'
+    wait: true
+    wait_condition:
+      type: Provisioned
+    wait_sleep: 5
+    wait_timeout: 60
   register: mcemanagedcluster_clusterdeployment_result
-  until:
-    - mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions is defined
-    - mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Provisioned') | list | length > 0
-    - (mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Provisioned') | first).status == "True"
-  retries: 12
-  delay: 5
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mcemanagedcluster_info.cluster_name }} to connect to Hub
   kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster
     name: '{{ mcemanagedcluster_info.cluster_name }}'
-  register: mcemanagedcluster_managedcluster_result
-  until:
-    - mcemanagedcluster_managedcluster_result.resources.0.status.conditions is defined
-    - mcemanagedcluster_managedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | list | length > 0
-    - (mcemanagedcluster_managedcluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ManagedClusterConditionAvailable') | first).status == "True"
-  retries: 30
-  delay: 10
+    wait: true
+    wait_condition:
+      type: ManagedClusterConditionAvailable
+    wait_sleep: 10
+    wait_timeout: 300
 
 - name: Set msg
   set_fact:

@@ -91,10 +91,7 @@
   register: mcemanagedcluster_agentclusterinstall_result
 
 - assert:
-    that:
-      - mcemanagedcluster_agentclusterinstall_result.resources.0.status.conditions is defined
-      - mcemanagedcluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
-      - (mcemanagedcluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True"
+    that: (mcemanagedcluster_agentclusterinstall_result | json_query('resources[0].status.conditions[?type==`Failed`].status | [0]') == 'False')
     fail_msg: |
       Cluster installation failed. Check the AgentClusterInstall resource status for details.
 

@@ -7,7 +7,7 @@ All commands in this tutorial are executed on the RHACM Hub cluster.
 First, expose the Search Query API endpoint by creating a route:
 
 ```
-$ oc create route passthrough -n open-cluster-management  --service search-search-api search-api
+$ oc create route passthrough -n open-cluster-management --service search-search-api search-api
 ```
 
 Retrieve the API route host name:

@@ -1,0 +1,72 @@
+- import_tasks: prereqs_deploy.yml
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/infraenv/{{ mceinfraenv_info.cluster_name }}/bmc-creds'
+    hvault_secret_data:
+      username: '{{ mceinfraenv_info.cluster_nodes_shared.bmh.bmc.username }}'
+      password: '{{ mceinfraenv_info.cluster_nodes_shared.bmh.bmc.password }}'
+  when: mceinfraenv_info.cluster_nodes_shared.bmh.bmc is defined
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: secret_insert.yml
+  vars:
+    hvault_mount_point: autogitops
+    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/infraenv/{{ mceinfraenv_info.cluster_name }}/pull-secret'
+    hvault_secret_data:
+      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/infraenv
+    autogitops_app_dst_path: mce/infraenv/{{ mceinfraenv_info.cluster_name }}
+    autogitops_app_namespace: '{{ mceinfraenv_info.cluster_name }}-infraenv'
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for installer ISO image to be generated
+  kubernetes.core.k8s_info:
+    api_version: agent-install.openshift.io/v1beta1
+    kind: InfraEnv
+    name: '{{ mceinfraenv_info.cluster_name }}'
+    namespace: '{{ mceinfraenv_info.cluster_name }}-infraenv'
+    wait: true
+    wait_condition:
+      type: ImageCreated
+    wait_sleep: 5
+    wait_timeout: 60
+  register: mceinfraenv_infraenv_result
+
+- set_fact:
+    msg: |
+      Cluster installation cannot proceed until the required cluster hosts are added to the inventory.
+
+      Hosts managed using BMC will be added automatically. All other hosts require performing manual steps described below.
+
+      Browse to the Multi-cluster Engine (or RHACM) Dashboard. From the left-side menu click on Infrastructure and select Host inventory.
+      Click on the {{ mceinfraenv_info.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.
+
+      Alternatively, you can download the bootable installer ISO image using the command:
+      $ curl -L '{{ mceinfraenv_infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ mceinfraenv_infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
+
+      Alternatively, if you are PXE booting your machines, you can find the boot artifacts here:
+      {{ mceinfraenv_infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
+
+- debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mceinfraenv_info.cluster_nodes_individual.keys() | length }} cluster host(s) to show up in the inventory
+  kubernetes.core.k8s_info:
+    api_version: agent-install.openshift.io/v1beta1
+    kind: Agent
+    namespace: '{{ mceinfraenv_info.cluster_name }}-infraenv'
+  register: mceinfraenv_agent_result
+  until: >-
+    mceinfraenv_info.cluster_nodes_individual.keys() is
+      subset(mceinfraenv_agent_result.resources | json_query("[*].status.inventory.hostname"))
+  retries: 180
+  delay: 10

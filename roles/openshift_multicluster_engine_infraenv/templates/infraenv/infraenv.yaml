@@ -1,0 +1,35 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: {{ mceinfraenv_info.cluster_name }}
+  namespace: {{ mceinfraenv_info.cluster_name }}-infraenv
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mceinfraenv_info.location }}'
+    networkType: {{ mceinfraenv_info.network_type }}
+spec:
+{% if mceinfraenv_info.ntp_sources | default([]) %}
+  additionalNTPSources: {{ mceinfraenv_info.ntp_sources | to_yaml }}
+{% endif %}
+{% if mceinfraenv_info.trusted_ca_bundle | default('') %}
+  additionalTrustBundle: |
+    {{ mceinfraenv_info.trusted_ca_bundle | indent(4) }}
+{% endif %}
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ mceinfraenv_info.location }}'
+  pullSecretRef:
+    name: {{ mceinfraenv_info.cluster_name }}-pull-secret
+{% if mceinfraenv_info.ssh_authorized_key | default('') %}
+  sshAuthorizedKey: '{{ mceinfraenv_info.ssh_authorized_key }}'
+{% endif %}
+  nmStateConfigLabelSelector:
+    matchLabels:
+      infraenvs.agent-install.openshift.io: {{ mceinfraenv_info.cluster_name }}
+{% if mceinfraenv_info.clusterwide_proxy | default({}) %}
+  proxy:
+    httpProxy: {{ mceinfraenv_info.clusterwide_proxy.http_proxy }}
+    httpsProxy: {{ mceinfraenv_info.clusterwide_proxy.https_proxy }}
+    noProxy: {{ mceinfraenv_info.clusterwide_proxy.no_proxy }}
+{% else %}
+  proxy: {}
+{% endif %}
+  cpuArchitecture: {{ mceinfraenv_info.cpu_architecture }}

@@ -3,8 +3,6 @@
 
 - import_tasks: rhacm_detect.yml
 
-- import_tasks: prereqs_deploy.yml
-
 - set_fact:
     mcemanagedcluster_control_plane_agents: >-
       {{ mcemanagedcluster_info.cluster_nodes_individual.values() | selectattr('role', 'equalto', 'master') | length }}
@@ -19,32 +17,10 @@
     - mcemanagedcluster_info.user_managed_networking == false
 
 - import_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_insert.yml
+    name: openshift_multicluster_engine_infraenv
+    tasks_from: infraenv_deploy.yml
   vars:
-    hvault_mount_point: autogitops
-    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/bmc-creds'
-    hvault_secret_data:
-      username: '{{ mcemanagedcluster_info.cluster_nodes_shared.bmh.bmc.username }}'
-      password: '{{ mcemanagedcluster_info.cluster_nodes_shared.bmh.bmc.password }}'
-  when: mcemanagedcluster_info.cluster_nodes_shared.bmh.bmc is defined
-
-- import_role:
-    name: openshift_hashicorp_vault
-    tasks_from: secret_insert.yml
-  vars:
-    hvault_mount_point: autogitops
-    hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/assisted-installer/infraenv/pull-secret'
-    hvault_secret_data:
-      .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
-
-- import_role:
-    name: openshift_autogitops
-    tasks_from: app_deploy.yml
-  vars:
-    autogitops_app_src_path: templates/assisted-installer/infraenv
-    autogitops_app_dst_path: mce/managed-cluster/assisted-installer/infraenv
-    autogitops_app_namespace: '{{ mcemanagedcluster_info.cluster_name }}-infraenv'
+    mceinfraenv_info: '{{ mcemanagedcluster_baremetal }}'
 
 - import_role:
     name: openshift_hashicorp_vault
@@ -62,50 +38,6 @@
     autogitops_app_src_path: templates/assisted-installer/managed-cluster
     autogitops_app_dst_path: mce/managed-cluster/assisted-installer/managed-cluster
     autogitops_app_namespace: '{{ mcemanagedcluster_info.cluster_name }}'
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for installer ISO image to be generated
-  kubernetes.core.k8s_info:
-    api_version: agent-install.openshift.io/v1beta1
-    kind: InfraEnv
-    name: '{{ mcemanagedcluster_info.cluster_name }}'
-    namespace: '{{ mcemanagedcluster_info.cluster_name }}-infraenv'
-  register: mcemanagedcluster_infraenv_result
-  until:
-    - mcemanagedcluster_infraenv_result.resources.0.status.conditions is defined
-    - mcemanagedcluster_infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | list | length > 0
-    - (mcemanagedcluster_infraenv_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ImageCreated') | first).status == "True"
-  retries: 12
-  delay: 5
-
-- set_fact:
-    msg: |
-      Cluster installation cannot proceed until the required cluster hosts are added to the inventory.
-
-      Hosts managed using BMC will be added automatically. All other hosts require performing manual steps described below.
-
-      Browse to the Multi-cluster Engine (or RHACM) Dashboard. From the left-side menu click on Infrastructure and select Host inventory.
-      Click on the {{ mcemanagedcluster_info.cluster_name }} infrastructure environment. Click Add hosts and add the required cluster hosts to the inventory.
-
-      Alternatively, you can download the bootable installer ISO image using the command:
-      $ curl -L '{{ mcemanagedcluster_infraenv_result.resources.0.status.isoDownloadURL }}' -o {{ mcemanagedcluster_infraenv_result.resources.0.status.isoDownloadURL | regex_replace('.*/([A-Za-z0-9-]+).*', '\1') }}-discovery.iso
-
-      Alternatively, if you are PXE booting your machines, you can find the boot artifacts here:
-      {{ mcemanagedcluster_infraenv_result.resources.0.status.bootArtifacts | to_nice_yaml }}
-
-- debug:
-    msg: "{{ msg.split('\n') }}"
-
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mcemanagedcluster_info.cluster_nodes_individual.keys() | length }} cluster host(s) to show up in the inventory
-  kubernetes.core.k8s_info:
-    api_version: agent-install.openshift.io/v1beta1
-    kind: Agent
-    namespace: '{{ mcemanagedcluster_info.cluster_name }}-infraenv'
-  register: mcemanagedcluster_agent_result
-  until: >-
-    mcemanagedcluster_info.cluster_nodes_individual.keys() is
-      subset(mcemanagedcluster_agent_result.resources | json_query("[*].status.inventory.hostname"))
-  retries: 180
-  delay: 10
 
 - name: Bind host to the cluster
   kubernetes.core.k8s:

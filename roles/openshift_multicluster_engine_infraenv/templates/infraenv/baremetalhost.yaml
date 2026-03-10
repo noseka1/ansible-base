@@ -1,14 +1,14 @@
 ---
-{% for key, value in mcemanagedcluster_info.cluster_nodes_individual.items() %}
-{% if value.bmh is defined %}
+{% for key, individual in mceinfraenv_info.cluster_nodes_individual.items() %}
+{% if individual.bmh is defined %}
 ---
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
   name: {{ key }}
-  namespace: {{ mcemanagedcluster_info.cluster_name }}-infraenv
+  namespace: {{ mceinfraenv_info.cluster_name }}-infraenv
   labels:
-    infraenvs.agent-install.openshift.io: {{ mcemanagedcluster_info.cluster_name }}
+    infraenvs.agent-install.openshift.io: {{ mceinfraenv_info.cluster_name }}
 spec:
   online: true
   # Select the automatedCleaningMode to apply during the provisioning and deprovisioning of nodes.
@@ -28,12 +28,14 @@ spec:
   # data on these nodes is lost. To recover from an accidental deletion of the cluster, one can simply
   # power the cluster nodes back on and re-import the cluster into RHACM.
   automatedCleaningMode: disabled
-  bootMACAddress: '{{ value.bmh.boot_macaddr }}'
+  bootMACAddress: '{{ individual.bmh.boot_macaddr }}'
   bmc:
-    address: '{{ value.bmh.bmc.address }}'
+    address: '{{ individual.bmh.bmc.address }}'
     credentialsName: bmc-creds
-    disableCertificateVerification: {{ mcemanagedcluster_info.cluster_nodes_shared.bmh.bmc.disable_certificate_verification }}
-  bootMode: {{ mcemanagedcluster_info.cluster_nodes_shared.bmh.boot_mode }}
-  rootDeviceHints: {{ value.bmh.root_device_hints | to_json }}
+    disableCertificateVerification: {{ mceinfraenv_info.cluster_nodes_shared.bmh.bmc.disable_certificate_verification }}
+  bootMode: {{ mceinfraenv_info.cluster_nodes_shared.bmh.boot_mode }}
+{% if individual.bmh.root_device_hints is defined %}
+  rootDeviceHints: {{ individual.bmh.root_device_hints | to_json }}
+{% endif %}
 {% endif %}
 {% endfor %}

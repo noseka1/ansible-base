@@ -1,0 +1,4 @@
+- name: Create ClusterImageSet for OCP version {{ mceinfraenv_info.ocp_release_image }}
+  kubernetes.core.k8s:
+    template:
+      - clusterimageset/clusterimageset.yaml

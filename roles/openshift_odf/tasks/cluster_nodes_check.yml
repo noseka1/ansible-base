@@ -7,4 +7,3 @@
 
       Optionally, you can define cluster topology by adding OSD topology labels as defined at:
       https://www.rook.io/docs/rook/latest/CRDs/Cluster/ceph-cluster-crd/#osd-topology
-    quiet: true

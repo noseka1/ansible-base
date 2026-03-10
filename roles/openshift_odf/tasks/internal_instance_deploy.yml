@@ -9,7 +9,6 @@
       - odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].storage_device_sets is defined
       - odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].storage_device_sets | length > 0
     fail_msg: Cannot determine which storageclass to use for the underlying persistent volumes.
-    quiet: true
 
 - name: Check if default storage class exists
   import_role:

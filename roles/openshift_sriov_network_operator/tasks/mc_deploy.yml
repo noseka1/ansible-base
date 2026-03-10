@@ -22,3 +22,4 @@
       Need at least 1 node labeled as SR-IOV capable.
 
       Node Feature Discovery can automatically label the nodes. Did you deploy this operator?
+    quiet: true

@@ -11,6 +11,7 @@
     fail_msg: |
       Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
       Use the openshift_ddvector_deploy.yml playbook to install a Datadog Vector instance.
+    quiet: true
 
 - set_fact:
     ddvector_hostname: 'datadog-vector-instance.{{ ddvector_namespace }}.svc'

@@ -1,10 +1,12 @@
 - assert:
     that: efs_aws_access_key_id | length > 0
     fail_msg: Variable 'efs_aws_access_key_id' must not be empty
+    quiet: true
 
 - assert:
     that: efs_aws_secret_access_key | length > 0
     fail_msg: Variable 'efs_aws_secret_access_key' must not be empty
+    quiet: true
 
 - import_role:
     name: openshift_common

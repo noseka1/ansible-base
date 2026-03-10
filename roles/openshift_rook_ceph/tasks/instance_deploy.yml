@@ -11,10 +11,12 @@
 - assert:
     that: query('kubernetes.core.k8s', api_version='v1', kind='StorageClass', resource_name=rook_ceph_mon_pvc_template) | length == 1
     fail_msg: Storage class '{{ rook_ceph_mon_pvc_template }}' does not exist
+    quiet: true
 
 - assert:
     that: query('kubernetes.core.k8s', api_version='v1', kind='StorageClass', resource_name=rook_ceph_storage_device_sets) | length == 1
     fail_msg: Storage class '{{ rook_ceph_storage_device_sets }}' does not exist
+    quiet: true
 
 - name: Deploy Rook Ceph toolbox
   kubernetes.core.k8s:

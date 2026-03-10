@@ -54,4 +54,4 @@
     fail_msg: |
       The certificate subject does not equal {{ certman_certificate_dns_name }}
       Actual subject is {{ certman_test_cert_info.subject.commonName }}
-    success_msg: Certificate subject verified for {{ certman_certificate_dns_name }}
+    quiet: true

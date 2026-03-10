@@ -2,8 +2,9 @@
     that: >-
       query('kubernetes.core.k8s', api_version='observability.open-cluster-management.io/v1beta2',
         kind='MultiClusterObservability') | default([]) | length == 0
-    fail_msg: |
+    fail_msg: >-
       Cannot delete RHACM Hub because MultiClusterObservability resource(s) exist. Uninstall RHACM Observability first.
+    quiet: true
 
 - import_role:
     name: openshift_multicluster_engine

@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mcemanagedcluster_info.cluster_name }} for deployment to complete
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster deployment of {{ mcemanagedcluster_info.cluster_name }} to complete
   kubernetes.core.k8s_info:
     api_version: hive.openshift.io/v1
     kind: ClusterDeployment

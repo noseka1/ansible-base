@@ -77,7 +77,7 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster instalallation to finish
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for agent cluster installation to finish
   kubernetes.core.k8s_info:
     api_version: extensions.hive.openshift.io/v1beta1
     kind: AgentClusterInstall

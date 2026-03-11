@@ -4,10 +4,8 @@
     kind: Deployment
     name: '{{ wait_for_deployment_name }}'
     namespace: '{{ wait_for_deployment_namespace }}'
-  register: wait_for_deployment_result
-  until:
-    - wait_for_deployment_result.resources.0.status.conditions is defined
-    - wait_for_deployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (wait_for_deployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
-  retries: '{{ wait_for_deployment_retries | default(60) }}'
-  delay: 10
+    wait: true
+    wait_condition:
+      type: Available
+    wait_sleep: 10
+    wait_timeout: '{{ (wait_for_deployment_retries | default(60)) * 10 }}'

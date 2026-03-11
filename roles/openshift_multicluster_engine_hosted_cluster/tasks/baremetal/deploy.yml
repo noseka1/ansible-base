@@ -17,7 +17,7 @@
     tasks_from: app_deploy.yml
   vars:
     autogitops_app_src_path: templates/baremetal/instance
-    autogitops_app_dst_path: hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-instance
+    autogitops_app_dst_path: mce/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}/instance
     autogitops_app_namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'
     autogitops_app_sync_retries: 600
   tags: mcehostedcluster_instance

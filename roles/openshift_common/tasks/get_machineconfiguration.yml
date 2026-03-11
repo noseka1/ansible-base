@@ -1,8 +1,8 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_cluster_version.yml
 
 - name: Set openshift_common_machineconfiguration_exists
-  set_fact:
+  ansible.builtin.set_fact:
     openshift_common_machineconfiguration_exists: >-
       {{ oscommon_cluster_version_majorminor is version('4.17', '>=', strict=true) }}

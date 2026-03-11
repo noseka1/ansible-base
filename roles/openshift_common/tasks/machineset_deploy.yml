@@ -1,7 +1,7 @@
-- import_tasks: get_infrastructure.yml
+- ansible.builtin.import_tasks: get_infrastructure.yml
 
 - name: Set cluster ID and AWS region
-  set_fact:
+  ansible.builtin.set_fact:
     oscommon_add_machineset_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
     oscommon_add_machineset_aws_region: '{{ oscommon_infrastructure.status.platformStatus.aws.region }}'
 
@@ -13,10 +13,10 @@
   register: oscommon_existing_machinesets_result
 
 - name: Set AWS ami id
-  set_fact:
+  ansible.builtin.set_fact:
     oscommon_add_machineset_ami_id: '{{ oscommon_existing_machinesets_result.resources.0.spec.template.spec.providerSpec.value.ami.id }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_cluster_version.yml
 

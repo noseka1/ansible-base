@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: '{{ smbcsi_operator_subscription_name }}'
     oscomm_subscription_namespace: '{{ smbcsi_operator_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -13,7 +13,7 @@
     autogitops_app_dst_path: smbcsi/operator
     autogitops_app_namespace: '{{ smbcsi_operator_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -21,7 +21,7 @@
     autogitops_app_dst_path: smbcsi/instance
     autogitops_app_namespace: ''
 
-- include_role:
+- ansible.builtin.include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
     apply:
@@ -33,7 +33,7 @@
       username: admin
       password: '{{ generic_user_password }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

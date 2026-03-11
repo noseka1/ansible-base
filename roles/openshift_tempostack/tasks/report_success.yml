@@ -1,5 +1,5 @@
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Tempo installed successfully.
 
@@ -7,5 +7,5 @@
       Explore and choose Tempo as a data source. You will see the traces created
       by the trace generator job.
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

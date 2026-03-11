@@ -1,5 +1,5 @@
 - name: Install SSH host keys
-  copy:
+  ansible.builtin.copy:
     content: '{{ item.content }}'
     dest: '{{ item.dest }}'
     group: '{{ item.group }}'

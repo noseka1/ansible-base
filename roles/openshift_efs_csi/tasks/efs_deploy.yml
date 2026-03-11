@@ -1,19 +1,19 @@
-- assert:
+- ansible.builtin.assert:
     that: efs_aws_access_key_id | length > 0
     fail_msg: Variable 'efs_aws_access_key_id' must not be empty
     quiet: true
 
-- assert:
+- ansible.builtin.assert:
     that: efs_aws_secret_access_key | length > 0
     fail_msg: Variable 'efs_aws_secret_access_key' must not be empty
     quiet: true
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
 - name: Set cluster ID and AWS region
-  set_fact:
+  ansible.builtin.set_fact:
     efs_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
     efs_aws_region: '{{ oscommon_infrastructure.status.platformStatus.aws.region }}'
 
@@ -53,7 +53,7 @@
   register: efs_security_group_result
 
 - name: Prepare targets list
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ efs_subnets_result.subnets | default([]) | to_json }}' |
       jq --compact-output '[.[]|{"subnet_id":.subnet_id,"security_groups":["{{ efs_security_group_result.group_id }}"]}]'
@@ -72,5 +72,5 @@
     targets: '{{ efs_target_list.stdout | from_json }}'
   register: efs_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     efs_aws_file_system_id: '{{ efs_result.efs.file_system_id }}'

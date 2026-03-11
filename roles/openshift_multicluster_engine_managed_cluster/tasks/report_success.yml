@@ -26,10 +26,10 @@
   delay: 10
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Cluster {{ mcemanagedcluster_info.cluster_name }} deployed successfully.
       You can download the admin kubeconfig by issuing 'oc extract -n {{ mcemanagedcluster_info.cluster_name }} secret/{{ mcemanagedcluster_clusterdeployment_result.resources.0.spec.clusterMetadata.adminKubeconfigSecretRef.name }} --keys kubeconfig'
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

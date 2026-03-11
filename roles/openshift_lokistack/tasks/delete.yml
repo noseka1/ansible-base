@@ -1,21 +1,21 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_default_storage_class.yml
   tags: lokistack_instance
 
-- fail:
+- ansible.builtin.fail:
     msg: No default storage class found on the cluster.
   when: not oscommon_default_storage_class
   tags: lokistack_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: '{{ loki_instance_app_prefix }}lokistack/instance'
   tags: lokistack_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
@@ -23,7 +23,7 @@
     hvault_secret_name: '{{ oscommon_cluster_domain }}/{[ loki_instance_app_prefix }}lokistack/instance/loki-s3'
   tags: lokistack_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_minio
     tasks_from: delete.yml
   vars:
@@ -39,13 +39,13 @@
   register: lokistack_result
   tags: lokistack_operator
 
-- debug:
+- ansible.builtin.debug:
     msg: There are existing lokistack resources. Skipping Loki operator deletion.
   when:
     - lokistack_result.resources | default([]) | length > 0
   tags: lokistack_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

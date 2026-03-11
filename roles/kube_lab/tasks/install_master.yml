@@ -1,18 +1,18 @@
 - name: Copy over the kubeadm master configuration
-  template:
+  ansible.builtin.template:
     src: kubeadm_master_config.yml
     dest: '{{ kubeadm_config_dir }}'
     mode: '0644'
 
 - name: Create Kubernetes certificate directory
-  file:
+  ansible.builtin.file:
     path: '{{ kubeadm_config.cert_dir }}'
     state: directory
     mode: '0755'
   become: true
 
 - name: Copy over the custom CA certificate and key
-  copy:
+  ansible.builtin.copy:
     content: '{{ item.content }}'
     dest: '{{ item.file }}'
     mode: '{{ item.mode }}'
@@ -23,25 +23,25 @@
   become: true
 
 - name: Install Kubernetes master
-  command: kubeadm init --config {{ kubeadm_config_dir }}/kubeadm_master_config.yml
+  ansible.builtin.command: kubeadm init --config {{ kubeadm_config_dir }}/kubeadm_master_config.yml
   args:
     creates: /etc/kubernetes/kubelet.conf
   register: kubeadm
   become: true
 
-- debug:
+- ansible.builtin.debug:
     var: kubeadm.stdout_lines
   when: kubeadm is changed
 
 - name: Ensure that the /root/.kube directory exists
-  file:
+  ansible.builtin.file:
     dest: /root/.kube
     state: directory
     mode: '0755'
   become: true
 
 - name: Copy Kubernetes admin credentials
-  command: cp /etc/kubernetes/admin.conf /root/.kube/config
+  ansible.builtin.command: cp /etc/kubernetes/admin.conf /root/.kube/config
   args:
     creates: /root/.kube/config
   become: true

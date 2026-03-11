@@ -37,7 +37,7 @@
   become: true
 
 - name: Install Docker daemon config
-  template:
+  ansible.builtin.template:
     src: daemon.json
     dest: /etc/docker/daemon.json
     mode: '0644'

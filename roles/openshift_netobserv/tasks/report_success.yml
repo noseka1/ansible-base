@@ -1,9 +1,9 @@
-- set_fact:
+- ansible.builtin.set_fact:
     msg: |
       Network Observability installed successfully.
 
       If the Observe -> Network Traffic doesn't show up in the OpenShift Console, you may need to restart console pods:
       $ oc delete pods -n openshift-console -l app=console
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

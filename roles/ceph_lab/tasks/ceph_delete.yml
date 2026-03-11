@@ -1,5 +1,5 @@
 - name: Delete Ceph cluster
-  command: |
+  ansible.builtin.command: |
     ceph fsid
   ignore_errors: true
   register: cephlab_cluster_fsid
@@ -8,7 +8,7 @@
   become: true
 
 - name: Disable cephadm operations
-  command: |
+  ansible.builtin.command: |
     cephadm shell \
       --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
       -- \
@@ -19,7 +19,7 @@
   become: true
 
 - name: Delete Ceph cluster
-  command: |
+  ansible.builtin.command: |
     cephadm rm-cluster \
       --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
       --zap-osds \
@@ -28,6 +28,6 @@
   become: true
 
 - name: Delete cluster configuration files
-  file:
+  ansible.builtin.file:
     path: '{{ cephlab_conf_dir }}'
     state: absent

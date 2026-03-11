@@ -7,7 +7,7 @@
   register: hostedcluster_result
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Cluster {{ mcehostedcluster_info.cluster_name }} deployed successfully.
 
@@ -19,5 +19,5 @@
 
       oc extract -n {{ mcehostedcluster_info.cluster_name }}-hosted secret/{{ hostedcluster_result.resources.0.status.kubeadminPassword.name }} --to -
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

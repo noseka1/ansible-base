@@ -4,7 +4,7 @@
     kind: CustomResourceDefinition
   register: mcemanagedcluster_crd_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     mcemanagedcluster_rhacm_detected: >-
       {{ mcemanagedcluster_crd_result.resources
           | json_query("[?spec.group=='agent.open-cluster-management.io' && spec.names.kind=='KlusterletAddonConfig']") | length == 1 }}

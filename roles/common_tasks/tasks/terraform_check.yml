@@ -1,14 +1,14 @@
 - name: Get Terraform info
-  command: terraform -version
+  ansible.builtin.command: terraform -version
   changed_when: false
   ignore_errors: true
   register: common_tasks_terraform_check_result
 
-- assert:
+- ansible.builtin.assert:
     that: common_tasks_terraform_check_result is succeeded
     fail_msg: You must install Terraform and add it to your $PATH
     quiet: true
 
 - name: Show Terraform info
-  debug:
+  ansible.builtin.debug:
     var: common_tasks_terraform_check_result.stdout_lines

@@ -1,8 +1,8 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_machineconfiguration.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: update_machineconfiguration.yml
   vars:
@@ -18,7 +18,7 @@
     - worker
     - master
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
@@ -29,12 +29,12 @@
     - localhostpath_machineconfig_result is changed
 
 - name: Check if default storage class exists
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_default_storage_class.yml
 
 - name: Check if default storage class exists
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_default_volume_snapshot_class.yml
 

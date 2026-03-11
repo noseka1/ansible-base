@@ -1,5 +1,5 @@
 - name: Install chrony package
-  package:
+  ansible.builtin.package:
     name: '{{ item }}'
     state: present
   loop:
@@ -7,12 +7,12 @@
   become: true
 
 - name: Enable chronyd service and start it
-  service:
+  ansible.builtin.service:
     name: chronyd
     state: started
     enabled: true
   become: true
 
 - name: Refresh Ansible's ansible_date_time fact
-  setup:
+  ansible.builtin.setup:
     filter: ansible_date_time

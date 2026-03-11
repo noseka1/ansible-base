@@ -6,7 +6,7 @@
     namespace: '{{ goldilocks_namespace }}'
   register: goldilocks_web_route
 
-- set_fact:
+- ansible.builtin.set_fact:
     msg: |
       Goldilocks installed successfully.
 
@@ -17,5 +17,5 @@
       If you deployed VPA after installing Goldilocks, restart Goldilocks pods to
       reread the VPA objects.
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

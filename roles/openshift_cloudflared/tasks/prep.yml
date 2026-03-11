@@ -1,19 +1,19 @@
 - name: Check that tunnel origin certificate was provided
-  fail:
+  ansible.builtin.fail:
     msg: Tunnel origin certificate is missing, you must set cloudflared_tunnel_origin_cert
   when: cloudflared_tunnel_origin_cert | length == 0
 
 - name: Check that the domain suffix was provided
-  fail:
+  ansible.builtin.fail:
     msg: Domain suffix is missing, you must set the variable cloudflared_domain_suffix
   when: cloudflared_domain_suffix | length == 0
 
 - name: Check that the target hostname was provided
-  fail:
+  ansible.builtin.fail:
     msg: Target hostname is missing, you must set the variable cloudflared_target_hostname
   when: cloudflared_target_hostname | length == 0
 
-- set_fact:
+- ansible.builtin.set_fact:
     cloudflared_tunnel_name: '{{ cloudflared_target_hostname }}'
     # Make sure that domain name length won't exceed 78 characters.
     # Cloudflare refuses domain names that exceed this limit.

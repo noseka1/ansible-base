@@ -1,9 +1,9 @@
-- import_tasks: manifestwork_deploy.yml
+- ansible.builtin.import_tasks: manifestwork_deploy.yml
 
-- import_tasks: assisted_installer_deploy.yml
+- ansible.builtin.import_tasks: assisted_installer_deploy.yml
 
-- import_tasks: cluster_discovery_deploy.yml
+- ansible.builtin.import_tasks: cluster_discovery_deploy.yml
   when: redhat_ocm_api_token | length > 0
 
-- import_tasks: hypershift_aws_config.yml
+- ansible.builtin.import_tasks: hypershift_aws_config.yml
   when: mce_hypershift_aws.enabled

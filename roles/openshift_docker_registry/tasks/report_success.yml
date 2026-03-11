@@ -7,7 +7,7 @@
   register: dockerreg_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ dockerreg_route.resources.0.spec.host }}'
     method: GET
     status_code: [ 200 ]
@@ -21,11 +21,11 @@
   delay: 5
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Docker registry installed successfully.
 
       Docker registry URL: https://{{ dockerreg_route.resources.0.spec.host }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

@@ -40,12 +40,12 @@
     template: endpoint-certs/default-ingresscontroller.yaml
   register: osclusterpostinst_endpoint_certs_apply_ingresscontroller_result
 
-- import_tasks: kubeconfig_remove_ca.yml
+- ansible.builtin.import_tasks: kubeconfig_remove_ca.yml
   when:
     - osclusterpostinst_configure_kubeconfig
     - osclusterpostinst_endpoint_certs_apply_apiserver_result is changed
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:

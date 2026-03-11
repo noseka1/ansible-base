@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -8,14 +8,14 @@
       private-key.pem: |
         {{ generic_ssh_key_pair.private_key }}
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: windows-machine-config-operator
     oscomm_subscription_namespace: '{{ wmco_operator_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -36,5 +36,5 @@
   delay: 10
 
 - name: If you are bringing your own host, you can use this script to enable SSH on it
-  debug:
+  ansible.builtin.debug:
     var: wmco_windows_user_data.resources.0.data.userData | b64decode

@@ -9,5 +9,5 @@
       register: hvault_route
 
     - name: Set vault URL
-      set_fact:
+      ansible.builtin.set_fact:
         hvault_addr: 'https://{{ hvault_route.resources.0.spec.host }}'

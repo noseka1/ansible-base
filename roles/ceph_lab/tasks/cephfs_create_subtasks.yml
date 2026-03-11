@@ -1,14 +1,14 @@
 - name: Create metadata pool for CephFS
-  command: >-
+  ansible.builtin.command: >-
     ceph osd pool create {{ cephlab_cephfs_volume_name }}-metadata 16
   become: true
 
 - name: Create data pool for CephFS
-  command: >-
+  ansible.builtin.command: >-
     ceph osd pool create {{ cephlab_cephfs_volume_name }}-data0 32
   become: true
 
 - name: Create CephFS volume
-  command: >-
+  ansible.builtin.command: >-
     ceph fs new {{ cephlab_cephfs_volume_name }} {{ cephlab_cephfs_volume_name }}-metadata {{ cephlab_cephfs_volume_name }}-data0
   become: true

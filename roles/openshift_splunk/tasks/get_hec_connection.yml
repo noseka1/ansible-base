@@ -7,7 +7,7 @@
   register: splunk_hec_route
 
 - name: Fail if Splunk route doesn't exist
-  fail:
+  ansible.builtin.fail:
     msg: |
       Splunk route doesn't exist. Is Splunk installed on the cluster?
       Use the openshift_splunk_deploy.yml playbook to install a Splunk instance.
@@ -26,7 +26,7 @@
   delay: 2
 
 - name: Set Splunk HEC connection info
-  set_fact:
+  ansible.builtin.set_fact:
     splunk_url: https://{{ splunk_hec_route.resources.0.spec.host }}
     splunk_hec_json_endpoint: https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/event
     splunk_hec_raw_endpoint:  https://{{ splunk_hec_route.resources.0.spec.host }}/services/collector/raw

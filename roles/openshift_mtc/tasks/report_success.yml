@@ -7,7 +7,7 @@
   register: mtc_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Migration Toolkit for Containers UI to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ mtc_route.resources.0.spec.host }}'
     method: GET
     validate_certs: false
@@ -16,5 +16,5 @@
   retries: 60
   delay: 10
 
-- debug:
+- ansible.builtin.debug:
     msg: Migration Toolkit for Containers installed successfully. You can browse to https://{{ mtc_route.resources.0.spec.host }}

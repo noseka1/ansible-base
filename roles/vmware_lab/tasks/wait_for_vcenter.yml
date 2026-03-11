@@ -1,5 +1,5 @@
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vmware_lab.vcenter_hostname }} to come back up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}'
     validate_certs: false
   delegate_to: localhost
@@ -9,7 +9,7 @@
   delay: 10
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vmware_lab.vcenter_hostname }} APIs to become available
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/session'
     method: POST
     url_username: '{{ vmware_lab.vcenter_username }}'

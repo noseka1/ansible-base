@@ -1,5 +1,5 @@
 - hosts: all
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: openshift_cluster_postinstall
         tasks_from: deploy.yml

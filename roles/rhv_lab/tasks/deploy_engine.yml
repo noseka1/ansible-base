@@ -1,17 +1,17 @@
 - name: Reset dnf module virt before switching it to virt:av
-  command: dnf module reset virt --assumeyes
+  ansible.builtin.command: dnf module reset virt --assumeyes
   tags:
     - skip_ansible_lint
   become: true
 
 - name: Enable dnf module virt:av
-  command: dnf module enable virt:av --assumeyes
+  ansible.builtin.command: dnf module enable virt:av --assumeyes
   tags:
     - skip_ansible_lint
   become: true
 
 - name: Install rpms
-  yum:
+  ansible.builtin.yum:
     name:
       - firewalld
       - rhvm-appliance
@@ -20,20 +20,20 @@
   become: true
 
 - name: Ensure vdsm user is in the sanlock group (workaround for https://access.redhat.com/solutions/632983)
-  user:
+  ansible.builtin.user:
     name: vdsm
     groups: sanlock
     append: true
   become: true
 
 - name: Firewalld is required to be enabled and active in order to correctly deploy hosted-engine
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: started
     enabled: true
 
 - name: Copy over the installation answer file
-  template:
+  ansible.builtin.template:
     src: '{{ item }}'
     dest: '{{ ansible_facts.env.HOME }}/{{ item }}'
     mode: '0644'
@@ -41,11 +41,11 @@
     - hosted-engine-deploy-answers-file.conf
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Continue the installation using command:
 
       'ssh root@rhvh.lab.example.com hosted-engine --deploy --config-append=/root/hosted-engine-deploy-answers-file.conf'
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

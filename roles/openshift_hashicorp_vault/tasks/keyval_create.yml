@@ -1,9 +1,9 @@
-- import_role:
+- ansible.builtin.import_role:
     name: ansible-modules-hashivault
 
-- import_tasks: get_vault_route.yml
+- ansible.builtin.import_tasks: get_vault_route.yml
 
-- import_tasks: get_admin_token.yml
+- ansible.builtin.import_tasks: get_admin_token.yml
 
 - name: Enable generic secret kv store
   hashivault_secret_engine:
@@ -41,7 +41,7 @@
     VAULT_TOKEN: '{{ hvault_token }}'
   loop: '{{ hvault_keyval_reader }}'
 
-- import_tasks: secret_insert.yml
+- ansible.builtin.import_tasks: secret_insert.yml
   vars:
     hvault_mount_point: '{{ hvault_keyval_name }}'
     hvault_secret_name: testsecret

@@ -1,7 +1,7 @@
-- set_fact:
+- ansible.builtin.set_fact:
     osclusterinstall_info: '{{ osclusterinstall_aws }}'
 
-- import_tasks: common_delete.yml
+- ansible.builtin.import_tasks: common_delete.yml
   environment:
     AWS_ACCESS_KEY_ID: '{{ osclusterinstall_aws.aws_access_key_id }}'
     AWS_SECRET_ACCESS_KEY: '{{ osclusterinstall_aws.aws_secret_access_key }}'

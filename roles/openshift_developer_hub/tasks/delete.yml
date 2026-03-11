@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: developer-hub/instance
   tags: rhdh_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
@@ -13,7 +13,7 @@
     hvault_secret_name: '{{ oscommon_cluster_domain }}/rhdh/instance/secrets-rhdh'
   tags: rhdh_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

@@ -1,25 +1,25 @@
 - name: Fetch cloud-init configuration
-  slurp:
+  ansible.builtin.slurp:
     path: /etc/cloud/cloud.cfg
   register: cloud_cfg
 
 - name: Extract the data
-  set_fact:
+  ansible.builtin.set_fact:
     cloud_cfg: '{{ cloud_cfg.content | b64decode | from_yaml }}'
 
 - name: Modify cloud-init configuration
-  set_fact:
+  ansible.builtin.set_fact:
     cloud_cfg: '{{ cloud_cfg | combine(cloud_init_modifications) }}'
 
 - name: Write cloud-init configuration back
-  copy:
+  ansible.builtin.copy:
     content: '{{ cloud_cfg | to_nice_yaml }}'
     dest: /etc/cloud/cloud.cfg
     mode: '0644'
   become: true
 
 - name: Make cloud-init run on RHEL7
-  copy:
+  ansible.builtin.copy:
     src: ds-identify.cfg
     dest: /etc/cloud/ds-identify.cfg
     mode: '0644'

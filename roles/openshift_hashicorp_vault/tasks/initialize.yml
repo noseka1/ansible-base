@@ -12,7 +12,7 @@
     template: postinstall/vault-unseal-key-secret.yaml
 
 - name: Unseal vault
-  import_tasks: unseal.yml
+  ansible.builtin.import_tasks: unseal.yml
 
 - name: Deploy script that unseals vault automatically
   kubernetes.core.k8s:

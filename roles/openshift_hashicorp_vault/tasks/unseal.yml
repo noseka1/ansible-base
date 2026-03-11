@@ -1,5 +1,5 @@
 - name: Obtain the seal status
-  uri:
+  ansible.builtin.uri:
     url: '{{ hvault_addr }}/v1/sys/seal-status'
     method: GET
     validate_certs: '{{ not hvault_skip_verify }}'

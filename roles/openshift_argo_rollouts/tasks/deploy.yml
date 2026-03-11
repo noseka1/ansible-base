@@ -12,14 +12,14 @@
     definition: '{{ lookup("url", argo_rollouts_dashboard_url, split_lines=false) }}'
     namespace: '{{ argo_rollouts_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
     wait_for_deployment_name: argo-rollouts
     wait_for_deployment_namespace: '{{ argo_rollouts_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
@@ -28,4 +28,4 @@
     oauth_proxy_upstream: http://{{ argo_rollouts_name }}-dashboard:3100
     oauth_proxy_app_prefix: argo-rollouts-
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

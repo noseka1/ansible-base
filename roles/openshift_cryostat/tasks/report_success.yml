@@ -13,7 +13,7 @@
   delay: 10
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Cryostat installed successfully.
 
@@ -26,5 +26,5 @@
       To display Cryostat JMX credentials type:
       oc extract --namespace {{ cryostat_instance_namespace }} secret/cryostat-jmx-auth --to -
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

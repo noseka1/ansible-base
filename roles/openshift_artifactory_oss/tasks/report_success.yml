@@ -7,7 +7,7 @@
   register: artifactory_route_result
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Artifactory installed successfully.
 
@@ -18,5 +18,5 @@
       Username: admin
       Password: password
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

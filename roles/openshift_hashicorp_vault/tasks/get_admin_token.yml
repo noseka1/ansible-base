@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: ansible-modules-hashivault
 
 - when: hvault_token is not defined
@@ -17,5 +17,5 @@
         VAULT_PASSWORD: '{{ generic_user_password }}'
 
     - name: Save vault admin token
-      set_fact:
+      ansible.builtin.set_fact:
         hvault_token: '{{ hvault_token_result.token.auth.client_token }}'

@@ -1,4 +1,4 @@
-- set_fact:
+- ansible.builtin.set_fact:
     osclusterinstall_info: '{{ osclusterinstall_vsphere }}'
 
-- import_tasks: common_delete.yml
+- ansible.builtin.import_tasks: common_delete.yml

@@ -1,10 +1,10 @@
 - name: Configure passwordless sudo
-  import_role:
+  ansible.builtin.import_role:
     name: common_tasks
     tasks_from: configure_passwordless_sudo.yml
 
 - name: Configure common users
-  import_role:
+  ansible.builtin.import_role:
     name: common_tasks
     tasks_from: configure_common_users.yml
 
@@ -19,27 +19,27 @@
   become: true
 
 - name: Set UseDNS to no in sshd config
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: '^UseDNS'
     line: UseDNS no
   become: true
 
 - name: Install SSH host keys
-  import_tasks: install_ssh_host_keys.yml
+  ansible.builtin.import_tasks: install_ssh_host_keys.yml
 
 - name: Configure cloud-init
-  import_tasks: configure_cloud_init.yml
+  ansible.builtin.import_tasks: configure_cloud_init.yml
 
 - name: Check if SELinux configuration is present
-  stat:
+  ansible.builtin.stat:
     path: /etc/selinux/config
     get_checksum: false
     get_mime: false
   register: image_vm_selinux_config_result
 
 - name: Fix SELinux file type
-  shell: |
+  ansible.builtin.shell: |
     touch /.autorelabel
     chcon system_u:object_r:etc_runtime_t:s0 /.autorelabel
   when: image_vm_selinux_config_result.stat.exists

@@ -7,7 +7,7 @@
   register: openshift_console_route
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       RHACM installed successfully.
 
@@ -17,5 +17,5 @@
       If the All Clusters item doesn't show up in the OpenShift Console, you may need to restart console pods:
       $ oc delete pods -n openshift-console -l app=console
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

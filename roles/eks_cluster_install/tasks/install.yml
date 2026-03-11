@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: common_tasks
     tasks_from: terraform_check.yml
 
@@ -32,12 +32,12 @@
     AWS_SECRET_ACCESS_KEY: '{{ eks_cluster_install.aws_secret_access_key }}'
   register: eks_cluster_install_terraform_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     eks_cluster_install_terraform_ca_data: '{{ eks_cluster_install_terraform_result.outputs.cluster_certificate_authority_data.value }}'
     eks_cluster_install_terraform_server_url:  '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value }}'
     eks_cluster_install_terraform_server_hostname: '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value | regex_replace("https://(.*)", "\1")}}'
 
 - name: Create kubeconfig file {{ eks_cluster_install.config_dir }}/kubeconfig
-  template:
+  ansible.builtin.template:
     src: kubeconfig
     dest: '{{ eks_cluster_install.config_dir }}/kubeconfig'

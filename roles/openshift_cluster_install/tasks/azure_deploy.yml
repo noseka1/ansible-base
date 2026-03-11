@@ -1,15 +1,15 @@
-- set_fact:
+- ansible.builtin.set_fact:
     osclusterinstall_info: '{{ osclusterinstall_azure }}'
     osclusterinstall_platform: AZURE
 
-- import_tasks: azure_setup.yml
+- ansible.builtin.import_tasks: azure_setup.yml
   environment:
     AZURE_SUBSCRIPTION_ID: '{{ osclusterinstall_azure.subscription_id }}'
     AZURE_TENANT: '{{ osclusterinstall_azure.azure_tenant_id }}'
     AZURE_CLIENT_ID: '{{ osclusterinstall_azure.azure_client_id }}'
     AZURE_SECRET: '{{ osclusterinstall_azure.azure_secret }}'
 
-- import_tasks: common_deploy.yml
+- ansible.builtin.import_tasks: common_deploy.yml
   environment:
     AZURE_SUBSCRIPTION_ID: '{{ osclusterinstall_azure.subscription_id }}'
     AZURE_TENANT: '{{ osclusterinstall_azure.azure_tenant_id }}'

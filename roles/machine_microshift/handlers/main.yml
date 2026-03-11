@@ -1,22 +1,22 @@
 - name: Reload systemd
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
   become: true
 
 - name: Restart crio
-  service:
+  ansible.builtin.service:
     name: crio
     state: restarted
   become: true
 
 - name: Restart create-odf-lvm
-  service:
+  ansible.builtin.service:
     name: create-odf-lvm
     state: restarted
   become: true
 
 - name: Restart microshift
-  service:
+  ansible.builtin.service:
     name: microshift
     state: restarted
   become: true

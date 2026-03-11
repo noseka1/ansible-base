@@ -47,7 +47,7 @@
   retries: 60
   delay: 10
 
-- set_fact:
+- ansible.builtin.set_fact:
     crossplane_current_provider_revision: '{{ crossplane_terraform_provider.resources.0.status.currentRevision }}'
 
-- import_tasks: relax_provider_scc.yml
+- ansible.builtin.import_tasks: relax_provider_scc.yml

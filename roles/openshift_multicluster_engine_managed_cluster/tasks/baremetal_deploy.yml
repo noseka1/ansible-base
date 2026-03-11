@@ -1,28 +1,28 @@
-- set_fact:
+- ansible.builtin.set_fact:
     mcemanagedcluster_info: '{{ mcemanagedcluster_baremetal }}'
 
-- import_tasks: rhacm_detect.yml
+- ansible.builtin.import_tasks: rhacm_detect.yml
 
-- set_fact:
+- ansible.builtin.set_fact:
     mcemanagedcluster_control_plane_agents: >-
       {{ mcemanagedcluster_info.cluster_nodes_individual.values() | selectattr('role', 'equalto', 'master') | length }}
     mcemanagedcluster_worker_agents: >-
       {{ mcemanagedcluster_info.cluster_nodes_individual.values() | selectattr('role', 'equalto', 'worker') | length }}
 
-- fail:
+- ansible.builtin.fail:
     msg: user_managed_networking must be set to true when deploying SNO
   when:
     - mcemanagedcluster_control_plane_agents | int == 1
     - mcemanagedcluster_worker_agents | int == 0
     - mcemanagedcluster_info.user_managed_networking == false
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_multicluster_engine_infraenv
     tasks_from: infraenv_deploy.yml
   vars:
     mceinfraenv_info: '{{ mcemanagedcluster_baremetal }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -31,7 +31,7 @@
     hvault_secret_data:
       .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -90,7 +90,7 @@
     wait_timeout: 5400
   register: mcemanagedcluster_agentclusterinstall_result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - mcemanagedcluster_agentclusterinstall_result.resources.0.status.conditions is defined
       - mcemanagedcluster_agentclusterinstall_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0
@@ -98,4 +98,4 @@
     fail_msg: |
       Cluster installation failed. Check the AgentClusterInstall resource status for details.
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

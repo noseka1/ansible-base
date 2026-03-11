@@ -7,7 +7,7 @@
   register: grafana_instance_route
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ grafana_instance_route.resources.0.spec.host }}'
     method: GET
     validate_certs: false
@@ -18,11 +18,11 @@
   delay: 10
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Grafana installed successfully.
 
       Use your browser to access the Grafana Web UI at https://{{ grafana_instance_route.resources.0.spec.host }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

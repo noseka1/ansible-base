@@ -1,8 +1,8 @@
-- import_role:
+- ansible.builtin.import_role:
     name: common_tasks
     tasks_from: rosa_check.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: common_tasks
     tasks_from: terraform_check.yml
 

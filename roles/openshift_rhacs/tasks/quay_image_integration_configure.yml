@@ -1,6 +1,6 @@
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
 
-- include_tasks: quay_image_integration_configure_subtasks.yml
+- ansible.builtin.include_tasks: quay_image_integration_configure_subtasks.yml
   loop:
     - myorg1
     - myorg2

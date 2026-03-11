@@ -7,7 +7,7 @@
   register: rook_ceph_dashboard_result
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph dashboard to become available
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rook_ceph_dashboard_result.resources.0.spec.host }}'
     status_code: [ 200 ]
     validate_certs: false
@@ -17,7 +17,7 @@
   delay: 10
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Rook Ceph installed successfully.
 
@@ -27,5 +27,5 @@
       The 'admin' user password can be retrieved using:
       $ oc get -n rook-ceph secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 --decode && echo
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

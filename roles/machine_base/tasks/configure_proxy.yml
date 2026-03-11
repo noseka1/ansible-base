@@ -9,7 +9,7 @@
   become: true
 
 - name: Install custom yum trusted CA certificate
-  copy:
+  ansible.builtin.copy:
     dest: /etc/rhsm/ca/redhat-uep-custom.pem
     content: '{{ machine_base_custom_yum_sslcacert[ansible_facts.domain] }}'
     backup: true
@@ -28,7 +28,7 @@
   become: true
 
 - name: Disable server certificate status verification (OCSP Stapling) for yum repos
-  replace:
+  ansible.builtin.replace:
     path: /etc/yum.repos.d/redhat.repo
     regexp: 'sslverifystatus = 1'
     replace: 'sslverifystatus = 0'

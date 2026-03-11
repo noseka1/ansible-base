@@ -1,8 +1,8 @@
-- set_fact:
+- ansible.builtin.set_fact:
     quay_team_name: creators
     quay_robot_name: creator
 
-- include_tasks: organization_create.yml
+- ansible.builtin.include_tasks: organization_create.yml
   loop:
     - myorg1
     - myorg2

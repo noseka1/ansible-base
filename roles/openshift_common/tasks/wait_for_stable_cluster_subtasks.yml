@@ -1,8 +1,8 @@
 - name: Increment retry count
-  set_fact:
+  ansible.builtin.set_fact:
     stable_cluster_retry_count: '{{ (stable_cluster_retry_count | int) + 1 }}'
 
-- fail:
+- ansible.builtin.fail:
     msg: Ended after {{ stable_cluster_retries }}
   when: (stable_cluster_retry_count | int ) > stable_cluster_retries
 
@@ -14,7 +14,7 @@
   register: clusteroperator_result
 
 - name: Create unavailable, progressing, and degraded operator groups
-  set_fact:
+  ansible.builtin.set_fact:
     clusteroperator_count: >-
       {{ clusteroperator_result.resources | default([]) | length }}
     clusteroperator_unavailable: >-
@@ -25,7 +25,7 @@
       {{ clusteroperator_result.resources | default([]) | json_query("[?status.conditions[?type=='Degraded' && status=='True']].metadata.name") }}
 
 - name: Set job complete to true
-  set_fact:
+  ansible.builtin.set_fact:
     stable_cluster_job_complete: true
   when:
     - clusteroperator_count | int > 0
@@ -43,9 +43,9 @@
     ''
     To skip waiting for the operators you can set Ansible variable stable_cluster_wait_for_operators = false.
     ''
-  pause:
+  ansible.builtin.pause:
     seconds: 120
   when: not stable_cluster_job_complete
 
-- include_tasks: wait_for_stable_cluster_subtasks.yml
+- ansible.builtin.include_tasks: wait_for_stable_cluster_subtasks.yml
   when: not stable_cluster_job_complete

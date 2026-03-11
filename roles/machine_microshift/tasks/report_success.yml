@@ -1,10 +1,10 @@
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       MicroShift installed successfully.
 
       You can download the admin kubeconfig file by issuing:
       scp root@{{ ansible_facts.fqdn }}:/var/lib/microshift/resources/kubeadmin/{{ ansible_facts.fqdn }}/kubeconfig .
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

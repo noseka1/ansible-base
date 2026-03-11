@@ -1,12 +1,12 @@
-- assert:
+- ansible.builtin.assert:
     that: >-
       query('kubernetes.core.k8s', api_version='observability.open-cluster-management.io/v1beta2',
         kind='MultiClusterObservability') | default([]) | length == 0
     fail_msg: |
       Cannot delete RHACM Hub because MultiClusterObservability resource(s) exist. Uninstall RHACM Observability first.
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_multicluster_engine
     tasks_from: common_delete.yml
 
-- import_tasks: hub_delete_subtasks.yml
+- ansible.builtin.import_tasks: hub_delete_subtasks.yml

@@ -1,54 +1,54 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
-- import_tasks: local_repo_create.yml
+- ansible.builtin.import_tasks: local_repo_create.yml
 
 - name: Set application variables
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
     autogitops_argocd_namespace: ag-{{ oscommon_cluster_domain | regex_replace('\.', '-') }}
 
 - name: Set application config directory
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_cfg_dir: '{{ autogitops_git_dir }}/{{ autogitops_root_name }}/{{ autogitops_app_name }}'
 
 - name: Check if application.yaml exists
-  stat:
+  ansible.builtin.stat:
     path: '{{ autogitops_app_cfg_dir }}/application.yaml'
   register: autogitops_app_dir_stat_result
 
 - name: Retrieve application.yaml
-  slurp:
+  ansible.builtin.slurp:
     path: '{{ autogitops_app_cfg_dir }}/application.yaml'
   register: autogitops_app_yaml_slurp_result
   when: autogitops_app_dir_stat_result.stat.exists
 
 - name: Application git directory does not exist
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_dst_dir: ''
   when:
     - not autogitops_app_dir_stat_result.stat.exists
 
 - name: Set application git directory
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_dst_dir: '{{ autogitops_git_dir }}/{{ (autogitops_app_yaml_slurp_result.content | b64decode | from_yaml).spec.source.path }}'
   when: autogitops_app_dir_stat_result.stat.exists
 
-- include_tasks: app_delete_dir.yml
+- ansible.builtin.include_tasks: app_delete_dir.yml
   when:
     - autogitops_app_dst_dir | length > 0
     - autogitops_app_dir_stat_result.stat.exists
 
-- include_tasks: local_repo_push.yml
+- ansible.builtin.include_tasks: local_repo_push.yml
   when: autogitops_app_dst_dir | length > 0
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_gitops
     tasks_from: get_argocd_api_connection.yml
 
 - name: Check if application {{ autogitops_app_name }} exists
-  uri:
+  ansible.builtin.uri:
     url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
     method: GET
     headers:
@@ -57,21 +57,21 @@
     status_code: [ 200, 403, 404 ]
   register: autogitops_app_resource_result
 
-- include_tasks: app_sync_delete.yml
+- ansible.builtin.include_tasks: app_sync_delete.yml
   when: autogitops_app_resource_result.status == 200
 
 - name: Delete application directories
-  file:
+  ansible.builtin.file:
     path: '{{ item }}'
     state: absent
   loop:
     - '{{ autogitops_app_dst_dir }}'
     - '{{ autogitops_app_cfg_dir }}'
 
-- import_tasks: local_repo_push.yml
+- ansible.builtin.import_tasks: local_repo_push.yml
 
 - name: Wait for application {{ autogitops_app_name }} to disappear from Argo CD
-  uri:
+  ansible.builtin.uri:
     url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
     method: GET
     headers:

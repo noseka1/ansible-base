@@ -1,5 +1,5 @@
 - name: Ensure /root/.ssh directory exists
-  file:
+  ansible.builtin.file:
     path: /root/.ssh
     state: directory
     owner: root

@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: rhbk-operator
     oscomm_subscription_namespace: keycloak
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -13,9 +13,9 @@
     autogitops_app_dst_path: rhbk/operator
     autogitops_app_namespace: keycloak
 
-- import_tasks: get_instance_hostname.yml
+- ansible.builtin.import_tasks: get_instance_hostname.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -26,7 +26,7 @@
       password: '{{ generic_user_password }}'
       admin_password: '{{ generic_user_password }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -34,8 +34,8 @@
     autogitops_app_dst_path: rhbk/instance
     autogitops_app_namespace: keycloak
 
-- import_tasks: get_connection.yml
+- ansible.builtin.import_tasks: get_connection.yml
 
-- import_tasks: set_admin_password.yml
+- ansible.builtin.import_tasks: set_admin_password.yml
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

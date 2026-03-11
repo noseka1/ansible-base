@@ -1,7 +1,7 @@
-- set_fact:
+- ansible.builtin.set_fact:
     osclusterinstall_info: '{{ osclusterinstall_azure }}'
 
-- import_tasks: common_delete.yml
+- ansible.builtin.import_tasks: common_delete.yml
   environment:
     AZURE_SUBSCRIPTION_ID: '{{ osclusterinstall_azure.subscription_id }}'
     AZURE_TENANT: '{{ osclusterinstall_azure.azure_tenant_id }}'

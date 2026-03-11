@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: console_plugin_disable.yml
   vars:
@@ -12,6 +12,6 @@
     state: absent
     wait: true
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml

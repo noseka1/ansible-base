@@ -1,5 +1,5 @@
 - name: Look up role {{ item }}
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients/{{ rhbk_realm_management_client_id }}/roles/{{ item }}
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -8,7 +8,7 @@
   register: rhbk_role_get_result
 
 - name: Assign role {{ item }} to service account user {{ rhbk_service_account_user_result.json.id }}
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/users/{{ rhbk_service_account_user_result.json.id }}/role-mappings/clients/{{ rhbk_realm_management_client_id }}
     method: POST
     headers:

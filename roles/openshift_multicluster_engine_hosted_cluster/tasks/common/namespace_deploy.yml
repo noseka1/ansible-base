@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -7,7 +7,7 @@
     hvault_secret_data:
       key: '01234567890123456789012345678901'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -16,7 +16,7 @@
     hvault_secret_data:
       .dockerconfigjson: '{{ redhat_cloud_pull_secret }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -25,7 +25,7 @@
     hvault_secret_data:
       id_rsa.pub: '{{ mcehostedcluster_info.ssh_authorized_key }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

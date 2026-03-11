@@ -1,11 +1,11 @@
 - name: Ensure certificate directory exists
-  file:
+  ansible.builtin.file:
     path: '{{ outer_item.dir }}'
     state: directory
   become: true
 
 - name: Install leaf certificate
-  copy:
+  ansible.builtin.copy:
     content: '{{ item.content }}'
     dest: '{{ outer_item.dir }}/{{ item.name }}'
   notify:

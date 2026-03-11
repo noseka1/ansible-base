@@ -1,5 +1,5 @@
 - name: Restart crio
-  service:
+  ansible.builtin.service:
     name: crio
     state: restarted
   become: true

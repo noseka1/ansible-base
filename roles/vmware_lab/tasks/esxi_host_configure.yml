@@ -1,4 +1,4 @@
-- import_tasks: esxi_host_configure_cert.yml
+- ansible.builtin.import_tasks: esxi_host_configure_cert.yml
   when: vmware_lab_certs[esxi_hostname] is defined
 
 - name: Mount NFS datastore to ESXi
@@ -56,11 +56,11 @@
   when: esxi_config is changed
 
 - name: Wait for ESXi host to start rebooting
-  pause:
+  ansible.builtin.pause:
     seconds: 30
   delegate_to: localhost
   when: esxi_config is changed
 
 - name: Wait for ESXi to become reachable
-  import_tasks: wait_for_esxi.yml
+  ansible.builtin.import_tasks: wait_for_esxi.yml
   when: esxi_config is changed

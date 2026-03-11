@@ -25,5 +25,5 @@
   register: test_configmap
 
 - name: Fail if the test configmap can't be found
-  fail:
+  ansible.builtin.fail:
   when: test_configmap.resources | length != 1

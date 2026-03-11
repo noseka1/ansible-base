@@ -1,10 +1,10 @@
 - name: Check if rosa command is available
-  command: rosa help
+  ansible.builtin.command: rosa help
   changed_when: false
   ignore_errors: true
   register: common_tasks_rosa_result
 
-- assert:
+- ansible.builtin.assert:
     that: common_tasks_rosa_result is succeeded
     fail_msg: You must install rosa executable and add it to your $PATH
     quiet: true

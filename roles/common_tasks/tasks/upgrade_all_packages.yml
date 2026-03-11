@@ -1,5 +1,5 @@
 - name: Upgrade all packages
-  yum:
+  ansible.builtin.yum:
     name: '*'
     state: latest
   when:
@@ -9,7 +9,7 @@
   become: true
 
 - name: Reboot the machine
-  reboot:
+  ansible.builtin.reboot:
   when:
     - package_upgrade_result is changed
     - machine_base_update_all_packages_reboot

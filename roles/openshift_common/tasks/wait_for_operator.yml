@@ -23,5 +23,5 @@
   retries: 300
   delay: 2
 
-- debug:
+- ansible.builtin.debug:
     msg: Installed operator {{ oscomm_operator_subscription.resources.0.status.installedCSV }}

@@ -1,30 +1,30 @@
-- assert:
+- ansible.builtin.assert:
     that:
       - ocu_target_channel | length > 0
     fail_msg: 'Upgrade target channel is not defined. Example: stable-4.20'
     quiet: true
 
-- assert:
+- ansible.builtin.assert:
     that:
       - ocu_target_version | length > 0
     fail_msg: 'Upgrade target version is not defined. Examples: 4.20.0, latest'
     quiet: true
 
 - name: Retrieve latest version on {{ ocu_target_channel }} channel
-  script: files/openshift_upgrade_path.py {{ ocu_target_channel }}
+  ansible.builtin.script: files/openshift_upgrade_path.py {{ ocu_target_channel }}
   changed_when: false
   register: ocu_latest_version
   when: ocu_target_version == 'latest'
 
 - name: Set target OpenShift version (resolved)
-  set_fact:
+  ansible.builtin.set_fact:
     ocu_target_version_resolved: '{{ ocu_latest_version.stdout_lines[0] }}'
   when: ocu_target_version == 'latest'
 
 - name: Set target OpenShift version (direct)
-  set_fact:
+  ansible.builtin.set_fact:
     ocu_target_version_resolved: '{{ ocu_target_version }}'
   when: ocu_target_version != 'latest'
 
-- debug:
+- ansible.builtin.debug:
     msg: Upgrading OpenShift to version {{ ocu_target_version_resolved }}

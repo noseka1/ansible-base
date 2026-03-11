@@ -1,14 +1,14 @@
-- debug:
+- ansible.builtin.debug:
     msg: Setting up user {{ ansible_user }}
 
-- set_fact:
+- ansible.builtin.set_fact:
     github_dir: '{{ ansible_facts.env.HOME + "/git/github.com/noseka1" }}'
 
 - name: Git checkout rcfiles
-  git:
+  ansible.builtin.git:
     repo: 'https://github.com/noseka1/rcfiles'
     dest: '{{ github_dir }}/rcfiles'
     version: master
 
 - name: Set up rcfiles
-  command: '{{ github_dir }}/rcfiles/bin/rcfiles_setup --assumeyes'
+  ansible.builtin.command: '{{ github_dir }}/rcfiles/bin/rcfiles_setup --assumeyes'

@@ -7,7 +7,7 @@
   register: etcd_backup_job_result
 
 - name: Trigger etcd backup manually
-  command: |
+  ansible.builtin.command: |
     oc create job \
       --namespace {{ etcd_backup_namespace }} \
       --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} \

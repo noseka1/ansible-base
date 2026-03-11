@@ -1,5 +1,5 @@
 - name: Get existing webhooks for repo {{ gitea_username }}/{{ item.name }}
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ gitea_hostname }}/api/v1/repos/{{ gitea_username }}/{{ item.name }}/hooks'
     method: GET
     url_username: '{{ gitea_username }}'
@@ -9,11 +9,11 @@
     status_code: [ 200 ]
   register: gitea_repo_webhooks
 
-- set_fact:
+- ansible.builtin.set_fact:
     gitea_repo_webhook_urls: '{{ gitea_repo_webhooks.json | json_query("[*].config.url") }}'
 
 - name: Create git webhook for {{ item.url }}
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ gitea_hostname }}/api/v1/repos/{{ gitea_username }}/{{ item.name }}/hooks'
     method: POST
     body_format: json

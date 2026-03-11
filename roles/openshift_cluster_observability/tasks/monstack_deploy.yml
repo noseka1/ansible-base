@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -7,7 +7,7 @@
     autogitops_app_namespace: '{{ clusterobserv_monstack_namespace }}'
   tags: cluster_observability_monstack
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

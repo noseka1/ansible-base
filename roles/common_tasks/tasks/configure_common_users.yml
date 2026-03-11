@@ -1,11 +1,11 @@
 - name: Check if /bin/bash is installed
-  stat:
+  ansible.builtin.stat:
     path: /bin/bash
     get_checksum: false
     get_mime: false
   register: common_tasks_binbash_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     common_tasks_default_shell: '{{ "/bin/bash" if common_tasks_binbash_result.stat.exists else "/bin/sh" }}'
 
 - name: Set root password
@@ -15,7 +15,7 @@
     shell: '{{ common_tasks_default_shell }}'
   become: true
 
-- set_fact:
+- ansible.builtin.set_fact:
     common_tasks_sudo_group: '{{ "sudo" if ansible_facts.os_family == "Debian" else "wheel" }}'
 
 - name: Create users

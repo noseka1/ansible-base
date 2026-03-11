@@ -1,5 +1,5 @@
 - name: Install ODF LVM service script
-  copy:
+  ansible.builtin.copy:
     src: create-odf-lvm.sh
     dest: /usr/local/bin
     mode: '0755'
@@ -8,7 +8,7 @@
   become: true
 
 - name: Create ODF LVM service
-  copy:
+  ansible.builtin.copy:
     src: create-odf-lvm.service
     dest: /etc/systemd/system
   notify:
@@ -17,7 +17,7 @@
   become: true
 
 - name: Start create-odf-lvm service
-  service:
+  ansible.builtin.service:
     name: create-odf-lvm
     state: started
     enabled: true

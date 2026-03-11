@@ -1,9 +1,9 @@
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       OpenShift installation complete.
 
       You can check the cluster status using 'KUBECONFIG={{ osclusterinstall_info.config_dir }}/auth/kubeconfig oc get co'
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

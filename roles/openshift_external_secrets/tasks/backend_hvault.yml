@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: get_vault_route.yml
 
@@ -22,5 +22,5 @@
   delay: 1
 
 - name: Fail if the secret value is not correct
-  fail:
+  ansible.builtin.fail:
   when: (extsecrets_test_secret.resources.0.data.testkey | b64decode) != 'testvalue'

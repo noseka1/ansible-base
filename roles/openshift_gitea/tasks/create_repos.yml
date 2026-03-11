@@ -1,7 +1,7 @@
-- import_tasks: get_connection.yml
+- ansible.builtin.import_tasks: get_connection.yml
 
 - name: Create git repository
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ gitea_hostname }}/api/v1/user/repos'
     method: POST
     body_format: json

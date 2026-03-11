@@ -1,17 +1,17 @@
-- import_tasks: secured_cluster_common_delete.yml
+- ansible.builtin.import_tasks: secured_cluster_common_delete.yml
 
-- import_tasks: webhook_receiver_delete.yml
+- ansible.builtin.import_tasks: webhook_receiver_delete.yml
   when: rhacs_webhook_receiver_enabled
 
-- import_tasks: minio_backup_delete.yml
+- ansible.builtin.import_tasks: minio_backup_delete.yml
   when: rhacs_minio_backup_enabled
 
-- import_tasks: central_delete.yml
+- ansible.builtin.import_tasks: central_delete.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: rhacs/namespace
 
-- import_tasks: operator_delete.yml
+- ansible.builtin.import_tasks: operator_delete.yml

@@ -1,5 +1,5 @@
 - name: Checkout Kafdrop git repo
-  git:
+  ansible.builtin.git:
     repo: https://github.com/obsidiandynamics/kafdrop.git
     dest: /tmp/kafdrop
     version: '{{ amqstreams_kafdrop_version }}'
@@ -13,7 +13,7 @@
     wait: true
 
 - name: Deploy oauth-proxy
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:

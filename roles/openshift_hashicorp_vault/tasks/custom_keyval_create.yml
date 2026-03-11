@@ -1,4 +1,4 @@
-- import_tasks: keyval_create.yml
+- ansible.builtin.import_tasks: keyval_create.yml
   vars:
     hvault_keyval_name: mykv
     hvault_keyval_reader:

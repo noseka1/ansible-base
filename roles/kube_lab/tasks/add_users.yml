@@ -1,6 +1,6 @@
 - name: Create admin user
   kubernetes.core.k8s:
-    template:
+    ansible.builtin.template:
       - admin-sa.yaml
       - admin-clusterrolebinding.yaml
   become: true

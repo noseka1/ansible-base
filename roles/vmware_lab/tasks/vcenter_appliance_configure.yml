@@ -1,5 +1,5 @@
 - name: Power off vCenter VM
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -9,7 +9,7 @@
   delegate_to: localhost
 
 - name: Change memory size to {{ vmware_lab.vcenter_vm.memory }}
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -20,7 +20,7 @@
   delegate_to: localhost
 
 - name: Gather network info about {{ vmware_lab.vcenter_vm.name }}
-  vmware_guest_network:
+  community.vmware.vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -32,7 +32,7 @@
   register: vcenter_network_info
 
 - name: Remove the network interface from the {{ vmware_lab.vcenter_vm.name }}
-  vmware_guest_network:
+  community.vmware.vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -45,7 +45,7 @@
   when: vcenter_network_info.network_data["0"] is defined
 
 - name: Add network interface to the {{ vmware_lab.vcenter_vm.name }} with well-known MAC address {{ vmware_lab.vcenter_vm.macaddr }}
-  vmware_guest_network:
+  community.vmware.vmware_guest_network:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -58,7 +58,7 @@
   delegate_to: localhost
 
 - name: Power vCenter VM back on
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -68,4 +68,4 @@
   delegate_to: localhost
 
 - name: Wait for vCenter to become available
-  import_tasks: wait_for_vcenter.yml
+  ansible.builtin.import_tasks: wait_for_vcenter.yml

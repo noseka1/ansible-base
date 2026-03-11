@@ -10,9 +10,9 @@
   delay: 10
 
 - name: List of node names
-  set_fact:
+  ansible.builtin.set_fact:
     expand_node_names: '{{ expand_nodes.resources | json_query("[*].metadata.name") }}'
 
 - name: Existing worker nodes
-  debug:
+  ansible.builtin.debug:
     var: expand_node_names

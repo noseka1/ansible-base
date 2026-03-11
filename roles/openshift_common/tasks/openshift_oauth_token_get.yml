@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
 - when: oscommon_openshift_oauth_token is not defined
   block:
     - name: Grab OpenShift OAUTH token
-      uri:
+      ansible.builtin.uri:
         url: https://oauth-openshift.apps.{{ oscommon_cluster_domain }}/oauth/authorize?client_id=openshift-challenging-client&response_type=token
         headers:
           X-CSRF-Token: dummy
@@ -16,6 +16,6 @@
       register: oscommon_openshift_oauth_token_result
 
     - name: Set oscommon_openshift_oauth_token
-      set_fact:
+      ansible.builtin.set_fact:
         oscommon_openshift_oauth_token: >-
           {{ oscommon_openshift_oauth_token_result.url | urlsplit(query='fragment') | regex_replace('(^|.*&)access_token=([^&]+).*', '\2') | urldecode }}

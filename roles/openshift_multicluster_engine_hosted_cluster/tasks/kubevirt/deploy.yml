@@ -1,4 +1,4 @@
-- set_fact:
+- ansible.builtin.set_fact:
     mcehostedcluster_info: '{{ mcehostedcluster_kubevirt }}'
 
 - name: Enable wildcard DNS routes
@@ -6,9 +6,9 @@
     template:
       - kubevirt/prereqs/ingresscontroller.yaml
 
-- import_tasks: common/namespace_deploy.yml
+- ansible.builtin.import_tasks: common/namespace_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -17,4 +17,4 @@
     autogitops_app_namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'
     autogitops_app_sync_retries: 600
 
-- import_tasks: common/report_success.yml
+- ansible.builtin.import_tasks: common/report_success.yml

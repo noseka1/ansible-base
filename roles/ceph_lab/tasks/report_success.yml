@@ -1,5 +1,5 @@
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Red Hat Ceph Storage installed successfully.
 
@@ -17,5 +17,5 @@
 
       Note that OSDs and other cluster components may still be deploying ...
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

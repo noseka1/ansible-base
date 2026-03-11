@@ -5,6 +5,6 @@
   register: odf_installed_csvs
 
 - name: Extract the Python script from the annotation in rook-ceph-operator CSV
-  set_fact:
+  ansible.builtin.set_fact:
     odf_external_cluster_script: >-
       {{ odf_installed_csvs.resources | json_query("[].metadata.annotations.externalClusterScript") | first | b64decode }}

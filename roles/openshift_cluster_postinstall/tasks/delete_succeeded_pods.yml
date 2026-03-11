@@ -1,2 +1,2 @@
 - name: Delete all pods which are in Succeeded state
-  command: oc delete pod --all-namespaces --field-selector=status.phase==Succeeded
+  ansible.builtin.command: oc delete pod --all-namespaces --field-selector=status.phase==Succeeded

@@ -1,17 +1,17 @@
 - name: Check if kind cluster has already been deployed
-  command: kubectl cluster-info --context kind-kind
+  ansible.builtin.command: kubectl cluster-info --context kind-kind
   ignore_errors: true
   register: cluster_info_result
   become: true
 
 - name: Delete kind cluster
-  command: /usr/local/bin/kind delete cluster
+  ansible.builtin.command: /usr/local/bin/kind delete cluster
   environment:
     KIND_EXPERIMENTAL_PROVIDER: podman
   register: delete_kind_result
   when: cluster_info_result is success
   become: true
 
-- debug:
+- ansible.builtin.debug:
     var: delete_kind_result.stderr_lines
   when: delete_kind_result is changed

@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
   - name: Add a chroot host
-    add_host:
+    ansible.builtin.add_host:
       hostname: '{{ chroot_location }}'
       ansible_host: '{{ chroot_location }}'
 

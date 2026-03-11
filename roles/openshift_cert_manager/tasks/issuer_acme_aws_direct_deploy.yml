@@ -4,6 +4,6 @@
       - acme-aws/credentialsrequest.yaml
       - acme-aws/clusterissuer.yaml
 
-- import_tasks: certificate_verify.yml
+- ansible.builtin.import_tasks: certificate_verify.yml
   vars:
     certman_certificate_issuer_name: acme-aws

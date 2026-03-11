@@ -1,4 +1,4 @@
-- import_tasks: example_delete.yml
+- ansible.builtin.import_tasks: example_delete.yml
   tags: osvirt_example_workload
 
 - name: Delete custom storageprofiles
@@ -12,7 +12,7 @@
     state: absent
   tags: osvirt_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -22,14 +22,14 @@
       - api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/hostpath-provisioner
   tags: osvirt_hostpathprov
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: alermanager_silence_manage.yml
   vars:
@@ -37,19 +37,19 @@
     oscomm_silence_state: absent
   tags: osvirt_hostpathprov
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/instance
   tags: osvirt_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-virtualization/operator
   tags: osvirt_operator
 
-- import_tasks: cluster_nodes_delete.yml
+- ansible.builtin.import_tasks: cluster_nodes_delete.yml
   tags: osvirt_cluster_nodes

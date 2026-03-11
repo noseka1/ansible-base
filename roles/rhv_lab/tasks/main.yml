@@ -1,8 +1,8 @@
 - name: Enable RHV repos
-  import_tasks: enable_rhv_repos.yml
+  ansible.builtin.import_tasks: enable_rhv_repos.yml
 
 - name: Install NFS storage
-  import_tasks: install_nfs.yml
+  ansible.builtin.import_tasks: install_nfs.yml
 
 - name: Deploy oVirt engine appliance
-  import_tasks: deploy_engine.yml
+  ansible.builtin.import_tasks: deploy_engine.yml

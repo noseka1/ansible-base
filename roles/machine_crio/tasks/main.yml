@@ -1,5 +1,5 @@
 - name: Install the cri-o container runtime
-  yum:
+  ansible.builtin.yum:
     name:
       - conmon
       - cri-o
@@ -19,7 +19,7 @@
   become: true
 
 - name: Start crio service
-  service:
+  ansible.builtin.ervice:
     name: crio
     state: started
     enabled: true

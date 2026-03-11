@@ -1,5 +1,5 @@
 - name: Create datacenter
-  vmware_datacenter:
+  community.vmware.vmware_datacenter:
     hostname: '{{ vmware_lab.vcenter_hostname }}'
     username: '{{ vmware_lab.vcenter_username }}'
     password: '{{ vmware_lab.vcenter_password }}'
@@ -9,7 +9,7 @@
   run_once: true
 
 - name: Create cluster
-  vmware_cluster:
+  community.vmware.vmware_cluster:
     hostname: '{{ vmware_lab.vcenter_hostname }}'
     username: '{{ vmware_lab.vcenter_username }}'
     password: '{{ vmware_lab.vcenter_password }}'
@@ -19,7 +19,7 @@
   delegate_to: localhost
 
 - name: Obtain Cluster info
-  vmware_cluster_info:
+  community.vmware.vmware_cluster_info:
     hostname: '{{ vmware_lab.vcenter_hostname }}'
     username: '{{ vmware_lab.vcenter_username }}'
     password: '{{ vmware_lab.vcenter_password }}'
@@ -30,11 +30,11 @@
   register: vsphere_cluster_info
 
 - name: Set vsphere_advanced_settings_key
-  set_fact:
+  ansible.builtin.set_fact:
     vsphere_advanced_settings_key: config.vcls.clusters.{{ vsphere_cluster_info.clusters[cluster_name].moid }}.enabled
 
 - name: Set vsphere_advanced_settings
-  set_fact:
+  ansible.builtin.set_fact:
     vsphere_advanced_settings: >
       {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}
 
@@ -48,7 +48,7 @@
   delegate_to: localhost
 
 - name: Add ESXi Host to vCenter
-  vmware_host:
+  community.vmware.vmware_host:
     hostname: '{{ vmware_lab.vcenter_hostname }}'
     username: '{{ vmware_lab.vcenter_username }}'
     password: '{{ vmware_lab.vcenter_password }}'
@@ -121,7 +121,7 @@
   run_once: true
 
 - name: Create target folder {{ vmware_lab.datacenter_name }}/{{ vmware_lab.openshift_deployment_prereqs.target_folder }}
-  vcenter_folder:
+  community.vmware.vcenter_folder:
     hostname: '{{ vmware_lab.vcenter_hostname }}'
     username: '{{ vmware_lab.vcenter_username }}'
     password: '{{ vmware_lab.vcenter_password }}'
@@ -133,7 +133,7 @@
   run_once: true
 
 - name: Add a VMware vSwitch
-  vmware_vswitch:
+  community.vmware.vmware_vswitch:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
@@ -143,7 +143,7 @@
   delegate_to: localhost
 
 - name: Create portgroup
-  vmware_portgroup:
+  community.vmware.vmware_portgroup:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'

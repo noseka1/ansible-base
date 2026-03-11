@@ -7,5 +7,5 @@
   register: openshift_common_trusted_ca_result
 
 - name: Set openshift_common_ingress_trusted_ca_bundle
-  set_fact:
+  ansible.builtin.set_fact:
     openshift_common_ingress_trusted_ca_bundle: '{{ openshift_common_trusted_ca_result.resources.0.data["ca-bundle.crt"] }}'

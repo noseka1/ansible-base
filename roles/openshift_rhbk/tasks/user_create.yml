@@ -1,5 +1,5 @@
 - name: Check if user {{ rhbk_user.name }} in realm {{ rhbk_realm_name }} exists
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/users?username={{ rhbk_user.name | urlencode }}&exact=true
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -14,14 +14,14 @@
     name: '{{ rhbk_user.name }}'
   register: rhbk_openshift_user_result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - rhbk_openshift_user_result.resources | length == 1
     fail_msg: User "{{ rhbk_user.name }}" does not exist in OpenShift.
     quiet: true
 
 - name: Create user {{ rhbk_user.name }} if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/users
     method: POST
     headers:
@@ -47,7 +47,7 @@
   when: rhbk_list_user_result.json | length == 0
 
 - name: Set Keycloak password for user {{ rhbk_user.name }} in realm {{ rhbk_realm_name }}
-  uri:
+  ansible.builtin.uri:
     url: '{{ rhbk_create_user_result.location }}/reset-password'
     method: PUT
     headers:

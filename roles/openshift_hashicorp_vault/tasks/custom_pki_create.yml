@@ -42,7 +42,7 @@
     VAULT_TOKEN: '{{ hvault_token }}'
   when: hvault_pki_ca_bundle | length == 0
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 

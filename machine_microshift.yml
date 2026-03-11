@@ -1,9 +1,9 @@
 - hosts: all
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_base
       tags: machine_base
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_microshift
       tags: machine_microshift

@@ -49,10 +49,10 @@ spec:
       name: siteconfig
     - configOverrides: {}
       enabled: false
-      name: fine-grained-rbac-preview
+      name: fine-grained-rbac
     - configOverrides: {}
       enabled: false
-      name: cnv-mtv-integrations-preview
+      name: cnv-mtv-integrations
 {% if rhacm_place_on_infra_nodes %}
   nodeSelector:
     node-role.kubernetes.io/infra: ""

@@ -1,6 +1,6 @@
 - import_role:
     name: openshift_multicluster_engine_infraenv
-    tasks_from: infraenv_deploy.yml
+    tasks_from: deploy.yml
   vars:
     mceinfraenv_info: '{{ mcehostedcluster_baremetal }}'
   tags: mcehostedcluster_infraenv

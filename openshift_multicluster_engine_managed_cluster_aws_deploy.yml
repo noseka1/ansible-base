@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_multicluster_engine_managed_cluster
-        tasks_from: aws_deploy.yml
+        tasks_from: aws/deploy.yml

@@ -1,9 +1,9 @@
 - set_fact:
-    mcemanagedcluster_info: '{{ mcemanagedcluster_aws }}'
+    mcemanagedcluster_info: '{{ mcemanagedcluster_azure }}'
 
-- import_tasks: rhacm_detect.yml
+- import_tasks: common/rhacm_detect.yml
 
-- import_tasks: prereqs_deploy.yml
+- import_tasks: common/prereqs_deploy.yml
 
 - import_role:
     name: openshift_hashicorp_vault
@@ -12,8 +12,7 @@
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/{{ mcemanagedcluster_info.cluster_name }}/cloud-creds'
     hvault_secret_data:
-      aws_access_key_id: '{{ mcemanagedcluster_info.aws_access_key_id }}'
-      aws_secret_access_key: '{{ mcemanagedcluster_info.aws_secret_access_key }}'
+      osServicePrincipal.json: '{{ mcemanagedcluster_info.os_service_ppal }}'
 
 - import_role:
     name: openshift_hashicorp_vault
@@ -22,7 +21,7 @@
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/mce/managed-cluster/{{ mcemanagedcluster_info.cluster_name }}/install-config'
     hvault_secret_data:
-      install-config.yaml: '{{ lookup("template", "aws/install-config/install-config.yaml") }}'
+      install-config.yaml: '{{ lookup("template", "azure/install-config/install-config.yaml") }}'
 
 - import_role:
     name: openshift_hashicorp_vault
@@ -46,10 +45,10 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/aws/managed-cluster
+    autogitops_app_src_path: templates/azure/managed-cluster
     autogitops_app_dst_path: mce/managed-cluster/{{ mcemanagedcluster_info.cluster_name }}
     autogitops_app_namespace: '{{ mcemanagedcluster_info.cluster_name }}'
 
-- import_tasks: hive_wait.yml
+- import_tasks: common/hive_wait.yml
 
-- import_tasks: report_success.yml
+- import_tasks: common/report_success.yml

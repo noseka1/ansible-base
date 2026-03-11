@@ -1,5 +1,3 @@
-- import_tasks: prereqs_deploy.yml
-
 - import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml

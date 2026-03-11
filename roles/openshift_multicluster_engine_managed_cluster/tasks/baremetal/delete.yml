@@ -16,6 +16,6 @@
 
 - import_role:
     name: openshift_multicluster_engine_infraenv
-    tasks_from: infraenv_delete.yml
+    tasks_from: delete.yml
   vars:
     mceinfraenv_info: '{{ mcemanagedcluster_baremetal }}'

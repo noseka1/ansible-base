@@ -1,7 +1,9 @@
 - set_fact:
     mcemanagedcluster_info: '{{ mcemanagedcluster_baremetal }}'
 
-- import_tasks: rhacm_detect.yml
+- import_tasks: common/rhacm_detect.yml
+
+- import_tasks: common/prereqs_deploy.yml
 
 - set_fact:
     mcemanagedcluster_control_plane_agents: >-
@@ -18,7 +20,7 @@
 
 - import_role:
     name: openshift_multicluster_engine_infraenv
-    tasks_from: infraenv_deploy.yml
+    tasks_from: deploy.yml
   vars:
     mceinfraenv_info: '{{ mcemanagedcluster_baremetal }}'
 
@@ -97,4 +99,4 @@
       Agent cluster installation of {{ mcemanagedcluster_info.cluster_name }} failed. Check the AgentClusterInstall resource status for details.
     quiet: true
 
-- import_tasks: report_success.yml
+- import_tasks: common/report_success.yml

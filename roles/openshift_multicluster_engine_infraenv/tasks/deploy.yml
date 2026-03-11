@@ -65,6 +65,6 @@
   register: mceinfraenv_agent_result
   until: >-
     mceinfraenv_info.cluster_nodes_individual.keys() is
-      subset(mceinfraenv_agent_result.resources | json_query("[*].status.inventory.hostname"))
+      subset(mceinfraenv_agent_result.resources | default([]) | json_query("[*].status.inventory.hostname"))
   retries: 180
   delay: 10

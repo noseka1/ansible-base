@@ -4,4 +4,4 @@ metadata:
   name: cluster
 spec:
   encryption:
-    type: aesgcm
+    type: {{ osclusterpostinst_etcd_encryption | default('""', true) }}

@@ -8,6 +8,8 @@
 - import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
+  tags:
+    - etcd_encryption
 
 - import_role:
     name: openshift_common
@@ -26,8 +28,9 @@
 
 - import_tasks: etcd_encryption.yml
   when:
-    - osclusterpostinst_etcd_encryption
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
+  tags:
+    - etcd_encryption
 
 - import_tasks: infra_nodes.yml
   when: oscommon_infrastructure.status.platformStatus.type == 'AWS'

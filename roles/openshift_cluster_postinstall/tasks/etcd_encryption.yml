@@ -1,49 +1,57 @@
 # Encrypt Kubernetes etcd database, see also:
-# https://docs.openshift.com/container-platform/4.14/security/encrypting-etcd.html
+# https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/etcd/enabling-etcd-encryption
+# https://github.com/openshift/enhancements/blob/c124f770ac107dad2f8b19548ef7fa2c0d837166/enhancements/kube-apiserver/encrypting-data-at-datastore-layer.md
 
-- name: Enable etcd encryption
+- name: Set etcd encryption to '{{ osclusterpostinst_etcd_encryption }}'
   kubernetes.core.k8s:
     template: etcd-encryption/cluster-apiserver.yaml
   register: osclusterpostinst_etcd_encryption_result
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift API Server resources to encrypt
-  kubernetes.core.k8s_info:
-    api_version: operator.openshift.io/v1
-    kind: OpenShiftAPIServer
-    name: cluster
-  register: osclusterpostinst_openshiftapiserver_result
-  until:
-    - osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions is defined
-    - osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (osclusterpostinst_openshiftapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 120
-  delay: 10
-  when: osclusterpostinst_etcd_encryption_result is changed
+- when: osclusterpostinst_etcd_encryption_result is changed
+  block:
+    - set_fact:
+        osclusterpostinst_etcd_encryption_desired_status: >-
+          {{ 'False' if osclusterpostinst_etcd_encryption in [ '', 'identity' ] else 'True' }}
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes API Server resources to encrypt
-  kubernetes.core.k8s_info:
-    api_version: operator.openshift.io/v1
-    kind: KubeAPIServer
-    name: cluster
-  register: osclusterpostinst_kubernetesapiserver_result
-  until:
-    - osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions is defined
-    - osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (osclusterpostinst_kubernetesapiserver_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 120
-  delay: 10
-  when: osclusterpostinst_etcd_encryption_result is changed
+    - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift API Server resources to encrypt/decrypt
+      kubernetes.core.k8s_info:
+        api_version: operator.openshift.io/v1
+        kind: OpenShiftAPIServer
+        name: cluster
+      register: osclusterpostinst_openshiftapiserver_result
+      until: >-
+        osclusterpostinst_openshiftapiserver_result | json_query('resources[0].status.conditions[?type==`Encrypted`].status | [0]')
+          == osclusterpostinst_etcd_encryption_desired_status
+      retries: 120
+      delay: 10
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift OAuth API resources to encrypt
-  kubernetes.core.k8s_info:
-    api_version: operator.openshift.io/v1
-    kind: Authentication
-    name: cluster
-  register: osclusterpostinst_openshiftoauth_result
-  until:
-    - osclusterpostinst_openshiftoauth_result.resources.0.status.conditions is defined
-    - osclusterpostinst_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | list | length > 0
-    - (osclusterpostinst_openshiftoauth_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Encrypted') | first).status == "True"
-  retries: 120
-  delay: 10
-  when: osclusterpostinst_etcd_encryption_result is changed
+    - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes API Server resources to encrypt/decrypt
+      kubernetes.core.k8s_info:
+        api_version: operator.openshift.io/v1
+        kind: KubeAPIServer
+        name: cluster
+      register: osclusterpostinst_kubernetesapiserver_result
+      until: >-
+        osclusterpostinst_kubernetesapiserver_result | json_query('resources[0].status.conditions[?type==`Encrypted`].status | [0]')
+          == osclusterpostinst_etcd_encryption_desired_status
+      retries: 120
+      delay: 10
+
+    - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift OAuth API resources to encrypt/decrypt
+      kubernetes.core.k8s_info:
+        api_version: operator.openshift.io/v1
+        kind: Authentication
+        name: cluster
+      register: osclusterpostinst_openshiftoauth_result
+      until: >-
+        osclusterpostinst_openshiftoauth_result | json_query('resources[0].status.conditions[?type==`Encrypted`].status | [0]')
+          == osclusterpostinst_etcd_encryption_desired_status
+      retries: 120
+      delay: 10
+
+    - import_role:
+        name: openshift_common
+        tasks_from: wait_for_stable_cluster.yml
+      vars:
+        stable_cluster_delay: 0
+        stable_cluster_retries: 10

@@ -63,7 +63,8 @@ osclusterpostinst_set_core_user_password: false
 osclusterpostinst_set_root_user_password: false
 
 # Enable etcd encryption for the cluster to provide an additional layer of data security
-osclusterpostinst_etcd_encryption: false
+# Valid options are: '', identity, aescbc, aesgcm
+osclusterpostinst_etcd_encryption: ''
 
 # Deploy auto-gitops as part of the cluster post-installation process
 osclusterpostinst_deploy_autogitops: false

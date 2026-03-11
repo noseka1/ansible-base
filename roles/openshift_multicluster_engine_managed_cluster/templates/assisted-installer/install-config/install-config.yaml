@@ -1,1 +1,1 @@
-{{ mcemanagedcluster_info.install_config_overrides | to_yaml }}
+{{ mcemanagedcluster_info.install_config_overrides | default({}) | to_yaml }}

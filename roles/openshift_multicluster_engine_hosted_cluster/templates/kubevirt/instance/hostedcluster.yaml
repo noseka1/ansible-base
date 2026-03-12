@@ -68,8 +68,5 @@ spec:
   - service: Ignition
     servicePublishingStrategy:
       type: Route
-  - service: OVNSbDb
-    servicePublishingStrategy:
-      type: Route
   sshKey:
     name: {{ mcehostedcluster_info.cluster_name }}-ssh-key

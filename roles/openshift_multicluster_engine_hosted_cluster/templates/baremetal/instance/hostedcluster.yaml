@@ -78,10 +78,5 @@ spec:
       nodePort:
         address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
       type: NodePort
-  - service: OIDC
-    servicePublishingStrategy:
-      nodePort:
-        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
-      type: NodePort
   sshKey:
     name: {{ mcehostedcluster_info.cluster_name }}-ssh-key

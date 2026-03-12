@@ -4,4 +4,4 @@
 
 - name: Add the subscription-admins group the the existing open-cluster-management:subscription-admin binding
   kubernetes.core.k8s:
-    template: instance/open-cluster-management:subscription-admin-clusterrolebinding.yml
+    template: instance/open-cluster-management-subscription-admin-clusterrolebinding.yml

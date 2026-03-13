@@ -1,4 +1,4 @@
-- name: Retrieve backup created by Ansible
+- name: Retrieve backup job {{ etcd_backup_namespace }}/etcd-backup-test created by Ansible
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job
@@ -22,8 +22,14 @@
     namespace: '{{ etcd_backup_namespace }}'
   register: etcd_backup_job_result
   until:
-    - etcd_backup_job_result.resources | length == 1
-    - etcd_backup_job_result.resources.0.status.succeeded is defined
-    - etcd_backup_job_result.resources.0.status.succeeded == 1
+    - (etcd_backup_job_result.resources.0.status.succeeded | default(0) > 0) or
+      (etcd_backup_job_result.resources.0.status.failed | default(0) > 0)
+
   retries: 6
   delay: 10
+
+- name: Check that backup job {{ etcd_backup_namespace }}/etcd-backup-test succeeded
+  assert:
+    that: etcd_backup_job_result.resources.0.status.succeeded > 0
+    fail_msg: The {{ etcd_backup_namespace }}/etcd-backup-test job failed
+    quiet: true

@@ -1,7 +1,7 @@
 - name: Delete etcd-backup Helm chart
   kubernetes.core.helm:
-    name: '{{ etcd_backup_name }}'
-    release_namespace: '{{ etcd_backup_namespace }}'
+    name: '{{ etcdbackupadfinis_name }}'
+    release_namespace: '{{ etcdbackupadfinis_namespace }}'
     wait: true
     state: absent
 

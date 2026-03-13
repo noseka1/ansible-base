@@ -5,7 +5,7 @@ backup:
 image:
   pullPolicy: IfNotPresent
   repository: ghcr.io/adfinis/openshift-etcd-backup
-  tag: v{{ etcd_backup_version }}
+  tag: v{{ etcdbackupadfinis_version }}
 persistence:
   hostPath:
     enabled: false
@@ -22,6 +22,6 @@ monitoring:
       rules:
       - alert: EtcdBackupCronJobStatusFailedJobExists
         expr: |
-          kube_job_status_failed{namespace="{{ etcd_backup_namespace }}"} > 0
+          kube_job_status_failed{namespace="{{ etcdbackupadfinis_namespace }}"} > 0
         labels:
           severity: critical

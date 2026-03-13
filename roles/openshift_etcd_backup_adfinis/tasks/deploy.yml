@@ -6,14 +6,14 @@
 - name: Add adfinis chart repo
   kubernetes.core.helm_repository:
     name: adfinis
-    repo_url: '{{ etcd_backup_helm_repo }}'
+    repo_url: '{{ etcdbackupadfinis_helm_repo }}'
 
 - name: Deploy etcd-backup Helm chart
   kubernetes.core.helm:
-    name: '{{ etcd_backup_name }}'
+    name: '{{ etcdbackupadfinis_name }}'
     chart_ref: adfinis/openshift-etcd-backup
-    chart_version: '{{ etcd_backup_version }}'
-    release_namespace: '{{ etcd_backup_namespace }}'
+    chart_version: '{{ etcdbackupadfinis_version }}'
+    release_namespace: '{{ etcdbackupadfinis_namespace }}'
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     # Prevent blocking forever if using a WaitForFirstConsumer storageclass
     wait: false

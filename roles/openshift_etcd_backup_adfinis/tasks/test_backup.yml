@@ -1,35 +1,35 @@
-- name: Retrieve backup job {{ etcd_backup_namespace }}/etcd-backup-test created by Ansible
+- name: Retrieve backup job {{ etcdbackupadfinis_namespace }}/etcd-backup-test created by Ansible
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job
     name: etcd-backup-test
-    namespace: '{{ etcd_backup_namespace }}'
-  register: etcd_backup_job_result
+    namespace: '{{ etcdbackupadfinis_namespace }}'
+  register: etcdbackupadfinis_job_result
 
 - name: Trigger etcd backup manually
   command: |
     oc create job \
-      --namespace {{ etcd_backup_namespace }} \
-      --from=cronjob/etcd-backup-openshift-{{ etcd_backup_name }} \
+      --namespace {{ etcdbackupadfinis_namespace }} \
+      --from=cronjob/etcd-backup-openshift-{{ etcdbackupadfinis_name }} \
       etcd-backup-test
-  when: etcd_backup_job_result.resources | length == 0
+  when: etcdbackupadfinis_job_result.resources | length == 0
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job
     name: etcd-backup-test
-    namespace: '{{ etcd_backup_namespace }}'
-  register: etcd_backup_job_result
+    namespace: '{{ etcdbackupadfinis_namespace }}'
+  register: etcdbackupadfinis_job_result
   until:
-    - (etcd_backup_job_result.resources.0.status.succeeded | default(0) > 0) or
-      (etcd_backup_job_result.resources.0.status.failed | default(0) > 0)
+    - (etcdbackupadfinis_job_result.resources.0.status.succeeded | default(0) > 0) or
+      (etcdbackupadfinis_job_result.resources.0.status.failed | default(0) > 0)
 
   retries: 6
   delay: 10
 
-- name: Check that backup job {{ etcd_backup_namespace }}/etcd-backup-test succeeded
+- name: Check that backup job {{ etcdbackupadfinis_namespace }}/etcd-backup-test succeeded
   assert:
-    that: etcd_backup_job_result.resources.0.status.succeeded > 0
-    fail_msg: The {{ etcd_backup_namespace }}/etcd-backup-test job failed
+    that: etcdbackupadfinis_job_result.resources.0.status.succeeded > 0
+    fail_msg: The {{ etcdbackupadfinis_namespace }}/etcd-backup-test job failed
     quiet: true

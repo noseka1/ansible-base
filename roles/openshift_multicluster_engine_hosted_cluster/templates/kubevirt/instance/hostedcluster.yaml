@@ -24,6 +24,11 @@ spec:
 {% else %}
   controllerAvailabilityPolicy: HighlyAvailable
 {% endif %}
+{% if mcehostedcluster_info.data_plane_replicas == 1 %}
+  infrastructureAvailabilityPolicy: SingleReplica
+{% else %}
+  infrastructureAvailabilityPolicy: HighlyAvailable
+{% endif %}
   etcd:
     managed:
       storage:

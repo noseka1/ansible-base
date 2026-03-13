@@ -8,6 +8,6 @@
 - name: Delete etcd-backup namespace
   kubernetes.core.k8s:
     template:
-      - etcd-backup-ns.yaml
+      - namespace.yaml
     wait: true
     state: absent

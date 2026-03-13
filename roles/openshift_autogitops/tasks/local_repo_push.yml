@@ -1,10 +1,10 @@
-- name: Stage directories for commit
+- name: Stage directories for commit # noqa: command-instead-of-module
   ansible.builtin.command: git add .
   changed_when: false
   args:
     chdir: '{{ autogitops_git_dir }}'
 
-- name: Check git status
+- name: Check git status # noqa: command-instead-of-module
   ansible.builtin.command: git status
   changed_when: false
   args:
@@ -14,7 +14,7 @@
 - ansible.builtin.set_fact:
     autogitops_git_updated: '{{ autogitops_git_status_result.stdout.find("Changes to be committed") != -1 }}'
 
-- name: Commit changes to git
+- name: Commit changes to git # noqa: command-instead-of-module
   ansible.builtin.command: git commit --message 'Update app {{ autogitops_app_name }}'
   args:
     chdir: '{{ autogitops_git_dir }}'
@@ -25,7 +25,7 @@
     GIT_COMMITTER_EMAIL: autogitops@example.com
   when: autogitops_git_updated
 
-- name: Retrieve latest commit
+- name: Retrieve latest commit # noqa: command-instead-of-module
   ansible.builtin.command: git show
   changed_when: false
   args:
@@ -39,13 +39,13 @@
     verbosity: 1
   when: autogitops_git_updated
 
-- name: Push changes to remote repo
+- name: Push changes to remote repo # noqa: command-instead-of-module
   ansible.builtin.command: git push
   args:
     chdir: '{{ autogitops_git_dir }}'
   when: autogitops_git_updated
 
-- name: Retrieve latest commit id
+- name: Retrieve latest commit id # noqa: command-instead-of-module
   ansible.builtin.command: git rev-parse HEAD
   changed_when: false
   args:

@@ -15,5 +15,5 @@
     url_password: '{{ gitea_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 201, 409 ]
+    status_code: [201, 409]
   loop: '{{ gitea_create_repos }}'

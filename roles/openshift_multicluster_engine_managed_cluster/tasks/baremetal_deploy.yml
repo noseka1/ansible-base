@@ -52,7 +52,7 @@
       apiVersion: agent-install.openshift.io/v1beta1
       kind: Agent
       metadata:
-        name:  '{{ item.metadata.name }}'
+        name: '{{ item.metadata.name }}'
         namespace: '{{ item.metadata.namespace }}'
       spec:
         approved: true
@@ -63,7 +63,7 @@
   when: mcemanagedcluster_info.cluster_nodes_individual[item.status.inventory.hostname] is defined
   loop: '{{ mcemanagedcluster_agent_result.resources }}'
   loop_control:
-    label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ mcemanagedcluster_info.cluster_nodes_individual[item.status.inventory.hostname].role | default ("") }}'
+    label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ mcemanagedcluster_info.cluster_nodes_individual[item.status.inventory.hostname].role | default("") }}'
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
   kubernetes.core.k8s_info:

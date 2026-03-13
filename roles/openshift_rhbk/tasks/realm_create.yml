@@ -12,7 +12,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_realms_list_result
 
 - name: Create realm {{ rhbk_realm_name }} if it doesn't exist
@@ -28,7 +28,7 @@
       displayName: '{{ rhbk_realm_display_name }}'
       enabled: true
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   when: (rhbk_realms_list_result.json | selectattr('id', 'equalto', rhbk_realm_name) | list| length) == 0
 
 - name: Obtain list of client scopes
@@ -37,7 +37,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_client_scopes_list_result
 
 - name: Create client scope "groups" if it doesn't exist
@@ -65,7 +65,7 @@
           protocol: openid-connect
           protocolMapper: oidc-group-membership-mapper
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   when: (rhbk_client_scopes_list_result.json | selectattr('name', 'equalto', 'groups') | list | length) == 0
 
 - name: Obtain list of clients
@@ -74,7 +74,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_clients_list_result
 
 - name: Create client {{ rhbk_client_name }} if it doesn't exist
@@ -103,7 +103,7 @@
       redirectUris: '{{ rhbk_client_redirect_uris }}'
       serviceAccountsEnabled: '{{ rhbk_client_service_accounts_enabled | default(omit) }}'
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   register: rhbk_client_create_result
   when: (rhbk_clients_list_result.json | selectattr('clientId', 'equalto', rhbk_client_name) | list | length) == 0
 
@@ -113,7 +113,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_clients_list_result
 
 - ansible.builtin.set_fact:
@@ -130,7 +130,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_service_account_user_result
   when: rhbk_client_create_result is not skipped
 
@@ -148,7 +148,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_identity_providers_list_result
 
 - name: Create identity provider openshift-v4 if it doesn't exist
@@ -167,7 +167,7 @@
       enabled: true
       providerId: openshift-v4
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   when: (rhbk_identity_providers_list_result.json | selectattr('providerId', 'equalto', 'openshift-v4') | list | length) == 0
 
 - ansible.builtin.import_tasks: group_create.yml
@@ -184,11 +184,11 @@
       firstname: Some
       lastname: Admin
       email: admin@example.com
-      groups: [ keycloak-admins ]
+      groups: [keycloak-admins]
     - name: devel
       firstname: Some
       lastname: Developer
       email: devel@example.com
-      groups: [ keycloak-developers ]
+      groups: [keycloak-developers]
   loop_control:
     loop_var: rhbk_user

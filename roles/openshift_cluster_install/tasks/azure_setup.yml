@@ -14,4 +14,4 @@
   ansible.builtin.template:
     src: azure/osServicePrincipal.json
     dest: '{{ osclusterinstall_azure.azure_config_path }}'
-    mode: 0600
+    mode: '0600'

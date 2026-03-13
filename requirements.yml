@@ -1,31 +1,31 @@
 roles:
 # Requires RPM package python3-hvac
-- name: ansible-modules-hashivault
-  src: https://github.com/TerryHowe/ansible-modules-hashivault.git
-  version: 5.4.0
+  - name: ansible-modules-hashivault
+    src: https://github.com/TerryHowe/ansible-modules-hashivault.git
+    version: 5.4.0
 
 collections:
-- name: kubernetes.core
-  src: https://github.com/ansible-collections/kubernetes.core
-  version: 6.3.0
+  - name: kubernetes.core
+    src: https://github.com/ansible-collections/kubernetes.core
+    version: 6.3.0
 
-- name: amazon.aws
-  src: https://github.com/ansible-collections/amazon.aws
-  version: 10.1.1
+  - name: amazon.aws
+    src: https://github.com/ansible-collections/amazon.aws
+    version: 10.1.1
 
-- name: ansible.windows
-  src: https://github.com/ansible-collections/ansible.windows
-  version: 3.2.0
+  - name: ansible.windows
+    src: https://github.com/ansible-collections/ansible.windows
+    version: 3.2.0
 
-- name: chocolatey.chocolatey
-  src: https://github.com/chocolatey/chocolatey-ansible
-  version: 1.5.3
+  - name: chocolatey.chocolatey
+    src: https://github.com/chocolatey/chocolatey-ansible
+    version: 1.5.3
 
 # Requires RPM package python3-pyvmomi
-- name: community.vmware
-  src: https://github.com/ansible-collections/community.vmware
-  version: 5.7.2
+  - name: community.vmware
+    src: https://github.com/ansible-collections/community.vmware
+    version: 5.7.2
 
-- name: azure.azcollection
-  src: https://github.com/ansible-collections/azure
-  version: 3.7.0
+  - name: azure.azcollection
+    src: https://github.com/ansible-collections/azure
+    version: 3.7.0

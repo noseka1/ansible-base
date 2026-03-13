@@ -6,7 +6,7 @@
     method: GET
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 404 ]
+    status_code: [200, 404]
   register: nexus_repository_manager_docker_repo_result
 
 - name: Create Docker repository

@@ -6,7 +6,7 @@
     url_password: '{{ gitea_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200 ]
+    status_code: [200]
   register: gitea_repo_webhooks
 
 - ansible.builtin.set_fact:
@@ -25,11 +25,11 @@
         content_type: json
         url: '{{ item.url }}'
       description: '{{ item.description }}'
-      events: [ push ]
+      events: [push]
       type: gogs
     url_username: '{{ gitea_username }}'
     url_password: '{{ gitea_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 201, 409 ]
+    status_code: [201, 409]
   when: item.url not in gitea_repo_webhook_urls

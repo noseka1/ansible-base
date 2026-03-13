@@ -38,7 +38,7 @@
     state: present
     variables:
       cloud_region: '{{ rosa_cluster_install.aws_region }}'
-      availability_zones: '{{ [ rosa_cluster_install.aws_region ] | product(rosa_cluster_install.aws_availability_zones) | map("join") | to_json }}'
+      availability_zones: '{{ [rosa_cluster_install.aws_region] | product(rosa_cluster_install.aws_availability_zones) | map("join") | to_json }}'
       cluster_name: '{{ rosa_cluster_install.cluster_name }}'
       openshift_version: '{{ rosa_cluster_install.cluster_version }}'
       account_role_prefix: '{{ rosa_cluster_install_account_roles_result.outputs.account_role_prefix.value }}'

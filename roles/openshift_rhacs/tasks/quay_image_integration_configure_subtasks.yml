@@ -19,9 +19,9 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ -1, 200, 500, 503 ]
+    status_code: [-1, 200, 500, 503]
   register: rhacs_existing_imageintegration_result
-  until: rhacs_existing_imageintegration_result.status in [ 200 ]
+  until: rhacs_existing_imageintegration_result.status in [200]
   retries: 12
   delay: 10
 
@@ -43,9 +43,9 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ -1, 200, 503 ]
+    status_code: [-1, 200, 503]
   when: rhacs_existing_imageintegration_result.json.integrations | selectattr('name', 'equalto', rhacs_quay_imageintegration_name ) | list | length == 0
   register: rhacs_imageintegration_result
-  until: rhacs_imageintegration_result.status in [ 200 ]
+  until: rhacs_imageintegration_result.status in [200]
   retries: 12
   delay: 10

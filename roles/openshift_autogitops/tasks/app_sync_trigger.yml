@@ -13,10 +13,10 @@
     headers:
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: '{{ autogitops_argocd_validate_certs }}'
-    status_code: [ 200 ]
+    status_code: [200]
   register: autogitops_app_sync_result
   until:
     - autogitops_app_sync_result.json.status.reconciledAt is defined or
-      autogitops_app_sync_result.status not in [ 200 ]
+      autogitops_app_sync_result.status not in [200]
   retries: 300
   delay: 2

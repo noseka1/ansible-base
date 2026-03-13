@@ -11,7 +11,7 @@
       password: '{{ generic_user_password }}'
       email: admin@example.com
       access_token: true
-    status_code: [ 200, 400 ]
+    status_code: [200, 400]
   register: quay_admin_initialize
 
 - ansible.builtin.fail:

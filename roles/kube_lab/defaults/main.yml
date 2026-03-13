@@ -6,7 +6,7 @@ kubeadm_config:
   cert_dir: /etc/kubernetes/pki
 
 kubeadm_config_crisocket: /var/run/crio/crio.sock
-#kubeadm_config_crisocket: /var/run/containerd/containerd.sock
+# kubeadm_config_crisocket: /var/run/containerd/containerd.sock
 
 kubeadm_config_dir: '{{ ansible_facts.env.HOME }}/kubeadm'
 

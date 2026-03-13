@@ -14,7 +14,7 @@
     method: POST
     url_username: '{{ vmware_lab.vcenter_username }}'
     url_password: '{{ vmware_lab.vcenter_password }}'
-    status_code: [ 201 ]
+    status_code: [201]
     validate_certs: false
   delegate_to: localhost
   register: vcenter_session

@@ -21,7 +21,7 @@
 
 - ansible.builtin.set_fact:
     osvirt_machine_eviction_strategy: LiveMigrate
-    osvirt_machine_root_disk_access_modes: [ 'ReadWriteMany' ]
+    osvirt_machine_root_disk_access_modes: ['ReadWriteMany']
     osvirt_machine_root_disk_storage_class_name: '{{ osvirt_ocs_storageclasses_defs.0.metadata.name }}'
     osvirt_machine_root_disk_volume_mode: >-
       {{ "Filesystem" if osvirt_ocs_storageclasses_defs.0.metadata.name in ["nfs-csi", "efs-csi", "rook-cephfs"] else "Block" }}

@@ -18,8 +18,8 @@
     url: '{{ hvault_addr }}/v1/sys/health'
     method: GET
     validate_certs: '{{ not hvault_skip_verify }}'
-    status_code: [ 200, 501, 503 ]
+    status_code: [200, 501, 503]
   register: hvault_health
-  until: (hvault_health.status in [ 200, 501 ] or (hvault_health.json is defined and hvault_health.json.sealed))
+  until: (hvault_health.status in [200, 501] or (hvault_health.json is defined and hvault_health.json.sealed))
   retries: 60
   delay: 10

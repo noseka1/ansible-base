@@ -52,9 +52,9 @@ osclusterpostinst_send_network_audit_logs_to_syslog_enabled: false
 osclusterpostinst_cluster_banner:
   enabled: false
   background_color: '#008000' # green (dev)
-  #background_color: '#9fc5e8' # light blue (test)
-  #background_color: '#ddaa11' # yellow (stage)
-  #background_color: '#dd0000' # red (prod)
+  # background_color: '#9fc5e8' # light blue (test)
+  # background_color: '#ddaa11' # yellow (stage)
+  # background_color: '#dd0000' # red (prod)
 
 # Set core user password. The password of user core can be set on OCP >= 4.13
 osclusterpostinst_set_core_user_password: false

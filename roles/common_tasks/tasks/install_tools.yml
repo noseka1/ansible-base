@@ -20,7 +20,7 @@
       - setools-console # sesearch
       - zsh
     state: present
-  when: ansible_facts.distribution in [ "RedHat", "Fedora" ]
+  when: ansible_facts.distribution in ["RedHat", "Fedora"]
   become: true
 
 - name: Install tools RHEL7

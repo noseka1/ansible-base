@@ -4,7 +4,7 @@
     method: POST
     url_username: '{{ vmware_lab.vcenter_username }}'
     url_password: '{{ vmware_lab.vcenter_password }}'
-    status_code: [ 201 ]
+    status_code: [201]
     validate_certs: false
   register: vcenter_session
 
@@ -39,7 +39,7 @@
       cert_chain:
         cert_chain:
           - '{{ vmware_lab_certs.vcenter.ca_crt }}'
-    status_code: [ 201 ]
+    status_code: [201]
     validate_certs: false
   when:
     - vcenter_trusted_cert_found is not defined
@@ -68,7 +68,7 @@
       cert: '{{ vmware_lab_certs.vcenter.crt }}'
       key: '{{ vmware_lab_certs.vcenter.key }}'
       root_cert: '{{ vmware_lab_certs.vcenter.ca_crt }}'
-    status_code: [ 204 ]
+    status_code: [204]
     validate_certs: false
   when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt
 

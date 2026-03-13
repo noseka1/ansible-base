@@ -8,7 +8,8 @@
   become: true
 
 - name: Generate SSH keys for root
-  openssh_keypair: path=/root/.ssh/id_rsa
+  openssh_keypair:
+    path: /root/.ssh/id_rsa
   register: machine_base_root_keypair_result
   become: true
 

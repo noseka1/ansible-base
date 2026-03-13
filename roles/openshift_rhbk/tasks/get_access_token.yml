@@ -9,7 +9,7 @@
       password: '{{ rhbk_password }}'
       grant_type: password
     validate_certs: false
-    status_code: [ 200, 401 ]
+    status_code: [200, 401]
   register: rhbk_token_result
   until:
     - rhbk_token_result.json.access_token | default('') | length > 0

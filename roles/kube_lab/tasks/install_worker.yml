@@ -11,5 +11,6 @@
   register: kubeadm
   become: true
 
-- ansible.builtin.debug: var=kubeadm.stdout_lines
+- ansible.builtin.debug:
+    var: kubeadm.stdout_lines
   when: kubeadm is changed

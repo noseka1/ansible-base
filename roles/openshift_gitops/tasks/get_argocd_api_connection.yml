@@ -11,7 +11,7 @@
           username: admin
           password: '{{ generic_user_password }}'
         validate_certs: false
-        status_code: [ 200 ]
+        status_code: [200]
       register: argocd_session_result
 
     - ansible.builtin.set_fact:

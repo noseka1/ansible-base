@@ -23,7 +23,7 @@
 
 - name: Restart cloudflared pods after configuration changed
   ansible.builtin.command: oc rollout restart -n {{ cloudflared_namespace }} deployment/cloudflared
-  when:  cloudflared_config_result is changed
+  when: cloudflared_config_result is changed
 
 - ansible.builtin.import_role:
     name: openshift_common

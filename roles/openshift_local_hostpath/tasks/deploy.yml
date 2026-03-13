@@ -52,7 +52,7 @@
   kubernetes.core.helm:
     name: local-hostpath
     chart_ref: democratic-csi/democratic-csi
-    chart_version: '{{ localhostpath_democratic_csi_helm_chart_version  }}'
+    chart_version: '{{ localhostpath_democratic_csi_helm_chart_version }}'
     release_namespace: local-hostpath
     release_values: '{{ lookup("template", "democratic-csi/values.yaml") | from_yaml }}'
     wait: true
@@ -61,7 +61,7 @@
   kubernetes.core.helm:
     name: local-hostpath-snapshot
     chart_ref: democratic-csi/snapshot-controller
-    chart_version: '{{ localhostpath_snapshot_controller_helm_chart_version  }}'
+    chart_version: '{{ localhostpath_snapshot_controller_helm_chart_version }}'
     release_namespace: local-hostpath
     release_values: '{{ lookup("template", "snapshot-controller/values.yaml") | from_yaml }}'
     wait: true

@@ -21,4 +21,4 @@
 - name: Check Prometheus Windows exporter metrics are available
   ansible.windows.win_uri:
     url: http://localhost:9182/metrics
-    status_code: [ 200 ]
+    status_code: [200]

@@ -1,7 +1,7 @@
 cloud_init_modifications:
   disable_root: 0
-  ssh_pwauth:   1
-  datasource_list: [ None ]
+  ssh_pwauth: 1
+  datasource_list: [None]
   # disable ssh module which overwrote host keys
   cloud_init_modules:
     - growpart

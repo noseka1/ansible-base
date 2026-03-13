@@ -2,7 +2,7 @@
   ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}
     validate_certs: false
-    status_code: [ 200, 503 ]
+    status_code: [200, 503]
   register: rhbk_ping_result
   until: rhbk_ping_result.status == 200
   retries: 30

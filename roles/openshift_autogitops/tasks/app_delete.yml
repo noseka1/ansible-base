@@ -54,7 +54,7 @@
     headers:
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: '{{ autogitops_argocd_validate_certs }}'
-    status_code: [ 200, 403, 404 ]
+    status_code: [200, 403, 404]
   register: autogitops_app_resource_result
 
 - ansible.builtin.include_tasks: app_sync_delete.yml
@@ -77,7 +77,7 @@
     headers:
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: '{{ autogitops_argocd_validate_certs }}'
-    status_code: [ 200, 403, 404 ]
+    status_code: [200, 403, 404]
   register: autogitops_app_resource_result
   when: autogitops_git_updated
   until:

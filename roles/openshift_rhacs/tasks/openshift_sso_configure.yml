@@ -13,7 +13,7 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 400 ]
+    status_code: [200, 400]
 
 - name: Get auth providers in RHACS
   ansible.builtin.uri:
@@ -23,7 +23,7 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 400 ]
+    status_code: [200, 400]
   register: rhacs_auth_providers
 
 - name: Set rhacs_auth_provider_id
@@ -45,7 +45,7 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 409 ]
+    status_code: [200, 409]
 
 - name: Grant Admin role to users in cluster-admin group (returns HTTP 409 if the auth provider already exists)
   ansible.builtin.uri:
@@ -62,4 +62,4 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 409 ]
+    status_code: [200, 409]

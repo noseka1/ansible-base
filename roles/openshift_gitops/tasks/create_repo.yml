@@ -17,4 +17,4 @@
     headers:
       Authorization: Bearer {{ argocd_api_token }}
     validate_certs: false
-    status_code: [ 200 ]
+    status_code: [200]

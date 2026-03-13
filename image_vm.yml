@@ -2,10 +2,10 @@
   hosts: localhost
   gather_facts: false
   tasks:
-  - name: Add a chroot host
-    ansible.builtin.add_host:
-      hostname: '{{ chroot_location }}'
-      ansible_host: '{{ chroot_location }}'
+    - name: Add a chroot host
+      ansible.builtin.add_host:
+        hostname: '{{ chroot_location }}'
+        ansible_host: '{{ chroot_location }}'
 
 - hosts: '{{ chroot_location }}'
   connection: chroot

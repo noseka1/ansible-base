@@ -29,7 +29,7 @@
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 409 ]
+    status_code: [200, 409]
   register: generate_cert_result
 
 - name: Apply the generated init-bundle (skip if no new bundle generated in the previous step)

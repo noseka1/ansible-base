@@ -4,7 +4,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_list_user_result
 
 - name: Retrieve user {{ rhbk_user.name }} in OpenShift
@@ -42,7 +42,7 @@
           userName: '{{ rhbk_user.name }}'
       enabled: true
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   register: rhbk_create_user_result
   when: rhbk_list_user_result.json | length == 0
 
@@ -58,5 +58,5 @@
       value: '{{ generic_user_password }}'
       temporary: false
     validate_certs: true
-    status_code: [ 204 ]
+    status_code: [204]
   when: rhbk_create_user_result is not skipped

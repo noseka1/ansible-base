@@ -12,7 +12,7 @@
         url_username: admin
         url_password: '{{ generic_user_password }}'
         force_basic_auth: true
-        status_code: [ 200 ]
+        status_code: [200]
       register: oscommon_openshift_oauth_token_result
 
     - name: Set oscommon_openshift_oauth_token

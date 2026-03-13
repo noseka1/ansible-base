@@ -4,7 +4,7 @@
     dest: /etc/microshift/config.yaml
   notify:
     - Restart microshift
-  become: True
+  become: true
 
 - name: Start microshift service
   ansible.builtin.service:

@@ -36,7 +36,7 @@
 - name: Set vsphere_advanced_settings
   ansible.builtin.set_fact:
     vsphere_advanced_settings: >
-      {{ {} | combine({ vsphere_advanced_settings_key: 'False' }) }}
+      {{ {} | combine({vsphere_advanced_settings_key: 'False'}) }}
 
 - name: Disable vCLS for cluster {{ cluster_name }} (https://kb.vmware.com/kb/80472)
   community.vmware.vmware_vcenter_settings:
@@ -96,7 +96,7 @@
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'
-    name: '{{ default_datastore_rename}}'
+    name: '{{ default_datastore_rename }}'
     validate_certs: false
   delegate_to: localhost
   register: default_datastore_result

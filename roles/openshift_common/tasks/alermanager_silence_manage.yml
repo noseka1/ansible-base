@@ -21,7 +21,7 @@
     url: https://alertmanager-main-openshift-monitoring.apps.{{ oscommon_cluster_domain }}/api/v2/silences
     headers:
       Authorization: Bearer {{ oscommon_openshift_oauth_token }}
-    status_code: [ 200 ]
+    status_code: [200]
   register: oscomm_get_silences_result
 
 - name: Find matching unexpired silence
@@ -57,4 +57,4 @@
       Authorization: Bearer {{ oscommon_openshift_oauth_token }}
     body_format: json
     body: '{{ oscomm_silence_definition | to_json }}'
-    status_code: [ 200 ]
+    status_code: [200]

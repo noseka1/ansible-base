@@ -4,7 +4,7 @@
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
     validate_certs: true
-    status_code: [ 200 ]
+    status_code: [200]
   register: rhbk_groups_list_result
 
 - name: Create group {{ rhbk_group_name }} if it doesn't exist
@@ -17,5 +17,5 @@
     body:
       name: '{{ rhbk_group_name }}'
     validate_certs: true
-    status_code: [ 201 ]
+    status_code: [201]
   when: (rhbk_groups_list_result.json | selectattr('name', 'equalto', rhbk_group_name) | list | length) == 0

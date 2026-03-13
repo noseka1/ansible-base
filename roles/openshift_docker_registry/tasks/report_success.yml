@@ -10,13 +10,13 @@
   ansible.builtin.uri:
     url: 'https://{{ dockerreg_route.resources.0.spec.host }}'
     method: GET
-    status_code: [ 200 ]
+    status_code: [200]
     url_username: admin
     url_password: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: true
   register: dockerreg_result
-  until: dockerreg_result.status in [ 200 ]
+  until: dockerreg_result.status in [200]
   retries: 60
   delay: 5
 

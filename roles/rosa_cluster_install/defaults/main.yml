@@ -4,7 +4,7 @@ rosa_cluster_install:
   cluster_version: 4.20.0
   aws_region: us-west-2
   # Only single AZ is supported at the moment
-  aws_availability_zones: [ a ]
+  aws_availability_zones: [a]
   aws_access_key_id: XXXXXXXXXXXXXXXXXXXX
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   terraform_templates_version: v1.2.2

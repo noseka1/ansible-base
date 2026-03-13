@@ -45,7 +45,7 @@
     body: '{{ generic_user_password }}'
     force_basic_auth: true
     validate_certs: false
-    status_code: [ 200, 204, 401 ]
+    status_code: [200, 204, 401]
   register: nexus_repository_manager_password_update
 
 - name: Disable anonymous access

@@ -7,6 +7,7 @@ mcehostedcluster_kubevirt:
   ssh_authorized_key: ''
   clusterwide_proxy: {}
   trusted_ca_bundle: ''
+  dns_base_domain: example.com
   nodepool_rootvolume_accessmodes:
     - ReadWriteOnce
   nodepool_compute_cores: 2

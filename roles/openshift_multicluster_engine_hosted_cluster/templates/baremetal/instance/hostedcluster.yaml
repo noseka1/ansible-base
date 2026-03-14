@@ -70,18 +70,12 @@ spec:
       type: NodePort
   - service: Ignition
     servicePublishingStrategy:
-      nodePort:
-        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
-      type: NodePort
+      type: Route
   - service: Konnectivity
     servicePublishingStrategy:
-      nodePort:
-        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
-      type: NodePort
+      type: Route
   - service: OAuthServer
     servicePublishingStrategy:
-      nodePort:
-        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
-      type: NodePort
+      type: Route
   sshKey:
     name: {{ mcehostedcluster_info.cluster_name }}-ssh-key

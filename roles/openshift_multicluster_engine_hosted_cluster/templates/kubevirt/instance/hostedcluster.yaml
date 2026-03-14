@@ -29,6 +29,8 @@ spec:
 {% else %}
   infrastructureAvailabilityPolicy: HighlyAvailable
 {% endif %}
+  dns:
+    baseDomain: {{ mcehostedcluster_info.dns_base_domain }}
   etcd:
     managed:
       storage:
@@ -63,14 +65,16 @@ spec:
   services:
   - service: APIServer
     servicePublishingStrategy:
-      type: LoadBalancer
-  - service: OAuthServer
+      nodePort:
+        address: api.{{ mcehostedcluster_info.cluster_name }}.{{ mcehostedcluster_info.dns_base_domain }}
+      type: NodePort
+  - service: Ignition
     servicePublishingStrategy:
       type: Route
   - service: Konnectivity
     servicePublishingStrategy:
       type: Route
-  - service: Ignition
+  - service: OAuthServer
     servicePublishingStrategy:
       type: Route
   sshKey:

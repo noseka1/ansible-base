@@ -2,7 +2,7 @@ mcehostedcluster_kubevirt:
   cluster_name: mycluster20
   ocp_release_image: 4.21.3-x86_64
   control_plane_replicas: 1
-  data_plane_replicas: 2
+  data_plane_replicas: 1
   etcd_storageclass: ''
   ssh_authorized_key: ''
   clusterwide_proxy: {}
@@ -20,7 +20,7 @@ mcehostedcluster_baremetal:
   cluster_name: mycluster21
   ocp_release_image: 4.21.3-x86_64
   control_plane_replicas: 1
-  data_plane_replicas: 2
+  data_plane_replicas: 1
   etcd_storageclass: ''
   ssh_authorized_key: ''
   clusterwide_proxy: {}

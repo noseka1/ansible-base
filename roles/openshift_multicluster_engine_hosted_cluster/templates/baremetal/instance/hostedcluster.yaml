@@ -6,6 +6,9 @@ metadata:
 spec:
   autoscaling: {}
   configuration:
+    apiServer:
+      audit:
+        profile: Default
 {% if mcehostedcluster_info.clusterwide_proxy | default({})
      or mcehostedcluster_info.trusted_ca_bundle | default('') %}
     proxy:

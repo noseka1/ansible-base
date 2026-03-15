@@ -1,4 +1,4 @@
-# Helm Charts for Deploying Red Hat OpenShift Service Mesh
+# Deploying Red Hat OpenShift Service Mesh
 
 Red Hat OpenShift Service Mesh product documentation can be found [here](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-about.html). These Helm charts are based on the examples included in the product documentation.
 

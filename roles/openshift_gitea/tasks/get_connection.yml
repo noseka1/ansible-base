@@ -8,10 +8,11 @@
         namespace: '{{ gitea_namespace }}'
       register: gitea_route
 
-    - name: Fail if Gitea route doesn't exist
-      fail:
-        msg: Gitea route doesn't exist. Is Gitea installed on the cluster?
-      when: gitea_route.resources | length == 0
+    - name: Verify Gitea route exists
+      assert:
+        that: gitea_route.resources | length == 1
+        fail_msg: "Gitea route doesn't exist. Is Gitea installed on the cluster?"
+        quiet: true
 
     - name: Set Gitea connection
       set_fact:

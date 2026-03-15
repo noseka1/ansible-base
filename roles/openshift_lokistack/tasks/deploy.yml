@@ -29,9 +29,10 @@
     tasks_from: get_default_storage_class.yml
   tags: lokistack_instance
 
-- fail:
-    msg: No default storage class found on the cluster.
-  when: not oscommon_default_storage_class
+- name: Check that default storageclass exists
+  assert:
+    that: oscommon_default_storage_class
+    fail_msg: No default storage class found on the cluster.
   tags: lokistack_instance
 
 - import_role:

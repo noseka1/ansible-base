@@ -7,12 +7,12 @@
   register: vcsa_deploy
 
 - name: Fail if not mounted
-  fail:
-    msg: >
+  assert:
+    that: vcsa_deploy.stat.exists
+    fail_msg: >-
       Mount the vCenter Server Appliance ISO on {{ vmware_lab.vcenter_iso_mount_path }} are re-run this script.
       For example: sudo mount VMware-VCSA-all-7.0.2-17958471.iso {{ vmware_lab.vcenter_iso_mount_path }}
   delegate_to: localhost
-  when: not vcsa_deploy.stat.exists
 
 - name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
   command: >

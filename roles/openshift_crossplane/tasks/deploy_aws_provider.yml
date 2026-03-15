@@ -16,13 +16,13 @@
   retries: 60
   delay: 10
 
-- fail:
-    msg: Variable crossplane_aws_access_key_id must be set
-  when: crossplane_aws_access_key_id | length == 0
+- assert:
+    that: crossplane_aws_access_key_id | length > 0
+    fail_msg: Variable crossplane_aws_access_key_id must be set
 
-- fail:
-    msg: Variable crossplane_aws_secret_acccess_key must be set
-  when: crossplane_aws_secret_acccess_key | length == 0
+- assert:
+    that: crossplane_aws_secret_acccess_key | length > 0
+    fail_msg: Variable crossplane_aws_secret_acccess_key must be set
 
 - name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.aws.crossplane.io CRD to become available
   kubernetes.core.k8s_info:

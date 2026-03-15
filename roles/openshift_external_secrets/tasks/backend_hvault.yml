@@ -22,5 +22,6 @@
   delay: 1
 
 - name: Fail if the secret value is not correct
-  fail:
-  when: (extsecrets_test_secret.resources.0.data.testkey | b64decode) != 'testvalue'
+  assert:
+    that: (extsecrets_test_secret.resources.0.data.testkey | b64decode) == 'testvalue'
+    fail_msg: The secret value is not 'testvalue'.

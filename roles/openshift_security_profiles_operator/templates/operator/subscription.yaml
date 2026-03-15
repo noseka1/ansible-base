@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: security-profiles-operator
+  namespace: openshift-security-profiles
+spec:
+  channel: {{ secprof_operator_subscription_channel | default('""', true) }}
+  installPlanApproval: Manual
+  name: security-profiles-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: {{ secprof_operator_subscription_starting_csv | default('""', true) }}

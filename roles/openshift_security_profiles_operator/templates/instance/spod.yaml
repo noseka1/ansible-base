@@ -1,0 +1,28 @@
+apiVersion: security-profiles-operator.x-k8s.io/v1alpha1
+kind: SecurityProfilesOperatorDaemon
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+  name: spod
+  namespace: openshift-security-profiles
+spec:
+  # With the Advanced Audit Logging Framework, you can correlate an OpenShift
+  # Container Platform user with their direct actions on the node during oc
+  # exec, oc rsh, and oc debug sessions. The advanced audit logging results in
+  # detailed logs in a JSON Lines format.
+  #
+  # To monitor the advanced audit log tail use the following command:
+  # $ oc -n openshift-security-profiles log --selector name=spod -c json-enricher --max-log-requests 100 -f
+  #
+  # See also Advanced Audit Logging Framework:
+  # https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/security_and_compliance/security-profiles-operator#spo-audit-logging_spo-advanced
+  enableJsonEnricher: true
+  jsonEnricherOptions:
+    # Specifies the interval, in seconds, at which the accumulated audit log
+    # data is output in JSON format. For each process, syscalls occurring
+    # within this interval are grouped together. The default is 60 seconds.
+    # Increasing this interval will reduce the rate at which logs are written.
+    auditLogIntervalSeconds: 60
+  # The Security Profiles Operator supports the default logging verbosity of 0
+  # and an enhanced verbosity of 1.
+  verbosity: 1

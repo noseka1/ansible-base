@@ -49,13 +49,11 @@
     kind: CephCluster
     name: mycluster
     namespace: rook-ceph
-  register: rook_ceph_cluster_result
-  until:
-    - rook_ceph_cluster_result.resources.0.status.conditions is defined
-    - rook_ceph_cluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
-    - (rook_ceph_cluster_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
-  retries: 60
-  delay: 10
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_sleep: 10
+    wait_timeout: 600
 
 - name: Deploy Rook Ceph filesystem
   kubernetes.core.k8s:

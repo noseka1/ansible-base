@@ -15,13 +15,11 @@
     kind: Kafka
     namespace: '{{ amqstreams_kafka_single_namespace }}'
     name: my-cluster
-  register: kafka_instance
-  until:
-    - kafka_instance.resources.0.status.conditions is defined
-    - kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | list | length > 0
-    - (kafka_instance.resources.0.status.conditions | selectattr('type', 'equalto', 'Ready') | first).status == "True"
-  retries: 60
-  delay: 10
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_sleep: 10
+    wait_timeout: 600
 
 - import_tasks: create_topics.yml
   vars:

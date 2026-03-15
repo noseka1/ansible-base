@@ -1,5 +1,5 @@
 - set_fact:
-    mcehostedcluster_info: '{{ mcehostedcluster_baremetal }}'
+    mcehostedcluster_info: '{{ mcehostedcluster_agent }}'
   tags: mcehostedcluster_instance
 
 # Detach the cluster from MCE before deleting the cluster
@@ -28,5 +28,5 @@
     name: openshift_multicluster_engine_infraenv
     tasks_from: delete.yml
   vars:
-    mceinfraenv_info: '{{ mcehostedcluster_baremetal }}'
+    mceinfraenv_info: '{{ mcehostedcluster_agent }}'
   tags: mcehostedcluster_infraenv

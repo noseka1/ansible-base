@@ -17,7 +17,7 @@ mcehostedcluster_kubevirt:
   # Allowed volume mode values are Filesystem or Block
   nodepool_rootvolume_volumemode: Filesystem
 
-mcehostedcluster_baremetal:
+mcehostedcluster_agent:
   cluster_name: mycluster21
   ocp_release_image: 4.21.3-x86_64
   control_plane_replicas: 1

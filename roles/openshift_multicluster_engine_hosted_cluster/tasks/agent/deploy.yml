@@ -2,11 +2,11 @@
     name: openshift_multicluster_engine_infraenv
     tasks_from: deploy.yml
   vars:
-    mceinfraenv_info: '{{ mcehostedcluster_baremetal }}'
+    mceinfraenv_info: '{{ mcehostedcluster_agent }}'
   tags: mcehostedcluster_infraenv
 
 - set_fact:
-    mcehostedcluster_info: '{{ mcehostedcluster_baremetal }}'
+    mcehostedcluster_info: '{{ mcehostedcluster_agent }}'
   tags: mcehostedcluster_instance
 
 - import_tasks: common/namespace_deploy.yml
@@ -16,7 +16,7 @@
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
-    autogitops_app_src_path: templates/baremetal/instance
+    autogitops_app_src_path: templates/agent/instance
     autogitops_app_dst_path: mce/hosted-cluster/{{ mcehostedcluster_info.cluster_name }}/instance
     autogitops_app_namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'
     autogitops_app_sync_retries: 600

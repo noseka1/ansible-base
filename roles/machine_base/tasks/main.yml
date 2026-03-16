@@ -22,7 +22,7 @@
 - ansible.builtin.import_tasks: generate_ssh_keys.yml
 
 - name: Set timezone to {{ machine_base_timezone }}
-  timezone:
+  community.general.timezone:
     name: '{{ machine_base_timezone }}'
   when: machine_base_timezone | length > 0
   become: true

@@ -9,7 +9,7 @@
     tasks_from: configure_common_users.yml
 
 - name: Set authorized key for users
-  authorized_key:
+  ansible.posix.authorized_key:
     user: '{{ item }}'
     key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
   loop:

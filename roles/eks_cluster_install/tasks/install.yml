@@ -3,7 +3,7 @@
     tasks_from: terraform_check.yml
 
 - name: Create cluster configuration directory {{ eks_cluster_install.config_dir }}
-  file:
+  ansible.builtin.file:
     path: '{{ eks_cluster_install.config_dir }}'
     state: directory
     mode: '0755'
@@ -34,8 +34,8 @@
 
 - ansible.builtin.set_fact:
     eks_cluster_install_terraform_ca_data: '{{ eks_cluster_install_terraform_result.outputs.cluster_certificate_authority_data.value }}'
-    eks_cluster_install_terraform_server_url:  '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value }}'
-    eks_cluster_install_terraform_server_hostname: '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value | regex_replace("https://(.*)", "\1")}}'
+    eks_cluster_install_terraform_server_url: '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value }}'
+    eks_cluster_install_terraform_server_hostname: '{{ eks_cluster_install_terraform_result.outputs.cluster_endpoint.value | regex_replace("https://(.*)", "\1") }}'
 
 - name: Create kubeconfig file {{ eks_cluster_install.config_dir }}/kubeconfig
   ansible.builtin.template:

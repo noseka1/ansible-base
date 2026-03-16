@@ -14,7 +14,7 @@
   become: true
 
 - name: Set the core file pattern
-  sysctl:
+  ansible.posix.sysctl:
     name: kernel.core_pattern
     value: '{{ machine_base_core_pattern }}'
     reload: true

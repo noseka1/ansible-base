@@ -1,5 +1,5 @@
 - name: Load required kernel modules
-  modprobe:
+  community.general.modprobe:
     name: '{{ item }}'
   loop:
     - br_netfilter
@@ -8,7 +8,7 @@
   become: true
 
 - name: Setup required sysctl params
-  sysctl:
+  ansible.posix.sysctl:
     name: '{{ item.key }}'
     value: '{{ item.value }}'
     reload: true
@@ -19,7 +19,7 @@
   become: true
 
 - name: Put SELinux in permissive mode
-  selinux:
+  ansible.posix.selinux:
     policy: targeted
     state: permissive
   become: true

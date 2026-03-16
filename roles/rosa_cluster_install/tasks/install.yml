@@ -7,7 +7,7 @@
     tasks_from: terraform_check.yml
 
 - name: Create cluster configuration directory {{ rosa_cluster_install.config_dir }}
-  file:
+  ansible.builtin.file:
     path: '{{ rosa_cluster_install.config_dir }}'
     state: directory
     mode: '0755'

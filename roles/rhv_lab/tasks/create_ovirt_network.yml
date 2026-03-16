@@ -1,13 +1,13 @@
 - block:
     - name: Log in to '{{ rhv_lab.ovirt_url }}'
-      ovirt_auth:
+      ovirt.ovirt.ovirt_auth:
         url: '{{ rhv_lab.ovirt_url }}'
         username: '{{ rhv_lab.ovirt_username }}'
         password: '{{ rhv_lab.ovirt_password }}'
         insecure: true
 
     - name: Create network
-      ovirt_network:
+      ovirt.ovirt.ovirt_network:
         auth: '{{ ovirt_auth }}'
         data_center: Default
         clusters:
@@ -17,7 +17,7 @@
         vm_network: true
 
     - name: Attach network to host
-      ovirt_host_network:
+      ovirt.ovirt.ovirt_host_network:
         auth: '{{ ovirt_auth }}'
         name: rhvh.lab.example.com
         interface: eth1
@@ -26,6 +26,6 @@
 
   always:
     - name: Always revoke the SSO token, log out from '{{ rhv_lab.ovirt_url }}'
-      ovirt_auth:
+      ovirt.ovirt.ovirt_auth:
         state: absent
         ovirt_auth: '{{ ovirt_auth }}'

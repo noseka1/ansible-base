@@ -3,8 +3,6 @@
 
 - ansible.builtin.import_tasks: rhacm_detect.yml
 
-- ansible.builtin.import_tasks: prereqs_deploy.yml
-
 - ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml

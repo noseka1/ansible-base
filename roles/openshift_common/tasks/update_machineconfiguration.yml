@@ -1,6 +1,7 @@
 - name: Retrieve update for MachineConfiguration files
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
   changed_when: false
@@ -9,6 +10,7 @@
 - name: Retrieve update for MachineConfiguration units
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
   changed_when: false
@@ -27,6 +29,7 @@
 - name: Retrieve current MachineConfiguration files
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
   changed_when: false
@@ -35,6 +38,7 @@
 - name: Retrieve current MachineConfiguration units
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
   changed_when: false
@@ -43,6 +47,7 @@
 - name: Merge MachineConfiguration files
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_orig_files.stdout }} {{ openshift_common_mc_update_files.stdout }}' |
         jq --slurp add |
         jq --compact-output 'to_entries|[.[].value]'
@@ -52,6 +57,7 @@
 - name: Merge MachineConfiguration units
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ openshift_common_mc_orig_units.stdout }} {{ openshift_common_mc_update_units.stdout }}' |
         jq --slurp add |
         jq --compact-output 'to_entries|[.[].value]'

@@ -55,6 +55,7 @@
 - name: Prepare targets list
   ansible.builtin.shell:
     cmd: |-
+      set -o pipefail &&
       echo '{{ efs_subnets_result.subnets | default([]) | to_json }}' |
       jq --compact-output '[.[]|{"subnet_id":.subnet_id,"security_groups":["{{ efs_security_group_result.group_id }}"]}]'
   changed_when: false

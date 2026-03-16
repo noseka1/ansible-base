@@ -1,5 +1,6 @@
 - ansible.builtin.set_fact:
-    mcehostedcluster_info: '{{ mcehostedcluster_kubevirt }}'
+    mcehostedcluster_info: '{{ mcehostedcluster_baremetal }}'
+  tags: mcehostedcluster_instance
 
 # Detach the cluster from MCE before deleting the cluster
 - ansible.builtin.import_role:
@@ -11,11 +12,21 @@
         kind: ManagedCluster
         name: '{{ mcehostedcluster_info.cluster_name }}'
     delete_kubernetes_objects_retries: 60
+  tags: mcehostedcluster_instance
 
 - ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: hosted-cluster/{{ mcehostedcluster_info.cluster_name }}-instance
+  tags: mcehostedcluster_instance
 
-- ansible.builtin.import_tasks: common/namespace_delete.yml
+- ansible.builtin.import_tasks: common_namespace_delete.yml
+  tags: mcehostedcluster_instance
+
+- ansible.builtin.import_role:
+    name: openshift_multicluster_engine_infraenv
+    tasks_from: infraenv_delete.yml
+  vars:
+    mceinfraenv_info: '{{ mcehostedcluster_baremetal }}'
+  tags: mcehostedcluster_infraenv

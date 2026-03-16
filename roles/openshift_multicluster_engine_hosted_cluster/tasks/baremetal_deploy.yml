@@ -9,7 +9,7 @@
     mcehostedcluster_info: '{{ mcehostedcluster_baremetal }}'
   tags: mcehostedcluster_instance
 
-- ansible.builtin.import_tasks: common/namespace_deploy.yml
+- ansible.builtin.import_tasks: common_namespace_deploy.yml
   tags: mcehostedcluster_instance
 
 - ansible.builtin.import_role:
@@ -22,5 +22,5 @@
     autogitops_app_sync_retries: 600
   tags: mcehostedcluster_instance
 
-- ansible.builtin.import_tasks: common/report_success.yml
+- ansible.builtin.import_tasks: common_report_success.yml
   tags: mcehostedcluster_instance

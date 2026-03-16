@@ -1,4 +1,4 @@
-- ansible.builtin.import_role: secured_cluster_common_delete.yml
+- ansible.builtin.import_tasks: secured_cluster_common_delete.yml
 
 - ansible.builtin.import_role:
     name: openshift_autogitops

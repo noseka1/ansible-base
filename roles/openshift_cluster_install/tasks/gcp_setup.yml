@@ -3,6 +3,7 @@
 - name: Enable GCP API services required for installing OpenShift
   google.cloud.gcp_serviceusage_service:
     name: '{{ item }}'
+    auth_kind: serviceaccount
     state: present
   loop:
     - compute.googleapis.com
@@ -15,6 +16,7 @@
 - name: Enable GCP API services that are optional for installing OpenShift
   google.cloud.gcp_serviceusage_service:
     name: '{{ item }}'
+    auth_kind: serviceaccount
     state: present
   loop:
     - cloudapis.googleapis.com

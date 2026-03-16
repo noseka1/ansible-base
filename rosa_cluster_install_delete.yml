@@ -1,6 +1,0 @@
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - ansible.builtin.import_role:
-        name: rosa_cluster_install
-        tasks_from: delete.yml

@@ -36,7 +36,7 @@
   when: deploy_kind_result is changed
 
 - name: Retrieve cluster info
-  ansible.builtin.shell: kubectl cluster-info --context kind-kind | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
+  ansible.builtin.shell: set -o pipefail && kubectl cluster-info --context kind-kind | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
   register: cluster_info_result
   become: true
 

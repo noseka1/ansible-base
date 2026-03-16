@@ -14,7 +14,7 @@
   when:
     - mcemanagedcluster_control_plane_agents | int == 1
     - mcemanagedcluster_worker_agents | int == 0
-    - mcemanagedcluster_info.user_managed_networking == false
+    - not mcemanagedcluster_info.user_managed_networking | bool
 
 - ansible.builtin.import_role:
     name: openshift_multicluster_engine_infraenv

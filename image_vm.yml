@@ -7,7 +7,7 @@
         hostname: '{{ chroot_location }}'
         ansible_host: '{{ chroot_location }}'
 
-- hosts: '{{ chroot_location }}'
+- hosts: '{{ chroot_location }}' # noqa syntax-check[specific]
   connection: chroot
   roles:
     - image_vm

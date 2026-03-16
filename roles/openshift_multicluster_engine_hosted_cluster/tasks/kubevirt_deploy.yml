@@ -6,7 +6,7 @@
     template:
       - kubevirt/prereqs/ingresscontroller.yaml
 
-- ansible.builtin.import_tasks: common/namespace_deploy.yml
+- ansible.builtin.import_tasks: common_namespace_deploy.yml
 
 - ansible.builtin.import_role:
     name: openshift_autogitops
@@ -17,4 +17,4 @@
     autogitops_app_namespace: '{{ mcehostedcluster_info.cluster_name }}-hosted'
     autogitops_app_sync_retries: 600
 
-- ansible.builtin.import_tasks: common/report_success.yml
+- ansible.builtin.import_tasks: common_report_success.yml

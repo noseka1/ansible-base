@@ -1,10 +1,11 @@
 - name: Retrieve rbd pool {{ cephlab_rbd_pool_name }}
-  ansible.builtin.command: >-
-    ceph osd pool stats {{ cephlab_rbd_pool_name }}
-  changed_when: false
-  ignore_errors: true
-  register: cephlab_rbd_stats
-  become: true
+  block:
+    - name: Attempt to retrieve rbd pool stats
+      ansible.builtin.command: >-
+        ceph osd pool stats {{ cephlab_rbd_pool_name }}
+      changed_when: false
+      become: true
 
-- ansible.builtin.import_tasks: rbd_create_subtasks.yml
-  when: cephlab_rbd_stats is failed
+  rescue:
+    - name: Create rbd volume if doesn't exist
+      ansible.builtin.import_tasks: rbd_create_subtasks.yml

@@ -1,13 +1,14 @@
 - name: Retrieve zone {{ cephlab_rgw_store_zone }}
-  ansible.builtin.command: >-
-    radosgw-admin zone get --rgw-zone {{ cephlab_rgw_store_zone }}
-  changed_when: false
-  ignore_errors: true
-  register: cephlab_rgw_zone_result
-  become: true
+  block:
+    - name: Attempt to retrieve zone info
+      ansible.builtin.command: >-
+        radosgw-admin zone get --rgw-zone {{ cephlab_rgw_store_zone }}
+      changed_when: false
+      become: true
 
-- ansible.builtin.import_tasks: rgw_deploy_subtasks.yml
-  when: cephlab_rgw_zone_result is failed
+  rescue:
+    - name: Deploy zone if doesn't exist
+      ansible.builtin.import_tasks: rgw_deploy_subtasks.yml
 
 - name: Create rgw spec file
   ansible.builtin.template:

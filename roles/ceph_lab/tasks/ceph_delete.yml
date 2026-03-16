@@ -1,31 +1,38 @@
-- name: Delete Ceph cluster
-  ansible.builtin.command: |
-    ceph fsid
-  ignore_errors: true
-  register: cephlab_cluster_fsid
-  delegate_to: '{{ groups.ceph_lab.0 }}'
-  run_once: true
-  become: true
+- name: Get cluster FSID
+  block:
+    - name: Attempt to get cluster FSID
+      ansible.builtin.command: |
+        ceph fsid
+      register: cephlab_cluster_fsid
+      delegate_to: '{{ groups.ceph_lab.0 }}'
+      run_once: true
+      become: true
 
-- name: Disable cephadm operations
-  ansible.builtin.command: |
-    cephadm shell \
-      --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
-      -- \
-      ceph mgr module disable cephadm
-  delegate_to: '{{ groups.ceph_lab.0 }}'
-  run_once: true
-  when: cephlab_cluster_fsid is succeeded
-  become: true
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "There was an error getting FSID, please check. Continuing with automation..."
+      changed_when: true
 
 - name: Delete Ceph cluster
-  ansible.builtin.command: |
-    cephadm rm-cluster \
-      --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
-      --zap-osds \
-      --force
   when: cephlab_cluster_fsid is succeeded
   become: true
+  block:
+    - name: Disable cephadm operations
+      ansible.builtin.command: |
+        cephadm shell \
+          --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
+          -- \
+          ceph mgr module disable cephadm
+      delegate_to: '{{ groups.ceph_lab.0 }}'
+      run_once: true
+
+    - name: Delete Ceph cluster
+      ansible.builtin.command: |
+        cephadm rm-cluster \
+          --fsid {{ cephlab_cluster_fsid.stdout_lines[0] }} \
+          --zap-osds \
+          --force
 
 - name: Delete cluster configuration files
   ansible.builtin.file:

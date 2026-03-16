@@ -7,11 +7,18 @@
   when: (stable_cluster_retry_count | int ) > stable_cluster_retries
 
 - name: Retrieve cluster status
-  kubernetes.core.k8s_info:
-    api_version: config.openshift.io/v1
-    kind: ClusterOperator
-  ignore_errors: true
-  register: clusteroperator_result
+  block:
+    - name: Attempt to retrieve cluster status
+      kubernetes.core.k8s_info:
+        api_version: config.openshift.io/v1
+        kind: ClusterOperator
+      register: clusteroperator_result
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "There was an error retrieving cluster status, please check. Continuing with automation..."
+      changed_when: true
 
 - name: Create unavailable, progressing, and degraded operator groups
   ansible.builtin.set_fact:

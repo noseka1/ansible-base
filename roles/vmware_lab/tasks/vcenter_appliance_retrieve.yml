@@ -1,11 +1,18 @@
 - name: Retrieve vCenter virtual machine
-  community.vmware.vmware_guest_info:
-    hostname: '{{ esxi_hostname }}'
-    username: '{{ esxi_username }}'
-    password: '{{ esxi_password }}'
-    name: '{{ vmware_lab.vcenter_vm.name }}'
-    datacenter: ha-datacenter
-    validate_certs: false
-  delegate_to: localhost
-  ignore_errors: true
-  register: vcenter_vm
+  block:
+    - name: Attempt to retrieve VM info
+      community.vmware.vmware_guest_info:
+        hostname: '{{ esxi_hostname }}'
+        username: '{{ esxi_username }}'
+        password: '{{ esxi_password }}'
+        name: '{{ vmware_lab.vcenter_vm.name }}'
+        datacenter: ha-datacenter
+        validate_certs: false
+      delegate_to: localhost
+      register: vcenter_vm
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "There was an error executing the previous task, please check. Continuing with automation..."
+      changed_when: true

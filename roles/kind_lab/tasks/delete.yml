@@ -1,15 +1,21 @@
 - name: Check if kind cluster has already been deployed
-  ansible.builtin.command: kubectl cluster-info --context kind-kind
-  ignore_errors: true
-  register: cluster_info_result
-  become: true
+  block:
+    - name: Attempt to get cluster info
+      ansible.builtin.command: kubectl cluster-info --context kind-kind
+      register: cluster_info_result
+      become: true
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "Likely cluster hasn't been deployed yet. Continuing with automation..."
+      changed_when: true
 
 - name: Delete kind cluster
   ansible.builtin.command: /usr/local/bin/kind delete cluster
   environment:
     KIND_EXPERIMENTAL_PROVIDER: podman
   register: delete_kind_result
-  when: cluster_info_result is success
   become: true
 
 - ansible.builtin.debug:

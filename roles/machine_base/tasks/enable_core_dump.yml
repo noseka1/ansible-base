@@ -14,19 +14,33 @@
   become: true
 
 - name: Set the core file pattern
-  ansible.posix.sysctl:
-    name: kernel.core_pattern
-    value: '{{ machine_base_core_pattern }}'
-    reload: true
-  ignore_errors: true
-  become: true
+  block:
+    - name: Attempt to set core file pattern
+      ansible.posix.sysctl:
+        name: kernel.core_pattern
+        value: '{{ machine_base_core_pattern }}'
+        reload: true
+      become: true
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "Unable to set core file pattern, please check. Continuing with automation..."
+      changed_when: true
 
 - name: Enable core file generation
-  ansible.builtin.lineinfile:
-    dest: /etc/security/limits.conf
-    regexp: " soft core unlimited"
-    line: "* soft core unlimited"
-    insertafter: EOF
-    state: present
-  ignore_errors: true
-  become: true
+  block:
+    - name: Attempt to enable core file generation
+      ansible.builtin.lineinfile:
+        dest: /etc/security/limits.conf
+        regexp: " soft core unlimited"
+        line: "* soft core unlimited"
+        insertafter: EOF
+        state: present
+      become: true
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "Unable to enable core file generation, please check. Continuing with automation..."
+      changed_when: true

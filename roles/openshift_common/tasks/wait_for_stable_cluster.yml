@@ -1,9 +1,16 @@
 - name: Retrieve the MachineConfigPools
-  kubernetes.core.k8s_info:
-    api_version: machineconfiguration.openshift.io/v1
-    kind: MachineConfigPool
-  ignore_errors: true
-  register: oscommon_mcp_result
+  block:
+    - name: Attempt to retrieve the MachineConfigPools
+      kubernetes.core.k8s_info:
+        api_version: machineconfiguration.openshift.io/v1
+        kind: MachineConfigPool
+      register: oscommon_mcp_result
+
+  rescue:
+    - name: Handle failure
+      ansible.builtin.debug:
+        msg: "Unable to retrieve the MachineConfigPools, please check. Continuing with automation..."
+      changed_when: true
 
 - ansible.builtin.set_fact:
     oscommon_mcp_max_pool_size: >-
@@ -21,7 +28,6 @@
   kubernetes.core.k8s_info:
     api_version: machineconfiguration.openshift.io/v1
     kind: MachineConfigPool
-  ignore_errors: true
   register: oscommon_mcp_result
   until:
     - oscommon_mcp_result.resources | default([]) | length >= oscommon_mcp_pool_count | int

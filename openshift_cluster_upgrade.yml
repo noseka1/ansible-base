@@ -1,5 +1,8 @@
-- hosts: all
+- name: Upgrade Openshift cluster
+  hosts: all
   gather_facts: false
+
   tasks:
-    - ansible.builtin.import_role:
+    - name: Start cluster upgrade
+      ansible.builtin.import_role:
         name: openshift_cluster_upgrade

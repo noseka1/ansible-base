@@ -8,15 +8,15 @@
       spec:
         channel: '{{ item.channel }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} target version to become available
+- name: Waiting for the target version to become available since {{ lookup("pipe", "date +%r") }}
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.availableUpdates is defined
-    - ocu_clusterversion_result.resources.0.status.availableUpdates | selectattr('version', 'equalto', item.version) | list | length > 0
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.availableUpdates is defined
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.availableUpdates | selectattr('version', 'equalto', item.version) | list | length > 0
   retries: 60
   delay: 10
 
@@ -31,35 +31,36 @@
         desiredUpdate:
           version: '{{ item.version }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to start
+- name: Waiting for the upgrade to start since {{ lookup("pipe", "date +%r") }}
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.conditions is defined
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions is defined
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"
   retries: 300
   delay: 1
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to version {{ item.version }} to complete
+- name: Waiting for the upgrade to complete since {{ lookup("pipe", "date +%r") }}
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
-  register: ocu_clusterversion_result
+  register: openshift_cluster_upgrade_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.conditions is defined
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions is defined
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
+    - (openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
+    - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
+    - (openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
   retries: 360
   delay: 20
 
-- ansible.builtin.import_role:
+- name: Wait for stable cluster
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:

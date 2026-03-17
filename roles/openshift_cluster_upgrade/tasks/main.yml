@@ -1,6 +1,8 @@
-- ansible.builtin.import_tasks: compute_target_version.yml
+- name: Get target version
+  ansible.builtin.import_tasks: compute_target_version.yml
 
-- ansible.builtin.import_role:
+- name: Wait for stable cluster
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
@@ -12,22 +14,24 @@
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
-  register: ocu_clusterversion_result
+  register: openshift_cluster_upgrade_clusterversion_result
 
-- ansible.builtin.debug:
-    msg: Current cluster version is {{ ocu_clusterversion_result.resources.0.status.desired.version }}
+- name: Show cluster current version
+  ansible.builtin.debug:
+    msg: Current cluster version is {{ openshift_cluster_upgrade_clusterversion_result.resources.0.status.desired.version }}
 
-- name: Compute upgrade path {{ ocu_clusterversion_result.resources.0.status.desired.version }} -> {{ ocu_target_version_resolved }}
+- name: Compute upgrade path to {{ openshift_cluster_upgrade_target_version_resolved }}
   ansible.builtin.script: |-
     files/openshift_upgrade_path.py \
-      {{ ocu_clusterversion_result.resources.0.status.desired.version }} \
-      {{ ocu_target_channel }} \
-      {{ ocu_target_version_resolved }}
+      {{ openshift_cluster_upgrade_clusterversion_result.resources.0.status.desired.version }} \
+      {{ openshift_cluster_upgrade_target_channel }} \
+      {{ openshift_cluster_upgrade_target_version_resolved }}
   changed_when: false
-  register: ocu_upgrade_path
+  register: openshift_cluster_upgrade_path
 
-- ansible.builtin.debug:
-    var: ocu_upgrade_path.stdout | from_json
+- name: Show upgrade path
+  ansible.builtin.debug:
+    var: openshift_cluster_upgrade_path.stdout | from_json
 
 - name: Provide administrator acknowledgment to upgrade
   kubernetes.core.k8s:
@@ -35,15 +39,15 @@
 
 - name: Perform OpenShift cluster upgrade(s)
   ansible.builtin.include_tasks: upgrade.yml
-  loop: '{{ ocu_upgrade_path.stdout | from_json }}'
+  loop: '{{ openshift_cluster_upgrade_path.stdout | from_json }}'
 
 - name: Retrieve the upgrade history
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
-  register: ocu_clusterversion_result
+  register: openshift_cluster_upgrade_clusterversion_result
 
 - name: Show upgrade history
   ansible.builtin.debug:
-    var: ocu_clusterversion_result.resources.0.status.history
+    var: openshift_cluster_upgrade_clusterversion_result.resources.0.status.history

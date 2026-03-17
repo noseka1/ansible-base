@@ -1,0 +1,16 @@
+---
+exclude_paths:
+  - "**/*.yaml"
+  - .ansible-lint
+  - .ansible/
+  - third_party/
+
+skip_list:
+  - yaml[commas]
+  - name[missing]
+  - name[play]
+  - name[template]
+  - var-naming[no-role-prefix]
+  - yaml[line-length]
+  - no-changed-when
+  - no-handler

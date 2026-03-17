@@ -1,32 +1,31 @@
 - name: Make sure target channel is defined
   ansible.builtin.assert:
-    that:
-      - openshift_cluster_upgrade_target_channel | length > 0
+    that: openshift_cluster_upgrade_target_channel | default('') | length > 0
     fail_msg: 'Upgrade target channel is not defined. Example: stable-4.20'
     quiet: true
 
 - name: Make sure target version is defined
   ansible.builtin.assert:
-    that:
-      - openshift_cluster_upgrade_target_version | length > 0
+    that: openshift_cluster_upgrade_target_version | default('') | length > 0
     fail_msg: 'Upgrade target version is not defined. Examples: 4.20.0, latest'
     quiet: true
 
-- name: Retrieve latest version on channel {{ openshift_cluster_upgrade_target_channel }}
-  ansible.builtin.script: files/openshift_upgrade_path.py {{ openshift_cluster_upgrade_target_channel }}
-  changed_when: false
-  register: ocu_latest_version
+- name: Retrieve and set target version (for latest)
   when: openshift_cluster_upgrade_target_version == 'latest'
+  block:
+    - name: Retrieve latest version on channel {{ openshift_cluster_upgrade_target_channel }}
+      ansible.builtin.script: files/openshift_upgrade_path.py {{ openshift_cluster_upgrade_target_channel }}
+      changed_when: false
+      register: ocu_latest_version
 
-- name: Set target OpenShift version (resolved)
-  ansible.builtin.set_fact:
-    openshift_cluster_upgrade_target_version_resolved: '{{ ocu_latest_version.stdout_lines[0] }}'
-  when: openshift_cluster_upgrade_target_version == 'latest'
+    - name: Set target OpenShift version (resolved)
+      ansible.builtin.set_fact:
+        openshift_cluster_upgrade_target_version_resolved: '{{ ocu_latest_version.stdout_lines[0] }}'
 
 - name: Set target OpenShift version (direct)
+  when: openshift_cluster_upgrade_target_version != 'latest'
   ansible.builtin.set_fact:
     openshift_cluster_upgrade_target_version_resolved: '{{ openshift_cluster_upgrade_target_version }}'
-  when: openshift_cluster_upgrade_target_version != 'latest'
 
 - name: Show upgrade start message
   ansible.builtin.debug:

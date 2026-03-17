@@ -11,6 +11,7 @@
   ansible.builtin.template:
     src: '{{ item }}'
     dest: '{{ tmpdir.path }}'
+    mode: '0644'
   loop: '{{ kustomize_files }}'
 
 - name: Set state of kustomization {{ kustomize_name }} to {{ kustomize_op }}

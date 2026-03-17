@@ -8,6 +8,7 @@
   ansible.builtin.get_url:
     url: '{{ osclusterinstall_installer_url }}'
     dest: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_installer_url | basename }}'
+    mode: '0644'
   retries: 3
 
 - name: Extract openshift-install

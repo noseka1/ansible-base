@@ -2,6 +2,7 @@
   ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}'
     state: '{{ item }}'
+    mode: '0755'
   loop:
     - absent
     - directory
@@ -10,3 +11,4 @@
   ansible.builtin.copy:
     dest: '{{ autogitops_app_dst_dir }}/.gitkeep'
     content: ''
+    mode: '0644'

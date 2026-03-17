@@ -2,12 +2,14 @@
   ansible.builtin.file:
     path: '{{ outer_item.dir }}'
     state: directory
+    mode: '0755'
   become: true
 
 - name: Install leaf certificate
   ansible.builtin.copy:
     content: '{{ item.content }}'
     dest: '{{ outer_item.dir }}/{{ item.name }}'
+    mode: '0600'
   notify:
     - Restart microshift
   loop: '{{ outer_item.files }}'

@@ -17,6 +17,7 @@
   ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
     state: directory
+    mode: '0755'
   loop: >-
     {{ autogitops_app_src_items | selectattr('state', 'equalto', 'directory') }}
   loop_control:
@@ -26,6 +27,7 @@
   ansible.builtin.template:
     src: '{{ item.src }}'
     dest: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
+    mode: '0644'
   loop: >-
     {{ autogitops_app_src_items | selectattr('state', 'equalto', 'file') }}
   loop_control:

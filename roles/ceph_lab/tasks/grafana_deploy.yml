@@ -2,6 +2,7 @@
   ansible.builtin.copy:
     content: '{{ cephlab_ceph_grafana_crt }}'
     dest: '{{ cephlab_conf_dir }}/grafana.crt'
+    mode: '0644'
   register: cephlab_ceph_grafana_crt_result
   when: cephlab_ceph_grafana_crt | length > 0
 
@@ -30,6 +31,7 @@
     src: grafana-spec.yaml
     dest: '{{ cephlab_conf_dir }}/grafana-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_grafana_spec_result
 
 - name: Apply Grafana spec

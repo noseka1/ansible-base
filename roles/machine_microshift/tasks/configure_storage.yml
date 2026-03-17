@@ -11,6 +11,7 @@
   ansible.builtin.copy:
     src: create-odf-lvm.service
     dest: /etc/systemd/system
+    mode: '0644'
   notify:
     - Reload systemd
     - Restart create-odf-lvm

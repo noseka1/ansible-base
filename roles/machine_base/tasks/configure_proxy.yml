@@ -6,6 +6,7 @@
     value: '{{ machine_base_http_proxy[ansible_facts.domain].https_proxy }}'
     no_extra_spaces: true
     backup: true
+    mode: '0644'
   become: true
 
 - name: Install custom yum trusted CA certificate
@@ -13,6 +14,7 @@
     dest: /etc/rhsm/ca/redhat-uep-custom.pem
     content: '{{ machine_base_custom_yum_sslcacert[ansible_facts.domain] }}'
     backup: true
+    mode: '0600'
   when:
     - machine_base_custom_yum_sslcacert[ansible_facts.domain] is defined
   become: true
@@ -23,6 +25,7 @@
     section: rhsm
     option: repo_ca_cert
     value: '%(ca_cert_dir)sredhat-uep-custom.pem'
+    mode: '0644'
   when:
     - machine_base_custom_yum_sslcacert[ansible_facts.domain] is defined
   become: true

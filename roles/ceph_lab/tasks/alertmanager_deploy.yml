@@ -3,6 +3,7 @@
     src: alertmanager-spec.yaml
     dest: '{{ cephlab_conf_dir }}/alertmanager-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_alertmanager_spec_result
 
 - name: Apply Alertmanager spec
@@ -15,6 +16,7 @@
   ansible.builtin.template:
     src: alertmanager.yml
     dest: '{{ cephlab_conf_dir }}/alertmanager.yml'
+    mode: '0644'
   register: cephlab_alertmanager_result
   when: cephlab_send_alerts_to_slack_url | length > 0
 

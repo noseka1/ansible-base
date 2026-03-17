@@ -41,3 +41,4 @@
   ansible.builtin.template:
     src: kubeconfig
     dest: '{{ eks_cluster_install.config_dir }}/kubeconfig'
+    mode: '0600'

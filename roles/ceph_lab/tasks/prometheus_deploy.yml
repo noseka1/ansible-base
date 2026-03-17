@@ -3,6 +3,7 @@
     src: prometheus-spec.yaml
     dest: '{{ cephlab_conf_dir }}/prometheus-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_prometheus_spec_result
 
 - name: Apply Prometheus spec

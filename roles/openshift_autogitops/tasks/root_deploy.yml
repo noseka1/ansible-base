@@ -14,11 +14,13 @@
   ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}'
     state: directory
+    mode: '0755'
 
 - name: Create a .gitkeep file to allow checking the empty directory into git
   ansible.builtin.copy:
     dest: '{{ autogitops_app_dst_dir }}/.gitkeep'
     content: ''
+    mode: '0644'
 
 - ansible.builtin.import_tasks: local_repo_push.yml
 

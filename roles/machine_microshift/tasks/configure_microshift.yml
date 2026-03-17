@@ -2,6 +2,7 @@
   ansible.builtin.template:
     src: config.yaml
     dest: /etc/microshift/config.yaml
+    mode: '0644'
   notify:
     - Restart microshift
   become: true

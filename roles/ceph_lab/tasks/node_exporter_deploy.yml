@@ -3,6 +3,7 @@
     src: node-exporter-spec.yaml
     dest: '{{ cephlab_conf_dir }}/node-exporter-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_nodeexporter_spec_result
 
 - name: Apply node-exporter spec

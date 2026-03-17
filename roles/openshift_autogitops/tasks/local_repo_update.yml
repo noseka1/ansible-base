@@ -7,6 +7,7 @@
   ansible.builtin.file:
     path: '{{ item }}'
     state: directory
+    mode: '0755'
   loop:
     - '{{ autogitops_app_dst_dir }}'
     - '{{ autogitops_app_cfg_dir }}'
@@ -15,6 +16,7 @@
   ansible.builtin.template:
     src: application.yaml
     dest: '{{ autogitops_app_cfg_dir }}/application.yaml'
+    mode: '0644'
 
 - name: Check if Chart.yaml file exists
   ansible.builtin.stat:

@@ -15,6 +15,7 @@
     src: rgw-spec.yaml
     dest: '{{ cephlab_conf_dir }}/rgw-{{ cephlab_rgw_store_zone }}-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_rgw_spec_result
 
 - name: Apply rgw spec

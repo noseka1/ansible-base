@@ -2,11 +2,13 @@
   ansible.builtin.copy:
     content: '{{ cephlab_external_cluster_script }}'
     dest: '{{ cephlab_conf_dir }}/ceph-external-cluster-details-exporter.py'
+    mode: '0755'
 
 - name: Upload RGW CA certificate
   ansible.builtin.copy:
     content: '{{ cephlab_ceph_rgw_ca_crt }}'
     dest: '{{ cephlab_conf_dir }}/rgw-ca.crt'
+    mode: '0644'
 
 - name: Collect external cluster connection details
   ansible.builtin.command:

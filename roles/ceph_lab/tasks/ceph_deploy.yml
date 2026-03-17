@@ -2,6 +2,7 @@
   ansible.builtin.file:
     path: '{{ cephlab_conf_dir }}'
     state: directory
+    mode: '0755'
 
 - name: Create registry credentials file
   ansible.builtin.template:
@@ -13,6 +14,7 @@
   ansible.builtin.copy:
     content: '{{ cephlab_ceph_dashboard_crt }}'
     dest: '{{ cephlab_conf_dir }}/dashboard.crt'
+    mode: '0600'
   when: cephlab_ceph_dashboard_crt | length > 0
 
 - name: Create dashboard key file
@@ -50,6 +52,7 @@
     src: cluster-spec.yaml
     dest: '{{ cephlab_conf_dir }}/cluster-spec.yaml'
     backup: true
+    mode: '0644'
   register: cephlab_cluster_spec
 
 - name: Deploy complete Ceph cluster

@@ -2,6 +2,7 @@
   ansible.builtin.copy:
     content: '{{ machine_microshift_trusted_ca_bundle[ansible_facts.domain] }}'
     dest: /etc/pki/ca-trust/source/anchors/custom-ca-bundle.pem
+    mode: '0600'
   register:
     machine_microshift_trusted_ca_bundle_result
   notify:

@@ -9,6 +9,7 @@
   ansible.builtin.file:
     path: '{{ item }}'
     state: directory
+    mode: '0755'
   changed_when: false
   loop:
     - '{{ autogitops_app_tmpdir.path }}/source'
@@ -37,6 +38,7 @@
   ansible.builtin.template:
     src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/values.yaml'
     dest: '{{ autogitops_app_tmpdir.path }}/source/values.yaml'
+    mode: '0644'
   changed_when: false
   when: autogitops_app_values_stat_result.stat.exists
 
@@ -44,6 +46,7 @@
   ansible.builtin.template:
     src: '{{ ansible_parent_role_paths.0 }}/{{ autogitops_app_src_path }}/Chart.yaml'
     dest: '{{ autogitops_app_tmpdir.path }}/source/Chart.yaml'
+    mode: '0644'
   changed_when: false
 
 - name: Render manifests from Helm templates

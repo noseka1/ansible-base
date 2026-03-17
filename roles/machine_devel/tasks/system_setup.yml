@@ -5,6 +5,7 @@
   ansible.builtin.file:
     path: '{{ github_dir }}'
     state: directory
+    mode: '0755'
 
 - name: Git checkout toolbox-container
   ansible.builtin.git:

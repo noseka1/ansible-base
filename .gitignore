@@ -4,3 +4,4 @@
 /inventory/group_vars/kube_lab/kubeadm_token.yml
 /inventory/group_vars/kube_lab/kubeadm_ca_cert.yml
 /third_party/
+.ansible/

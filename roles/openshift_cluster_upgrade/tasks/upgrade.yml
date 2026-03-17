@@ -36,7 +36,7 @@
     api_version: config.openshift.io/v1
     kind: ClusterVersion
     name: version
-  register: ocu_clusterversion_result
+  register: openshift_cluster_upgrade_clusterversion_result
   until:
     - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions is defined
     - openshift_cluster_upgrade_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0

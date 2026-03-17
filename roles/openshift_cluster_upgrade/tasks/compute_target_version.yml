@@ -16,11 +16,11 @@
     - name: Retrieve latest version on channel {{ openshift_cluster_upgrade_target_channel }}
       ansible.builtin.script: files/openshift_upgrade_path.py {{ openshift_cluster_upgrade_target_channel }}
       changed_when: false
-      register: ocu_latest_version
+      register: openshift_cluster_upgrade_latest_version
 
     - name: Set target OpenShift version (resolved)
       ansible.builtin.set_fact:
-        openshift_cluster_upgrade_target_version_resolved: '{{ ocu_latest_version.stdout_lines[0] }}'
+        openshift_cluster_upgrade_target_version_resolved: '{{ openshift_cluster_upgrade_latest_version.stdout_lines[0] }}'
 
 - name: Set target OpenShift version (direct)
   when: openshift_cluster_upgrade_target_version != 'latest'

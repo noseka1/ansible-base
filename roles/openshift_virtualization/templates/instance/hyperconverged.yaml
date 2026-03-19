@@ -33,6 +33,10 @@ spec:
     # inside the virt-handler pod.
     # Enabling (or removing) the feature gate causes the redeployment of the virt-handler pod.
     persistentReservation: true
+  # FilesystemOverhead describes the space reserved for overhead when using Filesystem volumes.
+  # The default value is 0.06 (= 6%).
+  #filesystemOverhead:
+  #  global: '0.06'
   infra: {}
   liveMigrationConfig:
     # Use post copy mode when memory dirty rates are high to ensure the migration converges.

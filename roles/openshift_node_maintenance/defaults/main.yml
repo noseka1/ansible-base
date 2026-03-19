@@ -1,5 +1,2 @@
 nodemaintenance_operator_subscription_channel: ''
 nodemaintenance_operator_subscription_starting_csv: ''
-nodemaintenance_operator_subscription_name: node-maintenance-operator
-
-nodemaintenance_operator_namespace: openshift-operators

@@ -1,7 +1,9 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: {{ gitops_operator_name }}
+  # The subscription must be named openshift-gitops-operator or RHACM won't be
+  # able to detect that OpenShift GitOps operator is installed on the cluster
+  name: openshift-gitops-operator
   namespace: {{ gitops_operator_namespace }}
 spec:
   channel: {{ gitops_operator_subscription_channel | default('""', true) }}

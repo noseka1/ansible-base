@@ -2,8 +2,8 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ nodemaintenance_operator_subscription_name }}'
-    oscomm_subscription_namespace: '{{ nodemaintenance_operator_namespace }}'
+    oscomm_subscription_name: node-maintenance-operator
+    oscomm_subscription_namespace: openshift-operators
 
 - import_role:
     name: openshift_autogitops
@@ -11,4 +11,4 @@
   vars:
     autogitops_app_src_path: templates/operator
     autogitops_app_dst_path: node-maintenance/operator
-    autogitops_app_namespace: '{{ nodemaintenance_operator_namespace }}'
+    autogitops_app_namespace: openshift-operators

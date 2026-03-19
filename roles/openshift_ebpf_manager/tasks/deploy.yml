@@ -2,7 +2,7 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: bpfman
+    oscomm_subscription_name: bpfman-operator
     oscomm_subscription_namespace: bpfman
 
 - import_role:

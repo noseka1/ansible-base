@@ -2,7 +2,7 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ oadp_operator_name }}'
+    oscomm_subscription_name: redhat-oadp-operator
     oscomm_subscription_namespace: '{{ oadp_operator_namespace }}'
 
 - import_role:

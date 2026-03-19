@@ -2,7 +2,7 @@
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
-    oscomm_subscription_name: '{{ smbcsi_operator_subscription_name }}'
+    oscomm_subscription_name: smb-csi-driver-operator
     oscomm_subscription_namespace: '{{ smbcsi_operator_namespace }}'
 
 - import_role:

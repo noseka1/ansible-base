@@ -2,9 +2,6 @@ gitops_operator_subscription_channel: ''
 gitops_operator_subscription_starting_csv: ''
 
 gitops_operator_namespace: openshift-gitops-operator
-# The subscription must be named openshift-gitops-operator or RHACM won't be
-# able to detect that OpenShift GitOps operator is installed on the cluster
-gitops_operator_name: openshift-gitops-operator
 
 # Should the Argo CD components be installed on infra nodes?
 gitops_place_on_infra_nodes: false

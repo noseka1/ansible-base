@@ -13,6 +13,13 @@
     autogitops_app_dst_path: fence-agents-remediation/operator
     autogitops_app_namespace: openshift-workload-availability
 
+- import_role:
+    name: openshift_common
+    tasks_from: wait_for_deployment.yml
+  vars:
+    wait_for_deployment_name: fence-agents-remediation-controller-manager
+    wait_for_deployment_namespace: openshift-workload-availability
+
 - include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml

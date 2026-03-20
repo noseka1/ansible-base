@@ -48,7 +48,9 @@ spec:
           # console logs available in the output of the side-car container, issue the command:
           # oc logs -f -c guest-console-log virt-launcher-example-t9th7
           logSerialConsole: true
-          # CPU hotplug doesn't work with multiqueue virtio-net at this time
+          # CPU hotplug doesn't work with multiqueue virtio-net at this time.
+          # Note that there is one queue provisioned per vCPU. The VM must be provisioned with multiple vCPUs
+          # to benefit from multiqueue network I/O.
           networkInterfaceMultiqueue: false
           rng: {}
           # The Microsoft Windows 11 installer requires the presence of a TPM device, even though it doesn't

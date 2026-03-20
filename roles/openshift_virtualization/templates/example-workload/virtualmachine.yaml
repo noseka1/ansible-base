@@ -24,6 +24,13 @@ spec:
           sockets: 1
           threads: 1
         devices:
+{% if osvirt_machine_multithreaded_diskio %}
+          # This allows the host-level IOthreads to be automatically mapped to multiple queues inside the
+          # guest, so work is properly spread among vcpus as well. Queues are automatically set to the
+          # total number of vcpus.
+          # The VM must be provisioned with multiple vCPUs to benefit from multiple I/O queues.
+          blockMultiQueue: true
+{% endif %}
           disks:
           - disk:
               bus: virtio
@@ -60,6 +67,22 @@ spec:
           # See also https://kubevirt.io/user-guide/compute/persistent_tpm_and_uefi_state/
           tpm:
             persistent: false
+{% if osvirt_machine_multithreaded_diskio %}
+        # Allow VM disk I/O to be spread among multiple submission threads, which are also mapped to multiple
+        # disk queues inside the VM. Allow VMs with many vcpus performing I/O to more efficiently utilize host
+        # resources instead of bottlenecking behind a single submission thread.
+        # SupplementalPool IOthreads are automatically shared across all VM disks, configure enough threads to
+        # handle multiple disks if all are very active.
+        # The requested supplementalPoolThreadCount value will be added to the total vcpu value, this
+        # increases how many cpu requests are automatically configured for the VM (a virt-launcher pod).
+        #
+        # See also:
+        # Feature Introduction: Multiple IOthreads for OpenShift Virtualization
+        # https://developers.redhat.com/blog/2025/06/23/feature-introduction-multiple-iothreads-openshift-virtualization#
+        ioThreadsPolicy: supplementalPool
+        ioThreads:
+          supplementalPoolThreadCount: 4
+{% endif %}
         memory:
           guest: 2Gi
       evictionStrategy: {{ osvirt_machine_eviction_strategy }}

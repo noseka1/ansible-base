@@ -18,6 +18,7 @@ osvirt_machine_name: example
 osvirt_machine_ssh_authorized_key: ''
 osvirt_machine_eviction_strategy: 'None'
 osvirt_machine_node_selector: {}
+osvirt_machine_multithreaded_diskio: false
 #  node-role.kubernetes.io/baremetal: ""
 osvirt_machine_tolerations:
   - effect: NoSchedule

@@ -21,16 +21,16 @@
     - osclusterinstall_info.version != 'latest'
     - not osclusterinstall_complete.stat.exists
 
-- import_tasks: cluster_version.yml
+- import_tasks: common/cluster_version.yml
   when:
     - osclusterinstall_info.version == 'latest'
     - not osclusterinstall_complete.stat.exists
 
-- import_tasks: cluster_installer.yml
+- import_tasks: common/cluster_installer.yml
   when:
     - not osclusterinstall_complete.stat.exists
 
-- import_tasks: cluster_install.yml
+- import_tasks: common/cluster_install.yml
   when:
     - not osclusterinstall_complete.stat.exists
 
@@ -42,7 +42,7 @@
   when:
     - not osclusterinstall_complete.stat.exists
 
-- import_tasks: report_success.yml
+- import_tasks: common/report_success.yml
 
 - import_role:
     name: openshift_cluster_postinstall

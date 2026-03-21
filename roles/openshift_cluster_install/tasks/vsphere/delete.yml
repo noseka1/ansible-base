@@ -1,5 +1,4 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_vsphere }}'
-    osclusterinstall_platform: VSPHERE
 
-- import_tasks: common_deploy.yml
+- import_tasks: common/delete.yml

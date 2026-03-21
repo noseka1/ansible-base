@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_cluster_install
-        tasks_from: gcp_delete.yml
+        tasks_from: gcp/delete.yml

@@ -2,13 +2,13 @@
     osclusterinstall_info: '{{ osclusterinstall_gcp }}'
     osclusterinstall_platform: GCP
 
-- import_tasks: gcp_setup.yml
+- import_tasks: gcp/setup.yml
   environment:
     GCP_AUTH_KIND: serviceaccount
     GCP_SERVICE_ACCOUNT_FILE: '{{ osclusterinstall_gcp.gcp_service_account_file }}'
     GCP_PROJECT: '{{ osclusterinstall_gcp.gcp_projectid }}'
 
-- import_tasks: common_deploy.yml
+- import_tasks: common/deploy.yml
   environment:
     GCP_AUTH_KIND: serviceaccount
     GCP_SERVICE_ACCOUNT_FILE: '{{ osclusterinstall_gcp.gcp_service_account_file }}'

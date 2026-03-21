@@ -1,7 +1,7 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_gcp }}'
 
-- import_tasks: common_delete.yml
+- import_tasks: common/delete.yml
   environment:
     GCP_AUTH_KIND: serviceaccount
     GCP_SERVICE_ACCOUNT_FILE: '{{ osclusterinstall_gcp.gcp_service_account_file }}'

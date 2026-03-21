@@ -3,4 +3,4 @@
   tasks:
     - import_role:
         name: openshift_cluster_install
-        tasks_from: aws_deploy.yml
+        tasks_from: aws/deploy.yml

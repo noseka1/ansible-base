@@ -24,9 +24,6 @@ platform:
   none: {}
 {% else %}
   baremetal:
-{% if osclusterinstall_info.ntp_sources | default([]) %}
-    additionalNTPSources: {{ osclusterinstall_info.ntp_sources | to_nice_json(indent=2,sort_keys=false) | indent(6) }}
-{% endif %}
     apiVIP: {{ osclusterinstall_info.api_vip }}
     ingressVIP: {{ osclusterinstall_info.ingress_vip }}
     loadBalancer:

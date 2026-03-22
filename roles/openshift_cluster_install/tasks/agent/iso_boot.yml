@@ -58,18 +58,29 @@
   loop_control:
     label: '{{ item.key }}'
 
-- name: Set one-time boot from CD-ROM (Sushy sets boot order permanently)
-  community.general.redfish_command:
-    category: Systems
-    command: SetOneTimeBoot
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
-    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
-    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-    resource_id: '{{ item.value.bmc.resource_id }}'
-    bootdevice: Cd
-  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
-  loop_control:
-    label: '{{ item.key }}'
+#  Sushy BMC emulator can't set the one-time boot order. Instead, it sets the
+#  boot order permanently. When using Sushy, assume the machine boot order is:
+#  1. Disk
+#  2. CD-ROM
+#  and the disk was erased prior to the OpenShift installation. This ensures
+#  that the first boot happens from the CD-ROM (as the disk has no operating
+#  system on it) and all the following boots use the disk.
+#
+#  If not using Sushy, uncomment the following code to set the one-time boot
+#  from CD-ROM:
+#
+#- name: Set one-time boot from CD-ROM
+#  community.general.redfish_command:
+#    category: Systems
+#    command: SetOneTimeBoot
+#    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+#    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+#    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+#    resource_id: '{{ item.value.bmc.resource_id }}'
+#    bootdevice: Cd
+#  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+#  loop_control:
+#    label: '{{ item.key }}'
 
 - name: Power on
   community.general.redfish_command:
@@ -79,19 +90,6 @@
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
-  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
-  loop_control:
-    label: '{{ item.key }}'
-
-- name: Set one-time boot from HDD (Revert permanent boot order set by Sushy)
-  community.general.redfish_command:
-    category: Systems
-    command: SetOneTimeBoot
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
-    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
-    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-    resource_id: '{{ item.value.bmc.resource_id }}'
-    bootdevice: Hdd
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
   loop_control:
     label: '{{ item.key }}'

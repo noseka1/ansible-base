@@ -17,13 +17,15 @@
     baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-  register: osclusterinstall_virtul_media_result
+  register: osclusterinstall_virtual_media_result
 
 - name: Collect machine resource ids
   set_fact:
     osclusterinstall_resource_ids: >-
       {{ osclusterinstall_info.cluster_nodes_individual | dict2items | map(attribute="value.bmc.resource_id") }}'
 
+# If using Sushy BMC emulator, ejecting the virtual media detaches the CD-ROM
+# drive from the virtual machine which removes the CD-ROM from the boot order.
 - name: Eject virtual media
   community.general.redfish_command:
     category: Systems
@@ -37,7 +39,7 @@
   when:
     - item.0.resource_uri.split('/')[-1] in osclusterinstall_resource_ids
     - item.1 | json_query("[?Id==`Cd`].Image | [0]") | length > 0
-  loop: '{{ osclusterinstall_virtul_media_result.redfish_facts.virtual_media.entries }}'
+  loop: '{{ osclusterinstall_virtual_media_result.redfish_facts.virtual_media.entries }}'
   loop_control:
     label: '{{ item.0.resource_uri }}'
 
@@ -58,29 +60,45 @@
   loop_control:
     label: '{{ item.key }}'
 
-#  Sushy BMC emulator can't set the one-time boot order. Instead, it sets the
-#  boot order permanently. When using Sushy, assume the machine boot order is:
+# If using Sushy BMC emulator, inserting the virtual media attaches the CD-ROM
+# drive to the virtual machine and marks it as the first drive to boot from.
+- name: Set one-time boot from CD-ROM
+  community.general.redfish_command:
+    category: Systems
+    command: SetOneTimeBoot
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+    bootdevice: Cd
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+#  If using Sushy BMC emulator, use the following task to set the boot order:
 #  1. Disk
 #  2. CD-ROM
-#  and the disk was erased prior to the OpenShift installation. This ensures
-#  that the first boot happens from the CD-ROM (as the disk has no operating
-#  system on it) and all the following boots use the disk.
 #
-#  If not using Sushy, uncomment the following code to set the one-time boot
+#  Sushy BMC emulator can't set the one-time boot order. Instead, it sets the
+#  boot order permanently. When using Sushy, set the boot order 1. Disk,
+#  2. CD-ROM, and erase the disk prior to the OpenShift installation. This
+#  ensures that the first boot happens from the CD-ROM (as the disk has no
+#  operating system on it) and all the following boots use the disk.
+#
+#  If not using Sushy, comment out the following code to keep the one-time boot
 #  from CD-ROM:
-#
-#- name: Set one-time boot from CD-ROM
-#  community.general.redfish_command:
-#    category: Systems
-#    command: SetOneTimeBoot
-#    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
-#    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
-#    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-#    resource_id: '{{ item.value.bmc.resource_id }}'
-#    bootdevice: Cd
-#  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
-#  loop_control:
-#    label: '{{ item.key }}'
+- name: Set one-time boot from disk
+  community.general.redfish_command:
+    category: Systems
+    command: SetOneTimeBoot
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+    bootdevice: Hdd
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
 
 - name: Power on
   community.general.redfish_command:

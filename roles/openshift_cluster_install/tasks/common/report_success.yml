@@ -3,7 +3,19 @@
     msg: |
       OpenShift installation complete.
 
-      You can check the cluster status using 'KUBECONFIG={{ osclusterinstall_info.config_dir }}/auth/kubeconfig oc get co'
+      You can check the cluster status:
+
+      1. Export the KUBECONFIG variable that defines the connection to OpenShift:
+
+         export KUBECONFIG={{ osclusterinstall_info.config_dir }}/auth/kubeconfig
+
+      2. You can check the status of your cluster using:
+
+         {{ osclusterinstall_info.config_dir }}/oc get clusteroperator
+
+         and
+
+         {{ osclusterinstall_info.config_dir }}/oc get clusterversion
 
 - debug:
     msg: "{{ msg.split('\n') }}"

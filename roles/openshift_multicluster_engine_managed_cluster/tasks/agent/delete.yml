@@ -1,5 +1,5 @@
 - set_fact:
-    mcemanagedcluster_info: '{{ mcemanagedcluster_baremetal }}'
+    mcemanagedcluster_info: '{{ mcemanagedcluster_agent }}'
 
 - import_role:
     name: openshift_autogitops
@@ -18,4 +18,4 @@
     name: openshift_multicluster_engine_infraenv
     tasks_from: delete.yml
   vars:
-    mceinfraenv_info: '{{ mcemanagedcluster_baremetal }}'
+    mceinfraenv_info: '{{ mcemanagedcluster_agent }}'

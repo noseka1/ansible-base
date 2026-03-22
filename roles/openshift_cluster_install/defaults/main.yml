@@ -24,11 +24,11 @@ osclusterinstall_agent:
       username: dummy
       password: dummy
       disable_certificate_verification: true
-      baseuri: sushy.lab.example.com:8000
   cluster_nodes_individual:
     master1:
       role: master
       bmc:
+        baseuri: sushy.lab.example.com:8000
         resource_id: 00000000-0000-0003-0021-000000000000
         # Optionally, specify BMC address for node remediation by MachineHealthCheck
         address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0021-000000000000
@@ -42,6 +42,7 @@ osclusterinstall_agent:
     master2:
       role: master
       bmc:
+        baseuri: sushy.lab.example.com:8000
         resource_id: 00000000-0000-0003-0022-000000000000
         address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0022-000000000000
       root_device_hints:
@@ -53,6 +54,7 @@ osclusterinstall_agent:
     master3:
       role: master
       bmc:
+        baseuri: sushy.lab.example.com:8000
         resource_id: 00000000-0000-0003-0023-000000000000
         address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0023-000000000000
       root_device_hints:

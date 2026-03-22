@@ -2,7 +2,7 @@
   community.general.redfish_command:
     category: Systems
     command: PowerForceOff
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
@@ -10,44 +10,32 @@
   loop_control:
     label: '{{ item.key }}'
 
-- name: Get virtual media information
-  community.general.redfish_info:
-    category: Systems
-    command: GetVirtualMedia
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
-    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
-    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-  register: osclusterinstall_virtual_media_result
-
-- name: Collect machine resource ids
-  set_fact:
-    osclusterinstall_resource_ids: >-
-      {{ osclusterinstall_info.cluster_nodes_individual | dict2items | map(attribute="value.bmc.resource_id") }}'
-
 # If using Sushy BMC emulator, ejecting the virtual media detaches the CD-ROM
 # drive from the virtual machine which removes the CD-ROM from the boot order.
+#
+# It is possible to eject the virtual media using the VirtualMediaEject
+# of community.general.redfish_command. Unfortunately, this currently requires
+# passing the image_url which makes it difficult to use, see also:
+# VirtualMediaEject should not require image_url #3042
+# https://github.com/ansible-collections/community.general/issues/3042
 - name: Eject virtual media
-  community.general.redfish_command:
-    category: Systems
-    command: VirtualMediaEject
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
-    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
-    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
-    virtual_media:
-      image_url: '{{ item.1 | json_query("[?Id==`Cd`].Image | [0]") }}'
-    resource_id: '{{ item.0.resource_uri.split("/")[-1] }}'
-  when:
-    - item.0.resource_uri.split('/')[-1] in osclusterinstall_resource_ids
-    - item.1 | json_query("[?Id==`Cd`].Image | [0]") | length > 0
-  loop: '{{ osclusterinstall_virtual_media_result.redfish_facts.virtual_media.entries }}'
+  uri:
+    url: https://{{ item.value.bmc.baseuri }}/redfish/v1/Systems/{{ item.value.bmc.resource_id }}/VirtualMedia/Cd/Actions/VirtualMedia.EjectMedia
+    method: POST
+    url_username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    url_password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    force_basic_auth: true
+    validate_certs: false
+    status_code: [ 200, 204 ]
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
   loop_control:
-    label: '{{ item.0.resource_uri }}'
+    label: '{{ item.key }}'
 
 - name: Insert virtual media
   community.general.redfish_command:
     category: Systems
     command: VirtualMediaInsert
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
@@ -66,7 +54,7 @@
   community.general.redfish_command:
     category: Systems
     command: SetOneTimeBoot
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
@@ -91,7 +79,7 @@
   community.general.redfish_command:
     category: Systems
     command: SetOneTimeBoot
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
@@ -104,7 +92,7 @@
   community.general.redfish_command:
     category: Systems
     command: PowerOn
-    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     resource_id: '{{ item.value.bmc.resource_id }}'

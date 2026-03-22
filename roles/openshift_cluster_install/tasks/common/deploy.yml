@@ -27,11 +27,11 @@
 
     - import_tasks: common/cluster_installer.yml
 
-    - import_tasks: common/cluster_install.yml
+    - include_tasks: common/cluster_install.yml
       when:
         - osclusterinstall_platform != 'AGENT'
 
-    - import_tasks: agent/cluster_install.yml
+    - include_tasks: agent/cluster_install.yml
       when:
         - osclusterinstall_platform == 'AGENT'
 

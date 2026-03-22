@@ -17,7 +17,7 @@
 
 - import_tasks: agent/iso_boot.yml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the bootstrap to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the bootstrap to complete
   command: >-
     ./openshift-install agent wait-for bootstrap-complete --dir . --log-level debug
   changed_when: false
@@ -46,7 +46,7 @@
 - debug:
     msg: "{{ msg.split('\n') }}"
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the installation to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the installation to complete
   command: >-
     ./openshift-install agent wait-for bootstrap-complete --dir . --log-level debug
   changed_when: false

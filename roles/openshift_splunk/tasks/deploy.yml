@@ -36,7 +36,7 @@
 
 - import_tasks: get_hec_connection.yml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Splunk to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Splunk to come up
   uri:
     url: '{{ splunk_hec_json_endpoint }}'
     method: POST

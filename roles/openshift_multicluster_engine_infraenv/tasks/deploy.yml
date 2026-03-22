@@ -26,7 +26,7 @@
     autogitops_app_dst_path: mce/infraenv/{{ mceinfraenv_info.cluster_name }}
     autogitops_app_namespace: '{{ mceinfraenv_info.cluster_name }}-infraenv'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for installer ISO image to be generated
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for installer ISO image to be generated
   kubernetes.core.k8s_info:
     api_version: agent-install.openshift.io/v1beta1
     kind: InfraEnv
@@ -57,7 +57,7 @@
 - debug:
     msg: "{{ msg.split('\n') }}"
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mceinfraenv_info.cluster_nodes_individual.keys() | length }} cluster host(s) to show up in the inventory
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ mceinfraenv_info.cluster_nodes_individual.keys() | length }} cluster host(s) to show up in the inventory
   kubernetes.core.k8s_info:
     api_version: agent-install.openshift.io/v1beta1
     kind: Agent

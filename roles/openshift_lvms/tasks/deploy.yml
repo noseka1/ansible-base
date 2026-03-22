@@ -47,7 +47,7 @@
     autogitops_app_namespace: '{{ lvms_namespace }}'
   tags: lvms_instance
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for LVMCluster to deploy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for LVMCluster to deploy
   kubernetes.core.k8s_info:
     api_version: lvm.topolvm.io/v1alpha1
     kind: LVMCluster

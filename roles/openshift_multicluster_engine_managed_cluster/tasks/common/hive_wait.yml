@@ -37,7 +37,7 @@
     msg: >-
       oc logs -n {{ mcemanagedcluster_info.cluster_name }} job/{{ mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name }} -c installer -f
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for provisioning job {{ mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name }} to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for provisioning job {{ mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name }} to complete
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job

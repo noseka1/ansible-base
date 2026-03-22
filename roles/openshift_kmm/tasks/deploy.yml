@@ -24,7 +24,7 @@
     autogitops_app_namespace: kmm-example
   tags: kmm_example
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for kernel module to install on cluster nodes
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for kernel module to install on cluster nodes
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Node

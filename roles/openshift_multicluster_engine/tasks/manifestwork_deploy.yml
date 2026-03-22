@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     template: manifestwork/test-hello-work-manifestwork.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for test-hello-work deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for test-hello-work deployment to complete
   kubernetes.core.k8s_info:
     api_version: work.open-cluster-management.io/v1
     kind: ManifestWork

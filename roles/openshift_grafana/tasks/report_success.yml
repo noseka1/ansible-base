@@ -6,7 +6,7 @@
     namespace: grafana
   register: grafana_instance_route
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Grafana to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Grafana to come up
   uri:
     url: 'https://{{ grafana_instance_route.resources.0.spec.host }}'
     method: GET

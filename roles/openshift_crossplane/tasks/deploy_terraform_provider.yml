@@ -4,7 +4,7 @@
       - terraform-controllerconfig.yaml
       - terraform-provider.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider to deploy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Terraform provider to deploy
   kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
@@ -16,7 +16,7 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.tf.crossplane.io CRD to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for providerconfigs.tf.crossplane.io CRD to become available
   kubernetes.core.k8s_info:
     api_version: apiextensions.k8s.io/v1
     kind: CustomResourceDefinition
@@ -33,7 +33,7 @@
     template:
       - default-providerconfig-terraform.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Terraform provider revision
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Terraform provider revision
   kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider

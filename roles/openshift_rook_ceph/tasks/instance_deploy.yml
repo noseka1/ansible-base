@@ -43,7 +43,7 @@
       - instance/rook-ceph-block-sc.yaml
       - instance/csi-rbdplugin-snapclass-vsclass.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph cluster to become healthy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Ceph cluster to become healthy
   kubernetes.core.k8s_info:
     api_version: ceph.rook.io/v1
     kind: CephCluster
@@ -64,7 +64,7 @@
       ---
       {{ lookup('template', 'instance/csi-cephfsplugin-snapclass-vsclass.yaml') }}
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph filesystem to become healthy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Ceph filesystem to become healthy
   kubernetes.core.k8s_info:
     api_version: ceph.rook.io/v1
     kind: CephFilesystem
@@ -84,7 +84,7 @@
       ---
       {{ lookup('url', rook_ceph_git_url + '/deploy/examples/storageclass-bucket-delete.yaml', split_lines=false) }}
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph object store to become healthy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Ceph object store to become healthy
   kubernetes.core.k8s_info:
     api_version: ceph.rook.io/v1
     kind: CephObjectStore
@@ -106,7 +106,7 @@
       ---
       {{ lookup('template', 'instance/csi-nfsplugin-snapclass-vsclass.yaml') }}
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Ceph NFS to become healthy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Ceph NFS to become healthy
   kubernetes.core.k8s_info:
     api_version: ceph.rook.io/v1
     kind: CephNFS

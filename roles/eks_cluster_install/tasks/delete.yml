@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the EKS cluster deletion to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the EKS cluster deletion to complete
   community.general.terraform:
     project_path: '{{ eks_cluster_install.config_dir }}/terraform/'
     state: absent

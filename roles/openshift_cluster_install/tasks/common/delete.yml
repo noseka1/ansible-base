@@ -9,7 +9,7 @@
     msg: You can follow the logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
   when: osclusterinstall_install_complete_result.stat.exists
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift deletion to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the OpenShift deletion to complete
   command: >-
     ./openshift-install destroy cluster --dir . --log-level debug
   args:

@@ -21,7 +21,7 @@
     autogitops_app_dst_path: file-integrity/instance
     autogitops_app_namespace: openshift-file-integrity
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for FileIntegrityNodeStatus to show up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for FileIntegrityNodeStatus to show up
   kubernetes.core.k8s_info:
     api_version: fileintegrity.openshift.io/v1alpha1
     kind: FileIntegrityNodeStatus

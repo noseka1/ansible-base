@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ wait_for_deployment_namespace }}/{{ wait_for_deployment_name }} deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ wait_for_deployment_namespace }}/{{ wait_for_deployment_name }} deployment to complete
   kubernetes.core.k8s_info:
     api_version: apps/v1
     kind: Deployment

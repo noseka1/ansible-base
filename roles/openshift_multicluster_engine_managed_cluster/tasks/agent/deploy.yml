@@ -67,7 +67,7 @@
   loop_control:
     label: '{{ item.metadata.name }}: {{ item.status.inventory.hostname }} -> {{ mcemanagedcluster_info.cluster_nodes_individual[item.status.inventory.hostname].role | default ("") }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster requirements to be met
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for cluster requirements to be met
   kubernetes.core.k8s_info:
     api_version: extensions.hive.openshift.io/v1beta1
     kind: AgentClusterInstall
@@ -79,7 +79,7 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for agent cluster installation to finish
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for agent cluster installation to finish
   kubernetes.core.k8s_info:
     api_version: extensions.hive.openshift.io/v1beta1
     kind: AgentClusterInstall

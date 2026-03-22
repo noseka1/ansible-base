@@ -6,7 +6,7 @@
     namespace: '{{ dockerreg_namespace }}'
   register: dockerreg_route
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for docker-registry to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for docker-registry to come up
   uri:
     url: 'https://{{ dockerreg_route.resources.0.spec.host }}'
     method: GET

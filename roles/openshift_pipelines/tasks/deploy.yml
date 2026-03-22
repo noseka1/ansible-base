@@ -21,7 +21,7 @@
     autogitops_app_dst_path: openshift-pipelines/operator
     autogitops_app_namespace: openshift-operators
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the Tasks to be created
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the Tasks to be created
   kubernetes.core.k8s_info:
     api_version: tekton.dev/v1
     kind: Task

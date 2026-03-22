@@ -5,7 +5,7 @@
 - import_tasks: get_rhacs_central_host.yml
   when: rhacs_central_host | length == 0
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Central to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Central to come up
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/ping'
     url_username: admin
@@ -46,7 +46,7 @@
     autogitops_app_dst_path: rhacs/secured-cluster
     autogitops_app_namespace: stackrox
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ oscommon_cluster_domain }} to become healthy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ oscommon_cluster_domain }} to become healthy
   uri:
     url: 'https://{{ rhacs_central_host }}/v1/clusters'
     url_username: admin

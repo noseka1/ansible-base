@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for nodes to join the cluster
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for nodes to join the cluster
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Node

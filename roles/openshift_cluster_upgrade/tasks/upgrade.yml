@@ -8,7 +8,7 @@
       spec:
         channel: '{{ item.channel }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the {{ item.version }} target version to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the {{ item.version }} target version to become available
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
@@ -31,7 +31,7 @@
         desiredUpdate:
           version: '{{ item.version }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to start
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the upgrade to start
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion
@@ -44,7 +44,7 @@
   retries: 300
   delay: 1
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the upgrade to version {{ item.version }} to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the upgrade to version {{ item.version }} to complete
   kubernetes.core.k8s_info:
     api_version: config.openshift.io/v1
     kind: ClusterVersion

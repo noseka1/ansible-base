@@ -34,7 +34,7 @@
     mode: '0644'
   delegate_to: localhost
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for vCenter installation to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for vCenter installation to complete
   command: >
     {{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
       install

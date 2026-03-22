@@ -11,7 +11,7 @@
 - debug:
     msg: You can follow the installation logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the installation to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the installation to complete
   command: >-
     ./openshift-install create cluster --dir . --log-level debug
   args:

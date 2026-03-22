@@ -28,7 +28,7 @@
     autogitops_app_dst_path: ingress-node-firewall/instance
     autogitops_app_namespace: openshift-ingress-node-firewall
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for ingress node firewall daemonset to deploy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for ingress node firewall daemonset to deploy
   kubernetes.core.k8s_info:
     api_version: ingressnodefirewall.openshift.io/v1alpha1
     kind: IngressNodeFirewallConfig

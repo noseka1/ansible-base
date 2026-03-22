@@ -6,7 +6,7 @@
     namespace: openshift-migration
   register: mtc_route
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Migration Toolkit for Containers UI to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Migration Toolkit for Containers UI to come up
   uri:
     url: 'https://{{ mtc_route.resources.0.spec.host }}'
     method: GET

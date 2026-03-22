@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for kind {{ oscommon_kind_apiversion  }} {{ oscommon_kind_name }} to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for kind {{ oscommon_kind_apiversion  }} {{ oscommon_kind_name }} to become available
   kubernetes.core.k8s_info:
     api_version: '{{ oscommon_kind_apiversion }}'
     kind: '{{ oscommon_kind_name }}'

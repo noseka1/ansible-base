@@ -14,7 +14,7 @@
     namespace: '{{ wmco_example_workload_namespace }}'
   register: wmco_workload_route
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for https://{{ wmco_workload_route.resources.0.spec.host }} to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for https://{{ wmco_workload_route.resources.0.spec.host }} to become available
   uri:
     url: 'https://{{ wmco_workload_route.resources.0.spec.host }}'
     validate_certs: false

@@ -19,7 +19,7 @@
 - name: Obtain Minio route
   import_tasks: get_minio_api_route.yml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Minio to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Minio to come up
   uri:
     url: 'https://{{ minio_api_route.resources.0.spec.host }}/minio/health/live'
     method: GET

@@ -21,7 +21,7 @@
     autogitops_app_dst_path: mce/instance
     autogitops_app_namespace: multicluster-engine
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for ManagedCluster local-cluster object to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for ManagedCluster local-cluster object to become available
   kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster

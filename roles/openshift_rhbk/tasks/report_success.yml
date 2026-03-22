@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Keycloak Web UI to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Keycloak Web UI to come up
   uri:
     url: https://{{ rhbk_hostname }}
     validate_certs: false

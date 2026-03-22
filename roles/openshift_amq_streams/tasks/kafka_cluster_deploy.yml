@@ -9,7 +9,7 @@
   loop:
     - '{{ amqstreams_examples }}/kafka/kafka-persistent.yaml'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka cluster deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Kafka cluster deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka

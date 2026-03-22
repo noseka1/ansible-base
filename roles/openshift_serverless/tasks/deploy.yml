@@ -13,7 +13,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.serving) }}"
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Serving deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Knative Serving deployment to complete
   kubernetes.core.k8s_info:
     api_version: operator.knative.dev/v1alpha1
     kind: KnativeServing
@@ -29,7 +29,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('pipe', 'oc kustomize ' + serverless_kustomizations.eventing) }}"
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Knative Eventing deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Knative Eventing deployment to complete
   kubernetes.core.k8s_info:
     api_version: operator.knative.dev/v1alpha1
     kind: KnativeEventing

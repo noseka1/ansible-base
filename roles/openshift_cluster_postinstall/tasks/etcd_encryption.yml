@@ -13,7 +13,7 @@
         osclusterpostinst_etcd_encryption_desired_status: >-
           {{ 'False' if osclusterpostinst_etcd_encryption in [ '', 'identity' ] else 'True' }}
 
-    - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift API Server resources to encrypt/decrypt
+    - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for OpenShift API Server resources to encrypt/decrypt
       kubernetes.core.k8s_info:
         api_version: operator.openshift.io/v1
         kind: OpenShiftAPIServer
@@ -25,7 +25,7 @@
       retries: 120
       delay: 10
 
-    - name: Waiting since {{ lookup("pipe", "date +%r") }} for Kubernetes API Server resources to encrypt/decrypt
+    - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Kubernetes API Server resources to encrypt/decrypt
       kubernetes.core.k8s_info:
         api_version: operator.openshift.io/v1
         kind: KubeAPIServer
@@ -37,7 +37,7 @@
       retries: 120
       delay: 10
 
-    - name: Waiting since {{ lookup("pipe", "date +%r") }} for OpenShift OAuth API resources to encrypt/decrypt
+    - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for OpenShift OAuth API resources to encrypt/decrypt
       kubernetes.core.k8s_info:
         api_version: operator.openshift.io/v1
         kind: Authentication

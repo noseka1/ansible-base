@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     template: aws-provider.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider to deploy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for AWS provider to deploy
   kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider
@@ -22,7 +22,7 @@
     that: crossplane_aws_secret_acccess_key | length > 0
     fail_msg: Variable crossplane_aws_secret_acccess_key must be set
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for providerconfigs.aws.crossplane.io CRD to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for providerconfigs.aws.crossplane.io CRD to become available
   kubernetes.core.k8s_info:
     api_version: apiextensions.k8s.io/v1
     kind: CustomResourceDefinition
@@ -40,7 +40,7 @@
       - default-providerconfig-aws.yaml
       - aws-creds-secret.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS provider revision
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for AWS provider revision
   kubernetes.core.k8s_info:
     api_version: pkg.crossplane.io/v1
     kind: Provider

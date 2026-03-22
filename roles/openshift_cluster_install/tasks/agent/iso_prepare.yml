@@ -10,7 +10,7 @@
     - { src: '{{ osclusterinstall_platform | lower }}/agent-config.yaml',   dest: '{{ osclusterinstall_info.config_dir }}/agent-config.backup.yaml' }
   no_log: true
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for installer to create bootable ISO image
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for installer to create bootable ISO image
   command: >-
     ./openshift-install agent create image --dir . --log-level debug
   args:

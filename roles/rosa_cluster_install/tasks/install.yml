@@ -19,7 +19,7 @@
     version: '{{ rosa_cluster_install.terraform_templates_version }}'
     force: false
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for AWS account roles to create
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for AWS account roles to create
   community.general.terraform:
     project_path: '{{ rosa_cluster_install.config_dir }}/terraform-provider-rhcs/examples/create_account_roles'
     force_init: true
@@ -31,7 +31,7 @@
     AWS_SECRET_ACCESS_KEY: '{{ rosa_cluster_install.aws_secret_access_key }}'
   register: rosa_cluster_install_account_roles_result
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for ROSA cluster to deploy
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for ROSA cluster to deploy
   community.general.terraform:
     project_path: '{{ rosa_cluster_install.config_dir }}/terraform-provider-rhcs/examples/create_rosa_sts_cluster/oidc_configuration/cluster_with_managed_oidc_config'
     force_init: true

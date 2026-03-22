@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vmware_lab.vcenter_hostname }} to come back up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ vmware_lab.vcenter_hostname }} to come back up
   uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}'
     validate_certs: false
@@ -8,7 +8,7 @@
   retries: 60
   delay: 10
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ vmware_lab.vcenter_hostname }} APIs to become available
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ vmware_lab.vcenter_hostname }} APIs to become available
   uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/session'
     method: POST

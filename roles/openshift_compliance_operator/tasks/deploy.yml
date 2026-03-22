@@ -21,7 +21,7 @@
     autogitops_app_dst_path: compliance-operator/scan
     autogitops_app_namespace: openshift-compliance
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the CIS compliance scan to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the CIS compliance scan to complete
   kubernetes.core.k8s_info:
     api_version: compliance.openshift.io/v1alpha1
     kind: ComplianceScan

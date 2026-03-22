@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Quay to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Quay to come up
   uri:
     url: 'https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/discovery'
     method: GET

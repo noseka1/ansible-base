@@ -11,7 +11,7 @@
     - '{{ amqstreams_examples }}/mirror-maker/kafka-target.yaml'
     - '{{ amqstreams_examples }}/mirror-maker/kafka-mirror-maker-2-sync-groups.yaml'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Source deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Kafka Source deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
@@ -23,7 +23,7 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Kafka Target deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Kafka Target deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
@@ -35,7 +35,7 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Mirror Maker deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Mirror Maker deployment to complete
   kubernetes.core.k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: KafkaMirrorMaker2

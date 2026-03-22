@@ -10,7 +10,7 @@
     autogitops_app_dst_path: iscsi-target/namespace
     autogitops_app_namespace: '{{ iscsi_target_namespace }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for service A IP
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for service A IP
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service
@@ -25,7 +25,7 @@
 - set_fact:
     iscsi_target_service_a_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for service B IP
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for service B IP
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Service

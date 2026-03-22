@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for cluster deployment of {{ mcemanagedcluster_info.cluster_name }} to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for cluster deployment of {{ mcemanagedcluster_info.cluster_name }} to complete
   kubernetes.core.k8s_info:
     api_version: hive.openshift.io/v1
     kind: ClusterDeployment
@@ -11,7 +11,7 @@
     wait_timeout: 60
   register: mcemanagedcluster_clusterdeployment_result
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for {{ mcemanagedcluster_info.cluster_name }} to connect to Hub
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ mcemanagedcluster_info.cluster_name }} to connect to Hub
   kubernetes.core.k8s_info:
     api_version: cluster.open-cluster-management.io/v1
     kind: ManagedCluster

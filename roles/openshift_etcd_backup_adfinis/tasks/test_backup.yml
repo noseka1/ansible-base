@@ -14,7 +14,7 @@
       etcd-backup-test
   when: etcdbackupadfinis_job_result.resources | length == 0
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for backup to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for backup to complete
   kubernetes.core.k8s_info:
     api_version: batch/v1
     kind: Job

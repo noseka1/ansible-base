@@ -1,4 +1,4 @@
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for certificate issuer {{ certman_certificate_issuer_name }} to become ready
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for certificate issuer {{ certman_certificate_issuer_name }} to become ready
   kubernetes.core.k8s_info:
     api_version: cert-manager.io/v1
     kind: ClusterIssuer
@@ -13,7 +13,7 @@
     template:
       - test/certificate.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for certificate {{ certman_certificate_issuer_name }}-test to become ready
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for certificate {{ certman_certificate_issuer_name }}-test to become ready
   kubernetes.core.k8s_info:
     api_version: cert-manager.io/v1
     kind: Certificate

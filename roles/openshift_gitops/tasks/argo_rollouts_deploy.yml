@@ -2,7 +2,7 @@
   kubernetes.core.k8s:
     template: rollouts/argo-rollout-rolloutmanager.yaml
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo Rollouts deployment to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Argo Rollouts deployment to complete
   kubernetes.core.k8s_info:
     api_version: argoproj.io/v1alpha1
     kind: RolloutManager

@@ -6,7 +6,7 @@
     namespace: '{{ argo_rollouts_namespace }}'
   register: argo_rollouts_route
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for Argo Rollouts dashboard to come up
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Argo Rollouts dashboard to come up
   uri:
     url: 'https://{{ argo_rollouts_route.resources.0.spec.host }}/rollouts'
     status_code: [ 403 ]

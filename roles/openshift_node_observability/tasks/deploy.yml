@@ -29,7 +29,7 @@
     autogitops_app_dst_path: node-observability/example
     autogitops_app_namespace: node-observability-operator
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for profiling query to complete
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for profiling query to complete
   kubernetes.core.k8s_info:
     api_version: nodeobservability.olm.openshift.io/v1alpha2
     kind: NodeObservabilityRun

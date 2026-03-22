@@ -18,6 +18,21 @@
     exclude:
       - README.md
 
+- name: Download oc client archive {{ osclusterinstall_client_archive_url }}
+  get_url:
+    url: '{{ osclusterinstall_client_archive_url }}'
+    dest: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_client_archive_url | basename }}'
+    checksum: 'sha256:{{ osclusterinstall_client_sha256sum_url }}'
+  retries: 3
+
+- name: Extract oc client
+  unarchive:
+    src: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_client_archive_url | basename }}'
+    dest: '{{ osclusterinstall_info.config_dir }}'
+    exclude:
+      - README.md
+      - kubectl
+
 - name: Get installer info
   command: '{{ osclusterinstall_info.config_dir }}/openshift-install version'
   changed_when: false

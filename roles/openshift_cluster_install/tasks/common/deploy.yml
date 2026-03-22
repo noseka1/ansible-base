@@ -3,44 +3,43 @@
     path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     get_checksum: false
     get_mime: false
-  register: osclusterinstall_complete
+  register: osclusterinstall_install_complete_result
 
 - debug:
     msg: >-
       Found cluster installation timestamp in directory {{ osclusterinstall_info.config_dir }}, assuming that the
       cluster already exists, skipping the installation. If you are trying to reinstall the cluster, delete the cluster
       using an Ansible playbook before running this playbook.
-
   when:
-    - osclusterinstall_complete.stat.exists
+    - osclusterinstall_install_complete_result.stat.exists
 
-- name: Set target OpenShift version
-  set_fact:
-    osclusterinstall_version_resolved: '{{ osclusterinstall_info.version }}'
-  when:
-    - osclusterinstall_info.version != 'latest'
-    - not osclusterinstall_complete.stat.exists
+- when: not osclusterinstall_install_complete_result.stat.exists
+  block:
+    - name: Set target OpenShift version
+      set_fact:
+        osclusterinstall_version_resolved: '{{ osclusterinstall_info.version }}'
+      when:
+        - osclusterinstall_info.version != 'latest'
 
-- import_tasks: common/cluster_version.yml
-  when:
-    - osclusterinstall_info.version == 'latest'
-    - not osclusterinstall_complete.stat.exists
+    - import_tasks: common/cluster_version.yml
+      when:
+        - osclusterinstall_info.version == 'latest'
 
-- import_tasks: common/cluster_installer.yml
-  when:
-    - not osclusterinstall_complete.stat.exists
+    - import_tasks: common/cluster_installer.yml
 
-- import_tasks: common/cluster_install.yml
-  when:
-    - not osclusterinstall_complete.stat.exists
+    - import_tasks: common/cluster_install.yml
+      when:
+        - osclusterinstall_platform != 'AGENT'
 
-- name: Create the timestamp
-  file:
-    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
-    state: touch
-    mode: '0644'
-  when:
-    - not osclusterinstall_complete.stat.exists
+    - import_tasks: agent/cluster_install.yml
+      when:
+        - osclusterinstall_platform == 'AGENT'
+
+    - name: Create the timestamp
+      file:
+        path: '{{ osclusterinstall_info.config_dir }}/install_complete'
+        state: touch
+        mode: '0644'
 
 - import_tasks: common/report_success.yml
 

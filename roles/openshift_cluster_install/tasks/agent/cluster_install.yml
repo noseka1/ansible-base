@@ -1,0 +1,54 @@
+- name: Check the iso_prepared timestamp
+  stat:
+    path: '{{ osclusterinstall_info.config_dir }}/iso_prepared'
+    get_checksum: false
+    get_mime: false
+  register: osclusterinstall_iso_prepared_result
+
+- when: not osclusterinstall_iso_prepared_result.stat.exists
+  block:
+    - import_tasks: agent/iso_prepare.yml
+
+    - name: Create the timestamp
+      file:
+        path: '{{ osclusterinstall_info.config_dir }}/iso_prepared'
+        state: touch
+        mode: '0644'
+
+- import_tasks: agent/iso_boot.yml
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the bootstrap to complete
+  command: >-
+    ./openshift-install agent wait-for bootstrap-complete --dir . --log-level debug
+  changed_when: false
+  args:
+    chdir: '{{ osclusterinstall_info.config_dir }}'
+
+- name: Bootstrap complete
+  set_fact:
+    msg: |
+      Bootstrap complete.
+
+      While the cluster installation continues, you can check the installation status:
+
+      1. Export the KUBECONFIG variable that defines the connection to OpenShift:
+
+         export KUBECONFIG={{ osclusterinstall_info.config_dir }}/auth/kubeconfig
+
+      2. You can check the status of your cluster using:
+
+         {{ osclusterinstall_info.config_dir }}/oc get clusteroperator
+
+         and
+
+         {{ osclusterinstall_info.config_dir }}/oc get clusterversion
+
+- debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the installation to complete
+  command: >-
+    ./openshift-install agent wait-for bootstrap-complete --dir . --log-level debug
+  changed_when: false
+  args:
+    chdir: '{{ osclusterinstall_info.config_dir }}'

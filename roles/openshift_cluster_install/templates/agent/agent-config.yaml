@@ -1,0 +1,30 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: {{ osclusterinstall_info.cluster_name }}
+rendezvousIP: {{ osclusterinstall_info.rendezvous_ip }}
+{% if osclusterinstall_info.ntp_sources | default([]) %}
+additionalNTPSources: {{ osclusterinstall_info.ntp_sources | to_nice_json(indent=2,sort_keys=false) | indent(2) }}
+{% endif %}
+# When minimalISO is set to true, a minimal ISO that does not contain the rootfs
+# will be generated. By default a full ISO will be created
+minimalISO: false
+hosts:
+{% for key, individual in osclusterinstall_info.cluster_nodes_individual.items() %}
+- hostname: {{ key }}
+  role: {{ individual.role }}
+{% if individual.bmc.address | default('') %}
+  bmc:
+    address: {{ individual.bmc.address }}
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    disableCertificateVerification: {{ osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}
+{% endif %}
+{% if individual.root_device_hints is defined %}
+  rootDeviceHints: {{ individual.root_device_hints | to_nice_json(indent=2,sort_keys=false) | indent(4) }}
+{% endif %}
+  interfaces: {{ individual.interfaces | to_nice_json(indent=2,sort_keys=false) | indent(4) }}
+{% if individual.network_config | default({}) %}
+  networkConfig: {{ individual.network_config | to_nice_json(indent=2,sort_keys=false) | indent(4) }}
+{% endif %}
+{% endfor %}

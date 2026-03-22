@@ -1,19 +1,17 @@
-- name: Create install-config.yaml
+- name: Create configuration for openshift-install
   template:
-    src: '{{ osclusterinstall_platform | lower }}/install-config.yaml'
-    dest: '{{ osclusterinstall_info.config_dir }}'
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
     mode: '0644'
-
-- name: Create a backup copy of install-config.yaml
-  template:
-    src: '{{ osclusterinstall_platform | lower }}/install-config.yaml'
-    dest: '{{ osclusterinstall_info.config_dir }}/install-config.backup.yaml'
-    mode: '0644'
+  loop:
+    - { src: '{{ osclusterinstall_platform | lower }}/install-config.yaml', dest: '{{ osclusterinstall_info.config_dir }}/install-config.yaml' }
+    - { src: '{{ osclusterinstall_platform | lower }}/install-config.yaml', dest: '{{ osclusterinstall_info.config_dir }}/install-config.backup.yaml' }
+  no_log: true
 
 - debug:
     msg: You can follow the installation logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
 
-- name: Waiting since {{ lookup("pipe", "date +%r") }} for the OpenShift {{ osclusterinstall_version_resolved }} installation to complete
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the installation to complete
   command: >-
     ./openshift-install create cluster --dir . --log-level debug
   args:

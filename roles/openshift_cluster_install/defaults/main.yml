@@ -1,3 +1,74 @@
+osclusterinstall_agent:
+  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster3'
+  cluster_name: mycluster3
+  base_domain: example.com
+  channel: stable-4.21
+  version: latest
+  control_plane_replicas: 3
+  data_plane_replicas: 0
+  clusterwide_proxy: {}
+  ntp_sources: []
+  trusted_ca_bundle: ''
+  api_vip: 192.168.30.10
+  ingress_vip: 192.168.30.11
+  rendezvous_ip: 192.168.30.21
+  ssh_authorized_key: ''
+  # Load balancer options are OpenShiftManagedDefault (default), UserManaged
+  load_balancer: OpenShiftManagedDefault
+  network_type: OVNKubernetes
+  machine_network_cidr: 192.168.30.0/24
+  cluster_network_cidr: 10.128.0.0/14
+  service_network_cidr: 172.30.0.0/16
+  cluster_nodes_shared:
+    bmc:
+      username: dummy
+      password: dummy
+      disable_certificate_verification: true
+      baseuri: sushy.lab.example.com:8000
+  cluster_nodes_individual:
+    master1:
+      role: master
+      bmc:
+        resource_id: 00000000-0000-0003-0021-000000000000
+        # Optionally, specify BMC address for node remediation by MachineHealthCheck
+        address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0021-000000000000
+      # Optionally, specify root device hints
+      root_device_hints:
+        deviceName: /dev/vda
+      interfaces:
+        - name: ens3
+          macAddress: '52:54:00:03:21:00'
+      network_config: {}
+    master2:
+      role: master
+      bmc:
+        resource_id: 00000000-0000-0003-0022-000000000000
+        address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0022-000000000000
+      root_device_hints:
+        deviceName: /dev/vda
+      interfaces:
+        - name: ens3
+          macAddress: '52:54:00:03:22:00'
+      network_config: {}
+    master3:
+      role: master
+      bmc:
+        resource_id: 00000000-0000-0003-0023-000000000000
+        address: redfish-virtualmedia+https://sushy.lab.example.com:8000/redfish/v1/Systems/00000000-0000-0003-0023-000000000000
+      root_device_hints:
+        deviceName: /dev/vda
+      interfaces:
+        - name: ens3
+          macAddress: '52:54:00:03:23:00'
+      network_config: {}
+  iso_upload_s3_access_key: admin
+  iso_upload_s3_secret_key: '{{ generic_user_password }}'
+  iso_upload_s3_endpoint_url: https://minio.lab.example.com:9010
+  iso_upload_s3_region: minio
+  iso_upload_s3_bucket: mybucket1
+  iso_upload_s3_object: openshift_cluster_install/{{ osclusterinstall_agent.cluster_name }}/agent.x86_64.iso
+  iso_download_url: https://minio.lab.example.com:9010/mybucket1/openshift_cluster_install/{{ osclusterinstall_agent.cluster_name }}/agent.x86_64.iso
+
 osclusterinstall_aws:
   config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster10'
   cluster_name: mycluster10
@@ -76,6 +147,10 @@ osclusterinstall_vsphere:
 osclusterinstall_installer_archive_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/openshift-install-linux-{{ osclusterinstall_version_resolved }}.tar.gz
 osclusterinstall_installer_sha256sum_url: >-
+  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/sha256sum.txt
+osclusterinstall_client_archive_url: >-
+  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/openshift-client-linux-{{ osclusterinstall_version_resolved }}.tar.gz
+osclusterinstall_client_sha256sum_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/sha256sum.txt
 
 osclusterinstall_run_postinstall: false

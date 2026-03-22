@@ -1,0 +1,97 @@
+- name: Power off
+  community.general.redfish_command:
+    category: Systems
+    command: PowerForceOff
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+- name: Get virtual media information
+  community.general.redfish_info:
+    category: Systems
+    command: GetVirtualMedia
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+  register: osclusterinstall_virtul_media_result
+
+- name: Collect machine resource ids
+  set_fact:
+    osclusterinstall_resource_ids: >-
+      {{ osclusterinstall_info.cluster_nodes_individual | dict2items | map(attribute="value.bmc.resource_id") }}'
+
+- name: Eject virtual media
+  community.general.redfish_command:
+    category: Systems
+    command: VirtualMediaEject
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    virtual_media:
+      image_url: '{{ item.1 | json_query("[?Id==`Cd`].Image | [0]") }}'
+    resource_id: '{{ item.0.resource_uri.split("/")[-1] }}'
+  when:
+    - item.0.resource_uri.split('/')[-1] in osclusterinstall_resource_ids
+    - item.1 | json_query("[?Id==`Cd`].Image | [0]") | length > 0
+  loop: '{{ osclusterinstall_virtul_media_result.redfish_facts.virtual_media.entries }}'
+  loop_control:
+    label: '{{ item.0.resource_uri }}'
+
+- name: Insert virtual media
+  community.general.redfish_command:
+    category: Systems
+    command: VirtualMediaInsert
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+    virtual_media:
+      image_url: '{{ osclusterinstall_info.iso_download_url }}'
+      media_types:
+        - CD
+        - DVD
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+- name: Set one-time boot from CD-ROM (Sushy sets boot order permanently)
+  community.general.redfish_command:
+    category: Systems
+    command: SetOneTimeBoot
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+    bootdevice: Cd
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+- name: Power on
+  community.general.redfish_command:
+    category: Systems
+    command: PowerOn
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+- name: Set one-time boot from HDD (Revert permanent boot order set by Sushy)
+  community.general.redfish_command:
+    category: Systems
+    command: SetOneTimeBoot
+    baseuri: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+    bootdevice: Hdd
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'

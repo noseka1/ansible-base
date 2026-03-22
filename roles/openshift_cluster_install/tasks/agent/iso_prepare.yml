@@ -1,0 +1,29 @@
+- name: Create configuration for openshift-install
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '0644'
+  loop:
+    - { src: '{{ osclusterinstall_platform | lower }}/install-config.yaml', dest: '{{ osclusterinstall_info.config_dir }}/install-config.yaml' }
+    - { src: '{{ osclusterinstall_platform | lower }}/install-config.yaml', dest: '{{ osclusterinstall_info.config_dir }}/install-config.backup.yaml' }
+    - { src: '{{ osclusterinstall_platform | lower }}/agent-config.yaml',   dest: '{{ osclusterinstall_info.config_dir }}/agent-config.yaml' }
+    - { src: '{{ osclusterinstall_platform | lower }}/agent-config.yaml',   dest: '{{ osclusterinstall_info.config_dir }}/agent-config.backup.yaml' }
+  no_log: true
+
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for installer to create bootable ISO image
+  command: >-
+    ./openshift-install agent create image --dir . --log-level debug
+  args:
+    chdir: '{{ osclusterinstall_info.config_dir }}'
+
+- name: Upload ISO image into S3
+  amazon.aws.s3_object:
+    access_key: '{{ osclusterinstall_info.iso_upload_s3_access_key }}'
+    secret_key: '{{ osclusterinstall_info.iso_upload_s3_secret_key }}'
+    endpoint_url: '{{ osclusterinstall_info.iso_upload_s3_endpoint_url }}'
+    region: '{{ osclusterinstall_info.iso_upload_s3_region }}'
+    bucket: '{{ osclusterinstall_info.iso_upload_s3_bucket }}'
+    object: '{{ osclusterinstall_info.iso_upload_s3_object }}'
+    src: '{{ osclusterinstall_info.config_dir }}/agent.x86_64.iso'
+    mode: put
+    encrypt: false

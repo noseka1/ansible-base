@@ -1,0 +1,6 @@
+- hosts: all
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: openshift_cluster_install
+        tasks_from: agent/deploy.yml

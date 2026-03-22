@@ -5,6 +5,7 @@
     baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
   loop_control:
@@ -25,7 +26,7 @@
     url_username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     url_password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
     force_basic_auth: true
-    validate_certs: false
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     status_code: [ 200, 204 ]
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
   loop_control:
@@ -38,6 +39,7 @@
     baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
     virtual_media:
       image_url: '{{ osclusterinstall_info.iso_download_url }}'
@@ -57,6 +59,7 @@
     baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
     bootdevice: Cd
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
@@ -82,6 +85,7 @@
     baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
     bootdevice: Hdd
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
@@ -95,6 +99,7 @@
     baseuri: '{{ item.value.bmc.baseuri }}'
     username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
     password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
     resource_id: '{{ item.value.bmc.resource_id }}'
   loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
   loop_control:

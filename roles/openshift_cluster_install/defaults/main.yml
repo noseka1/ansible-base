@@ -73,7 +73,9 @@ osclusterinstall_vsphere:
   vsphere_network: segment-sandbox-8bcng
   vsphere_cluster: /SDDC-Datacenter/host/Cluster-1
 
-osclusterinstall_installer_url: >-
+osclusterinstall_installer_archive_url: >-
   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/openshift-install-linux-{{ osclusterinstall_version_resolved }}.tar.gz
+osclusterinstall_installer_sha256sum_url: >-
+  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ osclusterinstall_version_resolved }}/sha256sum.txt
 
 osclusterinstall_run_postinstall: false

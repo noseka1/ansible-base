@@ -8,6 +8,6 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: {{ osclusterpostinst_cert_issuer_name }}
-  commonName: {{ item.cert_common_name }}
+  commonName: '{{ item.cert_common_name }}'
   dnsNames:
-  - {{ item.cert_common_name }}
+  - '{{ item.cert_common_name }}'

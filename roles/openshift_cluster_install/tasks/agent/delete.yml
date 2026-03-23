@@ -2,4 +2,33 @@
     osclusterinstall_info: '{{ osclusterinstall_agent }}'
     osclusterinstall_platform: AGENT
 
-- import_tasks: common/delete.yml
+- name: Power off
+  community.general.redfish_command:
+    category: Systems
+    command: PowerForceOff
+    baseuri: '{{ item.value.bmc.baseuri }}'
+    username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'
+    password: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.password }}'
+    validate_certs: '{{ not osclusterinstall_info.cluster_nodes_shared.bmc.disable_certificate_verification }}'
+    resource_id: '{{ item.value.bmc.resource_id }}'
+  loop: '{{ osclusterinstall_info.cluster_nodes_individual | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
+
+- name: Delete cluster configuration
+  file:
+    path: '{{ osclusterinstall_info.config_dir }}/{{ item }}'
+    state: absent
+  loop:
+    - .openshift_install.log
+    - .openshift_install_state.json
+    - agent-config.backup.yaml
+    - agent-config.yaml
+    - agent.x86_64.iso
+    - auth/kubeadmin-password
+    - auth/kubeconfig
+    - install_complete
+    - install-config.backup.yaml
+    - install-config.yaml
+    - iso_prepared
+    - rendezvousIP

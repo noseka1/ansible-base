@@ -1,5 +1,6 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_gcp }}'
+    osclusterinstall_platform: GCP
 
 - import_tasks: common/delete.yml
   environment:

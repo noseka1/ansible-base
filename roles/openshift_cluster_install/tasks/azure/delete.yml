@@ -1,5 +1,6 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_azure }}'
+    osclusterinstall_platform: AZURE
 
 - import_tasks: common/delete.yml
   environment:

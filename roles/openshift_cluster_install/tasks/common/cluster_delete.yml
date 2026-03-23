@@ -1,0 +1,13 @@
+- debug:
+    msg: You can follow the logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
+
+- name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the OpenShift deletion to complete
+  command: >-
+    ./openshift-install destroy cluster --dir . --log-level debug
+  args:
+    chdir: '{{ osclusterinstall_info.config_dir }}'
+
+- name: Delete the timestamp
+  file:
+    path: '{{ osclusterinstall_info.config_dir }}/install_complete'
+    state: absent

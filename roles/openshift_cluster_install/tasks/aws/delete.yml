@@ -1,5 +1,6 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_aws }}'
+    osclusterinstall_platform: AWS
 
 - import_tasks: common/delete.yml
   environment:

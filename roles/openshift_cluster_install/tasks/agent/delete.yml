@@ -1,4 +1,5 @@
 - set_fact:
     osclusterinstall_info: '{{ osclusterinstall_agent }}'
+    osclusterinstall_platform: AGENT
 
 - import_tasks: common/delete.yml

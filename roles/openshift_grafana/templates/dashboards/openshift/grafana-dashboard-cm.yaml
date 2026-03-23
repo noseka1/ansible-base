@@ -2,5 +2,4 @@ kind: ConfigMap
 metadata:
   name: {{ item.metadata.name }}
   namespace: grafana
-data:
-  {{ item.data | to_yaml }}
+data: {{ item.data | to_nice_json(indent=2,sort_keys=false) | indent(2) }}

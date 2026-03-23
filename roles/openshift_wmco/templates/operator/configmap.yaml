@@ -4,6 +4,5 @@ metadata:
   name: windows-instances
   namespace: {{ wmco_operator_namespace }}
 {% if wmco_byoh_instances %}
-data:
-  {{ wmco_byoh_instances | to_yaml | indent(2) }}
+data: {{ wmco_byoh_instances | to_nice_json(indent=2,sort_keys=false) | indent(2) }}
 {% endif %}

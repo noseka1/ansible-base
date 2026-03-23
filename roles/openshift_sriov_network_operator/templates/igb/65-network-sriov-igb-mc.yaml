@@ -5,4 +5,4 @@ metadata:
     machineconfiguration.openshift.io/role: {{ item }}
   name: 62-{{ item }}-network-sriov-igb
 spec:
-  kernelArguments: {{ osclusterpostinst_kernel_arguments | to_yaml }}
+  kernelArguments: {{ osclusterpostinst_kernel_arguments | to_nice_json(indent=2,sort_keys=false) | indent(4) }}

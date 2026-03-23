@@ -42,8 +42,7 @@ spec:
     dbStorageClassName: {{ odf_platform_to_storageclass[oscommon_infrastructure.status.platformStatus.type].mcg_db }}
 {% endif %}
 {% if odf_network is defined %}
-  network:
-    {{ odf_network | to_yaml | indent(4) }}
+  network: {{ odf_network | to_nice_json(indent=2,sort_keys=false) | indent(4) }}
 {% endif %}
   nfs:
     enable: true

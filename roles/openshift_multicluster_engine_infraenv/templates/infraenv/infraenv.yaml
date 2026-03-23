@@ -8,7 +8,7 @@ metadata:
     networkType: {{ mceinfraenv_info.network_type }}
 spec:
 {% if mceinfraenv_info.ntp_sources | default([]) %}
-  additionalNTPSources: {{ mceinfraenv_info.ntp_sources | to_yaml }}
+  additionalNTPSources: {{ mceinfraenv_info.ntp_sources | to_nice_json(indent=2,sort_keys=false) | indent(4) }}
 {% endif %}
 {% if mceinfraenv_info.trusted_ca_bundle | default('') %}
   additionalTrustBundle: |

@@ -18,7 +18,7 @@ spec:
         memory: '{{ mcehostedcluster_info.nodepool_compute_memory | default("6Gi") }}'
       rootVolume:
         persistent:
-          accessModes: {{ mcehostedcluster_info.nodepool_rootvolume_accessmodes | to_yaml }}
+          accessModes: {{ mcehostedcluster_info.nodepool_rootvolume_accessmodes | to_nice_json(indent=2,sort_keys=false) | indent(12) }}
           size: {{ mcehostedcluster_info.nodepool_rootvolume_size }}
 {% if mcehostedcluster_info.nodepool_rootvolume_storageclass | length > 0 %}
           storageClass: {{ mcehostedcluster_info.nodepool_rootvolume_storageclass }}

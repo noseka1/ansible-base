@@ -2,7 +2,7 @@
 ---
 service_type: host
 hostname: {{ hostvars[host]['ansible_host'] }}
-labels: {{ hostvars[host]['cephadm_labels'] | to_yaml }}
+labels: {{ hostvars[host]['cephadm_labels'] | to_nice_json(indent=2,sort_keys=false) | indent(2) }}
 {% endfor %}
 ---
 service_type: mon
@@ -29,4 +29,4 @@ service_type: osd
 placement:
   label: osd
 data_devices:
-  paths: {{ cephlab_osd_data_devices_paths | to_yaml }}
+  paths: {{ cephlab_osd_data_devices_paths | to_nice_json(indent=2,sort_keys=false) | indent(4) }}

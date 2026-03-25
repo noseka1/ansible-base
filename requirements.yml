@@ -28,4 +28,4 @@ collections:
 
 - name: azure.azcollection
   src: https://github.com/ansible-collections/azure
-  version: 3.7.0
+  version: 3.16.0

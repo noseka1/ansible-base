@@ -11,4 +11,4 @@
 - name: Send all notifications to the custom webhook receiver
   kubernetes.core.k8s:
     template:
-      - notifications/default-notifications-configuration-notificationsconfiguration.yaml
+      - notifications/notificationsconfiguration.yaml

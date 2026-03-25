@@ -15,7 +15,7 @@
 - name: Delete cluster roles
   kubernetes.core.k8s:
     template:
-      - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/clusterrolebinding.yaml
     wait: true
     state: absent
 

@@ -12,12 +12,12 @@
 - name: Deploy Argo CD
   kubernetes.core.k8s:
     template:
-      - instance/openshift-gitops-ns.yaml
-      - instance/openshift-gitops-argocd.yaml
-      - instance/openshift-gitops-cluster-secret.yaml
-      - instance/openshift-gitops-cluster-admin-clusterrolebinding.yaml
+      - instance/namespace.yaml
+      - instance/argocd.yaml
+      - instance/cluster-secret.yaml
+      - instance/clusterrolebinding.yaml
       - instance/trusted-ca-bundle-cm.yaml
-      - instance/argocd-secret-secret.yaml
+      - instance/argocd-secret.yaml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ gitops_instance_name }} deployment to complete
   kubernetes.core.k8s_info:

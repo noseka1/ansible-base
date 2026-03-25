@@ -7,7 +7,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-# Grant argocd-admin service account cluster-admin privileges
+# Grant argocd-mgmt service account cluster-admin privileges
 - kind: ServiceAccount
   name: argocd-mgmt
   namespace: kube-system

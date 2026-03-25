@@ -5,3 +5,4 @@
 /inventory/group_vars/kube_lab/kubeadm_ca_cert.yml
 /third_party/
 /workspace/
+/execution_environment/context/

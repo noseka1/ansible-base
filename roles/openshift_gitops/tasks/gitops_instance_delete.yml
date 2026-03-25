@@ -1,3 +1,26 @@
+- name: Check if Argo CD subscription exists
+  kubernetes.core.k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: openshift-gitops-operator
+    namespace: '{{ gitops_operator_namespace }}'
+  register: gitops_instance_subscription_result
+
+- name: Instruct operator to delete Argo CD instance
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: Subscription
+      metadata:
+        name: openshift-gitops-operator
+        namespace: '{{ gitops_operator_namespace }}'
+      spec:
+        config:
+          env:
+          - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+            value: "true"
+  when: gitops_instance_subscription_result.resources | length == 1
+
 - import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
@@ -18,12 +41,3 @@
       - instance/clusterrolebinding.yaml
     wait: true
     state: absent
-
-- import_role:
-    name: openshift_common
-    tasks_from: delete_kubernetes_objects.yml
-  vars:
-    delete_kubernetes_objects:
-      - api_version: v1
-        kind: Namespace
-        name: openshift-gitops

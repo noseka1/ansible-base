@@ -36,3 +36,6 @@
 
 - import_tasks: report_success.yml
   tags: aap_instance
+
+- import_tasks: init.yml
+  tags: aap_init

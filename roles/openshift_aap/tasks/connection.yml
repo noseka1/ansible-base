@@ -1,0 +1,21 @@
+- when: aap_connection_host is not defined
+  block:
+    - name: Obtain gateway route
+      kubernetes.core.k8s_info:
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: aap
+        namespace: aap
+      register: aap_gateway_route_result
+
+    - name: Verify gateway route exists
+      assert:
+        that: aap_gateway_route_result.resources | length == 1
+        fail_msg: "AAP gateway route doesn't exist. Is AAP installed on the cluster?"
+        quiet: true
+
+    - name: Set AAP connection
+      set_fact:
+        aap_connection_host: '{{ aap_gateway_route_result.resources.0.spec.host }}'
+        aap_connection_username:  admin
+        aap_connection_password: '{{ generic_user_password }}'

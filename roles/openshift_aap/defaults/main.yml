@@ -3,3 +3,7 @@ aap_operator_subscription_starting_csv: ''
 
 # AAP requires ReadWriteMany (RWX) storage
 aap_instance_file_storage_storage_class: ''
+
+# Filter for looking up Ansible Automation Platform subscription
+aap_subscription_filter:
+  subscription_name: Employee SKU

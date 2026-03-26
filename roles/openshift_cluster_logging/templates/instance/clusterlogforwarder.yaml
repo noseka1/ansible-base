@@ -22,8 +22,8 @@ spec:
         memory: 8Gi
   inputs:
   # The built-in "audit" input includes the rather verbose and low-level auditd
-  # logs. Define a custom input that excludes the auditd logs to reduce the size
-  # of collected logs. See also:
+  # logs. Define a custom input that excludes the auditd logs ("auditd" item not
+  # included in the list) to reduce the size of collected logs. See also:
   # https://docs.redhat.com/en/documentation/red_hat_openshift_logging/6.4/html/configuring_logging/configuring-log-forwarding#input-spec-filter-audit-infrastructure_configuring-log-forwarding
   - name: audit-without-auditd
     type: audit

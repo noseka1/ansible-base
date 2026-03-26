@@ -20,11 +20,11 @@
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/splunk/instance/credentials'
     hvault_secret_data:
-      #hec_token: CEEC6F85-10D4-41FD-B7BA-86026102C3B5
-      #idxc_secret: AA8CUQWAwEaESgV7WSGAt6o3
-      #pass4SymmKey: FVgKfq0rSXyJdNNI8VN65YvB
+      #hec_token: CEEC6F85-10D4-41FD-B7BA-86026102C3B5 # gitleaks:allow
+      #idxc_secret: AA8CUQWAwEaESgV7WSGAt6o3 # gitleaks:allow
+      #pass4SymmKey: FVgKfq0rSXyJdNNI8VN65YvB # gitleaks:allow
       password: '{{ generic_user_password }}'
-      #shc_secret: YcBshr1jNyYZXrVj87I5898a
+      #shc_secret: YcBshr1jNyYZXrVj87I5898a # gitleaks:allow
 
 - import_role:
     name: openshift_autogitops

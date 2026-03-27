@@ -17,3 +17,9 @@ additional_build_steps:
       git \
       python3 \
       pip3
+    # Install oc and kubectl
+    RUN curl --location --no-progress-meter \
+      https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz | \
+      tar xvfz - --directory /usr/local/bin oc kubectl && \
+      kubectl completion bash > /etc/bash_completion.d/kubectl && \
+      oc completion bash > /etc/bash_completion.d/oc

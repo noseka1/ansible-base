@@ -1,0 +1,28 @@
+{
+  "fields": [
+    {
+      "id": "kube_server",
+      "type": "string",
+      "label": "Kubernetes API Server URL",
+      "help_text": "Example: https://api.mycluster.example.com:6443"
+    },
+    {
+      "id": "kube_token",
+      "type": "string",
+      "label": "API Token",
+      "secret": true
+    },
+    {
+      "id": "kube_ca",
+      "type": "string",
+      "label": "Certificate Authority (Optional)",
+      "multiline": true
+    },
+    {
+      "id": "kube_insecure_skip_tls_verify",
+      "type": "boolean",
+      "label": "Skip verification of server TLS cert (Optional)"
+    }
+  ],
+  "required": ["kube_server", "kube_token"]
+}

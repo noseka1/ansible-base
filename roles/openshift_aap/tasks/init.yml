@@ -55,15 +55,26 @@
 - debug:
     var: aap_init_sa_secret_result.resources.0.data.token | b64decode
 
+- name: Create Custom Kubeconfig File credential type
+  ansible.controller.credential_type:
+    name: Custom Kubeconfig File
+    description: Generates a physical .kube/config file for oc/kubectl commands
+    kind: cloud
+    inputs: "{{ lookup('file', 'inputs.json') | from_json }}"
+    injectors: "{{ lookup('file', 'injectors.json') | from_json }}"
+    controller_host: '{{ aap_connection_host }}'
+    controller_username: '{{ aap_connection_username }}'
+    controller_password: '{{ aap_connection_password }}'
+
 - name: Create OpenShift credential in Ansible Automation Platform
   ansible.controller.credential:
     name: '{{ oscommon_cluster_domain }}'
-    credential_type: OpenShift or Kubernetes API Bearer Token
+    credential_type: Custom Kubeconfig File
     organization: Default
     inputs:
-      host: '{{ oscommon_cluster_url }}'
-      bearer_token: '{{ aap_init_sa_secret_result.resources.0.data.token | b64decode }}'
-      verify_ssl: true
+      kube_server: '{{ oscommon_cluster_url }}'
+      kube_token: '{{ aap_init_sa_secret_result.resources.0.data.token | b64decode }}'
+      kube_insecure_skip_tls_verify: true
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

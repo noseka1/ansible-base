@@ -24,7 +24,7 @@
 
 - name: Create HashiCorp Vault credential in Ansible Automation Platform
   ansible.controller.credential:
-    name: 'HashiCorp Vault on {{ oscommon_cluster_domain }}'
+    name: '{{ oscommon_cluster_domain }} HashiCorp Vault'
     credential_type: Custom HashiCorp Vault
     organization: Default
     inputs:

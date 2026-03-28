@@ -68,7 +68,7 @@
 
 - name: Create OpenShift credential in Ansible Automation Platform
   ansible.controller.credential:
-    name: '{{ oscommon_cluster_domain }}'
+    name: '{{ oscommon_cluster_domain }} Kubernetes API'
     credential_type: Custom Kubeconfig File
     organization: Default
     inputs:
@@ -146,7 +146,7 @@
     project: Wait for Stable Cluster {{ oscommon_cluster_domain }}
     playbook: openshift_wait_for_stable_cluster.yml
     credentials:
-      - '{{ oscommon_cluster_domain }}'
+      - '{{ oscommon_cluster_domain }} Kubernetes API'
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

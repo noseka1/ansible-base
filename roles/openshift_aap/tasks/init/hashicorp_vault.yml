@@ -28,6 +28,8 @@
     credential_type: Custom HashiCorp Vault
     organization: Default
     inputs:
+      vault_addr: '{{ hvault_addr }}'
+      vault_skip_verify: true
       vault_approle_role_id: '{{ hvault_approle_role_id }}'
       vault_approle_secret_id: '{{ hvault_approle_secret }}'
     controller_host: '{{ aap_connection_host }}'

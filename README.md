@@ -6,13 +6,13 @@ Install dependencies with:
 
 ```
 $ ansible-galaxy role install \
-  --role-file requirements.yml \
+  --role-file requirements_community.yml \
   --force
 ```
 
 ```
 $ ansible-galaxy collection install \
-  --requirements-file requirements.yml \
+  --requirements-file requirements_community.yml \
   --force
 ```
 

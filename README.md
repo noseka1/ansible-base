@@ -22,6 +22,9 @@ Optionally, install Red Hat dependencies using:
 $ export ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN="<Insert your secret token that you downloaded from https://console.redhat.com/ansible/automation-hub/token>"
 ```
 
+Note that the token will expire after 30 days of inactivity.
+
+
 ```
 $ ansible-galaxy collection install \
   --requirements-file requirements_redhat.yml \

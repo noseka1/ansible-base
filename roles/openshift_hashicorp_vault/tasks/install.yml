@@ -11,7 +11,7 @@
     autogitops_app_namespace: '{{ hvault_namespace }}'
 
 - name: Obtain vault route
-  import_tasks: get_vault_route.yml
+  import_tasks: connection_addr.yml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for HashiCorp Vault to come up
   uri:

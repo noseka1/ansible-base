@@ -1,6 +1,6 @@
 - import_role:
     name: openshift_hashicorp_vault
-    tasks_from: get_vault_route.yml
+    tasks_from: connection_addr.yml
 
 - name: Create HashiCorp Vault backend "{{ extsecrets_hvault_name }}"
   kubernetes.core.k8s:

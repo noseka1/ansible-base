@@ -8,7 +8,7 @@
 
 - import_tasks: unseal.yml
 
-- import_tasks: get_admin_token.yml
+- import_tasks: admin_token.yml
 
 - import_tasks: enable_audit.yml
 

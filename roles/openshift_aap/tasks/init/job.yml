@@ -40,10 +40,10 @@
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'
 
-- name: Add project Wait for Stable Cluster {{ oscommon_cluster_domain }}
+- name: Add project Verify AAP Setup
   ansible.controller.project:
-    name: Wait for Stable Cluster {{ oscommon_cluster_domain }}
-    description: Wait for cluster operators to stabilize
+    name: Verify AAP Setup
+    description: Run a test job that verifies initial AAP configuration.
     organization: Default
     scm_update_on_launch: true
     scm_update_cache_timeout: 60
@@ -56,21 +56,22 @@
 
 - name: Create job template
   ansible.controller.job_template:
-    name: Wait for Stable Cluster {{ oscommon_cluster_domain }}
+    name: Verify AAP Setup
     job_type: run
     organization: Default
     inventory: '{{ oscommon_cluster_domain }}'
-    project: Wait for Stable Cluster {{ oscommon_cluster_domain }}
-    playbook: openshift_wait_for_stable_cluster.yml
+    project: Verify AAP Setup
+    playbook: openshift_aap_test.yml
     credentials:
       - '{{ oscommon_cluster_domain }} Kubernetes API'
+      - '{{ oscommon_cluster_domain }} HashiCorp Vault'
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'
 
 - name: Launch a job
   ansible.controller.job_launch:
-    job_template: Wait for Stable Cluster {{ oscommon_cluster_domain }}
+    job_template: Verify AAP Setup
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

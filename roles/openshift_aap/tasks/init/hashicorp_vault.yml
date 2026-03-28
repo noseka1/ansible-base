@@ -15,6 +15,7 @@
 - name: Create Custom HashiCorp Vault credential type
   ansible.controller.credential_type:
     name: Custom HashiCorp Vault
+    description: Authetication to HashiCorp Vault using approle
     kind: cloud
     inputs: '{{ lookup("file", "hashicorp_vault/inputs.yml") | from_yaml }}'
     injectors: '{{ lookup("file", "hashicorp_vault/injectors.yml") | from_yaml }}'
@@ -29,7 +30,8 @@
     organization: Default
     inputs:
       vault_addr: '{{ hvault_addr }}'
-      vault_skip_verify: true
+      vault_cacert: '{{ aap_trusted_ca_certificate }}'
+      vault_skip_verify: false
       vault_approle_role_id: '{{ hvault_approle_role_id }}'
       vault_approle_secret_id: '{{ hvault_approle_secret }}'
     controller_host: '{{ aap_connection_host }}'

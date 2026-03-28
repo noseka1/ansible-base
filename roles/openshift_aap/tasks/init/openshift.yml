@@ -37,7 +37,8 @@
     inputs:
       kube_server: '{{ oscommon_cluster_url }}'
       kube_token: '{{ aap_init_sa_secret_result.resources.0.data.token | b64decode }}'
-      kube_insecure_skip_tls_verify: true
+      kube_ca_base64: '{{ aap_trusted_ca_certificate | b64encode }}'
+      kube_insecure_skip_tls_verify: false
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

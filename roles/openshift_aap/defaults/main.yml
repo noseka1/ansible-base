@@ -7,3 +7,6 @@ aap_instance_file_storage_storage_class: ''
 # Filter for looking up Ansible Automation Platform subscription
 aap_subscription_filter:
   subscription_name: Employee SKU
+
+# CA certificate used to validate Kubernetes API and HashiCorp Vault endpoints
+aap_trusted_ca_certificate: ''

@@ -7,10 +7,9 @@ fields:
     type: string
     label: API Token
     secret: true
-  - id: kube_ca
+  - id: kube_ca_base64
     type: string
-    label: Certificate Authority (Optional)
-    multiline: true
+    label: Base64-encoded Certificate Authority (Optional)
   - id: kube_insecure_skip_tls_verify
     type: boolean
     label: Skip verification of server TLS cert (Optional)

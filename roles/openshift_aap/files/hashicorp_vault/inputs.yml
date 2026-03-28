@@ -3,6 +3,10 @@ fields:
     type: string
     label: HashiCorp Vault API URL
     help_text: 'Example: https://hashicorp-vault-instance-hashicorp-vault.apps.mycluster3.example.com'
+  - id: vault_cacert
+    type: string
+    label: Certificate Authority (Optional)
+    multiline: true
   - id: vault_skip_verify
     type: boolean
     label: Skip verification of server TLS cert (Optional)
@@ -13,3 +17,7 @@ fields:
     type: string
     label: Hashicorp Vault appRole Secret ID
     secret: true
+required:
+  - vault_addr
+  - vault_approle_role_id
+  - vault_approle_secret_id

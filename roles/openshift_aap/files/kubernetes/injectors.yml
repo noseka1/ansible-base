@@ -3,9 +3,13 @@ file:
     apiVersion: v1
     clusters:
     - cluster:
-        server: "{{ kube_server }}"
-        {% if kube_ca %}certificate-authority-data: "{{ kube_ca }}"{% endif %}
-        {% if kube_insecure_skip_tls_verify is defined %}insecure-skip-tls-verify: {{ kube_insecure_skip_tls_verify }}{% endif %}
+        server: '{{ kube_server }}'
+    {% if kube_ca_base64 %}
+        certificate-authority-data: {{ kube_ca_base64 }}
+    {% endif %}
+    {% if kube_insecure_skip_tls_verify is defined %}
+        insecure-skip-tls-verify: {{ kube_insecure_skip_tls_verify }}
+    {% endif %}
       name: dynamic-cluster
     contexts:
     - context:
@@ -18,6 +22,6 @@ file:
     users:
     - name: dynamic-user
       user:
-        token: "{{ kube_token }}"
+        token: '{{ kube_token }}'
 env:
   KUBECONFIG: '{{ tower.filename }}'

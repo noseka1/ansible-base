@@ -9,3 +9,8 @@ env:
   VAULT_AUTHTYPE: approle
   VAULT_ROLE_ID: '{{ vault_approle_role_id }}'
   VAULT_SECRET_ID: '{{ vault_approle_secret_id }}'
+  VAULT_CACERT: '{{ tower.filename }}'
+
+file:
+  template: |-
+    {{ vault_cacert }}

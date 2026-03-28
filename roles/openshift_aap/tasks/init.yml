@@ -60,8 +60,8 @@
     name: Custom Kubeconfig File
     description: Generates a physical .kube/config file for oc/kubectl commands
     kind: cloud
-    inputs: "{{ lookup('file', 'inputs.json') | from_json }}"
-    injectors: "{{ lookup('file', 'injectors.json') | from_json }}"
+    inputs: '{{ lookup("file", "kubernetes/inputs.json") | from_json }}'
+    injectors: '{{ lookup("file", "kubernetes/injectors.json") | from_json }}'
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'
@@ -78,6 +78,8 @@
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'
+
+- import_tasks: init_hashicorp_vault.yml
 
 - name: Create cluster inventory
   ansible.controller.inventory:

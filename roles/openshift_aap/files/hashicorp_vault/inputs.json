@@ -1,0 +1,15 @@
+{
+  "fields": [
+    {
+      "id": "vault_approle_role_id",
+      "type": "string",
+      "label": "Hashicorp Vault appRole Role ID"
+    },
+    {
+      "id": "vault_approle_secret_id",
+      "type": "string",
+      "label": "Hashicorp Vault appRole Secret ID",
+      "secret": true
+    }
+  ]
+}

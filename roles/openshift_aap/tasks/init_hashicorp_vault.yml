@@ -1,0 +1,35 @@
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: keyval_create.yml
+  vars:
+    hvault_keyval_name: ansible
+    hvault_keyval_approle:
+      - ansible
+
+- import_role:
+    name: openshift_hashicorp_vault
+    tasks_from: connection_approle.yml
+  vars:
+    hvault_approle_name: ansible
+
+- name: Create Custom HashiCorp Vault credential type
+  ansible.controller.credential_type:
+    name: Custom HashiCorp Vault
+    kind: cloud
+    inputs: '{{ lookup("file", "hashicorp_vault/inputs.json") | from_json }}'
+    injectors: '{{ lookup("file", "hashicorp_vault/injectors.json") | from_json }}'
+    controller_host: '{{ aap_connection_host }}'
+    controller_username: '{{ aap_connection_username }}'
+    controller_password: '{{ aap_connection_password }}'
+
+- name: Create HashiCorp Vault credential in Ansible Automation Platform
+  ansible.controller.credential:
+    name: 'HashiCorp Vault on {{ oscommon_cluster_domain }}'
+    credential_type: Custom HashiCorp Vault
+    organization: Default
+    inputs:
+      vault_approle_role_id: '{{ hvault_approle_role_id }}'
+      vault_approle_secret_id: '{{ hvault_approle_secret }}'
+    controller_host: '{{ aap_connection_host }}'
+    controller_username: '{{ aap_connection_username }}'
+    controller_password: '{{ aap_connection_password }}'

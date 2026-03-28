@@ -14,6 +14,8 @@
 
 - import_tasks: enable_kube_auth.yml
 
+- import_tasks: enable_approle_auth.yml
+
 - import_tasks: custom_keyval_create.yml
   when: hvault_custom_keyval_create
 

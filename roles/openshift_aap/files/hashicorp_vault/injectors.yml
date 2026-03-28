@@ -1,6 +1,11 @@
 env:
   VAULT_ADDR: '{{ vault_addr }}'
   VAULT_SKIP_VERIFY: '{{ vault_skip_verify | default(false) }}'
-  VAULT_AUTHTYPE: approle
+  # These variables work for hashicorp.vault.kv2_secret
   VAULT_APPROLE_ROLE_ID: '{{ vault_approle_role_id }}'
   VAULT_APPROLE_SECRET_ID: '{{ vault_approle_secret_id }}'
+  # These variables work for ansible-modules-hashivault. See also:
+  # https://github.com/TerryHowe/ansible-modules-hashivault?tab=readme-ov-file#environmental-variables
+  VAULT_AUTHTYPE: approle
+  VAULT_ROLE_ID: '{{ vault_approle_role_id }}'
+  VAULT_SECRET_ID: '{{ vault_approle_secret_id }}'

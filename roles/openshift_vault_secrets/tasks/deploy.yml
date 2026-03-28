@@ -45,3 +45,18 @@
     autogitops_app_dst_path: vault-secrets/example
     autogitops_app_namespace: vault-secrets-example
   tags: vso_example
+
+- name: Retrieve the respective secret created by the operator
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: example
+    namespace: vault-secrets-example
+  register: vso_example_result
+  tags: vso_example
+
+- name: Fail if the secret value is not correct
+  assert:
+    that: (vso_example_result.resources.0.data.testkey | b64decode) == 'testvalue'
+    fail_msg: The secret value is not 'testvalue'.
+  tags: vso_example

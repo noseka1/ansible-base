@@ -16,8 +16,8 @@
   ansible.controller.credential_type:
     name: Custom HashiCorp Vault
     kind: cloud
-    inputs: '{{ lookup("file", "hashicorp_vault/inputs.json") | from_json }}'
-    injectors: '{{ lookup("file", "hashicorp_vault/injectors.json") | from_json }}'
+    inputs: '{{ lookup("file", "hashicorp_vault/inputs.yml") | from_yaml }}'
+    injectors: '{{ lookup("file", "hashicorp_vault/injectors.yml") | from_yaml }}'
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

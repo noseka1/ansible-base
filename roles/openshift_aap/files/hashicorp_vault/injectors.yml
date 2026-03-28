@@ -1,0 +1,3 @@
+env:
+  VAULT_APPROLE_ROLE_ID: '{{ vault_approle_role_id }}'
+  VAULT_APPROLE_SECRET_ID: '{{ vault_approle_secret_id }}'

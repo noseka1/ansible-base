@@ -1,0 +1,23 @@
+file:
+  template: |-
+    apiVersion: v1
+    clusters:
+    - cluster:
+        server: "{{ kube_server }}"
+        {% if kube_ca %}certificate-authority-data: "{{ kube_ca }}"{% endif %}
+        {% if kube_insecure_skip_tls_verify is defined %}insecure-skip-tls-verify: {{ kube_insecure_skip_tls_verify }}{% endif %}
+      name: dynamic-cluster
+    contexts:
+    - context:
+        cluster: dynamic-cluster
+        user: dynamic-user
+      name: dynamic-context
+    current-context: dynamic-context
+    kind: Config
+    preferences: {}
+    users:
+    - name: dynamic-user
+      user:
+        token: "{{ kube_token }}"
+env:
+  KUBECONFIG: '{{ tower.filename }}'

@@ -23,8 +23,8 @@
     name: Custom Kubeconfig File
     description: Generates a physical .kube/config file for oc/kubectl commands
     kind: cloud
-    inputs: '{{ lookup("file", "kubernetes/inputs.json") | from_json }}'
-    injectors: '{{ lookup("file", "kubernetes/injectors.json") | from_json }}'
+    inputs: '{{ lookup("file", "kubernetes/inputs.yml") | from_yaml }}'
+    injectors: '{{ lookup("file", "kubernetes/injectors.yml") | from_yaml }}'
     controller_host: '{{ aap_connection_host }}'
     controller_username: '{{ aap_connection_username }}'
     controller_password: '{{ aap_connection_password }}'

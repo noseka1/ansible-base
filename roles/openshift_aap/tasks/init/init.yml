@@ -6,4 +6,4 @@
 
 - import_tasks: init/hashicorp_vault.yml
 
-- import_tasks: init/test.yml
+- import_tasks: init/job.yml

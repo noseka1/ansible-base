@@ -1,0 +1,20 @@
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: vault-secrets/example
+  tags: vso_example
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: vault-secrets/instance
+  tags: vso_instance
+
+- import_role:
+    name: openshift_autogitops
+    tasks_from: app_delete.yml
+  vars:
+    autogitops_app_dst_path: vault-secrets/operator
+  tags: vso_operator

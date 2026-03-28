@@ -1,0 +1,11 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultConnection
+metadata:
+  name: vault-connection
+  namespace: vault-secrets-authconfig
+spec:
+  address: '{{ hvault_addr }}'
+  skipTLSVerify: false
+{% if vso_vault_connection_trusted_ca_cert %}
+  caCertSecretRef: trusted-ca-cert
+{% endif %}

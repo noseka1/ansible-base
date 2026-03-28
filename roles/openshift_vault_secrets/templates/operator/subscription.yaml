@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: vault-secrets-operator
+  namespace: vault-secrets-operator
+spec:
+  channel: {{ vso_operator_subscription_channel | default('""', true) }}
+  installPlanApproval: Manual
+  name: vault-secrets-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: {{ vso_operator_subscription_starting_csv | default('""', true) }}

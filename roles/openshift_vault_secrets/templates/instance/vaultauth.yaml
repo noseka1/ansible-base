@@ -1,0 +1,17 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: vault-auth
+  namespace: vault-secrets-authconfig
+spec:
+  # Allow referring to this VaultAuth from secrets in any namespace.
+  # See also:
+  # https://github.com/hashicorp/vault-secrets-operator/issues/148
+  allowedNamespaces:
+    - '*'
+  vaultConnectionRef: vault-connection
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: vault-secrets-operator
+    serviceAccount: vault-secrets-operator

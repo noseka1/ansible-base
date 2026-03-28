@@ -1,0 +1,31 @@
+- assert:
+    that: redhat_subscription_username | length > 0
+    fail_msg: Variable 'redhat_subscription_username' must not be empty
+    quiet: true
+
+- assert:
+    that: redhat_subscription_password | length > 0
+    fail_msg: Variable 'redhat_subscription_password' must not be empty
+    quiet: true
+
+- name: Get Ansible Automation Platform subscriptions
+  ansible.controller.subscriptions:
+    username: '{{ redhat_subscription_username }}'
+    password: '{{ redhat_subscription_password }}'
+    filters: '{{ aap_subscription_filter }}'
+    controller_host: '{{ aap_connection_host }}'
+    controller_username: '{{ aap_connection_username }}'
+    controller_password: '{{ aap_connection_password }}'
+  register: aap_subscriptions_result
+
+- assert:
+    that: aap_subscriptions_result.subscriptions | length > 0
+    fail_msg: No subscription for Ansible Automation Platform available.
+    quiet: true
+
+- name: Install controller license
+  ansible.controller.license:
+    subscription_id: '{{ aap_subscriptions_result.subscriptions.0.subscription_id }}'
+    controller_host: '{{ aap_connection_host }}'
+    controller_username: '{{ aap_connection_username }}'
+    controller_password: '{{ aap_connection_password }}'

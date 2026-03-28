@@ -1,0 +1,9 @@
+- import_tasks: connection.yml
+
+- import_tasks: init/license.yml
+
+- import_tasks: init/openshift.yml
+
+- import_tasks: init/hashicorp_vault.yml
+
+- import_tasks: init/test.yml

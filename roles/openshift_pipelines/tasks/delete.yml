@@ -1,14 +1,14 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: openshift-pipelines/operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -35,7 +35,7 @@
         kind: ValidatingWebhookConfiguration
         name: validation.webhook.operator.tekton.dev
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

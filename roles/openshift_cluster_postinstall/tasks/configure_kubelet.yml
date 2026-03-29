@@ -3,7 +3,7 @@
     template: custom-kubeletconfig.yaml
   register: osclusterpostinst_kubelet_config_result
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:

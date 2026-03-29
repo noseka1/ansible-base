@@ -1,4 +1,4 @@
-- set_fact:
+- ansible.builtin.set_fact:
     osclusterinstall_info: '{{ osclusterinstall_agent }}'
     osclusterinstall_platform: AGENT
 
@@ -16,7 +16,7 @@
     label: '{{ item.key }}'
 
 - name: Delete cluster configuration
-  file:
+  ansible.builtin.file:
     path: '{{ osclusterinstall_info.config_dir }}/{{ item }}'
     state: absent
   loop:

@@ -1,6 +1,6 @@
-- import_tasks: operator_deploy.yml
+- ansible.builtin.import_tasks: operator_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -8,34 +8,34 @@
     autogitops_app_dst_path: rhacs/namespace
     autogitops_app_namespace: stackrox
 
-- import_tasks: central_deploy.yml
+- ansible.builtin.import_tasks: central_deploy.yml
 
-- import_tasks: quay_image_integration_configure.yml
+- ansible.builtin.import_tasks: quay_image_integration_configure.yml
   when: rhacs_quay_image_integration_enabled
 
-- import_tasks: webhook_receiver_deploy.yml
+- ansible.builtin.import_tasks: webhook_receiver_deploy.yml
   when: rhacs_webhook_receiver_enabled
 
-- import_tasks: email_receiver_configure.yml
+- ansible.builtin.import_tasks: email_receiver_configure.yml
   when: rhacs_email_receiver_enabled
 
-- import_tasks: syslog_receiver_configure.yml
+- ansible.builtin.import_tasks: syslog_receiver_configure.yml
   when: rhacs_syslog_receiver_enabled
 
-- import_tasks: slack_receiver_configure.yml
+- ansible.builtin.import_tasks: slack_receiver_configure.yml
   when: rhacs_slack_receiver_url | length > 0
 
-- import_tasks: splunk_receiver_configure.yml
+- ansible.builtin.import_tasks: splunk_receiver_configure.yml
   when: rhacs_splunk_receiver_enabled
 
-- import_tasks: minio_backup_deploy.yml
+- ansible.builtin.import_tasks: minio_backup_deploy.yml
   when: rhacs_minio_backup_enabled
 
-- import_tasks: cloudflare_tunnel_create.yml
+- ansible.builtin.import_tasks: cloudflare_tunnel_create.yml
   when: rhacs_cloudflare_tunnel_create
 
-- import_tasks: openshift_sso_configure.yml
+- ansible.builtin.import_tasks: openshift_sso_configure.yml
 
-- import_tasks: secured_cluster_common_deploy.yml
+- ansible.builtin.import_tasks: secured_cluster_common_deploy.yml
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

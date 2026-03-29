@@ -1,25 +1,25 @@
-- import_role:
+- ansible.builtin.import_role:
     name: ansible-modules-hashivault
 
-- import_tasks: install.yml
+- ansible.builtin.import_tasks: install.yml
 
-- import_tasks: initialize.yml
+- ansible.builtin.import_tasks: initialize.yml
   when: hvault_health.status == 501
 
-- import_tasks: unseal.yml
+- ansible.builtin.import_tasks: unseal.yml
 
-- import_tasks: admin_token.yml
+- ansible.builtin.import_tasks: admin_token.yml
 
-- import_tasks: enable_audit.yml
+- ansible.builtin.import_tasks: enable_audit.yml
 
-- import_tasks: enable_kube_auth.yml
+- ansible.builtin.import_tasks: enable_kube_auth.yml
 
-- import_tasks: enable_approle_auth.yml
+- ansible.builtin.import_tasks: enable_approle_auth.yml
 
-- import_tasks: custom_keyval_create.yml
+- ansible.builtin.import_tasks: custom_keyval_create.yml
   when: hvault_custom_keyval_create
 
-- import_tasks: custom_pki_create.yml
+- ansible.builtin.import_tasks: custom_pki_create.yml
   when: hvault_custom_pki_create
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

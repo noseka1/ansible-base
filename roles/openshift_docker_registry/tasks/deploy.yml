@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -8,7 +8,7 @@
       htpasswd: |
         admin:{{ generic_user_password | string | password_hash("bcrypt", "constant1234567890123.") }}
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -16,4 +16,4 @@
     autogitops_app_dst_path: docker-registry/instance
     autogitops_app_namespace: '{{ dockerreg_namespace }}'
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

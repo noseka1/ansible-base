@@ -1,4 +1,4 @@
-- set_fact:
+- ansible.builtin.set_fact:
     rhbk_realm_name: rhdh
     rhbk_realm_display_name: Red Hat Developer Hub Realm
     rhbk_client_name: rhdh
@@ -12,14 +12,14 @@
       - query-users
       - view-users
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_rhbk
     tasks_from: realm_create.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_rhbk
     tasks_from: openshift_oauthclient_create.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_rhbk
     tasks_from: client_secret_get.yml

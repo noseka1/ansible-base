@@ -2,6 +2,6 @@
     - kube_lab
   tasks:
     - name: Uninstall the Kubernetes cluster
-      import_role:
+      ansible.builtin.import_role:
         name: kube_lab
         tasks_from: uninstall.yml

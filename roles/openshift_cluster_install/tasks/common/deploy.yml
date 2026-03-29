@@ -1,11 +1,11 @@
 - name: Check the install_complete timestamp
-  stat:
+  ansible.builtin.stat:
     path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     get_checksum: false
     get_mime: false
   register: osclusterinstall_install_complete_result
 
-- debug:
+- ansible.builtin.debug:
     msg: >-
       Found cluster installation timestamp in directory {{ osclusterinstall_info.config_dir }}, assuming that the
       cluster already exists, skipping the installation. If you are trying to reinstall the cluster, delete the cluster
@@ -16,34 +16,34 @@
 - when: not osclusterinstall_install_complete_result.stat.exists
   block:
     - name: Set target OpenShift version
-      set_fact:
+      ansible.builtin.set_fact:
         osclusterinstall_version_resolved: '{{ osclusterinstall_info.version }}'
       when:
         - osclusterinstall_info.version != 'latest'
 
-    - import_tasks: common/cluster_version.yml
+    - ansible.builtin.import_tasks: common/cluster_version.yml
       when:
         - osclusterinstall_info.version == 'latest'
 
-    - import_tasks: common/cluster_installer.yml
+    - ansible.builtin.import_tasks: common/cluster_installer.yml
 
-    - include_tasks: common/cluster_install.yml
+    - ansible.builtin.include_tasks: common/cluster_install.yml
       when:
         - osclusterinstall_platform != 'AGENT'
 
-    - include_tasks: agent/cluster_install.yml
+    - ansible.builtin.include_tasks: agent/cluster_install.yml
       when:
         - osclusterinstall_platform == 'AGENT'
 
     - name: Create the timestamp
-      file:
+      ansible.builtin.file:
         path: '{{ osclusterinstall_info.config_dir }}/install_complete'
         state: touch
         mode: '0644'
 
-- import_tasks: common/report_success.yml
+- ansible.builtin.import_tasks: common/report_success.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cluster_postinstall
     tasks_from: deploy.yml
   environment:

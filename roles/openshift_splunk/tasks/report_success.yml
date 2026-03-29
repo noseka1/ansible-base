@@ -6,7 +6,7 @@
     namespace: '{{ splunk_instance_namespace }}'
   register: splunk_web_route
 
-- set_fact:
+- ansible.builtin.set_fact:
     msg: |
       Splunk Enterprise installed successfully.
 
@@ -22,5 +22,5 @@
       To display Splunk credentials, type:
       oc extract -n {{ splunk_instance_namespace }} secret/splunk-{{ splunk_instance_namespace }}-secret --to -
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

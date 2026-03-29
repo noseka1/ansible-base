@@ -1,5 +1,5 @@
 - name: Check that smtp4dev service does exist
-  assert:
+  ansible.builtin.assert:
     that: >-
       query('kubernetes.core.k8s', api_version='v1', kind='Service', namespace=smtp4dev_namespace, resource_name='smtp4dev') | length == 1
     fail_msg: |
@@ -7,6 +7,6 @@
       Use the openshift_smtp4dev_deploy.yml playbook to install an smtp4dev instance.
     quiet: true
 
-- set_fact:
+- ansible.builtin.set_fact:
     smtp4dev_hostname: smtp4dev.{{ smtp4dev_namespace }}.svc
     smtp4dev_port: 25

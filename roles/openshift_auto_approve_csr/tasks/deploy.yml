@@ -17,11 +17,11 @@
     namespace: '{{ auto_approve_csr_namespace }}'
   register: auto_approve_csr_serviceaccount_secret
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_machineconfiguration.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: update_machineconfiguration.yml
   vars:
@@ -33,7 +33,7 @@
     template: 64-auto-approve-csr-mc.yaml
   register: openshift_auto_approve_result
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:

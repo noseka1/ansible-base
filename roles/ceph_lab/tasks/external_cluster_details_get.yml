@@ -1,15 +1,15 @@
 - name: Upload ceph-external-cluster-details-exporter.py script
-  copy:
+  ansible.builtin.copy:
     content: '{{ cephlab_external_cluster_script }}'
     dest: '{{ cephlab_conf_dir }}/ceph-external-cluster-details-exporter.py'
 
 - name: Upload RGW CA certificate
-  copy:
+  ansible.builtin.copy:
     content: '{{ cephlab_ceph_rgw_ca_crt }}'
     dest: '{{ cephlab_conf_dir }}/rgw-ca.crt'
 
 - name: Collect external cluster connection details
-  command:
+  ansible.builtin.command:
     python {{ cephlab_conf_dir }}/ceph-external-cluster-details-exporter.py
       --rbd-data-pool-name {{ cephlab_rbd_pool_name }}
       --cephfs-filesystem-name {{ cephlab_cephfs_volume_name }}

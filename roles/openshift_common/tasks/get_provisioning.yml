@@ -7,6 +7,6 @@
   register: openshift_common_provisioning_result
 
 - name: Set openshift_common_provisioning_exists
-  set_fact:
+  ansible.builtin.set_fact:
     openshift_common_provisioning_exists: >-
       {{ openshift_common_provisioning_result.resources | length > 0 }}

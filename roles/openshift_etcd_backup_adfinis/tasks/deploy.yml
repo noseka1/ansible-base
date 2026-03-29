@@ -18,4 +18,4 @@
     # Prevent blocking forever if using a WaitForFirstConsumer storageclass
     wait: false
 
-- import_tasks: test_backup.yml
+- ansible.builtin.import_tasks: test_backup.yml

@@ -1,13 +1,13 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_rhbk
     tasks_from: get_connection.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_rhbk
     tasks_from: get_access_token.yml
 
 - name: Obtain list of realms
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -16,7 +16,7 @@
   register: rhbk_realms_list_result
 
 - name: Create realm {{ rhbk_realm_name }} if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms
     method: POST
     headers:
@@ -32,7 +32,7 @@
   when: (rhbk_realms_list_result.json | selectattr('id', 'equalto', rhbk_realm_name) | list| length) == 0
 
 - name: Obtain list of client scopes
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/client-scopes
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -41,7 +41,7 @@
   register: rhbk_client_scopes_list_result
 
 - name: Create client scope "groups" if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/client-scopes
     method: POST
     headers:
@@ -69,7 +69,7 @@
   when: (rhbk_client_scopes_list_result.json | selectattr('name', 'equalto', 'groups') | list | length) == 0
 
 - name: Obtain list of clients
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -78,7 +78,7 @@
   register: rhbk_clients_list_result
 
 - name: Create client {{ rhbk_client_name }} if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients
     method: POST
     headers:
@@ -108,7 +108,7 @@
   when: (rhbk_clients_list_result.json | selectattr('clientId', 'equalto', rhbk_client_name) | list | length) == 0
 
 - name: Obtain list of clients
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -116,16 +116,16 @@
     status_code: [ 200 ]
   register: rhbk_clients_list_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     rhbk_client_id: >-
       {{ (rhbk_clients_list_result.json | selectattr('clientId', 'equalto', rhbk_client_name) | first).id }}
 
-- set_fact:
+- ansible.builtin.set_fact:
     rhbk_realm_management_client_id: >-
       {{ (rhbk_clients_list_result.json | selectattr('clientId', 'equalto', 'realm-management') | first).id }}
 
 - name: Retrieve service account user for client {{ rhbk_client_name }}
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/clients/{{ rhbk_client_id }}/service-account-user
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -134,16 +134,16 @@
   register: rhbk_service_account_user_result
   when: rhbk_client_create_result is not skipped
 
-- include_tasks: user_role_assign.yml
+- ansible.builtin.include_tasks: user_role_assign.yml
   loop: '{{ rhbk_client_assign_roles }}'
   when: rhbk_client_create_result is not skipped
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
 - name: Obtain list of identity providers
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/identity-provider/instances
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -152,7 +152,7 @@
   register: rhbk_identity_providers_list_result
 
 - name: Create identity provider openshift-v4 if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/identity-provider/instances
     method: POST
     headers:
@@ -170,15 +170,15 @@
     status_code: [ 201 ]
   when: (rhbk_identity_providers_list_result.json | selectattr('providerId', 'equalto', 'openshift-v4') | list | length) == 0
 
-- import_tasks: group_create.yml
+- ansible.builtin.import_tasks: group_create.yml
   vars:
     rhbk_group_name: keycloak-admins
 
-- import_tasks: group_create.yml
+- ansible.builtin.import_tasks: group_create.yml
   vars:
     rhbk_group_name: keycloak-developers
 
-- include_tasks: user_create.yml
+- ansible.builtin.include_tasks: user_create.yml
   loop:
     - name: admin
       firstname: Some

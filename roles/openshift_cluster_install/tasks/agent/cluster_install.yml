@@ -1,5 +1,5 @@
 - name: Check the iso_prepared timestamp
-  stat:
+  ansible.builtin.stat:
     path: '{{ osclusterinstall_info.config_dir }}/iso_prepared'
     get_checksum: false
     get_mime: false
@@ -7,25 +7,25 @@
 
 - when: not osclusterinstall_iso_prepared_result.stat.exists
   block:
-    - import_tasks: agent/iso_prepare.yml
+    - ansible.builtin.import_tasks: agent/iso_prepare.yml
 
     - name: Create the timestamp
-      file:
+      ansible.builtin.file:
         path: '{{ osclusterinstall_info.config_dir }}/iso_prepared'
         state: touch
         mode: '0644'
 
-- import_tasks: agent/iso_boot.yml
+- ansible.builtin.import_tasks: agent/iso_boot.yml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the bootstrap to complete
-  command: >-
+  ansible.builtin.command: >-
     ./openshift-install agent wait-for bootstrap-complete --dir . --log-level debug
   changed_when: false
   args:
     chdir: '{{ osclusterinstall_info.config_dir }}'
 
 - name: Bootstrap complete
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Bootstrap complete.
 
@@ -43,11 +43,11 @@
 
          {{ osclusterinstall_info.config_dir }}/oc get clusterversion
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the installation to complete
-  command: >-
+  ansible.builtin.command: >-
     ./openshift-install agent wait-for install-complete --dir . --log-level debug
   changed_when: false
   args:

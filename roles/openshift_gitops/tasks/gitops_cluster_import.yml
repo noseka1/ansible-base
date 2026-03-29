@@ -19,7 +19,7 @@
     namespace: kube-system
   register: gitops_instance_sa_secret_result
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 

@@ -1,15 +1,15 @@
 - name: Copy over the kubeadm node configuration
-  template:
+  ansible.builtin.template:
     src: kubeadm_worker_config.yml
     dest: '{{ kubeadm_config_dir }}'
     mode: '0644'
 
 - name: Join the Kubernetes cluster
-  command: kubeadm join --config {{ kubeadm_config_dir }}/kubeadm_worker_config.yml
+  ansible.builtin.command: kubeadm join --config {{ kubeadm_config_dir }}/kubeadm_worker_config.yml
   args:
     creates: /etc/kubernetes/kubelet.conf
   register: kubeadm
   become: true
 
-- debug: var=kubeadm.stdout_lines
+- ansible.builtin.debug: var=kubeadm.stdout_lines
   when: kubeadm is changed

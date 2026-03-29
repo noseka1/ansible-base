@@ -1,5 +1,5 @@
 - name: Delete GPU Nodes MachineSet
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: machineset_delete.yml
   vars:

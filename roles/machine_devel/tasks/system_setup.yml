@@ -1,18 +1,18 @@
-- set_fact:
+- ansible.builtin.set_fact:
     github_dir: '{{ ansible_facts.env.HOME + "/git/github.com/noseka1" }}'
 
 - name: Create github directory
-  file:
+  ansible.builtin.file:
     path: '{{ github_dir }}'
     state: directory
 
 - name: Git checkout toolbox-container
-  git:
+  ansible.builtin.git:
     repo: 'https://github.com/noseka1/toolbox-container'
     dest: '{{ github_dir }}/toolbox-container'
     version: master
 
-- assert:
+- ansible.builtin.assert:
     that:
       - github_readonly_token is defined
       - github_readonly_token | length > 0
@@ -20,13 +20,13 @@
     quiet: true
 
 - name: Check that GitHub token is not expired
-  uri:
+  ansible.builtin.uri:
     url: https://api.github.com
     headers:
       Authorization: token {{ github_readonly_token }}
 
 - name: Run installation scripts
-  command: '{{ item }}'
+  ansible.builtin.command: '{{ item }}'
   loop:
     - '{{ github_dir }}/toolbox-container/toolbox_install_basic.sh'
     - '{{ github_dir }}/toolbox-container/toolbox_install_full.sh'

@@ -1,12 +1,12 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
   when: rhacs_central_host | length == 0
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Central to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/ping'
     url_username: admin
     url_password: '{{ generic_user_password }}'
@@ -19,7 +19,7 @@
   delay: 10
 
 - name: Try to generate init-bundle for cluster (returns HTTP 409 if bundle already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/cluster-init/init-bundles'
     method: POST
     body_format: json
@@ -38,7 +38,7 @@
     namespace: stackrox
   when: generate_cert_result.status == 200
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -47,7 +47,7 @@
     autogitops_app_namespace: stackrox
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ oscommon_cluster_domain }} to become healthy
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/clusters'
     url_username: admin
     url_password: '{{ generic_user_password }}'

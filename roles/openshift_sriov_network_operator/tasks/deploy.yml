@@ -1,7 +1,7 @@
-- import_tasks: mc_deploy.yml
+- ansible.builtin.import_tasks: mc_deploy.yml
   tags: sriovnet_mc
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
@@ -9,7 +9,7 @@
     oscomm_subscription_namespace: openshift-sriov-network-operator
   tags: sriovnet_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -18,7 +18,7 @@
     autogitops_app_namespace: openshift-sriov-network-operator
   tags: sriovnet_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

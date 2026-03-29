@@ -1,5 +1,5 @@
 - name: Copy pull secret to CRI-O
-  copy:
+  ansible.builtin.copy:
     dest: /etc/crio/openshift-pull-secret
     content: '{{ redhat_cloud_pull_secret }}'
     mode: '0600'
@@ -8,13 +8,13 @@
   become: true
 
 - name: Create directory /etc/systemd/system/crio.service.d
-  file:
+  ansible.builtin.file:
     path: /etc/systemd/system/crio.service.d
     state: directory
   become: true
 
 - name: Configure CRI-O proxy
-  template:
+  ansible.builtin.template:
     src: 00-proxy.conf
     dest: /etc/systemd/system/crio.service.d/00-proxy.conf
   when:
@@ -25,7 +25,7 @@
   become: true
 
 - name: Start crio service
-  service:
+  ansible.builtin.service:
     name: crio
     state: started
     enabled: true

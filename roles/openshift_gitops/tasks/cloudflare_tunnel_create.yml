@@ -1,6 +1,6 @@
-- import_tasks: get_argocd_route.yml
+- ansible.builtin.import_tasks: get_argocd_route.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cloudflared
     tasks_from: deploy.yml
   vars:

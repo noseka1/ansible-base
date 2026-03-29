@@ -9,5 +9,5 @@
       register: oscommon_default_ingresscontroller_result
 
     - name: Set infrastructure info
-      set_fact:
+      ansible.builtin.set_fact:
         oscommon_default_ingresscontroller: '{{ oscommon_default_ingresscontroller_result.resources.0 }}'

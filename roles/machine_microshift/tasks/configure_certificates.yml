@@ -1,5 +1,5 @@
 - name: Install custom trusted CA
-  copy:
+  ansible.builtin.copy:
     content: '{{ machine_microshift_trusted_ca_bundle[ansible_facts.domain] }}'
     dest: /etc/pki/ca-trust/source/anchors/custom-ca-bundle.pem
   register:
@@ -11,12 +11,12 @@
   become: true
 
 - name: Update CA trust
-  command: update-ca-trust
+  ansible.builtin.command: update-ca-trust
   when: machine_microshift_trusted_ca_bundle_result is changed
   become: true
 
 - name: Install Kubernetes API and ingress certificates
-  include_tasks: configure_certificates_subtasks.yml
+  ansible.builtin.include_tasks: configure_certificates_subtasks.yml
   loop:
     - dir: /var/lib/microshift/certs/kube-apiserver-external-signer/kube-external-serving
       files:

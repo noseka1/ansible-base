@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: direct_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: issuer_certificate_authority_direct_deploy.yml
 
-- import_tasks: endpoint_certs_complete.yml
+- ansible.builtin.import_tasks: endpoint_certs_complete.yml
   vars:
     osclusterpostinst_cert_issuer_name: certificate-authority

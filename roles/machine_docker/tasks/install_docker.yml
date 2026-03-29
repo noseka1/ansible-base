@@ -1,11 +1,11 @@
 - name: Add Docker repo
-  get_url:
+  ansible.builtin.get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/docker-ce.repo
   become: true
 
 - name: Workaround for installing containerd.io, https://bugzilla.redhat.com/show_bug.cgi?id=1756473
-  ini_file:
+  community.general.ini_file:
     dest: /etc/yum.repos.d/docker-ce.repo
     section: docker-ce-stable
     option: module_hotfixes
@@ -14,7 +14,7 @@
   become: true
 
 - name: Make sure conflicting podman is not installed
-  yum:
+  ansible.builtin.yum:
     name:
       - podman
       - podman-docker
@@ -23,21 +23,21 @@
   become: true
 
 - name: Install Docker
-  yum:
+  ansible.builtin.yum:
     name:
       - docker-ce
       - docker-ce-cli
   become: true
 
 - name: Ensure required directory exists
-  file:
+  ansible.builtin.file:
     dest: /etc/docker
     state: directory
     mode: '0755'
   become: true
 
 - name: Install Docker daemon config
-  template:
+  ansible.builtin.template:
     src: daemon.json
     dest: /etc/docker/daemon.json
     mode: '0644'
@@ -45,7 +45,7 @@
   become: true
 
 - name: Start Docker service
-  service:
+  ansible.builtin.service:
     name: docker
     state: started
     enabled: true

@@ -1,5 +1,5 @@
 - name: Install custom certificate
-  template:
+  ansible.builtin.template:
     src: rui.crt
     dest: /etc/vmware/ssl/rui.crt
     mode: '0644'
@@ -7,7 +7,7 @@
   become: true
 
 - name: Install custom private key
-  template:
+  ansible.builtin.template:
     src: rui.key
     dest: /etc/vmware/ssl/rui.key
     mode: '0644'
@@ -15,7 +15,7 @@
   become: true
 
 - name: Restart ESXi services after cert has been updated
-  command: '{{ item }}'
+  ansible.builtin.command: '{{ item }}'
   loop:
     - /etc/init.d/hostd restart
     - /etc/init.d/vpxa restart
@@ -23,5 +23,5 @@
   become: true
 
 - name: Wait for ESXi to become reachable
-  import_tasks: wait_for_esxi.yml
+  ansible.builtin.import_tasks: wait_for_esxi.yml
   when: (esxi_cert is changed) or (esxi_key is changed)

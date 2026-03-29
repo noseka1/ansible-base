@@ -9,7 +9,7 @@
 
 - when: osclusterpostinst_etcd_encryption_result is changed
   block:
-    - set_fact:
+    - ansible.builtin.set_fact:
         osclusterpostinst_etcd_encryption_desired_status: >-
           {{ 'False' if osclusterpostinst_etcd_encryption in [ '', 'identity' ] else 'True' }}
 
@@ -49,7 +49,7 @@
       retries: 120
       delay: 10
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: openshift_common
         tasks_from: wait_for_stable_cluster.yml
       vars:

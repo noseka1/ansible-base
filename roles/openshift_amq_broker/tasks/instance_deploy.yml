@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -10,7 +10,7 @@
       AMQ_PASSWORD: '{{ generic_user_password }}'
       AMQ_USER: admin
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

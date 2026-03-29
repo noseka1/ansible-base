@@ -1,18 +1,18 @@
 - hosts: ceph_lab
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: ceph_lab
         tasks_from: ssh_auth_setup.yml
       tags: cephlab_ssh_auth_setup
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: ceph_lab
         tasks_from: ceph_prereqs.yml
       tags: cephlab_prereqs
 
 - hosts: ceph_lab[0]
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: ceph_lab
         tasks_from: ceph_deploy.yml
       tags: cephlab_deploy

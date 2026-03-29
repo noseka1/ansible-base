@@ -1,12 +1,12 @@
 - name: Install rpms
-  yum:
+  ansible.builtin.yum:
     name:
       - nfs-utils
     state: present
   become: true
 
 - name: Start NFS server services
-  service:
+  ansible.builtin.service:
     name: '{{ item }}'
     state: started
     enabled: true
@@ -16,13 +16,13 @@
   become: true
 
 - name: Create group kvm
-  group:
+  ansible.builtin.group:
     name: kvm
     gid: 36
   become: true
 
 - name: Create user vdsm
-  user:
+  ansible.builtin.user:
     name: vdsm
     uid: 36
     groups:
@@ -30,23 +30,23 @@
   become: true
 
 - name: Create /storage directory
-  file:
+  ansible.builtin.file:
     path: /storage
     owner: vdsm
-    group: kvm
+    ansible.builtin.group: kvm
     state: directory
     mode: '0755'
   become: true
 
 - name: Export /storage via NFS
-  template:
+  ansible.builtin.template:
     src: exports
     dest: /etc/exports
     mode: '0644'
   register: nfs_config
 
 - name: Restart NFS services
-  service:
+  ansible.builtin.service:
     name: '{{ item }}'
     state: restarted
   loop:

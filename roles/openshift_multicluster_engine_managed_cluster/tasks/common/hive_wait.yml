@@ -14,7 +14,7 @@
   retries: 12
   delay: 5
 
-- fail:
+- ansible.builtin.fail:
     msg: Cluster provisioning failed.
   when: >-
     ((mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions is defined) and
@@ -33,7 +33,7 @@
   retries: 12
   delay: 5
 
-- debug:
+- ansible.builtin.debug:
     msg: >-
       oc logs -n {{ mcemanagedcluster_info.cluster_name }} job/{{ mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name }} -c installer -f
 
@@ -54,7 +54,7 @@
   retries: 300
   delay: 20
 
-- fail:
+- ansible.builtin.fail:
     msg: Cluster provisioning failed.
   when: >-
     ((mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0) and

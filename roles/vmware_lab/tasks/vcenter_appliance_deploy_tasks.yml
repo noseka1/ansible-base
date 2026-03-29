@@ -1,5 +1,5 @@
 - name: Check that the vCenter Server Appliance ISO is mounted
-  stat:
+  ansible.builtin.stat:
     path: '{{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy'
     get_checksum: false
     get_mime: false
@@ -7,7 +7,7 @@
   register: vcsa_deploy
 
 - name: Fail if not mounted
-  assert:
+  ansible.builtin.assert:
     that: vcsa_deploy.stat.exists
     fail_msg: >-
       Mount the vCenter Server Appliance ISO on {{ vmware_lab.vcenter_iso_mount_path }} are re-run this script.
@@ -15,27 +15,27 @@
   delegate_to: localhost
 
 - name: Check that ovftool used by the installer works. This may fail due to libnsl not installed.
-  command: >
+  ansible.builtin.command: >
     {{ vmware_lab.vcenter_iso_mount_path }}/vcsa/ovftool/lin64/ovftool --help
   delegate_to: localhost
   changed_when: false
 
 - name: Create temporary directory
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
     suffix: -vcsa
   delegate_to: localhost
   register: tmpdir
 
 - name: Copy install config to {{ tmpdir.path }}
-  template:
+  ansible.builtin.template:
     src: embedded_vCSA_on_ESXi.json
     dest: '{{ tmpdir.path }}'
     mode: '0644'
   delegate_to: localhost
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for vCenter installation to complete
-  command: >
+  ansible.builtin.command: >
     {{ vmware_lab.vcenter_iso_mount_path }}/vcsa-cli-installer/lin64/vcsa-deploy
       install
       --accept-eula
@@ -48,7 +48,7 @@
     - skip_ansible_lint
 
 - name: Delete temporary directory {{ tmpdir.path }}
-  file:
+  ansible.builtin.file:
     path: '{{ tmpdir.path }}'
     state: absent
   delegate_to: localhost

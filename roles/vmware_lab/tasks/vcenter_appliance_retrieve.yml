@@ -1,5 +1,5 @@
 - name: Retrieve vCenter virtual machine
-  vmware_guest_info:
+  community.vmware.vmware_guest_info:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'

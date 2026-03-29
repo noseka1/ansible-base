@@ -1,136 +1,136 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
     stable_cluster_delay: 0
     stable_cluster_retries: 10
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
   tags:
     - etcd_encryption
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_default_ingresscontroller.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_cluster_version.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_provisioning.yml
 
-- import_tasks: configure_images_mirrors.yml
+- ansible.builtin.import_tasks: configure_images_mirrors.yml
   when: osclusterpostinst_image_mirrors[oscommon_cluster_domain] is defined
 
-- import_tasks: etcd_encryption.yml
+- ansible.builtin.import_tasks: etcd_encryption.yml
   when:
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
   tags:
     - etcd_encryption
 
-- import_tasks: infra_nodes.yml
+- ansible.builtin.import_tasks: infra_nodes.yml
   when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
-- import_tasks: cluster_autoscaling.yml
+- ansible.builtin.import_tasks: cluster_autoscaling.yml
   when: oscommon_infrastructure.status.platformStatus.type in ['AWS', 'Azure', 'GCP']
 
-- import_tasks: configure_machine_healthcheck.yml
+- ansible.builtin.import_tasks: configure_machine_healthcheck.yml
   when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
-- import_tasks: autoscale_to_host.yml
+- ansible.builtin.import_tasks: autoscale_to_host.yml
   when:
     - oscommon_infrastructure.status.platformStatus.type == 'BareMetal'
     - openshift_common_provisioning_exists
 
-- import_tasks: configure_ingresscontroller.yml
+- ansible.builtin.import_tasks: configure_ingresscontroller.yml
 
-- import_tasks: configure_network.yml
+- ansible.builtin.import_tasks: configure_network.yml
 
-- import_tasks: ensure_storage.yml
+- ansible.builtin.import_tasks: ensure_storage.yml
 
-- import_tasks: clusterwide_proxy.yml
+- ansible.builtin.import_tasks: clusterwide_proxy.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: rhel_entitlement.yml
+- ansible.builtin.import_tasks: rhel_entitlement.yml
 
-- import_tasks: install_custom_rpms.yml
+- ansible.builtin.import_tasks: install_custom_rpms.yml
   when: osclusterpostinst_install_custom_rpms
 
-- import_tasks: custom_kernel_args.yml
+- ansible.builtin.import_tasks: custom_kernel_args.yml
 
-- import_tasks: configure_kubelet.yml
+- ansible.builtin.import_tasks: configure_kubelet.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: set_core_user_password.yml
+- ansible.builtin.import_tasks: set_core_user_password.yml
   when:
     - osclusterpostinst_set_core_user_password
     - oscommon_cluster_version_majorminor is version('4.13', '>=', strict=true)
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: set_root_user_password.yml
+- ansible.builtin.import_tasks: set_root_user_password.yml
   when:
     - osclusterpostinst_set_root_user_password
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: enable_fstrim.yml
+- ansible.builtin.import_tasks: enable_fstrim.yml
   when:
     - osclusterpostinst_enable_fstrim
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: kube_apiserver_audit.yml
+- ansible.builtin.import_tasks: kube_apiserver_audit.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: rbac.yml
+- ansible.builtin.import_tasks: rbac.yml
 
-- import_tasks: oauth_provider.yml
+- ansible.builtin.import_tasks: oauth_provider.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: operatorhub_io.yml
+- ansible.builtin.import_tasks: operatorhub_io.yml
   when: osclusterpostinst_enable_operatorhub
 
-- import_tasks: image_registry.yml
+- ansible.builtin.import_tasks: image_registry.yml
 
-- import_tasks: image_prunning.yml
+- ansible.builtin.import_tasks: image_prunning.yml
 
-- import_tasks: disable_self_provisioners.yml
+- ansible.builtin.import_tasks: disable_self_provisioners.yml
 
-- import_tasks: monitoring.yml
+- ansible.builtin.import_tasks: monitoring.yml
 
-- import_tasks: auto_approve_csr.yml
+- ansible.builtin.import_tasks: auto_approve_csr.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
 
-- import_tasks: cluster_banner.yml
+- ansible.builtin.import_tasks: cluster_banner.yml
   when: osclusterpostinst_cluster_banner.enabled
 
-- import_tasks: delete_succeeded_pods.yml
+- ansible.builtin.import_tasks: delete_succeeded_pods.yml
 
-- import_tasks: endpoint_certs_aws.yml
+- ansible.builtin.import_tasks: endpoint_certs_aws.yml
   when:
     - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'AWS'
 
-- import_tasks: endpoint_certs_azure.yml
+- ansible.builtin.import_tasks: endpoint_certs_azure.yml
   when:
     - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'Azure'
 
-- import_tasks: endpoint_certs_gcp.yml
+- ansible.builtin.import_tasks: endpoint_certs_gcp.yml
   when:
     - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type == 'GCP'
 
-- import_tasks: endpoint_certs_private.yml
+- ansible.builtin.import_tasks: endpoint_certs_private.yml
   when:
     - osclusterpostinst_configure_endpoint_certs
     - oscommon_infrastructure.status.platformStatus.type not in ['AWS', 'Azure', 'GCP']
 
-- import_tasks: cluster_info.yml
+- ansible.builtin.import_tasks: cluster_info.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: deploy.yml
   when: osclusterpostinst_deploy_autogitops

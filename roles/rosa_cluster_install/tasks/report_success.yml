@@ -1,5 +1,5 @@
 - name: Describe ROSA cluster
-  command: rosa describe cluster --output json --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
+  ansible.builtin.command: rosa describe cluster --output json --cluster {{ rosa_cluster_install_cluster_result.outputs.cluster_id.value }}
   environment:
     OCM_CONFIG: '{{ rosa_cluster_install.config_dir }}/.ocm.json'
     AWS_ACCESS_KEY_ID: '{{ rosa_cluster_install.aws_access_key_id }}'
@@ -7,11 +7,11 @@
   changed_when: false
   register: rosa_cluster_install_describe_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     rosa_cluster_install_describe_json: '{{ rosa_cluster_install_describe_result.stdout | from_json }}'
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       ROSA installation complete.
 
@@ -21,5 +21,5 @@
       The cluster admin user may still be provisioning. After several minutes you can log in with:
       $ oc login --username cluster-admin --namespace default {{ rosa_cluster_install_describe_json.api.url }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -9,7 +9,7 @@
       password: '{{ slg_case_management_password }}'
   tags: slg_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
@@ -17,7 +17,7 @@
     oscomm_subscription_namespace: support-log-gather-operator
   tags: slg_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -26,7 +26,7 @@
     autogitops_app_namespace: support-log-gather-operator
   tags: slg_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

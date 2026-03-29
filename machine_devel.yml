@@ -1,27 +1,27 @@
 - hosts: all
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_base
       tags: machine_base
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: common_tasks
         tasks_from: configure_common_users.yml
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_devel
         tasks_from: system_setup.yml
       when: ansible_facts.distribution == "Fedora"
       tags: machine_devel
 
     # Switch to user devel
-    - set_fact:
+    - ansible.builtin.set_fact:
         ansible_user: devel
       tags: machine_devel
 
 - hosts: all
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_devel
         tasks_from: user_setup.yml
       tags: machine_devel

@@ -1,5 +1,5 @@
-- import_tasks: csi_delete.yml
+- ansible.builtin.import_tasks: csi_delete.yml
   tags: smbcsi
 
-- import_tasks: server_delete.yml
+- ansible.builtin.import_tasks: server_delete.yml
   tags: smbsrv

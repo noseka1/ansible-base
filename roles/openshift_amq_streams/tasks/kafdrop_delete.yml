@@ -1,5 +1,5 @@
 - name: Deploy oauth-proxy
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_oauth_proxy
     tasks_from: delete.yml
   vars:

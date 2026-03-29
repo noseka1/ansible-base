@@ -1,11 +1,11 @@
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_smtp4dev
     tasks_from: get_connection.yml
 
 - name: Create email notifier in RHACS (returns HTTP 409 if the notifier already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/notifiers'
     method: POST
     body_format: json

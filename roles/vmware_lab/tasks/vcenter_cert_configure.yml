@@ -1,5 +1,5 @@
 - name: Create session
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/session'
     method: POST
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -9,7 +9,7 @@
   register: vcenter_session
 
 - name: List vCenter trusted certs (retry if the cert component is still starting up)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
     method: GET
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -23,11 +23,11 @@
   delay: 10
 
 - name: Search for CA cert in trusted certs
-  include_tasks: vcenter_cert_configure_search_cert.yml
+  ansible.builtin.include_tasks: vcenter_cert_configure_search_cert.yml
   loop: '{{ vcenter_trusted_certs.json }}'
 
 - name: Add CA cert to trusted certs
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains'
     method: POST
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -45,7 +45,7 @@
     - vcenter_trusted_cert_found is not defined
 
 - name: Get current vCenter TLS certs
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
     method: GET
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -56,7 +56,7 @@
   register: vcenter_certs
 
 - name: Set vCenter TLS certs
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/tls'
     method: PUT
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -73,10 +73,10 @@
   when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt
 
 - name: Wait for 60 seconds for vCenter services to begin restarting
-  wait_for:
+  ansible.builtin.wait_for:
     timeout: 60
   when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt
 
 - name: Wait for vCenter to become available
-  import_tasks: wait_for_vcenter.yml
+  ansible.builtin.import_tasks: wait_for_vcenter.yml
   when: vcenter_certs.json.cert != vmware_lab_certs.vcenter.crt

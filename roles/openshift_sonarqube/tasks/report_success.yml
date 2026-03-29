@@ -6,7 +6,7 @@
     namespace: sonarqube
   register: sonarqube_web_route
 
-- set_fact:
+- ansible.builtin.set_fact:
     msg: |
       SonarQube installed successfully.
 
@@ -15,5 +15,5 @@
 
       The initial admin password is 'admin'.
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

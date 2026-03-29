@@ -1,25 +1,25 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_infrastructure.yml
 
 - name: Set application variables
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_name: '{{ autogitops_app_dst_path | regex_replace("/", "-") }}'
     autogitops_app_project: '{{ oscommon_cluster_domain | regex_replace("\.", "-") }}'
     autogitops_argocd_namespace: ag-{{ oscommon_cluster_domain | regex_replace('\.', '-') }}
 
-- import_tasks: local_repo_create.yml
+- ansible.builtin.import_tasks: local_repo_create.yml
 
-- import_tasks: local_repo_update.yml
+- ansible.builtin.import_tasks: local_repo_update.yml
 
-- import_tasks: local_repo_push.yml
+- ansible.builtin.import_tasks: local_repo_push.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_gitops
     tasks_from: get_argocd_api_connection.yml
 
 - name: Wait for application {{ autogitops_app_name }} to show up in Argo CD
-  uri:
+  ansible.builtin.uri:
     url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}'
     method: GET
     headers:
@@ -38,6 +38,6 @@
 
 # Secrets could have been updated in the secret store (HashiCorp Vault). Force the refresh of the secrets
 # in OpenShift to ensure all secrets are up to date. Argo CD application needs fresh secrets to sync properly.
-- import_tasks: app_externalsecrets_refresh.yml
+- ansible.builtin.import_tasks: app_externalsecrets_refresh.yml
 
-- import_tasks: app_sync_deploy.yml
+- ansible.builtin.import_tasks: app_sync_deploy.yml

@@ -1,6 +1,6 @@
 - hosts: all
   gather_facts: false
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: openshift_multicluster_engine_managed_cluster
         tasks_from: azure/deploy.yml

@@ -6,7 +6,7 @@
     - worker
     - master
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
@@ -14,7 +14,7 @@
     stable_cluster_retries: 10
   when: sriovnet_machineconfig_result is changed
 
-- assert:
+- ansible.builtin.assert:
     that: >-
       query('kubernetes.core.k8s', api_version='v1', kind='Node',
         label_selector='feature.node.kubernetes.io/network-sriov.capable=') | length >= 0

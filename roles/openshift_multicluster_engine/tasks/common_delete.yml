@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -7,10 +7,10 @@
         kind: Namespace
         name: hosted-clusters
 
-- import_tasks: hypershift_aws_delete.yml
+- ansible.builtin.import_tasks: hypershift_aws_delete.yml
 
-- import_tasks: cluster_discovery_delete.yml
+- ansible.builtin.import_tasks: cluster_discovery_delete.yml
 
-- import_tasks: assisted_installer_delete.yml
+- ansible.builtin.import_tasks: assisted_installer_delete.yml
 
-- import_tasks: manifestwork_delete.yml
+- ansible.builtin.import_tasks: manifestwork_delete.yml

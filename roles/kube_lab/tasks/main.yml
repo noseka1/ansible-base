@@ -1,47 +1,47 @@
-- import_role:
+- ansible.builtin.import_role:
     name: machine_base
   tags: machine_base
 
-- import_role:
+- ansible.builtin.import_role:
     name: machine_docker
   when: kubeadm_config_crisocket.find('containerd') != -1
   tags: machine_docker
 
-- import_role:
+- ansible.builtin.import_role:
     name: machine_crio
   when: kubeadm_config_crisocket.find('crio') != -1
   tags: machine_crio
 
 - name: Include configuration common to both Kubernetes master and nodes
-  import_tasks: common.yml
+  ansible.builtin.import_tasks: common.yml
   tags: common
 
 - name: Install Kubernetes master
-  import_tasks: install_master.yml
+  ansible.builtin.import_tasks: install_master.yml
   when: "'kube_master' in group_names"
   tags: install_master
 
 - name: Install Kubernetes add-ons
-  import_tasks: install_addons.yml
+  ansible.builtin.import_tasks: install_addons.yml
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: install_addons
 
 - name: Add users
-  import_tasks: add_users.yml
+  ansible.builtin.import_tasks: add_users.yml
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: add_users
 
 - name: Make master nodes schedulable
-  import_tasks: make_masters_schedulable.yml
+  ansible.builtin.import_tasks: make_masters_schedulable.yml
   when: "'kube_master' in group_names and kubeadm_masters_schedulable"
   tags: make_masters_schedulable
 
 - name: Install Kubernetes workers
-  import_tasks: install_worker.yml
+  ansible.builtin.import_tasks: install_worker.yml
   when: "'kube_worker' in group_names"
   tags: install_worker
 
 - name: Report success
-  import_tasks: report_success.yml
+  ansible.builtin.import_tasks: report_success.yml
   when: inventory_hostname == hostvars[groups['kube_master'][0]]['inventory_hostname']
   tags: report_success

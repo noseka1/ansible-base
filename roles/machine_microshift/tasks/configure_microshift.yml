@@ -1,5 +1,5 @@
 - name: Configure MicroShift
-  template:
+  ansible.builtin.template:
     src: config.yaml
     dest: /etc/microshift/config.yaml
   notify:
@@ -7,7 +7,7 @@
   become: True
 
 - name: Start microshift service
-  service:
+  ansible.builtin.service:
     name: microshift
     state: started
     enabled: true

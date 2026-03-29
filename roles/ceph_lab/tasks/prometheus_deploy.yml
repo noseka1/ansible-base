@@ -1,12 +1,12 @@
 - name: Create Prometheus spec file
-  template:
+  ansible.builtin.template:
     src: prometheus-spec.yaml
     dest: '{{ cephlab_conf_dir }}/prometheus-spec.yaml'
     backup: true
   register: cephlab_prometheus_spec_result
 
 - name: Apply Prometheus spec
-  command: >-
+  ansible.builtin.command: >-
     ceph orch apply -i {{ cephlab_conf_dir }}/prometheus-spec.yaml
   when: cephlab_prometheus_spec_result is changed
   become: true

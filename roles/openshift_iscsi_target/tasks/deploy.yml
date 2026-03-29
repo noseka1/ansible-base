@@ -1,8 +1,8 @@
-- import_tasks: mc_multipath.yml
+- ansible.builtin.import_tasks: mc_multipath.yml
 
-- import_tasks: mc_target.yml
+- ansible.builtin.import_tasks: mc_target.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -22,7 +22,7 @@
   retries: 10
   delay: 1
 
-- set_fact:
+- ansible.builtin.set_fact:
     iscsi_target_service_a_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for service B IP
@@ -37,10 +37,10 @@
   retries: 10
   delay: 1
 
-- set_fact:
+- ansible.builtin.set_fact:
     iscsi_target_service_b_ip: '{{ iscsi_target_service_result.resources.0.spec.clusterIP }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -48,7 +48,7 @@
     autogitops_app_dst_path: iscsi-target/instance
     autogitops_app_namespace: '{{ iscsi_target_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

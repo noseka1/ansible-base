@@ -3,7 +3,7 @@
     template: autoscaling/clusterautoscaler.yml
 
 - name: Set ocpost_cluster_id
-  set_fact:
+  ansible.builtin.set_fact:
     ocpost_cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets

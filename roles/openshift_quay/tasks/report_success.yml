@@ -1,5 +1,5 @@
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Quay to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ quay_instance_route.resources.0.spec.host }}/api/v1/discovery'
     method: GET
     validate_certs: false
@@ -9,12 +9,12 @@
   delay: 10
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Red Hat Quay installed successfully. Use your browser to access the Quay Web UI and create account for user admin.
 
       You can browse to:
       https://{{ quay_instance_route.resources.0.spec.host }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

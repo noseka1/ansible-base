@@ -14,11 +14,11 @@
     wait_sleep: 10
     wait_timeout: 600
 
-- assert:
+- ansible.builtin.assert:
     that: crossplane_aws_access_key_id | length > 0
     fail_msg: Variable crossplane_aws_access_key_id must be set
 
-- assert:
+- ansible.builtin.assert:
     that: crossplane_aws_secret_acccess_key | length > 0
     fail_msg: Variable crossplane_aws_secret_acccess_key must be set
 
@@ -52,7 +52,7 @@
   retries: 60
   delay: 10
 
-- set_fact:
+- ansible.builtin.set_fact:
     crossplane_current_provider_revision: '{{ crossplane_aws_provider.resources.0.status.currentRevision }}'
 
-- import_tasks: relax_provider_scc.yml
+- ansible.builtin.import_tasks: relax_provider_scc.yml

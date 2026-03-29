@@ -1,19 +1,19 @@
 - name: Install containerd
-  yum:
+  ansible.builtin.yum:
     name: containerd.io
   become: true
 
 - name: Generate default configuration
-  command: containerd config default
+  ansible.builtin.command: containerd config default
   changed_when: false
   register: containerd_config
 
 - name: Set containerd_config
-  set_fact:
+  ansible.builtin.set_fact:
     containerd_config: '{{ containerd_config.stdout | regex_replace("SystemdCgroup = false", "SystemdCgroup = true") }}'
 
 - name: Create containerd configuration file
-  copy:
+  ansible.builtin.copy:
     content: '{{ containerd_config }}'
     dest: /etc/containerd/config.toml
     mode: '0644'
@@ -21,7 +21,7 @@
   become: true
 
 - name: Start containerd service
-  service:
+  ansible.builtin.service:
     name: containerd
     state: started
     enabled: true

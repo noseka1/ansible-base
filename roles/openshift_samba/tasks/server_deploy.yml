@@ -3,7 +3,7 @@
     definition: "{{ lookup('pipe', 'oc kustomize ' + smbsrv_operator_kustomization) }}"
     wait: true
 
-- include_role:
+- ansible.builtin.include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
     apply:
@@ -29,7 +29,7 @@
           }
         }
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

@@ -1,7 +1,7 @@
-- import_tasks: get_argocd_route.yml
+- ansible.builtin.import_tasks: get_argocd_route.yml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Argo CD to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ argocd_route_host }}/api/v1/session'
     method: POST
     body:
@@ -15,7 +15,7 @@
   delay: 10
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Argo CD installed successfully.
 
@@ -25,5 +25,5 @@
       Or you can log in with:
       argocd login {{ argocd_route_host }} --username admin
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

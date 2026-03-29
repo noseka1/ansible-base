@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_lokistack
     tasks_from: deploy.yml
   vars:
@@ -8,7 +8,7 @@
     loki_instance_tenants_mode: openshift-network
   tags: netobserv_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
@@ -16,7 +16,7 @@
     oscomm_subscription_namespace: openshift-netobserv-operator
   tags: netobserv_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -25,7 +25,7 @@
     autogitops_app_namespace: openshift-netobserv-operator
   tags: netobserv_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
@@ -33,7 +33,7 @@
     oscomm_subscription_namespace: openshift-netobserv-operator
   tags: netobserv_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -42,5 +42,5 @@
     autogitops_app_namespace: netobserv
   tags: netobserv_instance
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml
   tags: netobserv_instance

@@ -1,5 +1,5 @@
 - hosts: all
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: machine_base
       tags: machine_base

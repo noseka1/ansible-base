@@ -14,7 +14,7 @@
     wait_sleep: 5
     wait_timeout: 800
 
-- assert:
+- ansible.builtin.assert:
     that: query('kubernetes.core.k8s', api_version='v1', kind='ConfigMap', namespace='default', resource_name='test-hello-work') | length == 1
     fail_msg: ConfigMap default/test-hello-work can't be found.
     quiet: true

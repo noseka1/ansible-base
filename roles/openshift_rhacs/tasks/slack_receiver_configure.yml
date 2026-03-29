@@ -1,7 +1,7 @@
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
 
 - name: Create Slack notifier in RHACS (returns HTTP 409 if the notifier already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/notifiers'
     method: POST
     body_format: json

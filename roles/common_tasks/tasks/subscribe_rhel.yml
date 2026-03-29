@@ -1,15 +1,15 @@
 - name: Enable RHSM in container
-  file:
+  ansible.builtin.file:
     dest: /etc/rhsm-host
     state: absent
   become: true
 
-- assert:
+- ansible.builtin.assert:
     that: redhat_subscription_username | length > 0
     fail_msg: Variable 'redhat_subscription_username' must not be empty
     quiet: true
 
-- assert:
+- ansible.builtin.assert:
     that: redhat_subscription_password | length > 0
     fail_msg: Variable 'redhat_subscription_password' must not be empty
     quiet: true

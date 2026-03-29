@@ -1,11 +1,11 @@
-- assert:
+- ansible.builtin.assert:
     that: rhacs_central_host | default('') | length > 0
     fail_msg: Variable 'rhacs_central_host' must not be empty
     quiet: true
 
-- import_tasks: operator_deploy.yml
+- ansible.builtin.import_tasks: operator_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -13,4 +13,4 @@
     autogitops_app_dst_path: rhacs/namespace
     autogitops_app_namespace: stackrox
 
-- import_tasks: secured_cluster_common_deploy.yml
+- ansible.builtin.import_tasks: secured_cluster_common_deploy.yml

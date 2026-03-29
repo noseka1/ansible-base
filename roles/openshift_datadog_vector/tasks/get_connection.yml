@@ -6,14 +6,14 @@
     namespace: '{{ ddvector_namespace }}'
   register: ddvector_service_result
 
-- assert:
+- ansible.builtin.assert:
     that: ddvector_service_result.resources | length == 1
     fail_msg: |
       Datadog Vector service doesn't exist. Is Datadog Vector installed on the cluster?
       Use the openshift_ddvector_deploy.yml playbook to install a Datadog Vector instance.
     quiet: true
 
-- set_fact:
+- ansible.builtin.set_fact:
     ddvector_hostname: 'datadog-vector-instance.{{ ddvector_namespace }}.svc'
     ddvector_ip: '{{ ddvector_service_result.resources.0.spec.clusterIP }}'
     ddvector_port_syslog_udp: 1514

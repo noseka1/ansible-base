@@ -1,7 +1,7 @@
-- import_tasks: get_rhacs_central_reencrypt_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_reencrypt_host.yml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for RHACS to come up
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_reencrypt_host }}'
   register: result
   until: result.status == 200
@@ -9,11 +9,11 @@
   delay: 10
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       RHACS installed successfully.
 
       You can browse to https://{{ rhacs_central_reencrypt_host }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

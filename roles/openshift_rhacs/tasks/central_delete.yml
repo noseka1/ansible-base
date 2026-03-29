@@ -1,25 +1,25 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-db-password'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/central-htpasswd'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/rhacs/central/scanner-db-password'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
@@ -29,7 +29,7 @@
     - rhacs_central_default_tls_cert_crt | length > 0
     - rhacs_central_default_tls_cert_key | length > 0
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

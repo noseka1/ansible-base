@@ -1,0 +1,36 @@
+---
+exclude_paths:
+  - "**/*.yaml"
+  - .ansible-lint
+  - .ansible/
+  - third_party/
+
+skip_list:
+  - yaml[commas]
+  - yaml[brackets]
+  - yaml[colons]
+  - yaml[empty-lines]
+  - yaml[comments]
+  - yaml[line-length]
+  - yaml[new-line-at-end-of-file]
+  - yaml[indentation]
+  - yaml[truthy]
+  - yaml[octal-values]
+  - jinja[spacing]
+  - jinja[invalid]
+  - args[module]
+  - name[missing]
+  - name[play]
+  - name[template]
+  - var-naming[no-role-prefix]
+  - no-changed-when
+  - no-handler
+  - literal-compare
+  - risky-shell-pipe
+  - risky-file-permissions
+  - package-latest
+  - no-free-form
+  - ignore-errors
+  - command-instead-of-module
+  - internal-error
+  - schema[requirements]

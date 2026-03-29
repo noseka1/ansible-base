@@ -75,7 +75,7 @@
     secret: /auth/kubernetes/role/cert-manager
     data:
       bound_service_account_names: cert-manager
-      bound_service_account_namespaces: cert-manager,default
+      bound_service_account_namespaces: cert-manager
       policies: mycluster_signer
   environment:
     VAULT_ADDR: '{{ hvault_addr }}'

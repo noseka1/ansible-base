@@ -5,9 +5,9 @@
       - role_name: default-reader
         sa_names: default
         sa_namespaces: '*'
-      - role_name: external-secrets
-        sa_names: external-secrets,default
-        sa_namespaces: external-secrets,default
+      - role_name: external-secrets-operator
+        sa_names: external-secrets
+        sa_namespaces: external-secrets
       - role_name: vault-secrets-operator
         sa_names: vault-secrets-operator
         sa_namespaces: '*'

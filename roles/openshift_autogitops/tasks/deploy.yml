@@ -45,7 +45,7 @@
   vars:
     hvault_keyval_name: autogitops
     hvault_keyval_reader:
-      - role_name: external-secrets
+      - role_name: external-secrets-operator
         sa_names: external-secrets
         sa_namespaces: external-secrets
 

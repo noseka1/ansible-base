@@ -14,7 +14,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: mc
-        image: minio/mc:latest
+        image: docker.io/pgsty/mc:RELEASE.2026-03-13T08-57-32Z
         env:
         - name: MINIO_ACCESS_KEY
           valueFrom:

@@ -1,11 +1,11 @@
-- import_tasks: install_packages.yml
+- ansible.builtin.import_tasks: install_packages.yml
 
-- import_tasks: configure_certificates.yml
+- ansible.builtin.import_tasks: configure_certificates.yml
 
-- import_tasks: configure_crio.yml
+- ansible.builtin.import_tasks: configure_crio.yml
 
-- import_tasks: configure_storage.yml
+- ansible.builtin.import_tasks: configure_storage.yml
 
-- import_tasks: configure_microshift.yml
+- ansible.builtin.import_tasks: configure_microshift.yml
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

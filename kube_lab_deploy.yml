@@ -1,5 +1,5 @@
 - hosts:
     - kube_lab
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: kube_lab

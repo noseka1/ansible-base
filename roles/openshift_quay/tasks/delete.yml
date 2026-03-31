@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: quay/quay/instance
   tags: quay_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
@@ -13,7 +13,7 @@
     hvault_secret_name: '{{ oscommon_cluster_domain }}/quay/quay/config'
   tags: quay_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_minio
     tasks_from: delete.yml
   vars:
@@ -22,28 +22,28 @@
     minio_app_prefix: quay-
   tags: quay_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: quay/quay/operator
   tags: quay_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: quay/quay-bridge/operator
   tags: quay_bridge_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: quay/container-security/operator
   tags: quay_security_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -51,7 +51,7 @@
       - api_version: secscan.quay.redhat.com/v1alpha1
         kind: ImageManifestVuln
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml
   tags:

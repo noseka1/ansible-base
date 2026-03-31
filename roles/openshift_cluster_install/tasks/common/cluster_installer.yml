@@ -1,32 +1,32 @@
 - name: Create cluster configuration directory {{ osclusterinstall_info.config_dir }}
-  file:
+  ansible.builtin.file:
     path: '{{ osclusterinstall_info.config_dir }}'
     state: directory
     mode: '0755'
 
 - name: Download openshift-install archive {{ osclusterinstall_installer_archive_url }}
-  get_url:
+  ansible.builtin.get_url:
     url: '{{ osclusterinstall_installer_archive_url }}'
     dest: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_installer_archive_url | basename }}'
     checksum: 'sha256:{{ osclusterinstall_installer_sha256sum_url }}'
   retries: 3
 
 - name: Extract openshift-install
-  unarchive:
+  ansible.builtin.unarchive:
     src: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_installer_archive_url | basename }}'
     dest: '{{ osclusterinstall_info.config_dir }}'
     exclude:
       - README.md
 
 - name: Download oc client archive {{ osclusterinstall_client_archive_url }}
-  get_url:
+  ansible.builtin.get_url:
     url: '{{ osclusterinstall_client_archive_url }}'
     dest: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_client_archive_url | basename }}'
     checksum: 'sha256:{{ osclusterinstall_client_sha256sum_url }}'
   retries: 3
 
 - name: Extract oc client
-  unarchive:
+  ansible.builtin.unarchive:
     src: '{{ osclusterinstall_info.config_dir }}/{{ osclusterinstall_client_archive_url | basename }}'
     dest: '{{ osclusterinstall_info.config_dir }}'
     exclude:
@@ -34,10 +34,10 @@
       - kubectl
 
 - name: Get installer info
-  command: '{{ osclusterinstall_info.config_dir }}/openshift-install version'
+  ansible.builtin.command: '{{ osclusterinstall_info.config_dir }}/openshift-install version'
   changed_when: false
   register: osclusterinstall_installer_version
 
 - name: Show installer info
-  debug:
+  ansible.builtin.debug:
     var: osclusterinstall_installer_version.stdout_lines

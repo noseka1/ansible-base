@@ -1,7 +1,7 @@
-- import_tasks: app_sync_trigger.yml
+- ansible.builtin.import_tasks: app_sync_trigger.yml
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ autogitops_app_name }} resources to delete
-  uri:
+  ansible.builtin.uri:
     url: '{{ argocd_api_url }}/api/v1/applications/{{ autogitops_app_name }}?appNamespace={{ autogitops_argocd_namespace }}&refresh=normal'
     method: GET
     headers:
@@ -20,24 +20,24 @@
   retries: 300
   delay: 2
 
-- set_fact:
+- ansible.builtin.set_fact:
     autogitops_app_reconciled: >-
       {{ autogitops_app_get_result.json.status.reconciledAt != autogitops_app_sync_result.json.status.reconciledAt }}
     autogitops_app_remaining: >-
       {{ autogitops_app_get_result.json.status.resources | default([]) | json_query("[?health.status==nil || health.status!='Missing' || status!='OutOfSync']") }}
 
-- debug:
+- ansible.builtin.debug:
     msg: Application {{ autogitops_app_name }} failed to reconcile
   when: not autogitops_app_reconciled
 
 - name: Resources failed to delete
-  debug:
+  ansible.builtin.debug:
     var: autogitops_app_remaining
   when: autogitops_app_remaining | length > 0
 
-- fail:
+- ansible.builtin.fail:
     msg: Application {{ autogitops_app_name }} failed to delete
   when: not ( autogitops_app_reconciled and autogitops_app_remaining | length == 0)
 
-- debug:
+- ansible.builtin.debug:
     msg: Application {{ autogitops_app_name }} deleted successfully

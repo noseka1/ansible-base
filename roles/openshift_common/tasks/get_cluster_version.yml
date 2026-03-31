@@ -5,7 +5,7 @@
     name: version
   register: oscommon_clusterversion_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     oscommon_cluster_uuid: >-
       {{ oscommon_clusterversion_result.resources.0.spec.clusterID }}
     oscommon_cluster_version_str: >-

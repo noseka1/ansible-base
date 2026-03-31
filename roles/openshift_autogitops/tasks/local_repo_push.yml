@@ -1,21 +1,21 @@
 - name: Stage directories for commit
-  command: git add .
+  ansible.builtin.command: git add .
   changed_when: false
   args:
     chdir: '{{ autogitops_git_dir }}'
 
 - name: Check git status
-  command: git status
+  ansible.builtin.command: git status
   changed_when: false
   args:
     chdir: '{{ autogitops_git_dir }}'
   register: autogitops_git_status_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     autogitops_git_updated: '{{ autogitops_git_status_result.stdout.find("Changes to be committed") != -1 }}'
 
 - name: Commit changes to git
-  command: git commit --message 'Update app {{ autogitops_app_name }}'
+  ansible.builtin.command: git commit --message 'Update app {{ autogitops_app_name }}'
   args:
     chdir: '{{ autogitops_git_dir }}'
   environment:
@@ -26,7 +26,7 @@
   when: autogitops_git_updated
 
 - name: Retrieve latest commit
-  command: git show
+  ansible.builtin.command: git show
   changed_when: false
   args:
     chdir: '{{ autogitops_git_dir }}'
@@ -34,23 +34,23 @@
   when: autogitops_git_updated
 
 - name: Show git commit if ran with ansible-playbook -v
-  debug:
+  ansible.builtin.debug:
     var: autogitops_git_commit_result.stdout_lines
     verbosity: 1
   when: autogitops_git_updated
 
 - name: Push changes to remote repo
-  command: git push
+  ansible.builtin.command: git push
   args:
     chdir: '{{ autogitops_git_dir }}'
   when: autogitops_git_updated
 
 - name: Retrieve latest commit id
-  command: git rev-parse HEAD
+  ansible.builtin.command: git rev-parse HEAD
   changed_when: false
   args:
     chdir: '{{ autogitops_git_dir }}'
   register: autogitops_git_revision_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     autogitops_git_last_commit: '{{ autogitops_git_revision_result.stdout }}'

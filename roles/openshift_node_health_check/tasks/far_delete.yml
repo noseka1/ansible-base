@@ -1,17 +1,17 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: fence-agents-remediation/instance
 
-- include_role:
+- ansible.builtin.include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/fence-agents-remediation/shared'
 
-- include_role:
+- ansible.builtin.include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
@@ -21,7 +21,7 @@
   loop_control:
     label: '{{ item.key }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

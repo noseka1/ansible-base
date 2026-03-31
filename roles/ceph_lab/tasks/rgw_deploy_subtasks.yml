@@ -1,12 +1,12 @@
 - name: Create realm {{ cephlab_rgw_store_realm }}
-  command: >-
+  ansible.builtin.command: >-
     radosgw-admin realm create
       --rgw-realm={{ cephlab_rgw_store_realm }}
       {% if cephlab_rgw_store_default %}--default{% endif %}
   become: true
 
 - name: Create zonegroup {{ cephlab_rgw_store_zonegroup }}
-  command: >-
+  ansible.builtin.command: >-
     radosgw-admin zonegroup create
       --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }}
       --master
@@ -14,7 +14,7 @@
   become: true
 
 - name: Create zone {{ cephlab_rgw_store_zone }}
-  command: >-
+  ansible.builtin.command: >-
     radosgw-admin zone create
       --rgw-zonegroup={{ cephlab_rgw_store_zonegroup }}
       --rgw-zone={{ cephlab_rgw_store_zone }}
@@ -23,7 +23,7 @@
   become: true
 
 - name: Commit the changes
-  command: >-
+  ansible.builtin.command: >-
     radosgw-admin period update
       --rgw-realm={{ cephlab_rgw_store_realm }}
       --commit

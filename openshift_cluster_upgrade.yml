@@ -1,5 +1,5 @@
 - hosts: all
   gather_facts: false
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: openshift_cluster_upgrade

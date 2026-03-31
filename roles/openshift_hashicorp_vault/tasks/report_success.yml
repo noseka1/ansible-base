@@ -1,5 +1,5 @@
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Vault installed successfully.
 
@@ -9,5 +9,5 @@
       You can browse to:
       {{ hvault_addr }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

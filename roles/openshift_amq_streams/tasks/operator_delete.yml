@@ -1,5 +1,5 @@
 - name: Delete AMQ Streams operator
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_operator.yml
   vars:

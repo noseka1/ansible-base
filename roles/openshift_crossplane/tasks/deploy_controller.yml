@@ -12,7 +12,7 @@
     release_values: '{{ lookup("template", "values.yaml") | from_yaml }}'
     wait: true
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:

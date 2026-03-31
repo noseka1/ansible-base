@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -6,7 +6,7 @@
     autogitops_app_dst_path: goldilocks
     autogitops_app_namespace: '{{ goldilocks_namespace }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_oauth_proxy
     tasks_from: deploy.yml
   vars:
@@ -15,4 +15,4 @@
     oauth_proxy_upstream: http://{{ goldilocks_name }}-dashboard
     oauth_proxy_app_prefix: goldilocks-
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

@@ -1,8 +1,8 @@
-- import_tasks: common_delete.yml
+- ansible.builtin.import_tasks: common_delete.yml
 
-- import_tasks: mce_delete.yml
+- ansible.builtin.import_tasks: mce_delete.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -11,7 +11,7 @@
         kind: Namespace
         name: hive
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:

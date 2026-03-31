@@ -7,7 +7,7 @@
   register: etcdbackupadfinis_job_result
 
 - name: Trigger etcd backup manually
-  command: |
+  ansible.builtin.command: |
     oc create job \
       --namespace {{ etcdbackupadfinis_namespace }} \
       --from=cronjob/etcd-backup-openshift-{{ etcdbackupadfinis_name }} \
@@ -29,7 +29,7 @@
   delay: 10
 
 - name: Check that backup job {{ etcdbackupadfinis_namespace }}/etcd-backup-test succeeded
-  assert:
+  ansible.builtin.assert:
     that: etcdbackupadfinis_job_result.resources.0.status.succeeded > 0
     fail_msg: The {{ etcdbackupadfinis_namespace }}/etcd-backup-test job failed
     quiet: true

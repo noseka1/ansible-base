@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: mtv/provider
   tags: mtv_provider
 
-- include_role:
+- ansible.builtin.include_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
     apply:
@@ -16,21 +16,21 @@
   loop: '{{ mtv_providers }}'
   tags: mtv_provider
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: mtv/instance
   tags: mtv_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: templates/operator
   tags: mtv_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: console_plugin_disable.yml
   vars:

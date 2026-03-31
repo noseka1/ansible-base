@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_webhook_receiver
     tasks_from: delete.yml
   vars:

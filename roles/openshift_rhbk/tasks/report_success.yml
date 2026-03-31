@@ -1,5 +1,5 @@
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for Keycloak Web UI to come up
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}
     validate_certs: false
     status_code: [ 200, 503 ]
@@ -9,12 +9,12 @@
   delay: 10
 
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Red Hat build of Keycloak installed successfully.
 
       You can browse to the Keycloak Web UI and log in as user "{{ rhbk_username }}":
       https://{{ rhbk_hostname }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

@@ -7,12 +7,12 @@
   register: rhacm_observability_route
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       RHACM Observability installed successfully.
 
       You can now access RHACM Observability Grafana instance at:
       https://{{ rhacm_observability_route.resources.0.spec.host }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

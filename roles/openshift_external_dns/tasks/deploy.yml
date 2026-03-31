@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
     oscomm_subscription_name: external-dns-operator
     oscomm_subscription_namespace: external-dns-operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -13,24 +13,24 @@
     autogitops_app_dst_path: external-dns/operator
     autogitops_app_namespace: external-dns-operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
     oscomm_subscription_name: external-dns-operator
     oscomm_subscription_namespace: external-dns-operator
 
-- assert:
+- ansible.builtin.assert:
     that: externaldns_aws_access_key_id | length > 0
     fail_msg: Variable 'externaldns_aws_access_key_id' must not be empty
     quiet: true
 
-- assert:
+- ansible.builtin.assert:
     that: externaldns_aws_secret_access_key | length > 0
     fail_msg: Variable 'externaldns_aws_secret_access_key' must not be empty
     quiet: true
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -42,7 +42,7 @@
         aws_access_key_id = {{ externaldns_aws_access_key_id }}
         aws_secret_access_key = {{ externaldns_aws_secret_access_key }}
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

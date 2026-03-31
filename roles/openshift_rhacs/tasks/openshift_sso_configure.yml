@@ -1,7 +1,7 @@
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
 
 - name: Create OpenShift auth provider in RHACS (returns HTTP 400 if the auth provider already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/authProviders'
     method: POST
     body_format: json
@@ -16,7 +16,7 @@
     status_code: [ 200, 400 ]
 
 - name: Get auth providers in RHACS
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/authProviders'
     method: GET
     url_username: admin
@@ -27,11 +27,11 @@
   register: rhacs_auth_providers
 
 - name: Set rhacs_auth_provider_id
-  set_fact:
+  ansible.builtin.set_fact:
     rhacs_auth_provider_id: "{{ (rhacs_auth_providers.json.authProviders | selectattr('name', 'equalto', 'OpenShift OAuth') | first).id }}"
 
 - name: Set minimum access role (returns HTTP 409 if the auth provider already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/groups'
     method: POST
     body_format: json
@@ -48,7 +48,7 @@
     status_code: [ 200, 409 ]
 
 - name: Grant Admin role to users in cluster-admin group (returns HTTP 409 if the auth provider already exists)
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhacs_central_host }}/v1/groups'
     method: POST
     body_format: json

@@ -4,7 +4,7 @@
     kind: ClusterServiceVersion
   register: prune_csvs_existing_csvs
 
-- set_fact:
+- ansible.builtin.set_fact:
     prune_csvs_all: '{{ prune_csvs_existing_csvs | json_query("resources[].metadata.name") | unique }}'
 
 - name: Obtain all operator Subscriptions
@@ -13,14 +13,14 @@
     kind: Subscription
   register: prune_csvs_existing_subscriptions
 
-- set_fact:
+- ansible.builtin.set_fact:
     prune_csvs_keep: '{{ (prune_csvs_existing_subscriptions | json_query("resources[].status.installedCSV")) + ["packageserver"] }}'
 
-- set_fact:
+- ansible.builtin.set_fact:
     prune_csvs_delete: '{{ prune_csvs_all | difference(prune_csvs_keep) }}'
 
 - name: Going to delete the following CSVs
-  debug:
+  ansible.builtin.debug:
     var: prune_csvs_delete
 
 - name: Obtain all Kubernetes namespaces

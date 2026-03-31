@@ -1,11 +1,11 @@
-- import_tasks: cluster_nodes_deploy.yml
+- ansible.builtin.import_tasks: cluster_nodes_deploy.yml
   tags: odf_cluster_nodes
 
-- import_tasks: operator_deploy.yml
+- ansible.builtin.import_tasks: operator_deploy.yml
   tags: odf_operator
 
-- import_tasks: cluster_nodes_check.yml
+- ansible.builtin.import_tasks: cluster_nodes_check.yml
   tags: odf_instance
 
-- import_tasks: internal_instance_deploy.yml
+- ansible.builtin.import_tasks: internal_instance_deploy.yml
   tags: odf_instance

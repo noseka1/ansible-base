@@ -1,8 +1,8 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: direct_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: issuer_acme_gcp_direct_deploy.yml
   vars:
@@ -10,6 +10,6 @@
     certman_acme_gcp_cloud_dns_projectid: '{{ oscommon_infrastructure.status.platformStatus.gcp.projectID }}'
     certman_certificate_dns_name: 'mytest.{{ oscommon_cluster_domain }}'
 
-- import_tasks: endpoint_certs_complete.yml
+- ansible.builtin.import_tasks: endpoint_certs_complete.yml
   vars:
     osclusterpostinst_cert_issuer_name: acme-gcp

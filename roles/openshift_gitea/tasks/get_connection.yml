@@ -9,19 +9,19 @@
       register: gitea_route
 
     - name: Verify Gitea route exists
-      assert:
+      ansible.builtin.assert:
         that: gitea_route.resources | length == 1
         fail_msg: "Gitea route doesn't exist. Is Gitea installed on the cluster?"
         quiet: true
 
     - name: Set Gitea connection
-      set_fact:
+      ansible.builtin.set_fact:
         gitea_hostname: '{{ gitea_route.resources.0.spec.host }}'
         gitea_username: '{{ gitea_username }}'
         gitea_password: '{{ gitea_password }}'
 
 - name: Set git repository connection
-  set_fact:
+  ansible.builtin.set_fact:
     gitea_repo_name: '{{ gitea_repo_name }}'
     gitea_repo_url_plain: https://{{ gitea_hostname }}/{{ gitea_username }}/{{ gitea_repo_name }}.git
     gitea_repo_url_creds: https://{{ gitea_username | urlencode }}:{{ gitea_password | urlencode }}@{{ gitea_hostname }}/{{ gitea_username }}/{{ gitea_repo_name }}.git

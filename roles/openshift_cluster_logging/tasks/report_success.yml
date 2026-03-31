@@ -1,5 +1,5 @@
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       OpenShift Logging installed successfully.
 
@@ -8,5 +8,5 @@
 
       Go to OpenShift Web Console, refresh the browse page, and navigate to Observe -> Logs to view the collected logs.
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

@@ -1,5 +1,5 @@
 - name: Configure RHEL entitlement on OpenShift nodes
-  import_role:
+  ansible.builtin.import_role:
     name: openshift_rhel_entitlement
     tasks_from: deploy.yml
   vars:

@@ -1,5 +1,5 @@
 - name: Check the install_complete timestamp
-  stat:
+  ansible.builtin.stat:
     path: '{{ osclusterinstall_info.config_dir }}/install_complete'
     get_checksum: false
     get_mime: false
@@ -7,16 +7,16 @@
 
 - when: osclusterinstall_install_complete_result.stat.exists
   block:
-    - debug:
+    - ansible.builtin.debug:
         msg: You can follow the logs using 'tail -f {{ osclusterinstall_info.config_dir }}/.openshift_install.log'
 
     - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the OpenShift deletion to complete
-      command: >-
+      ansible.builtin.command: >-
         ./openshift-install destroy cluster --dir . --log-level debug
       args:
         chdir: '{{ osclusterinstall_info.config_dir }}'
 
     - name: Delete the timestamp
-      file:
+      ansible.builtin.file:
         path: '{{ osclusterinstall_info.config_dir }}/install_complete'
         state: absent

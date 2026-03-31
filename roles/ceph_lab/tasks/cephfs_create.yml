@@ -1,10 +1,10 @@
 - name: Retrieve CephFS volume {{ cephlab_cephfs_volume_name }}
-  command: >-
+  ansible.builtin.command: >-
     ceph fs volume info {{ cephlab_cephfs_volume_name }}
   changed_when: false
   ignore_errors: true
   register: cephlab_cephfs_volume_info
   become: true
 
-- import_tasks: cephfs_create_subtasks.yml
+- ansible.builtin.import_tasks: cephfs_create_subtasks.yml
   when: cephlab_cephfs_volume_info is failed

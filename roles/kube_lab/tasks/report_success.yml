@@ -26,7 +26,7 @@
   become: true
 
 - name: Set msg
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       Kubernetes {{ kubeadm_config.kubernetes_version }} installed successfully
 
@@ -35,5 +35,5 @@
 
       Authorization token: {{ admin_secret_result.resources.0.data.token | b64decode }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

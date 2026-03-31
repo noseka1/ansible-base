@@ -1,5 +1,5 @@
 - name: Fetch root's public ssh key from first node
-  slurp:
+  ansible.builtin.slurp:
     path: /root/.ssh/id_rsa.pub
   register: cephlab_ssh_public_key
   delegate_to: '{{ groups.ceph_lab.0 }}'
@@ -7,7 +7,7 @@
   become: true
 
 - name: Add ssh public key to authorized keys on all cluster nodes
-  authorized_key:
+  ansible.posix.authorized_key:
     user: root
     key: '{{ cephlab_ssh_public_key.content | b64decode }}'
   become: true

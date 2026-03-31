@@ -1,20 +1,20 @@
 - name: Obtain application source tree
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_src_items: >-
       {{ query('community.general.filetree', ansible_parent_role_paths.0 + '/' + autogitops_app_src_path) }}
 
-- assert:
+- ansible.builtin.assert:
     that: autogitops_app_src_items | length > 0
     fail_msg: There are no application manifests to deploy. The manifest source directory is empty.
     quiet: true
 
 - name: Obtain application destination tree
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_dst_items: >-
       {{ query('community.general.filetree', autogitops_app_dst_dir) }}
 
 - name: Ensure directory structure exists
-  file:
+  ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
     state: directory
   loop: >-
@@ -32,12 +32,12 @@
     label: '{{ item.path }}'
 
 - name: Convert source tree to dictionary
-  set_fact:
+  ansible.builtin.set_fact:
     autogitops_app_src_items_dict: >-
       {{ autogitops_app_src_items | items2dict(key_name='path', value_name='path') }}
 
 - name: Ensure deleted files are removed
-  file:
+  ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}/{{ item.path }}'
     state: absent
   when: not item.path in autogitops_app_src_items_dict

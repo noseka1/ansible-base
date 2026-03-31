@@ -1,29 +1,29 @@
 - name: Create configuration directory {{ cephlab_conf_dir }}
-  file:
+  ansible.builtin.file:
     path: '{{ cephlab_conf_dir }}'
     state: directory
 
 - name: Create registry credentials file
-  template:
+  ansible.builtin.template:
     src: registry-creds.json
     dest: '{{ cephlab_conf_dir }}/registry-creds.json'
     mode: '0600'
 
 - name: Create dashboard certificate file
-  copy:
+  ansible.builtin.copy:
     content: '{{ cephlab_ceph_dashboard_crt }}'
     dest: '{{ cephlab_conf_dir }}/dashboard.crt'
   when: cephlab_ceph_dashboard_crt | length > 0
 
 - name: Create dashboard key file
-  copy:
+  ansible.builtin.copy:
     content: '{{ cephlab_ceph_dashboard_key }}'
     dest: '{{ cephlab_conf_dir }}/dashboard.key'
     mode: '0600'
   when: cephlab_ceph_dashboard_key | length > 0
 
 - name: Bootstrap Ceph cluster
-  command: >-
+  ansible.builtin.command: >-
     cephadm
     {% if cephlab_rhceph_container_image | length > 0 %}
       --image {{ cephlab_rhceph_container_image }}
@@ -46,30 +46,30 @@
   become: true
 
 - name: Create Ceph cluster spec file
-  template:
+  ansible.builtin.template:
     src: cluster-spec.yaml
     dest: '{{ cephlab_conf_dir }}/cluster-spec.yaml'
     backup: true
   register: cephlab_cluster_spec
 
 - name: Deploy complete Ceph cluster
-  command: >-
+  ansible.builtin.command: >-
     ceph orch apply -i {{ cephlab_conf_dir }}/cluster-spec.yaml
   when: cephlab_cluster_spec is changed
   become: true
 
-- import_tasks: node_exporter_deploy.yml
+- ansible.builtin.import_tasks: node_exporter_deploy.yml
 
-- import_tasks: prometheus_deploy.yml
+- ansible.builtin.import_tasks: prometheus_deploy.yml
 
-- import_tasks: alertmanager_deploy.yml
+- ansible.builtin.import_tasks: alertmanager_deploy.yml
 
-- import_tasks: grafana_deploy.yml
+- ansible.builtin.import_tasks: grafana_deploy.yml
 
-- import_tasks: rbd_create.yml
+- ansible.builtin.import_tasks: rbd_create.yml
 
-- import_tasks: cephfs_create.yml
+- ansible.builtin.import_tasks: cephfs_create.yml
 
-- import_tasks: rgw_deploy.yml
+- ansible.builtin.import_tasks: rgw_deploy.yml
 
-- import_tasks: report_success.yml
+- ansible.builtin.import_tasks: report_success.yml

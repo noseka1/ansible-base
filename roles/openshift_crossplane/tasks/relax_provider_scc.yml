@@ -4,14 +4,14 @@
   register: crossplane_provider_scc
 
 - name: Remove the failing {{ crossplane_current_provider_revision }} provider pod
-  command: oc scale --namespace {{ crossplane_namespace }} --replicas 0 deploy {{ crossplane_current_provider_revision }}
+  ansible.builtin.command: oc scale --namespace {{ crossplane_namespace }} --replicas 0 deploy {{ crossplane_current_provider_revision }}
   when: crossplane_provider_scc is changed
 
 - name: Start the {{ crossplane_current_provider_revision }} provider pod
-  command: oc scale --namespace {{ crossplane_namespace }} --replicas 1 deploy {{ crossplane_current_provider_revision }}
+  ansible.builtin.command: oc scale --namespace {{ crossplane_namespace }} --replicas 1 deploy {{ crossplane_current_provider_revision }}
   when: crossplane_provider_scc is changed
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:

@@ -1,5 +1,5 @@
 - name: Get vCenter trusted cert {{ item.chain }}
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ vmware_lab.vcenter_hostname }}/api/vcenter/certificate-management/vcenter/trusted-root-chains/{{ item.chain }}'
     method: GET
     url_username: '{{ vmware_lab.vcenter_username }}'
@@ -10,7 +10,7 @@
   register: vcenter_trusted_cert
 
 - name: Set vcenter_trusted_cert_found
-  set_fact:
+  ansible.builtin.set_fact:
     vcenter_trusted_cert_found: true
   when:
     - vcenter_trusted_cert.json.cert_chain.cert_chain.0 is defined

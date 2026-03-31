@@ -1,11 +1,11 @@
 - name: Restart docker
-  service:
+  ansible.builtin.service:
     name: docker
     state: restarted
   become: true
 
 - name: Restart containerd
-  service:
+  ansible.builtin.service:
     name: containerd
     state: restarted
   become: true

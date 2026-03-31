@@ -1,5 +1,5 @@
 - name: Delete and recreate application directory {{ autogitops_app_dst_dir }}
-  file:
+  ansible.builtin.file:
     path: '{{ autogitops_app_dst_dir }}'
     state: '{{ item }}'
   loop:
@@ -7,6 +7,6 @@
     - directory
 
 - name: Create a .gitkeep file to allow checking the empty directory into git
-  copy:
+  ansible.builtin.copy:
     dest: '{{ autogitops_app_dst_dir }}/.gitkeep'
     content: ''

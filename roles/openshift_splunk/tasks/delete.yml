@@ -1,22 +1,22 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: splunk/instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_delete.yml
   vars:
     hvault_mount_point: autogitops
     hvault_secret_name: '{{ oscommon_cluster_domain }}/splunk/instance/credentials'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: splunk/operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml

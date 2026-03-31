@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: get_cluster_version.yml
 

@@ -1,5 +1,5 @@
 - name: Retrieve  Docker repository if it exists
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/repositories/docker/hosted/{{ nexus_repository_manager_docker_repo_name }}'
     user: admin
     password: '{{ generic_user_password }}'
@@ -10,7 +10,7 @@
   register: nexus_repository_manager_docker_repo_result
 
 - name: Create Docker repository
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ nexus_repository_manager_route.resources.0.spec.host }}/service/rest/v1/repositories/docker/hosted'
     user: admin
     password: '{{ generic_user_password }}'

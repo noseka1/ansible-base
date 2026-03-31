@@ -1,7 +1,7 @@
-- import_tasks: cluster_nodes_deploy.yml
+- ansible.builtin.import_tasks: cluster_nodes_deploy.yml
   tags: osvirt_cluster_nodes
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
@@ -9,7 +9,7 @@
     oscomm_subscription_namespace: openshift-cnv
   tags: osvirt_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -18,7 +18,7 @@
     autogitops_app_namespace: openshift-cnv
   tags: osvirt_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_operator.yml
   vars:
@@ -26,7 +26,7 @@
     oscomm_subscription_namespace: openshift-cnv
   tags: osvirt_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -35,7 +35,7 @@
     autogitops_app_namespace: openshift-cnv
   tags: osvirt_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: alermanager_silence_manage.yml
   vars:
@@ -43,7 +43,7 @@
     oscomm_silence_state: present
   tags: osvirt_hostpathprov
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -66,5 +66,5 @@
       - storageprofiles/openebs-lvm-storageprofile.yaml
   tags: osvirt_instance
 
-- import_tasks: example_deploy.yml
+- ansible.builtin.import_tasks: example_deploy.yml
   tags: osvirt_example_workload

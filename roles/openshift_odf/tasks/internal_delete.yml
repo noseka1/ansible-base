@@ -1,8 +1,8 @@
-- import_tasks: internal_instance_delete.yml
+- ansible.builtin.import_tasks: internal_instance_delete.yml
   tags: odf_instance
 
-- import_tasks: operator_delete.yml
+- ansible.builtin.import_tasks: operator_delete.yml
   tags: odf_operator
 
-- import_tasks: cluster_nodes_delete.yml
+- ansible.builtin.import_tasks: cluster_nodes_delete.yml
   tags: odf_cluster_nodes

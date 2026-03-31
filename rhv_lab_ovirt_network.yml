@@ -3,6 +3,6 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: rhv_lab
         tasks_from: create_ovirt_network.yml

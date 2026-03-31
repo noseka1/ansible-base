@@ -1,9 +1,9 @@
-- set_fact:
+- ansible.builtin.set_fact:
     msg: |
       GitLab installed successfully.
 
       You can go to GitLab Web UI and log in as user 'root':
       https://gitlab.apps.{{ oscommon_cluster_domain }}
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

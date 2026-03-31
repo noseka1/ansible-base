@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: delete_kubernetes_objects.yml
   vars:
@@ -10,12 +10,12 @@
         kind: Namespace
         name: openshift-terminal
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: web-terminal/operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: prune_csvs.yml

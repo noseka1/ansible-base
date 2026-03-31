@@ -1,24 +1,24 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_gitea
     tasks_from: get_connection.yml
   vars:
     gitea_repo_name: '{{ autogitops_git_repo_name }}'
 
-- set_fact:
+- ansible.builtin.set_fact:
     autogitops_git_dir: '{{ autogitops_workspace_dir }}/{{ oscommon_cluster_domain }}'
 
 - name: Cluster local git directory
-  debug:
+  ansible.builtin.debug:
     var: autogitops_git_dir
 
 - name: Ensure local git directory exists
-  file:
+  ansible.builtin.file:
     path: '{{ autogitops_git_dir }}'
     state: directory
     mode: '0700'
 
 - name: Pull GitOps state from cluster
-  git:
+  ansible.builtin.git:
     repo: '{{ gitea_repo_url_creds }}'
     dest: '{{ autogitops_git_dir }}'
     version: 'ag-{{ oscommon_cluster_domain }}'

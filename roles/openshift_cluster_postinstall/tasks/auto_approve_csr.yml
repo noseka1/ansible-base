@@ -2,7 +2,7 @@
 # deploy csr-auto-approver only if there is no provisioning configuration.
 # Provisioning automates the cluster scaling and signs the CSR for new cluster
 # nodes automatically.
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_auto_approve_csr
     tasks_from: deploy.yml
   when: >-

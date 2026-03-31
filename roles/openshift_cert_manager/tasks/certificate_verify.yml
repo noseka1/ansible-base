@@ -44,7 +44,7 @@
   register: certman_test_cert_info
 
 - name: Verify the certificate subject is correct
-  assert:
+  ansible.builtin.assert:
     that: certman_test_cert_info.subject.commonName == certman_certificate_dns_name
     fail_msg: |
       The certificate subject does not equal {{ certman_certificate_dns_name }}

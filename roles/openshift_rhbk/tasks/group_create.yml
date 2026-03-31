@@ -1,5 +1,5 @@
 - name: Obtain list of groups
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/groups
     headers:
       Authorization: Bearer {{ rhbk_access_token }}
@@ -8,7 +8,7 @@
   register: rhbk_groups_list_result
 
 - name: Create group {{ rhbk_group_name }} if it doesn't exist
-  uri:
+  ansible.builtin.uri:
     url: https://{{ rhbk_hostname }}/admin/realms/{{ rhbk_realm_name }}/groups
     method: POST
     headers:

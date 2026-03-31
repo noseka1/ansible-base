@@ -1,7 +1,7 @@
-- import_tasks: get_argocd_api_connection.yml
+- ansible.builtin.import_tasks: get_argocd_api_connection.yml
 
 - name: Create repository certificate for '{{ gitops_repo_cert_server_name }}'
-  uri:
+  ansible.builtin.uri:
     url: https://{{ argocd_route_host }}/api/v1/certificates?upsert=true
     method: POST
     body_format: json

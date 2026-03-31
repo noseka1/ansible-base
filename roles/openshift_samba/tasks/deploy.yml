@@ -1,5 +1,5 @@
-- import_tasks: server_deploy.yml
+- ansible.builtin.import_tasks: server_deploy.yml
   tags: smbsrv
 
-- import_tasks: csi_deploy.yml
+- ansible.builtin.import_tasks: csi_deploy.yml
   tags: smbcsi

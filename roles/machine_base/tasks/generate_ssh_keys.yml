@@ -1,5 +1,5 @@
 - name: Ensure /root/.ssh directory exists
-  file:
+  ansible.builtin.file:
     path: /root/.ssh
     state: directory
     owner: root
@@ -8,19 +8,19 @@
   become: true
 
 - name: Generate SSH keys for root
-  openssh_keypair: path=/root/.ssh/id_rsa
+  community.crypto.openssh_keypair: path=/root/.ssh/id_rsa
   register: machine_base_root_keypair_result
   become: true
 
 - name: Set as authorized key
-  authorized_key:
+  ansible.posix.authorized_key:
     user: root
     key: '{{ machine_base_root_keypair_result.public_key }}'
     state: present
   become: true
 
 - name: Ensure {{ ansible_facts.user_dir }}/.ssh directory exists
-  file:
+  ansible.builtin.file:
     path: '{{ ansible_facts.user_dir }}/.ssh'
     state: directory
     owner: '{{ ansible_facts.user_id }}'
@@ -29,12 +29,12 @@
   become: true
 
 - name: Generate SSH keys for {{ ansible_facts.user_id }}
-  openssh_keypair:
+  community.crypto.openssh_keypair:
     path: '{{ ansible_facts.user_dir }}/.ssh/id_rsa'
   register: machine_base_user_keypair_result
 
 - name: Set as authorized key
-  authorized_key:
+  ansible.posix.authorized_key:
     user: '{{ ansible_facts.user_id }}'
     key: '{{ machine_base_user_keypair_result.public_key }}'
     state: present

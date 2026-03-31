@@ -1,4 +1,4 @@
-- assert:
+- ansible.builtin.assert:
     that: query('kubernetes.core.k8s', api_version='v1', kind='Node', label_selector='cluster.ocs.openshift.io/openshift-storage=') | length >= 3
     fail_msg: |
       Need at least 3 nodes labeled as ODF nodes. You can label cluster nodes using:

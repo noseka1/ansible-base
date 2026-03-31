@@ -1,8 +1,8 @@
-- import_tasks: efs_deploy.yml
+- ansible.builtin.import_tasks: efs_deploy.yml
   when: efs_aws_manage
   tags: efs_aws_manage
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve
   vars:
@@ -10,7 +10,7 @@
     oscomm_subscription_namespace: openshift-cluster-csi-drivers
   tags: efs_operator
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -19,12 +19,12 @@
     autogitops_app_namespace: openshift-cluster-csi-drivers
   tags: efs_operator
 
-- assert:
+- ansible.builtin.assert:
     that: efs_aws_file_system_id | length > 0
     fail_msg: Variable 'efs_aws_file_system_id' must not be empty
     quiet: true
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:
@@ -33,7 +33,7 @@
     autogitops_app_namespace: ''
   tags: efs_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
@@ -41,7 +41,7 @@
     wait_for_deployment_namespace: openshift-cluster-csi-drivers
   tags: efs_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:
@@ -49,7 +49,7 @@
     wait_for_deployment_namespace: openshift-cluster-csi-drivers
   tags: efs_instance
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

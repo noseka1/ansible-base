@@ -1,6 +1,6 @@
-- import_tasks: get_rhacs_central_host.yml
+- ansible.builtin.import_tasks: get_rhacs_central_host.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cloudflared
     tasks_from: deploy.yml
   vars:

@@ -1,7 +1,7 @@
-- import_tasks: get_argocd_api_connection.yml
+- ansible.builtin.import_tasks: get_argocd_api_connection.yml
 
 - name: Create repository '{{ gitops_repo_name }}'
-  uri:
+  ansible.builtin.uri:
     url: https://{{ argocd_route_host }}/api/v1/repositories?upsert=true
     method: POST
     body_format: json

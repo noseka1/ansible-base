@@ -9,13 +9,13 @@
       register: aap_gateway_route_result
 
     - name: Verify gateway route exists
-      assert:
+      ansible.builtin.assert:
         that: aap_gateway_route_result.resources | length == 1
         fail_msg: "AAP gateway route doesn't exist. Is AAP installed on the cluster?"
         quiet: true
 
     - name: Set AAP connection
-      set_fact:
+      ansible.builtin.set_fact:
         aap_connection_host: '{{ aap_gateway_route_result.resources.0.spec.host }}'
         aap_connection_username:  admin
         aap_connection_password: '{{ generic_user_password }}'

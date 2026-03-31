@@ -23,7 +23,7 @@
   kubernetes.core.k8s:
     definition: "{{ lookup('url', rook_ceph_git_url + '/deploy/examples/csi-operator.yaml', split_lines=false) }}"
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:

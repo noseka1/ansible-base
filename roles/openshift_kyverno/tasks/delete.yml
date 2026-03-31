@@ -1,25 +1,25 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_oauth_proxy
     tasks_from: delete.yml
   vars:
     oauth_proxy_app_prefix: kyverno-
   tags: kyverno_policy_reporter
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: kyverno/policy-reporter
   tags: kyverno_policy_reporter
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:
     autogitops_app_dst_path: kyverno/policies
   tags: kyverno_policies
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_delete.yml
   vars:

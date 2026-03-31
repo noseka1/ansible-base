@@ -1,6 +1,6 @@
 - hosts: all
   gather_facts: false
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: openshift_amq_streams
         tasks_from: mirror_maker_delete.yml

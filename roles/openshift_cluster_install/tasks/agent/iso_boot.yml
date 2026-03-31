@@ -20,7 +20,7 @@
 # VirtualMediaEject should not require image_url #3042
 # https://github.com/ansible-collections/community.general/issues/3042
 - name: Eject virtual media
-  uri:
+  ansible.builtin.uri:
     url: https://{{ item.value.bmc.baseuri }}/redfish/v1/Systems/{{ item.value.bmc.resource_id }}/VirtualMedia/Cd/Actions/VirtualMedia.EjectMedia
     method: POST
     url_username: '{{ osclusterinstall_info.cluster_nodes_shared.bmc.username }}'

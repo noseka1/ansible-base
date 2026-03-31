@@ -1,5 +1,5 @@
 - name: Set cluster_id
-  set_fact:
+  ansible.builtin.set_fact:
     cluster_id: '{{ oscommon_infrastructure.status.infrastructureName }}'
 
 - name: Retrieve existing machinesets

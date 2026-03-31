@@ -6,7 +6,7 @@
   become: true
 
 - name: Install Ceph RPM packages
-  yum:
+  ansible.builtin.yum:
     name:
       - chrony
       - cephadm

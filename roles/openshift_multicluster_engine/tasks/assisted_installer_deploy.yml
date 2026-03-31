@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: secret_insert.yml
   vars:
@@ -8,7 +8,7 @@
       pullSecret: '{{ redhat_cloud_pull_secret }}'
       ssh-publickey: '{{ mce_ssh_authorized_key }}'
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_autogitops
     tasks_from: app_deploy.yml
   vars:

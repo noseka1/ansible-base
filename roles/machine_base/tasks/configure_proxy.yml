@@ -1,5 +1,5 @@
 - name: Configure dnf to use http proxy
-  ini_file:
+  community.general.ini_file:
     dest: /etc/dnf/dnf.conf
     section: main
     option: proxy
@@ -9,7 +9,7 @@
   become: true
 
 - name: Install custom yum trusted CA certificate
-  copy:
+  ansible.builtin.copy:
     dest: /etc/rhsm/ca/redhat-uep-custom.pem
     content: '{{ machine_base_custom_yum_sslcacert[ansible_facts.domain] }}'
     backup: true
@@ -18,7 +18,7 @@
   become: true
 
 - name: Configure Red Hat Subscription Manager to generate redhat.repo that uses custom cert
-  ini_file:
+  community.general.ini_file:
     dest: /etc/rhsm/rhsm.conf
     section: rhsm
     option: repo_ca_cert
@@ -28,7 +28,7 @@
   become: true
 
 - name: Disable server certificate status verification (OCSP Stapling) for yum repos
-  replace:
+  ansible.builtin.replace:
     path: /etc/yum.repos.d/redhat.repo
     regexp: 'sslverifystatus = 1'
     replace: 'sslverifystatus = 0'

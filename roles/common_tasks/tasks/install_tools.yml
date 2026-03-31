@@ -1,5 +1,5 @@
 - name: Install tools
-  yum:
+  ansible.builtin.yum:
     name:
       - bind-utils # dig, host
       - bzip2
@@ -24,7 +24,7 @@
   become: true
 
 - name: Install tools RHEL7
-  yum:
+  ansible.builtin.yum:
     name:
       - policycoreutils-python # semanage
     state: present
@@ -34,7 +34,7 @@
   become: true
 
 - name: Install tools RHEL8
-  yum:
+  ansible.builtin.yum:
     name:
       - jq
       - policycoreutils-python-utils # semanage
@@ -49,7 +49,7 @@
   become: true
 
 - name: Install tools RHEL9
-  yum:
+  ansible.builtin.yum:
     name:
       - jq
       - policycoreutils-python-utils # semanage
@@ -63,7 +63,7 @@
   become: true
 
 - name: Install tools Fedora
-  yum:
+  ansible.builtin.yum:
     name:
       - colordiff
       - fzf
@@ -81,7 +81,7 @@
   become: true
 
 - name: Install tools used by ranger
-  yum:
+  ansible.builtin.yum:
     name:
       - atool
       - python3-pygments

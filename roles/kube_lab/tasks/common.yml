@@ -1,5 +1,5 @@
 - name: Load required kernel modules
-  modprobe:
+  community.general.modprobe:
     name: '{{ item }}'
   loop:
     - br_netfilter
@@ -8,7 +8,7 @@
   become: true
 
 - name: Setup required sysctl params
-  sysctl:
+  ansible.posix.sysctl:
     name: '{{ item.key }}'
     value: '{{ item.value }}'
     reload: true
@@ -19,20 +19,20 @@
   become: true
 
 - name: Put SELinux in permissive mode
-  selinux:
+  ansible.posix.selinux:
     policy: targeted
     state: permissive
   become: true
 
 - name: Add Kubernetes Yum repository
-  copy:
+  ansible.builtin.copy:
     src: kubernetes.repo
     dest: /etc/yum.repos.d/kubernetes.repo
     mode: '0644'
   become: true
 
 - name: Install Kubernetes bootstrap packages
-  yum:
+  ansible.builtin.yum:
     name:
       - kubelet
       - kubeadm
@@ -41,7 +41,7 @@
   become: true
 
 - name: Ensure the kubelet services is enabled and started
-  service:
+  ansible.builtin.service:
     name: '{{ item }}'
     state: started
     enabled: true
@@ -50,17 +50,17 @@
   become: true
 
 - name: Create a kubeadm config directory
-  file:
+  ansible.builtin.file:
     dest: '{{ kubeadm_config_dir }}'
     state: directory
     mode: '0755'
 
 - name: Install further required packages
-  yum:
+  ansible.builtin.yum:
     name: iproute-tc
   become: true
 
 - name: Verify that container runtime socket {{ kubeadm_config_crisocket }} is functional
-  command: crictl --runtime-endpoint unix://{{ kubeadm_config_crisocket }}
+  ansible.builtin.command: crictl --runtime-endpoint unix://{{ kubeadm_config_crisocket }}
   changed_when: false
   become: true

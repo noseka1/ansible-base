@@ -1,5 +1,5 @@
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for {{ esxi_hostname }} to come back up
-  vmware_about_info:
+  community.vmware.vmware_about_info:
     hostname: '{{ esxi_hostname }}'
     username: '{{ esxi_username }}'
     password: '{{ esxi_password }}'

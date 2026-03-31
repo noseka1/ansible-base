@@ -1,5 +1,5 @@
 - name: Report success
-  set_fact:
+  ansible.builtin.set_fact:
     msg: |
       OpenShift installation complete.
 
@@ -17,5 +17,5 @@
 
          {{ osclusterinstall_info.config_dir }}/oc get clusterversion
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

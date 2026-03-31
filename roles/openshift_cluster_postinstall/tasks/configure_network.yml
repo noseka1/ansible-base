@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_datadog_vector
     tasks_from: get_connection.yml
   when: osclusterpostinst_send_network_audit_logs_to_syslog_enabled

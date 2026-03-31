@@ -1,14 +1,14 @@
 - name: Create temporary kustomize directory for {{ kustomize_name }}
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
     suffix: -{{ kustomize_name }}-kustomize
   register: tmpdir
 
-- debug:
+- ansible.builtin.debug:
     msg: Created temporary directory {{ tmpdir.path }}
 
 - name: Copy kustomization Ansible templates to {{ tmpdir.path }}
-  template:
+  ansible.builtin.template:
     src: '{{ item }}'
     dest: '{{ tmpdir.path }}'
   loop: '{{ kustomize_files }}'
@@ -19,6 +19,6 @@
     state: '{{ kustomize_op }}'
 
 - name: Delete temporary kustomize directory {{ tmpdir.path }}
-  file:
+  ansible.builtin.file:
     path: '{{ tmpdir.path }}'
     state: absent

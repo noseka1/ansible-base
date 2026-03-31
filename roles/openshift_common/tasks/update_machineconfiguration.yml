@@ -1,5 +1,5 @@
 - name: Retrieve update for MachineConfiguration files
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
@@ -7,7 +7,7 @@
   register: openshift_common_mc_update_files
 
 - name: Retrieve update for MachineConfiguration units
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_update_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
@@ -21,11 +21,11 @@
     name: cluster
   register: openshift_common_mc_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     openshift_common_mc_orig_yaml: '{{ openshift_common_mc_result.resources.0 }}'
 
 - name: Retrieve current MachineConfiguration files
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.files | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.path,value:.}]|from_entries'
@@ -33,7 +33,7 @@
   register: openshift_common_mc_orig_files
 
 - name: Retrieve current MachineConfiguration units
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_orig_yaml.spec.nodeDisruptionPolicy.units | default([]) | to_json }}' |
         jq --compact-output '[.[]|{key:.name,value:.}]|from_entries'
@@ -41,7 +41,7 @@
   register: openshift_common_mc_orig_units
 
 - name: Merge MachineConfiguration files
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_orig_files.stdout }} {{ openshift_common_mc_update_files.stdout }}' |
         jq --slurp add |
@@ -50,7 +50,7 @@
   register: openshift_common_mc_apply_files
 
 - name: Merge MachineConfiguration units
-  shell:
+  ansible.builtin.shell:
     cmd: |-
       echo '{{ openshift_common_mc_orig_units.stdout }} {{ openshift_common_mc_update_units.stdout }}' |
         jq --slurp add |
@@ -58,14 +58,14 @@
   changed_when: false
   register: openshift_common_mc_apply_units
 
-- set_fact:
+- ansible.builtin.set_fact:
     openshift_common_mc_apply_spec:
       spec:
         nodeDisruptionPolicy:
           files: '{{ openshift_common_mc_apply_files.stdout | from_json }}'
           units: '{{ openshift_common_mc_apply_units.stdout | from_json }}'
 
-- set_fact:
+- ansible.builtin.set_fact:
     openshift_common_mc_apply_yaml: '{{ openshift_common_mc_update_yaml | combine(openshift_common_mc_apply_spec, recursive=true) }}'
 
 - name: Update MachineConfiguration on cluster

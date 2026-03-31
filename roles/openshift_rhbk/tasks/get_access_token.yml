@@ -1,5 +1,5 @@
 - name: Obtain Keycloak access token
-  uri:
+  ansible.builtin.uri:
     url: 'https://{{ rhbk_hostname }}/realms/master/protocol/openid-connect/token'
     method: POST
     body_format: form-urlencoded
@@ -16,6 +16,6 @@
   retries: 30
   delay: 10
 
-- set_fact:
+- ansible.builtin.set_fact:
     rhbk_access_token: '{{ rhbk_token_result.json.access_token }}'
   when: rhbk_token_result.json.access_token is defined

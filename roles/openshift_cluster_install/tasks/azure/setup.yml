@@ -1,17 +1,17 @@
 - name: Display OCP Azure Quota requirements message
-  debug:
+  ansible.builtin.debug:
     msg:
       - "Azure account limits: https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-account.html#installation-azure-limits_installing-azure-account"
       - "Manage Azure Quotas: https://portal.azure.com/#view/Microsoft_Azure_Capacity/QuotaMenuBlade/~/myQuotas"
 
 - name: Create the root DNS zone
-  azure_rm_dnszone:
+  azure.azcollection.azure_rm_dnszone:
     name: '{{ osclusterinstall_azure.azure_dns_zone }}'
     resource_group: '{{ osclusterinstall_azure.resource_group }}'
   when: osclusterinstall_azure.create_azure_dns_zone
 
 - name: Add osServicePrincipal.json file for OpenShift Installer
-  template:
+  ansible.builtin.template:
     src: azure/osServicePrincipal.json
     dest: '{{ osclusterinstall_azure.azure_config_path }}'
     mode: 0600

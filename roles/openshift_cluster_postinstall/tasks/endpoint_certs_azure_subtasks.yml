@@ -5,11 +5,11 @@
     name: cluster
   register: osclusterpostinst_cluster_dns
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: direct_deploy.yml
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_cert_manager
     tasks_from: issuer_acme_azure_direct_deploy.yml
   vars:
@@ -18,6 +18,6 @@
     certman_acme_azure_hosted_zone_name: '{{ (osclusterpostinst_cluster_dns.resources.0.spec.publicZone.id | split("/"))[8] }}'
     certman_certificate_dns_name: 'mytest.{{ oscommon_cluster_domain }}'
 
-- import_tasks: endpoint_certs_complete.yml
+- ansible.builtin.import_tasks: endpoint_certs_complete.yml
   vars:
     osclusterpostinst_cert_issuer_name: acme-azure

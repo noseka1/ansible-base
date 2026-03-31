@@ -19,6 +19,6 @@
     - wireshark
 
 - name: Check Prometheus Windows exporter metrics are available
-  win_uri:
+  ansible.windows.win_uri:
     url: http://localhost:9182/metrics
     status_code: [ 200 ]

@@ -1,10 +1,10 @@
 - name: Retrieve rbd pool {{ cephlab_rbd_pool_name }}
-  command: >-
+  ansible.builtin.command: >-
     ceph osd pool stats {{ cephlab_rbd_pool_name }}
   changed_when: false
   ignore_errors: true
   register: cephlab_rbd_stats
   become: true
 
-- import_tasks: rbd_create_subtasks.yml
+- ansible.builtin.import_tasks: rbd_create_subtasks.yml
   when: cephlab_rbd_stats is failed

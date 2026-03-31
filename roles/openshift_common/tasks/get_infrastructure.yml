@@ -8,12 +8,12 @@
       register: oscommon_infrastructure_result
 
     - name: Set infrastructure info
-      set_fact:
+      ansible.builtin.set_fact:
         oscommon_infrastructure: '{{ oscommon_infrastructure_result.resources.0 }}'
         oscommon_cluster_url: >-
           {{ oscommon_infrastructure_result.resources.0.status.apiServerURL }}
         oscommon_cluster_domain: >-
           {{ oscommon_infrastructure_result.resources.0.status.apiServerURL | regex_replace("https://api\.(.*):6443", "\1") }}
 
-    - debug:
+    - ansible.builtin.debug:
         var: oscommon_cluster_domain

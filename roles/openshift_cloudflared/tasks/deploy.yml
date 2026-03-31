@@ -1,6 +1,6 @@
-- import_tasks: prep.yml
+- ansible.builtin.import_tasks: prep.yml
 
-- debug:
+- ansible.builtin.debug:
     msg: Creating tunnel to forward from {{ cloudflared_ingress_hostname }} to {{ cloudflared_target_hostname }}
 
 - name: Create {{ cloudflared_namespace }} namespace
@@ -22,10 +22,10 @@
       - cloudflared-deploy.yaml
 
 - name: Restart cloudflared pods after configuration changed
-  command: oc rollout restart -n {{ cloudflared_namespace }} deployment/cloudflared
+  ansible.builtin.command: oc rollout restart -n {{ cloudflared_namespace }} deployment/cloudflared
   when:  cloudflared_config_result is changed
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_deployment.yml
   vars:

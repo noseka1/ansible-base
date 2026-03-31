@@ -1,4 +1,4 @@
-- import_tasks: get_hostname.yml
+- ansible.builtin.import_tasks: get_hostname.yml
 
 - name: Obtain Quay registry robot access token for {{ quay_organization_name }}
   kubernetes.core.k8s_info:
@@ -8,6 +8,6 @@
     namespace: '{{ quay_instance_namespace }}'
   register: quay_robot_token_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     quay_robot_username: '{{ quay_organization_name }}+{{ quay_robot_name }}'
     quay_robot_password: '{{ quay_robot_token_result.resources.0.data.access_token | b64decode }}'

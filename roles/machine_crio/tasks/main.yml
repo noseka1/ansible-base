@@ -1,5 +1,5 @@
 - name: Install the cri-o container runtime
-  yum:
+  ansible.builtin.yum:
     name:
       - conmon
       - cri-o
@@ -9,7 +9,7 @@
   become: true
 
 - name: Configure conmon location
-  ini_file:
+  community.general.ini_file:
     dest: /etc/crio/crio.conf
     section: crio.runtime
     option: conmon
@@ -19,7 +19,7 @@
   become: true
 
 - name: Start crio service
-  service:
+  ansible.builtin.service:
     name: crio
     state: started
     enabled: true

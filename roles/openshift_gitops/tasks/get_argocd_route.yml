@@ -8,5 +8,5 @@
         namespace: '{{ gitops_instance_namespace }}'
       register: argocd_route_result
 
-    - set_fact:
+    - ansible.builtin.set_fact:
         argocd_route_host: '{{ argocd_route_result.resources.0.spec.host }}'

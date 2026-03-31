@@ -7,5 +7,5 @@
     AWS_SECRET_ACCESS_KEY: '{{ eks_cluster_install.aws_secret_access_key }}'
   register: eks_cluster_install_terraform_result
 
-- debug:
+- ansible.builtin.debug:
     var: eks_cluster_install_terraform_result.stdout_lines

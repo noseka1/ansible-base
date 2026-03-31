@@ -1,10 +1,10 @@
 - name: Install pip3 tool
-  yum:
+  ansible.builtin.yum:
     name: python36
   become: true
 
 - name: Install Python modules required by Ansible
-  pip:
+  ansible.builtin.pip:
     name:
       - kubernetes==11.0.0
       - openshift==0.11.2

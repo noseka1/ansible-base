@@ -24,6 +24,13 @@ spec:
           sockets: 1
           threads: 1
         devices:
+          # Older operating systems like RHEL6 or Windows Server 2012 R2 or
+          # older can't boot using modern virtio drivers. Windows may run into
+          # the Blue Screen of Death (BSoD) due to the driver mismatch. These
+          # older systems require virtio-transitional drivers that can be
+          # enabled by setting useVirtioTransitional = true.
+          # See also: https://redhat.atlassian.net/browse/MTV-1895
+          useVirtioTransitional: false
 {% if osvirt_machine_multithreaded_diskio %}
           # This allows the host-level IOthreads to be automatically mapped to multiple queues inside the
           # guest, so work is properly spread among vcpus as well. Queues are automatically set to the

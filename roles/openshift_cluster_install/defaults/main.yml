@@ -1,5 +1,5 @@
 osclusterinstall_agent:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster3'
+  config_dir: '{{ playbook_dir }}/workspace/openshift_cluster_install/mycluster3'
   cluster_name: mycluster3
   base_domain: example.com
   channel: stable-4.21
@@ -72,7 +72,7 @@ osclusterinstall_agent:
   iso_download_url: https://minio.lab.example.com:9010/mybucket1/openshift_cluster_install/{{ osclusterinstall_agent.cluster_name }}/agent.x86_64.iso
 
 osclusterinstall_aws:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster10'
+  config_dir: '{{ playbook_dir }}/workspace/openshift_cluster_install/mycluster10'
   cluster_name: mycluster10
   base_domain: sandbox1422.opentlc.com
   channel: stable-4.21
@@ -87,7 +87,7 @@ osclusterinstall_aws:
   aws_secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 osclusterinstall_gcp:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster11'
+  config_dir: '{{ playbook_dir }}/workspace/openshift_cluster_install/mycluster11'
   cluster_name: mycluster11
   base_domain: sandbox1422.opentlc.com
   channel: stable-4.21
@@ -102,7 +102,7 @@ osclusterinstall_gcp:
   gcp_projectid: openenv-pvdbt
 
 osclusterinstall_azure:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster14'
+  config_dir: '{{ playbook_dir }}/workspace/openshift_cluster_install/mycluster14'
   cluster_name: ocp4-azure
   base_domain: XXXX.azure.redhatworkshops.io
   version: latest
@@ -124,7 +124,7 @@ osclusterinstall_azure:
   create_azure_dns_zone: false
 
 osclusterinstall_vsphere:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster18'
+  config_dir: '{{ playbook_dir }}/workspace/openshift_cluster_install/mycluster18'
   cluster_name: 8bcng
   base_domain: dynamic.opentlc.com
   channel: stable-4.21

@@ -1,4 +1,4 @@
-autogitops_workspace_dir: '{{ playbook_dir }}/workspace/autogitops'
+autogitops_workspace_dir: '{{ playbook_dir }}/workspace/openshift_autogitops'
 
 autogitops_git_repo_name: autogitops
 

@@ -1,5 +1,5 @@
 rosa_cluster_install:
-  config_dir: '{{ playbook_dir }}/workspace/openshift/mycluster17'
+  config_dir: '{{ playbook_dir }}/workspace/rosa_cluster_install/mycluster17'
   cluster_name: mycluster17
   cluster_version: 4.21.5
   aws_region: us-west-2

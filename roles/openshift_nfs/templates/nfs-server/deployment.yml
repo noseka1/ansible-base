@@ -9,6 +9,8 @@ spec:
   selector:
     matchLabels:
       app: nfs-server
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

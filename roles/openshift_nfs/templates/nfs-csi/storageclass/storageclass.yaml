@@ -14,5 +14,6 @@ parameters:
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
-mountOptions:
-  - nfsvers=4.2
+#mountOptions:
+#  - nfsvers=4.2
+#  - timeo=3000

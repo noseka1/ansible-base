@@ -15,8 +15,8 @@
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.availableUpdates is defined
-    - ocu_clusterversion_result.resources.0.status.availableUpdates | selectattr('version', 'equalto', item.version) | list | length > 0
+    - ocu_clusterversion_result.resources.0.status.availableUpdates | default([]) |
+        selectattr('version', 'equalto', item.version) | length > 0
   retries: 60
   delay: 10
 
@@ -38,9 +38,7 @@
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.conditions is defined
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "True"
+    - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'True'
   retries: 300
   delay: 1
 
@@ -51,11 +49,9 @@
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result.resources.0.status.conditions is defined
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Progressing') | first).status == "False"
-    - ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | list | length > 0
-    - (ocu_clusterversion_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Available') | first).status == "True"
+    - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'False'
+    - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Failing`].status | [0]') == 'False'
+    - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Available`].status | [0]') == 'True'
   retries: 360
   delay: 20
 

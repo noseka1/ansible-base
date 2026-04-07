@@ -9,7 +9,8 @@
     name: openshift_common
     tasks_from: get_infrastructure.yml
   tags:
-    - etcd_encryption
+    - osclusterpostinst_etcd_encryption
+    - osclusterpostinst_ntp
 
 - ansible.builtin.import_role:
     name: openshift_common
@@ -30,7 +31,7 @@
   when:
     - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
   tags:
-    - etcd_encryption
+    - osclusterpostinst_etcd_encryption
 
 - ansible.builtin.import_tasks: infra_nodes.yml
   when: oscommon_infrastructure.status.platformStatus.type == 'AWS'
@@ -54,6 +55,13 @@
 
 - ansible.builtin.import_tasks: clusterwide_proxy.yml
   when: oscommon_infrastructure.status.controlPlaneTopology not in ['External']
+
+- ansible.builtin.import_tasks: ntp.yml
+  when:
+    - osclusterpostinst_custom_ntp_servers | length > 0
+    - oscommon_infrastructure.status.controlPlaneTopology not in ['External']
+  tags:
+    - osclusterpostinst_ntp
 
 - ansible.builtin.import_tasks: rhel_entitlement.yml
 

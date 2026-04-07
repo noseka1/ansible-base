@@ -17,6 +17,9 @@ osclusterpostinst_kernel_arguments: []
 #  - intel_iommu=on
 #  - amd_iommu=on
 
+# Override chrony NTP server list
+osclusterpostinst_custom_ntp_servers: []
+
 osclusterpostinst_deploy_infra_nodes: false
 # Instance type m6i.2xlarge = 8 vCPUs, 32 GiB RAM
 osclusterpostinst_deploy_infra_nodes_instance_type: m6i.2xlarge

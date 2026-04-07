@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ item }}
+  name: 99-{{ item }}-chrony-conf-override
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,{{ lookup('template', 'ntp/chrony.conf') | b64encode }}
+        mode: 0644
+        overwrite: true
+        path: /etc/chrony.conf

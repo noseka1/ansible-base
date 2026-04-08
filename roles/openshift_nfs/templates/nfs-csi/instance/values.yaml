@@ -1,5 +1,6 @@
 csi-driver-nfs:
   externalSnapshotter:
     enabled: true
+    name: nfs-snapshot-controller
     customResourceDefinitions:
       enabled: false

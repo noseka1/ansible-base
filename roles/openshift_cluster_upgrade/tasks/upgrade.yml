@@ -38,9 +38,21 @@
     name: version
   register: ocu_clusterversion_result
   until:
-    - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'True'
-  retries: 300
+    - (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'True')
+      or
+      (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False' and
+       ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') == 'AdminAckRequired')
+  retries: 120
   delay: 1
+
+- ansible.builtin.fail:
+    msg: |
+      Cluster not upgradeable.
+       Reason: {{ ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') }}
+      Message: {{ ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].message | [0]') }}
+  when:
+    - (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False' and
+       ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') == 'AdminAckRequired')
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the upgrade to version {{ item.version }} to complete
   kubernetes.core.k8s_info:
@@ -52,6 +64,8 @@
     - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'False'
     - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Failing`].status | [0]') == 'False'
     - ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Available`].status | [0]') == 'True'
+    - ocu_clusterversion_result.resources.0.status.history | selectattr('version', 'equalto', item.version) |
+        map(attribute='state') | first | default('') == 'Completed'
   retries: 360
   delay: 20
 

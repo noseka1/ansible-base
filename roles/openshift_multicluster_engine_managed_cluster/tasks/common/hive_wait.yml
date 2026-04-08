@@ -6,20 +6,16 @@
     namespace: '{{ mcemanagedcluster_info.cluster_name }}'
   register: mcemanagedcluster_clusterdeployment_result
   until:
-    - (mcemanagedcluster_clusterdeployment_result.resources.0.status.provisionRef.name is defined)
+    - (mcemanagedcluster_clusterdeployment_result.resources.0.status.provisionRef.name | default('') | length > 0)
       or
-      ((mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions is defined) and
-      (mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ProvisionFailed') | list | length > 0) and
-      (mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ProvisionFailed') | first).status == "True")
+      (mcemanagedcluster_clusterdeployment_result | json_query('resources[0].status.conditions[?type==`ProvisionFailed`].status | [0]') == 'True')
   retries: 12
   delay: 5
 
 - ansible.builtin.fail:
     msg: Cluster provisioning failed.
   when: >-
-    ((mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions is defined) and
-    (mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ProvisionFailed') | list | length > 0) and
-    (mcemanagedcluster_clusterdeployment_result.resources.0.status.conditions | selectattr('type', 'equalto', 'ProvisionFailed') | first).status == "True")
+    (mcemanagedcluster_clusterdeployment_result | json_query('resources[0].status.conditions[?type==`ProvisionFailed`].status | [0]') == 'True')
 
 - name: Retrieve provisioning job reference
   kubernetes.core.k8s_info:
@@ -29,7 +25,7 @@
     namespace: '{{ mcemanagedcluster_info.cluster_name }}'
   register: mcemanagedcluster_clusterprovision_result
   until:
-    - mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name is defined
+    - mcemanagedcluster_clusterprovision_result.resources.0.status.jobRef.name | default('') | length > 0
   retries: 12
   delay: 5
 
@@ -45,17 +41,13 @@
     namespace: '{{ mcemanagedcluster_info.cluster_name }}'
   register: mcemanagedcluster_provisioning_job_result
   until:
-    - mcemanagedcluster_provisioning_job_result.resources.0.status.conditions is defined
-    - ((mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0) and
-      (mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True")
+    - (mcemanagedcluster_provisioning_job_result | json_query('resources[0].status.conditions[?type==`Failed`].status | [0]') == 'True')
       or
-      ((mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | list | length > 0) and
-      (mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Complete') | first).status == "True")
+      (mcemanagedcluster_provisioning_job_result | json_query('resources[0].status.conditions[?type==`Complete`].status | [0]') == 'True')
   retries: 300
   delay: 20
 
 - ansible.builtin.fail:
     msg: Cluster provisioning failed.
   when: >-
-    ((mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | list | length > 0) and
-    (mcemanagedcluster_provisioning_job_result.resources.0.status.conditions | selectattr('type', 'equalto', 'Failed') | first).status == "True")
+    (mcemanagedcluster_provisioning_job_result | json_query('resources[0].status.conditions[?type==`Failed`].status | [0]') == 'True')

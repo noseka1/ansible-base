@@ -10,3 +10,6 @@ data:
   # See also Preparing to upgrade to OpenShift Container Platform 4.16
   # https://access.redhat.com/articles/7031404
   ack-4.15-kube-1.29-api-removals-in-4.16: "true"
+  # See also Preparing to upgrade to OpenShift Container Platform 4.20
+  # https://access.redhat.com/articles/7130599
+  ack-4.19-admissionregistration-v1beta1-api-removals-in-4.20: "true"

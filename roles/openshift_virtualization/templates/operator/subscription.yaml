@@ -17,3 +17,6 @@ spec:
     env:
     - name: KVM_EMULATION
       value: '{{ osvirt_kvm_emulation_enabled | string }}'
+#    # Use custom KubeVirt virt-launcher image
+#    - name: VIRT_LAUNCHER_IMAGE
+#      value: registry.lab.example.com:5002/noseka1/...

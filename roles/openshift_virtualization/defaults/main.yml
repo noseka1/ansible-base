@@ -29,6 +29,15 @@ osvirt_machine_root_disk_access_modes:
 osvirt_machine_root_disk_capacity: 10Gi
 osvirt_machine_root_disk_storage_class_name: ''
 osvirt_machine_root_disk_volume_mode: Filesystem
+# Storageclasses in the order of preference
+osvirt_machine_root_disk_storage_class_preference:
+  - { name: nfs-csi, mode: Filesystem }
+  - { name: ocs-storagecluster-ceph-rbd-virtualization, mode: Block }
+  - { name: ocs-external-storagecluster-ceph-rbd, mode: Block }
+  - { name: rook-ceph-block-virtualization, mode: Block }
+  - { name: rook-ceph-block, mode: Block }
+  - { name: efs-csi, mode: Filesystem }
+  - { name: rook-cephfs, mode: Filesystem }
 
 osvirt_machine_pod_network: true
 osvirt_machine_multus_network_name: ''

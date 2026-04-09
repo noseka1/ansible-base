@@ -1,0 +1,14 @@
+apiVersion: search.open-cluster-management.io/v1alpha1
+kind: Search
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: search-v2-operator
+  namespace: open-cluster-management
+spec:
+  dbStorage:
+    size: 10Gi
+{% if oscommon_default_storage_class | length > 0 %}
+    storageClassName: {{ oscommon_default_storage_class }}
+{% endif %}

@@ -20,6 +20,11 @@
     oscomm_subscription_name: advanced-cluster-management
     oscomm_subscription_namespace: open-cluster-management
 
+- name: Retrieve default storage class
+  ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: get_default_storage_class.yml
+
 - ansible.builtin.import_role:
     name: openshift_common
     tasks_from: install_plan_approve

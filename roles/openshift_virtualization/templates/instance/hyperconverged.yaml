@@ -1,15 +1,17 @@
 apiVersion: hco.kubevirt.io/v1beta1
 kind: HyperConverged
 metadata:
-  annotations:
-    kubevirt.kubevirt.io/jsonpatch: |-
-      [
-        {
-          "op":"add",
-          "path":"/spec/configuration/developerConfiguration/featureGates/-",
-          "value":"EnableVirtioFsStorageVolumes"
-        }
-      ]
+#  # Enable additional features in the KubeVirt resource. Note that this
+#  # triggers the Prometheus alert "UnsupportedHCOModification".
+#  annotations:
+#    kubevirt.kubevirt.io/jsonpatch: |-
+#      [
+#        {
+#          "op":"add",
+#          "path":"/spec/configuration/developerConfiguration/featureGates/-",
+#          "value":"EnableVirtioFsStorageVolumes"
+#        }
+#      ]
   name: kubevirt-hyperconverged
   namespace: openshift-cnv
 spec:

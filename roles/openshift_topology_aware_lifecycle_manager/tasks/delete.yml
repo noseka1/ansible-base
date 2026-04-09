@@ -4,3 +4,8 @@
   vars:
     autogitops_app_dst_path: talm/operator
   tags: talm_operator
+
+- ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: prune_csvs.yml
+  tags: talm_operator

@@ -1,0 +1,6 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: rook-ceph-delete-bucket
+spec:
+  claimPropertySets: []

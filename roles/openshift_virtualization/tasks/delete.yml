@@ -7,8 +7,14 @@
       - storageprofiles/efs-csi-storageprofile.yaml
       - storageprofiles/iscsi-target-storageprofile.yaml
       - storageprofiles/local-hostpath-storageprofile.yaml
+      - storageprofiles/lvms-loop1-vg-storageprofile.yaml
       - storageprofiles/nfs-csi-storageprofile.yaml
       - storageprofiles/openebs-lvm-storageprofile.yaml
+      - storageprofiles/rook-ceph-block-storageprofile.yaml
+      - storageprofiles/rook-ceph-block-virtualization-storageprofile.yaml
+      - storageprofiles/rook-ceph-delete-bucket-storageprofile.yaml
+      - storageprofiles/rook-cephfs-storageprofile.yaml
+      - storageprofiles/rook-nfs-storageprofile.yaml
     state: absent
   tags: osvirt_instance
 

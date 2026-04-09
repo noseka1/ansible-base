@@ -1,0 +1,12 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: lvms-loop1-vg
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteOnce
+    volumeMode: Block
+  - accessModes:
+    - ReadWriteOnce
+    volumeMode: Filesystem

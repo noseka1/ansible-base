@@ -40,7 +40,8 @@
   until:
     - (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Progressing`].status | [0]') == 'True')
       or
-      (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False')
+      (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False' and
+       ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') != 'UpdateInProgress')
   retries: 120
   delay: 1
 
@@ -50,7 +51,8 @@
        Reason: {{ ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') }}
       Message: {{ ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].message | [0]') }}
   when:
-    - (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False')
+      (ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].status | [0]') == 'False' and
+       ocu_clusterversion_result | json_query('resources[0].status.conditions[?type==`Upgradeable`].reason | [0]') != 'UpdateInProgress')
 
 - name: Waiting since {{ now(fmt="%I:%M:%S %p") }} for the upgrade to version {{ item.version }} to complete
   kubernetes.core.k8s_info:

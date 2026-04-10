@@ -1,4 +1,4 @@
-- ansible.builtin.import_tasks: example_delete.yml
+- ansible.builtin.import_tasks: example/delete.yml
   tags: osvirt_example_workload
 
 - name: Delete custom storageprofiles
@@ -57,5 +57,5 @@
     autogitops_app_dst_path: openshift-virtualization/operator
   tags: osvirt_operator
 
-- ansible.builtin.import_tasks: cluster_nodes_delete.yml
+- ansible.builtin.import_tasks: cluster_nodes/delete.yml
   tags: osvirt_cluster_nodes

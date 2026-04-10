@@ -1,4 +1,4 @@
-- ansible.builtin.import_tasks: cluster_nodes_deploy.yml
+- ansible.builtin.import_tasks: cluster_nodes/deploy.yml
   tags: osvirt_cluster_nodes
 
 - ansible.builtin.import_role:
@@ -72,5 +72,5 @@
       - storageprofiles/rook-nfs-storageprofile.yaml
   tags: osvirt_instance
 
-- ansible.builtin.import_tasks: example_deploy.yml
+- ansible.builtin.import_tasks: example/deploy.yml
   tags: osvirt_example_workload

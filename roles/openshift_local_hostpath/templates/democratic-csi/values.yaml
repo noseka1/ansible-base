@@ -2,7 +2,7 @@ csiDriver:
   # Should be globally unique for a given cluster
   name: org.democratic-csi.local-hostpath
   attachRequired: false
-  # Disable storage capacity reporting to allow overprovisioning
+  # Disable storage capacity reporting to allow storage overprovisioning
   storageCapacity: false
   fsGroupPolicy: File
 
@@ -93,7 +93,7 @@ driver:
             - CREATE_DELETE_SNAPSHOT
             - CLONE_VOLUME
             - SINGLE_NODE_MULTI_WRITER
-            # Disable storage capacity reporting to allow overprovisioning
+            # Disable storage capacity reporting to allow storage overprovisioning
             #- GET_CAPACITY
     local-hostpath:
       shareBasePath: {{ localhostpath_host_path }}

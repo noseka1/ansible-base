@@ -28,10 +28,7 @@ controller:
     enabled: false
 
   externalSnapshotter:
-    enabled: true
-    extraArgs:
-      - --leader-election=false
-      - --node-deployment=true
+    enabled: false
 
   driver:
     image:
@@ -65,23 +62,6 @@ node:
       # Set to true if running on OpenShift
       privileged: true
 
-storageClasses:
-  - name: local-hostpath
-    annotations:
-      storageclass.kubernetes.io/is-default-class: >-
-        {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath') | to_json }}
-      storageclass.kubevirt.io/is-default-virt-class: >-
-        {{ (not oscommon_default_virt_storage_class or oscommon_default_virt_storage_class == 'local-hostpath') | to_json }}
-    reclaimPolicy: Delete
-    volumeBindingMode: WaitForFirstConsumer
-    allowVolumeExpansion: false
-
-volumeSnapshotClasses:
-  - name: local-hostpath
-    annotations:
-      snapshot.storage.kubernetes.io/is-default-class: >-
-        {{ (not oscommon_default_volume_snapshot_class or oscommon_default_volume_snapshot_class == 'local-hostpath') | to_json }}
-
 driver:
   config:
     driver: local-hostpath
@@ -103,3 +83,14 @@ driver:
       dirPermissionsGroup: 0
       snapshots:
         default_driver: filecopy
+
+storageClasses:
+  - name: local-hostpath
+    annotations:
+      storageclass.kubernetes.io/is-default-class: >-
+        {{ (not oscommon_default_storage_class or oscommon_default_storage_class == 'local-hostpath') | to_json }}
+      storageclass.kubevirt.io/is-default-virt-class: >-
+        {{ (not oscommon_default_virt_storage_class or oscommon_default_virt_storage_class == 'local-hostpath') | to_json }}
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: false

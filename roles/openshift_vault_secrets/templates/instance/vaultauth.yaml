@@ -8,7 +8,7 @@ spec:
   # See also:
   # https://github.com/hashicorp/vault-secrets-operator/issues/148
   allowedNamespaces:
-    - '*'
+  - '*'
   vaultConnectionRef: vault-connection
   method: kubernetes
   mount: kubernetes

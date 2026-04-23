@@ -52,11 +52,12 @@ spec:
 #    # Set the Kubevirt.spec.configuration.developerConfiguration.logVerbosity. See also:
 #    # https://kubevirt.io/user-guide/debug_virt_stack/debug/
 #    kubevirt:
-#      virtLauncher: 8
-#      virtHandler: 8
-#      virtController: 4
 #      virtAPI: 5
+#      virtController: 4
+#      virtHandler: 8
+#      virtLauncher: 8
 #      virtOperator: 6
+#      virtSynchronizationController: 8
   resourceRequirements:
     # CPU overcommit ratio (default is 10). Set it to 1 for no CPU overcommit.
     vmiCPUAllocationRatio: 4

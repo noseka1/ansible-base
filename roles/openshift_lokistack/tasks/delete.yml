@@ -5,7 +5,7 @@
 
 - name: Check that default storageclass exists
   ansible.builtin.assert:
-    that: oscommon_default_storage_class
+    that: oscommon_default_storage_class | length > 0
     fail_msg: No default storage class found on the cluster.
   tags: lokistack_instance
 

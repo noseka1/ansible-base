@@ -89,6 +89,14 @@ spec:
     type: kubeAPIAudit
     kubeAPIAudit:
       rules: []
+  # Argo CD managing hundreds of applications generates a huge amount of logs.
+  # Drop these logs. Don't forward them anywhere.
+  - name: drop-openshift-gitops
+    type: drop
+    drop:
+    - test:
+      - field: .kubernetes.namespace_name
+        matches: '^openshift-gitops$'
   pipelines:
 {% if clusterlog_forward_to_loki %}
   - name: loki-pipeline
@@ -113,6 +121,7 @@ spec:
     #  because the internal store does not provide a secure storage.
     - audit-without-auditd
     filterRefs:
+    - drop-openshift-gitops
     - custom-kubeapiaudit
     - detect-multiline-exception
     outputRefs:
@@ -125,6 +134,7 @@ spec:
     - infrastructure
     - audit-without-auditd
     filterRefs:
+    - drop-openshift-gitops
     - custom-kubeapiaudit
     - detect-multiline-exception
     outputRefs:
@@ -137,6 +147,7 @@ spec:
     - infrastructure
     - audit-without-audit
     filterRefs:
+    - drop-openshift-gitops
     - custom-kubeapiaudit
     - detect-multiline-exception
     outputRefs:

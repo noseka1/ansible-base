@@ -1,5 +1,7 @@
 hvault_namespace: hashicorp-vault
 hvault_name: hashicorp-vault-instance
+
+# Verify HashiCorp Vault route certificate
 hvault_skip_verify: false
 
 # Create a custom key-value store and insert sample secrets

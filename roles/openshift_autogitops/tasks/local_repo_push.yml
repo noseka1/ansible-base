@@ -14,36 +14,42 @@
 - ansible.builtin.set_fact:
     autogitops_git_updated: '{{ autogitops_git_status_result.stdout.find("Changes to be committed") != -1 }}'
 
-- name: Commit changes to git
-  ansible.builtin.command: git commit --message 'Update app {{ autogitops_app_name }}'
-  args:
-    chdir: '{{ autogitops_git_dir }}'
-  environment:
-    GIT_AUTHOR_NAME: autogitops
-    GIT_AUTHOR_EMAIL: autogitops@example.com
-    GIT_COMMITTER_NAME: autogitops
-    GIT_COMMITTER_EMAIL: autogitops@example.com
-  when: autogitops_git_updated
+- when: autogitops_git_updated
+  block:
+    - name: Commit changes to git
+      ansible.builtin.command: git commit --message 'Update app {{ autogitops_app_name }}'
+      args:
+        chdir: '{{ autogitops_git_dir }}'
+      environment:
+        GIT_AUTHOR_NAME: autogitops
+        GIT_AUTHOR_EMAIL: autogitops@example.com
+        GIT_COMMITTER_NAME: autogitops
+        GIT_COMMITTER_EMAIL: autogitops@example.com
 
-- name: Retrieve latest commit
-  ansible.builtin.command: git show
-  changed_when: false
-  args:
-    chdir: '{{ autogitops_git_dir }}'
-  register: autogitops_git_commit_result
-  when: autogitops_git_updated
+    - name: Retrieve latest commit
+      ansible.builtin.command: git show
+      changed_when: false
+      args:
+        chdir: '{{ autogitops_git_dir }}'
+      register: autogitops_git_commit_result
 
-- name: Show git commit if ran with ansible-playbook -v
-  ansible.builtin.debug:
-    var: autogitops_git_commit_result.stdout_lines
-    verbosity: 1
-  when: autogitops_git_updated
+    - name: Show git commit if ran with ansible-playbook -v
+      ansible.builtin.debug:
+        var: autogitops_git_commit_result.stdout_lines
 
-- name: Push changes to remote repo
-  ansible.builtin.command: git push
-  args:
-    chdir: '{{ autogitops_git_dir }}'
-  when: autogitops_git_updated
+    - ansible.builtin.import_role:
+        name: openshift_gitea
+        tasks_from: get_connection.yml
+      vars:
+        gitea_repo_name: '{{ autogitops_git_repo_name }}'
+
+    - name: Push changes to remote repo
+      ansible.builtin.command: git push
+      args:
+        chdir: '{{ autogitops_git_dir }}'
+      environment:
+        GIT_ASKPASS: '{{ autogitops_workspace_dir }}/askpass.sh'
+        GIT_PASSWORD: '{{ gitea_password }}'
 
 - name: Retrieve latest commit id
   ansible.builtin.command: git rev-parse HEAD

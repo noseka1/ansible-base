@@ -15,12 +15,20 @@
   ansible.builtin.file:
     path: '{{ autogitops_git_dir }}'
     state: directory
-    mode: '0700'
+
+- name: Create git askpass helper
+  ansible.builtin.copy:
+    content: 'echo "$GIT_PASSWORD"'
+    dest: '{{ autogitops_workspace_dir }}/askpass.sh'
+    mode: '0755'
 
 - name: Pull GitOps state from cluster
   ansible.builtin.git:
-    repo: '{{ gitea_repo_url_creds }}'
+    repo: '{{ gitea_repo_url_user }}'
     dest: '{{ autogitops_git_dir }}'
     version: 'ag-{{ oscommon_cluster_domain }}'
     single_branch: true
     force: true
+  environment:
+    GIT_ASKPASS: '{{ autogitops_workspace_dir }}/askpass.sh'
+    GIT_PASSWORD: '{{ gitea_password }}'

@@ -19,7 +19,10 @@
     method: GET
     validate_certs: '{{ not hvault_skip_verify }}'
     status_code: [ 200, 501, 503 ]
-  register: hvault_health
-  until: (hvault_health.status in [ 200, 501 ] or (hvault_health.json is defined and hvault_health.json.sealed))
+  register: hvault_health_result
+  until: >-
+    hvault_health_result.status == 200 or
+    hvault_health_result.json.sealed | default(false) or
+    hvault_health_result.json.initialized | default(true) == false
   retries: 60
   delay: 10

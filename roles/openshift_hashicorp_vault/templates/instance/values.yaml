@@ -4,17 +4,18 @@ vault:
   injector:
     enabled: {{ hvault_injector_enabled }}
     # Use OpenShift-specific images as per
-    # https://github.com/hashicorp/vault-helm/blob/v0.30.0/values.openshift.yaml
+    # https://github.com/hashicorp/vault-helm/blob/v0.32.0/values.openshift.yaml
     image:
-      repository: "registry.connect.redhat.com/hashicorp/vault-k8s"
-      tag: "1.6.2-ubi"
+      repository: registry.connect.redhat.com/hashicorp/vault-k8s
+      tag: 1.7.2-ubi
     agentImage:
-      repository: "registry.connect.redhat.com/hashicorp/vault"
-      tag: "1.19.0-ubi"
+      repository: registry.connect.redhat.com/hashicorp/vault
+      tag: 1.21.2-ubi
   server:
     auditStorage:
       enabled: true
     extraEnvironmentVars:
+      # Supported values (in order of detail) are trace, debug, info, warn, and err.
       VAULT_LOG_LEVEL: debug
     readinessProbe:
       # This readiness probe succeeds even when HashiCorp Vault is uninitialized. This allows Argo CD
@@ -23,8 +24,8 @@ vault:
     # Use OpenShift-specific images as per
     # https://github.com/hashicorp/vault-helm/blob/v0.30.0/values.openshift.yaml
     image:
-      repository: "registry.connect.redhat.com/hashicorp/vault"
-      tag: "1.19.0-ubi"
+      repository: registry.connect.redhat.com/hashicorp/vault
+      tag: 1.21.2-ubi
   ui:
     enabled: true
 

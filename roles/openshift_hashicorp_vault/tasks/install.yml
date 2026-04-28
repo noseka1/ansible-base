@@ -26,3 +26,11 @@
     hvault_health_result.json.initialized | default(true) == false
   retries: 60
   delay: 10
+
+- name: Retrieve the unseal secret if it exists
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: '{{ hvault_name }}-unseal-key'
+    namespace: '{{ hvault_namespace }}'
+  register: hvault_unseal_secret_result

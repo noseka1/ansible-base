@@ -4,7 +4,9 @@
 - ansible.builtin.import_tasks: install.yml
 
 - ansible.builtin.import_tasks: initialize.yml
-  when: hvault_health_result.json.initialized | default(true) == false
+  when:
+    - hvault_health_result.json.initialized | default(true) == false
+    - hvault_unseal_secret_result.resources | length == 0
 
 - ansible.builtin.import_tasks: unseal.yml
 

@@ -36,6 +36,7 @@
     - name: Show git commit if ran with ansible-playbook -v
       ansible.builtin.debug:
         var: autogitops_git_commit_result.stdout_lines
+        verbosity: 1
 
     - ansible.builtin.import_role:
         name: openshift_gitea

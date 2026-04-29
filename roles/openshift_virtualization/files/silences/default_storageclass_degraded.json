@@ -1,0 +1,20 @@
+{
+  "comment": "Basic storageclass like local-hostpath doesn't support smart cloning. This is acknowledged.",
+  "createdBy": "Ansible ID 1306a706-c279-42c6-a7d4-c3e46367fe7f",
+  "startsAt": "2025-01-01T00:00:00.000Z",
+  "endsAt": "3000-01-01T00:00:00.000Z",
+  "matchers": [
+    {
+      "isEqual": true,
+      "isRegex": false,
+      "name": "alertname",
+      "value": "CDIDefaultStorageClassDegraded"
+    },
+    {
+      "isEqual": true,
+      "isRegex": false,
+      "name": "severity",
+      "value": "warning"
+    }
+  ]
+}

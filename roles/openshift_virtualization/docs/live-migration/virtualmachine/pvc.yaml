@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    alerts.k8s.io/KubePersistentVolumeFillingUp: disabled
+  name: example-rootdisk
+  namespace: kubevirt-migrate-source
+spec:
+  dataSourceRef:
+    apiGroup: cdi.kubevirt.io
+    kind: VolumeImportSource
+    name: example-rootdisk
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-csi
+  volumeMode: Filesystem

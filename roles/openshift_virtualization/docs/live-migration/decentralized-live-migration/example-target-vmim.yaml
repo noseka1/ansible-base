@@ -1,0 +1,9 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: example-target
+  namespace: kubevirt-migrate-target
+spec:
+  receive:
+    migrationID: example1
+  vmiName: example

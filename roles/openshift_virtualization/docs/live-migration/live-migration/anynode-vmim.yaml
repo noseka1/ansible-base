@@ -1,0 +1,7 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: live-migration-anynode
+  namespace: kubevirt-migrate-source
+spec:
+  vmiName: example

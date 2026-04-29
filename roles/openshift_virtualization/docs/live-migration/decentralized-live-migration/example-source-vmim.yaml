@@ -1,0 +1,34 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: example-source
+  namespace: kubevirt-migrate-source
+spec:
+  sendTo:
+    # If you are migrating within a single cluster, then the synchronization
+    # controller is located on this cluster.
+    #
+    # If you are migrating between two separate OpenShift clusters, then the
+    # synchronization controller configured here is the one in the target
+    # cluster. Both clusters should be attached to the same migration network
+    # configured in hyperconverged.spec.liveMigrationConfig.network.
+    # The source VM pod must be able to reach the IP of the synchronization
+    # controller in the target cluster via this migration network.
+    #
+    # Identify the current leader among the synchronization controllers:
+    #
+    # $ virtsync=$(oc get leases.coordination.k8s.io -n openshift-cnv virt-synchronization-controller -o jsonpath='{.spec.holderIdentity}')
+    #
+    # If you are migrating with a single cluster, get the Pod IP of the
+    # synchronization controller. Use this IP in the connectURL:
+    #
+    # $ oc get po -n openshift-cnv $virtsync -o jsonpath='{.status.podIP}'
+    #
+    # If you are migrating to a different cluster, get the IP attached to the
+    # Multus interface migration0. Use this IP in the connectURL:
+    #
+    # $ oc get po -n openshift-cnv $virt_sync_pod -o jsonpath='{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/network-status}'
+    #
+    connectURL: 10.128.0.50:9185
+    migrationID: example1
+  vmiName: example

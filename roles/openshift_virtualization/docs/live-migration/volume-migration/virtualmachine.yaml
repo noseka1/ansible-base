@@ -1,0 +1,50 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: example
+  namespace: kubevirt-migrate-source
+spec:
+  runStrategy: Always
+  # Set the update volume strategy to trigger volume live-migration
+  updateVolumesStrategy: Migration
+  template:
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: cloudinitdisk
+          - bootOrder: 1
+            disk:
+              bus: virtio
+            name: rootdisk
+          interfaces:
+          - macAddress: 02:65:34:bb:53:bb
+            masquerade: {}
+            model: virtio
+            name: default
+          logSerialConsole: true
+          rng: {}
+        firmware:
+          serial: 72092eac-2b37-4384-b896-4ff0e18b9e02
+          uuid: cd11f840-8ab2-42a1-909f-cbe0851647d4
+        memory:
+          guest: 2Gi
+      evictionStrategy: LiveMigrate
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - cloudInitNoCloud:
+          secretRef:
+            name: example-cloudinit
+        name: cloudinitdisk
+      - persistentVolumeClaim:
+          # Point to the target volume
+          claimName: example-rootdisk-target
+        name: rootdisk

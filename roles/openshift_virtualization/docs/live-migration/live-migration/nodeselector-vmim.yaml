@@ -1,0 +1,9 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: live-migration-nodeselector
+  namespace: kubevirt-migrate-source
+spec:
+  addedNodeSelector:
+    kubernetes.io/hostname: master1
+  vmiName: example

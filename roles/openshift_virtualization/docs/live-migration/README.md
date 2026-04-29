@@ -8,6 +8,8 @@ storageclass occurences and update them to match your cluster:
 $ grep -r storageClassName *
 ```
 
+Create source namespace:
+
 ```
 $ oc apply -f virtualmachine/namespace.yaml
 ```

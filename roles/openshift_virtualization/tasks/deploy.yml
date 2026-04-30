@@ -60,6 +60,15 @@
     autogitops_app_namespace: ''
   tags: osvirt_hostpathprov
 
+- ansible.builtin.import_role:
+    name: openshift_autogitops
+    tasks_from: app_deploy.yml
+  vars:
+    autogitops_app_src_path: templates/live-migration
+    autogitops_app_dst_path: openshift-virtualization/live-migration
+    autogitops_app_namespace: kube-system
+  tags: osvirt_livemigration
+
 # CNV operator removes a storageprofile if the corresponding
 # storageclass doesn't exist on the cluster. Use Ansible to deploy
 # the storageprofiles for now. Argo CD fails to sync after the

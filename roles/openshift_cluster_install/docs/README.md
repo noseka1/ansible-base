@@ -6,3 +6,4 @@ This role runs OpenShift installation. It was tested to work with the following 
 * **Azure Subscription Based Blank Open Environment.** Note that Azure Blank Open Environment doesn't work.
 * **GCP Blank Open Environment.**
 * **VMware Cloud Public Cloud Open Environment.** Make sure that you check the "Enable DNS records for OCP" checkbox.
+* **Agent.** Agent-based OpenShift cluster installation including orchestration of machines via Redfish.

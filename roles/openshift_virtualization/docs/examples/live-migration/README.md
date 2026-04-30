@@ -148,6 +148,35 @@ Virtualization pods and try again:
 $ oc delete pod -n openshift-cnv --all
 ```
 
+To live-migrate between different OpenShift clusters, several prerequisites
+must be met:
+
+1. The OpenShift Container Platform and OpenShift Virtualization minor release
+   versions [must match](https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/virtualization/live-migration#prerequisites_virt-enabling-cclm-for-vms).
+2. Both clusters must be connected to the same migration network configured in
+   `hyperconverged.spec.liveMigrationConfig.network`. The virt-handler pods in
+   the source cluster must be able to reach the IP of the
+   virt-synchronization-controller in the target cluster via this migration
+   network. Refere to [Configuring a cross-cluster live migration network](https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/virtualization/live-migration#virt-configuring-cross-cluster-live-migration-network).
+3. The source cluster must trust the KubeVirt CA of the target cluster. See
+   also [Configuring KubeVirt CA with cross cluster live migration](https://kubevirt.io/user-guide/compute/decentralized_live_migration/#configuring-kubevirt-ca-with-cross-cluster-live-migration).
+
+To establish the trust, import the KubeVirt CA certificate of the target
+cluster to the trust store of the source cluster. Switch Kubernetes context to
+the target cluster. Export the KubeVirt CA certificate from the target cluster
+into a local file named `ca-bundle`:
+
+```
+$ oc extract -n openshift-cnv cm/kubevirt-ca
+```
+
+Switch Kubernetes context to the source cluster. Import the KubeVirt CA
+certificate to the trust store:
+
+```
+$ oc set data -n openshift-cnv cm/kubevirt-external-ca --from-file ca-bundle
+```
+
 ### References
 
 * [Live Migration](https://kubevirt.io/user-guide/compute/live_migration/)

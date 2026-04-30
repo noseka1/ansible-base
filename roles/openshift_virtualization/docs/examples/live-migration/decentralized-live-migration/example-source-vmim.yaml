@@ -11,10 +11,11 @@ spec:
     #
     # Conversely, if you are migrating to a different OpenShift clusters, then
     # the synchronization controller configured here is the one in the target
-    # cluster. Both clusters should be attached to the same migration network
+    # cluster. Both clusters must be attached to the same migration network
     # configured in hyperconverged.spec.liveMigrationConfig.network.
-    # The source VM pod must be able to reach the IP of the synchronization
-    # controller in the target cluster via this migration network.
+    # The virt-handler pods in the source cluster must be able to reach the IP
+    # of the synchronization controller in the target cluster via this
+    # migration network.
     #
     # In the target cluster, identify the current leader among the
     # synchronization controllers:

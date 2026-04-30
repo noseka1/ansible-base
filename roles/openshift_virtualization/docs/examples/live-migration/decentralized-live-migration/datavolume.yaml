@@ -1,3 +1,4 @@
+# Apply this resource to the target OpenShift cluster.
 # DataVolume lays down the QCOW2 raw image on the file system.
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume

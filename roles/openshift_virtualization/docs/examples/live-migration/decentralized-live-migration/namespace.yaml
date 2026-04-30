@@ -1,3 +1,4 @@
+# Apply this resource to the target OpenShift cluster.
 apiVersion: v1
 kind: Namespace
 metadata:

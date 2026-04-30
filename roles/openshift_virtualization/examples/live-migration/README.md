@@ -119,7 +119,8 @@ Create target namespace:
 $ oc apply -f decentralized-live-migration/namespace.yaml
 ```
 
-Trigger the decentralized live migration:
+Trigger the decentralized live migration to move a VM to a different namespace
+within the same cluster:
 
 ```
 $ oc apply -R -f decentralized-live-migration

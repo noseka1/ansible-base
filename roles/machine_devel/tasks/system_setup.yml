@@ -29,7 +29,7 @@
   ansible.builtin.command: '{{ item }}'
   loop:
     - '{{ github_dir }}/toolbox-container/toolbox_install_basic.sh'
-    - '{{ github_dir }}/toolbox-container/toolbox_install_full.sh'
+    - '{{ github_dir }}/toolbox-container/toolbox_install_medium.sh'
   environment:
     GITHUB_TOKEN: '{{ github_readonly_token }}'
   become: true

@@ -72,20 +72,9 @@
       - htop
       - iotop
       - ngrep
-      - ranger
       - tig
       - tmux
       - wireshark-cli
     state: present
-  when: ansible_facts.distribution == "Fedora"
-  become: true
-
-- name: Install tools used by ranger
-  ansible.builtin.yum:
-    name:
-      - atool
-      - python3-pygments
-      - unoconv
-      - mediainfo
   when: ansible_facts.distribution == "Fedora"
   become: true

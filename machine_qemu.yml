@@ -1,0 +1,5 @@
+- hosts: all
+  tasks:
+    - ansible.builtin.import_role:
+        name: machine_qemu
+      tags: machine_qemu

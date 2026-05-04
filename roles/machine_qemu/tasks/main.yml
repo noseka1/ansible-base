@@ -1,0 +1,31 @@
+- name: Install QEMU KVM and libvirt packages
+  ansible.builtin.yum:
+    name:
+      - qemu-kvm
+      - qemu-kvm-tools
+      - qemu-img
+      - libvirt
+      - libguestfs-tools
+    state: present
+  become: true
+
+- name: Start virtualization services
+  ansible.builtin.service:
+    name: '{{ item }}'
+    state: started
+    enabled: true
+  loop:
+    - libvirtd.service
+    - libvirtd-admin.socket
+    - libvirtd-ro.socket
+  become: true
+
+- name: Execute command virt-host-validate
+  ansible.builtin.command: >-
+    virt-host-validate
+  changed_when: false
+  register: virt_host_validate_result
+
+- name: Display output of virt-host-validate
+  debug:
+    var: virt_host_validate_result.stdout_lines

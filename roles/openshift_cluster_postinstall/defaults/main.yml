@@ -69,7 +69,7 @@ osclusterpostinst_set_root_user_password: false
 # Valid options are: '', identity, aescbc, aesgcm
 osclusterpostinst_etcd_encryption: ''
 
-# Deploy auto-gitops as part of the cluster post-installation process
+# Deploy autogitops as part of the cluster post-installation process
 osclusterpostinst_deploy_autogitops: false
 
 # Install RHEL entitlement on OpenShift nodes. This allows the OpenShift nodes and container

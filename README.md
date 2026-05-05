@@ -7,6 +7,8 @@ This repository contains scripts, tools, and sample configurations used in Red H
 * Trying out proof-of-concept deployments and configurations
 * Creating customer demos
 
+By default, the repository is designed to support single-node OpenShift clusters to ensure simplicity and preserve compute resources. Nevertheless, the Ansible roles are parameterized to accommodate larger scale deployments as well.
+
 ## Setup
 
 Install dependencies with:

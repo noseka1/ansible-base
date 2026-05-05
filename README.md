@@ -4,7 +4,7 @@ This repository contains scripts, tools, and sample configurations used in Red H
 * Configuration reference for customer environments
 * Building a lab environment for self-education
 * Reproducing production issues in an isolated lab environment
-* Creating proof-of-concept deployments
+* Trying out proof-of-concept deployments and configurations
 * Creating customer demos
 
 ## Setup

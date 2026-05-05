@@ -1,6 +1,8 @@
 # AutoGitOps
 
-AutoGitOps is a minimalist GitOps implementation for managing a single OpenShift cluster. AutoGitOps itself is deployed on the OpenShift cluster that it manages not depending on any external infrastructure components. The AutoGitOps deployment as well as the workflow is orchestrated by Ansible.
+AutoGitOps is a minimalist, self-contained GitOps implementation for managing a single OpenShift cluster. AutoGitOps itself is deployed on the OpenShift cluster that it manages. It has no dependencies on any outside components. The AutoGitOps deployment as well as the GitOps workflow is orchestrated by Ansible.
+
+##Deploying AutoGitOps
 
 You can deploy AutoGitOps using the command:
 
@@ -14,7 +16,15 @@ The above command deploys and configures the AutoGitOps components:
 * Gitea
 * External Secrets Operator
 
-Once AutoGitOps is deployed, you can use it to deploy operators and configurations to the OpenShift cluster. The deployment is orchestrated by Ansible and consists of the following steps:
+## Using AutoGitOps
+
+Once AutoGitOps is deployed, you can use it to deploy operators and configurations to the OpenShift cluster. For example:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_nmstate_deploy.yml
+```
+
+The deployment is orchestrated by Ansible and consists of the following steps:
 1. Ansible processes reads the role from the local checkout of `red-hat-delivery-suite` repository
 2. Ansible uploads secrets into HashiCorp Vault
 3. Ansible creates Kubernetes manifests and pushes them into Gitea

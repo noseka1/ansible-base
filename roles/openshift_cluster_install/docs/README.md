@@ -7,7 +7,7 @@ This role installs OpenShift cluster using the following installation methods
 * **VMware IPI**
 * **Agent installation.** Agent-based OpenShift cluster installation including orchestration of machines via Redfish.
 
-It was tested to work with the following [demo.redhat.com](https://demo.redhat.com/) environments:
+The role was tested to work with the following [demo.redhat.com](https://demo.redhat.com/) environments:
 
 * **AWS Blank Open Environment.**
 * **Azure Subscription Based Blank Open Environment.** Note that Azure Blank Open Environment doesn't work.

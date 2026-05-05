@@ -65,9 +65,9 @@ Define the necessary variables in your Ansible inventory and issue:
 $ ansible-playbook -i inventory/localhost.yml openshift_cluster_postinstall.yml
 ```
 
-## Deploying Autogitops
+## Deploying AutoGitOps
 
-Most of the OpenShift operators in this repo are deployed using [autogitops](docs/autogitops.md). Before deploying any of the OpenShift operators, you must have autogitops deployed on your cluster. You can deploy autogitops using the command:
+Most of the OpenShift operators in this repo are deployed using [AutoGitOps](docs/autogitops.md). Before deploying any of the OpenShift operators, you must have AutoGitOps deployed on your cluster. You can deploy autogitops using the command:
 
 ```
 $ ansible-playbook -i inventory/localhost.yml openshift_autogitops_deploy.yml

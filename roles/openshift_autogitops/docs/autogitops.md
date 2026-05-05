@@ -2,7 +2,7 @@
 
 AutoGitOps is a minimalist, self-contained GitOps implementation for managing a single OpenShift cluster. AutoGitOps itself is deployed on the OpenShift cluster that it manages. It has no dependencies on any outside components. The AutoGitOps deployment as well as the GitOps workflow is orchestrated by Ansible.
 
-##Deploying AutoGitOps
+## Deploying AutoGitOps
 
 You can deploy AutoGitOps using the command:
 

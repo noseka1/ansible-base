@@ -3,9 +3,9 @@
 This repository contains scripts, tools, and sample configurations used in Red Hat Services delivery projects. The repository is especially useful in these scenarios:
 * Configuration reference for customer environments
 * Building a lab environment for self-education
-* Reproducing production issues in an isolated environment
-* Creating a proof-of-concept deployments
-* Creating a customer demo
+* Reproducing production issues in an isolated lab environment
+* Creating proof-of-concept deployments
+* Creating customer demos
 
 ## Setup
 

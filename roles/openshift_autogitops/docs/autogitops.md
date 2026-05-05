@@ -24,7 +24,7 @@ Once AutoGitOps is deployed, you can use it to deploy operators and configuratio
 $ ansible-playbook -i inventory/localhost.yml openshift_nmstate_deploy.yml
 ```
 
-The deployment is orchestrated by Ansible and consists of the following steps:
+The GitOps workflow is orchestrated by Ansible and consists of the following steps:
 1. Ansible processes reads the role from the local checkout of `red-hat-delivery-suite` repository
 2. Ansible uploads secrets into HashiCorp Vault
 3. Ansible creates Kubernetes manifests and pushes them into Gitea

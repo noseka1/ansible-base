@@ -45,15 +45,35 @@ $ cp inventory/group_vars/all/credentials.yml.sample inventory/group_vars/all/cr
 $ vi inventory/group_vars/all/credentials.yml
 ```
 
-Many of the Ansible roles in this repo require that autogitops is deployed on the cluster. You can deploy autogitops using the command:
+Optionally, add add custom configurations into `./inventory` directory.
+
+## Deploying OpenShift cluster
+
+Deploy OpenShift cluster to AWS, Azure, GCP, or bare metal using the [openshift_cluster_install](roles/openshift_cluster_install/docs/README.md) role. Define the necessary variables in your Ansible inventory and execute:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_cluster_install_aws_deploy.yml
+```
+
+## Configuring OpenShift after installation
+
+Define the necessary variables in your Ansible inventory and issue:
+
+```
+$ ansible-playbook -i inventory/localhost.yml openshift_cluster_postinstall.yml
+```
+
+## Deploying Autogitops
+
+Most of the OpenShift operators in this repo are deployed using autogitops. You can deploy autogitops using the command:
 
 ```
 $ ansible-playbook -i inventory/localhost.yml openshift_autogitops_deploy.yml
 ```
 
-## Example usage
+## Deploying OpenShift operators
 
-You can run a playbook using:
+You can run Ansible playbook to deploy OpenShift operators:
 
 ```
 $ ansible-playbook -i inventory/localhost.yml <playbook>

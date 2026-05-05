@@ -45,7 +45,7 @@ $ cp inventory/group_vars/all/credentials.yml.sample inventory/group_vars/all/cr
 $ vi inventory/group_vars/all/credentials.yml
 ```
 
-Optionally, add add custom configurations into `./inventory` directory.
+Optionally, add custom configurations into `./inventory` directory.
 
 ## Deploying OpenShift cluster
 

@@ -4,6 +4,7 @@ exclude_paths:
   - .ansible-lint
   - .ansible/
   - third_party/
+  - workspace/
 
 skip_list:
   - yaml[commas]

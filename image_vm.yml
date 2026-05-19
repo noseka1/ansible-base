@@ -2,6 +2,11 @@
   hosts: localhost
   gather_facts: false
   tasks:
+  - ansible.builtin.assert:
+      that: chroot_location | length > 0
+      fail_msg: Variable 'chroot_location' must not be empty
+      quiet: true
+
   - name: Add a chroot host
     ansible.builtin.add_host:
       hostname: '{{ chroot_location }}'

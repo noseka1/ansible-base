@@ -1,9 +1,9 @@
-- import_tasks: connection.yml
+- ansible.builtin.import_tasks: connection.yml
 
-- import_tasks: init/license.yml
+- ansible.builtin.import_tasks: init/license.yml
 
-- import_tasks: init/openshift.yml
+- ansible.builtin.import_tasks: init/openshift.yml
 
-- import_tasks: init/hashicorp_vault.yml
+- ansible.builtin.import_tasks: init/hashicorp_vault.yml
 
-- import_tasks: init/job.yml
+- ansible.builtin.import_tasks: init/job.yml

@@ -1,4 +1,4 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: keyval_create.yml
   vars:
@@ -6,7 +6,7 @@
     hvault_keyval_approle:
       - ansible
 
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_hashicorp_vault
     tasks_from: connection_approle.yml
   vars:

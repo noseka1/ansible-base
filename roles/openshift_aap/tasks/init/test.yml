@@ -1,11 +1,11 @@
-- import_role:
+- ansible.builtin.import_role:
     name: openshift_common
     tasks_from: wait_for_stable_cluster.yml
   vars:
     stable_cluster_delay: 0
     stable_cluster_retries: 10
 
-- import_role:
+- ansible.builtin.import_role:
     name: ansible-modules-hashivault
 
 - name: Retrieve secret from HashiCorp vault

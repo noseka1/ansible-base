@@ -23,6 +23,6 @@
     VAULT_TOKEN: '{{ hvault_token }}'
   register: hvault_approle_secret_result
 
-- set_fact:
+- ansible.builtin.set_fact:
     hvault_approle_role_id: '{{ hvault_approle_role_id_result.data.role_id }}'
     hvault_approle_secret: '{{ hvault_approle_secret_result.data.secret_id }}'

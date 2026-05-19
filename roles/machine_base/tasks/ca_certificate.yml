@@ -1,5 +1,5 @@
 - name: Copy CA certificate to trust store
-  copy:
+  ansible.builtin.copy:
     content: '{{ machinebase_import_ca_certificate }}'
     dest: >-
       {{ (ansible_facts.os_family == 'RedHat') | ternary('/etc/pki/ca-trust/source/anchors', '/usr/local/share/ca-certificates') }}/ansible_ca_cert.crt
@@ -7,14 +7,14 @@
   become: true
 
 - name: Update trusted CA store (RedHat)
-  command: update-ca-trust extract
+  ansible.builtin.command: update-ca-trust extract
   when:
     - machinebase_certificate_result is changed
     - ansible_facts.os_family == 'RedHat'
   become: true
 
 - name: Update trusted CA store (Debian)
-  command: update-ca-certificates
+  ansible.builtin.command: update-ca-certificates
   when:
     - machinebase_certificate_result is changed
     - ansible_facts.os_family == 'Debian'

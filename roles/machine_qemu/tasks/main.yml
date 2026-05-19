@@ -27,5 +27,5 @@
   register: virt_host_validate_result
 
 - name: Display output of virt-host-validate
-  debug:
+  ansible.builtin.debug:
     var: virt_host_validate_result.stdout_lines

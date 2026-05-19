@@ -7,7 +7,7 @@
   become: true
 
 - name: Install MicroShift and lvm2 package
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - microshift
       - lvm2

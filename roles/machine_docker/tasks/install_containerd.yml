@@ -1,5 +1,5 @@
 - name: Install containerd
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: containerd.io
   become: true
 

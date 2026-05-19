@@ -3,7 +3,7 @@
   tags: machine_base
 
 - name: Install kubectl and podman
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - openshift-clients
       - podman

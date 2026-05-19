@@ -32,7 +32,7 @@
   become: true
 
 - name: Install Kubernetes bootstrap packages
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - kubelet
       - kubeadm
@@ -56,7 +56,7 @@
     mode: '0755'
 
 - name: Install further required packages
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: iproute-tc
   become: true
 

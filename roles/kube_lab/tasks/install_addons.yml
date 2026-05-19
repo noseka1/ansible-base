@@ -1,5 +1,5 @@
 - name: Install pip3 tool
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: python36
   become: true
 

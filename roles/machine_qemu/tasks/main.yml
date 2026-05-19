@@ -1,5 +1,5 @@
 - name: Install QEMU KVM and libvirt packages
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - qemu-kvm
       - qemu-kvm-tools

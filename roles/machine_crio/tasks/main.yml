@@ -1,5 +1,5 @@
 - name: Install the cri-o container runtime
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - conmon
       - cri-o

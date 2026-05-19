@@ -1,5 +1,5 @@
 - name: Install rpms
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - nfs-utils
     state: present

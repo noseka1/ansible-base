@@ -1,5 +1,5 @@
 - name: Upgrade all packages
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: '*'
     state: latest
   when:

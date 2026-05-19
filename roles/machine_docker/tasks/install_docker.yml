@@ -14,7 +14,7 @@
   become: true
 
 - name: Make sure conflicting podman is not installed
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - podman
       - podman-docker
@@ -23,7 +23,7 @@
   become: true
 
 - name: Install Docker
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
       - docker-ce
       - docker-ce-cli

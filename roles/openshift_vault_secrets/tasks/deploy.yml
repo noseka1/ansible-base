@@ -56,7 +56,7 @@
   tags: vso_example
 
 - name: Fail if the secret value is not correct
-  assert:
+  ansible.builtin.assert:
     that: (vso_example_result.resources.0.data.testkey | b64decode) == 'testvalue'
     fail_msg: The secret value is not 'testvalue'.
   tags: vso_example

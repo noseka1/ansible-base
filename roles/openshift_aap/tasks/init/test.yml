@@ -17,6 +17,6 @@
   register: aap_test_hashivault_read_result
 
 - name: Fail if the secret value is not correct
-  assert:
+  ansible.builtin.assert:
     that: aap_test_hashivault_read_result.value == 'testvalue'
     fail_msg: The secret value is not 'testvalue'.

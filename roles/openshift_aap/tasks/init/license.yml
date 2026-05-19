@@ -1,9 +1,9 @@
-- assert:
+- ansible.builtin.assert:
     that: redhat_subscription_username | length > 0
     fail_msg: Variable 'redhat_subscription_username' must not be empty
     quiet: true
 
-- assert:
+- ansible.builtin.assert:
     that: redhat_subscription_password | length > 0
     fail_msg: Variable 'redhat_subscription_password' must not be empty
     quiet: true
@@ -18,7 +18,7 @@
     controller_password: '{{ aap_connection_password }}'
   register: aap_subscriptions_result
 
-- assert:
+- ansible.builtin.assert:
     that: aap_subscriptions_result.subscriptions | length > 0
     fail_msg: No subscription for Ansible Automation Platform available.
     quiet: true
